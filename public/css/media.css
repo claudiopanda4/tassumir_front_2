@@ -1,0 +1,119 @@
+@charset 'utf-8';
+@media screen and (max-width: 1150px) {
+	.aside {
+		display: none;
+	}
+}
+@media screen and (max-width: 530px) {
+	.main {
+		width: 100%;
+	}
+	.user-account, .search-lg,
+	.mobile-hidden, .menu-header ul li.mobile-hidden,
+	.ul-left li.mobile-hidden {
+		display: none;
+	}
+	.ul-left {
+	    margin-left: -30px;
+	}
+	.title h1 {
+	    font-size: 25px;
+	}
+	.card.stories-about-talking {
+		margin-top: -10px;
+	}
+	.menu-header ul li {
+	    display: block;
+	    margin-left: 5px;
+	}
+	.menu-header ul {
+	    margin-left: -40px;
+	}
+	.post {
+	    width: 100%;
+	}
+	.card-post p {
+	    padding: 5px 10px;
+	}
+	.card {
+		border-radius: 0px;
+		margin-top: 8px;
+	}
+	.user-tassumir {
+	    margin-right: 0px;
+	}
+	.row {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.fa-24 {
+	    font-size: 22px;
+	}
+	.stories-about-talking nav ul li {
+	    height: 80px;
+    	width: 80px;
+	    border-radius: 50%;
+	}
+	.headline {
+		display: none;
+	    border-bottom-right-radius: 50px;
+	    border-bottom-left-radius: 50px;
+	}
+	.stories-about-talking nav ul li .img-back-stories, 
+	.stories-about-talking nav ul li {
+		border-radius: 50%;    
+		border: 1px solid #800080;
+	}
+	.more-option-post {
+	    right: 10%;
+	}
+	.stories-about-talking nav {
+		overflow: auto;
+	}
+	.mobile-header-icon {
+		margin-top: 10px;
+	}
+	.ul-left li {
+		margin-top: 10px;
+	}
+	.interaction-user ul {
+	    width: 100%;
+	    padding-left: 0;
+	    justify-content: space-between;
+	}
+	.interaction-user .content-button a h2 {
+	    font-size: 11px;
+	}
+	.interaction-user .content-button {
+	    width: 95px;
+	}
+	.comment-send {
+		display: none;
+	}
+	.interaction-user {
+	    border-bottom: none;
+	}
+	.stories-about-talking nav ul {
+	    width: 390px;
+	    margin-bottom: 0;
+	    padding-left: 25px;
+	}
+	.stories-about-talking header h1 {
+	    font-size: 15px;
+	}
+	.stories-about-talking nav ul li:nth-child(1) {
+	    
+	}
+	.stories-about-talking nav ul li .img-back-stories {
+	    width: 100%;
+	    height: 100%;
+	}
+}
+@media screen and (max-width: 360px) {
+
+}
+@media screen and (max-width: 720px) {
+	.suggest-slide {
+		display: block;
+	}
+}
