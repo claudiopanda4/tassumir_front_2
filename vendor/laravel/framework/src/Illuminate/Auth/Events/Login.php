@@ -7,12 +7,14 @@ use Illuminate\Queue\SerializesModels;
 class Login
 {
     use SerializesModels;
+
     /**
      * The authentication guard name.
      *
      * @var string
      */
     public $guard;
+
     /**
      * The authenticated user.
      *
