@@ -28,18 +28,35 @@
 </head>
 <body>
     <div id="app">
-        <main class="main">
-            <div class="" id="main-login">
+        <main class="main" id="main-login-container">
+            <div class="center" id="main-login">
                 <header class="logo-form" id="title-login">
-                    <a href=""><i class="fas fa-link fa-24"></i><h1>Tass<span class="title-final">umir</span></h1></a>
+                    <div>
+                        <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final">umir</span></h1></a>
+                    </div>
                 </header>
                 <form action="{{ route('account.login.enter') }}" method="POST">
                     @csrf
                      <div class="form-group">
                         <label for="exampleInputPassword1">Número ou Email</label>
-                        <input class="form-control" name="number_email_login" type="text" placeholder="Default input">
+                        <input class="input-text-default input-full" name="number_email_login" type="text" placeholder="email ou telefone">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" name="password_login" class="form-control" id="exampleInputPassword1" placeholder="Password">
-     
+                        <input type="password" name="password_login" class="input-text-default input-full" id="exampleInputPassword1" placeholder="password">
+                    </div>
+                    <button id="login-enter" type="submit" class=""><span class="enter-login">Ent</span>rar</button>
+                    <div class="clearfix">
+                        <div id="forget-password" class="l-5">
+                            <a href=""><h1>Esqueceu a senha</h1></a>
+                        </div>
+                        <div class="r-5" id="register-enter-container">
+                            <button id="register-enter" type="submit" class=""><span class="enter-login"></span>Registar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

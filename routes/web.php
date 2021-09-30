@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     //Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('home');
 });
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');
+Route::get('/profile/', [App\Http\Controllers\PerfilController::class, 'index'])->name('account.profile');
 Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->name('account.logout');
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('account.login.form');
 Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
