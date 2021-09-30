@@ -13,16 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes(['register' => false]);
-Route::group(['middleware' => 'auth:web'], function () {
+Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/', function () {
         return view('feed.index');
-    })->middleware('auth');
+    })->middleware('auth:web1');
+    //Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('home');
 });
-
-
-/*Route::get('/', function () {
-    return view('feed.index');
-});
-Route::prefix('feed')->group(function () {
-    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('feed.index');
-});*/
+Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');
+Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->name('account.logout');
+Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('account.login.form');
+Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');

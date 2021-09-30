@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'web1',
+        'passwords' => 'logins',
     ],
 
     /*
@@ -39,6 +39,10 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        'web1' => [
+            'driver' => 'session',
+            'provider' => 'logins',
         ],
     ],
 
@@ -69,6 +73,11 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+
+        'logins' => [
+             'driver' => 'database',
+             'table' => 'logins',
+        ],
     ],
 
     /*
@@ -90,6 +99,12 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'logins' => [
+            'provider' => 'logins',
+            'table' => 'logins',
             'expire' => 60,
             'throttle' => 60,
         ],

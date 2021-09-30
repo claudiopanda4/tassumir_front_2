@@ -9,6 +9,7 @@ body {
 * {
 	box-sizing: border-box;
 	outline: none;
+	font-family: "nunito", sans-serif;
 }
 .aside, .header-main {
 	position: fixed;
@@ -637,4 +638,9 @@ a:hover {
 	width: 100%;
 	overflow-x: auto;
 	margin-bottom: 2px;
+}
+#main-login {
+	width: 360px;
+	height: 360px;
+	margin: auto;
 }
