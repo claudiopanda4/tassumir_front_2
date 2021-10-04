@@ -27,12 +27,12 @@
     <div class="couple-info">
 
     	<div class="couple-info-inputs">
-    		<label class="couple-name mt-2">Nome da pagina</label>
+    		<p class="couple-name mt-2">Nome da pagina</p>
     		<input type="text" placeholder="Escreva o nome da pagina " class="couple-input-edit" name="">
     	</div>
 
     	<div class="couple-info-inputs mt-2">
-    		<label class="couple-name mt-2">Alterar tipo de relacionamento</label>
+    		<p class="couple-name-p mt-2">Relacionamento </p>
     		<select class="couple-input-edit-select">
     			<option>Namoro</option>	
     	    </select>
@@ -47,7 +47,7 @@
     	</div>
 
     	<div class="couple-info-inputs mt-3">
-    		<label class="couple-name mt-2">Eliminar ou desactivar página </label>
+    		<p class="couple-name-p mt-2">Eliminar ou desactivar página </p>
     		
 	    	<div class="couple-publish-btn-edit-2">
 	    		<a href="{{route('delete_couple.page')}}" >Eliminar ou desactivar </a>

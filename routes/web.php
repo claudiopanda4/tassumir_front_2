@@ -34,6 +34,9 @@ Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::cla
 Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
 
 
+Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');
+
+Route::get('/help_support', [App\Http\Controllers\HelpSupport::class, 'index'])->name('help_support.page');
 
 
 

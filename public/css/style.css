@@ -86,6 +86,9 @@ body {
 .form-group label {
 	color: #fff;
 }
+.title-with-color{
+	color: #800080;
+}
 * {
 	box-sizing: border-box;
 	outline: none;
@@ -319,18 +322,24 @@ a:hover {
 	background-color: #800080;
     position: relative;
     color: #fff;
-    padding: 5px 10px 0;
-    width: 120px ;
+    padding: 10px;
+    width: 145px ;
     border-radius: 5px;
 
    }
-   .checkbox-style {
+   .checkbox-style{
    	    margin-top: 5px;
    		background-color: #800080;
    		color: #fff;
    		padding: 10px;
-
    }
+   /*input[type=checkbox]:checked + label{
+
+   	    margin-top: 5px;
+   		background-color: #800080;
+   		color: #fff;
+   		padding: 10px;
+   }*/
    .couple-publish-btn-edit a {
 
     color: #fff;  
@@ -342,8 +351,8 @@ a:hover {
 
 		background-color: #800080;
 	    position: relative;
-	   	padding: 5px 10px 0;
-	   		border-radius: 5px;
+	   	padding: 10px ;
+	   	border-radius: 5px;
 
 	 }
 
@@ -461,7 +470,7 @@ a:hover {
 	margin-top: 20px;
 	margin-left: 25px;
 	margin-right: 25px;
-	padding: 10px;
+	padding: 20px;
 	background-color: #3D3D3D;
 	border-radius: 10px;
 }
@@ -472,7 +481,10 @@ a:hover {
 .couple-info-inputs-3b{
 	display: flex;
 	justify-content: flex-start;
+	align-items: flex-start;
 }
+
+
 .couple-info-inputs{
 	display: flex;
 	justify-content: space-between;
@@ -483,7 +495,7 @@ a:hover {
 	border: 1px solid var(--background-dark-input);
 	border-radius: 20px;
 	padding: 8px;
-	width: 400px;
+	width: 300px;
 	color: #fff;
 }
 .couple-input-edit-select{
@@ -491,9 +503,10 @@ a:hover {
 	background-color:#606060;
 	border: 1px solid var(--background-dark-input);
 	border-radius: 20px;
-	width: 400px;
+	width: 300px;
     color: #fff;
     padding: 8px;
+    margin-left: 30px;
 
 }
 .send-them{
@@ -522,14 +535,27 @@ a:hover {
 	color: #fff;
 	font-size:10pt;
 }
+.couple-name-pp{
+	color: #fff;
+	font-size:12pt;
+}
 
 .couple-title-edit{
 	display: flex;
 	justify-content: flex-start;
 	align-content: flex-start;
 	color: #efefef;
+	font-size: 14pt;
+	margin-top: 10px;
+}
+.couple-title-edit-h{
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	color: #efefef;
 	font-size: 16pt;
 	margin-top: 10px;
+	margin-bottom: 30px;
 }
 .couple-title-edit-h3{
 	display: flex;
@@ -921,7 +947,27 @@ a:hover {
 	border-radius: 5px;
 	padding: 8px;
 
+
 }
+.new-style-btn-2a{
+	text-align: center;
+	background-color: #800080;	
+	color: #fff;
+	border-radius: 5px;
+	padding: 8px;
+	width: 125px;
+
+}
+.new-style-btn-2b{
+	text-align: center;
+	background-color: #800080;	
+	color: #fff;
+	border-radius: 5px;
+	padding: 8px;
+	width: 120px;
+
+}
+
 
 .interaction-user .content-button a {
 }
@@ -1153,6 +1199,7 @@ a:hover {
 	justify-content: space-between;
     flex-direction: row;
 }
+
 #card-ident {
 	flex: 2;
 	padding: 10px;

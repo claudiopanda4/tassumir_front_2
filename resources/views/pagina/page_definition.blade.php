@@ -3,7 +3,11 @@
 @section('content')
 
 <div class="couple-head-del">
-	
+	<header class="card-flex">
+		
+			<h2 class="couple-title-edit-h">Definições de conta
+			</h2>
+	</header>
 	<header class="card-flex">
 			<h2 class="couple-title-edit">Desactivar ou eliminar a tua página do Tassumir</h2>
 			<span>
