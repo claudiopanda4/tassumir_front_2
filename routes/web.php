@@ -21,6 +21,23 @@ Route::group(['middleware' => 'auth:web1'], function () {
 });
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');
 Route::get('/profile/', [App\Http\Controllers\PerfilController::class, 'index'])->name('account.profile');
+
+
+
+
+Route::get('/couple_page/', [App\Http\Controllers\PaginaCasalController::class, 'index'])->name('couple.page');
+
+
+Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::class, 'edit_couple'])->name('edit_couple.page');
+
+
+Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
+
+
+
+
+
+
 Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->name('account.logout');
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('account.login.form');
 Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');

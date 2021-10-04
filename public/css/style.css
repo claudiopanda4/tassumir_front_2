@@ -105,6 +105,9 @@ body {
 	height: 0;
 	overflow: hidden;
 }
+.clearfix ul li a{
+	background-color: transparent;
+}
 .main {
 	position: relative;
 	display: flex;
@@ -242,7 +245,10 @@ a:hover {
     border-radius: 20px;
     margin-top: 2px;
     color: #fff;
+
 }
+
+
 .input-search .input-text {
     padding: 8px;
 }
@@ -269,6 +275,360 @@ a:hover {
 	width: 40px;
 	height: 40px;
 }
+
+.card-couple {
+	margin-top: 20px;
+	margin-left: 25px;
+	margin-right: 25px;
+	padding: 10px;
+	background-color: #3D3D3D;
+	border-radius: 10px;
+
+}
+.card-couple-del {
+	margin-top: 20px;
+	
+	padding: 10px;
+	background-color: #3D3D3D;
+	border-radius: 10px;
+
+
+}
+.card-flex-edit {
+	
+    flex-direction: row;
+}
+.couple-btn-space {
+	display: flex;
+	margin-top: 10px;
+	}
+.couple-publish-btn  {
+
+	background-color: #800080;
+    position: relative;
+    color: #fff;
+    padding: 10px;
+    width: 103px ;
+   border-radius: 5px;
+
+
+   }
+   .couple-publish-btn-edit  {
+
+	background-color: #800080;
+    position: relative;
+    color: #fff;
+    padding: 5px 10px 0;
+    width: 120px ;
+    border-radius: 5px;
+
+   }
+   .checkbox-style {
+   	    margin-top: 5px;
+   		background-color: #800080;
+   		color: #fff;
+   		padding: 10px;
+
+   }
+   .couple-publish-btn-edit a {
+
+    color: #fff;  
+    font-size: 9pt;
+    text-align: center;
+    
+   }
+   .couple-publish-btn-edit-2  {
+
+		background-color: #800080;
+	    position: relative;
+	   	padding: 5px 10px 0;
+	   		border-radius: 5px;
+
+	 }
+
+   .couple-publish-btn-edit-2 a {
+   		text-align: center;
+	   	margin-left: 10px;
+	    color: #fff;
+	    font-size: 9pt; 
+   }
+
+   .couple-publish-btn a {
+    color: #fff;
+    text-align: center;
+   }
+.icon-img-comment{
+    width: 10%;
+    padding: 8px;
+    border-radius: 20px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border: none;
+	background-color:#606060;
+	position: absolute;
+	display: flex;
+	margin-left: 300px;
+
+}
+   
+.couple-free-space{
+	
+	margin-right: 100px;
+	margin-left: 100px;
+}
+.couple-invite-icon-one {
+	background-color: #800080;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin-left: 100px;
+
+}
+.couple-invite-icon {
+	background-color: #800080;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    margin-left: 10px;
+
+}
+.couple-history {
+
+	display: flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+}
+.couple-history h2{
+	color: #fff;
+	font-size: 13pt;
+}
+.couple-history-input{
+   
+    background-color: transparent;
+	padding: 10px;
+	width: 500px;
+	height: 100px;
+	border: none;
+	color: #fff;
+}
+
+.couple-separator{
+
+	padding-top: 5px;
+    padding-bottom: 5px;
+	border-bottom: 1px solid #717171;
+	justify-items: flex-end;
+	justify-content: flex-end;
+	display: flex;
+}
+
+.couple-numbering-text{
+
+    background-color: transparent;
+    justify-items: flex-end;
+    justify-content: flex-end;
+    color: #717171;
+}
+.couple-head {
+	background-color: #242526;
+	border-radius: 10px;
+
+}
+.couple-head-del {
+	background-color: #242526;
+	padding: 20px;
+	border-radius: 10px;
+	
+}
+.couple-head-edit {
+	background-color: #242526;
+	padding: 20px;
+	border-radius: 10px;
+}
+.couple-foto-edit {
+	position: relative;
+	width: 100px;
+	height: 100px;
+	margin-top: 9px;
+
+}
+.couple-info{
+
+	flex-direction: row;
+	margin-top: 10px;
+	border-radius: 10px;
+	margin-top: 20px;
+	margin-left: 25px;
+	margin-right: 25px;
+	padding: 10px;
+	background-color: #3D3D3D;
+	border-radius: 10px;
+}
+.couple-info-inputs-2b{
+	display: flex;
+	justify-content: space-evenly;
+}
+.couple-info-inputs-3b{
+	display: flex;
+	justify-content: flex-start;
+}
+.couple-info-inputs{
+	display: flex;
+	justify-content: space-between;
+}
+.couple-input-edit{
+
+	background-color:#606060;
+	border: 1px solid var(--background-dark-input);
+	border-radius: 20px;
+	padding: 8px;
+	width: 400px;
+	color: #fff;
+}
+.couple-input-edit-select{
+
+	background-color:#606060;
+	border: 1px solid var(--background-dark-input);
+	border-radius: 20px;
+	width: 400px;
+    color: #fff;
+    padding: 8px;
+
+}
+.send-them{
+	justify-content: flex-end;
+	align-content: flex-end;
+}
+.couple-input-edit-select-n{
+
+	background-color:#606060;
+	border: 1px solid var(--background-dark-input);
+	border-radius: 20px;
+	width: 300px;
+    color: #fff;
+    padding: 8px;
+    
+}
+
+.couple-name{
+	font-weight: bold;
+	color: #fff;
+	font-size:16pt;
+}
+
+
+.couple-name-p{
+	color: #fff;
+	font-size:10pt;
+}
+
+.couple-title-edit{
+	display: flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+	color: #efefef;
+	font-size: 16pt;
+	margin-top: 10px;
+}
+.couple-title-edit-h3{
+	display: flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+	color: #efefef;
+	font-size: 10pt;
+	margin-top: 10px;
+}
+
+.couple-foto-small {
+	position: relative;
+	
+	margin-top: 10px;
+
+}
+.couple-publi-follower{
+	display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+
+}
+.couple-input-text {
+	margin-top: 10px;
+	display: flex;
+}
+.couple-input{
+
+	background-color:#606060;
+	border: 1px solid var(--background-dark-input);
+	border-radius: 20px;
+	padding: 10px;
+	width: 518px;
+	color: #fff;
+
+
+}
+.couple-input-2{
+
+	background-color:#fff;
+	border: 1px solid var(--background-dark-input);
+	border-radius: 20px;
+	padding: 8px;
+	width: 518px;
+	color: red;
+
+
+}
+.left-margin-coupleInfo{
+	display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+	flex: 2;
+	padding: 10px;
+	margin-left: 10px;
+	background-color: #fff;
+	margin-top: 10px;
+	position: relative;
+	width: 190px;
+}
+.couple-name{
+	
+	color: #efefef;
+    font-size: 13px;
+    width: 145px;
+    
+
+}
+.couple-header{
+	justify-content: space-between;
+}
+.edit-couple a{
+
+	background-color: #800080;
+    position: relative;
+    color: #fff;
+    padding: 10px;
+    	border-radius: 5px;
+
+
+
+}
+.couple-status {
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 20px;
+
+	
+}
+.couple-actual-status {
+	 color: #efefef;
+    font-size: 14px;
+    
+    align-items: center;
+    justify-content: center;
+}
+
+
 .br-50, .circle {
 	border-radius: 50%;
 }
@@ -322,6 +682,10 @@ a:hover {
 .img-32 {
 	width: 32px;
 	height: 32px;
+}
+.img-40{
+	width: 40px;
+	height: 40px;
 }
 .li-component-aside-right .page-cover,
 .li-component-aside-right h1,
@@ -446,6 +810,7 @@ a:hover {
     color: #fff;
     margin-bottom: 3px;
     margin-top: 5px;
+    margin-right:80px ;
 }
 .page-identify {
 	margin-left: 0;
@@ -539,6 +904,24 @@ a:hover {
 	font-size: 13px;
 	margin-left: 5px;
 }
+.new-style-btn{
+	text-align: center;
+	background-color: #5D5D5D;
+	color: #fff;
+	padding: 8px;
+	border-radius: 5px;
+
+
+}
+.new-style-btn-2{
+	text-align: center;
+	background-color: #800080;	
+	color: #fff;
+	border-radius: 5px;
+	padding: 8px;
+
+}
+
 .interaction-user .content-button a {
 }
 .interaction-user li div.content-button {
@@ -592,6 +975,10 @@ a:hover {
 .comment-send {
 	margin-top: 10px;
 }
+.comment-send-couple {
+	margin-top: 10px;
+	flex-direction: row;
+}
 .comment-send-text {
 	width: 80%;
     background-color: var(--background-dark-input);
@@ -603,10 +990,33 @@ a:hover {
     border-radius: 20px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    background-color: transparent;
     border: none;
     color: #fff;
+	background-color:transparent;
 }
+
+.comment-send-text-couple {
+	width: 80%;
+    background-color: var(--background-dark-input);
+    border-radius: 20px;
+
+}
+.comment-send-couple input[type="text"] {
+	width: 80%;
+    padding: 9px;
+    border-radius: 20px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border: none;
+    color: #fff;
+	background-color:#606060;
+}
+
+
+
+
+
+
 .comment-send .fa-img-comment {
 	margin-right: 10px;
 	margin-top: 8px;	
@@ -751,9 +1161,19 @@ a:hover {
     font-size: 17px;
     width: 185px;
 }
+.profile-name-edit{
+	
+}
+
+
 #ident-profile {
 	display: flex;
     justify-content: space-around;
+    margin-top: 20px;
+}
+#ident-profile-edit{
+
+	display: flex;
     margin-top: 20px;
 }
 .invite-icon {
@@ -762,6 +1182,7 @@ a:hover {
     height: 40px;
     position: relative;
 }
+
 .statistics-profile {
 	
 }

@@ -227,7 +227,7 @@
                         </div>
                         <div class="input-text comment-send-text l-5 clearfix">
                             <input type="text" name="" placeholder="O que você tem a dizer?">
-                            <div class="r-5 icon-img-comment">
+                            <div class="r-5 ">
                                 <a href="">
                                     <i class="far fa-images fa-20 fa-img-comment"></i>
                                 </a>
