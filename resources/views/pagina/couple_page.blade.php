@@ -82,6 +82,10 @@
     </div>
    </div>
 
+<div class="card-flex-pub">
+	<h2 class="couple-pub">Publicações</h2>
+ </div>
+
    <div class="card-couple mb-5">
                 <div class="post">
                     <header class="clearfix">

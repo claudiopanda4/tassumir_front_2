@@ -327,11 +327,21 @@ a:hover {
     border-radius: 5px;
 
    }
+   .couple-pub{
+   	    justify-content: flex-start;
+   		align-content: flex-start;
+   		color: #efefef;
+   		margin-left: 23px;
+   		margin-top: 10px;
+   		margin-bottom: 10px;
+   		font-size: 12pt;
+   }
    .checkbox-style{
    	    margin-top: 5px;
    		background-color: #800080;
    		color: #fff;
    		padding: 10px;
+
    }
    /*input[type=checkbox]:checked + label{
 
@@ -1198,6 +1208,11 @@ a:hover {
 .card-flex {
 	justify-content: space-between;
     flex-direction: row;
+}
+.card-flex-pub{
+	justify-content: space-between;
+    flex-direction: row;
+    background-color: #242526;
 }
 
 #card-ident {
