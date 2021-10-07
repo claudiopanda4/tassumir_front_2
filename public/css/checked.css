@@ -525,3 +525,6 @@
 #more-option-170:checked ~ ul {
 	display: block;
 }
+#more-option-notify:checked ~ ul {
+	display: block;
+}

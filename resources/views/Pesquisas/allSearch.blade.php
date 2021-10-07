@@ -1,4 +1,4 @@
-@extends('layouts.search_menu');
+@extends('layouts.search_menu')
 
 @section('content')
 

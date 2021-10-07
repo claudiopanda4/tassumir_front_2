@@ -37,19 +37,16 @@
                 </li>
             </ul>
             <nav class="menu-header">
-                <?php 
-                    $key = 0;
-                ?>
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
                         <a href=""><i class="fas fa-search fa-24" size="7"></i></a>
                     </li>
                     <li class="l-5 mobile-header-icon  ">
                         <div class="last-component-n clearfix-n ">
-                            <label for="<?php echo "more-option-".$key; ?>">
+                            <label for="more-option-notify">
                                 <i class="far fa-bell fa-24 fa-option" size="7"></i>
                             </label>
-                            <input type="checkbox" name="" id="<?php echo "more-option-".$key; ?>" class="hidden">
+                            <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="clearfix more-option-post-n card-flex">
                                 <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
                                     
