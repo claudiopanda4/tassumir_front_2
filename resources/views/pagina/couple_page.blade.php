@@ -12,8 +12,12 @@
     <div class="" id="card-ident">
         <div id="ident-profile">
             <h1 class="profile-name">Delton & Ana</h1>
-            <div class="edit-couple ">
-                <a href="{{route('edit_couple.page')}}">Editar pagina</a>
+            <div class=" ">
+                <a href="{{route('edit_couple.page')}}">
+                    <h3 class="edit-profile">Editar Perfil</h3>
+                </a>
+
+                
             </div>
         </div>
 
@@ -181,7 +185,7 @@
                         
                     </div>
                 </div>
-            </div>
+    </div>
 
 
 

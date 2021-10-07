@@ -98,7 +98,18 @@ body {
 	position: fixed;
 	z-index: 100;
 	border: 1px solid #efefef;
+
 }
+ .header-main-n {
+	position: fixed;
+	z-index: 100;
+	border: 1px solid #efefef;
+	top: 3px;
+	
+	
+}
+
+
 .clearfix::after {
 	display: block;
 	content: '.';
@@ -109,6 +120,18 @@ body {
 	overflow: hidden;
 }
 .clearfix ul li a{
+	background-color: transparent;
+}
+.clearfix-n::after {
+	display: block;
+	content: '.';
+	visibility: hidden;
+	font-size: 0;
+	line-height: 0;
+	height: 0;
+	overflow: hidden;
+}
+.clearfix-n ul li a{
 	background-color: transparent;
 }
 .main {
@@ -122,11 +145,28 @@ body {
 .aside, .main, .header-main {
 	border: none;
 }
+.header-main-n {
+	border: none;
+}
 .aside-left {
 	left: 10px;
 }
 .aside-right {
 	right: 10px;
+}
+.aside-notification-right{
+
+	right: 10px;
+	width: 280px;
+	height: 70vh;
+	top: 85px;
+
+
+}
+.aside-notification{
+	position: absolute;
+	z-index: 100;
+	border: 1px solid #efefef;
 }
 .aside nav {
 	border-bottom: 1px solid #efefef;
@@ -149,6 +189,15 @@ body {
 	width: 100%;
 	background-color: #242526;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+
+}
+.header-main-component-n {
+	height: 60px;
+	width: 100%;
+	background-color: #242526;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+	
+
 }
 li {
 	list-style-type: none;
@@ -211,6 +260,42 @@ a:hover {
 	display: inline-block;
 	margin-left: 5px;
 } 
+
+/*.menu-header ul ul{
+	position: absolute;
+	visibility: hidden;
+
+}
+.menu-header ul li:hover ul{
+	visibility: visible;
+}
+.menu-header ul ul li{
+	display: block;
+	width: 200px;
+	padding: 20px;
+}
+.menu-header ul ul li{
+
+	float: none;
+	border-bottom: solid 1px #ccc;
+}
+label[for="hugo"]{
+	padding: 5px;
+	background-color: #222;
+	text-align: center;
+	font-size: 30px;
+	cursor: pointer;
+	height: 50px;
+}
+#hugo{
+	display: none;
+}
+label[for="hugo"]{
+	display: none;
+}*/
+
+
+
 .fas,
 .far,
 .fa,
@@ -287,6 +372,20 @@ a:hover {
 	padding: 10px;
 	background-color: #3D3D3D;
 	border-radius: 10px;
+
+}
+.card-notifications{
+	
+	position: absolute;
+	justify-content: flex-end;
+	align-content: flex-end;
+	padding: 10px;
+	background-color: #3D3D3D;
+	border-radius: 10px;
+	display: block;
+	margin-left: 100px;
+	margin-top: 100px;
+	z-index: 100;
 
 }
 .card-couple-del {
@@ -869,6 +968,17 @@ a:hover {
 	background-color: #242526;
 	margin-top: 15px;
 }
+.card-p{
+
+	background-color: #242526;
+	margin-top: 15px;
+	border-radius: 10px;
+	padding: 10px;
+
+}
+.move-right{
+	margin-left: 100px;
+}
 .card-post {
 
 }
@@ -888,6 +998,36 @@ a:hover {
     border-radius: 10px;
     box-shadow: 0 1px 2px #00000033;
 }
+.more-option-post-n {
+	display: none;
+    position: absolute;
+    background-color: var(--background-dark-input);
+    width: 400px;
+    height: 400px;
+    padding: 20px;
+    right: -100px;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px #00000033;
+
+}
+.change-look span:hover{
+
+	text-decoration: underline;
+	cursor: pointer;
+}
+.more-option-post-n a {
+	width: 100%;
+	color: #efefef;
+	text-align: center;
+}
+.more-option-post-n a:hover {
+	text-decoration: underline;
+}
+.more-option-post-n li {
+	text-align: center;
+}
+
 .more-option-post a {
 	width: 100%;
 	color: #efefef;
@@ -902,6 +1042,11 @@ a:hover {
 .last-component {
 	position: relative;
 	margin-right: 15px;
+}
+.last-component-n {
+	position: relative;
+	margin-right: 5px;
+
 }
 .hidden {
 	display: none;

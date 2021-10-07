@@ -7,6 +7,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script scr="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -28,29 +31,86 @@
                 <li class="search-lg mobile-hidden">
                     <div class="input-search">
                         <i class="fas fa-search fa-16 fa-search-main"></i>
-                        <input type="search" name="" placeholder="O que está procurando?" class="input-text">
+                        <input type="search" name="" placeholder="O que está procurando?" class="input-text" >
                     </div>
                 </li>
             </ul>
             <nav class="menu-header">
-                <ul class="clearfix">
+                <?php 
+                    $key = 0;
+                ?>
+                <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
                         <a href=""><i class="fas fa-search fa-24" size="7"></i></a>
                     </li>
-                    <li class="l-5 mobile-header-icon">
-                        <a href=""><i class="far fa-bell fa-24" size="7"></i></a>
+                    <li class="l-5 mobile-header-icon" style="z-index:2;">
+                        <div class="last-component-n clearfix-n " >
+
+                            <label for="<?php echo "more-option-".$key; ?>">
+                                <i class="far fa-bell fa-24 fa-option" size="7"></i>
+                            </label>
+                            <input type="checkbox" name="" id="<?php echo "more-option-".$key; ?>" class="hidden">
+                            <ul class="clearfix more-option-post-n card-flex">
+                                <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                                    
+                                    <span style="color:#efefef;">Actividades</span>
+                                </li>
+
+
+                                <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                                    
+                                    <span style="color:#fff;">Hoje</span>
+                                </li>
+
+                                <li class="change-look" style="display: flex;justify-content:flex-start;width: 300px;padding:8px;">
+
+                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >Delton Agostinho, gostou </span>
+                                </li>
+
+
+                                <li class="change-look"style="display: flex;justify-content: flex-start;width: 300px;padding:8px;">
+
+                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >João Nunes comentou: Ola </span>
+                                </li>
+
+                                <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                                    
+                                    <span style="color:#fff;">Ontem</span>
+                                </li>
+
+                                <li class="change-look" style="display: flex;justify-content: flex-start;width: 300px;padding:8px;">
+
+                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >Delton Agostinho, gostou </span>
+                                </li>
+
+
+                                <li class="change-look" style="display: flex;justify-content: flex-start;width: 300px;padding:8px;">
+
+                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >João Nunes comentou:Ola </span>
+                                </li>
+                                
+                                
+                            </ul>
+                        </div>
                     </li>
                     <li class="l-5 mobile-hidden">
                         <a href=""><i class="fas fa-shield-alt fa-24"></i></a>
                     </li>
                     <li class="user-tassumir clearfix l-5">
                         <a href="{{route('account.profile')}}"><img class="l-5" src='{{asset("storage/img/users/anselmoralph.jpg")}}'></a>
-                        <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account">Delton</h1></a>
+                        <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" >Delton</h1></a>
                     </li>
                 </ul>
             </nav>
     </header>
     <div class="header-main-component"></div>
+
+
+
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix">
@@ -69,7 +129,7 @@
             </ul>
         </nav>
     </aside>
-    <aside class="aside aside-right">
+    <aside class="aside aside-right" style="z-index:1;">
         <nav>
             <header>
                 <h1>Páginas que eu sigo</h1>
