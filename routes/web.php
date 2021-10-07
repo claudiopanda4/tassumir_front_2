@@ -26,7 +26,7 @@ Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::cla
 Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
 Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');
 Route::get('/help_support', [App\Http\Controllers\HelpSupport::class, 'index'])->name('help_support.page');
-Route::get('/notificacoes', [App\Http\Controllers\notificatioController::class, 'index'])->name('notifications.page');
+Route::get('/pesquisa', [App\Http\Controllers\searchController::class, 'index'])->name('pesquisa.page');
 
 Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->name('account.logout');
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('account.login.form');
