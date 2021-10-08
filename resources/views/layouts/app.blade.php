@@ -67,7 +67,8 @@
                                 </li>
 
 
-                                <li class="change-look"style="display: flex;justify-content: flex-start;width: 300px;padding:8px;">
+                                <li class="change-look"style="display: flex;justify-content: flex-start;width: 300px;
+                                padding:8px;">
 
                                     <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
                                     <span class="mt-2" style="font-size:12pt;color: #fff;" >João Nunes comentou: Ola </span>
@@ -89,6 +90,11 @@
 
                                     <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
                                     <span class="mt-2" style="font-size:12pt;color: #fff;" >João Nunes comentou:Ola </span>
+                                </li>
+                                 <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
+
+                            
+                                    <a href=""><span class="mt-2" style="font-size:12pt;color: #fff;" > Ver todos </span></a>
                                 </li>
                                 
                                 

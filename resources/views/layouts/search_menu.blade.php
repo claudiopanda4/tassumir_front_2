@@ -124,12 +124,12 @@
                                     
                     <span style="color:#efefef;">Filtros</span>
                 </li>
-                <li class="li-component-aside li-component-aside-active"><a href="">Tudo</a></li>
-                <li class="li-component-aside"><a href="">Pessoas</a></li>
+                <li class="li-component-aside li-component-aside-active"><a href="{{route('allSearch.page')}}">Tudo</a></li>
+                <li class="li-component-aside"><a href="{{route('peoplesSearch.page')}}">Pessoas</a></li>
                
-                <li class="li-component-aside"><a href="">Páginas</a></li>
+                <li class="li-component-aside"><a href="{{route('pagesSearch.page')}}">Páginas</a></li>
 
-                <li class="li-component-aside"><a href="">Publicações</a></li>
+                <li class="li-component-aside"><a href="{{route('publicationsSearch.page')}}">Publicações</a></li>
             </ul>
         </nav>
         

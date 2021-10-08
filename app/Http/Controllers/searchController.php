@@ -10,4 +10,16 @@ class searchController extends Controller
 
         return view('Pesquisas.allSearch');
     }
+    public function peoplesSearch(){
+
+        return view('Pesquisas.peoples');
+    }
+        public function pagesSearch(){
+
+        return view('Pesquisas.pages');
+    }
+       public function publicationsSearch(){
+
+        return view('Pesquisas.publications');
+    }
 }

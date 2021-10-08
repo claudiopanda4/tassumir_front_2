@@ -56,7 +56,7 @@
 
         <a href="">
                     <h3 class="edit-profile">Publicar</h3>
-                </a>
+        </a>
                 <div></div>
                 <div></div>
                 <div></div>
