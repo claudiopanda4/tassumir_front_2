@@ -364,11 +364,9 @@ label[for="hugo"]{
 }
 
 .card-couple {
-	margin-top: 20px;
-	margin-left: 25px;
-	margin-right: 25px;
+	
 	padding: 10px;
-	background-color: #3D3D3D;
+	background-color: #242526;
 	border-radius: 10px;
 
 }
@@ -390,7 +388,7 @@ label[for="hugo"]{
 	margin-top: 20px;
 	
 	padding: 10px;
-	background-color: #3D3D3D;
+	background-color: #242526;
 	border-radius: 10px;
 
 
@@ -500,6 +498,9 @@ label[for="hugo"]{
     height: 40px;
     position: relative;
     margin-left: 100px;
+    padding: 20px;
+   border-radius: 5px;
+ margin-left: 10px;
 
 }
 .couple-invite-icon {
@@ -507,7 +508,10 @@ label[for="hugo"]{
     width: 40px;
     height: 40px;
     position: relative;
-    margin-left: 10px;
+    margin-left: 100px;
+    padding: 20px;
+   border-radius: 5px;
+
 
 }
 .couple-history {
@@ -588,30 +592,48 @@ label[for="hugo"]{
 }
 .couple-info-inputs-3b{
 	display: flex;
-	justify-content: flex-start;
-	align-items: flex-start;
+	justify-content: space-around;
+	align-items:center;
 }
+.couple-info-inputs-3a{
+	display: flex;
+	justify-content: flex-start;
+	align-items:center;
+}
+
 
 
 .couple-info-inputs{
 	display: flex;
+	justify-content: space-around;
+}
+.card-help{
+	background-color: #242526;
+	margin-top: 15px;
+	border-radius: 10px;
+}
+.couple-info-inputs-btn{
+	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 .couple-input-edit{
 
-	background-color:#606060;
+	background-color: var(--background-dark-input);
 	border: 1px solid var(--background-dark-input);
 	border-radius: 20px;
 	padding: 8px;
-	width: 300px;
+	width: 60%;
+	height: 60%;
 	color: #fff;
 }
 .couple-input-edit-select{
 
-	background-color:#606060;
+	background-color: var(--background-dark-input);
 	border: 1px solid var(--background-dark-input);
 	border-radius: 20px;
-	width: 300px;
+	width: 60%;
+	height: 60%;
     color: #fff;
     padding: 8px;
     margin-left: 30px;
@@ -623,7 +645,7 @@ label[for="hugo"]{
 }
 .couple-input-edit-select-n{
 
-	background-color:#606060;
+	background-color: var(--background-dark-input);
 	border: 1px solid var(--background-dark-input);
 	border-radius: 20px;
 	width: 300px;
@@ -635,13 +657,13 @@ label[for="hugo"]{
 .couple-name{
 	font-weight: bold;
 	color: #fff;
-	font-size:16pt;
+	font-size:14pt;
 }
 
 
 .couple-name-p{
 	color: #fff;
-	font-size:10pt;
+	font-size:14pt;
 }
 .couple-name-pp{
 	color: #fff;
@@ -683,6 +705,7 @@ label[for="hugo"]{
 .couple-publi-follower{
 	display: flex;
     justify-content: space-around;
+    align-items: center;
     margin-top: 20px;
 
 }
@@ -692,13 +715,13 @@ label[for="hugo"]{
 }
 .couple-input{
 
-	background-color:#606060;
-	border: 1px solid var(--background-dark-input);
-	border-radius: 20px;
 	padding: 10px;
 	width: 518px;
-	color: #fff;
 
+	color: #fff;
+   
+    background-color: var(--background-dark-input);
+    border-radius: 20px;
 
 }
 .couple-input-2{
@@ -1350,7 +1373,7 @@ label[for="hugo"]{
 .card-flex-pub{
 	justify-content: space-between;
     flex-direction: row;
-    background-color: #242526;
+    background-color: transparent;
 }
 
 #card-ident {
@@ -1370,6 +1393,7 @@ label[for="hugo"]{
 #ident-profile {
 	display: flex;
     justify-content: space-around;
+    align-items: center;
     margin-top: 20px;
 }
 #ident-profile-edit{
@@ -1506,6 +1530,16 @@ label[for="hugo"]{
 	color: #fff;
 	border-radius: 5px;
 	background-color: #800080;
+	font-size: 12px;
+}
+.edit-profile1 {
+	padding: 8px;
+	width: 80px;
+	text-align: center;
+	display: inline-flex;
+	color: #fff;
+	border-radius: 5px;
+	background-color:#606060;
 	font-size: 12px;
 }
 .profile-follow {

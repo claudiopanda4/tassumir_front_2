@@ -14,41 +14,47 @@
 		<h1 class="couple-title-edit-h"><i class="fas fa-link fa-24 mr-2" ></i>Tass<span class="title-with-color">umir</span></h1>
 
 	</header>
+</div>
 
-	<div class=" card-flex">
+	<div class=" card-help card-flex">
 		
     	<div class="couple-info-inputs-3b mt-2">
 
-    		<p class="couple-name-pp ml-2 mt-2 mr-5">Centro de Ajuda</p> 
-    		<button class="new-style-btn-2 ml-5"> Centro de ajuda</button>
+    		<p class="couple-name-pp mt-2">Centro de Ajuda</p> 
+    		<!--<button class="new-style-btn-2 ml-5"> Centro de ajuda</button>-->
+    		 <a href="" class="mr-2">
+                    <h3 class="edit-profile" style="width:100%;">Centro de ajuda</h3>
+                </a>
     	
       	</div>
 
     	<div class="couple-info-inputs-3b mt-2">
 
-    		<p class="couple-name-pp ml-1 mt-2 ">Comunicar algum problema</p> 
-    		<button class="new-style-btn-2b ml-4"> Comunicar</button>
+    		<p class="couple-name-pp  mt-2 ">Comunicar algum problema</p> 
+    		 <a href="" class="mr-4">
+                    <h3 class="edit-profile" style="width:100%;">Comunicar</h3>
+                </a>
     	
       	</div>
 
     	<div class="couple-info-inputs-3b mt-2">
 
-    		<p class="couple-name-pp ml-2 mt-2 mr-5">Fazer uma denúncia</p> 
-    		<button class="new-style-btn-2a ml-4 "> Denunciar</button>
+    		<p class="couple-name-pp  mt-2 ">Fazer uma denúncia</p> 
+    		 <a href="" class="mr-2">
+                    <h3 class="edit-profile" style="width:100%;">Denunciar</h3>
+                </a>
     	
       	</div>
-
-
-
-
+      
 
 	</div>
+		<div class="card br-10 mt-3" >
+      		
+      		<header class="card-flex mt-2">
 
+				<h1 class="couple-title-edit-h"><i class="fas fa-link fa-24 mr-2" ></i>Tass<span class="title-with-color">umir</span></h1>
 
-
-
-	
-
-
+	        </header>
+      	</div>
 
 @stop

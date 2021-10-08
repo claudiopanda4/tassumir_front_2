@@ -213,11 +213,14 @@
 	.statistics-profile h2 {
 	    font-size: 13px;
 	}
+	/**/
+	
 }
 @media screen and (max-width: 360px) {
 	#main-login {
 		width: 85%;
 	}
+
 }
 @media screen and (max-width: 720px) {
 	.suggest-slide {
