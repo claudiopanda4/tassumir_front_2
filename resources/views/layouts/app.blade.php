@@ -36,7 +36,7 @@
                 </li>
             </ul>
             <nav class="menu-header">
-                
+
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
                         <a href=""><i class="fas fa-search fa-24" size="7"></i></a>
@@ -50,13 +50,13 @@
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="clearfix more-option-post-n card-flex">
                                 <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
-                                    
+
                                     <span style="color:#efefef;">Actividades</span>
                                 </li>
 
 
                                 <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
-                                    
+
                                     <span style="color:#fff;">Hoje</span>
                                 </li>
 
@@ -75,7 +75,7 @@
                                 </li>
 
                                 <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
-                                    
+
                                     <span style="color:#fff;">Ontem</span>
                                 </li>
 
@@ -93,11 +93,11 @@
                                 </li>
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
 
-                            
+
                                     <a href=""><span class="mt-2" style="font-size:12pt;color: #fff;" > Ver todos </span></a>
                                 </li>
-                                
-                                
+
+
                             </ul>
                         </div>
                     </li>
@@ -139,7 +139,7 @@
                 <h1>Páginas que eu sigo</h1>
             </header>
             <ul class="">
-                <?php 
+                <?php
                 $follow_page = [
                     [
                         "name" => "Famosos em Relacionamentos",
@@ -180,7 +180,7 @@
                 <h1>Sugestões para Você</h1>
             </header>
             <ul class="">
-                <?php 
+                <?php
                 $follow_page = [
                     [
                         "name" => "Famosos em Relacionamentos",

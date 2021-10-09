@@ -23,7 +23,7 @@
 </head>
 
 <body class="container-main">
-   
+
   <header class="header-main-n header-main-component-n clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
@@ -32,7 +32,7 @@
                 <li class="search-lg mobile-hidden">
                     <div class="input-search">
                         <i class="fas fa-search fa-16 fa-search-main"></i>
-                        <input type="search" name="" placeholder="O que está procurando?" class="input-text" >
+                        <input type="search" id="table_search" name="table_search" placeholder="O que está procurando?" class="input-text" >
                     </div>
                 </li>
             </ul>
@@ -49,13 +49,13 @@
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="clearfix more-option-post-n card-flex">
                                 <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
-                                    
+
                                     <span style="color:#efefef;">Actividades</span>
                                 </li>
 
 
                                 <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
-                                    
+
                                     <span style="color:#fff;">Hoje</span>
                                 </li>
 
@@ -73,7 +73,7 @@
                                 </li>
 
                                 <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
-                                    
+
                                     <span style="color:#fff;">Ontem</span>
                                 </li>
 
@@ -89,8 +89,8 @@
                                     <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
                                     <span class="mt-2" style="font-size:12pt;color: #fff;" >João Nunes comentou:Ola </span>
                                 </li>
-                                
-                                
+
+
                             </ul>
                         </div>
                     </li>
@@ -113,30 +113,30 @@
         <nav>
             <ul class="clearfix card-flex">
                 <li class=" mt-3" style="display: flex;justify-content: flex-start;align-content: flex-start;">
-                                    
+
                   <span style="color:#efefef;">Resultados da Pesquisa</span>
                 </li>
 
         <div class="couple-separator">
-           
+
         </div>
                 <li class="mb-2 mt-2" style="display: flex;justify-content: flex-start;align-content: flex-start;">
-                                    
+
                     <span style="color:#efefef;">Filtros</span>
                 </li>
                 <li class="li-component-aside li-component-aside-active"><a href="{{route('allSearch.page')}}">Tudo</a></li>
                 <li class="li-component-aside"><a href="{{route('peoplesSearch.page')}}">Pessoas</a></li>
-               
+
                 <li class="li-component-aside"><a href="{{route('pagesSearch.page')}}">Páginas</a></li>
 
                 <li class="li-component-aside"><a href="{{route('publicationsSearch.page')}}">Publicações</a></li>
             </ul>
         </nav>
-        
+
     </aside>
 
-  
-    
+
+
     <main class="main">
         @yield('content');
     </main>
