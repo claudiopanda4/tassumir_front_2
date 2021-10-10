@@ -106,7 +106,7 @@
                     </li>
                     <li class="user-tassumir clearfix l-5">
                         <a href="{{route('account.profile')}}"><img class="l-5" src='{{asset("storage/img/users/anselmoralph.jpg")}}'></a>
-                        <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" >Delton</h1></a>
+                        <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" ><?php echo USER_NOME; ?></h1></a>
                     </li>
                 </ul>
             </nav>
@@ -119,7 +119,7 @@
         <nav>
             <ul class="clearfix">
                 <li class="li-component-aside li-component-aside-active"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('account.home')}}">Feed de Notícias</a></li>
-                <li class="li-component-aside"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}">Delton Agostinho</a></li>
+                <li class="li-component-aside"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}"><?php echo USER_NOME . ' ' . USER_APELIDO; ?></a></li>
                 <!--<li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Criar Relacionamento</a></li>
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Página de Casal</a></li>

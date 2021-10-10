@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -12,6 +13,11 @@ class AuthController extends Controller
     }
     public function index(){
         if (Auth::check() == true) {
+            $account_name = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
+            
+            define('USER_NOME', $account_name[0]->nome);
+            define('USER_APELIDO', $account_name[0]->apelido);
+
             return view('feed.index');
         } 
         return redirect()->route('account.login.form');
