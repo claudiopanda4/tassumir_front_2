@@ -2,22 +2,25 @@
 
 @section('content')
 
-<div class="couple-head">
+
 	
-<div class=" card-flex">
+<div class="card br-10 card-flex">
+    <!--<div id="img-profile-container" class="circle">
+        <img class="img-profile img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+       
+    </div>-->
+    <div class="img-profile-user-married" style="padding:7px;">
+            <img class="img-profile img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+           
+    </div>
     
-		    <div  class="couple-foto-edit circle l-5">
-		        <img class="img-profile img-full circle" src="{{asset('thumb_IMG_1960_1024.jpg')}}">
-		    </div>
     <div class="" id="card-ident">
-        <div id="ident-profile">
+        <div id="ident-profile" class="mr-5" style="padding-right:8px;">
             <h1 class="profile-name">Delton & Ana</h1>
-            <div class=" ">
+            <div class="">
                 <a href="{{route('edit_couple.page')}}">
                     <h3 class="edit-profile">Editar Perfil</h3>
                 </a>
-
-                
             </div>
         </div>
 
@@ -34,37 +37,46 @@
     </div>   
 </div>
 
-<div class="card-couple card-flex">
+<div class="card-couple br-10 card-flex mt-3">
 
-	 <div  class="couple-foto-small circle l-5">
-        <img class="img-profile img-40 circle" src="{{asset('thumb_IMG_1960_1024.jpg')}}">
+  <div class="comment-send clearfix">
+                        <div class="img-user-comment l-5">
+                            <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                        </div>
+                        <div class="input-text comment-send-text l-5 clearfix">
+                            <input type="text" name="" placeholder="Delton & Ana, o que estao pensando?">
+                            
+                        </div>
     </div>
 
-    <div class="couple-input-text ">
-    	<input type="text" name="" placeholder="Delton & Ana, o que estao pensando?" class="couple-input">
-    </div>
     <div class="couple-separator"></div>
 
-    <div class="couple-btn-space">
 
-    	<div class="couple-publish-btn">
-    		<a href="" >Publicar </a>
-    	</div>
+    <div class="mt-3 " style="display:flex;justify-content:space-between;align-items:center ;">
 
-    	<div class="couple-free-space"></div>
-
-    	<div class="couple-invite-icon-one circle ">
-    		 <a href=""><i class="fas fa-user-plus fa-16 center "></i></a> 
-
-    	</div>
-    	<div class="couple-invite-icon circle">
-    		<a href="" ><i class="fas fa-user fa-16 center"></i></a>
-    	</div>
-    </div>
+        <a href="">
+                    <h3 class="edit-profile">Publicar</h3>
+        </a>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div class="ml-5"></div>
+                <div class="ml-3"></div>
+                <div class="ml-5"></div>
+                <a href="" class="couple-invite-icon-one circle">
+                    <i class="fas fa-user-plus fa-16 center " style="font-size:14pt;"></i>
+                </a>
+                <a href="" class="couple-invite-icon-one circle mr-4">
+                    <i class="fas fa-user fa-16 center" style="font-size: 14pt;"></i>
+                </a>
+     </div>
 </div>
 
 
-    <div class="card-couple card-flex">
+    <div class="card-couple br mt-3 card-flex">
     	<div class="couple-history">
     		<h2 >Historia do Casal</h2>
     	</div>
@@ -79,9 +91,14 @@
 
     	<div class="couple-btn-space">
 
-    	<div class="couple-publish-btn">
+    	<!--<div class="couple-publish-btn">
     		<a href="" >Editar </a>
-    	</div>
+    	</div>-->
+           <div class=" mt-1">
+                <a href="" >
+                    <h3 class="edit-profile" >Editar</h3>
+                </a>
+        </div>
 
     </div>
    </div>
@@ -91,10 +108,10 @@
  </div>
 
    <div class="card-couple mb-5">
-                <div class="post">
-                    <header class="clearfix">
-                        <div class="first-component clearfix l-5">
-                            <div class="page-cover circle l-5">
+       <div class="post">
+          <header class="clearfix">
+             <div class="first-component clearfix l-5">
+                    <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                             </div>
                             <div class="page-identify r-5 clearfix">
@@ -167,19 +184,18 @@
                             </li>  
                         </ul>
                     </nav>
-                    <div class="comment-send-couple clearfix ">
+                    <div class="comment-send clearfix">
                         <div class="img-user-comment l-5">
                             <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
                         </div>
-                        <div class="input-text comment-send-text-couple l-5 clearfix">
-                            <input type="text" name="" placeholder="O que você tem a dizer?" >
-                            
-                        </div>
-                        <div class="r-5 icon-img-comment">
+                        <div class="input-text comment-send-text l-5 clearfix">
+                            <input type="text" name="" placeholder="O que você tem a dizer?">
+                            <div class="r-5 ">
                                 <a href="">
                                     <i class="far fa-images fa-20 fa-img-comment"></i>
                                 </a>
                             </div>
+                        </div>
                     </div>
                     <div>
                         
@@ -187,14 +203,6 @@
                 </div>
     </div>
 
-
-
-
-
-
-
-
-</div>
 
 
 

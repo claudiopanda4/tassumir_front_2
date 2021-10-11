@@ -217,6 +217,7 @@
 	.card, .pop-up-component {
 	    width: 100%;
 	}
+	/**/
 }
 @media screen and (max-width: 360px) {
 	#main-login {

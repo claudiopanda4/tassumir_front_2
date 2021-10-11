@@ -1,14 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="couple-head-edit">
-
-		<header class="card-flex">
+<header class="card-flex">
 			<h2 class="couple-title-edit">Editar pagina</h2>
-		</header>
-
-
-    <div class="row" >
+</header>
+<div class="card br-10" style="padding: 10px;">
+	 <div class="row" >
     	<div class="col-md-4"></div>
     	<div class="col-md-3">
 	    		
@@ -23,35 +20,43 @@
     		
     	</div>
     </div>
+  </div>
+		
 
-    <div class="couple-info">
+   <div class="card br-10" style="padding: 10px;">
 
-    	<div class="couple-info-inputs">
-    		<p class="couple-name mt-2">Nome da pagina</p>
+    	<div class="couple-info-inputs mt-2">
+    		<p class="couple-name mt-2 ">Nome da pagina</p>
     		<input type="text" placeholder="Escreva o nome da pagina " class="couple-input-edit" name="">
+
     	</div>
 
     	<div class="couple-info-inputs mt-2">
-    		<p class="couple-name-p mt-2">Relacionamento </p>
+    		<p class="couple-name mt-2">Relacionamento </p>
     		<select class="couple-input-edit-select">
     			<option>Namoro</option>	
     	    </select>
     	</div>
 
-    	<div class="couple-info-inputs mt-3">
-    		<label class="couple-name mt-2"></label>
-	    	<div class="couple-publish-btn-edit ">
-	    		<a href="" >Guadar alterações </a>
-	    	</div>
+    	<div class="couple-info-inputs-btn mt-4">
+    		
+	    	<p class="couple-name mt-2"  ></p>
+	    	<div class=" ">
+                <a href="{{route('delete_couple.page')}}">
+                    <h3 class="edit-profile" style="width:100%;">Guadar alterações</h3>
+                </a>
+            </div>
 
     	</div>
 
-    	<div class="couple-info-inputs mt-3">
+    	<div class="couple-info-inputs-btn mt-3">
     		<p class="couple-name-p mt-2">Eliminar ou desactivar página </p>
     		
-	    	<div class="couple-publish-btn-edit-2">
-	    		<a href="{{route('delete_couple.page')}}" >Eliminar ou desactivar </a>
-	    	</div>
+	    	  <div class=" ">
+                <a href="{{route('delete_couple.page')}}">
+                    <h3 class="edit-profile" style="width:100%;">Eliminar ou desactivar</h3>
+                </a>
+            </div>
     	</div>
        
     	
@@ -59,5 +64,5 @@
 
 
 		
-	</div>
+	
 @stop

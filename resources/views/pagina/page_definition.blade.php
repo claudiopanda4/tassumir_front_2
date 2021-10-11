@@ -14,6 +14,7 @@
 				<h3 class="couple-title-edit-h3">Se queres fazer uma pausa do Tassumir, podes desactivar a tua conta. Se queres eliminar permanentemente a tua conta do Tassumir, informe-nos</h3>
 			</span>
 	</header>
+</div>
 
 	<div class="card-couple-del card-flex">
 		
@@ -25,14 +26,14 @@
 
 
     	</div>
-    	<div class="couple-info-inputs-3b mt-2">
+    	<div class="couple-info-inputs-3a mt-2">
     		<input type="checkbox" checked class="checkbox-style">
     		
     	
-    		<label class="couple-name ml-2">Desativar página</label> 
+    		<label class="couple-name ml-2 mt-3">Desativar página</label> 
       	</div>
 
-      	<div class="couple-info-inputs-3b mt-1">
+      	<div class="couple-info-inputs-3a mt-1">
     		<label class="couple-name-p ml-4"> Esta ação pode ser temporária</label>     		
     		
       	</div>
@@ -54,17 +55,17 @@
     	    </select>
     	</div>
 
-    	<div class="couple-info-inputs-3b mt-2">
+    	<div class="couple-info-inputs-3a mt-2">
     		
     		<input type="checkbox" checked class="checkbox-style">
-    		<label class="couple-name ml-2">Eliminar página</label> 
+    		<label class="couple-name ml-2 mt-3">Eliminar página</label> 
       	</div>
-      	<div class="couple-info-inputs-3b mt-1">
+      	<div class="couple-info-inputs-3a mt-1">
     		<label class="couple-name-p ml-4"> Esta ação é permanente</label>     		
     		
       	</div>
 
-      		<div class="couple-info-inputs-3b mt-1">
+      		<div class="couple-info-inputs-3a mt-1">
     		<p class="couple-name-p ml-4"> Quando eliminas a tua página do Tassumir, não vais poder recuperar os conteúdos ou as informações que partilhaste. Esta ação leva 24h para ser efectuada</p>     		
     		
       	</div>
@@ -72,19 +73,18 @@
 		
 	</div>
 
-     <div class="row mt-3">
+    <div class="card br-10 card-flex" style="padding-bottom: 10px;">
+	<div></div>
 
-     	<div class="col-md-6">
-     		
-     	</div>
-
-     	<div class="col-md-2">
-     		<button class="new-style-btn">Cancelar</button>
-     	</div>
-     		<div class="col-md-4">
-     		<button class="new-style-btn-2">Confirmar</button>
-     	</div>
-     	
+	<div class="mt-3" style="display:flex;justify-content:space-between;align-items:center ;">
+                <a href="{{route('delete_couple.page')}}" class="mr-2">
+                    <h3 class="edit-profile1" style="width:100%;">Cancelar</h3>
+                </a>
+                <a href="{{route('delete_couple.page')}}" class="mr-2">
+                    <h3 class="edit-profile" style="width:100%;">Confirmar</h3>
+                </a>
+     </div>
+    
      </div>
 
 	
