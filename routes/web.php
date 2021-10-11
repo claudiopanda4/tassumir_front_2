@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
 });
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');
 Route::get('/profile/', [App\Http\Controllers\PerfilController::class, 'index'])->name('account.profile');
+Route::get('/profile/{perfil}/', [App\Http\Controllers\PerfilController::class, 'edit'])->name('account.profile.edit');
 Route::get('/couple_page/', [App\Http\Controllers\PaginaCasalController::class, 'index'])->name('couple.page');
 Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::class, 'edit_couple'])->name('edit_couple.page');
 Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');

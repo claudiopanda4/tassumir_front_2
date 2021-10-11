@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\cr;
+use App\Models\Perfil;
 use Illuminate\Http\Request;
 
 class PerfilController extends Controller
@@ -41,10 +41,10 @@ class PerfilController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\cr  $cr
+     * @param  \App\Models\Perfil $perfil
      * @return \Illuminate\Http\Response
      */
-    public function show(cr $cr)
+    public function show(Perfil $perfil)
     {
         //
     }
@@ -52,22 +52,22 @@ class PerfilController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\cr  $cr
+     * @param  \App\Models\Perfil $perfil
      * @return \Illuminate\Http\Response
      */
-    public function edit(cr $cr)
+    public function edit($perfil)
     {
-        //
+        return view('perfil.edit');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\cr  $cr
+     * @param  \App\Models\Perfil $perfil
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, cr $cr)
+    public function update(Request $request, Perfil $perfil)
     {
         //
     }
@@ -75,10 +75,10 @@ class PerfilController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\cr  $cr
+     * @param  \App\Models\Perfil $perfil
      * @return \Illuminate\Http\Response
      */
-    public function destroy(cr $cr)
+    public function destroy(Perfil $perfil)
     {
         //
     }

@@ -45,8 +45,8 @@
 	    margin-right: 0px;
 	}
 	.row {
-		margin-left: 0;
-		margin-right: 0;
+		/*margin-left: 0;
+		margin-right: 0;*/
 	}
 	.fa-24 {
 	    font-size: 22px;
@@ -162,7 +162,8 @@
 	    right: 2px;
 	}
 	.stories-about-talking nav ul li {
-		width: 90px;
+	    width: 90px;
+    	height: 140px;
 	}
 	.btn-a-default {
 	    display: block;
@@ -213,10 +214,16 @@
 	.statistics-profile h2 {
 	    font-size: 13px;
 	}
+	.card, .pop-up-component {
+	    width: 100%;
+	}
 }
 @media screen and (max-width: 360px) {
 	#main-login {
 		width: 85%;
+	}
+	.input-container {
+	    width: 210px;
 	}
 }
 @media screen and (max-width: 720px) {

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<header class="card br-10 stories stories-about-talking">
+<header class="card br-10 stories stories-about-talking" id="stories-card">
             <header>
                 <h1>O que estão falando...</h1>
             </header>
@@ -184,7 +184,7 @@
                         </div>
                     </div>
                     <nav class="row interaction-numbers">
-                        <ul class="clearfix">
+                        <ul class="">
                             <li>
                                 <a href="">10 reacções</a>
                             </li>
@@ -194,7 +194,7 @@
                         </ul>
                     </nav>
                     <nav class="row clearfix interaction-user">
-                        <ul class="row clearfix">
+                        <ul class="row clearfix ul-interaction-user">
                             <li class="l-5">
                                 <div class="content-button">
                                     <a href="">

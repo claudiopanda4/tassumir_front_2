@@ -4,23 +4,23 @@
 <header class="card br-10 card-flex">
     <div id="img-profile-container" class="circle">
         <img class="img-profile img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
-        <a href="">
+        <label for="target-profile-cover">
             <div class="add-edit-profile circle">
                 <i class="fas fa-plus center" style="font-size: 10px;"></i>
             </div>
-        </a>
+        </label>
     </div>
     <div class="" id="card-ident">
         <div id="ident-profile">
             <h1 class="profile-name">Delton Agostinho Neto</h1>
-            <div class="invite-icon circle">
-                <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
-            </div>
+                <div class="invite-icon circle">
+                    <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
+                </div>
         </div>
         <ul class="profile-follow">
             <li class="statistics-profile">
                 <h2>65 A Seguir</h2>
-                <a href=""><h3 class="edit-profile">Editar Perfil</h3></a>
+                <a href="{{route('account.profile.edit', 2)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
             </li>
         </ul>
         <div class="inform-profile">
@@ -36,7 +36,7 @@
         <div class="img-profile-user-married">
             <img class="img-profile img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
             <div>
-                <h3 class="text-ellips">Delton Agostinho</h2>
+                <h2 class="text-ellips">Delton Agostinho</h2>
             </div>
         </div>
         <div class="identify-statist-profile-page">

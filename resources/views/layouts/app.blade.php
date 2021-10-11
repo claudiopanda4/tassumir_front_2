@@ -215,4 +215,32 @@
         @yield('content');
     </main>
 </body>
+<?php if (true): ?>
+<input type="checkbox" name="" id="target-profile-cover" class="invisible">
+<div class="pop-up" id="cover-profile">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Adicione Capa da Oferta</h1>
+            <div class="container-pop-up-component-header">
+                <div class="cancel-box div-img">
+                    <i class="fas fa-times fa-16 center" style="color: #000;"></i>
+                </div>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px;">
+            <div class="">
+                <form enctype="multipart/form-data">
+                    <input class="file" type="file" name="" style="width: 240px; margin-left: 10px;">
+                </form>
+            </div>
+        </div>
+        <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+            <div class="" id="cover-done">
+                <h2 style="padding: 10px; font-size: 14px;">Concluido</h2>
+            </div>
+        </div>
+    </div>
+</div> 
+<?php endif ?>
 </html>
