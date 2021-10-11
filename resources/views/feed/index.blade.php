@@ -133,7 +133,7 @@
                                 <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                             </div>
                             <div class="page-identify l-5 clearfix">
-                                <h1 class="text-ellips">Famosos em Relacionamentos</h1>
+                                <a href=""><h1 class="text-ellips">Famosos em Relacionamentos</h1></a>
                                 <div class="info-post clearfix">
                                     <span class="time-posted">50 min</span>
                                     <a href="" class="r-5 follow_page_post">seguir</a>

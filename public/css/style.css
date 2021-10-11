@@ -171,7 +171,11 @@ body {
 	border: 1px solid #efefef;
 }
 .aside nav {
-	border-bottom: 1px solid #efefef;
+	border-bottom: 1px solid #909090;
+}
+.aside-left nav {
+	border-bottom: 1px solid #909090;
+    width: 240px;
 }
 .aside nav footer {
 	margin-bottom: 5px;
@@ -1279,6 +1283,7 @@ label[for="hugo"]{
 	width: 110px;
 	border-radius: 10px;
 	overflow: hidden;
+	border: 1px solid #606060;
 }
 .stories-about-talking nav ul li .img-back-stories,
 .stories-about-talking nav ul li {
@@ -1334,7 +1339,7 @@ label[for="hugo"]{
 .li-component-suggest {
 	position: relative;
     width: 118px;
-    border: 1px solid #909090;
+    border: 1px solid #606060;
     border-radius: 10px;
     padding: 10px;
 }
@@ -1579,6 +1584,7 @@ label[for="hugo"]{
 	bottom: -2px;
 	right: 10px;
 	background-color: #800080;
+	cursor: pointer;
 }
 .btn-a-default {
 	display: none;
@@ -1653,7 +1659,7 @@ label[for="hugo"]{
     top: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(239,239,239,.8);
+    background-color: rgba(0, 0, 0, 0.6);
     /* box-shadow: 0px 2px 8px 2px #ccc; */
     z-index: -1;
     transition: all .3s;
@@ -1667,11 +1673,11 @@ label[for="hugo"]{
     width: 360px;
     min-width: 290px;
     height: 400px;
-    background-color: #fff;
+    /*background-color: #18191a;*/
     border-radius: 10px;
     margin: 30px auto;
     overflow-y: auto;
-    border: 1px solid #efefef;
+    border: 1px solid #242526;
     box-shadow: 2px 4px 10px 1px rgb(0 0 0 / 10%);
     -ms-box-shadow: 2px 4px 10px 1px rgb(0, 0, 0, .1);
     -moz-box-shadow: 2px 4px 10px 1px rgb(0, 0, 0, .1);
@@ -1685,12 +1691,16 @@ label[for="hugo"]{
     width: 358px;
     border-bottom: 1px solid #ccc;
 }
+.pop-up-component-header, 
+.pop-up-component {
+	background-color: #18191a;
+}
 .pop-up-component-header {
     position: fixed;
     height: 49px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-color: #fff;
+    /*background-color: #18191a;*/
     z-index: 2;
 }
 .pop-up-component-header h1 {
@@ -1698,6 +1708,7 @@ label[for="hugo"]{
     padding: 10px;
     font-size: 16px;
     margin-top: 5px;
+    color: #fff;
 }
 .container-pop-up-component-header {
     width: 95%;
@@ -1713,6 +1724,10 @@ label[for="hugo"]{
     background-color: #efefef;
     z-index: 2;
     cursor: pointer;
+}
+.cancel-box {
+	background-color: #000;
+	border: 1px solid #606060;
 }
 #cover-done {
     width: 60%;

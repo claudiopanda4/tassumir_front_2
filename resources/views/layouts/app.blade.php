@@ -228,16 +228,18 @@
         <header class="pop-up-component-header pop-up-component-header-default header-height">
             <h1>Adicione Capa da Oferta</h1>
             <div class="container-pop-up-component-header">
-                <div class="cancel-box div-img">
-                    <i class="fas fa-times fa-16 center" style="color: #000;"></i>
-                </div>
+                <label for="target-profile-cover">
+                    <div class="cancel-box div-img">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
             </div>
         </header>
         <div class="header-height"></div>
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <div class="">
                 <form enctype="multipart/form-data">
-                    <input class="file" type="file" name="" style="width: 240px; margin-left: 10px;">
+                    <input class="file" type="file" name="" style="width: 250px; margin-left: 10px; color: #fff;">
                 </form>
             </div>
         </div>
@@ -249,4 +251,20 @@
     </div>
 </div> 
 <?php endif ?>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.cancel-box').click(function(){
+            $('.pop-up').css({
+                opacity: 0,
+                zIndex: -1
+            });
+        });
+        $('.add-edit-profile').click(function(){
+            $('.pop-up').css({
+                opacity: 1,
+                zIndex: 1000
+            });
+        });
+    });
+</script>
 </html>

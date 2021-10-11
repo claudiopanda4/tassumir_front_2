@@ -61,7 +61,7 @@ class GenericUser implements UserContract
      */
     public function getRememberToken()
     {
-        return $this->attributes[$this->getRememberTokenName()];
+        //return $this->attributes[$this->getRememberTokenName()];
     }
 
     /**
