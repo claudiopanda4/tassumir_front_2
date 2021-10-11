@@ -65,18 +65,20 @@ class searchController extends Controller
 public function postpesquisa(Request $request){
 
    if($request->ajax()){
-       $data= DB::table('posts')->where('descricao','like','%'.$request->dados.'%')
+       $data1= DB::table('posts')->where('descricao','like','%'.$request->dados.'%')
        ->get();
-    /*   $post_reactions = DB::table('post_reactions')
-    ->select('post_id', DB::raw('count(post_reaction_id) as total'))
-    ->groupBy('post_id')->orderBy('total','desc')
-    ->get();
-    $conta = DB::table('contas')
-          ->join('estado_civils', 'estado_civils.estado_civil_id', '=', 'contas.estado_civil_id')   ->join('logins', 'logins.conta_id', '=', 'contas.conta_id')
-          ->select('contas.*', 'estado_civils.estado_civil', 'logins.password', 'contas.conta_id')
-          ->get();
-          ->join('pages', 'pages.page_id', '=', 'posts.page_id')
-          ->select('posts.*', 'pages.nome', 'posts.descricao')*/
+       $data2= DB::table('pages')->get();
+
+       for ($i=0; $i < sizeof($data1); $i++) {
+         for($j=0; $j < sizeof($data2); $j++){
+         if ($data1[$i]->page_id==$data2[$j]->page_id) {
+           $data[$i]['post_id']=$data1[$i]->post_id ;
+           $data[$i]['post']=$data1[$i]->descricao ;
+           $data[$i]['nome_page']=$data2[$j]->nome ;
+         }
+       }
+
+       }
 
        if(count($data)>0){
            $output['valor']=$data;
