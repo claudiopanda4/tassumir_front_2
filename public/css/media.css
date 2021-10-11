@@ -232,3 +232,16 @@
 		display: block;
 	}
 }
+
+@media screen and (min-width: 1440px) {
+	.main {
+		width: 700px;
+	}
+	.post {
+	    width: 100%;
+	    max-width: 710px;
+	}
+	.post-cover {
+	    height: 440px;
+	}
+}
