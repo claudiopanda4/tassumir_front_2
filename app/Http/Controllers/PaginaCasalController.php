@@ -9,15 +9,20 @@ class PaginaCasalController extends Controller
     
 
     public function index(){
-
-        return view('pagina.couple_page');
+        $auth = new AuthController();
+        $account_name = $auth->defaultDate();
+        return view('pagina.couple_page', compact('account_name'));
     }
     public function edit_couple(){
-        return view('pagina.edit_couple');
+        $auth = new AuthController();
+        $account_name = $auth->defaultDate();
+        return view('pagina.edit_couple', compact('account_name'));
     }
 
 
     public function delete_couple_page(){
-        return view('pagina.delete_couple_page');
+        $auth = new AuthController();
+        $account_name = $auth->defaultDate();
+        return view('pagina.delete_couple_page', compact('account_name'));
     }
 }

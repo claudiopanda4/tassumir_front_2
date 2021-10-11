@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Perfil;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PerfilController extends Controller
 {
@@ -14,7 +16,10 @@ class PerfilController extends Controller
      */
     public function index()
     {
-        return view('perfil.index');
+        $auth = new AuthController();
+        $account_name = $auth->defaultDate();
+        //dd($account_name);
+        return view('perfil.index', compact('account_name'));
     }
 
     /**
@@ -57,7 +62,9 @@ class PerfilController extends Controller
      */
     public function edit($perfil)
     {
-        return view('perfil.edit');
+        $auth = new AuthController();
+        $account_name = $auth->defaultDate();
+        return view('perfil.edit', compact('account_name'));
     }
 
     /**

@@ -152,6 +152,10 @@ body {
 .aside-right {
 	right: 10px;
 }
+.aside-left ul {
+	width: 210px;
+	padding-left: 0;
+}
 .aside-notification-right{
 
 	right: 10px;
@@ -955,7 +959,7 @@ label[for="hugo"]{
 	margin-left: 20px;
 }
 .post {
-	width: 95%;
+	width: 100%;
 	max-width: 510px;
 	margin: 10px auto 0;
 }
@@ -1015,6 +1019,7 @@ label[for="hugo"]{
 }
 .card-post p {
 	color: #fff;
+	padding: 10px;
 }
 .fa-option {
 	cursor: pointer;
@@ -1033,7 +1038,7 @@ label[for="hugo"]{
 	display: none;
     position: absolute;
     background-color: var(--background-dark-input);
-    width: 400px;
+    width: 340px;
     height: 420px;
     padding: 20px;
     right: -100px;
@@ -1214,9 +1219,11 @@ label[for="hugo"]{
 	width: 34px;
 	height: 34px;
 	margin-top: 10px;
+	margin-left: 15px;
 }
 .comment-send {
 	margin-top: 10px;
+	margin-bottom: 10px;
 }
 .comment-send-couple {
 	margin-top: 10px;

@@ -13,14 +13,18 @@ class AuthController extends Controller
     }
     public function index(){
         if (Auth::check() == true) {
-            $account_name = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
-            
-            define('USER_NOME', $account_name[0]->nome);
-            define('USER_APELIDO', $account_name[0]->apelido);
+            $account_name = $this->defaultDate();
+            //dd($account_name);
+            //define('USER_NOME', $account_name[0]->nome);
+            //define('USER_APELIDO', $account_name[0]->apelido);
 
-            return view('feed.index');
+            return view('feed.index', compact('account_name'));
         } 
         return redirect()->route('account.login.form');
+    }
+    public function defaultDate(){
+        $account_name = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
+        return $account_name;
     }
 
     public function showLoginForm(){

@@ -12,14 +12,14 @@
     </div>
     <div class="" id="card-ident">
         <div id="ident-profile">
-            <h1 class="profile-name">Delton Agostinho Neto</h1>
+            <h1 class="profile-name">{{$account_name[0]->nome}} {{$account_name[0]->apelido}}</h1>
                 <div class="invite-icon circle">
                     <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
                 </div>
         </div>
         <ul class="profile-follow">
             <li class="statistics-profile">
-                <h2>65 A Seguir</h2>
+                <h2>Seguindo 65</h2>
                 <a href="{{route('account.profile.edit', 2)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
             </li>
         </ul>

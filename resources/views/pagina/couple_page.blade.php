@@ -14,7 +14,7 @@
            
     </div>
     
-    <div class="" id="card-ident">
+    <div class="" id="card-ident card">
         <div id="ident-profile" class="mr-5" style="padding-right:8px;">
             <h1 class="profile-name">Delton & Ana</h1>
             <div class="">
@@ -37,7 +37,7 @@
     </div>   
 </div>
 
-<div class="card-couple br-10 card-flex mt-3">
+<div class="card-couple br-10 card-flex mt-3 card">
 
   <div class="comment-send clearfix">
                         <div class="img-user-comment l-5">
@@ -52,7 +52,7 @@
     <div class="couple-separator"></div>
 
 
-    <div class="mt-3 " style="display:flex;justify-content:space-between;align-items:center ;">
+    <div class="mt-3" style="display:flex;justify-content:space-between;align-items:center ;">
 
         <a href="">
                     <h3 class="edit-profile">Publicar</h3>
@@ -76,7 +76,7 @@
 </div>
 
 
-    <div class="card-couple br mt-3 card-flex">
+    <div class="card-couple br mt-3 card-flex card">
     	<div class="couple-history">
     		<h2 >Historia do Casal</h2>
     	</div>
@@ -107,7 +107,7 @@
 	<h2 class="couple-pub">Publicações</h2>
  </div>
 
-   <div class="card-couple mb-5">
+   <div class="card-couple mb-5 card">
        <div class="post">
           <header class="clearfix">
              <div class="first-component clearfix l-5">
