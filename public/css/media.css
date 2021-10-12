@@ -235,6 +235,9 @@
 	.interaction-user li:nth-child(1) div.content-button {
 		width: 86px;
 	}
+	.textarea-container textarea {
+	    border: 1px solid #3a3a3a;
+	}
 }
 @media screen and (max-width: 720px) {
 	.suggest-slide {

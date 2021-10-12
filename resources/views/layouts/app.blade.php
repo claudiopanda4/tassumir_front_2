@@ -23,7 +23,8 @@
 </head>
 
 <body class="container-main">
-    <header class="header-main header-main-component clearfix">
+    <div class="body-pop-up content-full-scroll">
+        <header class="header-main header-main-component clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
                     <a href="{{route('account.home')}}"><i class="fas fa-link fa-24"></i><h1>Tass<span class="title-final">umir</span></h1></a>
@@ -220,13 +221,95 @@
     <main>
         @yield('content');
     </main>
+    </div>
 </body>
+<?php if (true): ?>
+<form action="" method="" enctype="multipart/form-data">
+<input type="checkbox" name="" id="add-post-target" class="invisible">
+<div class="pop-up" id="add-post-container">
+    <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Criar Publicação</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-profile-cover">
+                    <div class="cancel-box div-img">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <form enctype="multipart/form-data">
+            <div class="header-height"></div>
+            <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
+                <div class="first-component clearfix l-5">
+                    <div class="page-cover circle l-5">
+                        <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                    </div>
+                    <div class="page-identify l-5 clearfix">
+                        <h1 class="text-ellips">Famosos em Relacionamentos</h1>
+                    </div>
+                </div>
+                <div class="textarea-container l-5" style="width:100%;">
+                    <textarea placeholder="O que deseja que as pessoas saibam?"></textarea>
+                </div>
+                <nav class="add-file l-5 clearfix">
+                    <ul style="width: 160px;" class="r-5">
+                        <label for="target-profile-cover-post">
+                            <li class="circle add-file-element">
+                                <i class="far fa-images fa-20 center"></i>
+                            </li>
+                        </label>
+                        <label for="target-profile-cover-post">
+                            <li class="circle add-file-element">
+                                <i class="far fa-play-circle fa-20 center"></i>
+                            </li>
+                        </label>
+                    </ul>
+                </nav>
+            </div>
+            <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+                <div class="" id="cover-done">
+                    <h2 style="padding: 10px; font-size: 14px;">Concluido</h2>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<input type="checkbox" name="" id="target-profile-cover-post" class="invisible">
+<div class="pop-up" id="cover-profile-post">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Adicione Imagem</h1>
+            <h1 class="invisible">Adicione Video</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-profile-cover-post">
+                    <div class="cancel-box div-img" id="cancel-box-add-file-post">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px;">
+            <div class="">
+                <input class="file" type="file" name="" style="width: 250px; margin-left: 10px; color: #fff;">    
+            </div>
+        </div>
+        <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+            <div class="" id="cover-done">
+                <h2 style="padding: 10px; font-size: 14px;">Concluido</h2>
+            </div>
+        </div>
+    </div>
+</div>
+</form> 
+<?php endif ?>
 <?php if (true): ?>
 <input type="checkbox" name="" id="target-profile-cover" class="invisible">
 <div class="pop-up" id="cover-profile">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
         <header class="pop-up-component-header pop-up-component-header-default header-height">
-            <h1>Adicione Capa da Oferta</h1>
+            <h1>Adicione Foto de Perfil</h1>
             <div class="container-pop-up-component-header">
                 <label for="target-profile-cover">
                     <div class="cancel-box div-img">
@@ -251,6 +334,9 @@
     </div>
 </div> 
 <?php endif ?>
+<?php if (true): ?>
+ 
+<?php endif ?>
 <script type="text/javascript">
     $(document).ready(function () {
         $('.cancel-box').click(function(){
@@ -261,6 +347,28 @@
         });
         $('.add-edit-profile').click(function(){
             $('.pop-up').css({
+                opacity: 1,
+                zIndex: 1000
+            });
+        });
+        $('.add-post').click(function(){
+            $('#add-post-container').css({
+                opacity: 1,
+                zIndex: 1000
+            });
+        });
+        $('.add-file-element').click(function(){
+            $('#cover-profile-post').css({
+                opacity: 1,
+                zIndex: 1001
+            });
+        });
+        $('#cancel-box-add-file-post').click(function(){
+            $('#cover-profile-post').css({
+                opacity: 0,
+                zIndex: -1
+            });
+            $('#add-post-container').css({
                 opacity: 1,
                 zIndex: 1000
             });

@@ -48,6 +48,11 @@
                 </p>
             </div>
         </div>
+        <label for="add-post-target" class="add-post-label">
+            <div class="add-post circle">
+                <i class="fas fa-plus fas-16 center"></i>
+            </div>
+        </label>
         <?php 
         $posts_feed = [
             [
@@ -138,6 +143,21 @@
                 </ul>
             </nav>
         </section>
+        <div class="card br-10 card-page" id="card-profile-option">
+            <nav class="option-profile-menu">
+                <ul class="">
+                    <li><a href=""><i class="far fa-images fas-32 center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                    <li><a href=""><i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                    <li><a href=""><i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                </ul>
+            </nav>
+            <div class="saved-container">
+                
+            </div>
+            <div class="invited-container">
+                
+            </div>
+        </div>
     </div>
 </div>
 @stop

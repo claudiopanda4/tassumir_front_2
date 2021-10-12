@@ -251,7 +251,7 @@ a:hover {
 }
 .aside-left .li-component-aside-active {
 	background-color: #800080;
-	border-radius: 10px;
+	border-radius: 5px;
 }
 .l-5 {
 	margin: 5px;
@@ -1410,7 +1410,7 @@ label[for="hugo"]{
 .li-component-suggest {
 	position: relative;
     width: 118px;
-    border: 1px solid #606060;
+    border: 1px solid #ffffff0d;
     border-radius: 10px;
     padding: 10px;
 }
@@ -1609,12 +1609,12 @@ label[for="hugo"]{
 }
 .menu-option-profile {
 	display: inline-flex;
-	font-size: 13px;
+	font-size: 15px;
 	padding-left: 10px;
 	color: #efefef;
 }
 .option-profile-menu ul {
-	width: 315px;
+	width: 380px;
     margin: auto;
     padding-left: 0;
 }
@@ -1723,6 +1723,16 @@ label[for="hugo"]{
 	width: 150px;
 	margin: 0 auto 10px;
 }
+.body-pop-up {
+    z-index: 105;
+    overflow: hidden;
+    overflow-y: auto;
+    background-color: var(--background-main);
+}
+.content-full-scroll {
+    width: 100vw;
+    height: 100vh;
+}
 .pop-up {
     position: absolute;
     display: block;
@@ -1760,7 +1770,7 @@ label[for="hugo"]{
 }
 .pop-up-component-header-default {
     width: 358px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ffffff0d;
 }
 .pop-up-component-header, 
 .pop-up-component {
@@ -1902,4 +1912,95 @@ label[for="hugo"]{
     border-radius: 5px;
     margin: 10px auto;
     color: #fff;
+}
+.add-post {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	top: 86px;
+	right: 10px;
+	z-index: 3;
+	background-color: #800080;
+}
+.add-post-label {
+	cursor: pointer;
+}
+#card-profile-option {
+	margin-top: 20px;
+}
+#card-profile-option .option-profile-menu li {
+	width: 31%;
+	position: relative;
+}
+#card-profile-option .option-profile-menu li:hover > a .icon-hover-option-profile{
+	color: #800080;
+}
+#pop-up-component-create-post {
+	width: 500px; 
+	position: absolute; 
+	top: 40%;
+	height: 500px;
+}
+#pop-up-component-create-post,
+#pop-up-component-create-post .pop-up-component-header {
+	
+}
+#pop-up-component-create-post .pop-up-component-header {
+	width: 498px;
+}
+#add-post-container .page-identify {
+	margin-top: 20px;
+}
+#add-post-container .page-identify h1 {
+	font-size: 14px;
+	color: #fff;
+}
+.content-details-post {
+	width: 96%;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+.textarea-container {
+	width: 100%;
+}
+.textarea-container textarea {
+	width: 90%;
+    height: 200px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    resize: none;
+    border-radius: 10px;
+    padding: 10px;
+}
+.textarea-container textarea::-webkit-scrollbar {
+	width: 3px;
+}
+.textarea-container textarea::-webkit-scrollbar-thumb {
+	border-radius: 30px;
+    background-color: #606060;
+}
+.add-file li {
+	display: inline-flex;
+	width: 40px;
+	height: 40px;
+	position: relative;
+	border: 1px solid #ffffff0d;
+	margin-right: 10px;
+	cursor: pointer;
+}
+.add-file {
+	width: 80%;
+	margin: auto;
+}
+#main-profile {
+	width: 600px;
+}
+#main-profile .card {
+	background-color: transparent;
+	border: none;
+}
+#main-profile .card-page-maried {
+	background-color: #242526;
 }

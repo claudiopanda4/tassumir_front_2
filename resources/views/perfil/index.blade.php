@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<header class="card br-10 card-flex">
+<div class="main" id="main-profile">
+    <header class="card br-10 card-flex">
     <div id="img-profile-container" class="circle">
         <img class="img-profile img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
         <label for="target-profile-cover">
@@ -31,7 +32,7 @@
         </div>
     </div>   
 </header>
-<div class="card br-10">
+<div class="card br-10 card-page-maried">
     <div id="" class="page-married">
         <div class="img-profile-user-married">
             <img class="img-profile img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
@@ -62,12 +63,12 @@
 <div class="card br-10">
     <nav class="option-profile-menu">
         <ul class="">
-            <li><a href=""><i class="fas fa-bookmark fa-14"></i><h1 class="menu-option-profile">Guardados</h1></a></li>
+            <li><a href=""><i class="fas fa-bookmark fa-20"></i><h1 class="menu-option-profile">Guardados</h1></a></li>
             <?php if (false): ?>
-                <li><a href=""><i class="fas fa-ring fa-14"></i><h1 class="menu-option-profile">Pedidos</h1></a></li>
+                <li><a href=""><i class="fas fa-ring fa-20"></i><h1 class="menu-option-profile">Pedidos</h1></a></li>
             <?php endif ?>
-            <li><a href=""><i class="fas fa-eye fa-14"></i><h1 class="menu-option-profile">Seguindo</h1></a></li>
-            <li><a href=""><i class="fas fa-heart fa-14"></i><h1 class="menu-option-profile">Curtindo</h1></a></li>
+            <li><a href=""><i class="fas fa-eye fa-20"></i><h1 class="menu-option-profile">Seguindo</h1></a></li>
+            <li><a href=""><i class="fas fa-heart fa-20"></i><h1 class="menu-option-profile">Curtindo</h1></a></li>
         </ul>
     </nav>
     <div class="saved-container">
@@ -83,5 +84,6 @@
             <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Secção</h1></a>
         </div>
     </a>
+</div>
 </div>
 @stop
