@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="main">
+<header class="card more-following" id="card-more-following">
+    <ul>
+        <li>
+            
+        </li>
+    </ul>
+</header>
 <header class="card br-10 stories stories-about-talking" id="stories-card">
             <header>
                 <h1>O que estão falando...</h1>
@@ -240,4 +248,5 @@
                 </div>
             </div>
         <?php endforeach ?>
+</div>
 @stop

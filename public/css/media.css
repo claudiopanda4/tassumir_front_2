@@ -162,7 +162,7 @@
 	    right: 2px;
 	}
 	.stories-about-talking nav ul li {
-	    width: 90px;
+	    width: 85px;
     	height: 140px;
 	}
 	.btn-a-default {
@@ -226,6 +226,15 @@
 	.input-container {
 	    width: 210px;
 	}
+	.pop-up-component {
+	    width: 94%;
+	}
+	.pop-up-component-header-default {
+	    width: 335px;
+	}
+	.interaction-user li:nth-child(1) div.content-button {
+		width: 86px;
+	}
 }
 @media screen and (max-width: 720px) {
 	.suggest-slide {
@@ -235,13 +244,13 @@
 
 @media screen and (min-width: 1440px) {
 	.main {
-		width: 700px;
+		width: 580px;
 	}
 	.post {
 	    width: 100%;
 	    max-width: 710px;
 	}
 	.post-cover {
-	    height: 440px;
+	    height: 390px;
 	}
 }

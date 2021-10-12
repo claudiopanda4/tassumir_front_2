@@ -1120,7 +1120,7 @@ label[for="hugo"]{
 .interaction-numbers li:nth-child(2) {
 }
 .interaction-user .content-button {
-	width: 103px;
+	width: 120px;
 	padding: 5px 10px 0;
 }
 .interaction-user .content-button a h2{
@@ -1175,7 +1175,7 @@ label[for="hugo"]{
 }
 .interaction-user li:nth-child(1) div.content-button {
 	background-color: #800080;
-	width: 85px;
+	width: 90px;
 }
 .interaction-user li:nth-child(2) div.content-button {
 	background-color: #606060;
@@ -1298,10 +1298,10 @@ label[for="hugo"]{
 	position: absolute;
 	width: 40px;
 	height: 40px;
-	border: 3px solid #800080;
+	border: 4px solid #800080;
 	z-index: 2;
-	top: 10px;
-	left: 10px;
+	top: 5px;
+	left: 5px;
 }
 .identify-cover img {
 	border: 2px solid #fff;
@@ -1347,11 +1347,11 @@ label[for="hugo"]{
 	position: relative;
 	width: 60px;
 	height: 60px;
-	border: 2px solid #800080;
+	border: 4px solid #800080;
 	margin: 10px auto;
 }
 .li-component-suggest img {   
-	border: 1px solid #fff;
+	border: 2px solid #fff;
 }
 .suggest-slide {
 	display: none;
@@ -1659,7 +1659,7 @@ label[for="hugo"]{
     top: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.8);
     /* box-shadow: 0px 2px 8px 2px #ccc; */
     z-index: -1;
     transition: all .3s;
@@ -1738,4 +1738,75 @@ label[for="hugo"]{
     border-radius: 5px;
     cursor: pointer;
     margin: auto;
+}
+#card-more-following {
+	display: none;
+}
+.img-profile-page {
+	position: relative;
+	width: 130px;
+	height: 130px;
+}
+.statistics-profile-page {
+	margin-top: ;
+}
+.statistics-profile-page-component {
+	margin-right: 15px;
+}
+.statistics-profile-page-component h1,
+.statistics-profile-page-component h2 {
+	color: #fff;
+	font-size: 13.5px;
+	text-align: center;
+}
+.statistics-profile-page-component h1 {
+	font-weight: bolder;
+}
+.statistics-profile-page-identify {
+	margin-top: 20px;
+}
+.statistics-profile-page-identify h1, 
+.statistics-profile-page-identify h2 {
+	font-size: 13px;
+	color: #fff;
+}
+.statistics-profile-page-identify h1 {
+	font-size: 20px;
+}
+.follwing-btn {
+	width: 250px;
+	border-radius: 5px;
+	padding: 8px;
+	color: #fff;
+	border: none;
+	background-color: #800080;
+}
+.follwing-btn-container {
+	margin: 15px auto 10px;
+}
+.card-page {
+	margin: auto;
+	flex-direction: column;
+}
+#main-container-profile {
+	width: 650px;
+}
+#edit-page {
+	width: 110px;
+	padding: 5px;
+	font-size: 13px;
+}
+.edit-page-container {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+.description-couple {
+
+}
+.description-couple p {
+	color: #ffff;
+    font-size: 13px;
+    width: 340px;
+    padding: 10px;
 }
