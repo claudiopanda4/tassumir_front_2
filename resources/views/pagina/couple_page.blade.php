@@ -9,13 +9,13 @@
         <img class="img-profile img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
        
     </div>-->
-    <div class="img-profile-user-married" style="padding:7px;">
+    <div class="img-profile-user-married couple-img-check" >
             <img class="img-profile img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
            
     </div>
     
     <div class="" id="card-ident card">
-        <div id="ident-profile" class="mr-5" style="padding-right:8px;">
+        <div id="ident-profile" class="mr-5 couple-img-check2" >
             <h1 class="profile-name">Delton & Ana</h1>
             <div class="">
                 <a href="{{route('edit_couple.page')}}">
@@ -52,7 +52,7 @@
     <div class="couple-separator"></div>
 
 
-    <div class="mt-3" style="display:flex;justify-content:space-between;align-items:center ;">
+    <div class="mt-3 couple-check">
 
         <a href="">
                     <h3 class="edit-profile">Publicar</h3>
@@ -67,7 +67,7 @@
                 <div class="ml-3"></div>
                 <div class="ml-5"></div>
                 <a href="" class="couple-invite-icon-one circle">
-                    <i class="fas fa-user-plus fa-16 center " style="font-size:14pt;"></i>
+                    <i class="fas fa-user-plus fa-16 center couple-check-i"></i>
                 </a>
                 <a href="" class="couple-invite-icon-one circle mr-4">
                     <i class="fas fa-user fa-16 center" style="font-size: 14pt;"></i>
@@ -91,9 +91,6 @@
 
     	<div class="couple-btn-space">
 
-    	<!--<div class="couple-publish-btn">
-    		<a href="" >Editar </a>
-    	</div>-->
            <div class=" mt-1">
                 <a href="" >
                     <h3 class="edit-profile" >Editar</h3>
