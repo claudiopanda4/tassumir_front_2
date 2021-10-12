@@ -4,7 +4,7 @@
 <header class="card-flex">
 			<h2 class="couple-title-edit">Editar pagina</h2>
 </header>
-<div class="card br-10" style="padding: 10px;">
+<div class="card br-10 check" >
 	 <div class="row" >
     	<div class="col-md-4"></div>
     	<div class="col-md-3">
@@ -23,7 +23,7 @@
   </div>
 		
 
-   <div class="card br-10" style="padding: 10px;">
+   <div class="card br-10 check" >
 
     	<div class="couple-info-inputs mt-2">
     		<p class="couple-name mt-2 ">Nome da pagina</p>
@@ -43,7 +43,7 @@
 	    	<p class="couple-name mt-2"  ></p>
 	    	<div class=" ">
                 <a href="{{route('delete_couple.page')}}">
-                    <h3 class="edit-profile" style="width:100%;">Guadar alterações</h3>
+                    <h3 class="edit-profile check-width" >Guadar alterações</h3>
                 </a>
             </div>
 
@@ -54,7 +54,7 @@
     		
 	    	  <div class=" ">
                 <a href="{{route('delete_couple.page')}}">
-                    <h3 class="edit-profile" style="width:100%;">Eliminar ou desactivar</h3>
+                    <h3 class="edit-profile check-width" >Eliminar ou desactivar</h3>
                 </a>
             </div>
     	</div>

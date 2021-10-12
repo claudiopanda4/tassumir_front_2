@@ -76,12 +76,12 @@
     <div class="card br-10 card-flex" style="padding-bottom: 10px;">
 	<div></div>
 
-	<div class="mt-3" style="display:flex;justify-content:space-between;align-items:center ;">
+	<div class="mt-3 couple-check">
                 <a href="{{route('delete_couple.page')}}" class="mr-2">
-                    <h3 class="edit-profile1" style="width:100%;">Cancelar</h3>
+                    <h3 class="edit-profile1 couple-btn-check">Cancelar</h3>
                 </a>
                 <a href="{{route('delete_couple.page')}}" class="mr-2">
-                    <h3 class="edit-profile" style="width:100%;">Confirmar</h3>
+                    <h3 class="edit-profile couple-btn-check">Confirmar</h3>
                 </a>
      </div>
     

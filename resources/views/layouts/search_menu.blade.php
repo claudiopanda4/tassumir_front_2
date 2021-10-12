@@ -48,46 +48,46 @@
                             </label>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="clearfix more-option-post-n card-flex">
-                                <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                                <li class="mb-4 couple-list-search" >
 
-                                    <span style="color:#efefef;">Actividades</span>
+                                    <span class="couple-list-span-head">Actividades</span>
                                 </li>
 
 
-                                <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                                <li class="couple-list-search">
 
-                                    <span style="color:#fff;">Hoje</span>
+                                    <span class="couple-list-span-head">Hoje</span>
                                 </li>
 
-                                <li class="change-look" style="display: flex;justify-content:flex-start;width: 300px;padding:8px;">
+                                <li class="change-look couple-list-search2" >
 
                                     <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >Delton Agostinho, gostou </span>
+                                    <span class="mt-2 couple-list-span">Delton Agostinho, gostou </span>
                                 </li>
 
 
-                                <li class="change-look"style="display: flex;justify-content: flex-start;width: 300px;padding:8px;">
+                                <li class="change-look couple-list-search2">
 
                                     <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >João Nunes comentou: Ola </span>
+                                    <span class="mt-2 couple-list-span"  >João Nunes comentou: Ola </span>
                                 </li>
 
-                                <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                                <li class="couple-list-search">
 
-                                    <span style="color:#fff;">Ontem</span>
+                                    <span class="couple-list-span-head">Ontem</span>
                                 </li>
 
-                                <li class="change-look" style="display: flex;justify-content: flex-start;width: 300px;padding:8px;">
+                                <li class="change-look couple-list-search2" >
 
                                     <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >Delton Agostinho, gostou </span>
+                                    <span class="mt-2 couple-list-span">Delton Agostinho, gostou </span>
                                 </li>
 
 
-                                <li class="change-look" style="display: flex;justify-content: flex-start;width: 300px;padding:8px;">
+                                <li class="change-look couple-list-search2" >
 
                                     <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >João Nunes comentou:Ola </span>
+                                    <span class="mt-2 couple-list-span">João Nunes comentou:Ola </span>
                                 </li>
 
 
@@ -112,7 +112,7 @@
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix card-flex">
-                <li class=" mt-3" style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                <li class=" couple-search-li-aside-left mt-3">
 
                   <span style="color:#efefef;">Resultados da Pesquisa</span>
                 </li>
@@ -120,9 +120,9 @@
         <div class="couple-separator">
 
         </div>
-                <li class="mb-2 mt-2" style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                <li class="mb-2 mt-2 couple-search-li-aside-left">
 
-                    <span style="color:#efefef;">Filtros</span>
+                    <span class="couple-seach-span">Filtros</span>
                 </li>
                 <li class="li-component-aside li-component-aside-active"><a href="{{route('allSearch.page')}}">Tudo</a></li>
                 <li class="li-component-aside"><a href="{{route('peoplesSearch.page')}}">Pessoas</a></li>

@@ -544,6 +544,77 @@ label[for="hugo"]{
 	border: none;
 	color: #fff;
 }
+.couple-img-check{
+
+	padding:7px;
+}
+.couple-img-check2{
+	padding-right:8px;
+}
+.couple-check{
+	display:flex;
+	justify-content:space-between;
+	align-items:center ;
+}
+.couple-check-i{
+	font-size:14pt;
+}
+.couple-check-delete-btn{
+	padding-bottom: 10px;
+}
+.couple-check-delete-btn2{
+
+	display:flex;
+	justify-content:space-between;
+	align-items:center ;
+}
+.couple-btn-check{
+	width:100%;
+}
+.check{
+	padding: 10px;
+}
+.check-width{
+	width:100%;
+}
+.couple-list-search{
+	display: flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+}
+.couple-list-search2{
+	display: flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+	width: 300px;
+	padding:8px;
+}
+.couple-list-span{
+	font-size:12pt;
+	color: #fff;
+}
+.couple-list-span-head{
+	color: #fff;
+}
+.couple-search-li-aside-left{
+	display: flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+}
+.couple-seach-span{
+	color:#efefef;
+}
+
+.allSearch-li{
+	display:flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+}
+.allSearch-li2{
+	display:flex;
+	justify-content:space-around;
+	align-content:center;
+}
 
 .couple-separator{
 
