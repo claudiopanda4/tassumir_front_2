@@ -1857,15 +1857,19 @@ label[for="hugo"]{
 }
 .card-page {
 	margin: auto;
-	flex-direction: column;
+    flex-direction: column;
+    border: none;
+    background-color: transparent;
 }
 #main-container-profile {
 	width: 650px;
 }
 #edit-page {
 	width: 110px;
-	padding: 5px;
-	font-size: 13px;
+    padding: 5px;
+    font-size: 13px;
+    background: var(--background-dark-input);
+    border: 1px solid #60606
 }
 .edit-page-container {
 	position: absolute;
@@ -1880,4 +1884,22 @@ label[for="hugo"]{
     font-size: 13px;
     width: 340px;
     padding: 10px;
+}
+
+	.suggest-slide-page {
+	display: block;
+}
+.suggest-slide-page nav::-webkit-scrollbar {
+	height: 3px;
+}
+.suggest-slide-page nav::-webkit-scrollbar-thumb {
+	border-radius: 30px;
+    background-color: #606060;
+}
+.suggest-slide-page a.follow-suggest div {
+	padding: 5px;
+    background-color: var(--background-dark-input);
+    border-radius: 5px;
+    margin: 10px auto;
+    color: #fff;
 }
