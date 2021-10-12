@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="main">
 <div class="card br-10">
     <div class="label-input">
         <label>
@@ -63,5 +64,6 @@
         </div>
         
     </div>
+</div>
 </div>
 @stop

@@ -19,7 +19,7 @@
                         Seguir
                     </button>
                 </div>
-                <div class="statistics-profile-page-component-container clearfix">
+                <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg">
                     <div class="statistics-profile-page-component l-5">
                         <h1>123</h1>
                         <h2>Publicações</h2>
@@ -40,6 +40,25 @@
                     Editar Página
                 </button>
             </div>
+        </div>
+        <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-mobile">
+            <div class="statistics-profile-page-component l-5">
+                <h1>123</h1>
+                <h2>Publicações</h2>
+            </div>
+            <div class="statistics-profile-page-component l-5">
+                <h1>123</h1>
+                <h2>A Seguir</h2>
+            </div>
+            <div class="statistics-profile-page-component l-5">
+                <h1>123</h1>
+                <h2>Seguindo</h2>
+            </div>
+        </div>
+        <div class="edit-page-container-mobile">
+            <button type="submit" class="follwing-btn">
+                Editar Página
+            </button>
         </div>
         <div class="clearfix">
             <div class="description-couple">

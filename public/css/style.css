@@ -1879,7 +1879,7 @@ label[for="hugo"]{
     padding: 5px;
     font-size: 13px;
     background: var(--background-dark-input);
-    border: 1px solid #60606
+    border: 1px solid #606060;
 }
 .edit-page-container {
 	position: absolute;
@@ -2003,4 +2003,18 @@ label[for="hugo"]{
 }
 #main-profile .card-page-maried {
 	background-color: #242526;
+}
+#statistics-profile-page-component-mobile {
+	display: none;
+}
+.edit-page-container-mobile {
+	width: 80%;
+    margin: 10px auto;
+}
+.edit-page-container-mobile button {
+	width: 100%;
+    padding: 8px;
+    font-size: 13px;
+    background: var(--background-dark-input);
+    border: 1px solid #606060;
 }
