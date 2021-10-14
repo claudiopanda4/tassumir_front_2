@@ -7,8 +7,12 @@ use Illuminate\Support\Facades\DB;
 
 class PaginaCasalController extends Controller
 {
+<<<<<<< HEAD
  
     private $current_page_id = 1;
+=======
+
+>>>>>>> 3c654ca106da188892d096a79e79b32d1f599c07
 
     public function index(){
         $auth = new AuthController();
@@ -27,6 +31,15 @@ class PaginaCasalController extends Controller
         return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes'));
     }
 
+<<<<<<< HEAD
+=======
+    public function paginas($id){
+      $auth = new AuthController();
+      $account_name = $auth->defaultDate();
+      return view('pagina.couple_page', compact('account_name'));
+      
+    }
+>>>>>>> 3c654ca106da188892d096a79e79b32d1f599c07
     public function edit_couple(){
         $auth = new AuthController();
         $account_name = $auth->defaultDate();

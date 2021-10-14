@@ -1,37 +1,112 @@
-
 @extends('layouts.search_menu')
 
 @section('content')
-<div class="card-p ">
-<div name="pessoa">
-	<ul class="card-flex">
-
-          <li class="allSearch-li">
-          </li>
-           <li class="change-look allSearch-li2">
-		   </li>
-
-	</ul>
+<div name="post">
+	<input type="hidden" name="passa" id="passa" value="{{$val}}">
 </div>
-</div>
-<script >
+<script>
 
+$(document).ready(function() {
+		let passa= $('#passa').val();
+  $('#table_search').val(passa);
+	let v= 2;
+	if (variavel!='') {
+
+		$.ajax({
+			url: "{{ route('post.pesquisa')}}",
+			type: 'get',
+			data: {'dados': variavel , 'v':v},
+			dataType: 'json',
+			success:function(response){
+ 			var nome = '';
+			console.log(response.valor);
+			$.each(response.valor, function(key, value){
+				nome+='<div class="card-p mb-5">'
+				nome+='<div class="post">'
+				nome+='<header class="clearfix">'
+				nome+='<div class="first-component clearfix l-5">'
+				nome+='<div class="page-cover circle l-5">'
+				nome+='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}">'
+				nome+='</div>'
+				nome+='<div class="page-identify r-5 clearfix">'
+				nome+='<h1 class="text-ellips">'+value.nome_page+'</h1>'
+				nome+='<div class="info-post clearfix">'
+				nome+='<span class="time-posted">50 min</span>'
+				nome+='</div>'
+				nome+='</div>'
+				nome+='</div>'
+				nome+='</header>'
+				nome+='<div class="card-post">'
+				nome+='<div class="">'
+				nome+='<p>'+value.post+'</p>'
+				nome+='<div class="post-cover">'
+				nome+='<img class="img-full" src="{{asset("storage/img/page/unnamed.jpg")}}">'
+				nome+='</div>'
+				nome+='</div>'
+				nome+='</div>'
+				nome+='</div>'
+				nome+='</div>'
+				$('div[name=post]').empty();
+				$('div[name=post]').append(nome);
+			})
+		}
+	});
+	}
+	else {
+		$('div[name=post]').empty();
+	}
+});
+
+//---------------------------- função principal-------------------------------------------
 $('#table_search').on('keyup',function(){
 				let variavel= $('#table_search').val();
-			 $.ajax({
-				 url: "{{ route('pessoa.pesquisa')}}",
-				 type: 'get',
-				 data: {'dados': variavel},
-					dataType: 'json',
-					success:function(response){
-					console.log(response.valor);
+				let v= 2;
+				if (variavel!='') {
 
-					$('div[name=pessoa]').empty();
-					$.each(response.valor, function(key, value){
-					$('div[name=pessoa]').append("<ul class='card-flex '><li class='allSearch-li'><span  class='mt-2 couple-list-span-head'>Pessoas</span></li><li class='change-look allSearch-li2'><div class='mt-4'><img class='ml-5 circle img-40' src='{{asset('storage/img/users/anselmoralph.jpg')}}'></div><div class='mb-1 mr-2' id='card-ident'><div id='ident-profile' class='' ><span class='profile-name'>"+value.nome+" "+value.apelido+"</span><a href='' class='couple-invite-icon-one circle mr-4'><i class='fas fa-user-plus fa-16 center' style='font-size: 14pt;'></i></a></div></div></li><div class='couple-separator'></div></ul>");
-				})
-			}
-		});
+	$.ajax({
+		url: "{{ route('post.pesquisa')}}",
+		type: 'get',
+		data: {'dados': variavel , 'v':v},
+		 dataType: 'json',
+		 success:function(response){
+			 var nome = '';
+		 console.log(response.valor);
+	$.each(response.valor, function(key, value){
+
+		nome+='<div class="card-p mb-5">'
+		nome+='<div class="post">'
+		nome+='<header class="clearfix">'
+		nome+='<div class="first-component clearfix l-5">'
+		nome+='<div class="page-cover circle l-5">'
+		nome+='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}">'
+		nome+='</div>'
+		nome+='<div class="page-identify r-5 clearfix">'
+		nome+='<h1 class="text-ellips">'+value.nome_page+'</h1>'
+		nome+='<div class="info-post clearfix">'
+		nome+='<span class="time-posted">50 min</span>'
+		nome+='</div>'
+		nome+='</div>'
+		nome+='</div>'
+		nome+='</header>'
+		nome+='<div class="card-post">'
+		nome+='<div class="">'
+		nome+='<p>'+value.post+'</p>'
+		nome+='<div class="post-cover">'
+		nome+='<img class="img-full" src="{{asset("storage/img/page/unnamed.jpg")}}">'
+		nome+='</div>'
+		nome+='</div>'
+		nome+='</div>'
+		nome+='</div>'
+		nome+='</div>'
+	$('div[name=post]').empty();
+	$('div[name=post]').append(nome);
+})
+}
+});
+} else {
+$('div[name=post]').empty();
+}
 });
 </script>
+
 @stop
