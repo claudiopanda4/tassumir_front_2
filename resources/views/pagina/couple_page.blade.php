@@ -11,8 +11,8 @@
             </div>
             <div class="statistics-profile-page l-5 clearfix">
                 <div class="statistics-profile-page-identify">
-                    <h1>Delton e Ana</h1>
-                    <h2>@deltonana</h2>
+                    <h1>{{ $page_content[0]->nome }}</h1>
+                    <h2>@<span></span>{{ $page_content[0]->nome }} </h2>
                 </div>
                 <div class="follwing-btn-container">
                     <button type="submit" class="follwing-btn">
@@ -21,15 +21,20 @@
                 </div>
                 <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg">
                     <div class="statistics-profile-page-component l-5">
-                        <h1>123</h1>
+                        @if ($publicacoes > 1)
+                        <h1>{{ $publicacoes }}</h1>
                         <h2>Publicações</h2>
+                        @else
+                        <h1>{{ $publicacoes }}</h1>
+                        <h2>Publicação</h2>
+                        @endif
                     </div>
                     <div class="statistics-profile-page-component l-5">
                         <h1>123</h1>
                         <h2>A Seguir</h2>
                     </div>
                     <div class="statistics-profile-page-component l-5">
-                        <h1>123</h1>
+                        <h1>{{ $seguidores }}</h1>
                         <h2>Seguindo</h2>
                     </div>
                 </div>
@@ -43,15 +48,20 @@
         </div>
         <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-mobile">
             <div class="statistics-profile-page-component l-5">
-                <h1>123</h1>
-                <h2>Publicações</h2>
+               @if ($publicacoes > 1)
+               <h1>{{ $publicacoes }}</h1>
+               <h2>Publicações</h2>
+               @else
+               <h1>{{ $publicacoes }}</h1>
+               <h2>Publicação</h2>
+               @endif
             </div>
             <div class="statistics-profile-page-component l-5">
                 <h1>123</h1>
                 <h2>A Seguir</h2>
             </div>
             <div class="statistics-profile-page-component l-5">
-                <h1>123</h1>
+                <h1>{{ $seguidores }}</h1>
                 <h2>Seguindo</h2>
             </div>
         </div>
@@ -62,9 +72,7 @@
         </div>
         <div class="clearfix">
             <div class="description-couple">
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries
-                </p>
+                <p> {{ $page_content[0]->descricao }} </p>
             </div>
         </div>
         <label for="add-post-target" class="add-post-label">
