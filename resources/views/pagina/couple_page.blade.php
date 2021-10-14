@@ -29,7 +29,7 @@
                         <h2>Publicação</h2>
                         @endif
                     </div>
-                    <div class="statistics-profile-page-component l-5">
+                    <div class="statistics-profile-page-component l-5 invisible">
                         <h1>123</h1>
                         <h2>A Seguir</h2>
                     </div>

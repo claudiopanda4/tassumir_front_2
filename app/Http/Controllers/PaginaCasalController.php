@@ -7,12 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class PaginaCasalController extends Controller
 {
-<<<<<<< HEAD
- 
-    private $current_page_id = 1;
-=======
 
->>>>>>> 3c654ca106da188892d096a79e79b32d1f599c07
+    private $current_page_id = 1;
 
     public function index(){
         $auth = new AuthController();
@@ -31,15 +27,14 @@ class PaginaCasalController extends Controller
         return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes'));
     }
 
-<<<<<<< HEAD
-=======
     public function paginas($id){
       $auth = new AuthController();
       $account_name = $auth->defaultDate();
       return view('pagina.couple_page', compact('account_name'));
       
     }
->>>>>>> 3c654ca106da188892d096a79e79b32d1f599c07
+
+
     public function edit_couple(){
         $auth = new AuthController();
         $account_name = $auth->defaultDate();
@@ -77,23 +72,23 @@ class PaginaCasalController extends Controller
     {
         if ($request->hasFile('imgOrVideo'))
         {
-            $file_name = time() . '_' . md5($request->file('imgOrVideo')->getClientOriginalName());
+            $file_name = time() . '_' . md5($request->file('imgOrVideo')->getClientOriginalName()) . '.' . $request->imgOrVideo->extension();
             
             $path = '';
             
             if ( $this->check_image_extension($request->imgOrVideo->extension()) )
-            {
+            {   
                 $path = $request->file('imgOrVideo')->storeAs('public/img/page', $file_name);
                 $this->store($request->message, $file_name, $this->current_page_id, $this->formato_id('Imagem'));
-            }
- 
-            else if ( $this->check_video_extension($request->imgOrVideo->extension()) )
-            {
+
+            } else if ( $this->check_video_extension($request->imgOrVideo->extension()) ) {
+
                 $path = $request->file('imgOrVideo')->storeAs('public/video/page', $file_name);
                 $this->store($request->message, $file_name, $this->current_page_id, $this->formato_id('Video'));
             }
+            
+            return redirect()->route('couple.page');
         }
-        return redirect()->route('couple.page');
     }
     private function store($description, $file_name, $id, $format)
     {
