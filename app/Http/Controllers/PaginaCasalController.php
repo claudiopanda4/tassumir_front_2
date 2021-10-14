@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class PaginaCasalController extends Controller
 {
-
+ 
     private $current_page_id = 1;
+
 
     public function index(){
         $auth = new AuthController();
@@ -26,6 +27,7 @@ class PaginaCasalController extends Controller
     
         return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes'));
     }
+
 
     public function paginas($id){
       $auth = new AuthController();
