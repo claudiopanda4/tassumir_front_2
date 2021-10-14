@@ -51,7 +51,7 @@
                             <a href=""><h1>Esqueceu a senha</h1></a>
                         </div>
                         <div class="r-5" id="register-enter-container">
-                            <button id="register-enter" type="submit" class=""><span class="enter-login"></span>Registar</button>
+                            <a href="{{ route('account.register.form') }}"  id="register-enter" type="submit" class=""><span class="enter-login"></span>Registar</a>
                         </div>
                     </div>
                 </form>

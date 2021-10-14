@@ -5,7 +5,7 @@
 <header class="card more-following" id="card-more-following">
     <ul>
         <li>
-            
+
         </li>
     </ul>
 </header>
@@ -15,7 +15,7 @@
             </header>
             <nav>
                 <ul class="clearfix">
-                    <?php 
+                    <?php
                     $about_talking = [
                         [],[],[],[],[],
                     ];
@@ -40,7 +40,7 @@
                 </ul>
             </nav>
         </header>
-        <?php 
+        <?php
         $posts_feed = [
             [
                 "type" => "img",
@@ -114,7 +114,7 @@
                     </header>
                     <nav class="clearfix">
                         <ul class="clearfix">
-                            <?php 
+                            <?php
                             $suggest_page = [
                                 [],[],[],[],[],[],[],
                             ];
@@ -133,62 +133,22 @@
                     </nav>
                 </section>
             <?php endif ?>
-            <div class="card br-10">
-                <div class="post">
-                    <header class="clearfix">
-                        <div class="first-component clearfix l-5">
-                            <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                            </div>
-                            <div class="page-identify l-5 clearfix">
-                                <a href=""><h1 class="text-ellips">Famosos em Relacionamentos</h1></a>
-                                <div class="info-post clearfix">
-                                    <span class="time-posted">50 min</span>
-                                    <a href="" class="r-5 follow_page_post">seguir</a>
-                                </div>
-                            </div>
+        <?php endforeach ?>
+<?php foreach ($dados as $key => $value): ?>
+        <div class="card br-10">
+            <div class="post">
+                <header class="clearfix">
+                    <div class="first-component clearfix l-5">
+                        <div class="page-cover circle l-5">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                         </div>
-                        <div class="last-component clearfix r-5">
-                            <label for=<?php echo "more-option-".$key; ?>>
-                                <i class="fas fa-ellipsis-v fa-12 fa-option"></i>
-                            </label>
-                            <input type="checkbox" name="" id=<?php echo "more-option-".$key; ?> class="hidden">
-                            <ul class="clearfix more-option-post">
-                                <li>
-                                    <a href="">Editar</a>
-                                </li>
-                                <li>
-                                    <a href="">Ocultar Publicação</a>
-                                </li>
-                                <li>
-                                    <a href="">Apagar Publicação</a>
-                                </li>
-                                <li>
-                                    <a href="">Denunciar</a>
-                                </li>
-                                <li>
-                                    <a href="">Copiar Link</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </header>
-                    <div class="card-post">
-                        <div class="">
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
-                            <?php if ($posts_feed[$key]["type"] == "img"): ?>
-                            <div class="post-cover">
-                                <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                        <div class="page-identify l-5 clearfix">
+                            <a href="{{route('couple.page1', $dados[$key]['post_id']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
+                            <div class="info-post clearfix">
+                                <span class="time-posted">50 min</span><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
+                                  <a href="" class="r-5 follow_page_post" onclick="seguir('{{$dados[$key]['page_id']}}')">seguir</a>
+                                <?php endif; ?>
                             </div>
-                            <?php elseif ($posts_feed[$key]["type"] == "video"): ?>
-                            <div class="video-post">
-                                <video controls>
-                                    <source src="{{asset('storage/video/page/12345678.mp4')}}" type="video/mp4">
-                                    <source src="{{asset('storage/video/page/12345678.ogg')}}" type="video/ogg">
-                                    <source src="{{asset('storage/video/page/12345678.webcam')}}" type="video/webcam">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>       
-                            <?php endif ?>
                         </div>
                     </div>
                     <nav class="row interaction-numbers">
@@ -201,63 +161,165 @@
                             </li>
                             <li class="text-ellips" style="display:none;">
                                 <a href="">30 partilhas</a>
+                    <div class="last-component clearfix r-5">
+                        <label for=<?php echo "more-option-".$key; ?>>
+                            <i class="fas fa-ellipsis-v fa-12 fa-option"></i>
+                        </label>
+                        <input type="checkbox" name="" id=<?php echo "more-option-".$key; ?> class="hidden">
+                        <ul class="clearfix more-option-post">
+                            <li>
+                                <a href="">Editar</a>
+                            </li>
+                            <li>
+                                <a href="">Ocultar Publicação</a>
+                            </li>
+                            <li>
+                                <a href="">Apagar Publicação</a>
+                            </li>
+                            <li>
+                                <a href="">Denunciar</a>
+                            </li>
+                            <li>
+                                <a href="">Copiar Link</a>
                             </li>
                         </ul>
-                    </nav>
-                    <nav class="row clearfix interaction-user">
-                        <ul class="row clearfix ul-interaction-user">
-                            <li class="l-5">
-                                <div class="content-button">
-                                    <a href="">
-                                        <i class="far fa-heart center fa-16"></i>
-                                        <h2>Like</h2>
-                                    </a>
-                                </div>
-                            </li>
-                            <li class="l-5">
-                                <div class="content-button">
-                                    <a href="">
-                                        <i class="far fa-comment-alt center fa-16"></i>
-                                        <h2>Comentar</h2>
-                                    </a>
-                                </div>
-                            </li>
-                            <li class="r-5">
-                                <div class="content-button">
-                                    <a href="">
-                                        <i class="fas fa-share center fa-16"></i>
-                                        <h2>Partilhar</h2>
-                                    </a>
-                                </div>
-                            </li> 
-                            <li class="r-5">
-                                <div class="content-button">
-                                    <a href="">
-                                        <i class="far fa-bookmark center fa-16"></i>
-                                        <h2>Guardar</h2>
-                                    </a>
-                                </div>
-                            </li>  
-                        </ul>
-                    </nav>
-                    <div class="comment-send clearfix">
-                        <div class="img-user-comment l-5">
-                            <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
-                        </div>
-                        <div class="input-text comment-send-text l-5 clearfix">
-                            <input type="text" name="" placeholder="O que você tem a dizer?">
-                            <div class="r-5 ">
-                                <a href="">
-                                    <i class="far fa-images fa-20 fa-img-comment"></i>
-                                </a>
-                            </div>
-                        </div>
                     </div>
-                    <div>
-                        
+                </header>
+                <div class="card-post">
+                    <div class="">
+                        <p>{{$dados[$key]['post']}}</p>
+                        <?php if ($posts_feed[$key]["type"] == "img"): ?>
+                        <div class="post-cover">
+                            <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                        </div>
+                        <?php elseif ($posts_feed[$key]["type"] == "video"): ?>
+                        <div class="video-post">
+                            <video controls>
+                                <source src="{{asset('storage/video/page/12345678.mp4')}}" type="video/mp4">
+                                <source src="{{asset('storage/video/page/12345678.ogg')}}" type="video/ogg">
+                                <source src="{{asset('storage/video/page/12345678.webcam')}}" type="video/webcam">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <?php endif ?>
                     </div>
                 </div>
+                <nav class="row interaction-numbers">
+                    <ul class="">
+                        <li>
+                            <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="">{{$dados[$key]['qtd_likes']}} reacções</a>
+                        </li>
+                        <li>
+                            <a href="">{{$dados[$key]['qtd_comment']}} comentários</a>
+                        </li>
+                        <li>
+                            <a href="">30 partilhas</a>
+                        </li>
+                    </ul>
+                </nav>
+                <nav class="row clearfix interaction-user">
+                    <ul class="row clearfix ul-interaction-user">
+                        <li class="l-5">
+                            <div class="content-button">
+                              <?php if ($dados[$key]['reagir_S/N']==0): ?>
+                                <a href="" onclick="gostar('{{$dados[$key]['post_id']}}', '1')">
+                                    <i class="far fa-heart center fa-16"></i>
+                                    <h2>Like</h2>
+                                </a>
+                                <?php else: ?>
+                                  <a href="" onclick="gostar('{{$dados[$key]['post_id']}}', '2')">
+                                      <i class="far fa-heart center fa-16"></i>
+                                      <h2>Like</h2>
+                                  </a>
+                                  <?php endif; ?>
+                            </div>
+                        </li>
+                        <li class="l-5">
+                            <div class="content-button">
+                                <a href="">
+                                    <i class="far fa-comment-alt center fa-16"></i>
+                                    <h2>Comentar</h2>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="r-5">
+                            <div class="content-button">
+                                <a href="">
+                                    <i class="fas fa-share center fa-16"></i>
+                                    <h2>Partilhar</h2>
+                                </a>
+                            </div>
+                        </li>
+                        <li class="r-5">
+                            <div class="content-button">
+                                <a href="">
+                                    <i class="far fa-bookmark center fa-16"></i>
+                                    <h2>Guardar</h2>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="comment-send clearfix">
+                    <div class="img-user-comment l-5">
+                        <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                    </div>
+                    <div class="input-text comment-send-text l-5 clearfix">
+                        <input type="text" name="comentario" id="comentario" placeholder="O que você tem a dizer?">
+                        <div class="r-5 ">
+                            <a href="">
+                                <i class="far fa-images fa-20 fa-img-comment" onclick="comentar('{{$dados[$key]['page_id']}}')"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+                </div>
             </div>
+        </div>
         <?php endforeach ?>
 </div>
+<script>
+function gostar(id, v){
+
+    $.ajax({
+      url: "{{ route('like')}}",
+      type: 'get',
+      data: {'id': id, 'v':v},
+       dataType: 'json',
+       success:function(response){
+       console.log(response);
+
+      }
+    });
+  }
+  function seguir(id){
+
+      $.ajax({
+        url: "{{route('seguir')}}",
+        type: 'get',
+        data: {'id': id},
+         dataType: 'json',
+         success:function(response){
+         console.log(response);
+
+        }
+      });
+    }
+
+    function comentar(id){
+    let c = $('#comentario').val();
+        $.ajax({
+          url: "{{route('comentar')}}",
+          type: 'get',
+          data: {'id': id, 'comment': c},
+           dataType: 'json',
+           success:function(response){
+           console.log(response);
+
+          }
+        });
+      }
+</script>
 @stop
