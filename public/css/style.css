@@ -136,7 +136,7 @@ body {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	width: 530px;
+	width: 660px;
 	border: 1px solid #000;
 	margin: 20px auto;
 }
@@ -1041,6 +1041,7 @@ label[for="hugo"]{
 .post header .first-component {
 	position: relative;
 	width: 240px;
+	margin-top: 0;
 }
 .post header .first-component .page-cover {
 	position: relative;
@@ -1072,11 +1073,13 @@ label[for="hugo"]{
 .card {
 	background-color: #242526;
 	margin-top: 20px;    
-	width: 90%;
-    margin: 10px auto;
+	width: 500px;
+    margin: 10px auto 0;
 }
 #stories-card {
-	width: 100%;
+	width: 650px;
+    background-color: transparent;
+    border: none;
 }
 .card-p{
 
@@ -1200,6 +1203,7 @@ label[for="hugo"]{
 	color: #fff;
 	font-size: 13px;
 	margin-left: 5px;
+	display: none;
 }
 .new-style-btn{
 	text-align: center;
@@ -1237,22 +1241,31 @@ label[for="hugo"]{
 	width: 120px;
 
 }
-
-
 .interaction-user .content-button a {
 }
 .interaction-user li div.content-button {
 	border-radius: 5px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    position: relative;
+    background-color: #3a3b3c;
+    /*border: 1px solid #606060;*/
 }
 .interaction-user li:nth-child(1) div.content-button {
-	background-color: #800080;
+	/*background-color: #800080;*/
 	width: 90px;
+	border-radius: 5px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    position: relative;
 }
 .interaction-user li:nth-child(2) div.content-button {
-	background-color: #606060;
+	/*background-color: #606060;*/
 }
 .interaction-user li:nth-child(3) div.content-button {
-	background-color: #606060;
+	/*background-color: #606060;*/
 }
 .interaction-user {
     padding-top: 5px;
@@ -1346,7 +1359,7 @@ label[for="hugo"]{
 .stories-about-talking nav ul {
 	position: relative;
    	margin-left: -20px;
-    width: 550px;
+    width: 655px;
 }
 .stories-about-talking nav ul li {
 	position: relative;
@@ -1354,7 +1367,8 @@ label[for="hugo"]{
 	width: 110px;
 	border-radius: 10px;
 	overflow: hidden;
-	border: 1px solid #606060;
+	border: 1px solid #ffffff0d;
+	margin-bottom: 10px;
 }
 .stories-about-talking nav ul li .img-back-stories,
 .stories-about-talking nav ul li {
@@ -1367,12 +1381,12 @@ label[for="hugo"]{
 }
 .identify-cover {
 	position: absolute;
-	width: 40px;
-	height: 40px;
-	border: 4px solid #800080;
-	z-index: 2;
-	top: 5px;
-	left: 5px;
+    width: 35px;
+    height: 35px;
+    border: 4px solid #800080;
+    z-index: 2;
+    top: 10px;
+    left: 10px;
 }
 .identify-cover img {
 	border: 2px solid #fff;
@@ -1388,7 +1402,7 @@ label[for="hugo"]{
 }
 .headline h2 {
 	position: absolute;
-	font-size: 12px;
+	font-size: 11px;
 	height: 50px;
 	padding: 10px;
 	color: #fff;
@@ -1460,8 +1474,8 @@ label[for="hugo"]{
 	top: 40%;
 }
 #img-profile-container {
-	width: 100px;
-	height: 100px;
+	width: 110px;
+	height: 110px;
 	position: relative;
 	margin-top: 15px;
 	margin-left: 15px;
@@ -1480,11 +1494,11 @@ label[for="hugo"]{
 
 #card-ident {
 	flex: 2;
-	padding: 10px;
+	padding: 10px 15px 0;
 }
 .profile-name {
 	color: #efefef;
-    font-size: 17px;
+    font-size: 19px;
     width: 185px;
 }
 .profile-name-edit{
@@ -1494,9 +1508,9 @@ label[for="hugo"]{
 
 #ident-profile {
 	display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 #ident-profile-edit{
 
@@ -1510,13 +1524,15 @@ label[for="hugo"]{
     position: relative;
     margin-left: 10px;
     margin-top: -8px;
+    display: none;
 }
 
 .statistics-profile {
 	display: flex;
     justify-content: space-between;
-    padding-left: 10px;
+    padding-left: 0px;
     padding-top: 10px;
+    font-size: 15px;
 }
 .statistics-profile h2 {
 	color: #efefef;
@@ -1524,13 +1540,13 @@ label[for="hugo"]{
 	display: inline-flex;
 }
 .inform-profile {
-	margin-left: 50px;
+	margin-left: 5px;
 }
 .inform-profile p, 
 .inform-profile h2, 
 .inform-profile h3 {
 	color: #efefef;
-    font-size: 13px;
+    font-size: 14px;
 }
 .img-profile-user-married {
 	position: relative;
@@ -1614,24 +1630,30 @@ label[for="hugo"]{
 	color: #efefef;
 }
 .option-profile-menu ul {
-	width: 380px;
+	width: 300px;
     margin: auto;
     padding-left: 0;
 }
 .option-profile-menu li {
 	display: inline-flex;
-	padding: 10px;
-	/*width: 47%;*/
+    padding: 10px;
+    position: relative;
+    width: 30%;
 }
 .edit-profile {
 	padding: 8px;
-	width: 80px;
+	width: 100px;
 	text-align: center;
-	display: inline-flex;
+	/*display: inline-flex;*/
 	color: #fff;
 	border-radius: 5px;
-	background-color: #800080;
-	font-size: 12px;
+	background-color: var(--background-dark-input);
+    font-size: 13px;
+    text-align: center;
+    border: 1px solid #606060;
+    position: absolute;
+    right: 10px;
+    top: 15px;
 }
 .edit-profile1 {
 	padding: 8px;
@@ -1646,6 +1668,7 @@ label[for="hugo"]{
 .profile-follow {
     padding-bottom: 0px;
     margin-bottom: 2px;
+    padding-left: 0;
 }
 .add-edit-profile {
 	position: absolute;
@@ -1659,7 +1682,7 @@ label[for="hugo"]{
 }
 .btn-a-default {
 	display: none;
-	padding: 8px;
+	padding: 10px;
 	border-radius: 5px;
 	background-color: #800080;
 	font-size: 13px;
@@ -1829,7 +1852,7 @@ label[for="hugo"]{
 	height: 130px;
 }
 .statistics-profile-page {
-	margin-top: ;
+	
 }
 .statistics-profile-page-component {
 	margin-right: 15px;
@@ -2008,6 +2031,7 @@ label[for="hugo"]{
 	display: none;
 }
 .edit-page-container-mobile {
+	display: none;
 	width: 80%;
     margin: 10px auto;
 }
@@ -2017,4 +2041,31 @@ label[for="hugo"]{
     font-size: 13px;
     background: var(--background-dark-input);
     border: 1px solid #606060;
+}
+.edit-profile-mobile {
+	padding: 10px;
+    width: 100%;
+    text-align: center;
+    /* display: inline-flex; */
+    color: #fff;
+    border-radius: 5px;
+    background-color: var(--background-dark-input);
+    font-size: 13px;
+    text-align: center;
+    border: 1px solid #606060;
+    display: none;
+}
+.fa-15 {
+	font-size: 15px;
+}
+.options-profile-btn {
+	display: inline-flex;
+	width: 48%;
+	margin-left: 5px;
+}
+.options-profile-btn a {
+	width: 100%;
+}
+.options-profile-btn .follwing-btn {
+	padding: 8px;
 }

@@ -10,12 +10,28 @@
 		margin-top: 6px;
 		margin-top: 0;
 	}
+	.option-profile-menu ul {
+	    /*background-color: #242526;*/
+	}
+	.option-profile-menu {
+	    overflow-x: auto;
+	    /*background-color: #242526;*/
+	}
 	.img-profile-page {
 	    width: 110px;
 	    height: 110px;
 	}
+	.edit-profile {
+		display: none;
+	}
+	.edit-profile-mobile {
+		display: block;
+	}
 	.edit-page-container {
 		display: none;
+	}
+	.edit-page-container-mobile {
+		display: block;
 	}
 	#statistics-profile-page-component-mobile {
 		display: block;
@@ -84,6 +100,7 @@
 	}
 	.stories-about-talking nav {
 		overflow: auto;
+		background-color: #242526;
 	}
 	.mobile-header-icon {
 		margin-top: 10px;
@@ -92,9 +109,9 @@
 		margin-top: 10px;
 	}
 	.interaction-user ul {
-	    width: 100%;
+	    width: 90%;
 	    padding-left: 0;
-	    justify-content: space-between;
+	    justify-content: space-around;
 	}
 	.interaction-user .content-button a h2 {
 	    font-size: 11px;
@@ -109,8 +126,8 @@
 	    border-bottom: none;
 	}
 	.stories-about-talking nav ul {
-	    /*width: 390px;*/
-	    width: 520px;
+	    /*width: 390px;
+	    width: 520px;*/
 	    margin-bottom: 0;
 	    padding-left: 25px;
 	}
@@ -121,8 +138,8 @@
 	    
 	}
 	.stories-about-talking nav ul li .img-back-stories {
-	    /*width: 100%;
-	    height: 100%;*/
+	    width: 100%;
+	    height: 100%;
 	}
 	#img-profile-container {
 	    width: 80px;
@@ -171,12 +188,13 @@
 	    font-size: 13px;
 	}
 	.add-edit-profile {
-	    bottom: -15px;
+	    bottom: -10px;
 	    right: 2px;
 	}
 	.stories-about-talking nav ul li {
-	    width: 85px;
-    	height: 140px;
+	    width: 90px;
+	    height: 90px;
+	    border-radius: 50%;
 	}
 	.btn-a-default {
 	    display: block;
@@ -186,20 +204,22 @@
 	    height: 80px;
 	}
 	#img-profile-container {
-	    width: 80px;
-	    height: 80px;
+	    width: 110px;
+	    height: 110px;
 	    position: relative;
 	    margin-top: 0;
 	    margin-left: 0;
 	    padding-left: 10px;
 	    padding-top: 10px;
+	    margin: auto;
 	}
 	.img-profile-user-married img {
 	    width: 60px;
 	    height: 60px;
 	}
 	.profile-name {
-	    font-size: 15px;
+		margin-top: 10px;
+	    font-size: 18px;
 	    width: 170px;
 	    padding-left: 10px;
 	}
@@ -251,7 +271,7 @@
 	    width: 335px;
 	}
 	.interaction-user li:nth-child(1) div.content-button {
-		width: 86px;
+		width: 32px;
 	}
 	.textarea-container textarea {
 	    border: 1px solid #3a3a3a;
@@ -263,18 +283,21 @@
 		width: 150px;
 	}
 	.add-post {
-	    top: 330px;
+	    /*top: 330px;*/
 	}
 	
 }
 @media screen and (max-width: 400px) {
-	.option-profile-menu ul {
-	    width: 300px;
+	.option-profile-menu {
+		overflow-x: auto;
 	}
 }
 @media screen and (max-width: 800px) {
 	.user-tassumir h1 {
 		display: none;
+	}
+	.menu-option-profile {
+	    font-size: 14px;
 	}
 }
 @media screen and (max-width: 420px) {
@@ -298,16 +321,41 @@
 	}
 	.follwing-btn {
 	    padding: 5px;
+	    width: 100%;
+	}	
+	.statistics-profile-page {
+	    width: 200px;
 	}
 }
 @media screen and (max-width: 720px) {
 	.suggest-slide {
 		display: block;
 	}
+	#main-profile .card {
+	    flex-direction: column;
+	}
+	#ident-profile {
+	    flex-direction: column;
+	    text-align: center;
+	    font-size: 16px;
+	}
+}
+@media screen and (max-width: 650px) {
+	#stories-card {
+		width: 100%;
+	}
+	.main {
+		width: 100%;
+	}
 }
 @media screen and (max-width: 330px) {
 	#pop-up-component-create-post .pop-up-component-header {
 		width: 300px;
+	}
+}
+@media screen and (max-width: 501px) {
+	.card {
+		width: 100%;
 	}
 }
 @media screen and (max-width: 500px) {
@@ -331,7 +379,7 @@
 }
 @media screen and (min-width: 1440px) {
 	.main {
-		width: 580px;
+		width: 650px;
 	}
 	.post {
 	    width: 100%;
@@ -339,5 +387,14 @@
 	}
 	.post-cover {
 	    height: 390px;
+	}
+}
+@media screen and (max-width: 328px) {
+	.img-profile-page {
+	    width: 100px;
+	    height: 100px;
+	}
+	.statistics-profile-page {
+	    width: 170px;
 	}
 }
