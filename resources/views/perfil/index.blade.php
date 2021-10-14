@@ -18,11 +18,21 @@
                     <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
                 </div>
         </div>
+            <h1 class="profile-name">@_{{$account_name[0]->nome}}_{{$account_name[0]->apelido}}</h1>
         <div>
             <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
-                <button type="submit" class="follwing-btn">
-                    Assumir
-                </button>
+                <label for="target-invited-relationship" style="width: 100%;">
+                    <div class="follwing-btn follwing-btn-pop-up">
+                        <h2>Assumir</h2>
+                    </div>
+                </label>
+                <?php if (false): ?>
+                    <label for="target-invited-relationship">
+                        <button type="submit" class="follwing-btn follwing-btn-pop-up">
+                            Assumir
+                        </button>
+                    </label>
+                <?php endif ?>
             </div>
             <div class="options-profile-btn">
                 <a href="{{route('account.profile.edit', 2)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>

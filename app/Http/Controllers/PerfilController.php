@@ -79,9 +79,23 @@ class PerfilController extends Controller
      * @param  \App\Models\Perfil $perfil
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Perfil $perfil)
+    public function update(Request $request)
     {
-        //
+      $auth = new AuthController();
+      $account_name = $auth->defaultDate();
+      //dd($request->genre);
+      DB::table('contas')
+            ->where('conta_id', $account_name[0]->conta_id)
+            ->update([
+              'nome' => $request->nome,
+              'apelido' => $request->apelido,
+              'genero' => $request->genre,
+              'descricao' => $request->bio,
+              'email' => $request->email,
+              'telefone' => $request->telefone
+
+          ]);
+          return redirect()->route('account.profile');
     }
 
     /**

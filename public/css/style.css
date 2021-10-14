@@ -5,6 +5,7 @@ body {
 	--background-dark-input: #3a3b3c;
 	--background-dark-card: #242526;
 	--box-shadow-main: #00000033;
+	--border-gradient: linear-gradient(90%, #800080, #d708d7);
 }
 #app {
 	background-color: var(--background-dark-main);
@@ -1186,6 +1187,7 @@ label[for="hugo"]{
 	flex-direction: row;
 	margin-bottom: 5px;
 	justify-content: space-between;
+	padding-left: 10px;
 }
 .interaction-numbers li {
 	/*display: inline-flex;*/
@@ -1939,7 +1941,7 @@ label[for="hugo"]{
 }
 .suggest-slide-page a.follow-suggest div {
 	padding: 5px;
-    background-color: var(--background-dark-input);
+    background-color: #3490dc;
     border-radius: 5px;
     margin: 10px auto;
     color: #fff;
@@ -2076,4 +2078,61 @@ label[for="hugo"]{
 }
 .options-profile-btn .follwing-btn {
 	padding: 8px;
+}
+.follwing-btn h2 {
+	font-size: 14px;
+	text-align: center;
+	margin-bottom: 0;
+	padding: 4px;
+}
+.suggest-slide a div {
+	padding: 4px;
+    color: #fff;
+    background-color: #3490dc;
+    border-radius: 5px;
+    margin-top: 9px;
+}
+.relationship-type {
+	padding: 8px;
+    border-radius: 5px;
+    background-color: var(--background-dark-input);
+    cursor: pointer;
+    margin-left: 10px;
+    padding-bottom: 2px;
+    width: 200px;
+}
+.relationship-type-all {
+	background-color: #242526;
+	margin-left: 30px;
+	width: 200px;
+	display: none;
+	padding: 5px;
+	border-radius: 5px;
+	position: absolute;
+}
+.relationship-type-all label {
+	width: 100%;
+}
+.relationship-type-all h2 {
+	font-size: 13px;
+	padding: 6px;
+	color: #fff;
+	padding-left: 10px;
+	cursor: pointer;
+}
+.relationship-type h1,
+.relationship-type i {
+	display: inline-flex;
+	color: #fff;
+}
+.relationship-type h1 {
+	font-size: 13px;
+	padding-left: 10px;
+}
+.relationship-type-container {
+	margin-top: 15px;
+    margin-bottom: 10px;
+    height: 250px;
+    overflow-y: auto;
+    position: absolute;
 }
