@@ -6,7 +6,11 @@
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
 <<<<<<< HEAD
+<<<<<<< HEAD
         'reference' => '6f2880ff9dd3d3ea3a4653253833ad22eddaf97d',
+=======
+        'reference' => '54456b91e57391ecdb82bbf24bbe1751dce43980',
+>>>>>>> 5392486a668eeb3254b136039669535675d0efc8
 =======
         'reference' => 'bd6ab8a039279617502e03c691c98a4514de92e9',
 >>>>>>> 3c654ca106da188892d096a79e79b32d1f599c07
@@ -568,6 +572,7 @@
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
 <<<<<<< HEAD
+<<<<<<< HEAD
             'reference' => '6f2880ff9dd3d3ea3a4653253833ad22eddaf97d',
             'dev_requirement' => false,
         ),
@@ -588,7 +593,11 @@
             'aliases' => array(),
             'reference' => 'b21e65cbe13896946986cb0868180cd69e1bd5d3',
 =======
+            'reference' => '54456b91e57391ecdb82bbf24bbe1751dce43980',
+>>>>>>> 5392486a668eeb3254b136039669535675d0efc8
+=======
             'reference' => 'bd6ab8a039279617502e03c691c98a4514de92e9',
+>>>>>>> 3c654ca106da188892d096a79e79b32d1f599c07
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
