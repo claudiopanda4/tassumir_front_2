@@ -24,6 +24,7 @@ Route::get('/like', [App\Http\Controllers\AuthController::class, 'like'])->name(
 Route::get('/seguir', [App\Http\Controllers\AuthController::class, 'seguir'])->name('seguir');
 Route::get('/comentar', [App\Http\Controllers\AuthController::class, 'comentar'])->name('comentar');
 Route::get('/profile/', [App\Http\Controllers\PerfilController::class, 'index'])->name('account.profile');
+Route::get('/update/', [App\Http\Controllers\PerfilController::class, 'update'])->name('account.update');
 Route::get('/profile/{perfil}/', [App\Http\Controllers\PerfilController::class, 'edit'])->name('account.profile.edit');
 Route::get('/couple_page/', [App\Http\Controllers\PaginaCasalController::class, 'index'])->name('couple.page');
 Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');

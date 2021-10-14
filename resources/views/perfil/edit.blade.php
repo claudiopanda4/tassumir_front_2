@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="main">
+<div class="main" action="{{ route('account.update') }}" method="POST">
+  @csrf
 <div class="card br-10">
     <div class="label-input">
         <label>
@@ -66,7 +67,7 @@
     </div>
     <div class="btn-container">
         <div class="card-btn">
-            <button type="submit" class="btn">
+            <button type="submit" class="btn btn-block btn-primary">
                 Guardar Alterações
             </button>
         </div>
