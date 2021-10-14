@@ -39,18 +39,17 @@
                     	<h3 class="text-white">Olá</h3>
                     </div>
 
-
-                    <div class="row justify-content-start">
-                    	<span class="text-white">Seja Bem Vindo(a) a maior plataforma de relacionamento.</span>
-                    </div>
-
-                    <div class="row justify-content-center">
-                    	<span class="text-white">Agora vamos conhecer-te</span>
-                    </div>
-
                 </header>
 
-                <form action="{{ route('account.login.enter') }}" method="POST">
+                    <div class="row justify-content-center">
+                        <span class="text-white">Seja Bem Vindo(a) a maior plataforma de relacionamento.</span>
+                    </div>
+
+                    <div class="row justify-content-center mb-2">
+                        <span class="text-white">Agora vamos conhecer-te</span>
+                    </div>
+
+                <form action="{{route('account.registerComplete.form')}}" method="POST">
                     @csrf
 
                      <div class="form-group">
@@ -59,8 +58,6 @@
                     <div class="form-group">
                         <input type="text" name="password_login" class="input-text-default input-full" id="exampleInputPassword1" placeholder="Apelido">
                     </div>
-
-
                     <div class="row">
 
                     	<div class="col-md-8">
@@ -90,7 +87,6 @@
 
                         <input type="date" name="password_login" class="input-text-default input-full" id="exampleInputPassword1" placeholder="12/09/2002">
 
-
                     </div>
 
                     <a href="{{route('account.registerComplete.form')}}" id="login-enter" type="submit" class=""><span class="text-white">Seguinte</span></a>
@@ -98,7 +94,7 @@
                     <div class="clearfix">
 
                         <div id="forget-password" class="l-5">
-                            <a href="" class="hp-style"><h1>Já tenho uma conta</h1></a>
+                            <a href="{{route('account.login.form')}}" class="hp-style"><h1>Já tenho uma conta</h1></a>
                             
                         </div>
                        
