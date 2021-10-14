@@ -17,7 +17,7 @@
                 <ul class="clearfix">
                     <?php 
                     $about_talking = [
-                        [],[],[],[],
+                        [],[],[],[],[],
                     ];
                     foreach ($about_talking as $key => $value): ?>
                         <li class="li-component-stories l-5">
@@ -25,7 +25,7 @@
                                 <div class="identify-cover circle">
                                     <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
                                 </div>
-                                <img class="img-back-stories" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                <img class="img-back-stories center" src="{{asset('storage/img/page/unnamed.jpg')}}">
                                 <div class="headline">
                                     <h2>Yola Araújo oferece presente de 1 ano de...</h2>
                                 </div>
@@ -194,10 +194,13 @@
                     <nav class="row interaction-numbers">
                         <ul class="">
                             <li>
-                                <a href="">10 reacções</a>
+                                <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="">10 reacções</a>
                             </li>
                             <li>
                                 <a href="">10 comentários</a>
+                            </li>
+                            <li>
+                                <a href="">30 partilhas</a>
                             </li>
                         </ul>
                     </nav>
@@ -206,15 +209,15 @@
                             <li class="l-5">
                                 <div class="content-button">
                                     <a href="">
-                                        <i class="fas fa-heart"></i>
-                                        <h2>Gosto</h2>
+                                        <i class="far fa-heart center fa-16"></i>
+                                        <h2>Like</h2>
                                     </a>
                                 </div>
                             </li>
                             <li class="l-5">
                                 <div class="content-button">
                                     <a href="">
-                                        <i class="far fa-comment-alt"></i>
+                                        <i class="far fa-comment-alt center fa-16"></i>
                                         <h2>Comentar</h2>
                                     </a>
                                 </div>
@@ -222,8 +225,16 @@
                             <li class="r-5">
                                 <div class="content-button">
                                     <a href="">
-                                        <i class="fas fa-share"></i>
+                                        <i class="fas fa-share center fa-16"></i>
                                         <h2>Partilhar</h2>
+                                    </a>
+                                </div>
+                            </li> 
+                            <li class="r-5">
+                                <div class="content-button">
+                                    <a href="">
+                                        <i class="far fa-bookmark center fa-16"></i>
+                                        <h2>Guardar</h2>
                                     </a>
                                 </div>
                             </li>  
