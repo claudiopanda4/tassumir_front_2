@@ -18,7 +18,6 @@ class AuthController extends Controller
       $page= DB::table('pages')->get();
       $a=0;
       $dados = array();
-
       foreach ($post as $key) {
 
         $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$page[$key->page_id - 1]->page_id, 2 ]);
@@ -47,17 +46,18 @@ class AuthController extends Controller
     public function like(Request $request){
             $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
             $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+            $resposta = 0;
             if ($request->v == 1) {
               DB::table('post_reactions')->insert([
                 'reaction_id' => 1,
                 'identificador_id' => $aux[0]->identificador_id,
                 'post_id' => $request->id,
               ]);
-              $resposta="Não gosto";
+              $resposta= 1;
 
-            }elseif ($request->v == 2){
+            } elseif ($request->v == 2){
               DB::table('post_reactions')->where(['post_id'=>$request->id])->delete();
-              $resposta="Gosto";
+              $resposta= 2;
             }
             return response()->json($resposta);
           }
@@ -104,7 +104,7 @@ class AuthController extends Controller
         return view('auth.login_front');
     }
     public function registrarUser(){
-        
+
         return view('auth.registerUser');
     }
     public function registrarUserComplete(){
