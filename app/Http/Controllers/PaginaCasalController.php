@@ -6,12 +6,19 @@ use Illuminate\Http\Request;
 
 class PaginaCasalController extends Controller
 {
-    
+
 
     public function index(){
         $auth = new AuthController();
         $account_name = $auth->defaultDate();
         return view('pagina.couple_page', compact('account_name'));
+    }
+
+    public function paginas($id){
+      $auth = new AuthController();
+      $account_name = $auth->defaultDate();
+      return view('pagina.couple_page', compact('account_name'));
+      
     }
     public function edit_couple(){
         $auth = new AuthController();

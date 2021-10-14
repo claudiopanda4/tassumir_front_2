@@ -28,10 +28,10 @@
                 <a href="{{route('account.profile.edit', 2)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
             </div>
         </div>
-        
+
         <ul class="profile-follow">
             <li class="statistics-profile">
-                <h2>Seguindo 65</h2>
+                <h2>Seguindo {{$perfil[0]['qtd_ps']}}</h2>
                 <a href="{{route('account.profile.edit', 2)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
             </li>
         </ul>
@@ -39,9 +39,9 @@
             <h3>Namorado de <span>Ana Joyce</span></h3>
         </div>
         <div class="inform-profile">
-            <p>Estou trabalhando nisso...</p>
+            <p>{{$account_name[0]->descricao}}</p>
         </div>
-    </div>   
+    </div>
 </header>
 <div class="card br-10">
     <?php if (false): ?>
@@ -54,7 +54,7 @@
             <li><a href=""><i class="fas fa-eye fa-15"></i><h1 class="menu-option-profile">Seguindo</h1></a></li>
             <li><a href=""><i class="fas fa-heart fa-15"></i><h1 class="menu-option-profile">Curtindo</h1></a></li>
         </ul>
-    </nav>        
+    </nav>
     <?php endif ?>
 
     <nav class="option-profile-menu">
@@ -65,13 +65,13 @@
         </ul>
     </nav>
     <div class="invited-container">
-        
+
     </div>
     <div class="saved-container">
-        
+
     </div>
     <div class="invited-container">
-        
+
     </div>
     <?php if (false): ?>
     <div class="couple-page-container">
@@ -105,7 +105,7 @@
         </div>
     </div>
     <?php endif ?>
-    
+
 </div>
 <div>
     <a href="">
