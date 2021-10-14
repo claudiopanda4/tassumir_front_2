@@ -536,8 +536,14 @@
 	opacity: 1;
     z-index: 1000;
 }
-
 #target-profile-cover-post:checked ~ #cover-profile-post {
 	opacity: 1;
     z-index: 1001;
+}
+#target-invited-relationship:checked ~ #invited-relationship {
+	opacity: 1;
+    z-index: 1001;
+}
+#relationship-type-target:checked ~  .relationship-type-all {
+	display: block;
 }

@@ -338,10 +338,62 @@
 </div> 
 <?php endif ?>
 <?php if (true): ?>
+<input type="checkbox" name="" id="target-invited-relationship" class="invisible">
+<div class="pop-up" id="invited-relationship">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 296px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Pedido de Relacionamento</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-invited-relationship">
+                    <div class="cancel-box div-img" id="target-invited-relationship-id">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px; overflow-y: auto;">
+            <div class="">
+                <form enctype="multipart/form-data">
+                    <label for="relationship-type-target">
+                        <div class="relationship-type">
+                            <i class="fas fa-sliders-h"></i>
+                            <h1 id="relationship-selected-type">Tipo de Relacionamento</h1>
+                        </div>
+                    </label>
+                    <input type="checkbox" name="" id="relationship-type-target" class="invisible">
+                    <div class="relationship-type-all" id="relationship-type-container">
+                        <label for="relationship-type-target">
+                            <h2 id="relationship-type-all-1" class="relationship-type-component">Namoro</h2>
+                        </label>
+                        <label for="relationship-type-target">
+                            <h2 id="relationship-type-all-2" class="relationship-type-component">Noivado</h2>
+                        </label>
+                        <label for="relationship-type-target">
+                            <h2 id="relationship-type-all-3" class="relationship-type-component">Casamento</h2>
+                        </label>
+                    </div>
+                    <input type="hidden" name="" value="" id="relationship-type-selected">
+                </form>
+            </div>
+        </div>
+        <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+            <div class="" id="cover-done">
+                <h2 style="padding: 10px; font-size: 14px;">Concluido</h2>
+            </div>
+        </div>
+    </div>
+</div> 
+<?php endif ?>
+<?php if (true): ?>
  
 <?php endif ?>
 <script type="text/javascript">
     $(document).ready(function () {
+        $('.relationship-type-component').click(function(e){
+            $('#relationship-selected-type').text($('#' + e.target.id).text());
+            $('#relationship-type-selected').val(e.target.id.split('-')[3]);
+        });
         $('.cancel-box').click(function(){
             $('.pop-up').css({
                 opacity: 0,
@@ -372,6 +424,18 @@
                 zIndex: -1
             });
             $('#add-post-container').css({
+                opacity: 1,
+                zIndex: 1000
+            });
+        });
+        $('#target-invited-relationship-id').click(function(){
+            $('#invited-relationship').css({
+                opacity: 0,
+                zIndex: -1
+            });
+        });
+        $('.follwing-btn-pop-up').click(function(){
+            $('#invited-relationship').css({
                 opacity: 1,
                 zIndex: 1000
             });

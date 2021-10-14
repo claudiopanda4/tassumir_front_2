@@ -193,13 +193,13 @@
                     </div>
                     <nav class="row interaction-numbers">
                         <ul class="">
-                            <li>
-                                <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="">10 reacções</a>
+                            <li class="text-ellips">
+                                <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="">10 likes</a>
                             </li>
-                            <li>
+                            <li class="text-ellips">
                                 <a href="">10 comentários</a>
                             </li>
-                            <li>
+                            <li class="text-ellips" style="display:none;">
                                 <a href="">30 partilhas</a>
                             </li>
                         </ul>
