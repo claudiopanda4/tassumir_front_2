@@ -30,6 +30,13 @@ class AuthController extends Controller
     public function showLoginForm(){
         return view('auth.login_front');
     }
+    public function registrarUser(){
+        
+        return view('auth.registerUser');
+    }
+    public function registrarUserComplete(){
+        return view('auth.registerUserLastInfo');
+    }
 
     public function login(Request $request){
         
