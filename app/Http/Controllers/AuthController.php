@@ -23,8 +23,7 @@ class AuthController extends Controller
       $post=  DB::table('posts')->get();
       $page= DB::table('pages')->get();
       $a=0;
-
-
+      $dados = array();
       foreach ($post as $key) {
 
         $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$page[$key->page_id - 1]->page_id, 2 ]);

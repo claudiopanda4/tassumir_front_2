@@ -27,7 +27,20 @@ Route::get('/profile/', [App\Http\Controllers\PerfilController::class, 'index'])
 Route::post('/update/', [App\Http\Controllers\PerfilController::class, 'update'])->name('account.update');
 Route::get('/profile/{perfil}/', [App\Http\Controllers\PerfilController::class, 'edit'])->name('account.profile.edit');
 Route::get('/couple_page/', [App\Http\Controllers\PaginaCasalController::class, 'index'])->name('couple.page');
+
+
+
+Route::post('/couple_post/', [App\Http\Controllers\PaginaCasalController::class, 'store_post'])->name('post_couple.page');
+
+
+
 Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
+
+
+
+Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
+ 
+
 Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::class, 'edit_couple'])->name('edit_couple.page');
 Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
 Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');

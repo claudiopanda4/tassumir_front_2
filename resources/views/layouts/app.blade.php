@@ -123,7 +123,9 @@
                 <li class="li-component-aside"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}">{{$account_name[0]->nome}} {{$account_name[0]->apelido}}</a></li>
                 <!--<li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Criar Relacionamento</a></li>
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
-                <li class="li-component-aside"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Página de Casal</a></li>
+                <?php  ?>
+                    <li class="li-component-aside"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Página de Casal</a></li>
+                <?php  ?>
                 <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Guardados</a></li>
                 <li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Casais que eu sigo</a></li>
                 <li class="li-component-aside"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Ganhar Dinheiro</a></li>
@@ -227,7 +229,8 @@
     </div>
 </body>
 <?php if (true): ?>
-<form action="" method="" enctype="multipart/form-data">
+<form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
+@csrf
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
@@ -241,7 +244,7 @@
                 </label>
             </div>
         </header>
-        <form enctype="multipart/form-data">
+       <!-- <form enctype="multipart/form-data">-->
             <div class="header-height"></div>
             <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
                 <div class="first-component clearfix l-5">
@@ -253,7 +256,7 @@
                     </div>
                 </div>
                 <div class="textarea-container l-5" style="width:100%;">
-                    <textarea placeholder="O que deseja que as pessoas saibam?"></textarea>
+                    <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
                 </div>
                 <nav class="add-file l-5 clearfix">
                     <ul style="width: 160px;" class="r-5">
@@ -272,17 +275,17 @@
             </div>
             <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                 <div class="" id="cover-done">
-                    <h2 style="padding: 10px; font-size: 14px;">Concluido</h2>
+                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
                 </div>
             </div>
-        </form>
+        <!-- </form> -->
     </div>
 </div>
 <input type="checkbox" name="" id="target-profile-cover-post" class="invisible">
 <div class="pop-up" id="cover-profile-post">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
         <header class="pop-up-component-header pop-up-component-header-default header-height">
-            <h1>Adicione Imagem</h1>
+            <h1 class="">Adicione Imagem</h1>
             <h1 class="invisible">Adicione Video</h1>
             <div class="container-pop-up-component-header">
                 <label for="target-profile-cover-post">
@@ -295,16 +298,17 @@
         <div class="header-height"></div>
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <div class="">
-                <input class="file" type="file" name="" style="width: 250px; margin-left: 10px; color: #fff;">
+                <input class="file" type="file" name="imgOrVideo" style="width: 250px; margin-left: 10px; color: #fff;">
             </div>
         </div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-            <div class="" id="cover-done">
-                <h2 style="padding: 10px; font-size: 14px;">Concluido</h2>
+            <div id="cover-done">
+                <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
             </div>
         </div>
     </div>
 </div>
+
 </form>
 <?php endif ?>
 <?php if (true): ?>
@@ -393,6 +397,15 @@
                 zIndex: 1000
             });
         });
+
+        $('#concluir_file').click(function() {
+            $('#cover-profile-post').css({
+                opacity: 0,
+                zIndex: -1
+            });
+        });
+
     });
+
 </script>
 </html>
