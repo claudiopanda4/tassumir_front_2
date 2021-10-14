@@ -29,11 +29,8 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-<<<<<<< HEAD
     'reference' => '3c654ca106da188892d096a79e79b32d1f599c07',
-=======
-    'reference' => '8398c33393eb46c8d943abbed68da1270db35fd5',
->>>>>>> 1182bbc301bbf1417d57e1af1c02f4ef3d16da6f
+
     'name' => 'laravel/laravel',
   ),
   'versions' => 
