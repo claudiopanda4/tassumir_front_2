@@ -33,7 +33,10 @@ body {
     color: #fff;
     margin-top: 10px;
     font-weight: bolder;
+    
+	text-align: center;
 }
+
 #register-enter-container {
 	width: 45%;
 	margin-top: 15px;
@@ -45,10 +48,15 @@ body {
 	padding: 8px;
 	color: #fff;
 	border: none;
+	text-align: center;
 }
+
 #forget-password {
 	width: 45%;
 	margin-top: 15px;
+}
+#forget-password a h1 {
+	text-decoration: underline;
 }
 #forget-password h1 {
 	font-size: 14px;
