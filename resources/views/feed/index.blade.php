@@ -106,7 +106,7 @@
                 "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
             ],
         ];
-        foreach ($posts_feed as $key => $value): ?>
+        foreach ($dados as $key => $value): ?>
             <?php if ($key == 2): ?>
                 <section class="suggest-slide">
                     <header>
@@ -197,7 +197,7 @@
                 <nav class="row interaction-numbers">
                     <ul class="">
                         <li>
-                            <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="">{{$dados[$key]['qtd_likes']}} reacções</a>
+                            <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
                         </li>
                         <li>
                             <a href="">{{$dados[$key]['qtd_comment']}} comentários</a>
@@ -212,14 +212,14 @@
                         <li class="l-5">
                             <div class="content-button">
                               <?php if ($dados[$key]['reagir_S/N']==0): ?>
-                                <a href="" onclick="gostar('{{$dados[$key]['post_id']}}', '1')">
-                                    <i class="far fa-heart center fa-16"></i>
-                                    <h2>Like</h2>
+                                <a href="" class="like-a" id="on-{{$dados[$key]['post_id']}}">
+                                    <i class="far fa-heart center fa-16" id="on-{{$dados[$key]['post_id']}}-i"></i>
+                                    <h2 id="on-{{$dados[$key]['post_id']}}-h2">Like</h2>
                                 </a>
                                 <?php else: ?>
-                                  <a href="" onclick="gostar('{{$dados[$key]['post_id']}}', '2')">
-                                      <i class="far fa-heart center fa-16"></i>
-                                      <h2>Like</h2>
+                                  <a href="" class="like-a" id="off-{{$dados[$key]['post_id']}}">
+                                      <i class="far fa-heart center fa-16" id="off-{{$dados[$key]['post_id']}}-i"></i>
+                                      <h2 id="off-{{$dados[$key]['post_id']}}-h2">Like</h2>
                                   </a>
                                   <?php endif; ?>
                             </div>
@@ -279,8 +279,16 @@ function gostar(id, v){
       data: {'id': id, 'v':v},
        dataType: 'json',
        success:function(response){
-       console.log(response);
-
+       let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
+       if (response == 1) {
+         likes_qtd = parseInt(likes_qtd) + 1;
+         $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+       } else if (response == 2) {
+         likes_qtd = parseInt(likes_qtd) - 1;
+         if (likes_qtd >= 0) {
+           $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+         }
+       }
       }
     });
   }

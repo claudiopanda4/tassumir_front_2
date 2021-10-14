@@ -295,7 +295,7 @@
         <div class="header-height"></div>
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <div class="">
-                <input class="file" type="file" name="" style="width: 250px; margin-left: 10px; color: #fff;">    
+                <input class="file" type="file" name="" style="width: 250px; margin-left: 10px; color: #fff;">
             </div>
         </div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
@@ -305,7 +305,7 @@
         </div>
     </div>
 </div>
-</form> 
+</form>
 <?php endif ?>
 <?php if (true): ?>
 <input type="checkbox" name="" id="target-profile-cover" class="invisible">
@@ -335,13 +335,30 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
 <?php endif ?>
 <?php if (true): ?>
- 
+
 <?php endif ?>
 <script type="text/javascript">
     $(document).ready(function () {
+      $('.like-a').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id.split('-');
+          if(id[0] == "on"){
+            gostar(id[1], 1);
+            let new_id = "off-" + id[1] + "-i";
+            document.getElementById("on-" + id[1] + "-i").setAttribute('id', new_id);
+          } else if(id[0] == "off") {
+              gostar(id[1], 2);
+              let new_id = "on-" + id[1] + "-i";
+              document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
+          }
+      });
+      $('#genre-id').val($("input[name='genre']:checked").val());
+      $('.genre-class').click(function(){
+          $('#genre-id').val($("input[name='genre']:checked").val());
+      });
         $('.cancel-box').click(function(){
             $('.pop-up').css({
                 opacity: 0,

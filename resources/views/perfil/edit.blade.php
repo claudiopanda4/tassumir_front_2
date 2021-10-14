@@ -1,15 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="main" action="{{ route('account.update') }}" method="POST">
-  @csrf
+<div class="main">
+  <form class="" action="{{ route('account.update') }}" method="POST">
+    @csrf
+
 <div class="card br-10">
     <div class="label-input">
         <label>
             <span class="label-dark">Nome</span>
         </label>
         <div class="input input-container">
-            <input type="text" name="" class="input-text" placeholder="o primeiro nome" value="{{$account_name[0]->nome}}">
+            <input type="text" name="nome" class="input-text" placeholder="o primeiro nome" value="{{$account_name[0]->nome}}">
         </div>
     </div>
     <div class="label-input">
@@ -17,7 +19,7 @@
             <span class="label-dark">Sobrenome</span>
         </label>
         <div class="input input-container">
-            <input type="text" name="" class="input-text" placeholder="o último nome" value="{{$account_name[0]->apelido}} ">
+            <input type="text" name="apelido" class="input-text" placeholder="o último nome" value="{{$account_name[0]->apelido}} ">
         </div>
     </div>
     <div class="label-input">
@@ -25,7 +27,7 @@
             <span class="label-dark">Email</span>
         </label>
         <div class="input input-container">
-            <input type="email" name="" class="input-text" placeholder="example@gmail.com" value="{{$account_name[0]->email}} ">
+            <input type="email" name="email" class="input-text" placeholder="example@gmail.com" value="{{$account_name[0]->email}} ">
         </div>
     </div>
     <div class="label-input">
@@ -33,7 +35,7 @@
             <span class="label-dark">Biografia</span>
         </label>
         <div class="input input-container">
-            <textarea placeholder="O que tens a falar sobre si?" >{{$account_name[0]->descricao}}</textarea>
+            <textarea name="bio" placeholder="O que tens a falar sobre si?" >{{$account_name[0]->descricao}}</textarea>
         </div>
     </div>
     <div class="label-input">
@@ -41,7 +43,7 @@
             <span class="label-dark">Telefone</span>
         </label>
         <div class="input input-container">
-            <input type="email" name="" class="input-text" placeholder="+244-" value="{{$account_name[0]->telefone}} ">
+            <input type="telefone" name="telefone" class="input-text" placeholder="+244-" value="{{$account_name[0]->telefone}} ">
         </div>
     </div>
     <div class="label-input">
@@ -51,28 +53,30 @@
         <div class="input input-container-radio">
             <label for="M-genre">M</label>
             <?php if ($account_name[0]->genero=='M'): ?>
-              <input type="radio" name="genre" id="M-genre" checked>
+              <input type="radio" name="genre" id="M-genre" value="M" class="genre-class" checked>
             <?php else: ?>
-              <input type="radio" name="genre" id="M-genre">
+              <input type="radio" name="genre" class="genre-class" id="M-genre"  value="M">
             <?php endif; ?>
         </div>
         <div class="input input-container-radio">
             <label for="F-genre">F</label>
             <?php if ($account_name[0]->genero=='F'): ?>
-            <input type="radio" name="genre" id="F-genre" checked>
+            <input type="radio" name="genre" id="F-genre" class="genre-class" value="F" checked>
             <?php else: ?>
-            <input type="radio" name="genre" id="F-genre">
+            <input type="radio" name="genre" id="F-genre" class="genre-class"  value="F">
             <?php endif; ?>
         </div>
+        <input type="hidden" name="genre-choose" value="" id="genre-id">
     </div>
     <div class="btn-container">
         <div class="card-btn">
-            <button type="submit" class="btn btn-block btn-primary">
+            <button type="submit" class="btn">
                 Guardar Alterações
             </button>
         </div>
 
     </div>
 </div>
+  </form>
 </div>
 @stop
