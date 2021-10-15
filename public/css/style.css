@@ -156,10 +156,10 @@ body {
 	border: none;
 }
 .aside-left {
-	left: 10px;
+	left: 20px;
 }
 .aside-right {
-	right: 10px;
+	right: 20px;
 }
 .aside-left ul {
 	width: 210px;
@@ -200,7 +200,7 @@ body {
     background-color: #18191a;
     width: 100vw;
     height: auto;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .header-main-component {
 	height: 60px;
@@ -1066,6 +1066,7 @@ label[for="hugo"]{
 }
 .page-identify {
 	margin-left: 0;
+	margin-bottom: 0;
 	width: 185px;
 }
 .follow_page_post {
@@ -1107,6 +1108,7 @@ label[for="hugo"]{
 .card-post p {
 	color: #fff;
 	padding: 10px;
+	padding-top: 0;
 }
 .fa-option {
 	cursor: pointer;
@@ -1119,6 +1121,7 @@ label[for="hugo"]{
     padding: 10px;
     left: -200px;
     border-radius: 10px;
+    z-index: 2;
     box-shadow: 0 1px 2px #00000033;
 }
 .more-option-post-n {
@@ -2135,4 +2138,9 @@ label[for="hugo"]{
     height: 250px;
     overflow-y: auto;
     position: absolute;
+}
+.marriage-proposal {
+	width: 80%;
+    padding-left: 12px;
+    text-align: center;
 }

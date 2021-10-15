@@ -94,8 +94,11 @@ class PaginaCasalController extends Controller
     }
     private function store($description, $file_name, $id, $format)
     {
-        DB::insert('insert into posts(descricao, file, page_id, formato_id) values(?, ?, ?, ?)', 
-            [$description, $file_name, $id, $format]);
+
+        $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
+        //dd($uuid);
+        DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id) values(?, ?, ?, ?, ?)', 
+            [$uuid, $description, $file_name, $id, $format]);
     }
 
     public function check_image_extension( $extension )
