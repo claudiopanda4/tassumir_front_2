@@ -2160,3 +2160,6 @@ label[for="hugo"]{
 .label-full {
 	width: 100%;
 }
+.main-container {
+	margin-top: 40px;
+}

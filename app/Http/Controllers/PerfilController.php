@@ -20,8 +20,15 @@ class PerfilController extends Controller
         $account_name = $auth->defaultDate();
         //-------------------------------------------------------------------------
           $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-          $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
-          $perfil[0]['qtd_ps']=sizeof($seguidor);
+          $lenght = sizeof($aux1);
+          //dd($lenght);
+          if ($lenght > 0) {
+              $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
+                $perfil[0]['qtd_ps']=sizeof($seguidor);
+                return view('perfil.index', compact('account_name', 'perfil'));
+          } else {
+            $perfil[0]['qtd_ps'] = 0;
+          }
 
           //dd($account_name);
           return view('perfil.index', compact('account_name', 'perfil'));

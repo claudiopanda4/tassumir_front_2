@@ -24,12 +24,21 @@ class AuthController extends Controller
 
         $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$page[$key->page_id - 1]->page_id, 2 ]);
         $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-        $seguidor = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux[0]->identificador_id, $aux1[0]->identificador_id]);
+        if (sizeof($aux1) > 0) {
+            $seguidor = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux[0]->identificador_id, $aux1[0]->identificador_id]);
+        } else {
+            $seguidor = array();
+        }
+        
         $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
         $page_uuid = DB::select('select uuid from pages where page_id = ?', [$key->page_id]);
         $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
-        $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$key->post_id, $aux1[0]->identificador_id]);
-
+        
+        if (sizeof($aux1) > 0) {
+            $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$key->post_id, $aux1[0]->identificador_id]);
+        } else {
+            $ja_reagiu = array();
+        }
         $dados[$a]['nome_pag'] = $page[$key->page_id - 1]->nome;
         $dados[$a]['post']=$key->descricao;
         $dados[$a]['qtd_likes']= sizeof($likes);
@@ -143,8 +152,10 @@ class AuthController extends Controller
             'nacionalidade' => $request->nacionalidade
 
         ]);
-
-
+        DB::table('identificadors')->insertGetId([
+             'tipo_identificador_id' => 1,
+             'id' => $saveRetriveId,
+        ]);
         //$countId = DB::table('contas')->select(count(['conta_id']))->count();
 
         DB::table('logins')->insert([

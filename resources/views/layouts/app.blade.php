@@ -225,7 +225,7 @@
             </footer>
         </nav>
     </aside>
-    <main>
+    <main class="main-container">
         @yield('content');
     </main>
     </div>
