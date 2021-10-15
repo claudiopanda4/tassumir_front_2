@@ -48,7 +48,7 @@
                     <button id="login-enter" type="submit" class=""><span class="enter-login">Ent</span>rar</button>
                     <div class="clearfix">
                         <div id="forget-password" class="l-5">
-                            <a href=""><h1>Esqueceu a senha</h1></a>
+                            <a href="{{route('account.code.form')}}"><h1>Esqueceu a senha?</h1></a>
                         </div>
                         <div class="r-5" id="register-enter-container">
                             <a href="{{ route('account.register.form') }}"  id="register-enter" type="submit" class=""><span class="enter-login"></span>Registar</a>

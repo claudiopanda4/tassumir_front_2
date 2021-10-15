@@ -46,7 +46,7 @@
                         <span class="text-white mb-2">Estamos concluindo o seu cadastro...</span>
                     </div>
 
-                <form action="{{ route('account.login.enter') }}" method="POST">
+                <form action="" method="POST">
                     @csrf
 
                      <div class="form-group">
@@ -68,17 +68,15 @@
 
                         <div class="col-md-6">
                             
-                        <input type="email" class="input-text-default input-full" name="number_email_login" type="text" placeholder="Email" id="email">
+                        <input type="email" class="input-text-default input-full hidden" name="number_email_login" type="text" placeholder="Email" id="email">
 
-                        <input type="tel" class="input-text-default input-full" name="number_email_login" type="text" placeholder="Telefone" id="telefone">
+                        <input type="tel" class="input-text-default input-full hidden" name="number_email_login" type="text" placeholder="Telefone" id="telefone">
 
                         </div>
                          
                     </div>
 
                     <a href="" id="login-enter" type="submit" class=""><span class="text-white">Criar Conta</span></a>
-
-
                 </form>
             </div>
         </main>
@@ -87,6 +85,7 @@
 </html>
 
 <script>
+
 $(document).ready(function() {
 
     $("#inputState").change(function(){
@@ -95,25 +94,22 @@ $(document).ready(function() {
 
         if (type_info == "emailSele") {
 
-            $("#email").show();
+            $("#email").fadeIn();
             $("#telefone").hide();
 
         }else if(type_info == "telefSele"){
 
-            $("#telefone").show();
+            $("#telefone").fadeIn();
 
              $("#email").hide();
 
         }else{
 
-        $("#email").hide();
-        $("#telefone").hide();
+            $("#email").hide();
+            $("#telefone").hide();
     }
 
     });
-
-    $("#email").hide();
-    $("#telefone").hide();
 
 });
     

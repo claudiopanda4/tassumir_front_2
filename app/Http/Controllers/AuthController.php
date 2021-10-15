@@ -110,6 +110,16 @@ class AuthController extends Controller
     public function registrarUserComplete(){
         return view('auth.registerUserLastInfo');
     }
+    public function recuperarSenha(){
+
+        return view('auth.codeRecover');
+    }
+    public function codigoRecebido(){
+        return view('auth.codigoRecebido');
+    }
+    public function newCode(){
+        return view('auth.newCode');
+    }
 
     public function login(Request $request){
 
