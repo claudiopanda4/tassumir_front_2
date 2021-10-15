@@ -14,12 +14,7 @@ class PaginaCasalController extends Controller
     public function index(){
         $auth = new AuthController();
         $account_name = $auth->defaultDate();
-
-        $page_content = DB::select('select * from pages where conta_id_a = ? or conta_id_b = ?', [
-            $account_name[0]->conta_id, 
-            $account_name[0]->conta_id
-        ]);
-         
+        $page_content = $this->page_default_date($account_name);
         $seguidores = $this->seguidores($page_content[0]->nome, $page_content[0]->page_id);
         $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
@@ -28,12 +23,28 @@ class PaginaCasalController extends Controller
         return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes'));
     }
 
+    public function page_default_date ($account_name) {
+        
+        $page_content = DB::select('select * from pages where conta_id_a = ? or conta_id_b = ?', [
+            $account_name[0]->conta_id, 
+            $account_name[0]->conta_id
+        ]);
+
+        return $page_content;
+    }
 
     public function paginas($id){
       $auth = new AuthController();
       $account_name = $auth->defaultDate();
-      return view('pagina.couple_page', compact('account_name'));
-      
+      $page_content = $this->page_default_date($account_name);
+      $page_content = DB::select('select * from pages where page_id = ?', [
+            $id
+        ]);
+      $seguidores = $this->seguidores($page_content[0]->nome, $page_content[0]->page_id);
+      $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
+      $publicacoes = $this->get_all_post($page_content[0]->page_id);
+
+      return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes'));
     }
 
 

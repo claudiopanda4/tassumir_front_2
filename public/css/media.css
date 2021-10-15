@@ -13,6 +13,12 @@
 	.option-profile-menu ul {
 	    /*background-color: #242526;*/
 	}
+	.video-post {
+	    height: 180px;
+	}
+	.post-cover {
+	    height: 250px;
+	}
 	.option-profile-menu {
 	    overflow-x: auto;
 	    /*background-color: #242526;*/
@@ -68,7 +74,7 @@
 	}
 	.card {
 		border-radius: 0px;
-		margin-top: 8px;
+		margin-top: 5px;
 	}
 	.user-tassumir {
 	    margin-right: 0px;
@@ -132,7 +138,7 @@
 	    padding-left: 25px;
 	}
 	.stories-about-talking header h1 {
-	    font-size: 15px;
+	    font-size: 14px;
 	}
 	.stories-about-talking nav ul li:nth-child(1) {
 	    
@@ -153,8 +159,8 @@
 	    position: relative;
 	    margin-top: 0;
 	    margin-left: 0;
-	    padding-left: 10px;
-	    padding-top: 10px;
+	    /*padding-left: 10px;
+	    padding-top: 10px;*/
 	}
 	.img-profile-user-married img {
 	    width: 60px;
@@ -190,7 +196,7 @@
 	    font-size: 13px;
 	}
 	.add-edit-profile {
-	    bottom: -10px;
+	    bottom: 6px;
 	    right: 2px;
 	}
 	.stories-about-talking nav ul li {
@@ -220,9 +226,14 @@
 	    position: relative;
 	    margin-top: 0;
 	    margin-left: 0;
-	    padding-left: 10px;
-	    padding-top: 10px;
+	    /*padding-left: 10px;
+	    padding-top: 10px;*/
 	    margin: auto;
+	}
+	.border-grad {
+		border: 2px solid transparent;
+		background-image: linear-gradient(45deg, #d5cf12, #d708d7);
+		background-image: -webkit-linear-gradient(45deg, #d5cf12, #d708d7);
 	}
 	.img-profile-user-married img {
 	    width: 60px;
@@ -286,7 +297,7 @@
 		width: 32px;
 	}
 	.textarea-container textarea {
-	    border: 1px solid #3a3a3a;
+	    border: 1px solid #ffffff0d;
 	}
 	.statistics-profile-page {
 		width: 170px;
@@ -342,6 +353,27 @@
 @media screen and (max-width: 720px) {
 	.suggest-slide {
 		display: block;
+		margin-top: 5px;
+	}
+	.post {	    
+		border-top: 1px solid #343a40;
+	}
+	.post header {
+		margin-top: 10px;
+	}
+	.interaction-numbers {
+	    border-bottom: none;
+	}
+	.interaction-user ul.ul-interaction-user li {
+	    margin: 0;
+	}
+	.card {
+		background-color: #000;
+	}
+	.main, .header-main-component,
+	.stories-about-talking nav, .stories-about-talking nav ul,
+	main {
+		background-color: #000;
 	}
 	#main-profile .card {
 	    flex-direction: column;
@@ -355,10 +387,10 @@
 		display: none;
 	}
 	.stories-about-talking nav ul li {
-	    width: 90px;
-	    height: 90px;
+	    width: 75px;
+	    height: 75px;
 	    border-radius: 50%;
-	    border: 3px solid transparent;
+	    border: 2px solid transparent;
 	    padding: 7px;
 	    background-image: linear-gradient(45deg, #d5cf12, #d708d7);
 	    background-image: -webkit-linear-gradient(45deg, #d5cf12, #d708d7);
@@ -394,7 +426,10 @@
 	    height: 100%;
 	    position: relative;
 	    border-radius: 0;
-	    margin-top: 0;
+	    margin: 0;
+	}
+	#pop-up-component-create-post .pop-up-component-header {
+	    width: 100%;
 	}
 }
 @media screen and (max-width: 600px) {

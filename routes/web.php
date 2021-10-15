@@ -42,28 +42,17 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/pesquisa/pages1/{id}', [App\Http\Controllers\searchController::class, 'pagesSearch1'])->name('pagesSearch1.page');
     Route::get('/pesquisa/publications', [App\Http\Controllers\searchController::class, 'publicationsSearch'])->name('publicationsSearch.page');
     Route::get('/pesquisa/publications1/{id}', [App\Http\Controllers\searchController::class, 'publicationsSearch1'])->name('publicationsSearch1.page');
+    Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home.feed');
 
     //Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('home');
 });
 Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->name('account.logout');
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('account.login.form');
-
 Route::get('/registrar', [App\Http\Controllers\AuthController::class, 'registrarUser'])->name('account.register.form');
-
-
 Route::get('registrar/completRegister', [App\Http\Controllers\AuthController::class, 'registrarUserComplete'])->name('account.registerComplete.form');
-
 Route::get('/recuperarSenha', [App\Http\Controllers\AuthController::class, 'recuperarSenha'])->name('account.code.form');
-
-
 Route::get('/recuperarSenha/code', [App\Http\Controllers\AuthController::class, 'codigoRecebido'])->name('code.received.form');
-
-
 Route::get('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'newCode'])->name('validate.newCode.form');
-
-
 Route::get('/completRegister', [App\Http\Controllers\AuthController::class, 'registrarUserComplete'])->name('account.registerComplete.form');
-
 Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
-Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home.feed');
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');

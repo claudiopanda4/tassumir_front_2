@@ -108,7 +108,7 @@
                         <a href=""><i class="fas fa-shield-alt fa-24"></i></a>
                     </li>
                     <li class="user-tassumir clearfix l-5">
-                        <a href="{{route('account.profile')}}"><img class="l-5" src='{{asset("storage/img/users/anselmoralph.jpg")}}'></a>
+                        <a href="{{route('account.profile')}}"><img class="l-5 border-grad" src='{{asset("storage/img/users/anselmoralph.jpg")}}'></a>
                         <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" >{{$account_name[0]->nome}}</h1></a>
                     </li>
                 </ul>
@@ -304,9 +304,11 @@
             </div>
         </div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-            <div id="cover-done">
-                <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
-            </div>
+            <label for="target-profile-cover-post" class="label-full">
+                <div class="cover-done" id="cover-done-post">
+                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
+                </div>
+            </label>
         </div>
     </div>
 </div>
@@ -336,7 +338,7 @@
             </div>
         </div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-            <div class="" id="cover-done">
+            <div class="cover-done" id="cover-done">
                 <h2 style="padding: 10px; font-size: 14px;">Concluido</h2>
             </div>
         </div>
@@ -390,7 +392,7 @@
             </div>
         </div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-            <div class="" id="cover-done">
+            <div class="cover-done" id="cover-done-marriage">
                 <h2 style="padding: 10px; font-size: 14px;">Concluido</h2>
             </div>
         </div>
@@ -448,6 +450,16 @@
             });
         });
         $('#cancel-box-add-file-post').click(function(){
+            $('#cover-profile-post').css({
+                opacity: 0,
+                zIndex: -1
+            });
+            $('#add-post-container').css({
+                opacity: 1,
+                zIndex: 1000
+            });
+        });
+        $('#cover-done-post').click(function(){
             $('#cover-profile-post').css({
                 opacity: 0,
                 zIndex: -1

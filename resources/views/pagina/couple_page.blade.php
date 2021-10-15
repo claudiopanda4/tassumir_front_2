@@ -29,10 +29,12 @@
                         <h2>Publicação</h2>
                         @endif
                     </div>
+                    <?php if (false): ?>
                     <div class="statistics-profile-page-component l-5 invisible">
                         <h1>123</h1>
                         <h2>A Seguir</h2>
                     </div>
+                    <?php endif ?>
                     <div class="statistics-profile-page-component l-5">
                         <h1>{{ $seguidores }}</h1>
                         <h2>Seguindo</h2>
@@ -56,10 +58,12 @@
                <h2>Publicação</h2>
                @endif
             </div>
+            @if (false)
             <div class="statistics-profile-page-component l-5">
                 <h1>123</h1>
                 <h2>A Seguir</h2>
             </div>
+            @endif
             <div class="statistics-profile-page-component l-5">
                 <h1>{{ $seguidores }}</h1>
                 <h2>Seguindo</h2>

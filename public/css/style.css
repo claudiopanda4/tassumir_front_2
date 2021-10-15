@@ -354,8 +354,6 @@ label[for="hugo"]{
     color: #fff;
 
 }
-
-
 .input-search .input-text {
     padding: 8px;
 }
@@ -970,6 +968,7 @@ label[for="hugo"]{
 	width: 32px;
 	height: 32px;
 	border-radius: 50%;
+	border: 1px solid transparent;
 }
 .aside nav footer a:hover {
 	transition: all ease 0.8s;
@@ -1045,7 +1044,7 @@ label[for="hugo"]{
 .post {
 	width: 100%;
 	max-width: 510px;
-	margin: 10px auto 0;
+	margin: 0px auto;
 }
 .post header .first-component {
 	position: relative;
@@ -1058,11 +1057,12 @@ label[for="hugo"]{
 	height: 40px;
 }
 .post header .first-component .page-identify h1 {
-	font-size: 13px;
+	font-size: 14px;
     color: #fff;
     margin-bottom: 3px;
     margin-top: 5px;
     margin-right: 5px ;
+    font-weight: bolder;
 }
 .page-identify {
 	margin-left: 0;
@@ -1197,6 +1197,7 @@ label[for="hugo"]{
 }
 .interaction-numbers li a {
 	color: #fff;
+	font-size: 13px;
 }
 .interaction-numbers li a:hover {
 	text-decoration: underline;
@@ -1435,11 +1436,11 @@ label[for="hugo"]{
 	overflow: hidden;
 }
 .li-component-suggest {
-	position: relative;
+    position: relative;
     width: 118px;
-    border: 1px solid #ffffff0d;
     border-radius: 10px;
     padding: 10px;
+    border: 1px solid #343a40;
 }
 .li-component-suggest div.sugest_component {
 	position: relative;
@@ -1494,6 +1495,7 @@ label[for="hugo"]{
 	margin-left: 15px;
 }
 .img-profile {
+	border: 3px solid #000;
 }
 .card-flex {
 	justify-content: space-between;
@@ -1844,7 +1846,7 @@ label[for="hugo"]{
 }
 .cancel-box {
 	background-color: #000;
-	border: 1px solid #606060;
+	border: 1px solid #ffffff0d;
 }
 #cover-done {
     width: 60%;
@@ -1909,6 +1911,7 @@ label[for="hugo"]{
 }
 #main-container-profile {
 	width: 650px;
+	margin-top: 5px;
 }
 #edit-page {
 	width: 110px;
@@ -1973,8 +1976,7 @@ label[for="hugo"]{
 }
 #pop-up-component-create-post {
 	width: 500px; 
-	position: absolute; 
-	top: 40%;
+	position: absolute;
 	height: 500px;
 }
 #pop-up-component-create-post,
@@ -2001,7 +2003,7 @@ label[for="hugo"]{
 	width: 100%;
 }
 .textarea-container textarea {
-	width: 90%;
+	width: 95%;
     height: 200px;
     background: transparent;
     border: none;
@@ -2143,4 +2145,17 @@ label[for="hugo"]{
 	width: 80%;
     padding-left: 12px;
     text-align: center;
+}
+.cover-done {
+	width: 60%;
+    text-align: center;
+    color: #fff;
+    background-color: #800080;
+    padding: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: auto;
+}
+.label-full {
+	width: 100%;
 }

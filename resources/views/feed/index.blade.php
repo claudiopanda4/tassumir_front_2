@@ -107,32 +107,7 @@
             ],
         ];
         foreach ($dados as $key => $value): ?>
-            <?php if ($key == 2): ?>
-                <section class="suggest-slide">
-                    <header>
-                        <h1>Sugestões pra você</h1>
-                    </header>
-                    <nav class="clearfix">
-                        <ul class="clearfix">
-                            <?php
-                            $suggest_page = [
-                                [],[],[],[],[],[],[],
-                            ];
-                            foreach ($suggest_page as $key => $value): ?>
-                                <li class="li-component-suggest clearfix l-5">
-                                    <div class="clearfix sugest_component_div">
-                                        <div class="sugest_component circle clearfix">
-                                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                        </div>
-                                    </div>
-                                    <h1 class="name-suggest text-ellips">Criticando casais</h1>
-                                    <a href="" class=""><div>seguir</div></a>
-                                </li>
-                            <?php endforeach ?>
-                        </ul>
-                    </nav>
-                </section>
-            <?php endif ?>
+            
         <?php endforeach ?>
 <?php foreach ($dados as $key => $value): ?>
         <div class="card br-10">
@@ -143,7 +118,7 @@
                             <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                         </div>
                         <div class="page-identify l-5 clearfix">
-                            <a href="{{route('couple.page1', $dados[$key]['post_id']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
+                            <a href="{{route('couple.page1', $dados[$key]['page_id']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
                                 <span class="time-posted">50 min</span><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
                                   <a href="" class="r-5 follow_page_post" onclick="seguir('{{$dados[$key]['page_id']}}')">seguir</a>
@@ -153,7 +128,7 @@
                     </div>
                     <div class="last-component clearfix r-5">
                         <label for=<?php echo "more-option-".$key; ?>>
-                            <i class="fas fa-ellipsis-v fa-12 fa-option"></i>
+                            <i class="fas fa-ellipsis-h fa-15 fa-option"></i>
                         </label>
                         <input type="checkbox" name="" id=<?php echo "more-option-".$key; ?> class="hidden">
                         <ul class="clearfix more-option-post">
@@ -202,9 +177,11 @@
                         <li>
                             <a href="">{{$dados[$key]['qtd_comment']}} comentários</a>
                         </li>
+                        <?php if (false): ?>
                         <li>
                             <a href="">0 partilhas</a>
                         </li>
+                        <?php endif ?>
                     </ul>
                 </nav>
                 <nav class="row clearfix interaction-user">
@@ -268,6 +245,32 @@
                 </div>
             </div>
         </div>
+        <?php if ($key == 2): ?>
+                <section class="suggest-slide">
+                    <header>
+                        <h1>Sugestões pra você</h1>
+                    </header>
+                    <nav class="clearfix">
+                        <ul class="clearfix">
+                            <?php
+                            $suggest_page = [
+                                [],[],[],[],[],[],[],
+                            ];
+                            foreach ($suggest_page as $key => $value): ?>
+                                <li class="li-component-suggest clearfix l-5">
+                                    <div class="clearfix sugest_component_div">
+                                        <div class="sugest_component circle clearfix">
+                                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                        </div>
+                                    </div>
+                                    <h1 class="name-suggest text-ellips">Criticando casais</h1>
+                                    <a href="" class=""><div>seguir</div></a>
+                                </li>
+                            <?php endforeach ?>
+                        </ul>
+                    </nav>
+                </section>
+            <?php endif ?>
         <?php endforeach ?>
 </div>
 <script>
