@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Hash;
+
 class AuthController extends Controller
 {
     public function __construct(){
@@ -107,9 +109,55 @@ class AuthController extends Controller
 
         return view('auth.registerUser');
     }
-    public function registrarUserComplete(){
+    public function registrarUserComplete(Request $request){
+
         return view('auth.registerUserLastInfo');
     }
+
+    public function sendtoOtherForm(Request $request){
+
+        $nome = $request->nome;
+        $apelido = $request->apelido;
+        $sexo = $request->sexo;
+        $data = $request->dat;
+
+        //dd($nome."=>".$apelido."=>".$sexo."=>".$data);
+        
+        return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data'));
+        
+    }
+    public function joinAndSave(Request $request){
+
+
+        $saveRetriveId = DB::table('contas')->insertGetId([
+            'nome' => $request->nome1,
+            'apelido' => $request->apelido1,
+            'data_nasc' => $request->dataNasc1,
+            'genero' => $request->sexo1,
+            'estado_civil_id' => 1,
+            'email' => $request->email,
+            'telefone' => $request->telefone,
+            'estado_conta_id' => 1,
+            'nacionalidade' => $request->nacionalidade
+
+        ]);
+
+
+        //$countId = DB::table('contas')->select(count(['conta_id']))->count();
+
+        DB::table('logins')->insert([
+
+            'email' => $request->email,
+            'telefone' => $request->telefone,
+            'password' => Hash::make($request->password),
+            'conta_id' => $saveRetriveId,
+
+        ]);
+
+
+        return redirect()->route('account.login.form');
+    }
+
     public function recuperarSenha(){
 
         return view('auth.codeRecover');
@@ -131,8 +179,16 @@ class AuthController extends Controller
         //dd($request);
 
         if (Auth::attempt(['email' => $request->number_email_login, 'password' => $request->password_login])) {
+
             $request->session()->regenerate();
             return redirect()->route('account.home');
+
+        }else if(Auth::attempt(['telefone' => $request->number_email_login, 'password' => $request->password_login])){
+
+
+            $request->session()->regenerate();
+            return redirect()->route('account.home');
+
         }
         return redirect()->route('account.login.form');
     }

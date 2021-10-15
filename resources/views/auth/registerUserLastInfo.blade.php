@@ -30,6 +30,7 @@
 <body>
     <div id="app">
         <main class="main" id="main-login-container">
+            
             <div class="center" id="main-login">
                 <header class="logo-form" id="title-login">
                     <div>
@@ -46,20 +47,22 @@
                         <span class="text-white mb-2">Estamos concluindo o seu cadastro...</span>
                     </div>
 
-                <form action="" method="POST">
+                <form action="{{route('account.enter.form')}}" method="POST">
                     @csrf
 
-                     <div class="form-group">
-                        <input type="text" class="input-text-default input-full" name="number_email_login" type="text" placeholder="Nacionalidade">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="password_login" class="input-text-default input-full" id="exampleInputPassword1" placeholder="Apelido">
-                    </div>
+                    <input type="text" name="nome1" class="hidden" value="{{$nome}}" >
+                    <input type="text" name="apelido1" class="hidden" value="{{$apelido}}">
+                    <input type="text" name="dataNasc1" class="hidden" value="{{$data}}">
+                    <input type="text" name="sexo1" class="hidden" value="{{$sexo}}">
 
+                     <div class="form-group">
+                        <input type="text" class="input-text-default input-full" name="nacionalidade" type="text" placeholder="Nacionalidade" value="">
+
+                    </div>
 
                     <div class="row mt-2">
                         <div class="col-md-6">
-                            <select id="inputState" class="input-text-default input-full">
+                            <select id="inputState" class="input-text-default input-full" >
                                 <option selected>Choose...</option>
                                 <option value="emailSele">Email</option>
                                 <option value="telefSele">Telefone</option>
@@ -68,21 +71,28 @@
 
                         <div class="col-md-6">
                             
-                        <input type="email" class="input-text-default input-full hidden" name="number_email_login" type="text" placeholder="Email" id="email">
+                        <input type="email" class="input-text-default input-full hidden" placeholder="Email" id="email" name="email">
 
-                        <input type="tel" class="input-text-default input-full hidden" name="number_email_login" type="text" placeholder="Telefone" id="telefone">
+                        <input type="text" class="input-text-default input-full hidden" name="telefone" placeholder="Telefone" id="telefone">
 
                         </div>
                          
                     </div>
 
-                    <a href="" id="login-enter" type="submit" class=""><span class="text-white">Criar Conta</span></a>
+                     <div class="form-group mt-2">
+                        <input type="password" class="input-text-default input-full" name="password" type="text" placeholder="Password" value="">
+
+                    </div>
+
+                    <button type="submit" id="login-enter" class="alerta">Criar Conta</button>
+                    
                 </form>
             </div>
         </main>
     </div>
 </body>
 </html>
+
 
 <script>
 
