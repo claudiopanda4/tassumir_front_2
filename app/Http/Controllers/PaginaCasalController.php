@@ -19,7 +19,7 @@ class PaginaCasalController extends Controller
         $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
         $this->current_page_id = $page_content[0]->page_id; 
-    
+        dd($page_content);
         return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes'));
     }
 
@@ -37,7 +37,7 @@ class PaginaCasalController extends Controller
       $auth = new AuthController();
       $account_name = $auth->defaultDate();
       $page_content = $this->page_default_date($account_name);
-      $page_content = DB::select('select * from pages where page_id = ?', [
+      $page_content = DB::select('select * from pages where uuid = ?', [
             $id
         ]);
       $seguidores = $this->seguidores($page_content[0]->nome, $page_content[0]->page_id);

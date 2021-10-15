@@ -528,7 +528,7 @@
 #more-option-notify:checked ~ ul {
 	display: block;
 }
-#target-profile-cover:checked ~ .pop-up {
+#target-profile-cover:checked ~ .pop-up#cover-profile {
 	opacity: 1;
     z-index: 1000;
 }

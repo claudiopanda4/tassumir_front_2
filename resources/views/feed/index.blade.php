@@ -118,7 +118,7 @@
                             <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                         </div>
                         <div class="page-identify l-5 clearfix">
-                            <a href="{{route('couple.page1', $dados[$key]['page_id']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
+                            <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
                                 <span class="time-posted">50 min</span><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
                                   <a href="" class="r-5 follow_page_post" onclick="seguir('{{$dados[$key]['page_id']}}')">seguir</a>

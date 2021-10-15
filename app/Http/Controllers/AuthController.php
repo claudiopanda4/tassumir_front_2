@@ -26,6 +26,7 @@ class AuthController extends Controller
         $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
         $seguidor = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux[0]->identificador_id, $aux1[0]->identificador_id]);
         $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
+        $page_uuid = DB::select('select uuid from pages where page_id = ?', [$key->page_id]);
         $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
         $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$key->post_id, $aux1[0]->identificador_id]);
 
@@ -36,6 +37,7 @@ class AuthController extends Controller
         $dados[$a]['seguir_S/N']=sizeof($seguidor);
         $dados[$a]['post_id']=$key->post_id;
         $dados[$a]['page_id']= $key->page_id ;
+        $dados[$a]['page_uuid']= $page_uuid[0]->uuid ;
         $dados[$a]['reagir_S/N']=sizeof($ja_reagiu);
 
         $a++;

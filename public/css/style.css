@@ -5,6 +5,7 @@ body {
 	--background-dark-input: #3a3b3c;
 	--background-dark-card: #242526;
 	--box-shadow-main: #00000033;
+	--background-main-dark: #000;
 	--border-gradient: linear-gradient(90%, #800080, #d708d7);
 }
 #app {
@@ -1943,7 +1944,7 @@ label[for="hugo"]{
 }
 .suggest-slide-page nav::-webkit-scrollbar-thumb {
 	border-radius: 30px;
-    background-color: #606060;
+    background-color: #343a40;
 }
 .suggest-slide-page a.follow-suggest div {
 	padding: 5px;
@@ -2017,7 +2018,7 @@ label[for="hugo"]{
 }
 .textarea-container textarea::-webkit-scrollbar-thumb {
 	border-radius: 30px;
-    background-color: #606060;
+    background-color: #343a40;
 }
 .add-file li {
 	display: inline-flex;

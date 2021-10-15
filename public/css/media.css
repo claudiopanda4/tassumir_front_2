@@ -355,8 +355,18 @@
 		display: block;
 		margin-top: 5px;
 	}
+	.suggest-slide-page nav::-webkit-scrollbar {
+		height: 0px;
+	}
+	.suggest-slide-page nav::-webkit-scrollbar-thumb {
+		border-radius: 30px;
+	    background-color: transparent;
+	}
 	.post {	    
 		border-top: 1px solid #343a40;
+	}
+	.body-pop-up {
+	    background-color: var(--background-main-dark);
 	}
 	.post header {
 		margin-top: 10px;

@@ -260,7 +260,7 @@
                 <div class="textarea-container l-5" style="width:100%;">
                     <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
                 </div>
-                <nav class="add-file l-5 clearfix">
+                <nav class="add-file l-5 clearfix" style="margin-bottom: 0;">
                     <ul style="width: 160px;" class="r-5">
                         <label for="target-profile-cover-post">
                             <li class="circle add-file-element">
@@ -275,7 +275,7 @@
                     </ul>
                 </nav>
             </div>
-            <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+            <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
                 <div class="" id="cover-done">
                     <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
                 </div>
@@ -432,7 +432,7 @@
             });
         });
         $('.add-edit-profile').click(function(){
-            $('.pop-up').css({
+            $('#cover-profile').css({
                 opacity: 1,
                 zIndex: 1000
             });
