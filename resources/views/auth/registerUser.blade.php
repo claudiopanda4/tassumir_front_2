@@ -49,34 +49,33 @@
                         <span class="text-white">Agora vamos conhecer-te</span>
                     </div>
 
-                <form action="{{route('account.registerComplete.form')}}" method="POST">
+                <form action="{{route('account.teste.form')}}" method="POST">
                     @csrf
 
                      <div class="form-group">
-                        <input type="text" class="input-text-default input-full" name="number_email_login" type="text" placeholder="Nome">
+                        <input type="text" class="input-text-default input-full" name="nome" placeholder="Nome">
                     </div>
                     <div class="form-group">
-                        <input type="text" name="password_login" class="input-text-default input-full" id="exampleInputPassword1" placeholder="Apelido">
+                        <input type="text" name="apelido" class="input-text-default input-full" placeholder="Apelido">
                     </div>
                     <div class="row">
 
                     	<div class="col-md-8">
                     		
                     	<div class="form-check">
-							  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+							  <input class="form-check-input" type="radio" name="sexo" id="exampleRadios1" value="Masculino" checked>
 							  <label class="form-check-label text-white" for="exampleRadios1">
 							    Masculino
 							  </label>
 						</div>
-
 
                     	</div>
 
                     	<div class="col-md-4">
 	                    		
 	                    	<div class="form-check">
-								  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-								  <label class="form-check-label text-white" for="exampleRadios1">
+								  <input class="form-check-input" type="radio" name="sexo" id="exampleRadios2" value="Feminino">
+								  <label class="form-check-label text-white" for="exampleRadios2">
 								    Feminino
 								  </label>
 							</div>
@@ -85,11 +84,11 @@
                     </div>
                     <div class="form-group mt-2">
 
-                        <input type="date" name="password_login" class="input-text-default input-full" id="exampleInputPassword1" placeholder="12/09/2002">
+                        <input type="date" name="dat" class="input-text-default input-full" id="" placeholder="12/09/2002">
 
                     </div>
-
-                    <a href="{{route('account.registerComplete.form')}}" id="login-enter" type="submit" class=""><span class="text-white">Seguinte</span></a>
+                    <button type="submit" id="login-enter">Seguinte</button>
+                    <!--<a href="{{route('account.teste.form')}}" id="login-enter" type="button" class=""><span class="text-white">Seguinte</span></a>-->
 
                     <div class="clearfix">
 
