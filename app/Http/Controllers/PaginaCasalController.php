@@ -19,7 +19,7 @@ class PaginaCasalController extends Controller
         $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
         $this->current_page_id = $page_content[0]->page_id; 
-        dd($page_content);
+        //dd($page_content);
         return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes'));
     }
 
