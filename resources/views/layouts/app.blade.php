@@ -7,13 +7,15 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script scr="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+    <script src="{{ asset('js/jquery/jquery-3.5.1/jquery-3.5.1.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/checked.css') }}" rel="stylesheet">
@@ -342,10 +344,9 @@
 </div>
 <?php endif ?>
 <?php if (true): ?>
-<<<<<<< HEAD
 <input type="checkbox" name="" id="target-invited-relationship" class="invisible">
 <div class="pop-up" id="invited-relationship">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 296px;">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 320px;">
         <header class="pop-up-component-header pop-up-component-header-default header-height">
             <h1>Pedido de Relacionamento</h1>
             <div class="container-pop-up-component-header">
@@ -378,6 +379,12 @@
                             <h2 id="relationship-type-all-3" class="relationship-type-component">Casamento</h2>
                         </label>
                     </div>
+                    <div class="justify-content-start marriage-proposal" style="margin-bottom: 10px;">
+                        <span class="text-white">Caso seja aceite, qual nome da Página de casal, gostaria de usar? (Pode ser editado...).</span>
+                    </div>
+                    <div class="form-group marriage-proposal">
+                        <input type="text" class="input-text-default input-full" name="name_page" type="text" placeholder="Nome da Página do Casal">
+                    </div>
                     <input type="hidden" name="" value="" id="relationship-type-selected">
                 </form>
             </div>
@@ -395,14 +402,6 @@
 <?php endif ?>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.relationship-type-component').click(function(e){
-            $('#relationship-selected-type').text($('#' + e.target.id).text());
-            $('#relationship-type-selected').val(e.target.id.split('-')[3]);
-        });
-
-<?php endif ?>
-<script type="text/javascript">
-    $(document).ready(function () {
       $('.like-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id.split('-');
@@ -415,6 +414,10 @@
               let new_id = "on-" + id[1] + "-i";
               document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
           }
+      });
+      $('.relationship-type-component').click(function(e){
+            $('#relationship-selected-type').text($('#' + e.target.id).text());
+            $('#relationship-type-selected').val(e.target.id.split('-')[3]);
       });
       $('#genre-id').val($("input[name='genre']:checked").val());
       $('.genre-class').click(function(){
@@ -455,7 +458,8 @@
             });
         });
         $('#target-invited-relationship-id').click(function(){
-            $('#invited-relationship').css({
+            $('#invited-relationship').css({});
+        });
 
         $('#concluir_file').click(function() {
             $('#cover-profile-post').css({

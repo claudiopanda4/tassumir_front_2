@@ -4,3 +4,6 @@
 	font-family: nunito;
 	src: url('fonts/Nunito/Nunito-Regular.ttf');
 }
+* {
+	font-family: nunito;
+}

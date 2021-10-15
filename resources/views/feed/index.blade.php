@@ -151,16 +151,6 @@
                             </div>
                         </div>
                     </div>
-                    <nav class="row interaction-numbers">
-                        <ul class="">
-                            <li class="text-ellips">
-                                <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="">10 likes</a>
-                            </li>
-                            <li class="text-ellips">
-                                <a href="">10 comentários</a>
-                            </li>
-                            <li class="text-ellips" style="display:none;">
-                                <a href="">30 partilhas</a>
                     <div class="last-component clearfix r-5">
                         <label for=<?php echo "more-option-".$key; ?>>
                             <i class="fas fa-ellipsis-v fa-12 fa-option"></i>
@@ -213,7 +203,7 @@
                             <a href="">{{$dados[$key]['qtd_comment']}} comentários</a>
                         </li>
                         <li>
-                            <a href="">30 partilhas</a>
+                            <a href="">0 partilhas</a>
                         </li>
                     </ul>
                 </nav>
