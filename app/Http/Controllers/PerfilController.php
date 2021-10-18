@@ -6,6 +6,7 @@ use App\Models\Perfil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\AuthController;
 
 class PerfilController extends Controller
 {
@@ -18,6 +19,8 @@ class PerfilController extends Controller
     {
         $auth = new AuthController();
         $account_name = $auth->defaultDate();
+        $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
+        $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
         //-------------------------------------------------------------------------
           $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
           $lenght = sizeof($aux1);
@@ -25,13 +28,13 @@ class PerfilController extends Controller
           if ($lenght > 0) {
               $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                 $perfil[0]['qtd_ps']=sizeof($seguidor);
-                return view('perfil.index', compact('account_name', 'perfil'));
+                return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture'));
           } else {
             $perfil[0]['qtd_ps'] = 0;
           }
 
           //dd($account_name);
-          return view('perfil.index', compact('account_name', 'perfil'));
+          return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture'));
     }
 
     /**

@@ -108,7 +108,7 @@
                         <a href=""><i class="fas fa-shield-alt fa-24"></i></a>
                     </li>
                     <li class="user-tassumir clearfix l-5">
-                        <a href="{{route('account.profile')}}"><img class="l-5 border-grad" src='{{asset("storage/img/users/anselmoralph.jpg")}}'></a>
+                        <a href="{{route('account.profile')}}"><img class="l-5 border-grad" src='{{asset("storage/img/users/$profile_picture")}}'></a>
                         <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" >{{$account_name[0]->nome}}</h1></a>
                     </li>
                 </ul>
@@ -125,9 +125,9 @@
                 <li class="li-component-aside"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}">{{$account_name[0]->nome}} {{$account_name[0]->apelido}}</a></li>
                 <!--<li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Criar Relacionamento</a></li>
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
-                <?php  ?>
+                @if($checkUserStatus)
                     <li class="li-component-aside"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Página de Casal</a></li>
-                <?php  ?>
+                @endif
                 <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Guardados</a></li>
                 <li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Casais que eu sigo</a></li>
                 <li class="li-component-aside"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Ganhar Dinheiro</a></li>
