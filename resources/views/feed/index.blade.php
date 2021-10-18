@@ -27,7 +27,7 @@
                                 </div>
                                 <img class="img-back-stories center" src="{{asset('storage/img/page/unnamed.jpg')}}">
                                 <div class="headline">
-                                    <h2>Yola Araújo oferece presente de 1 ano de...</h2>
+                                    <h2 class="center">Yola Araújo oferece presente de 1 ano de...</h2>
                                 </div>
                             </a>
                         </li>
@@ -238,6 +238,27 @@
                                 <i class="far fa-images fa-20 fa-img-comment" onclick="comentar('{{$dados[$key]['page_id']}}')"></i>
                             </a>
                         </div>
+                        <div class="r-5 ">
+                            <a href="">
+                                <i class="far fa-paper-plane fa-20 fa-img-comment"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-users">
+                    <div class="comment-user-container">
+                        <div class="user-identify-comment">
+                            <div class="profille-img">
+                                <img  class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                            </div>
+                            <h2 class="text-ellips">Domingos Sobrinho</h2>
+                        </div>
+                        <div class="comment-user-comment">
+                            <p class="text-ellips">Amo muito esse casal</p>
+                        </div>
+                    </div>
+                    <div class="comment-user-container comment-user-container-react">
+                        <i class="far fa-heart fa-12"></i>
                     </div>
                 </div>
                 <div>

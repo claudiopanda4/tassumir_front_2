@@ -1286,8 +1286,8 @@ label[for="hugo"]{
     padding-top: 5px;
     padding-bottom: 5px;
 	border-bottom: 1px solid #606060;
-	justify-items: flex-end;
-	justify-content: flex-end;
+	justify-items: flex-start;
+	justify-content: flex-start;
 }
 .interaction-user,
 .interaction-numbers {
@@ -1338,7 +1338,7 @@ label[for="hugo"]{
     border-radius: 20px;
 }
 .comment-send input[type="text"] {
-	width: 80%;
+	width: 70%;
     padding: 8px;
     border-radius: 20px;
     border-top-right-radius: 0;
@@ -1410,16 +1410,17 @@ label[for="hugo"]{
 	position: absolute;
 	width: 100%;
 	bottom: 0;
-	height: 65px;
+	height: 100%;
 	border-bottom-right-radius: 10px;
 	border-bottom-left-radius: 10px;
-	background-color: rgba(0, 0, 0, 0.4);
+	background-color: rgba(0, 0, 0, 0.2);
 }
 .headline h2 {
 	position: absolute;
 	font-size: 11px;
 	height: 50px;
 	padding: 10px;
+	width: 100%;
 	color: #fff;
 }
 .see-all-stories {
@@ -2162,4 +2163,50 @@ label[for="hugo"]{
 }
 .main-container {
 	margin-top: 40px;
+}
+.comment-users {
+	display: flex;
+	justify-content: space-between;
+}
+.user-identify-comment {
+	padding-left: 20px;
+	width: 180px;
+	display: flex;
+}
+.user-identify-comment .profille-img {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	position: relative;
+}
+.user-identify-comment h2 {
+	padding: 5px;
+	font-size: 11px;
+	color: #fff;
+	padding-top: 10px;
+	width: 115px;
+}
+.user-identify-comment h2, 
+.user-identify-comment .profille-img {
+	display: inline-flex;
+}
+.comment-user-comment {
+	
+}
+.comment-user-comment p {
+	color: #fff;
+	font-size: 11px;
+	padding: 7px;
+	display: inline-flex;
+	width: 130px;
+}
+.comment-user-container {
+	display: flex;
+}
+.comment-user-container-react {
+	padding-right: 10px;
+}
+.comment-user-container-react i {
+	padding-top: 10px;
+	cursor: pointer;
 }

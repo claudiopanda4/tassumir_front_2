@@ -355,6 +355,12 @@
 		display: block;
 		margin-top: 5px;
 	}
+	.comment-users {
+	    padding-top: 10px;
+	}
+	.user-identify-comment {
+	    padding-left: 8px;
+	}
 	.suggest-slide-page nav::-webkit-scrollbar {
 		height: 0px;
 	}
@@ -443,6 +449,9 @@
 	}
 	#pop-up-component-create-post .pop-up-component-header {
 	    width: 100%;
+	}
+	.user-identify-comment {
+	    width: 153px;
 	}
 }
 @media screen and (max-width: 600px) {
