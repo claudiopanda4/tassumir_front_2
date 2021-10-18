@@ -7,9 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PaginaCasalController;
 
 class PerfilController extends Controller
 {
+    private $auth;
+
+    public function __construct()
+    {
+        $this->auth = new AuthController();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,12 +26,14 @@ class PerfilController extends Controller
     public function index()
     {
         $auth = new AuthController();
-        $account_name = $auth->defaultDate();
+        $account_name = $this->auth->defaultDate();
 
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
 
         $conta_logada = $auth->defaultDate();
+
+        $this->active_account_id = $account_name[0]->conta_id;
 
         //-------------------------------------------------------------------------
           $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
@@ -182,4 +192,29 @@ class PerfilController extends Controller
     }
       return redirect()->route('account1.profile', $request->conta_pedida);
     }
+
+
+    public function add_picture(Request $request)
+    {
+        
+        $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
+
+        if ($request->hasFile('profilePicture')) 
+        {
+            
+            if (PaginaCasalController::check_image_extension($request->profilePicture->extension())) 
+            {
+                $path = $request->file('profilePicture')->storeAs('public/img/users', $file_name);
+                AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]->conta_id);
+            }
+
+        }
+
+        return redirect()->route('account.profile');
+    }
+
+
+
+
+
 }
