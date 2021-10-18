@@ -19,7 +19,7 @@
                 </div>
         </div>
             <h1 class="profile-name">@_{{$account_name[0]->nome}}_{{$account_name[0]->apelido}}</h1>
-        <div>
+        <div><?php if ($conta_logada[0]->uuid != $account_name[0]->uuid): ?>
             <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
                 <label for="target-invited-relationship" style="width: 100%;">
                     <div class="follwing-btn follwing-btn-pop-up">
@@ -34,17 +34,19 @@
                     </label>
                 <?php endif ?>
             </div>
+                    <?php endif; ?>
             <div class="options-profile-btn">
-                <a href="{{route('account.profile.edit', 2)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
+                <a href="{{route('account.profile.edit',$account_name[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
             </div>
         </div>
 
         <ul class="profile-follow">
             <li class="statistics-profile">
-                <h2>Seguindo {{$perfil[0]['qtd_ps']}}</h2>
-                <a href="{{route('account.profile.edit', 2)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
-            </li>
+                <h2>Seguindo {{$perfil[0]['qtd_ps']}}</h2>  <?php if ($conta_logada[0]->uuid == $account_name[0]->uuid): ?>
+                <a href="{{route('account.profile.edit',$account_name[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+            <?php endif; ?></li>
         </ul>
+
         <div class="inform-profile">
             <h3>Namorado de <span>Ana Joyce</span></h3>
         </div>

@@ -20,12 +20,13 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/like', [App\Http\Controllers\AuthController::class, 'like'])->name('like');
     Route::get('/seguir', [App\Http\Controllers\AuthController::class, 'seguir'])->name('seguir');
     Route::get('/comentar', [App\Http\Controllers\AuthController::class, 'comentar'])->name('comentar');
+    Route::post('/Pedido_relac/', [App\Http\Controllers\PerfilController::class, 'Pedido_relac'])->name('Pedido_relac');
     Route::get('/profile/', [App\Http\Controllers\PerfilController::class, 'index'])->name('account.profile');
     Route::post('/update/', [App\Http\Controllers\PerfilController::class, 'update'])->name('account.update');
-    Route::get('/profile/{perfil}/', [App\Http\Controllers\PerfilController::class, 'edit'])->name('account.profile.edit');
+    Route::get('/profile/{id}', [App\Http\Controllers\PerfilController::class, 'perfil_das_contas'])->name('account1.profile');
+    Route::get('/profile.edit/{perfil}', [App\Http\Controllers\PerfilController::class, 'edit'])->name('account.profile.edit');
     Route::get('/couple_page/', [App\Http\Controllers\PaginaCasalController::class, 'index'])->name('couple.page');
     Route::post('/couple_post/', [App\Http\Controllers\PaginaCasalController::class, 'store_post'])->name('post_couple.page');
-    Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
     Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
     Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::class, 'edit_couple'])->name('edit_couple.page');
     Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
