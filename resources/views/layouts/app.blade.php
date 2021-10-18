@@ -108,7 +108,7 @@
                         <a href=""><i class="fas fa-shield-alt fa-24"></i></a>
                     </li>
                     <li class="user-tassumir clearfix l-5">
-                        @if ($profile_picture == null)
+                        @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
                             <a href="{{route('account.profile')}}"><i class="far fa-user-circle fa-24 l-5" style="margin-top: 10px;"></i></a>
                         @else
                             <a href="{{route('account.profile')}}"><img class="l-5 border-grad" src="{{asset('storage/img/users') . '/' . $profile_picture}}"></a>
