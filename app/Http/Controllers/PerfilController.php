@@ -64,9 +64,10 @@ class PerfilController extends Controller
           } else {
             $perfil[0]['qtd_ps'] = 0;
           }
-
+          $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
+          $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
           //dd($account_name);
-          return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento'));
+          return view('perfil.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'perfil','conta_logada', 'tipos_de_relacionamento'));
 
     }
 
@@ -153,17 +154,28 @@ class PerfilController extends Controller
 
     public function Pedido_relac(Request $request)
     {
-      $verificacaop=array();
+      $conta_pedida=array();
+      $verificacao_page_conta_pedida_b=array();
+      $verificacao_page_conta_pedida_a=array();
+      $verificacao_pedido=array();
       $conta_pedinte = Auth::user()->conta_id;
       $conta_pedida = DB::select('select * from contas where uuid = ?', [$request->conta_pedida]);
+      $verificacao_page_conta_pedinte_a=DB::select('select * from pages where conta_id_a = ?', [$conta_pedinte]);
+      $verificacao_page_conta_pedinte_b=DB::select('select * from pages where conta_id_b = ?', [$conta_pedinte]);
+
       if (sizeof($conta_pedida) == 0  ) {
-          $verificacaop[0]=1;
+          $verificacao_pedido[0]=1;
+          $verificacao_page_conta_pedida_b[0]=1;
+          $verificacao_page_conta_pedida_a[0]=1;
       }else {
-      $verificacaop= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_pedida[0]->conta_id, $conta_pedinte]);
+      $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_pedida[0]->conta_id, $conta_pedinte]);
+      $verificacao_page_conta_pedida_b=DB::select('select * from pages where conta_id_b  = ?', [$conta_pedida[0]->conta_id]);
+      $verificacao_page_conta_pedida_a=DB::select('select * from pages where conta_id_a  = ?', [$conta_pedida[0]->conta_id]);
+
       }
 
 
-      if ( sizeof($verificacaop) == 0) {
+      if ( sizeof($verificacao_pedido) == 0 && sizeof($verificacao_page_conta_pedinte_a) == 0 && sizeof($verificacao_page_conta_pedinte_b) == 0 && sizeof($verificacao_page_conta_pedida_b) == 0 && sizeof($verificacao_page_conta_pedida_a) == 0 ) {
 
       DB::table('pedido_relacionamentos')->insert([
 
