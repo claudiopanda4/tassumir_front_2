@@ -24,7 +24,7 @@ body {
 	color: #fff;
 }
 .enter-login {
-	color: #000;
+	color: #fff;
 }
 #login-enter {
 	background-color: #800080;
@@ -77,7 +77,7 @@ body {
 	width: 150px;
     text-align: center;
     color: #fff;
-    margin: 10px auto;
+    margin: 5px auto;
 }
 #title-login i,
 #title-login h1 {
@@ -91,7 +91,7 @@ body {
 }
 #title-login div {
 	width: 200px;
-    margin: 10px auto;
+    margin: 5px auto;
 }
 .form-group label {
 	color: #fff;

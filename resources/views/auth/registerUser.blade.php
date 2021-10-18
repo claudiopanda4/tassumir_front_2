@@ -28,7 +28,7 @@
 </head>
 <body>
     <div id="app">
-        <main class="main" id="main-login-container">
+        <main class="main" id="main-login-container" style="background-color: var(--background-dark-main);">
             <div class="center" id="main-login">
                 <header class="logo-form" id="title-login">
                     <div>
@@ -41,7 +41,7 @@
 
                 </header>
 
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center" style="text-align: center; margin-bottom: 5px;">
                         <span class="text-white">Seja Bem Vindo(a) a maior plataforma de relacionamento.</span>
                     </div>
 
