@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class PaginaCasalController extends Controller
 {
- 
+
     private $current_page_id = 1;
 
 
@@ -21,15 +21,15 @@ class PaginaCasalController extends Controller
         $seguidores = $this->seguidores($page_content[0]->nome, $page_content[0]->page_id);
         $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
-        $this->current_page_id = $page_content[0]->page_id; 
+        $this->current_page_id = $page_content[0]->page_id;
         //dd($page_content);
         return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture'));
     }
 
     public function page_default_date ($account_name) {
-        
+
         $page_content = DB::select('select * from pages where conta_id_a = ? or conta_id_b = ?', [
-            $account_name[0]->conta_id, 
+            $account_name[0]->conta_id,
             $account_name[0]->conta_id
         ]);
 
@@ -81,7 +81,7 @@ class PaginaCasalController extends Controller
         return DB::select('select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = ?', [$id])[0]->tipo_relacionamento;
     }
     private function seguidores($check_name, $id) {
-        return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));        
+        return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
     }
 
     private function get_all_post($id) {
@@ -89,18 +89,18 @@ class PaginaCasalController extends Controller
     }
 
     /**
-     * @param  
+     * @param
      */
     public function store_post(Request $request)
     {
         if ($request->hasFile('imgOrVideo'))
         {
             $file_name = time() . '_' . md5($request->file('imgOrVideo')->getClientOriginalName()) . '.' . $request->imgOrVideo->extension();
-            
+
             $path = '';
-            
+
             if ( Self::check_image_extension($request->imgOrVideo->extension()) )
-            {   
+            {
                 $path = $request->file('imgOrVideo')->storeAs('public/img/page', $file_name);
                 $this->store($request->message, $file_name, $this->current_page_id, $this->formato_id('Imagem'));
 
@@ -109,10 +109,10 @@ class PaginaCasalController extends Controller
                 $path = $request->file('imgOrVideo')->storeAs('public/video/page', $file_name);
                 $this->store($request->message, $file_name, $this->current_page_id, $this->formato_id('Video'));
             }
-            
+
             return redirect()->route('couple.page');
-        } 
-        
+        }
+
         $this->store($request->message, null, $this->current_page_id, $this->formato_id('Textos'));
         return redirect()->route('couple.page');
     }
@@ -121,13 +121,13 @@ class PaginaCasalController extends Controller
 
         $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
         //dd($uuid);
-        DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id) values(?, ?, ?, ?, ?)', 
-            [$uuid, $description, $file_name, $id, $format]);
+        DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id, estado_post_id) values(?, ?, ?, ?, ?, ?)',
+            [$uuid, $description, $file_name, $id, $format, 1]);
     }
 
     public static function check_image_extension( $extension )
     {
-        return $extension === 'jpg' || $extension === 'jpeg' || $extension === 'png'; 
+        return $extension === 'jpg' || $extension === 'jpeg' || $extension === 'png';
     }
 
     public function check_video_extension( $extension )

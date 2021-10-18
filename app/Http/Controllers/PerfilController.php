@@ -52,7 +52,6 @@ class PerfilController extends Controller
           }
 
           //dd($account_name);
-
           return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento'));
 
     }
@@ -61,7 +60,7 @@ class PerfilController extends Controller
     {
         $auth = new AuthController();
          $conta_logada = $auth->defaultDate();
-         
+
         //-------------------------------------------------------------------------
           $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
           $account_name=DB::select('select * from contas where uuid  = ?', [$id]);
@@ -74,7 +73,6 @@ class PerfilController extends Controller
           } else {
             $perfil[0]['qtd_ps'] = 0;
           }
-
           $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
           $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
 
@@ -166,24 +164,35 @@ class PerfilController extends Controller
 
     public function Pedido_relac(Request $request)
     {
-      $verificacaop=array();
+      $conta_pedida=array();
+      $verificacao_page_conta_pedida_b=array();
+      $verificacao_page_conta_pedida_a=array();
+      $verificacao_pedido=array();
       $conta_pedinte = Auth::user()->conta_id;
       $conta_pedida = DB::select('select * from contas where uuid = ?', [$request->conta_pedida]);
+      $verificacao_page_conta_pedinte_a=DB::select('select * from pages where conta_id_a = ?', [$conta_pedinte]);
+      $verificacao_page_conta_pedinte_b=DB::select('select * from pages where conta_id_b = ?', [$conta_pedinte]);
+
       if (sizeof($conta_pedida) == 0  ) {
-          $verificacaop[0]=1;
+          $verificacao_pedido[0]=1;
+          $verificacao_page_conta_pedida_b[0]=1;
+          $verificacao_page_conta_pedida_a[0]=1;
       }else {
-      $verificacaop= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_pedida[0]->conta_id, $conta_pedinte]);
+      $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_pedida[0]->conta_id, $conta_pedinte]);
+      $verificacao_page_conta_pedida_b=DB::select('select * from pages where conta_id_b  = ?', [$conta_pedida[0]->conta_id]);
+      $verificacao_page_conta_pedida_a=DB::select('select * from pages where conta_id_a  = ?', [$conta_pedida[0]->conta_id]);
+
       }
 
 
-      if ( sizeof($verificacaop) == 0) {
+      if ( sizeof($verificacao_pedido) == 0 && sizeof($verificacao_page_conta_pedinte_a) == 0 && sizeof($verificacao_page_conta_pedinte_b) == 0 && sizeof($verificacao_page_conta_pedida_b) == 0 && sizeof($verificacao_page_conta_pedida_a) == 0 ) {
 
       DB::table('pedido_relacionamentos')->insert([
 
           'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
           'conta_id_pedida' => $conta_pedida[0]->conta_id,
           'conta_id_pedinte' =>  $conta_pedinte,
-          'estado' => 1,
+          'estado_pedido_relac' => 1,
           'name_page' => $request->name_page,
           'tipo_relacionamento_id' => 1,
 
@@ -196,13 +205,13 @@ class PerfilController extends Controller
 
     public function add_picture(Request $request)
     {
-        
+
         $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
 
-        if ($request->hasFile('profilePicture')) 
+        if ($request->hasFile('profilePicture'))
         {
-            
-            if (PaginaCasalController::check_image_extension($request->profilePicture->extension())) 
+
+            if (PaginaCasalController::check_image_extension($request->profilePicture->extension()))
             {
                 $request->file('profilePicture')->storeAs('public/img/users', $file_name);
                 AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]->conta_id);

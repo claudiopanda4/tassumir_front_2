@@ -19,8 +19,8 @@ class AuthController extends Controller
         $account_name = $this->defaultDate();
         $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
         $profile_picture = Self::profile_picture(Auth::user()->conta_id);
-        
-        
+
+
       $post=  DB::table('posts')->get();
       $page= DB::table('pages')->get();
       $a=0;
@@ -53,7 +53,10 @@ class AuthController extends Controller
         $dados[$a]['page_id']= $key->page_id ;
         $dados[$a]['page_uuid']= $page_uuid[0]->uuid ;
         $dados[$a]['reagir_S/N']=sizeof($ja_reagiu);
-
+        $dados[$a]['formato']=$key->formato_id;
+        if($dados[$a]['formato']==1 || $dados[$a]['formato']== 2){
+        $dados[$a]['file']=$key->file;
+        }
         $a++;
       }
         return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture'));
@@ -231,10 +234,15 @@ class AuthController extends Controller
         return DB::select('select foto from contas where conta_id = ?', [$account_id])[0]->foto;
     }
 
+/*  public static function post_files($post_id)
+  {
+      return DB::select('select files from posts where post_id = ?', [$post_id])[0]->files;
+  }*/
+
     public static function updateUserProfilePicture($picture, $account_id)
     {
         DB::table('contas')->where('conta_id', $account_id)->update(['foto' => $picture]);
         return redirect()->route('account.profile');
     }
-  
+
 }
