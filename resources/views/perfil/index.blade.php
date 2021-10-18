@@ -36,14 +36,14 @@
             </div>
                     <?php endif; ?>
             <div class="options-profile-btn">
-                <a href="{{route('account.profile.edit',$account_name[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
+                <h3 class="edit-profile-mobile">Editar Perfil</h3></a>
             </div>
         </div>
 
         <ul class="profile-follow">
             <li class="statistics-profile">
                 <h2>Seguindo {{$perfil[0]['qtd_ps']}}</h2>  <?php if ($conta_logada[0]->uuid == $account_name[0]->uuid): ?>
-                <a href="{{route('account.profile.edit',$account_name[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+                <h3 class="edit-profile">Editar Perfil</h3></a>
             <?php endif; ?></li>
         </ul>
 
