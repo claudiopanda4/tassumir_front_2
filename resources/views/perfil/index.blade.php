@@ -4,7 +4,7 @@
 <div class="main" id="main-profile">
     <header class="card br-10 card-flex">
     <div id="img-profile-container" class="circle border-grad">
-        <img class="img-profile img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+        <img class="img-profile img-full circle" src="{{asset('storage/img/users/$profile_picture')}}">
         <label for="target-profile-cover">
             <div class="add-edit-profile circle">
                 <i class="fas fa-plus center" style="font-size: 10px;"></i>

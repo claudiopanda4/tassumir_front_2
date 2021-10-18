@@ -15,7 +15,11 @@ class AuthController extends Controller
     }
     public function index(){
         if (Auth::check() == true) {
-            $account_name = $this->defaultDate();
+
+        $account_name = $this->defaultDate();
+        $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
+        $profile_picture = Self::profile_picture(Auth::user()->conta_id);
+
       $post=  DB::table('posts')->get();
       $page= DB::table('pages')->get();
       $a=0;
@@ -51,7 +55,7 @@ class AuthController extends Controller
 
         $a++;
       }
-        return view('feed.index', compact('account_name', 'dados'));
+        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture'));
     }
     return redirect()->route('account.login.form');
     }
@@ -216,5 +220,14 @@ class AuthController extends Controller
         return redirect('/');
     }
 
+    public static function isCasal($account_id)
+    {
+        return count(DB::select('select page_id from pages where conta_id_a = ? or conta_id_b = ? and tipo_page_id = ?', [$account_id, $account_id, 1])) > 0;
+    }
+
+    public static function profile_picture($account_id)
+    {
+        return DB::select('select foto from contas where conta_id = ?', [$account_id])[0]->foto;
+    }
   
 }
