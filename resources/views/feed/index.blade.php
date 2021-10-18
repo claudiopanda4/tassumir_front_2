@@ -41,7 +41,7 @@
             </nav>
         </header>
         <?php
-        $posts_feed = [
+      /*  $posts_feed = [
             [
                 "type" => "img",
                 "page" => "Famosos em Relacionamentos",
@@ -105,7 +105,7 @@
                 "link" => "",
                 "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
             ],
-        ];
+        ];*/
         foreach ($dados as $key => $value): ?>
 
         <?php endforeach ?>
@@ -153,16 +153,14 @@
                 <div class="card-post">
                     <div class="">
                         <p>{{$dados[$key]['post']}}</p>
-                        <?php if ($posts_feed[$key]["type"] == "img"): ?>
+                        <?php if ( $dados[$key]['formato'] == 2 ): ?>
                         <div class="post-cover">
-                            <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                            <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
                         </div>
-                        <?php elseif ($posts_feed[$key]["type"] == "video"): ?>
+                      <?php elseif ($dados[$key]['formato'] == 1): ?>
                         <div class="video-post">
-                            <video controls>
-                                <source src="{{asset('storage/video/page/12345678.mp4')}}" type="video/mp4">
-                                <source src="{{asset('storage/video/page/12345678.ogg')}}" type="video/ogg">
-                                <source src="{{asset('storage/video/page/12345678.webcam')}}" type="video/webcam">
+                            <video controls
+                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>

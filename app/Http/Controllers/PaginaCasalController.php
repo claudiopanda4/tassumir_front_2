@@ -112,14 +112,17 @@ class PaginaCasalController extends Controller
 
             return redirect()->route('couple.page');
         }
+
+        $this->store($request->message, null, $this->current_page_id, $this->formato_id('Textos'));
+        return redirect()->route('couple.page');
     }
-    private function store($description, $file_name, $id, $format)
+    private function store($description, $file_name = null, $id, $format)
     {
 
         $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
         //dd($uuid);
-        DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id) values(?, ?, ?, ?, ?)',
-            [$uuid, $description, $file_name, $id, $format]);
+        DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id, estado_post_id) values(?, ?, ?, ?, ?, ?)',
+            [$uuid, $description, $file_name, $id, $format, 1]);
     }
 
     public static function check_image_extension( $extension )
