@@ -431,7 +431,8 @@
       $('.comentar-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
-            comentar(id);
+          $('#comentario-' + id).val();
+          comentar(id);
 
       });
 
@@ -503,6 +504,14 @@
                 zIndex: 1000
             });
         });
+        $('.comment-send-post').click(function(e){
+            e.preventDefault();
+            let id = e.target.id;
+            let id_final = id.split('-')[1];
+            $('#comment-send-' + id_final).css({
+                display : 'block',
+            });
+        })
     });
 
 </script>
