@@ -34,7 +34,7 @@ class PerfilController extends Controller
               $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                 $perfil[0]['qtd_ps']=sizeof($seguidor);
 
-                return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture'));
+                return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture','conta_logada','tipos_de_relacionamento'));
 
 
           } else {
@@ -43,9 +43,9 @@ class PerfilController extends Controller
 
           //dd($account_name);
 
-          return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture'));
+          return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture','conta_logada','tipos_de_relacionamento'));
 
-          return view('perfil.index', compact('account_name', 'perfil', 'conta_logada', 'tipos_de_relacionamento'));
+
     }
 
     public function perfil_das_contas($id)
@@ -170,7 +170,7 @@ class PerfilController extends Controller
           'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
           'conta_id_pedida' => $conta_pedida[0]->conta_id,
           'conta_id_pedinte' =>  $conta_pedinte,
-          'estado' => 1,
+          'estado_pedido_relac' => 1,
           'name_page' => $request->name_page,
           'tipo_relacionamento_id' => 1,
 
