@@ -4,8 +4,11 @@
 <div class="main" id="main-profile">
     <header class="card br-10 card-flex">
     <div id="img-profile-container" class="circle border-grad"> 
-       <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
-       <img class="img-profile img-full circle" src="{{asset('storage/img/users') . '/' . $profile_picture}}">
+        @if ($profile_picture == null)
+            <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+        @else
+            <img class="img-profile img-full circle" src="{{asset('storage/img/users') . '/' . $profile_picture}}">
+        @endif
         <label for="target-profile-cover">
             <div class="add-edit-profile circle">
                 <i class="fas fa-plus center" style="font-size: 10px;"></i>
