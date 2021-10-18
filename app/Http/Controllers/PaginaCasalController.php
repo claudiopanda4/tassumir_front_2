@@ -99,7 +99,7 @@ class PaginaCasalController extends Controller
             
             $path = '';
             
-            if ( $this->check_image_extension($request->imgOrVideo->extension()) )
+            if ( Self::check_image_extension($request->imgOrVideo->extension()) )
             {   
                 $path = $request->file('imgOrVideo')->storeAs('public/img/page', $file_name);
                 $this->store($request->message, $file_name, $this->current_page_id, $this->formato_id('Imagem'));
@@ -111,9 +111,12 @@ class PaginaCasalController extends Controller
             }
             
             return redirect()->route('couple.page');
-        }
+        } 
+        
+        $this->store($request->message, null, $this->current_page_id, $this->formato_id('Textos'));
+        return redirect()->route('couple.page');
     }
-    private function store($description, $file_name, $id, $format)
+    private function store($description, $file_name = null, $id, $format)
     {
 
         $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
@@ -122,7 +125,7 @@ class PaginaCasalController extends Controller
             [$uuid, $description, $file_name, $id, $format]);
     }
 
-    public function check_image_extension( $extension )
+    public static function check_image_extension( $extension )
     {
         return $extension === 'jpg' || $extension === 'jpeg' || $extension === 'png'; 
     }
