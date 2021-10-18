@@ -111,9 +111,12 @@ class PaginaCasalController extends Controller
             }
             
             return redirect()->route('couple.page');
-        }
+        } 
+        
+        $this->store($request->message, null, $this->current_page_id, $this->formato_id('Textos'));
+        return redirect()->route('couple.page');
     }
-    private function store($description, $file_name, $id, $format)
+    private function store($description, $file_name = null, $id, $format)
     {
 
         $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();

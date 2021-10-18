@@ -204,7 +204,7 @@ class PerfilController extends Controller
             
             if (PaginaCasalController::check_image_extension($request->profilePicture->extension())) 
             {
-                $path = $request->file('profilePicture')->storeAs('public/img/users', $file_name);
+                $request->file('profilePicture')->storeAs('public/img/users', $file_name);
                 AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]->conta_id);
             }
 

@@ -334,7 +334,7 @@
             <div class="">
                 <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;">
+                    <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
                             <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
