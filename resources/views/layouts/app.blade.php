@@ -108,6 +108,7 @@
                         <a href=""><i class="fas fa-shield-alt fa-24"></i></a>
                     </li>
                     <li class="user-tassumir clearfix l-5">
+                        <a href="{{route('account.profile')}}"><i class="far fa-user-circle fa-24 l-5" style="margin-top: 10px;"></i></a>
                         <a href="{{route('account.profile')}}"><img class="l-5 border-grad" src='{{asset("storage/img/users/$profile_picture")}}'></a>
                         <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" >{{$account_name[0]->nome}}</h1></a>
                     </li>
@@ -431,7 +432,12 @@
       $('.comentar-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
-          $('#comentario-' + id).val();
+          let coment = $('#comentario-' + id).val();
+          //alert(coment);
+          $("#comment-own-" + id).text(coment);
+          $("#comment-users-own-" + id).css({
+            display: "flex",
+          });
           comentar(id);
 
       });

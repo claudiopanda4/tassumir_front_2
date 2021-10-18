@@ -253,7 +253,7 @@
                             </div>
                         </div>
                         <div class="comment-user-comment">
-                            <p class="text-ellips">Amo muito esse casal</p>
+                            <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}">Amo muito esse casal</p>
                         </div>
                     </div>
                     <div class="comment-user-container comment-user-container-react">
