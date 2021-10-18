@@ -1110,6 +1110,7 @@ label[for="hugo"]{
 	color: #fff;
 	padding: 10px;
 	padding-top: 0;
+	font-size: 14px;
 }
 .fa-option {
 	cursor: pointer;
@@ -2171,6 +2172,7 @@ label[for="hugo"]{
 .user-identify-comment {
 	padding-left: 20px;
 	width: 180px;
+	margin-left: 60px;
 	display: flex;
 }
 .user-identify-comment .profille-img {
@@ -2184,7 +2186,7 @@ label[for="hugo"]{
 	font-size: 11px;
 	color: #fff;
 	padding-top: 10px;
-	width: 115px;
+	width: 85px;
 }
 .user-identify-comment h2, 
 .user-identify-comment .profille-img {
@@ -2209,4 +2211,14 @@ label[for="hugo"]{
 .comment-user-container-react i {
 	padding-top: 10px;
 	cursor: pointer;
+}
+.comment-users-own {
+	background-color: #3a3b3c;
+    width: 310px;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin: 10px;
+}
+.comment-users-own .user-identify-comment {
+    width: 40px;
 }

@@ -188,7 +188,7 @@
                     <ul class="row clearfix ul-interaction-user">
                         <li class="l-5">
                             <div class="content-button">
-                              <?php if ($dados[$key]['reagir_S/N']==0): ?>
+                              <?php if ($dados[$key]['reagir_S/N'] == 0): ?>
                                 <a href="" class="like-a" id="on-{{$dados[$key]['post_id']}}">
                                     <i class="far fa-heart center fa-16" id="on-{{$dados[$key]['post_id']}}-i"></i>
                                     <h2 id="on-{{$dados[$key]['post_id']}}-h2">Like</h2>
@@ -202,9 +202,9 @@
                             </div>
                         </li>
                         <li class="l-5">
-                            <div class="content-button">
-                                <a href="">
-                                    <i class="far fa-comment-alt center fa-16"></i>
+                            <div class="content-button comment-send-post" id="comment-{{$dados[$key]['post_id']}}">
+                                <a href="" id="comment_a-{{$dados[$key]['post_id']}}">
+                                    <i class="far fa-comment-alt center fa-16" id="comment_i-{{$dados[$key]['post_id']}}"></i>
                                     <h2>Comentar</h2>
                                 </a>
                             </div>
@@ -227,7 +227,7 @@
                         </li>
                     </ul>
                 </nav>
-                <div class="comment-send clearfix">
+                <div class="comment-send clearfix"  id="comment-send-{{$dados[$key]['post_id']}}">
                     <div class="img-user-comment l-5">
                         <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
                     </div>
@@ -235,14 +235,29 @@
                         <input type="text" class="" name="comentario" id="comentario-{{$dados[$key]['post_id']}}" placeholder="O que você tem a dizer?">
                         <div class="r-5 ">
                             <a href="" class="comentar-a" id="{{$dados[$key]['post_id']}}">
-                                <i class="far fa-images fa-20 fa-img-comment" id="{{$dados[$key]['post_id']}}"></i>
+                                <i class="far fa-paper-plane fa-20 fa-img-comment" id="{{$dados[$key]['post_id']}}"></i>
                             </a>
                         </div>
-                        <div class="r-5 ">
+                        <div class="r-5 " id="">
                             <a href="">
-                                <i class="far fa-paper-plane fa-20 fa-img-comment"></i>
+                                <i class="far fa-images fa-20 fa-img-comment"></i>
                             </a>
                         </div>
+                    </div>
+                </div>
+                <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
+                    <div class="comment-user-container">
+                        <div class="user-identify-comment">
+                            <div class="profille-img">
+                                <img  class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                            </div>
+                        </div>
+                        <div class="comment-user-comment">
+                            <p class="text-ellips">Amo muito esse casal</p>
+                        </div>
+                    </div>
+                    <div class="comment-user-container comment-user-container-react">
+                        <i class="far fa-heart fa-12"></i>
                     </div>
                 </div>
                 <div class="comment-users">
@@ -251,7 +266,7 @@
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
                             </div>
-                            <h2 class="text-ellips">Domingos Sobrinho</h2>
+                            <h2 class="text-ellips">Domingos</h2>
                         </div>
                         <div class="comment-user-comment">
                             <p class="text-ellips">Amo muito esse casal</p>

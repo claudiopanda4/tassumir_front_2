@@ -142,6 +142,7 @@ class AuthController extends Controller
 
 
         $saveRetriveId = DB::table('contas')->insertGetId([
+            'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
             'nome' => $request->nome1,
             'apelido' => $request->apelido1,
             'data_nasc' => $request->dataNasc1,

@@ -355,8 +355,13 @@
 		display: block;
 		margin-top: 5px;
 	}
+	.user-identify-comment {
+	    margin-left: 0;
+	}
 	.comment-users {
 	    padding-top: 10px;
+	    width: 312px;
+	    margin-left: 10px;
 	}
 	.user-identify-comment {
 	    padding-left: 8px;
@@ -453,6 +458,9 @@
 	.user-identify-comment {
 	    width: 153px;
 	}
+	.comment-send-text {
+	    width: 77%;
+	}
 }
 @media screen and (max-width: 600px) {
 	#main-profile {
@@ -486,5 +494,14 @@
 	}
 	.pop-up-component-header-default {
 	    width: 298px;
+	}
+	.comment-send input[type="text"] {
+	    width: 65%;
+	}
+	.comment-users {	    
+		width: 290px;
+	}
+	.user-identify-comment {
+	    width: 118px;
 	}
 }
