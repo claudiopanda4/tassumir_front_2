@@ -28,6 +28,7 @@ class PerfilController extends Controller
         $auth = new AuthController();
         $account_name = $this->auth->defaultDate();
 
+        $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
 
@@ -44,7 +45,7 @@ class PerfilController extends Controller
               $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                 $perfil[0]['qtd_ps']=sizeof($seguidor);
 
-                return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento'));
+                return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost'));
 
 
           } else {
@@ -52,7 +53,7 @@ class PerfilController extends Controller
           }
 
           //dd($account_name);
-          return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento'));
+          return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost'));
 
     }
 
@@ -73,11 +74,12 @@ class PerfilController extends Controller
           } else {
             $perfil[0]['qtd_ps'] = 0;
           }
+          $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
           $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
           $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
 
           //dd($account_name);
-          return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture'));
+          return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost'));
 
     }
 

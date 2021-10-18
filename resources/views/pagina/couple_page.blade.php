@@ -14,33 +14,56 @@
                     <h1>{{ $page_content[0]->nome }}</h1>
                     <h2>@<span></span>{{ $page_content[0]->nome }} </h2>
                 </div>
-                <div class="follwing-btn-container">
-                    <button type="submit" class="follwing-btn">
-                        Seguir
-                    </button>
-                </div>
-                <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg">
-                    <div class="statistics-profile-page-component l-5">
-                        @if ($publicacoes > 1)
-                        <h1>{{ $publicacoes }}</h1>
-                        <h2>Publicações</h2>
-                        @else
-                        <h1>{{ $publicacoes }}</h1>
-                        <h2>Publicação</h2>
-                        @endif
+                @if($isUserHost)
+                    <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg-1">
+                        <div class="statistics-profile-page-component l-5">
+                            @if ($publicacoes > 1)
+                            <h1>{{ $publicacoes }}</h1>
+                            <h2>Publicações</h2>
+                            @else
+                            <h1>{{ $publicacoes }}</h1>
+                            <h2>Publicação</h2>
+                            @endif
+                        </div>
+                        <?php if (false): ?>
+                        <div class="statistics-profile-page-component l-5 invisible">
+                            <h1>123</h1>
+                            <h2>A Seguir</h2>
+                        </div>
+                        <?php endif ?>
+                        <div class="statistics-profile-page-component l-5">
+                            <h1>{{ $seguidores }}</h1>
+                            <h2>Seguindo</h2>
+                        </div>
                     </div>
-                    <?php if (false): ?>
-                    <div class="statistics-profile-page-component l-5 invisible">
-                        <h1>123</h1>
-                        <h2>A Seguir</h2>
+                @else
+                    <div class="follwing-btn-container">
+                        <button type="submit" class="follwing-btn">
+                            Seguir
+                        </button>
                     </div>
-                    <?php endif ?>
-                    <div class="statistics-profile-page-component l-5">
-                        <h1>{{ $seguidores }}</h1>
-                        <h2>Seguindo</h2>
+                @endif
+                    <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg">
+                        <div class="statistics-profile-page-component l-5">
+                            @if ($publicacoes > 1)
+                            <h1>{{ $publicacoes }}</h1>
+                            <h2>Publicações</h2>
+                            @else
+                            <h1>{{ $publicacoes }}</h1>
+                            <h2>Publicação</h2>
+                            @endif
+                        </div>
+                        <?php if (false): ?>
+                        <div class="statistics-profile-page-component l-5 invisible">
+                            <h1>123</h1>
+                            <h2>A Seguir</h2>
+                        </div>
+                        <?php endif ?>
+                        <div class="statistics-profile-page-component l-5">
+                            <h1>{{ $seguidores }}</h1>
+                            <h2>Seguindo</h2>
+                        </div>
                     </div>
-                </div>
-                
             </div>
             <div class="edit-page-container">
                 <button type="submit" class="follwing-btn" id="edit-page">

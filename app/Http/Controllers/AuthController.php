@@ -19,7 +19,11 @@ class AuthController extends Controller
         $account_name = $this->defaultDate();
         $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
         $profile_picture = Self::profile_picture(Auth::user()->conta_id);
-
+            
+        $isUserHost = Self::isUserHost($account_name[0]->conta_id);
+        
+        //=================================================================
+        //=================================================================
 
       $post=  DB::table('posts')->get();
       $page= DB::table('pages')->get();
@@ -59,7 +63,7 @@ class AuthController extends Controller
         }
         $a++;
       }
-        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture'));
+        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost'));
     }
     return redirect()->route('account.login.form');
     }
@@ -243,6 +247,17 @@ class AuthController extends Controller
     {
         DB::table('contas')->where('conta_id', $account_id)->update(['foto' => $picture]);
         return redirect()->route('account.profile');
+    }
+
+    public static function isUserHost($account_id)
+    {
+        
+        return count(
+            DB::table('pages')
+            ->where('conta_id_a', $account_id)
+            ->orwhere('conta_id_b', $account_id)
+            ->get()
+        ) > 0;
     }
 
 }

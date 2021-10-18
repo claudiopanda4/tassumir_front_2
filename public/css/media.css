@@ -13,6 +13,9 @@
 	.option-profile-menu ul {
 	    /*background-color: #242526;*/
 	}
+	.interaction-user {
+	    justify-content: right;
+	}
 	.video-post {
 	    height: 180px;
 	}
