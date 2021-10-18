@@ -7,9 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PaginaCasalController;
 
 class PerfilController extends Controller
 {
+    private $auth;
+
+    public function __construct()
+    {
+        $this->auth = new AuthController();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,12 +26,14 @@ class PerfilController extends Controller
     public function index()
     {
         $auth = new AuthController();
-        $account_name = $auth->defaultDate();
+        $account_name = $this->auth->defaultDate();
 
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
 
         $conta_logada = $auth->defaultDate();
+
+        $this->active_account_id = $account_name[0]->conta_id;
 
         //-------------------------------------------------------------------------
           $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
@@ -34,7 +44,7 @@ class PerfilController extends Controller
               $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                 $perfil[0]['qtd_ps']=sizeof($seguidor);
 
-                return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture','conta_logada','tipos_de_relacionamento'));
+                return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento'));
 
 
           } else {
@@ -42,9 +52,7 @@ class PerfilController extends Controller
           }
 
           //dd($account_name);
-
-          return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture','conta_logada','tipos_de_relacionamento'));
-
+          return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento'));
 
     }
 
@@ -52,6 +60,7 @@ class PerfilController extends Controller
     {
         $auth = new AuthController();
          $conta_logada = $auth->defaultDate();
+
         //-------------------------------------------------------------------------
           $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
           $account_name=DB::select('select * from contas where uuid  = ?', [$id]);
@@ -64,10 +73,11 @@ class PerfilController extends Controller
           } else {
             $perfil[0]['qtd_ps'] = 0;
           }
-          $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
           $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
+          $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
+
           //dd($account_name);
-          return view('perfil.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'perfil','conta_logada', 'tipos_de_relacionamento'));
+          return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture'));
 
     }
 
@@ -191,4 +201,29 @@ class PerfilController extends Controller
     }
       return redirect()->route('account1.profile', $request->conta_pedida);
     }
+
+
+    public function add_picture(Request $request)
+    {
+
+        $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
+
+        if ($request->hasFile('profilePicture'))
+        {
+
+            if (PaginaCasalController::check_image_extension($request->profilePicture->extension()))
+            {
+                $path = $request->file('profilePicture')->storeAs('public/img/users', $file_name);
+                AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]->conta_id);
+            }
+
+        }
+
+        return redirect()->route('account.profile');
+    }
+
+
+
+
+
 }
