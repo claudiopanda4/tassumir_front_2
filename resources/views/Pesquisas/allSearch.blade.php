@@ -58,8 +58,6 @@
 
 //----------------------------------------------------------------------
 										 	 $.ajax({
-
-
 												 url: "{{ route('pessoa.pesquisa')}}",
 												 type: 'get',
 												 data: {'dados': variavel, 'v':v},
@@ -68,8 +66,6 @@
 														 var nome = '';
 														 var contador = 1;
 	 												console.log(response.valor);
-
-
  													$.each(response.valor, function(key, value){
 														if (value.estado_conta_id == 1) {
 															if (contador == 1) {
@@ -84,8 +80,11 @@
 															nome += '<li class="change-look" style="display:flex;justify-content:space-around;align-content:center;">'
 															nome += '<div class="mt-4"><img class="ml-5 circle img-40" src="{{asset("storage/img/users/anselmoralph.jpg")}}"></div>'
 															nome += '<div class="mb-1 mr-2" id="card-ident"><div id="ident-profile" class="" >'
-															nome += '<span class="profile-name">'+value.nome+' '+value.apelido+'</span>'
-															nome += '<a href="" class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
+															var route1 = "{{route('account1.profile', 1) }}"
+															url_array1 = route1.split('/');
+															url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
+															nome += '<a href='+url_link1+' <span class="profile-name">'+value.nome+' '+value.apelido+'</span>'
+															nome += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
 															nome += '</div></div></li><div class="couple-separator"></div>'
 															if (contador == 4) {
 																var route = "{{route('peoplesSearch1.page', 1) }}"

@@ -107,7 +107,7 @@
             ],
         ];
         foreach ($dados as $key => $value): ?>
-            
+
         <?php endforeach ?>
 <?php foreach ($dados as $key => $value): ?>
         <div class="card br-10">
@@ -120,9 +120,9 @@
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
-                                <span class="time-posted">50 min</span><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
-                                  <a href="" class="r-5 follow_page_post" onclick="seguir('{{$dados[$key]['page_id']}}')">seguir</a>
-                                <?php endif; ?>
+                                <span class="time-posted">50 min</span><div id="seguir"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
+                                  <a href="" class="seguir-a" id="{{$dados[$key]['page_id']}}">seguir</a>
+                                <?php endif; ?></div>
                             </div>
                         </div>
                     </div>
@@ -175,7 +175,7 @@
                             <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
                         </li>
                         <li>
-                            <a href="">{{$dados[$key]['qtd_comment']}} comentários</a>
+                            <a href="" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
                         </li>
                         <?php if (false): ?>
                         <li>
@@ -232,10 +232,10 @@
                         <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
                     </div>
                     <div class="input-text comment-send-text l-5 clearfix">
-                        <input type="text" name="comentario" id="comentario" placeholder="O que você tem a dizer?">
+                        <input type="text" class="" name="comentario" id="comentario-{{$dados[$key]['post_id']}}" placeholder="O que você tem a dizer?">
                         <div class="r-5 ">
-                            <a href="">
-                                <i class="far fa-images fa-20 fa-img-comment" onclick="comentar('{{$dados[$key]['page_id']}}')"></i>
+                            <a href="" class="comentar-a" id="{{$dados[$key]['post_id']}}">
+                                <i class="far fa-images fa-20 fa-img-comment" id="{{$dados[$key]['post_id']}}"></i>
                             </a>
                         </div>
                     </div>
@@ -274,12 +274,12 @@
         <?php endforeach ?>
 </div>
 <script>
-function gostar(id, v){
+function gostar(id){
 
     $.ajax({
       url: "{{ route('like')}}",
       type: 'get',
-      data: {'id': id, 'v':v},
+      data: {'id': id},
        dataType: 'json',
        success:function(response){
        let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
@@ -297,20 +297,24 @@ function gostar(id, v){
   }
   function seguir(id){
 
-      $.ajax({
+     $.ajax({
         url: "{{route('seguir')}}",
         type: 'get',
         data: {'id': id},
          dataType: 'json',
          success:function(response){
          console.log(response);
+         $('#seguir').hide();
 
         }
       });
     }
 
     function comentar(id){
-    let c = $('#comentario').val();
+    let c = $("#comentario-" + id).val();
+    let comment_qtd = $("#comment-qtd-" + id).text().split(' ')[0];
+
+
         $.ajax({
           url: "{{route('comentar')}}",
           type: 'get',
@@ -318,7 +322,9 @@ function gostar(id, v){
            dataType: 'json',
            success:function(response){
            console.log(response);
-
+           comment_qtd = parseInt(comment_qtd) + 1;
+           $("#comment-qtd-" + id).text((comment_qtd) + " comentários");
+           $("#comentario-" + id).val('');
           }
         });
       }
