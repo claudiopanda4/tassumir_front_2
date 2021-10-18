@@ -33,11 +33,11 @@ class AuthController extends Controller
         } else {
             $seguidor = array();
         }
-        
+
         $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
         $page_uuid = DB::select('select uuid from pages where page_id = ?', [$key->page_id]);
         $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
-        
+
         if (sizeof($aux1) > 0) {
             $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$key->post_id, $aux1[0]->identificador_id]);
         } else {
@@ -57,14 +57,15 @@ class AuthController extends Controller
       }
         return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture'));
     }
-            return redirect()->route('account.login.form');
-}
+    return redirect()->route('account.login.form');
+    }
 
     public function like(Request $request){
             $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
             $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+            $likes_verificacao = DB::select('select * from post_reactions where (post_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
             $resposta = 0;
-            if ($request->v == 1) {
+            if (sizeof($likes_verificacao) == 0) {
               DB::table('post_reactions')->insert([
                 'reaction_id' => 1,
                 'identificador_id' => $aux[0]->identificador_id,
@@ -72,7 +73,7 @@ class AuthController extends Controller
               ]);
               $resposta= 1;
 
-            } elseif ($request->v == 2){
+            } elseif (sizeof($likes_verificacao) == 1){
               DB::table('post_reactions')->where(['post_id'=>$request->id])->delete();
               $resposta= 2;
             }
@@ -137,9 +138,9 @@ class AuthController extends Controller
         $data = $request->dat;
 
         //dd($nome."=>".$apelido."=>".$sexo."=>".$data);
-        
+
         return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data'));
-        
+
     }
     public function joinAndSave(Request $request){
 
@@ -227,4 +228,5 @@ class AuthController extends Controller
     {
         return DB::select('select foto from contas where conta_id = ?', [$account_id])[0]->foto;
     }
+  
 }

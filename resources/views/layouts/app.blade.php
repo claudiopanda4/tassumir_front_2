@@ -362,7 +362,8 @@
         <div class="header-height"></div>
         <div style="margin-top: 15px; margin-bottom: 10px; overflow-y: auto;">
             <div class="">
-                <form enctype="multipart/form-data">
+                <form enctype="multipart/form-data" action="{{ route('Pedido_relac') }}" method="POST">
+                  @csrf
                     <label for="relationship-type-target">
                         <div class="relationship-type">
                             <i class="fas fa-sliders-h"></i>
@@ -375,10 +376,10 @@
                             <h2 id="relationship-type-all-1" class="relationship-type-component">Namoro</h2>
                         </label>
                         <label for="relationship-type-target">
-                            <h2 id="relationship-type-all-2" class="relationship-type-component">Noivado</h2>
+                            <h2 id="relationship-type-all-1" class="relationship-type-component">Noivado</h2>
                         </label>
                         <label for="relationship-type-target">
-                            <h2 id="relationship-type-all-3" class="relationship-type-component">Casamento</h2>
+                            <h2 id="relationship-type-all-1" class="relationship-type-component">Casamento</h2>
                         </label>
                     </div>
                     <div class="justify-content-start marriage-proposal" style="margin-bottom: 10px;">
@@ -387,20 +388,22 @@
                     <div class="form-group marriage-proposal">
                         <input type="text" class="input-text-default input-full" name="name_page" type="text" placeholder="Nome da Página do Casal">
                     </div>
-                    <input type="hidden" name="" value="" id="relationship-type-selected">
+                    <input type="hidden" name="conta_pedida" value="{{$account_name[0]->uuid}}" id="relationship-type-selected">
+                    <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+                        <div class="cover-done" id="cover-done-marriage">
+                          <button type="submit" name="button" style="padding: 10px; font-size: 14px;" >
+                            Concluido
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
-        <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-            <div class="cover-done" id="cover-done-marriage">
-                <h2 style="padding: 10px; font-size: 14px;">Concluido</h2>
-            </div>
-        </div>
     </div>
-</div> 
+</div>
 <?php endif ?>
 <?php if (true): ?>
- 
+
 <?php endif ?>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -408,15 +411,30 @@
           e.preventDefault();
           let id = e.target.id.split('-');
           if(id[0] == "on"){
-            gostar(id[1], 1);
+            gostar(id[1]);
             let new_id = "off-" + id[1] + "-i";
             document.getElementById("on-" + id[1] + "-i").setAttribute('id', new_id);
           } else if(id[0] == "off") {
-              gostar(id[1], 2);
+              gostar(id[1]);
               let new_id = "on-" + id[1] + "-i";
               document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
           }
       });
+
+      $('.seguir-a').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id;
+            seguir(id);
+
+      });
+
+      $('.comentar-a').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id;
+            comentar(id);
+
+      });
+
       $('.relationship-type-component').click(function(e){
             $('#relationship-selected-type').text($('#' + e.target.id).text());
             $('#relationship-type-selected').val(e.target.id.split('-')[3]);

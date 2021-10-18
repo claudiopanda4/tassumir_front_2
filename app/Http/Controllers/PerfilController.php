@@ -19,22 +19,55 @@ class PerfilController extends Controller
     {
         $auth = new AuthController();
         $account_name = $auth->defaultDate();
+
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
+
+        $conta_logada = $auth->defaultDate();
+
         //-------------------------------------------------------------------------
+          $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
           $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
           $lenght = sizeof($aux1);
           //dd($lenght);
           if ($lenght > 0) {
               $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                 $perfil[0]['qtd_ps']=sizeof($seguidor);
+
                 return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture'));
+
+
           } else {
             $perfil[0]['qtd_ps'] = 0;
           }
 
           //dd($account_name);
+
           return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture'));
+
+          return view('perfil.index', compact('account_name', 'perfil', 'conta_logada', 'tipos_de_relacionamento'));
+    }
+
+    public function perfil_das_contas($id)
+    {
+        $auth = new AuthController();
+         $conta_logada = $auth->defaultDate();
+        //-------------------------------------------------------------------------
+          $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
+          $account_name=DB::select('select * from contas where uuid  = ?', [$id]);
+          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+          $lenght = sizeof($aux1);
+          //dd($lenght);
+          if ($lenght > 0) {
+              $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
+                $perfil[0]['qtd_ps']=sizeof($seguidor);
+          } else {
+            $perfil[0]['qtd_ps'] = 0;
+          }
+
+          //dd($account_name);
+          return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento'));
+
     }
 
     /**
@@ -77,8 +110,7 @@ class PerfilController extends Controller
      */
     public function edit($perfil)
     {
-        $auth = new AuthController();
-        $account_name = $auth->defaultDate();
+        $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
         return view('perfil.edit', compact('account_name'));
     }
 
@@ -117,5 +149,34 @@ class PerfilController extends Controller
     public function destroy(Perfil $perfil)
     {
         //
+    }
+
+    public function Pedido_relac(Request $request)
+    {
+      $verificacaop=array();
+      $conta_pedinte = Auth::user()->conta_id;
+      $conta_pedida = DB::select('select * from contas where uuid = ?', [$request->conta_pedida]);
+      if (sizeof($conta_pedida) == 0  ) {
+          $verificacaop[0]=1;
+      }else {
+      $verificacaop= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_pedida[0]->conta_id, $conta_pedinte]);
+      }
+
+
+      if ( sizeof($verificacaop) == 0) {
+
+      DB::table('pedido_relacionamentos')->insert([
+
+          'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+          'conta_id_pedida' => $conta_pedida[0]->conta_id,
+          'conta_id_pedinte' =>  $conta_pedinte,
+          'estado' => 1,
+          'name_page' => $request->name_page,
+          'tipo_relacionamento_id' => 1,
+
+      ]);
+
+    }
+      return redirect()->route('account1.profile', $request->conta_pedida);
     }
 }
