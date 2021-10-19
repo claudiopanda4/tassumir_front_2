@@ -19,7 +19,7 @@
                         <div class="page-cover circle l-5">
                             <img class="img-full circle" src="../storage/img/page/t30_13_1092985.jpg">
                         </div>
-                        <a href=""><h1 class="l-5 name-page text-ellips"> {{ $page['page_name'] }} </h1></a>
+                        <a href="{{ route('couple_page.user') }}"><h1 class="l-5 name-page text-ellips"> {{ $page['page_name'] }} </h1></a>
                         @if($page['seguidores'] > 1)
                             <h2 class="l-5 text-ellips"> {{ $page['seguidores'] }} seguidores</h2>
                         @else
