@@ -54,7 +54,7 @@ class PaginaCasalController extends Controller
         //===================================================================================
         $page_content = $this->page_default_date($account_name);
         //===================================================================================
-        $seguidores = $this->seguidores($page_content[0]->nome, $page_content[0]->page_id);
+        $seguidores = Self::seguidores($page_content[0]->page_id);
         //===================================================================================
         $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
         //===================================================================================
@@ -87,7 +87,7 @@ class PaginaCasalController extends Controller
             $id
         ]);
       //===================================================================================
-      $seguidores = $this->seguidores($page_content[0]->nome, $page_content[0]->page_id);
+      $seguidores = Self::seguidores($page_content[0]->page_id);
       //===================================================================================
       $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
       //===================================================================================
@@ -140,7 +140,7 @@ class PaginaCasalController extends Controller
         //===================================================================================
         $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
         //===================================================================================
-        
+
         return view('pagina.delete_couple_page', compact('account_name', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages'));
     }
 
@@ -154,6 +154,7 @@ class PaginaCasalController extends Controller
         return DB::select('select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = ?', [$id])[0]->tipo_relacionamento;
     }
     public static function seguidores($id) {
+        
         return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
     }
 
