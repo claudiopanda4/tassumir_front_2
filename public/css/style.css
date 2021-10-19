@@ -386,7 +386,7 @@ label[for="hugo"]{
     font-size: 12px;
     width: 140px;
 }
-.page-cover ~ h1.name-page {
+.page-cover ~ a h1.name-page {
     color: #fff;
     font-size: 14px;
     margin-top: 8px;
@@ -2254,4 +2254,7 @@ label[for="hugo"]{
 }
 .img-profile-page-container {
 	position: relative;
+}
+#my-pages .card {
+	border: none;
 }

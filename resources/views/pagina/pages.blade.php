@@ -18,7 +18,7 @@
                     <div class="page-cover circle l-5">
                         <img class="img-full circle" src="../storage/img/page/t30_13_1092985.jpg">
                     </div>
-                    <h1 class="l-5 name-page text-ellips">Famosos em Relacionamentos</h1>
+                    <a href=""><h1 class="l-5 name-page text-ellips">Famosos em Relacionamentos</h1></a>
                     <h2 class="l-5 text-ellips">120 mil seguidores</h2>
                     <a href="" class="l-5">seguir</a>
                 </li>
