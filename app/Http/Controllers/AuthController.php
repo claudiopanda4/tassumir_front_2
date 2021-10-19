@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Controllers\PaginaCasalController;
+
 class AuthController extends Controller
 {
     public function __construct(){
@@ -17,11 +19,17 @@ class AuthController extends Controller
         if (Auth::check() == true) {
 
         $account_name = $this->defaultDate();
+        //===================================================================================
         $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
+        //===================================================================================
         $profile_picture = Self::profile_picture(Auth::user()->conta_id);
+        //===================================================================================
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
-        
+        //===================================================================================
         $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
+        //===================================================================================
+        $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
+        //===================================================================================
         //=================================================================
         //=================================================================
 
@@ -63,7 +71,7 @@ class AuthController extends Controller
         }
         $a++;
       }
-        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages'));
+        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
     }
     return redirect()->route('account.login.form');
     }
@@ -258,20 +266,45 @@ class AuthController extends Controller
     public static function isUserHost($account_id)
     {
         
-        return count(
-            DB::table('pages')
-            ->where('conta_id_a', $account_id)
-            ->orwhere('conta_id_b', $account_id)
-            ->get()
-        ) > 0;
+        return count(DB::table('pages')
+                    ->where('conta_id_a', $account_id)
+                    ->orwhere('conta_id_b', $account_id)
+                    ->get()) > 0;
     }
 
     public static function hasUserManyPages($account_id)
     {
         return count(DB::table('pages')
-            ->where('conta_id_a', $account_id)
-            ->orwhere('conta_id_b', $account_id)
-            ->get()) > 1;
+                    ->where('conta_id_a', $account_id)
+                    ->orwhere('conta_id_b', $account_id)
+                    ->get()) > 1;
+    }
+
+    /**
+     * get all the user pages
+     * 
+     * @return 
+     */
+
+    public static function allUserPages($auth, $account_id)
+    {   
+        $page_data = array();
+        $index = 0;
+
+        if ($auth->hasUserManyPages($account_id))
+        {
+            $data =  DB::table('pages')->where('conta_id_a', $account_id)->orwhere('conta_id_b', $account_id)->get();
+            foreach($data as $d) 
+            {
+                $page_data[$index]['page_uuid'] = $d->uuid;
+                $page_data[$index]['page_name'] = $d->nome;
+                $page_data[$index]['seguidores'] = PaginaCasalController::seguidores($d->page_id);
+                $index++;
+            }
+
+        }
+
+        return $page_data;
     }
 
 }
