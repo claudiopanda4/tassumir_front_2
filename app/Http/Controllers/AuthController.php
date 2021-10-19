@@ -21,6 +21,7 @@ class AuthController extends Controller
         $profile_picture = Self::profile_picture(Auth::user()->conta_id);
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
         
+        $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
         //=================================================================
         //=================================================================
 
@@ -62,7 +63,7 @@ class AuthController extends Controller
         }
         $a++;
       }
-        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost'));
+        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages'));
     }
     return redirect()->route('account.login.form');
     }
@@ -263,6 +264,14 @@ class AuthController extends Controller
             ->orwhere('conta_id_b', $account_id)
             ->get()
         ) > 0;
+    }
+
+    public static function hasUserManyPages($account_id)
+    {
+        return count(DB::table('pages')
+            ->where('conta_id_a', $account_id)
+            ->orwhere('conta_id_b', $account_id)
+            ->get()) > 1;
     }
 
 }

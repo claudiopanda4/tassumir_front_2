@@ -17,6 +17,7 @@ class PaginaCasalController extends Controller
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
         $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
+        $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
 
         $page_content = $this->page_default_date($account_name);
         $seguidores = $this->seguidores($page_content[0]->nome, $page_content[0]->page_id);
@@ -24,13 +25,14 @@ class PaginaCasalController extends Controller
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
         $this->current_page_id = $page_content[0]->page_id;
         //dd($page_content);
-        return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost'));
+        return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages'));
     }
     public function my_pages(){
         $auth = new AuthController();
         $account_name = $auth->defaultDate();
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
+        $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
 
         $page_content = $this->page_default_date($account_name);
         $seguidores = $this->seguidores($page_content[0]->nome, $page_content[0]->page_id);
@@ -38,7 +40,7 @@ class PaginaCasalController extends Controller
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
         $this->current_page_id = $page_content[0]->page_id;
         //dd($page_content);
-        return view('pagina.pages', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture'));
+        return view('pagina.pages', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'hasUserManyPages'));
     }
 
     public function page_default_date ($account_name) {
@@ -65,8 +67,9 @@ class PaginaCasalController extends Controller
       $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
       $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
       $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
+      $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
 
-      return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost'));
+      return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages'));
     }
 
 
@@ -76,7 +79,8 @@ class PaginaCasalController extends Controller
         $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
-        return view('pagina.edit_couple', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost'));
+        $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
+        return view('pagina.edit_couple', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages'));
     }
 
 
@@ -85,7 +89,8 @@ class PaginaCasalController extends Controller
         $account_name = $auth->defaultDate();
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
-        return view('pagina.delete_couple_page', compact('account_name', 'checkUserStatus', 'profile_picture'));
+        $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
+        return view('pagina.delete_couple_page', compact('account_name', 'checkUserStatus', 'profile_picture', 'hasUserManyPages'));
     }
 
     /*
