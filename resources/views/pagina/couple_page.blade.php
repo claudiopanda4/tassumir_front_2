@@ -19,7 +19,7 @@
                     <h1>{{ $page_content[0]->nome }}</h1>
                     <h2>@<span></span>{{ $page_content[0]->nome }} </h2>
                 </div>
-                <?php if (false): ?>
+                @if($isUserHost)
                     <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg-1">
                         <div class="statistics-profile-page-component l-5">
                             @if ($publicacoes > 1)
@@ -41,13 +41,13 @@
                             <h2>Seguindo</h2>
                         </div>
                     </div>
-                <?php else: ?>
+                @else
                     <div class="follwing-btn-container">
                         <button type="submit" class="follwing-btn">
                             Seguir
                         </button>
                     </div>
-                <?php endif ?>
+                @endif
                     <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg">
                         <div class="statistics-profile-page-component l-5">
                             @if ($publicacoes > 1)
