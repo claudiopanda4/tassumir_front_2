@@ -25,6 +25,20 @@ class PaginaCasalController extends Controller
         //dd($page_content);
         return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture'));
     }
+    public function my_pages(){
+        $auth = new AuthController();
+        $account_name = $auth->defaultDate();
+        $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
+        $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
+
+        $page_content = $this->page_default_date($account_name);
+        $seguidores = $this->seguidores($page_content[0]->nome, $page_content[0]->page_id);
+        $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
+        $publicacoes = $this->get_all_post($page_content[0]->page_id);
+        $this->current_page_id = $page_content[0]->page_id;
+        //dd($page_content);
+        return view('pagina.pages', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture'));
+    }
 
     public function page_default_date ($account_name) {
 

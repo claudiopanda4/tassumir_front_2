@@ -8,6 +8,11 @@
                 <div class="img-profile-page circle l-5">
                     <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full circle">
                 </div>
+                <label for="target-profile-cover">
+                    <div class="add-edit-profile circle">
+                        <i class="fas fa-plus center" style="font-size: 10px;"></i>
+                    </div>
+                </label>
             </div>
             <div class="statistics-profile-page l-5 clearfix">
                 <div class="statistics-profile-page-identify">

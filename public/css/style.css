@@ -381,7 +381,27 @@ label[for="hugo"]{
 	width: 40px;
 	height: 40px;
 }
-
+.page-cover ~ h2 {
+    color: #6c757d;
+    font-size: 12px;
+    width: 140px;
+}
+.page-cover ~ h1.name-page {
+    color: #fff;
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 2px;
+}
+.li-my-page {
+	width: 300px;
+}
+#my-pages .title {
+	color: #efefef;
+	font-size: 15px;
+	padding: 10px;
+	padding-left: 20px;
+	padding-top: 20px;
+}
 .card-couple {
 	
 	padding: 10px;
@@ -664,7 +684,12 @@ label[for="hugo"]{
 	margin-top: 9px;
 }
 .interaction-user ul.ul-interaction-user {
-	margin-right: 0;
+	justify-content: space-around;
+    margin-right: 0;
+    width: 90%;
+    border-bottom: 1px solid #343a40;
+    border-top: 1px solid #343a40;
+    margin: auto;
 }
 .couple-info{
 
@@ -963,7 +988,7 @@ label[for="hugo"]{
 }
 .user-tassumir h1 {
 	font-size: 13.5px;
-	margin-top: 10px;
+	margin-top: 6px;
 }
 .user-tassumir img {
 	width: 32px;
@@ -1049,13 +1074,13 @@ label[for="hugo"]{
 }
 .post header .first-component {
 	position: relative;
-	width: 240px;
+	width: 268px;
 	margin-top: 0;
 }
 .post header .first-component .page-cover {
 	position: relative;
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 }
 .post header .first-component .page-identify h1 {
 	font-size: 14px;
@@ -1068,7 +1093,7 @@ label[for="hugo"]{
 .page-identify {
 	margin-left: 0;
 	margin-bottom: 0;
-	width: 185px;
+	width: 190px;
 }
 .follow_page_post {
 	margin: 0;
@@ -1181,18 +1206,18 @@ label[for="hugo"]{
 }
 .interaction-numbers {
 	padding-top: 5px;
-	border-bottom: 1px solid #606060;
 }
 .interaction-numbers ul {
 	padding-right: 30px;
 }
 .interaction-numbers ul {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	margin-bottom: 5px;
-	justify-content: space-between;
-	padding-left: 10px;
+	width: 95%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+    justify-content: space-between;
+    padding-left: 10px;
+    margin: auto;
 }
 .interaction-numbers li {
 	/*display: inline-flex;*/
@@ -1265,8 +1290,8 @@ label[for="hugo"]{
     height: 34px;
     border-radius: 50%;
     position: relative;
-    background-color: #3a3b3c;
-    /*border: 1px solid #606060;*/
+    /*background-color: #3a3b3c;
+    border: 1px solid #606060;*/
 }
 .interaction-user li:nth-child(1) div.content-button {
 	/*background-color: #800080;*/
@@ -1286,7 +1311,6 @@ label[for="hugo"]{
 .interaction-user {
     padding-top: 5px;
     padding-bottom: 5px;
-	border-bottom: 1px solid #606060;
 	justify-items: flex-start;
 	justify-content: flex-start;
 }
@@ -1294,13 +1318,14 @@ label[for="hugo"]{
 .interaction-numbers {
 	width: 96.5%;
     margin: auto;
+	/*border-bottom: 1px solid #606060;*/
 }
 .interaction-user ul {
 	margin-bottom: 0;
 }
 .post-cover {
 	position: relative;
-    height: 270px;
+    height: 330px;
     margin-top: -10px;
     margin-bottom: 10px;
 }
@@ -1911,6 +1936,7 @@ label[for="hugo"]{
 	margin: auto;
     flex-direction: column;
     border: none;
+    width: 570px;
     background-color: transparent;
 }
 #main-container-profile {
@@ -2225,4 +2251,7 @@ label[for="hugo"]{
 }
 .comment-users-own .user-identify-comment {
     width: 40px;
+}
+.img-profile-page-container {
+	position: relative;
 }

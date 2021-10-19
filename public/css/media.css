@@ -358,6 +358,9 @@
 		display: block;
 		margin-top: 5px;
 	}
+	#imgless {
+		margin-top: 10px;
+	}
 	.user-identify-comment {
 	    margin-left: 0;
 	}
@@ -485,6 +488,11 @@
 	}
 	.post-cover {
 	    height: 390px;
+	}
+}
+@media screen and (max-width: 570px) {
+	.card-page {
+	    width: 100%;
 	}
 }
 @media screen and (max-width: 328px) {

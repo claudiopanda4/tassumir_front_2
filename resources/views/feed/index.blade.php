@@ -120,8 +120,8 @@
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
-                                <span class="time-posted">50 min</span><div id="seguir"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
-                                  <a href="" class="seguir-a" id="{{$dados[$key]['page_id']}}">seguir</a>
+                                <span class="time-posted l-5">50 min</span><div id="seguir"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
+                                  <a href="" class="seguir-a r-5" id="{{$dados[$key]['page_id']}}">seguir</a>
                                 <?php endif; ?></div>
                             </div>
                         </div>
@@ -210,7 +210,7 @@
                         <li class="r-5">
                             <div class="content-button">
                                 <a href="">
-                                    <i class="fas fa-share center fa-16"></i>
+                                    <i class="far fa-share-square fa-16"></i>
                                     <h2>Partilhar</h2>
                                 </a>
                             </div>

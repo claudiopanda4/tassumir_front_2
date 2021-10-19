@@ -109,7 +109,7 @@
                     </li>
                     <li class="user-tassumir clearfix l-5">
                         @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
-                            <a href="{{route('account.profile')}}"><i class="far fa-user-circle fa-24 l-5" style="margin-top: 10px;"></i></a>
+                            <a href="{{route('account.profile')}}"><i class="far fa-user-circle fa-24 l-5" id="imgless"></i></a>
                         @else
                             <a href="{{route('account.profile')}}"><img class="l-5 border-grad" src="{{asset('storage/img/users') . '/' . $profile_picture}}"></a>
                         @endif
@@ -131,6 +131,9 @@
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
                 @if($checkUserStatus)
                     <li class="li-component-aside"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Página de Casal</a></li>
+                @endif
+                @if($checkUserStatus)
+                    <li class="li-component-aside"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page.mine')}}">Minhas Páginas</a></li>
                 @endif
                 <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Guardados</a></li>
                 <li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Casais que eu sigo</a></li>

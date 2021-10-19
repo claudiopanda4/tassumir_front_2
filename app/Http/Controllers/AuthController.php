@@ -29,7 +29,7 @@ class AuthController extends Controller
 
         $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$page[$key->page_id - 1]->page_id, 2 ]);
         $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-        if (sizeof($aux1) > 0) {
+        if (sizeof($aux1) > 0 && sizeof($aux) > 0) {
             $seguidor = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux[0]->identificador_id, $aux1[0]->identificador_id]);
         } else {
             $seguidor = array();
