@@ -154,7 +154,7 @@ class PaginaCasalController extends Controller
         return DB::select('select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = ?', [$id])[0]->tipo_relacionamento;
     }
     public static function seguidores($id) {
-        
+        dd($id);
         return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
     }
 
