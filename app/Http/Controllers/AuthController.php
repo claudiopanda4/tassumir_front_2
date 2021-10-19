@@ -19,7 +19,6 @@ class AuthController extends Controller
         $account_name = $this->defaultDate();
         $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
         $profile_picture = Self::profile_picture(Auth::user()->conta_id);
-            
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
         
         //=================================================================
@@ -230,7 +229,13 @@ class AuthController extends Controller
 
     public static function isCasal($account_id)
     {
-        return count(DB::select('select page_id from pages where conta_id_a = ? or conta_id_b = ? and tipo_page_id = ?', [$account_id, $account_id, 1])) > 0;
+        //dd($account_id);
+        return count(DB::table('pages')
+                ->where('conta_id_a', $account_id)
+                ->orwhere('conta_id_b', $account_id)
+                ->orwhere('tipo_page_id', 1)
+                ->get()) > 0;
+        //return DB::select('select page_id from pages where conta_id_a = ? or conta_id_b = ? and tipo_page_id = ?', [$account_id, $account_id, 1]);
     }
 
     public static function profile_picture($account_id)
