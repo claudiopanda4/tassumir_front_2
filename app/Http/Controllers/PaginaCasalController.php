@@ -13,55 +13,32 @@ class PaginaCasalController extends Controller
 
     public function index(){
         $auth = new AuthController();
-        //===================================================================================
         $account_name = $auth->defaultDate();
-        //===================================================================================
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
-        //===================================================================================
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
-        //===================================================================================
         $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
-        //===================================================================================
         $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
-        //===================================================================================
         $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-        //===================================================================================
         $page_content = $this->page_default_date($account_name);
-        //===================================================================================
         $seguidores = Self::seguidores($page_content[0]->page_id);
-        //===================================================================================
         $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
-        //===================================================================================
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
-        //===================================================================================
         $this->current_page_id = $page_content[0]->page_id;
-        //===================================================================================
         //dd($page_content);
         return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
     }
     public function my_pages(){
         $auth = new AuthController();
-        //===================================================================================
         $account_name = $auth->defaultDate();
-        //===================================================================================
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
-        //===================================================================================
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
-        //===================================================================================
         $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
-        //===================================================================================
         $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-        //===================================================================================
         $page_content = $this->page_default_date($account_name);
-        //===================================================================================
         $seguidores = Self::seguidores($page_content[0]->page_id);
-        //===================================================================================
         $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
-        //===================================================================================
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
-        //===================================================================================
         $this->current_page_id = $page_content[0]->page_id;
-        //===================================================================================
         //dd($page_content);
         return view('pagina.pages', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages'));
     }
@@ -78,31 +55,19 @@ class PaginaCasalController extends Controller
 
     public function paginas($id){
       $auth = new AuthController();
-      //===================================================================================
       $account_name = $auth->defaultDate();
-      //===================================================================================
       $page_content = $this->page_default_date($account_name);
-      //===================================================================================
       $page_content = DB::select('select * from pages where uuid = ?', [
             $id
         ]);
-      //===================================================================================
       $seguidores = Self::seguidores($page_content[0]->page_id);
-      //===================================================================================
       $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
-      //===================================================================================
       $publicacoes = $this->get_all_post($page_content[0]->page_id);
-      //===================================================================================
       $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
-      //===================================================================================
       $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
-      //===================================================================================
       $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
-      //===================================================================================
       $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
-      //===================================================================================
       $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-      //===================================================================================
 
       return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
     }
@@ -110,36 +75,23 @@ class PaginaCasalController extends Controller
 
     public function edit_couple(){
         $auth = new AuthController();
-        //===================================================================================
         $account_name = $auth->defaultDate();
-        //===================================================================================
         $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
-        //===================================================================================
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
-        //===================================================================================
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
-        //===================================================================================
         $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
-        //===================================================================================
         $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-        //===================================================================================
         return view('pagina.edit_couple', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
     }
 
 
     public function delete_couple_page(){
         $auth = new AuthController();
-        //===================================================================================
         $account_name = $auth->defaultDate();
-        //===================================================================================
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
-        //===================================================================================
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
-        //===================================================================================
         $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
-        //===================================================================================
         $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-        //===================================================================================
 
         return view('pagina.delete_couple_page', compact('account_name', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages'));
     }
@@ -154,7 +106,7 @@ class PaginaCasalController extends Controller
         return DB::select('select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = ?', [$id])[0]->tipo_relacionamento;
     }
     public static function seguidores($id) {
-        dd($id);
+        //dd($id);
         return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
     }
 
@@ -162,6 +114,10 @@ class PaginaCasalController extends Controller
         return count(DB::select('select * from posts where page_id = ?', [$id]));
     }
 
+    private function post($uuid) {
+        return view('pagina.pages');
+        //return count(DB::select('select * from posts where $uuid = ?', [$uuid]));
+    }
     /**
      * @param
      */

@@ -173,7 +173,7 @@
                             <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
                         </li>
                         <li>
-                            <a href="" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
+                            <a href="{{route('couple.page.post', $dados[$key]['page_uuid'])}}" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
                         </li>
                         <?php if (false): ?>
                         <li>
