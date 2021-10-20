@@ -36,6 +36,7 @@ class AuthController extends Controller
       $post=  DB::table('posts')->get();
       $page= DB::table('pages')->get();
       $a=0;
+      $i=0;
       $dados = array();
       foreach ($post as $key) {
 
@@ -50,9 +51,11 @@ class AuthController extends Controller
         $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
         $page_uuid = DB::select('select uuid from pages where page_id = ?', [$key->page_id]);
         $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
+        $guardado= DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$key->post_id,  $account_name[0]->conta_id]);
 
         if (sizeof($aux1) > 0) {
             $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$key->post_id, $aux1[0]->identificador_id]);
+//            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$key->post_id-1]->comment_id, $aux1[0]->identificador_id]);
         } else {
             $ja_reagiu = array();
         }
@@ -65,10 +68,37 @@ class AuthController extends Controller
         $dados[$a]['page_id']= $key->page_id ;
         $dados[$a]['page_uuid']= $page_uuid[0]->uuid ;
         $dados[$a]['reagir_S/N']=sizeof($ja_reagiu);
+//        $dados[$a]['comment_S/N']=sizeof($ja_reagiu1);
+        $dados[$a]['guardado?']=sizeof($guardado);
         $dados[$a]['formato']=$key->formato_id;
+        $dados[$a]['estado_post']=$key->estado_post_id;
         if($dados[$a]['formato']==1 || $dados[$a]['formato']== 2){
         $dados[$a]['file']=$key->file;
         }
+        if ($account_name[0]->conta_id == $page[$key->page_id - 1]->conta_id_a  || $account_name[0]->conta_id == $page[$key->page_id - 1]->conta_id_b ) {
+          $dados[$a]['dono_da_pag?']=1;
+        }else {
+          $dados[$a]['dono_da_pag?']=0;
+        }
+        $dados[$a]['qtd_comment_reaction']=0;
+        for ($j=1; $j <= sizeof($comment) ; $j++) {
+            $reaction_comment = DB::select('select * from reactions_comments where comment_id = ?', [$j]);
+        if (sizeof($reaction_comment)>= $dados[$a]['qtd_comment_reaction']) {
+          $dados[$a]['qtd_comment_reaction']=sizeof($reaction_comment);
+          $dados[$a]['comment']=$comment[$j - 1]->comment;
+          $dados[$a]['comment_id']=$comment[$j - 1]->comment_id;
+
+          $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$j-1]->identificador_id ]);
+          if ($aux2[0]->tipo_identificador_id == 1) {
+            $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+            $dados[$a]['nome_comment']=$conta[0]->nome;
+            $dados[$a]['nome_comment'].=" ";
+            $dados[$a]['nome_comment'].=$conta[0]->apelido;
+          }elseif ($aux2[0]->tipo_identificador_id == 2) {
+            $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
+          }
+        }
+      }
         $a++;
       }
         return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
@@ -112,6 +142,52 @@ class AuthController extends Controller
 
                 return response()->json($resposta);
         }
+
+        public function savepost(Request $request){
+
+              $conta =Auth::user()->conta_id;
+              $aux = DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$request->id,  $conta]);
+         if (sizeof($aux)== 0) {
+           DB::table('saveds')->insert([
+               'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+               'conta_id' => $conta,
+               'post_id' => $request->id,
+               ]);
+         }
+
+                  $resposta=1;
+
+
+                    return response()->json($resposta);
+            }
+
+            public function delete_post(Request $request){
+
+                  DB::table('posts')
+                        ->where('post_id', $request->id)
+                        ->update([
+                          'estado_post_id' => 4,
+                      ]);
+
+                      $resposta=1;
+
+
+                        return response()->json($resposta);
+                }
+
+                public function ocultar_post(Request $request){
+
+                      DB::table('posts')
+                            ->where('post_id', $request->id)
+                            ->update([
+                              'estado_post_id' => 2,
+                          ]);
+
+                          $resposta=1;
+
+
+                            return response()->json($resposta);
+                    }
 
     public function comentar(Request $request){
 
@@ -266,7 +342,7 @@ class AuthController extends Controller
 
     public static function isUserHost($account_id)
     {
-        
+
         return count(DB::table('pages')
                     ->where('conta_id_a', $account_id)
                     ->orwhere('conta_id_b', $account_id)
@@ -283,19 +359,19 @@ class AuthController extends Controller
 
     /**
      * get all the user pages
-     * 
-     * @return 
+     *
+     * @return
      */
 
     public static function allUserPages($auth, $account_id)
-    {   
+    {
         $page_data = array();
         $index = 0;
 
         if ($auth->hasUserManyPages($account_id))
         {
             $data =  DB::table('pages')->where('conta_id_a', $account_id)->orwhere('conta_id_b', $account_id)->get();
-            foreach($data as $d) 
+            foreach($data as $d)
             {
                 $page_data[$index]['page_uuid'] = $d->uuid;
                 $page_data[$index]['page_name'] = $d->nome;
