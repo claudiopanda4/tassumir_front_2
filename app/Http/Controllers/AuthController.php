@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Controllers\PaginaCasalController;
+
 class AuthController extends Controller
 {
     public function __construct(){
@@ -17,17 +19,24 @@ class AuthController extends Controller
         if (Auth::check() == true) {
 
         $account_name = $this->defaultDate();
+        //===================================================================================
         $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
+        //===================================================================================
         $profile_picture = Self::profile_picture(Auth::user()->conta_id);
+        //===================================================================================
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
-        
+        //===================================================================================
         $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
+        //===================================================================================
+        $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
+        //===================================================================================
         //=================================================================
         //=================================================================
 
       $post=  DB::table('posts')->get();
       $page= DB::table('pages')->get();
       $a=0;
+      $i=0;
       $dados = array();
       foreach ($post as $key) {
 
@@ -40,11 +49,12 @@ class AuthController extends Controller
         }
 
         $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
-        $page_uuid = DB::select('select uuid from pages where page_id = ?', [$key->page_id]);
         $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
+        $guardado= DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$key->post_id,  $account_name[0]->conta_id]);
 
         if (sizeof($aux1) > 0) {
             $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$key->post_id, $aux1[0]->identificador_id]);
+//            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$key->post_id-1]->comment_id, $aux1[0]->identificador_id]);
         } else {
             $ja_reagiu = array();
         }
@@ -55,18 +65,147 @@ class AuthController extends Controller
         $dados[$a]['seguir_S/N']=sizeof($seguidor);
         $dados[$a]['post_id']=$key->post_id;
         $dados[$a]['page_id']= $key->page_id ;
-        $dados[$a]['page_uuid']= $page_uuid[0]->uuid ;
+        $dados[$a]['page_uuid']= $page[$key->page_id - 1]->uuid ;
+        $dados[$a]['post_uuid']= $key->uuid;
         $dados[$a]['reagir_S/N']=sizeof($ja_reagiu);
+//        $dados[$a]['comment_S/N']=sizeof($ja_reagiu1);
+        $dados[$a]['guardado?']=sizeof($guardado);
         $dados[$a]['formato']=$key->formato_id;
+        $dados[$a]['estado_post']=$key->estado_post_id;
         if($dados[$a]['formato']==1 || $dados[$a]['formato']== 2){
         $dados[$a]['file']=$key->file;
         }
+        if ($account_name[0]->conta_id == $page[$key->page_id - 1]->conta_id_a  || $account_name[0]->conta_id == $page[$key->page_id - 1]->conta_id_b ) {
+          $dados[$a]['dono_da_pag?']=1;
+        }else {
+          $dados[$a]['dono_da_pag?']=0;
+        }
+        $dados[$a]['qtd_comment_reaction']=0;
+        for ($j=1; $j <= sizeof($comment) ; $j++) {
+            $reaction_comment = DB::select('select * from reactions_comments where comment_id = ?', [$j]);
+        if (sizeof($reaction_comment)>= $dados[$a]['qtd_comment_reaction']) {
+          $dados[$a]['qtd_comment_reaction']=sizeof($reaction_comment);
+          $dados[$a]['comment']=$comment[$j - 1]->comment;
+          $dados[$a]['comment_id']=$comment[$j - 1]->comment_id;
+
+          $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$j-1]->identificador_id ]);
+          if ($aux2[0]->tipo_identificador_id == 1) {
+            $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+            $dados[$a]['nome_comment']=$conta[0]->nome;
+            $dados[$a]['nome_comment'].=" ";
+            $dados[$a]['nome_comment'].=$conta[0]->apelido;
+          }elseif ($aux2[0]->tipo_identificador_id == 2) {
+            $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
+          }
+        }
+      }
         $a++;
       }
-        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages'));
+        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
     }
     return redirect()->route('account.login.form');
     }
+
+    public function post_index($id){
+      $account_name = $this->defaultDate();
+      //===================================================================================
+      $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
+      //===================================================================================
+      $profile_picture = Self::profile_picture(Auth::user()->conta_id);
+      //===================================================================================
+      $isUserHost = Self::isUserHost($account_name[0]->conta_id);
+      //===================================================================================
+      $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
+      //===================================================================================
+      $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
+      //===================================================================================
+
+      $post=  DB::select('select * from posts where uuid = ?', [$id]);
+      $page= DB::table('pages')->get();
+      $i=0;
+      $dados = array();
+
+
+        $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$page[$post[0]->page_id - 1]->page_id, 2 ]);
+        $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+        if (sizeof($aux1) > 0 && sizeof($aux) > 0) {
+            $seguidor = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux[0]->identificador_id, $aux1[0]->identificador_id]);
+        } else {
+            $seguidor = array();
+        }
+
+        $likes = DB::select('select * from post_reactions where post_id = ?', [$post[0]->post_id]);
+        $page_uuid = DB::select('select uuid from pages where page_id = ?', [$post[0]->page_id]);
+        $comment = DB::select('select * from comments where post_id = ?', [$post[0]->post_id]);
+        $guardado= DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$post[0]->post_id,  $account_name[0]->conta_id]);
+
+        if (sizeof($aux1) > 0) {
+            $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$post[0]->post_id, $aux1[0]->identificador_id]);
+//            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$key->post_id-1]->comment_id, $aux1[0]->identificador_id]);
+        } else {
+            $ja_reagiu = array();
+        }
+        $dados[0]['nome_pag'] = $page[$post[0]->page_id - 1]->nome;
+        $dados[0]['post']=$post[0]->descricao;
+        $dados[0]['qtd_likes']= sizeof($likes);
+        $dados[0]['qtd_comment']=sizeof($comment);
+        $dados[0]['seguir_S/N']=sizeof($seguidor);
+        $dados[0]['post_id']=$post[0]->post_id;
+        $dados[0]['page_id']= $post[0]->page_id ;
+        $dados[0]['page_uuid']= $page_uuid[0]->uuid ;
+        $dados[0]['reagir_S/N']=sizeof($ja_reagiu);
+//        $dados[0]['comment_S/N']=sizeof($ja_reagiu1);
+        $dados[0]['guardado?']=sizeof($guardado);
+        $dados[0]['formato']=$post[0]->formato_id;
+        $dados[0]['estado_post']=$post[0]->estado_post_id;
+        if($dados[0]['formato']==1 || $dados[0]['formato']== 2){
+        $dados[0]['file']=$post[0]->file;
+        }
+        if ($account_name[0]->conta_id == $page[$post[0]->page_id - 1]->conta_id_a  || $account_name[0]->conta_id == $page[$post[0]->page_id - 1]->conta_id_b ) {
+          $dados[0]['dono_da_pag?']=1;
+        }else {
+          $dados[0]['dono_da_pag?']=0;
+        }
+        $a=0;
+        foreach ($comment as $key) {
+          $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id ]);
+          $dados[$a]['comment_id']=$key->comment_id;
+          if ($aux2[0]->tipo_identificador_id == 1) {
+            $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+            $dados[$a]['nome_comment']=$conta[0]->nome;
+            $dados[$a]['nome_comment'].=" ";
+            $dados[$a]['nome_comment'].=$conta[0]->apelido;
+          }elseif ($aux2[0]->tipo_identificador_id == 2) {
+            $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
+          }
+          $a++;
+        }
+        /*$dados[$a]['qtd_comment_reaction']=0;
+        for ($j=1; $j <= sizeof($comment) ; $j++) {
+            $reaction_comment = DB::select('select * from reactions_comments where comment_id = ?', [$j]);
+        if (sizeof($reaction_comment)>= $dados[$a]['qtd_comment_reaction']) {
+          $dados[$a]['qtd_comment_reaction']=sizeof($reaction_comment);
+          $dados[$a]['comment']=$comment[$j - 1]->comment;
+          $dados[$a]['comment_id']=$comment[$j - 1]->comment_id;
+
+          $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$j-1]->identificador_id ]);
+          if ($aux2[0]->tipo_identificador_id == 1) {
+            $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+            $dados[$a]['nome_comment']=$conta[0]->nome;
+            $dados[$a]['nome_comment'].=" ";
+            $dados[$a]['nome_comment'].=$conta[0]->apelido;
+          }elseif ($aux2[0]->tipo_identificador_id == 2) {
+            $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
+          }
+        }
+      }*/
+
+
+
+      return view('pagina.comment', compact('account_name', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
+    }
+
+
 
     public function like(Request $request){
             $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
@@ -95,6 +234,7 @@ class AuthController extends Controller
           $aux1= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
 
           DB::table('seguidors')->insert([
+              'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
               'identificador_id_seguida' => $aux[0]->identificador_id,
               'identificador_id_seguindo' => $aux1[0]->identificador_id,
               ]);
@@ -103,6 +243,52 @@ class AuthController extends Controller
 
                 return response()->json($resposta);
         }
+
+        public function savepost(Request $request){
+
+              $conta =Auth::user()->conta_id;
+              $aux = DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$request->id,  $conta]);
+         if (sizeof($aux)== 0) {
+           DB::table('saveds')->insert([
+               'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+               'conta_id' => $conta,
+               'post_id' => $request->id,
+               ]);
+         }
+
+                  $resposta=1;
+
+
+                    return response()->json($resposta);
+            }
+
+            public function delete_post(Request $request){
+
+                  DB::table('posts')
+                        ->where('post_id', $request->id)
+                        ->update([
+                          'estado_post_id' => 4,
+                      ]);
+
+                      $resposta=1;
+
+
+                        return response()->json($resposta);
+                }
+
+                public function ocultar_post(Request $request){
+
+                      DB::table('posts')
+                            ->where('post_id', $request->id)
+                            ->update([
+                              'estado_post_id' => 2,
+                          ]);
+
+                          $resposta=1;
+
+
+                            return response()->json($resposta);
+                    }
 
     public function comentar(Request $request){
 
@@ -257,21 +443,46 @@ class AuthController extends Controller
 
     public static function isUserHost($account_id)
     {
-        
-        return count(
-            DB::table('pages')
-            ->where('conta_id_a', $account_id)
-            ->orwhere('conta_id_b', $account_id)
-            ->get()
-        ) > 0;
+
+        return count(DB::table('pages')
+                    ->where('conta_id_a', $account_id)
+                    ->orwhere('conta_id_b', $account_id)
+                    ->get()) > 0;
     }
 
     public static function hasUserManyPages($account_id)
     {
         return count(DB::table('pages')
-            ->where('conta_id_a', $account_id)
-            ->orwhere('conta_id_b', $account_id)
-            ->get()) > 1;
+                    ->where('conta_id_a', $account_id)
+                    ->orwhere('conta_id_b', $account_id)
+                    ->get()) > 1;
+    }
+
+    /**
+     * get all the user pages
+     *
+     * @return
+     */
+
+    public static function allUserPages($auth, $account_id)
+    {
+        $page_data = array();
+        $index = 0;
+
+        if ($auth->hasUserManyPages($account_id))
+        {
+            $data =  DB::table('pages')->where('conta_id_a', $account_id)->orwhere('conta_id_b', $account_id)->get();
+            foreach($data as $d)
+            {
+                $page_data[$index]['page_uuid'] = $d->uuid;
+                $page_data[$index]['page_name'] = $d->nome;
+                $page_data[$index]['seguidores'] = PaginaCasalController::seguidores($d->page_id);
+                $index++;
+            }
+
+        }
+
+        return $page_data;
     }
 
 }

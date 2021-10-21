@@ -40,77 +40,9 @@
                 </ul>
             </nav>
         </header>
-        <?php
-      /*  $posts_feed = [
-            [
-                "type" => "img",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "video",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "img",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "video",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "none",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "img",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "img",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "video",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "none",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-        ];*/
-        foreach ($dados as $key => $value): ?>
-
-        <?php endforeach ?>
 <?php foreach ($dados as $key => $value): ?>
-        <div class="card br-10">
+  <?php if ($dados[$key]['estado_post']==1): ?>
+        <div class="card br-10" id="m_post-{{$dados[$key]['post_id']}}">
             <div class="post">
                 <header class="clearfix">
                     <div class="first-component clearfix l-5">
@@ -132,15 +64,21 @@
                         </label>
                         <input type="checkbox" name="" id=<?php echo "more-option-".$key; ?> class="hidden">
                         <ul class="clearfix more-option-post">
+                          <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
                             <li>
                                 <a href="">Editar</a>
                             </li>
+                            <?php endif; ?>
+                            <?php if ($dados[$key]['dono_da_pag?'] != 1): ?>
                             <li>
-                                <a href="">Ocultar Publicação</a>
+                                <a href="" class="ocultar_post" id="ocultar_post-{{$dados[$key]['post_id']}}">Ocultar Publicação</a>
                             </li>
+                            <?php endif; ?>
+                            <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
                             <li>
-                                <a href="">Apagar Publicação</a>
+                                <a href="" class="delete_post" id="delete_post-{{$dados[$key]['post_id']}}">Apagar Publicação</a>
                             </li>
+                            <?php endif; ?>
                             <li>
                                 <a href="">Denunciar</a>
                             </li>
@@ -173,7 +111,7 @@
                             <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
                         </li>
                         <li>
-                            <a href="" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
+                            <a href="{{route('post_index', $dados[$key]['post_uuid'])}}" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
                         </li>
                         <?php if (false): ?>
                         <li>
@@ -215,14 +153,16 @@
                                 </a>
                             </div>
                         </li>
-                        <li class="r-5">
+                        <?php if ($dados[$key]['guardado?']==0): ?>
+                        <li class="r-5" id="savepost-{{$dados[$key]['post_id']}}">
                             <div class="content-button">
-                                <a href="">
-                                    <i class="far fa-bookmark center fa-16"></i>
-                                    <h2>Guardar</h2>
+                                <a href="" class="savepost" id="savepost-{{$dados[$key]['post_id']}}">
+                                    <i class="far fa-bookmark center fa-16" id="savepost-{{$dados[$key]['post_id']}}"></i>
+                                    <h2 id="savepost-{{$dados[$key]['post_id']}}">Guardar</h2>
                                 </a>
                             </div>
                         </li>
+                          <?php endif; ?>
                     </ul>
                 </nav>
                 <div class="comment-send clearfix"  id="comment-send-{{$dados[$key]['post_id']}}">
@@ -258,27 +198,31 @@
                         <i class="far fa-heart fa-12"></i>
                     </div>
                 </div>
-                <div class="comment-users">
-                    <div class="comment-user-container">
+        <?php if ($dados[$key]['qtd_comment']>0): ?>
+          <div class="comment-users" id="comment-users-{{$dados[$key]['post_id']}}">
+                    <div class="comment-user-container" >
                         <div class="user-identify-comment">
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
                             </div>
-                            <h2 class="text-ellips">Domingos</h2>
+                            <h2 class="text-ellips">{{$dados[$key]['nome_comment']}}</h2>
                         </div>
                         <div class="comment-user-comment">
-                            <p class="text-ellips">Amo muito esse casal</p>
+                            <p class="text-ellips">{{$dados[$key]['comment']}}</p>
                         </div>
                     </div>
-                    <div class="comment-user-container comment-user-container-react">
-                        <i class="far fa-heart fa-12"></i>
-                    </div>
+                      <div class="comment-user-container comment-user-container-react">
+                        <a href="" class="comments_like" id="on-{{$dados[$key]['comment_id']}}">
+                          <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}"></i>
+                      </div>
                 </div>
+              <?php endif; ?>
                 <div>
 
                 </div>
             </div>
         </div>
+      <?php endif; ?>
         <?php if ($key == 2): ?>
                 <section class="suggest-slide">
                     <header>
@@ -344,11 +288,8 @@ function gostar(id){
       });
     }
 
-    function comentar(id){
-    let c = $("#comentario-" + id).val();
+    function comentar(id, c){
     let comment_qtd = $("#comment-qtd-" + id).text().split(' ')[0];
-
-
         $.ajax({
           url: "{{route('comentar')}}",
           type: 'get',
@@ -358,9 +299,53 @@ function gostar(id){
            console.log(response);
            comment_qtd = parseInt(comment_qtd) + 1;
            $("#comment-qtd-" + id).text((comment_qtd) + " comentários");
-           $("#comentario-" + id).val('');
           }
         });
       }
+
+      function guardar(id){
+
+         $.ajax({
+            url: "{{route('savepost')}}",
+            type: 'get',
+            data: {'id': id},
+             dataType: 'json',
+             success:function(response){
+             console.log(response);
+             $("#savepost-" + id).hide();
+
+            }
+          });
+        }
+
+        function delete_post(id){
+
+           $.ajax({
+              url: "{{route('delete_post')}}",
+              type: 'get',
+              data: {'id': id},
+               dataType: 'json',
+               success:function(response){
+               console.log(response);
+               $("#m_post-" + id).hide();
+
+              }
+            });
+          }
+
+          function ocultar_post(id){
+
+             $.ajax({
+                url: "{{route('ocultar_post')}}",
+                type: 'get',
+                data: {'id': id},
+                 dataType: 'json',
+                 success:function(response){
+                 console.log(response);
+                 $("#m_post-" + id).hide();
+
+                }
+              });
+            }
 </script>
 @stop

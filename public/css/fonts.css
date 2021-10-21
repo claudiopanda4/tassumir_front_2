@@ -4,6 +4,14 @@
 	font-family: nunito;
 	src: url('fonts/Nunito/Nunito-Regular.ttf');
 }
+@font-face {
+	font-family: aremat;
+	src: url('fonts/aremat/aremat-font.ttf');
+}
 * {
 	font-family: nunito;
+}
+.title h1,
+.title h1 .title-final {
+    font-family: aremat;
 }

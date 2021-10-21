@@ -547,3 +547,7 @@
 #relationship-type-target:checked ~  .relationship-type-all {
 	display: block;
 }
+#target-profile-cover-page:checked ~ #cover-profile-page {
+	opacity: 1;
+    z-index: 1001;
+}
