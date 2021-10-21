@@ -155,37 +155,41 @@
                 <h1>Páginas que eu sigo</h1>
             </header>
             <ul class="">
+                               <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
+                @forelse($dadosPage as $Paginas)
                 <?php
-                $follow_page = [
-                    [
-                        "name" => "Famosos em Relacionamentos",
-                        "seguir" => "seguir",
-                        "cover" => "t30_13_1092985.jpg",
-                        "n_seguidores" => "120 mil",
-                    ],
-                    [
-                        "name" => "Yola Araújo & Bass",
-                        "seguir" => "não seguir",
-                        "cover" => "79818663_.jpg",
-                        "n_seguidores" => "120 mil",
-                    ],
-                    [
-                        "name" => "Conselheiro Amoroso",
-                        "seguir" => "não seguir",
-                        "cover" => "wedding_rings.jpg",
-                        "n_seguidores" => "120 mil",
-                    ],
-                ];
-                foreach ($follow_page as $key_ => $value): ?>
-                    <li class="li-component-aside-right clearfix">
-                        <div class="page-cover circle l-5">
-                            <img class="img-full circle" src=<?php echo "../storage/img/page/".$follow_page[$key_]["cover"]; ?>>
-                        </div>
-                        <h1 class="l-5 name-page text-ellips">{{ $follow_page[$key_]["name"] }}</h1>
-                        <h2 class="l-5 text-ellips">{{ $follow_page[$key_]["n_seguidores"] }} seguidores</h2>
-                        <a href="">{{ $follow_page[$key_]["seguir"] }}</a>
-                    </li>
-                <?php endforeach ?>
+                $seguidors = 0; 
+                foreach ($dadosSeguida as  $val){ 
+                        if ($val->id == $Paginas->page_id) {
+                            $seguidors += 1;
+                        }
+                    }
+                ?>
+                
+                    @forelse($dadosSeguida as $Seguida)
+                        <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
+                        <li class="li-component-aside-right clearfix">
+                            <div class="page-cover circle l-5">
+                                <img class="img-full circle" src=<?php echo "../storage/img/page/t30_13_1092985.jpg"; ?>>
+                            </div>
+                            <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
+                            <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
+                           <?php 
+                           echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";?>
+                        </li>
+                        <?php endif ?>
+                    @empty   
+                    @endforelse
+                @empty
+                <li class="li-component-aside-right clearfix">
+                <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
+                </li>
+                @endforelse
+            <?php else: ?>
+                <li class="li-component-aside-right clearfix">
+                <h1 class="l-5 name-page text-ellips">Nenhuma Página Seguida</h1>
+                </li>
+            <?php endif ?>
             </ul>
             <footer class="clearfix">
                 <a href="" class="r-5">Ver Todas</a>
@@ -196,37 +200,69 @@
                 <h1>Sugestões para Você</h1>
             </header>
             <ul class="">
-                <?php
-                $follow_page = [
-                    [
-                        "name" => "Famosos em Relacionamentos",
-                        "seguir" => "seguir",
-                        "cover" => "t30_13_1092985.jpg",
-                        "n_seguidores" => "120 mil",
-                    ],
-                    [
-                        "name" => "Yola Araújo & Bass",
-                        "seguir" => "não seguir",
-                        "cover" => "79818663_.jpg",
-                        "n_seguidores" => "120 mil",
-                    ],
-                    [
-                        "name" => "Conselheiro Amoroso",
-                        "seguir" => "não seguir",
-                        "cover" => "wedding_rings.jpg",
-                        "n_seguidores" => "120 mil",
-                    ],
-                ];
-                foreach ($follow_page as $key_ => $value): ?>
-                    <li class="li-component-aside-right clearfix">
+             @forelse($dadosPage as $Paginas)
+                <?php $conta_page = 0;
+                 $verifica1 = 'A';
+                 $verifica = 'B';
+                 $seguidors = 0;
+                 $tamanho = 0;
+                 ?>
+                <?php                
+                foreach ($dadosSeguida as  $val){ 
+                        if ($val->id == $Paginas->page_id) {
+                            $seguidors += 1;
+                            
+                        }
+                    }
+                ?>               
+                @forelse($dadosSeguida as $Seguida)
+               <?php $tamanho = sizeof($dadosSeguida);?> 
+                <?php if ($Paginas->page_id == $Seguida->id) : ?>
+                        <?php if ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo) : ?>
+                                <?php $verifica1 = $Paginas->nome;?>
+                            <?php else: ?>
+                                <?php $verifica = $Paginas->nome;?>
+                            <?php endif ?> 
+                 <?php else: ?>                        
+                      <?php $conta_page += 1;?>     
+                <?php endif ?>
+                    @empty   
+                    @endforelse
+                    <?php if (($verifica1 != $verifica)  ) : ?>
+                        <?php if (($verifica != 'B')  ) : ?>
+                        <li class="li-component-aside-right clearfix">
                         <div class="page-cover circle l-5">
-                            <img class="img-full circle" src=<?php echo "../storage/img/page/".$follow_page[$key_]["cover"]; ?>>
+                            <img class="img-full circle" src=<?php echo "../storage/img/page/t30_13_1092985.jpg"; ?>>
                         </div>
-                        <h1 class="l-5 name-page text-ellips">{{ $follow_page[$key_]["name"] }}</h1>
-                        <h2 class="l-5 text-ellips">{{ $follow_page[$key_]["n_seguidores"] }} seguidores</h2>
-                        <a href="">{{ $follow_page[$key_]["seguir"] }}</a>
-                    </li>
-                <?php endforeach ?>
+                        <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
+                        <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
+                      <?php  echo"  
+                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
+                                ?>
+                            </li>  
+                            <?php endif ?>                       
+                    <?php else: ?>
+                               
+                    <?php endif ?>
+                    <?php if (($conta_page == $tamanho)  ) : ?>
+                        <li class="li-component-aside-right clearfix">
+                        <div class="page-cover circle l-5">
+                            <img class="img-full circle" src=<?php echo "../storage/img/page/t30_13_1092985.jpg"; ?>>
+                        </div>
+                        <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
+                        <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
+                      <?php  echo"  
+                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
+                                ?>
+                            </li>                       
+                    <?php else: ?>
+                             
+                    <?php endif ?>
+                @empty
+                <li class="li-component-aside-right clearfix">
+                <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
+                </li>
+                @endforelse
             </ul>
             <footer class="clearfix">
                 <a href="" class="r-5">Ver Todas</a>
