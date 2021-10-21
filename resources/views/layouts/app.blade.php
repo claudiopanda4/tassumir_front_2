@@ -241,9 +241,9 @@
 <?php if (true): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
-
-<input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
-
+@if($page_content[0]->uuid)
+    <input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
+@endif
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
@@ -377,7 +377,7 @@
             <div class="">
                 <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="page_u" value="{{$page_content[0]->uuid}}">
+                    <input type="hidden" name="f" value="{{$page_content[0]->uuid}}">
                     <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
