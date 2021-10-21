@@ -153,6 +153,41 @@ class PaginaCasalController extends Controller
         try {
             $auth = new AuthController();
             $account_name = $auth->defaultDate();
+                    
+            $dadosPage = Page::all();            
+          $dadosSeguindo[0] = [
+                            'id_seguidor' => 0,
+                            'identificador_id_seguida' => 0,
+                            'identificador_id_seguindo' => 0,
+                            'id' => 0];
+           $dadosSeguida = DB::table('seguidors')
+            ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+            foreach ($dadosSgndo as $value) {
+                $valor = $value->identificador_id;
+            }
+
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+            
+            $tt = 0;
+            foreach ($dadoSeguindo as $valor1) {                
+                if ($valor1->id == $account_name[0]->conta_id) {
+                        $key = 0;
+                        $dadosSeguindo[$key] = [
+                            'id_seguidor' => $valor1->seguidor_id,
+                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                            'id' => $valor1->id,
+                            ]; 
+                    }
+                }
+        //----------------------------------------------------------------
             $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
             $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
             $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
@@ -166,7 +201,7 @@ class PaginaCasalController extends Controller
             //dd($page_content);
             $conta_logada = $auth->defaultDate();
             //dd($page_content);
-            return view('pagina.pages', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages', 'page_current'));
+            return view('pagina.couple_page', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
         } catch (Exception $e) {
             dd($e);
         }
