@@ -466,7 +466,6 @@
       $('.seguir-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
-          alert(id)
             seguir(id);
 
       });
