@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <!--<div class="row">
+    <div class="row">
         <div class="col-md-10">
             <span class="text-white ">Novas</span>
             
@@ -28,7 +28,7 @@
             
             <span class="" style="font-size:12pt;color: #fff;" >Delton Agostinho, gostou </span>
         </div>
-    </div>-->
+    </div>
     
     
 </div>

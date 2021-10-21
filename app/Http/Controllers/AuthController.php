@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,8 +28,48 @@ class AuthController extends Controller
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
         $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
         $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
+
+        
+        //=================================================================
+        //=========================Comecem Aqui-----------
+        $dadosPage = Page::all();            
+          $dadosSeguindo[0] = [
+                            'id_seguidor' => 0,
+                            'identificador_id_seguida' => 0,
+                            'identificador_id_seguindo' => 0,
+                            'id' => 0];
+           $dadosSeguida = DB::table('seguidors')
+            ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+            foreach ($dadosSgndo as $value) {
+                $valor = $value->identificador_id;
+            }
+
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+            
+            $tt = 0;
+            foreach ($dadoSeguindo as $valor1) {                
+                if ($valor1->id == $account_name[0]->conta_id) {
+                        $key = 0;
+                        $dadosSeguindo[$key] = [
+                            'id_seguidor' => $valor1->seguidor_id,
+                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                            'id' => $valor1->id,
+                            ]; 
+                    }
+                }
+
+                //=========================Terminem Aqui----------- Depois põe estas variáveis no compact 'dadosSeguida', 'dadosSeguindo', 'dadosPage'
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
+
       $post=  DB::table('posts')->get();
       $page= DB::table('pages')->get();
       $a=0;
@@ -98,13 +139,50 @@ class AuthController extends Controller
       }
         $a++;
       }
-        return view('feed.index', compact('account_name', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current'));
+
+        return view('feed.index', compact('account_name', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+
     }
     return redirect()->route('account.login.form');
     }
 
     public function post_index($id){
-      $account_name = $this->defaultDate();
+        $account_name = $this->defaultDate();
+        $dadosPage = Page::all();            
+          $dadosSeguindo[0] = [
+                            'id_seguidor' => 0,
+                            'identificador_id_seguida' => 0,
+                            'identificador_id_seguindo' => 0,
+                            'id' => 0];
+           $dadosSeguida = DB::table('seguidors')
+            ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+            foreach ($dadosSgndo as $value) {
+                $valor = $value->identificador_id;
+            }
+
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+            
+            $tt = 0;
+            foreach ($dadoSeguindo as $valor1) {                
+                if ($valor1->id == $account_name[0]->conta_id) {
+                        $key = 0;
+                        $dadosSeguindo[$key] = [
+                            'id_seguidor' => $valor1->seguidor_id,
+                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                            'id' => $valor1->id,
+                            ]; 
+                    }
+                }
+
+      
       $page_content = $this->casalPage->page_default_date($account_name);
       $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
       $profile_picture = Self::profile_picture(Auth::user()->conta_id);
@@ -193,7 +271,9 @@ class AuthController extends Controller
 
 
 
-      return view('pagina.comment', compact('account_name', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current'));
+
+      return view('pagina.comment', compact('account_name', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+
     }
 
 
@@ -325,7 +405,43 @@ class AuthController extends Controller
         $page_content = $this->casalPage->page_default_date($account_name);
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
-        return view('notificacoes.index', compact('profile_picture', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages', 'page_current', 'page_content', 'conta_logada'));
+
+        //----------------------------------------------------------------
+        $dadosPage = Page::all();            
+          $dadosSeguindo[0] = [
+                            'id_seguidor' => 0,
+                            'identificador_id_seguida' => 0,
+                            'identificador_id_seguindo' => 0,
+                            'id' => 0];
+           $dadosSeguida = DB::table('seguidors')
+            ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+            foreach ($dadosSgndo as $value) {
+                $valor = $value->identificador_id;
+            }
+
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+            
+            $tt = 0;
+            foreach ($dadoSeguindo as $valor1) {                
+                if ($valor1->id == $account_name[0]->conta_id) {
+                        $key = 0;
+                        $dadosSeguindo[$key] = [
+                            'id_seguidor' => $valor1->seguidor_id,
+                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                            'id' => $valor1->id,
+                            ]; 
+                    }
+                }
+        //----------------------------------------------------------------
+        return view('notificacoes.index', compact('profile_picture', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages', 'page_current', 'page_content', 'conta_logada', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
     }
 
     public function sendtoOtherForm(Request $request){
