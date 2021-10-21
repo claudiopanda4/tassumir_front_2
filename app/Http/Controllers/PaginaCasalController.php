@@ -9,7 +9,7 @@ class PaginaCasalController extends Controller
 {
 
     private $current_page_id = 1;
-
+    private $current_page_uuid;
 
     public function index(){
 
@@ -114,6 +114,9 @@ class PaginaCasalController extends Controller
           $page_content = DB::select('select * from pages where uuid = ?', [
                 $uuid
             ]);
+
+          $this->current_page_uuid = $page_content[0]->uuid;
+
           $seguidores = Self::seguidores($uuid);
           $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
           $publicacoes = $this->get_all_post($page_content[0]->page_id);
@@ -195,7 +198,10 @@ class PaginaCasalController extends Controller
      */
     public function store_post(Request $request)
     {
-        try {
+        try 
+        {
+            $page_id = DB::select('select page_id from pages where uuid = ?', [$request->page_u])[0]->page_id;
+
             if ($request->hasFile('imgOrVideo'))
             {
                 $file_name = time() . '_' . md5($request->file('imgOrVideo')->getClientOriginalName()) . '.' . $request->imgOrVideo->extension();
@@ -205,17 +211,19 @@ class PaginaCasalController extends Controller
                 if ( Self::check_image_extension($request->imgOrVideo->extension()) )
                 {
                     $path = $request->file('imgOrVideo')->storeAs('public/img/page', $file_name);
-                    $this->store($request->message, $file_name, $this->current_page_id, $this->formato_id('Imagem'));
+                    $this->store($request->message, $file_name, $page_id, $this->formato_id('Imagem'));
 
                 } else if ( $this->check_video_extension($request->imgOrVideo->extension()) ) {
 
                     $path = $request->file('imgOrVideo')->storeAs('public/video/page', $file_name);
-                    $this->store($request->message, $file_name, $this->current_page_id, $this->formato_id('Video'));
+                    $this->store($request->message, $file_name, $page_id, $this->formato_id('Video'));
                 }
 
-                $this->store($request->message, null, $this->current_page_id, $this->formato_id('Textos'));
-                return redirect()->route('couple.page');
+            } else {
+                $this->store($request->message, null, $page_id, $this->formato_id('Textos'));
             }
+            return back();
+
         } catch (Exception $e) {
             dd($e);
         }

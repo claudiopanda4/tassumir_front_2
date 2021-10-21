@@ -5,10 +5,16 @@
     <div class="card br-10 card-flex card-page">
         <div class="clearfix">
             <div class="img-profile-page-container clearfix l-5">
+                @if(false)
                 <div class="img-profile-page circle l-5">
-
                     <img src="{{asset('storage/img/page/') . '/' . $page_content[0]->foto}}" class="img-full circle">
                 </div>
+                @endif
+                @if(true)
+                <div class="img-profile-page circle l-5">
+                    <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full circle">
+                </div>
+                @endif
                 <label for="target-profile-cover-page">
                     <div class="add-edit-profile circle">
                         <i class="fas fa-plus center" style="font-size: 10px;"></i>
