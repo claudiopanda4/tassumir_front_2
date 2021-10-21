@@ -87,7 +87,6 @@ class PerfilController extends Controller
               $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
               $page_current = 'profile';
               return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
-              return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
         } catch (Exception $e) {
             dd('erro');
         }
@@ -159,7 +158,7 @@ class PerfilController extends Controller
             $hasUserManyPages = $auth->hasUserManyPages(Auth::user()->conta_id);
             $allUserPages = $auth->allUserPages(new AuthController, Auth::user()->conta_id);
             $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
-            $page_current = 'profile';               
+            $page_current = 'profile';
             return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
         } catch (Exception $e) {
             dd('erro');
