@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::post('/profile/picture/', [App\Http\Controllers\PerfilController::class, 'add_picture'])->name('account.profile.pic');
 
     Route::post('/update/', [App\Http\Controllers\PerfilController::class, 'update'])->name('account.update');
-    Route::get('/profile/{id}', [App\Http\Controllers\PerfilController::class, 'perfil_das_contas'])->name('account1.profile');
+    Route::get('/profileC/{id}', [App\Http\Controllers\PerfilController::class, 'perfil_das_contas'])->name('account1.profile');
     Route::get('/profile/{perfil}', [App\Http\Controllers\PerfilController::class, 'edit'])->name('account.profile.edit');
 
 
