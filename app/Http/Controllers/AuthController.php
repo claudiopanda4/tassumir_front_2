@@ -22,7 +22,7 @@ class AuthController extends Controller
         //===================================================================================
         $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
         //===================================================================================
-        $profile_picture = Self::profile_picture(Auth::user()->conta_id);
+        $profile_picture = Self::pro(Auth::user()->conta_id);
         //===================================================================================
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
         //===================================================================================
@@ -318,7 +318,14 @@ class AuthController extends Controller
         return view('auth.registerUserLastInfo');
     }
     public function seeAllNotifications(){
-        return view('notificacoes.index');
+        $account_name = $this->defaultDate();
+        $profile_picture = Self::profile_picture(Auth::user()->conta_id);
+        $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
+        $profile_picture = Self::profile_picture(Auth::user()->conta_id);
+        $isUserHost = Self::isUserHost($account_name[0]->conta_id);
+        $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
+        $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
+        return view('notificacoes.index', compact('profile_picture', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages'));
     }
 
     public function sendtoOtherForm(Request $request){
