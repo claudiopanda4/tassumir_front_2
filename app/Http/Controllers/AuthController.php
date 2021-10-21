@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\PaginaCasalController;
 
 class AuthController extends Controller
-{   
+{
     private $casalPage;
     public function __construct(){
         //$this->middleware('auth:web1');
@@ -27,10 +27,8 @@ class AuthController extends Controller
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
         $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
         $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
-        
-        //=================================================================
-        //=================================================================
-
+        $page_current = 'auth';
+        $conta_logada = $this->defaultDate();
       $post=  DB::table('posts')->get();
       $page= DB::table('pages')->get();
       $a=0;
@@ -99,7 +97,7 @@ class AuthController extends Controller
       }
         $a++;
       }
-        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content'));
+        return view('feed.index', compact('account_name', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current'));
     }
     return redirect()->route('account.login.form');
     }
@@ -112,7 +110,7 @@ class AuthController extends Controller
       $isUserHost = Self::isUserHost($account_name[0]->conta_id);
       $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
       $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
-
+      $page_current = 'auth';
       $post =  DB::select('select * from posts where uuid = ?', [$id]);
       $page = DB::table('pages')->get();
       $i=0;
@@ -194,7 +192,7 @@ class AuthController extends Controller
 
 
 
-      return view('pagina.comment', compact('account_name', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content'));
+      return view('pagina.comment', compact('account_name', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current'));
     }
 
 
@@ -323,7 +321,9 @@ class AuthController extends Controller
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
         $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
         $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
-        return view('notificacoes.index', compact('profile_picture', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages'));
+        $page_current = 'auth';
+
+        return view('notificacoes.index', compact('profile_picture', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages', 'page_current'));
     }
 
     public function sendtoOtherForm(Request $request){
@@ -332,10 +332,11 @@ class AuthController extends Controller
         $apelido = $request->apelido;
         $sexo = $request->sexo;
         $data = $request->dat;
+        $page_current = 'auth';
 
         //dd($nome."=>".$apelido."=>".$sexo."=>".$data);
 
-        return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data'));
+        return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data', 'page_current'));
 
     }
     public function joinAndSave(Request $request){
@@ -419,9 +420,12 @@ class AuthController extends Controller
     public static function isCasal($account_id)
     {
         //dd($account_id);
+        $auth = new AuthController();
+            $conta_logada = $auth->defaultDate();
+
         return count(DB::table('pages')
-                ->where('conta_id_a', $account_id)
-                ->orwhere('conta_id_b', $account_id)
+                ->where('conta_id_a', $conta_logada[0]->conta_id)
+                ->orwhere('conta_id_b', $conta_logada[0]->conta_id)
                 ->orwhere('tipo_page_id', 1)
                 ->get()) > 0;
         //return DB::select('select page_id from pages where conta_id_a = ? or conta_id_b = ? and tipo_page_id = ?', [$account_id, $account_id, 1]);

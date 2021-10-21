@@ -373,6 +373,7 @@ class ClassLoader
 
         return $file;
     }
+
     /**
      * Returns the currently registered loaders indexed by their corresponding vendor directories.
      *
@@ -382,6 +383,7 @@ class ClassLoader
     {
         return self::$registeredLoaders;
     }
+
     private function findFileWithExtension($class, $ext)
     {
         // PSR-4 lookup
