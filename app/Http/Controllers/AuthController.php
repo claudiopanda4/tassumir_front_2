@@ -11,25 +11,23 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\PaginaCasalController;
 
 class AuthController extends Controller
-{
+{   
+    private $casalPage;
     public function __construct(){
         //$this->middleware('auth:web1');
+        $this->casalPage = new PaginaCasalController();
     }
     public function index(){
         if (Auth::check() == true) {
 
         $account_name = $this->defaultDate();
-        //===================================================================================
+        $page_content = $this->casalPage->page_default_date($account_name);
         $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
-        //===================================================================================
         $profile_picture = Self::profile_picture(Auth::user()->conta_id);
-        //===================================================================================
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
-        //===================================================================================
         $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
-        //===================================================================================
         $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
-        //===================================================================================
+        
         //=================================================================
         //=================================================================
 
@@ -101,13 +99,14 @@ class AuthController extends Controller
       }
         $a++;
       }
-        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
+        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content'));
     }
     return redirect()->route('account.login.form');
     }
 
     public function post_index($id){
       $account_name = $this->defaultDate();
+      $page_content = $this->casalPage->page_default_date($account_name);
       $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
       $profile_picture = Self::profile_picture(Auth::user()->conta_id);
       $isUserHost = Self::isUserHost($account_name[0]->conta_id);
@@ -195,7 +194,7 @@ class AuthController extends Controller
 
 
 
-      return view('pagina.comment', compact('account_name', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
+      return view('pagina.comment', compact('account_name', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content'));
     }
 
 
@@ -317,7 +316,14 @@ class AuthController extends Controller
         return view('auth.registerUserLastInfo');
     }
     public function seeAllNotifications(){
-        return view('notificacoes.index');
+        $account_name = $this->defaultDate();
+        $profile_picture = Self::profile_picture(Auth::user()->conta_id);
+        $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
+        $profile_picture = Self::profile_picture(Auth::user()->conta_id);
+        $isUserHost = Self::isUserHost($account_name[0]->conta_id);
+        $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
+        $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
+        return view('notificacoes.index', compact('profile_picture', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages'));
     }
 
     public function sendtoOtherForm(Request $request){
