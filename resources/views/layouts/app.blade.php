@@ -346,7 +346,7 @@
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
                             <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
-                            
+
                         </div>
                     </div>
                 </form>
@@ -378,7 +378,7 @@
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
                             <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
-                            
+
                         </div>
                     </div>
                 </form>
@@ -475,11 +475,32 @@
           let id = e.target.id;
           let coment = $('#comentario-' + id).val();
           //alert(coment);
-          $("#comment-own-" + id).text(coment);
+          if(coment != ''){
+            $("#comment-own-" + id).text(coment);
           $("#comment-users-own-" + id).css({
             display: "flex",
           });
-          comentar(id);
+          $("#comment-users-" + id).hide();
+          $("#comentario-" + id).val('');
+          comentar(id, coment);
+        }
+      });
+      $('.savepost').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id.split('-');
+          guardar(id[1]);
+
+      });
+      $('.delete_post').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id.split('-');
+          delete_post(id[1]);
+
+      });
+      $('.ocultar_post').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id.split('-');
+          ocultar_post(id[1]);
 
       });
 

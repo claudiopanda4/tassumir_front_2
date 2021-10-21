@@ -42,12 +42,6 @@
                         </div>
                     </div>
                 @else
-                    <div class="follwing-btn-container">
-                        <button type="submit" class="follwing-btn">
-                            Seguir
-                        </button>
-                    </div>
-                @endif
                     <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg">
                         <div class="statistics-profile-page-component l-5">
                             @if ($publicacoes > 1)
@@ -69,6 +63,12 @@
                             <h2>Seguindo</h2>
                         </div>
                     </div>
+                    <div class="follwing-btn-container">
+                        <button type="submit" class="follwing-btn">
+                            Seguir
+                        </button>
+                    </div>
+                @endif
             </div>
             <div class="edit-page-container">
                 <button type="submit" class="follwing-btn" id="edit-page">
