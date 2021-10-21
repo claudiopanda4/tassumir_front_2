@@ -172,9 +172,15 @@
                     </ul>
                 </nav>
                 <div class="comment-send clearfix"  id="comment-send-{{$dados[$key]['post_id']}}">
+                  @if( !($dados[$key]['foto_conta_logada'] == null) )
                     <div class="img-user-comment l-5">
-                        <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                        <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta_logada'] }}">
                     </div>
+                    @else
+                    <div class="img-user-comment l-5">
+                        <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                    </div>
+                      @endif
                     <div class="input-text comment-send-text l-5 clearfix">
                         <input type="text" class="" name="comentario" id="comentario-{{$dados[$key]['post_id']}}" placeholder="O que você tem a dizer?">
                         <div class="r-5 ">
@@ -192,9 +198,15 @@
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment">
+                          @if( !($dados[$key]['foto_conta_logada'] == null) )
                             <div class="profille-img">
-                                <img  class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                                <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta_logada'] }}">
                             </div>
+                            @else
+                            <div class="profille-img">
+                              <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                            </div>
+                            @endif
                         </div>
                         <div class="comment-user-comment">
                             <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}">Amo muito esse casal</p>
@@ -210,7 +222,7 @@
                         <div class="user-identify-comment">
                             @if( !($dados[$key]['foto_conta'] == null) )
                             <div class="profille-img">
-                                <img  class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_conta'] }}">
+                                <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
                             </div>
                             @else
                             <div class="profille-img">

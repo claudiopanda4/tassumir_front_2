@@ -29,10 +29,10 @@ class AuthController extends Controller
         $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
         $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
 
-        
+
         //=================================================================
         //=========================Comecem Aqui-----------
-        $dadosPage = Page::all();            
+        $dadosPage = Page::all();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -52,9 +52,9 @@ class AuthController extends Controller
             $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
             ->select('seguidors.*', 'identificadors.id')
             ->get();
-            
+
             $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {                
+            foreach ($dadoSeguindo as $valor1) {
                 if ($valor1->id == $account_name[0]->conta_id) {
                         $key = 0;
                         $dadosSeguindo[$key] = [
@@ -62,7 +62,7 @@ class AuthController extends Controller
                             'identificador_id_seguida' => $valor1->identificador_id_seguida,
                             'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
                             'id' => $valor1->id,
-                            ]; 
+                            ];
                     }
                 }
 
@@ -110,6 +110,7 @@ class AuthController extends Controller
         $dados[$a]['formato']=$key->formato_id;
         $dados[$a]['estado_post']=$key->estado_post_id;
         $dados[$a]['foto_page']=$page[$key->page_id - 1]->foto;
+        $dados[$a]['foto_conta_logada']=$account_name[0]->foto;
         if($dados[$a]['formato']==1 || $dados[$a]['formato']== 2){
         $dados[$a]['file']=$key->file;
         }
@@ -150,7 +151,7 @@ class AuthController extends Controller
 
     public function post_index($id){
         $account_name = $this->defaultDate();
-        $dadosPage = Page::all();            
+        $dadosPage = Page::all();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -170,9 +171,9 @@ class AuthController extends Controller
             $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
             ->select('seguidors.*', 'identificadors.id')
             ->get();
-            
+
             $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {                
+            foreach ($dadoSeguindo as $valor1) {
                 if ($valor1->id == $account_name[0]->conta_id) {
                         $key = 0;
                         $dadosSeguindo[$key] = [
@@ -180,11 +181,11 @@ class AuthController extends Controller
                             'identificador_id_seguida' => $valor1->identificador_id_seguida,
                             'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
                             'id' => $valor1->id,
-                            ]; 
+                            ];
                     }
                 }
 
-      
+
       $page_content = $this->casalPage->page_default_date($account_name);
       $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
       $profile_picture = Self::profile_picture(Auth::user()->conta_id);
@@ -409,7 +410,7 @@ class AuthController extends Controller
         $conta_logada = $this->defaultDate();
 
         //----------------------------------------------------------------
-        $dadosPage = Page::all();            
+        $dadosPage = Page::all();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -429,9 +430,9 @@ class AuthController extends Controller
             $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
             ->select('seguidors.*', 'identificadors.id')
             ->get();
-            
+
             $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {                
+            foreach ($dadoSeguindo as $valor1) {
                 if ($valor1->id == $account_name[0]->conta_id) {
                         $key = 0;
                         $dadosSeguindo[$key] = [
@@ -439,7 +440,7 @@ class AuthController extends Controller
                             'identificador_id_seguida' => $valor1->identificador_id_seguida,
                             'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
                             'id' => $valor1->id,
-                            ]; 
+                            ];
                     }
                 }
         //----------------------------------------------------------------
