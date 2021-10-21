@@ -58,10 +58,6 @@ class ClassLoader
     private $missingClasses = array();
     private $apcuPrefix;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 0c4185a1bca8f24360399578b7b1898578a929c8
     private static $registeredLoaders = array();
 
     public function __construct($vendorDir = null)
