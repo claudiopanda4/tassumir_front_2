@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         
         //=================================================================
-        //=================================================================
+        //=========================Comecem Aqui-----------
         $dadosPage = Page::all();            
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
@@ -66,7 +66,7 @@ class AuthController extends Controller
                     }
                 }
 
-
+                //=========================Terminem Aqui----------- Depois põe estas variáveis no compact 'dadosSeguida', 'dadosSeguindo', 'dadosPage'
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
 
