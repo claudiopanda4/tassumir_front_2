@@ -39,9 +39,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::post('/couple_post/', [App\Http\Controllers\PaginaCasalController::class, 'store_post'])->name('post_couple.page');
     
     Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
-
-    Route::get('/couple_page_user/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page_u');
-
+    
     Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::class, 'edit_couple'])->name('edit_couple.page');
     Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
     Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');
@@ -69,10 +67,12 @@ Route::get('/recuperarSenha', [App\Http\Controllers\AuthController::class, 'recu
 Route::get('/recuperarSenha/code', [App\Http\Controllers\AuthController::class, 'codigoRecebido'])->name('code.received.form');
 Route::get('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'newCode'])->name('validate.newCode.form');
 Route::get('/completRegister', [App\Http\Controllers\AuthController::class, 'registrarUserComplete'])->name('account.registerComplete.form');
-/* inicio teste */
+
 Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.teste.form');
 
 Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.enter.form');
-/* fim teste*/
+
 Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
+
+Route::get('/allNotifications', [App\Http\Controllers\AuthController::class, 'seeAllNotifications'])->name('account.all.notifications');
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');
