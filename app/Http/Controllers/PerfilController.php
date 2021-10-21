@@ -227,7 +227,7 @@ class PerfilController extends Controller
             $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
 
             $request->file('profilePicture')->storeAs('public/img/users', $file_name);
-            AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]-conta_id);
+            AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]->conta_id);
         }
 
         return redirect()->route('account.profile');
