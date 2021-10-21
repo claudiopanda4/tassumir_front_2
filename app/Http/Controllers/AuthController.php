@@ -91,8 +91,10 @@ class AuthController extends Controller
             $dados[$a]['nome_comment']=$conta[0]->nome;
             $dados[$a]['nome_comment'].=" ";
             $dados[$a]['nome_comment'].=$conta[0]->apelido;
+            $dados[$a]['foto_conta']=$conta[0]->foto;
           }elseif ($aux2[0]->tipo_identificador_id == 2) {
             $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
+            $dados[$a]['foto_conta']=$conta[0]->foto;
           }
         }
       }
