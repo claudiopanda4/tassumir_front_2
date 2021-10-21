@@ -46,9 +46,15 @@
             <div class="post">
                 <header class="clearfix">
                     <div class="first-component clearfix l-5">
-                        <div class="page-cover circle l-5">
-                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                        </div>
+                        @if( !($dados[$key]['foto_page'] == null) )
+                            <div class="page-cover circle l-5">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_page'] }}">
+                            </div>
+                        @else
+                            <div class="page-cover circle l-5">
+                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                            </div>
+                        @endif
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
