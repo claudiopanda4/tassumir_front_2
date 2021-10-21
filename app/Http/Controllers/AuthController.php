@@ -27,6 +27,7 @@ class AuthController extends Controller
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
         $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
         $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
+        $page_current = 'auth';
         
         //=================================================================
         //=================================================================
@@ -99,7 +100,7 @@ class AuthController extends Controller
       }
         $a++;
       }
-        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content'));
+        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current'));
     }
     return redirect()->route('account.login.form');
     }
@@ -112,7 +113,7 @@ class AuthController extends Controller
       $isUserHost = Self::isUserHost($account_name[0]->conta_id);
       $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
       $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
-
+      $page_current = 'auth';
       $post =  DB::select('select * from posts where uuid = ?', [$id]);
       $page = DB::table('pages')->get();
       $i=0;
@@ -323,7 +324,9 @@ class AuthController extends Controller
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
         $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
         $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
-        return view('notificacoes.index', compact('profile_picture', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages'));
+        $page_current = 'auth';
+
+        return view('notificacoes.index', compact('profile_picture', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages', 'page_current'));
     }
 
     public function sendtoOtherForm(Request $request){
@@ -332,10 +335,11 @@ class AuthController extends Controller
         $apelido = $request->apelido;
         $sexo = $request->sexo;
         $data = $request->dat;
+        $page_current = 'auth';
 
         //dd($nome."=>".$apelido."=>".$sexo."=>".$data);
 
-        return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data'));
+        return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data', 'page_current'));
 
     }
     public function joinAndSave(Request $request){

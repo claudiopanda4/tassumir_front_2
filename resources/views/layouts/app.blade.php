@@ -238,14 +238,12 @@
     </main>
     </div>
 </body>
-<?php if (true): ?>
+<?php if ($page_current == 'page'): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
-
-<input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
-
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
+    <input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
         <header class="pop-up-component-header pop-up-component-header-default header-height">
             <h1>Criar Publicação</h1>
