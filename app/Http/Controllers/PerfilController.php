@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
 use App\Models\Perfil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,10 +13,12 @@ use App\Http\Controllers\PaginaCasalController;
 class PerfilController extends Controller
 {
     private $auth;
+    private $casalPage;
 
     public function __construct()
     {
         $this->auth = new AuthController();
+        $this->casalPage = new PaginaCasalController();
     }
 
     /**
@@ -30,6 +33,8 @@ class PerfilController extends Controller
             $page_couple = new PaginaCasalController();
 
             $account_name = $this->auth->defaultDate();
+            
+            $page_content = $this->casalPage->page_default_date($account_name);
 
             $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
             $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
@@ -40,6 +45,42 @@ class PerfilController extends Controller
             $conta_logada = $auth->defaultDate();
 
             $this->active_account_id = $account_name[0]->conta_id;
+            //---------------------------------------------------------------------
+        $account_name = $auth->defaultDate();
+            $dadosPage = Page::all();            
+          $dadosSeguindo[0] = [
+                            'id_seguidor' => 0,
+                            'identificador_id_seguida' => 0,
+                            'identificador_id_seguindo' => 0,
+                            'id' => 0];
+           $dadosSeguida = DB::table('seguidors')
+            ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+            foreach ($dadosSgndo as $value) {
+                $valor = $value->identificador_id;
+            }
+
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+            
+            $tt = 0;
+            foreach ($dadoSeguindo as $valor1) {                
+                if ($valor1->id == $account_name[0]->conta_id) {
+                        $key = 0;
+                        $dadosSeguindo[$key] = [
+                            'id_seguidor' => $valor1->seguidor_id,
+                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                            'id' => $valor1->id,
+                            ]; 
+                    }
+                }
+        //---------------------------------------------------------------------
 
             //-------------------------------------------------------------------------
               $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
@@ -51,7 +92,11 @@ class PerfilController extends Controller
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                     $perfil[0]['qtd_ps']=sizeof($seguidor);
 
-                    return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content'));
+
+
+                    return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+
+
 
 
               } else {
@@ -59,7 +104,12 @@ class PerfilController extends Controller
               }
 
               //dd($account_name);
-              return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content'));
+
+
+
+              return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+
+
         } catch (Exception $e) {
             dd('erro');
         }
@@ -71,6 +121,40 @@ class PerfilController extends Controller
             $auth = new AuthController();
             $page_couple = new PaginaCasalController();
              $conta_logada = $auth->defaultDate();
+  //--------------------------------------------------------------
+             $dadosPage = Page::all();            
+          $dadosSeguindo[0] = [
+                            'id_seguidor' => 0,
+                            'identificador_id_seguida' => 0,
+                            'identificador_id_seguindo' => 0,
+                            'id' => 0];
+           $dadosSeguida = DB::table('seguidors')
+            ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+
+            foreach ($dadosSgndo as $value) {
+                $valor = $value->identificador_id;
+            }
+
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+            
+            $tt = 0;
+            foreach ($dadoSeguindo as $valor1) {                
+                if ($valor1->id == $conta_logada[0]->conta_id) {
+                        $key = 0;
+                        $dadosSeguindo[$key] = [
+                            'id_seguidor' => $valor1->seguidor_id,
+                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                            'id' => $valor1->id,
+                            ]; 
+                    }
+                }
 
             //-------------------------------------------------------------------------
               $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
@@ -90,8 +174,18 @@ class PerfilController extends Controller
               $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
               $page_content = $page_couple->page_default_date($account_name);
               $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
+
+
+              //dd($account_name);
+   
+
               $page_current = 'profile';
-              return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content'));
+
+              
+
+
+              return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+
         } catch (Exception $e) {
             dd('erro');
         }
@@ -158,6 +252,42 @@ class PerfilController extends Controller
             $auth = new AuthController();
             $page_couple = new PaginaCasalController();
             $account_name = $this->auth->defaultDate();
+                        //---------------------------------------------------------------------
+        $account_name = $auth->defaultDate();
+            $dadosPage = Page::all();            
+          $dadosSeguindo[0] = [
+                            'id_seguidor' => 0,
+                            'identificador_id_seguida' => 0,
+                            'identificador_id_seguindo' => 0,
+                            'id' => 0];
+           $dadosSeguida = DB::table('seguidors')
+            ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+            foreach ($dadosSgndo as $value) {
+                $valor = $value->identificador_id;
+            }
+
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+            
+            $tt = 0;
+            foreach ($dadoSeguindo as $valor1) {                
+                if ($valor1->id == $account_name[0]->conta_id) {
+                        $key = 0;
+                        $dadosSeguindo[$key] = [
+                            'id_seguidor' => $valor1->seguidor_id,
+                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                            'id' => $valor1->id,
+                            ]; 
+                    }
+                }
+        //---------------------------------------------------------------------
             $checkUserStatus = $auth->isCasal(Auth::user()->conta_id);
             $profile_picture = $auth->profile_picture(Auth::user()->conta_id);
             $isUserHost = $auth->isUserHost($account_name[0]->conta_id);
@@ -166,7 +296,10 @@ class PerfilController extends Controller
             $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
             $page_content = $page_couple->page_default_date($account_name);
             $page_current = 'profile';               
-            return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content'));
+
+
+            return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+
         } catch (Exception $e) {
             dd('erro');
         }
@@ -257,16 +390,30 @@ class PerfilController extends Controller
 
     public function add_picture(Request $request)
     {
-        try {
-            if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
+        try 
+        {
+            if ($request->page_u)
             {
-                $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
+                if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
+                {
+                    $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
 
-                $request->file('profilePicture')->storeAs('public/img/users', $file_name);
-                AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]->conta_id);
+                    $request->file('profilePicture')->storeAs('public/img/page', $file_name);
+                    AuthController::updatePageProfilePicture($file_name, $request->page_u);
+                }
+
+            } else {
+                if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
+                {
+                    $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
+
+                    $request->file('profilePicture')->storeAs('public/img/users', $file_name);
+                    AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]->conta_id);
+                }
             }
 
-            return redirect()->route('account.profile');
+            return back();
+
         } catch (Exception $e) {
             dd('erro');
         }
