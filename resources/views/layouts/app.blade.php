@@ -97,7 +97,7 @@
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
 
 
-                                    <a href=""><span class="mt-2" style="font-size:12pt;color: #fff;" > Ver todos </span></a>
+                                    <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:12pt;color: #fff;" > Ver todos </span></a>
                                 </li>
 
 

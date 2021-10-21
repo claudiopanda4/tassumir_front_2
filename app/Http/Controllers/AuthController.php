@@ -108,23 +108,16 @@ class AuthController extends Controller
 
     public function post_index($id){
       $account_name = $this->defaultDate();
-      //===================================================================================
       $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
-      //===================================================================================
       $profile_picture = Self::profile_picture(Auth::user()->conta_id);
-      //===================================================================================
       $isUserHost = Self::isUserHost($account_name[0]->conta_id);
-      //===================================================================================
       $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
-      //===================================================================================
       $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
-      //===================================================================================
 
-      $post=  DB::select('select * from posts where uuid = ?', [$id]);
-      $page= DB::table('pages')->get();
+      $post =  DB::select('select * from posts where uuid = ?', [$id]);
+      $page = DB::table('pages')->get();
       $i=0;
       $dados = array();
-
 
         $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$page[$post[0]->page_id - 1]->page_id, 2 ]);
         $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
@@ -322,6 +315,9 @@ class AuthController extends Controller
     public function registrarUserComplete(Request $request){
 
         return view('auth.registerUserLastInfo');
+    }
+    public function seeAllNotifications(){
+        return view('notificacoes.index');
     }
 
     public function sendtoOtherForm(Request $request){

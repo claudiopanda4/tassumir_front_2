@@ -111,7 +111,7 @@ class PaginaCasalController extends Controller
           $page_content = DB::select('select * from pages where uuid = ?', [
                 $uuid
             ]);
-          $seguidores = Self::seguidores($page_content[0]->page_id);
+          $seguidores = Self::seguidores($uuid);
           $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
           $publicacoes = $this->get_all_post($page_content[0]->page_id);
           $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
@@ -175,7 +175,6 @@ class PaginaCasalController extends Controller
 
         //dd($id);
         //return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
-
     }
 
     private function get_all_post($id) {

@@ -7,7 +7,7 @@
                 <header class="clearfix">
                     <div class="first-component clearfix l-5">
                         <div class="page-cover circle l-5">
-                            <img class="img-full circle" src="http://127.0.0.1:8000/storage/img/page/unnamed.jpg">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                         </div>
                         <div class="page-identify l-5 clearfix">
                             <a href="http://127.0.0.1:8000/couple_page/3e55d378-305f-403d-b996-ae3dac4f754b"><h1 class="text-ellips">{{$dados[0]['nome_pag']}}</h1></a>
