@@ -134,16 +134,19 @@ class PerfilController extends Controller
     public function edit($perfil)
     {
         try {
+
+            $auth = new AuthController();
+            $account_name = $this->auth->defaultDate();
                 //===================================================================================
-            $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
+            $checkUserStatus = $auth->isCasal(Auth::user()->conta_id);
             //===================================================================================
-            $profile_picture = Self::profile_picture(Auth::user()->conta_id);
+            $profile_picture = $auth->profile_picture(Auth::user()->conta_id);
             //===================================================================================
-            $isUserHost = Self::isUserHost($account_name[0]->conta_id);
+            $isUserHost = $auth->isUserHost($account_name[0]->conta_id);
             //===================================================================================
-            $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
+            $hasUserManyPages = $auth->hasUserManyPages(Auth::user()->conta_id);
             //===================================================================================
-            $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
+            $allUserPages = $auth->allUserPages(new AuthController, Auth::user()->conta_id);
             //===================================================================================
            $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
                
@@ -253,9 +256,8 @@ class PerfilController extends Controller
             dd('erro');   
         }
     }
-
-
-
-
-
+    public static function profile_picture($account_id)
+    {
+        return DB::select('select foto from contas where conta_id = ?', [$account_id])[0]->foto;
+    }
 }
