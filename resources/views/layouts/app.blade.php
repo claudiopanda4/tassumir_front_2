@@ -575,7 +575,7 @@
                 zIndex: 1000
             });
         });
-        $('.comment-send-post').click(function(e){
+        $('.follwing-btn follwing-btn-pop-up').click(function(e){
             e.preventDefault();
             let id = e.target.id;
             let id_final = id.split('-')[1];
