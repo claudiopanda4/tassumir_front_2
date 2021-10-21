@@ -30,6 +30,7 @@ class AuthController extends Controller
         //===================================================================================
         $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
         //===================================================================================
+        $conta_logada = $this->defaultDate();
         //=================================================================
         //=================================================================
 
@@ -101,7 +102,7 @@ class AuthController extends Controller
       }
         $a++;
       }
-        return view('feed.index', compact('account_name', 'dados', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
+        return view('feed.index', compact('account_name', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
     }
     return redirect()->route('account.login.form');
     }
