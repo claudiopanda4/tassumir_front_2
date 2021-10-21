@@ -466,6 +466,7 @@
       $('.seguir-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
+          alert(id)
             seguir(id);
 
       });
@@ -475,14 +476,15 @@
           let id = e.target.id;
           let coment = $('#comentario-' + id).val();
           //alert(coment);
-          $("#comment-own-" + id).text(coment);
+          if(coment != ''){
+            $("#comment-own-" + id).text(coment);
           $("#comment-users-own-" + id).css({
             display: "flex",
           });
           $("#comment-users-" + id).hide();
           $("#comentario-" + id).val('');
           comentar(id, coment);
-
+        }
       });
       $('.savepost').click(function (e) {
           e.preventDefault();
