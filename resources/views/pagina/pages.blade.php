@@ -10,16 +10,14 @@
             <h1 class="title">Minhas Páginas</h1>
             <ul>
                 <?php 
-                $my_pages = [
-                    [],[],[]
-                ]; 
+                    $key = 0;
                 ?>
                 @foreach($allUserPages as $page)
                     <li class="li-component-aside-right clearfix li-my-page">
                         <div class="page-cover circle l-5">
                             <img class="img-full circle" src="../storage/img/page/t30_13_1092985.jpg">
                         </div>
-                        <a href="{{ route('couple_page.user') }}"><h1 class="l-5 name-page text-ellips"> {{ $page['page_name'] }} </h1></a>
+                        <a href="{{ route('couple.page1', $page_content[$key]->uuid) }}"><h1 class="l-5 name-page text-ellips"> {{ $page['page_name'] }} </h1></a>
                         @if($page['seguidores'] > 1)
                             <h2 class="l-5 text-ellips"> {{ $page['seguidores'] }} seguidores</h2>
                         @else
@@ -27,6 +25,7 @@
                         @endif
                         <!-- <a href="" class="l-5">seguir</a> -->
                     </li>
+                    <?php $key++; ?>
                 @endforeach
             </ul>
         </nav>

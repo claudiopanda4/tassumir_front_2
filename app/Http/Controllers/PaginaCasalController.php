@@ -63,13 +63,13 @@ class PaginaCasalController extends Controller
         return $page_content;
     }
 
-    public function paginas($id){
+    public function paginas($uuid){
         try {
           $auth = new AuthController();
           $account_name = $auth->defaultDate();
           $page_content = $this->page_default_date($account_name);
           $page_content = DB::select('select * from pages where uuid = ?', [
-                $id
+                $uuid
             ]);
           $seguidores = Self::seguidores($page_content[0]->page_id);
           $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
