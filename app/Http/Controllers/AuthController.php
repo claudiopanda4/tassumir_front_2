@@ -443,6 +443,13 @@ class AuthController extends Controller
         return redirect()->route('account.profile');
     }
 
+    public static function updatePageProfilePicture($picture, $uuid)
+    {
+        DB::table('pages')->where('uuid', $uuid)->update(['foto' => $picture]);
+        return back();
+    }
+
+
     public static function isUserHost($account_id)
     {
 

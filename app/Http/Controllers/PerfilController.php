@@ -12,10 +12,12 @@ use App\Http\Controllers\PaginaCasalController;
 class PerfilController extends Controller
 {
     private $auth;
+    private $casalPage;
 
     public function __construct()
     {
         $this->auth = new AuthController();
+        $this->casalPage = new PaginaCasalController();
     }
 
     /**
@@ -28,6 +30,8 @@ class PerfilController extends Controller
         try {
             $auth = new AuthController();
             $account_name = $this->auth->defaultDate();
+            
+            $page_content = $this->casalPage->page_default_date($account_name);
 
             $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
             $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
@@ -47,7 +51,7 @@ class PerfilController extends Controller
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                     $perfil[0]['qtd_ps']=sizeof($seguidor);
 
-                    return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
+                    return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content'));
 
 
               } else {
@@ -55,7 +59,7 @@ class PerfilController extends Controller
               }
 
               //dd($account_name);
-              return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
+              return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content'));
         } catch (Exception $e) {
             dd('erro');
         }
@@ -256,16 +260,30 @@ class PerfilController extends Controller
 
     public function add_picture(Request $request)
     {
-        try {
-            if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
+        try 
+        {
+            if ($request->page_u)
             {
-                $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
+                if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
+                {
+                    $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
 
-                $request->file('profilePicture')->storeAs('public/img/users', $file_name);
-                AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]->conta_id);
+                    $request->file('profilePicture')->storeAs('public/img/page', $file_name);
+                    AuthController::updatePageProfilePicture($file_name, $request->page_u);
+                }
+
+            } else {
+                if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
+                {
+                    $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
+
+                    $request->file('profilePicture')->storeAs('public/img/users', $file_name);
+                    AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]->conta_id);
+                }
             }
 
-            return redirect()->route('account.profile');
+            return back();
+
         } catch (Exception $e) {
             dd('erro');   
         }
