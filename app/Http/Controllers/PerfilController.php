@@ -134,19 +134,17 @@ class PerfilController extends Controller
     public function edit($perfil)
     {
         try {
-                //===================================================================================
-            $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
-            //===================================================================================
-            $profile_picture = Self::profile_picture(Auth::user()->conta_id);
-            //===================================================================================
-            $isUserHost = Self::isUserHost($account_name[0]->conta_id);
-            //===================================================================================
-            $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
-            //===================================================================================
-            $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
-            //===================================================================================
-           $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
-               
+            $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
+            
+            $checkUserStatus = AuthController::isCasal(Auth::user()->conta_id);
+            
+            $profile_picture = AuthController::profile_picture(Auth::user()->conta_id);
+            
+            $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
+            
+            $hasUserManyPages = AuthController::hasUserManyPages(Auth::user()->conta_id);
+            
+            $allUserPages = AuthController::allUserPages(new AuthController, Auth::user()->conta_id);
             return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
         } catch (Exception $e) {
             dd('erro');

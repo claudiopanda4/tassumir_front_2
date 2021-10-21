@@ -196,9 +196,8 @@ class PaginaCasalController extends Controller
     {
         return count(DB::select('select * from seguidors where uuid = ?', [$id]));
 
-    public static function seguidores($id) {
         //dd($id);
-        return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
+        //return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
 
     }
 
