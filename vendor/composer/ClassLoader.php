@@ -57,6 +57,7 @@ class ClassLoader
     private $classMapAuthoritative = false;
     private $missingClasses = array();
     private $apcuPrefix;
+
     private static $registeredLoaders = array();
 
     public function __construct($vendorDir = null)
