@@ -52,18 +52,18 @@
         </label>
         <div class="input input-container-radio">
             <label for="M-genre">M</label>
-            <?php if ($account_name[0]->genero=='M'): ?>
-              <input type="radio" name="genre" id="M-genre" value="M" class="genre-class" checked>
+            <?php if ($account_name[0]->genero=='Masculino'): ?>
+              <input type="radio" name="genre" id="M-genre" value="Masculino" class="genre-class" checked>
             <?php else: ?>
-              <input type="radio" name="genre" class="genre-class" id="M-genre"  value="M">
+              <input type="radio" name="genre" class="genre-class" id="M-genre"  value="Masculino">
             <?php endif; ?>
         </div>
         <div class="input input-container-radio">
             <label for="F-genre">F</label>
-            <?php if ($account_name[0]->genero=='F'): ?>
-            <input type="radio" name="genre" id="F-genre" class="genre-class" value="F" checked>
+            <?php if ($account_name[0]->genero=='Feminino'): ?>
+            <input type="radio" name="genre" id="F-genre" class="genre-class" value="Feminino" checked>
             <?php else: ?>
-            <input type="radio" name="genre" id="F-genre" class="genre-class"  value="F">
+            <input type="radio" name="genre" id="F-genre" class="genre-class"  value="Feminino">
             <?php endif; ?>
         </div>
         <input type="hidden" name="genre-choose" value="" id="genre-id">

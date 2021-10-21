@@ -13,7 +13,7 @@
                 @foreach($allUserPages as $key => $page)
                     <li class="li-component-aside-right clearfix li-my-page">
                         <div class="page-cover circle l-5">
-                            <img class="img-full circle" src="../storage/img/page/t30_13_1092985.jpg">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                         </div>
                         <a href="{{route('couple.page1', $page['page_uuid']) }}"><h1 class="l-5 name-page text-ellips"> {{ $page['page_name'] }} </h1></a>
                         @if($page['seguidores'] > 1)

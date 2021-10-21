@@ -25,8 +25,10 @@ class PaginaCasalController extends Controller
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
         $this->current_page_id = $page_content[0]->page_id;
+        $page_current = 'page';
+        $conta_logada = $auth->defaultDate();
         //dd($page_content);
-        return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
+        return view('pagina.couple_page', compact('account_name','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
     }
 
     public function show_page()
@@ -45,9 +47,11 @@ class PaginaCasalController extends Controller
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
         $this->current_page_id = $page_content[0]->page_id;
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
+        $page_current = 'page';
         //dd($page_content);
-        return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
-
+        $conta_logada = $auth->defaultDate();
+        //dd($page_content);
+        return view('pagina.couple_page', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
         try {
             $auth = new AuthController();
             $account_name = $auth->defaultDate();
@@ -62,11 +66,11 @@ class PaginaCasalController extends Controller
             $publicacoes = $this->get_all_post($page_content[0]->page_id);
             $this->current_page_id = $page_content[0]->page_id;
             //dd($page_content);
-            return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
+            return view('pagina.couple_page', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
         } catch (Exception $e) {
             dd($e);
         }
-        
+
 
     }
 
@@ -85,12 +89,15 @@ class PaginaCasalController extends Controller
             $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
             $publicacoes = $this->get_all_post($page_content[0]->page_id);
             $this->current_page_id = $page_content[0]->page_id;
+            $page_current = 'page';
             //dd($page_content);
-            return view('pagina.pages', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages'));
+            $conta_logada = $auth->defaultDate();
+            //dd($page_content);
+            return view('pagina.pages', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages', 'page_current'));
         } catch (Exception $e) {
             dd($e);
         }
-        
+
     }
 
     public function page_default_date ($account_name) {
@@ -108,6 +115,7 @@ class PaginaCasalController extends Controller
           $auth = new AuthController();
           $account_name = $auth->defaultDate();
           $page_content = $this->page_default_date($account_name);
+          $page_current = 'page';
           $page_content = DB::select('select * from pages where uuid = ?', [
                 $uuid
             ]);
@@ -122,12 +130,12 @@ class PaginaCasalController extends Controller
           $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
           $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
           $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-
-          return view('pagina.couple_page', compact('account_name', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
+          $conta_logada = $auth->defaultDate();
+          return view('pagina.couple_page', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
         } catch (Exception $e) {
             dd($e);
         }
-      
+
     }
 
 
@@ -135,12 +143,14 @@ class PaginaCasalController extends Controller
         try {
             $auth = new AuthController();
             $account_name = $auth->defaultDate();
+            $page_current = 'page';
             $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
             $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
             $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
             $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-            return view('pagina.edit_couple', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
+            $conta_logada = $auth->defaultDate();
+            return view('pagina.edit_couple', compact('account_name', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -155,8 +165,10 @@ class PaginaCasalController extends Controller
             $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
             $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
+            $page_current = 'page';
+            $conta_logada = $auth->defaultDate();
 
-            return view('pagina.delete_couple_page', compact('account_name', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages'));
+            return view('pagina.delete_couple_page', compact('account_name', 'conta_logada', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages', 'page_current'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -172,7 +184,7 @@ class PaginaCasalController extends Controller
         return DB::select('select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = ?', [$id])[0]->tipo_relacionamento;
     }
 
-    public static function seguidores($id) 
+    public static function seguidores($id)
     {
         return count(DB::select('select * from seguidors where uuid = ?', [$id]));
 
@@ -195,6 +207,8 @@ class PaginaCasalController extends Controller
     {
         try 
         {
+            //dd($request);
+
             $page_id = DB::select('select page_id from pages where uuid = ?', [$request->page_u])[0]->page_id;
 
             if ($request->hasFile('imgOrVideo'))
