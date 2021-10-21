@@ -34,12 +34,14 @@ Route::group(['middleware' => 'auth:web1'], function () {
 
 
     Route::get('/couple_page/', [App\Http\Controllers\PaginaCasalController::class, 'index'])->name('couple.page');
-    Route::get('couple_page_user/', [App\Http\Controllers\PaginaCasalController::class, 'show_page'])->name('couple_page.user');
-
     Route::get('/my_pages/', [App\Http\Controllers\PaginaCasalController::class, 'my_pages'])->name('couple.page.mine');
-    Route::get('/posts/{&uuid}', [App\Http\Controllers\PaginaCasalController::class, 'post'])->name('couple.page.post');
+    Route::get('/posts/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'post'])->name('couple.page.post');
     Route::post('/couple_post/', [App\Http\Controllers\PaginaCasalController::class, 'store_post'])->name('post_couple.page');
+    
     Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
+
+    Route::get('/couple_page_user/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page_u');
+
     Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::class, 'edit_couple'])->name('edit_couple.page');
     Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
     Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');
