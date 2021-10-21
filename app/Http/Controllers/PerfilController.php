@@ -33,7 +33,7 @@ class PerfilController extends Controller
             $page_couple = new PaginaCasalController();
 
             $account_name = $this->auth->defaultDate();
-            
+
             $page_content = $this->casalPage->page_default_date($account_name);
 
             $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
@@ -47,7 +47,7 @@ class PerfilController extends Controller
             $this->active_account_id = $account_name[0]->conta_id;
             //---------------------------------------------------------------------
         $account_name = $auth->defaultDate();
-            $dadosPage = Page::all();            
+            $dadosPage = Page::all();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -67,9 +67,9 @@ class PerfilController extends Controller
             $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
             ->select('seguidors.*', 'identificadors.id')
             ->get();
-            
+
             $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {                
+            foreach ($dadoSeguindo as $valor1) {
                 if ($valor1->id == $account_name[0]->conta_id) {
                         $key = 0;
                         $dadosSeguindo[$key] = [
@@ -77,7 +77,7 @@ class PerfilController extends Controller
                             'identificador_id_seguida' => $valor1->identificador_id_seguida,
                             'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
                             'id' => $valor1->id,
-                            ]; 
+                            ];
                     }
                 }
         //---------------------------------------------------------------------
@@ -122,7 +122,7 @@ class PerfilController extends Controller
             $page_couple = new PaginaCasalController();
              $conta_logada = $auth->defaultDate();
   //--------------------------------------------------------------
-             $dadosPage = Page::all();            
+             $dadosPage = Page::all();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -142,9 +142,9 @@ class PerfilController extends Controller
             $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
             ->select('seguidors.*', 'identificadors.id')
             ->get();
-            
+
             $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {                
+            foreach ($dadoSeguindo as $valor1) {
                 if ($valor1->id == $conta_logada[0]->conta_id) {
                         $key = 0;
                         $dadosSeguindo[$key] = [
@@ -152,7 +152,7 @@ class PerfilController extends Controller
                             'identificador_id_seguida' => $valor1->identificador_id_seguida,
                             'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
                             'id' => $valor1->id,
-                            ]; 
+                            ];
                     }
                 }
 
@@ -177,11 +177,11 @@ class PerfilController extends Controller
 
 
               //dd($account_name);
-   
+
 
               $page_current = 'profile';
 
-              
+
 
 
               return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
@@ -254,7 +254,7 @@ class PerfilController extends Controller
             $account_name = $this->auth->defaultDate();
                         //---------------------------------------------------------------------
         $account_name = $auth->defaultDate();
-            $dadosPage = Page::all();            
+            $dadosPage = Page::all();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -274,9 +274,9 @@ class PerfilController extends Controller
             $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
             ->select('seguidors.*', 'identificadors.id')
             ->get();
-            
+
             $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {                
+            foreach ($dadoSeguindo as $valor1) {
                 if ($valor1->id == $account_name[0]->conta_id) {
                         $key = 0;
                         $dadosSeguindo[$key] = [
@@ -284,7 +284,7 @@ class PerfilController extends Controller
                             'identificador_id_seguida' => $valor1->identificador_id_seguida,
                             'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
                             'id' => $valor1->id,
-                            ]; 
+                            ];
                     }
                 }
         //---------------------------------------------------------------------
@@ -295,7 +295,7 @@ class PerfilController extends Controller
             $allUserPages = $auth->allUserPages(new AuthController, Auth::user()->conta_id);
             $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
             $page_content = $page_couple->page_default_date($account_name);
-            $page_current = 'profile';               
+            $page_current = 'profile';
 
 
             return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
@@ -390,7 +390,7 @@ class PerfilController extends Controller
 
     public function add_picture(Request $request)
     {
-        try 
+        try
         {
             if ($request->page_u)
             {

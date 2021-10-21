@@ -58,7 +58,7 @@
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
-                                <span class="time-posted l-5">50 min</span><div id="seguir"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
+                                <span class="time-posted l-5">50 min</span><div id="seguir-{{$dados[$key]['page_id']}}"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
                                   <a href="" class="seguir-a r-5" id="{{$dados[$key]['page_id']}}">seguir</a>
                                 <?php endif; ?></div>
                             </div>
@@ -172,9 +172,15 @@
                     </ul>
                 </nav>
                 <div class="comment-send clearfix"  id="comment-send-{{$dados[$key]['post_id']}}">
+                  @if( !($dados[$key]['foto_conta_logada'] == null) )
                     <div class="img-user-comment l-5">
-                        <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                        <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta_logada'] }}">
                     </div>
+                    @else
+                    <div class="img-user-comment l-5">
+                        <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                    </div>
+                      @endif
                     <div class="input-text comment-send-text l-5 clearfix">
                         <input type="text" class="" name="comentario" id="comentario-{{$dados[$key]['post_id']}}" placeholder="O que você tem a dizer?">
                         <div class="r-5 ">
@@ -192,9 +198,15 @@
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment">
+                          @if( !($dados[$key]['foto_conta_logada'] == null) )
                             <div class="profille-img">
-                                <img  class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                                <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta_logada'] }}">
                             </div>
+                            @else
+                            <div class="profille-img">
+                              <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                            </div>
+                            @endif
                         </div>
                         <div class="comment-user-comment">
                             <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}">Amo muito esse casal</p>
@@ -208,9 +220,15 @@
           <div class="comment-users" id="comment-users-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container" >
                         <div class="user-identify-comment">
+                            @if( !($dados[$key]['foto_conta'] == null) )
                             <div class="profille-img">
-                                <img  class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                                <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
                             </div>
+                            @else
+                            <div class="profille-img">
+                                  <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                            </div>
+                        @endif
                             <h2 class="text-ellips">{{$dados[$key]['nome_comment']}}</h2>
                         </div>
                         <div class="comment-user-comment">
@@ -288,7 +306,7 @@ function gostar(id){
          dataType: 'json',
          success:function(response){
          console.log(response);
-         $('#seguir').hide();
+         $('#seguir-' + id).hide();
 
         }
       });

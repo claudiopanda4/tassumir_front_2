@@ -14,6 +14,9 @@ namespace Composer;
 
 use Composer\Autoload\ClassLoader;
 use Composer\Semver\VersionParser;
+<<<<<<< HEAD
+
+=======
 
 
 
@@ -1553,6 +1556,7 @@ self::$installed = $data;
 }
 
  
+>>>>>>> 40712e607df614376017bbf8f25e83de5059ab4a
 /**
  * This class is copied in every Composer installed project and available to all
  *
