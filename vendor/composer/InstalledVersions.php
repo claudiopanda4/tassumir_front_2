@@ -13,13 +13,6 @@
 namespace Composer;
 
 use Composer\Semver\VersionParser;
-
-<<<<<<< HEAD
-
-
-
-
-
 class InstalledVersions
 {
 private static $installed = array (
@@ -1874,5 +1867,4 @@ class InstalledVersions
 
         return $installed;
     }
->>>>>>> 36ca857ee248ab052561bb9b848a80c99978bf8b
 }
