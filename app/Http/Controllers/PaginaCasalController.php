@@ -202,7 +202,7 @@ class PaginaCasalController extends Controller
             //dd($page_content);
             $conta_logada = $auth->defaultDate();
             //dd($page_content);
-            return view('pagina.couple_page', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+            return view('pagina.pages', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
         } catch (Exception $e) {
             dd($e);
         }
