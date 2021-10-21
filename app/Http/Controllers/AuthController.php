@@ -151,6 +151,7 @@ class AuthController extends Controller
 
     public function post_index($id){
         $account_name = $this->defaultDate();
+        $conta_logada = $this->defaultDate();
         $dadosPage = Page::all();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
@@ -275,7 +276,7 @@ class AuthController extends Controller
 
 
 
-      return view('pagina.comment', compact('account_name', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+      return view('pagina.comment', compact('account_name', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
 
     }
 
