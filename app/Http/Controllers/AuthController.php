@@ -323,6 +323,9 @@ class AuthController extends Controller
 
         return view('auth.registerUserLastInfo');
     }
+    public function seeAllNotifications(){
+        return view('notificacoes.index');
+    }
 
     public function sendtoOtherForm(Request $request){
 
