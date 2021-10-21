@@ -322,8 +322,8 @@ class AuthController extends Controller
         $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
         $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
         $page_current = 'auth';
-
-        return view('notificacoes.index', compact('profile_picture', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages', 'page_current'));
+        $conta_logada = $this->defaultDate();
+        return view('notificacoes.index', compact('profile_picture', 'account_name', 'conta_logada', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages', 'page_current'));
     }
 
     public function sendtoOtherForm(Request $request){

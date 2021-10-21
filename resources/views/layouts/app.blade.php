@@ -241,9 +241,9 @@
 <?php if (true): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
-<?php if (false): ?>
+
 <input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
-<?php endif;?>
+
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
