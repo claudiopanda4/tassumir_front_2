@@ -22,7 +22,7 @@ class AuthController extends Controller
         //===================================================================================
         $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
         //===================================================================================
-        $profile_picture = Self::pro(Auth::user()->conta_id);
+        $profile_picture = Self::profile_picture(Auth::user()->conta_id);
         //===================================================================================
         $isUserHost = Self::isUserHost($account_name[0]->conta_id);
         //===================================================================================
@@ -318,14 +318,7 @@ class AuthController extends Controller
         return view('auth.registerUserLastInfo');
     }
     public function seeAllNotifications(){
-        $account_name = $this->defaultDate();
-        $profile_picture = Self::profile_picture(Auth::user()->conta_id);
-        $checkUserStatus = Self::isCasal(Auth::user()->conta_id);
-        $profile_picture = Self::profile_picture(Auth::user()->conta_id);
-        $isUserHost = Self::isUserHost($account_name[0]->conta_id);
-        $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
-        $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
-        return view('notificacoes.index', compact('profile_picture', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages'));
+        return view('notificacoes.index');
     }
 
     public function sendtoOtherForm(Request $request){
@@ -421,9 +414,12 @@ class AuthController extends Controller
     public static function isCasal($account_id)
     {
         //dd($account_id);
+        $auth = new AuthController();
+            $conta_logada = $auth->defaultDate();
+
         return count(DB::table('pages')
-                ->where('conta_id_a', $account_id)
-                ->orwhere('conta_id_b', $account_id)
+                ->where('conta_id_a', $conta_logada[0]->conta_id)
+                ->orwhere('conta_id_b', $conta_logada[0]->conta_id)
                 ->orwhere('tipo_page_id', 1)
                 ->get()) > 0;
         //return DB::select('select page_id from pages where conta_id_a = ? or conta_id_b = ? and tipo_page_id = ?', [$account_id, $account_id, 1]);

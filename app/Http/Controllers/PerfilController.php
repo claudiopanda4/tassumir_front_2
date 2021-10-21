@@ -87,7 +87,7 @@ class PerfilController extends Controller
 
               //dd($account_name);
               return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
-   
+
         } catch (Exception $e) {
             dd('erro');
         }
@@ -134,22 +134,25 @@ class PerfilController extends Controller
     public function edit($perfil)
     {
         try {
+          $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
+
+        //  $verificacao_conta_a=DB::select('select * from pages where conta_id_a = ?', [$account_name[0]->conta_id]);
+        //  $verificacao_conta_b=DB::select('select * from pages where conta_id_b = ?', [$account_name[0]->conta_id]);
 
             $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
-            
+
             $checkUserStatus = AuthController::isCasal(Auth::user()->conta_id);
-            
+
             $profile_picture = AuthController::profile_picture(Auth::user()->conta_id);
-            
+
             $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
-            
+
             $hasUserManyPages = AuthController::hasUserManyPages(Auth::user()->conta_id);
-            
+
             $allUserPages = AuthController::allUserPages(new AuthController, Auth::user()->conta_id);
 
 
-            $auth = new AuthController();
-            $account_name = $this->auth->defaultDate();
+
                 //===================================================================================
             $checkUserStatus = $auth->isCasal(Auth::user()->conta_id);
             //===================================================================================
@@ -161,13 +164,12 @@ class PerfilController extends Controller
             //===================================================================================
             $allUserPages = $auth->allUserPages(new AuthController, Auth::user()->conta_id);
             //===================================================================================
-           $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
-               
+
 
             return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages'));
         } catch (Exception $e) {
             dd('erro');
-        }       
+        }
     }
 
     /**
@@ -247,7 +249,7 @@ class PerfilController extends Controller
           ]);
 
         }
-          return redirect()->route('account1.profile', $request->conta_pedida);   
+          return redirect()->route('account1.profile', $request->conta_pedida);
         } catch (Exception $e) {
             dd('erro');
         }
@@ -267,7 +269,7 @@ class PerfilController extends Controller
 
             return redirect()->route('account.profile');
         } catch (Exception $e) {
-            dd('erro');   
+            dd('erro');
         }
     }
     public static function profile_picture($account_id)
