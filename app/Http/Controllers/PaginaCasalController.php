@@ -18,7 +18,7 @@ class PaginaCasalController extends Controller
         $account_name = $auth->defaultDate();
         //---------------------------------------------------------------------
         $account_name = $auth->defaultDate();
-            $dadosPage = Page::all();            
+            $dadosPage = Page::all();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -38,9 +38,9 @@ class PaginaCasalController extends Controller
             $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
             ->select('seguidors.*', 'identificadors.id')
             ->get();
-            
+
             $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {                
+            foreach ($dadoSeguindo as $valor1) {
                 if ($valor1->id == $account_name[0]->conta_id) {
                         $key = 0;
                         $dadosSeguindo[$key] = [
@@ -48,7 +48,7 @@ class PaginaCasalController extends Controller
                             'identificador_id_seguida' => $valor1->identificador_id_seguida,
                             'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
                             'id' => $valor1->id,
-                            ]; 
+                            ];
                     }
                 }
         //---------------------------------------------------------------------
@@ -75,7 +75,7 @@ class PaginaCasalController extends Controller
         $account_name = $auth->defaultDate();
         //----------------------------------------------------------------
         $account_name = $auth->defaultDate();
-            $dadosPage = Page::all();            
+            $dadosPage = Page::all();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -95,9 +95,9 @@ class PaginaCasalController extends Controller
             $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
             ->select('seguidors.*', 'identificadors.id')
             ->get();
-            
+
             $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {                
+            foreach ($dadoSeguindo as $valor1) {
                 if ($valor1->id == $account_name[0]->conta_id) {
                         $key = 0;
                         $dadosSeguindo[$key] = [
@@ -105,7 +105,7 @@ class PaginaCasalController extends Controller
                             'identificador_id_seguida' => $valor1->identificador_id_seguida,
                             'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
                             'id' => $valor1->id,
-                            ]; 
+                            ];
                     }
                 }
         //----------------------------------------------------------------
@@ -153,8 +153,8 @@ class PaginaCasalController extends Controller
         try {
             $auth = new AuthController();
             $account_name = $auth->defaultDate();
-                    
-            $dadosPage = Page::all();            
+
+            $dadosPage = Page::all();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -174,9 +174,9 @@ class PaginaCasalController extends Controller
             $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
             ->select('seguidors.*', 'identificadors.id')
             ->get();
-            
+
             $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {                
+            foreach ($dadoSeguindo as $valor1) {
                 if ($valor1->id == $account_name[0]->conta_id) {
                         $key = 0;
                         $dadosSeguindo[$key] = [
@@ -184,7 +184,7 @@ class PaginaCasalController extends Controller
                             'identificador_id_seguida' => $valor1->identificador_id_seguida,
                             'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
                             'id' => $valor1->id,
-                            ]; 
+                            ];
                     }
                 }
         //----------------------------------------------------------------
@@ -192,6 +192,7 @@ class PaginaCasalController extends Controller
             $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
             $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
+            $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
             $page_content = $this->page_default_date($account_name);
             $seguidores = Self::seguidores($page_content[0]->page_id);
             $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
@@ -222,7 +223,7 @@ class PaginaCasalController extends Controller
         try {
           $auth = new AuthController();
           $account_name = $auth->defaultDate();
-            $dadosPage = Page::all();            
+            $dadosPage = Page::all();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -242,9 +243,9 @@ class PaginaCasalController extends Controller
             $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
             ->select('seguidors.*', 'identificadors.id')
             ->get();
-            
+
             $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {                
+            foreach ($dadoSeguindo as $valor1) {
                 if ($valor1->id == $account_name[0]->conta_id) {
                         $key = 0;
                         $dadosSeguindo[$key] = [
@@ -252,7 +253,7 @@ class PaginaCasalController extends Controller
                             'identificador_id_seguida' => $valor1->identificador_id_seguida,
                             'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
                             'id' => $valor1->id,
-                            ]; 
+                            ];
                     }
                 }
           $page_content = $this->page_default_date($account_name);
@@ -346,7 +347,7 @@ class PaginaCasalController extends Controller
      */
     public function store_post(Request $request)
     {
-        try 
+        try
         {
             //dd($request);
 
