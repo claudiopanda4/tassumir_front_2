@@ -38,6 +38,42 @@ class PerfilController extends Controller
             $conta_logada = $auth->defaultDate();
 
             $this->active_account_id = $account_name[0]->conta_id;
+            //---------------------------------------------------------------------
+        $account_name = $auth->defaultDate();
+            $dadosPage = Page::all();            
+          $dadosSeguindo[0] = [
+                            'id_seguidor' => 0,
+                            'identificador_id_seguida' => 0,
+                            'identificador_id_seguindo' => 0,
+                            'id' => 0];
+           $dadosSeguida = DB::table('seguidors')
+            ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+            foreach ($dadosSgndo as $value) {
+                $valor = $value->identificador_id;
+            }
+
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+            
+            $tt = 0;
+            foreach ($dadoSeguindo as $valor1) {                
+                if ($valor1->id == $account_name[0]->conta_id) {
+                        $key = 0;
+                        $dadosSeguindo[$key] = [
+                            'id_seguidor' => $valor1->seguidor_id,
+                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                            'id' => $valor1->id,
+                            ]; 
+                    }
+                }
+        //---------------------------------------------------------------------
 
             //-------------------------------------------------------------------------
               $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
@@ -49,7 +85,7 @@ class PerfilController extends Controller
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                     $perfil[0]['qtd_ps']=sizeof($seguidor);
 
-                    return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
+                    return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
 
               } else {
@@ -57,7 +93,7 @@ class PerfilController extends Controller
               }
 
               //dd($account_name);
-              return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
+              return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
         } catch (Exception $e) {
             dd('erro');
         }
@@ -123,12 +159,10 @@ class PerfilController extends Controller
 
 
               //dd($account_name);
-              return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
    
 
               $page_current = 'profile';
-              return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
-              return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
+              return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
         } catch (Exception $e) {
             dd('erro');
@@ -195,6 +229,42 @@ class PerfilController extends Controller
 
             $auth = new AuthController();
             $account_name = $this->auth->defaultDate();
+                        //---------------------------------------------------------------------
+        $account_name = $auth->defaultDate();
+            $dadosPage = Page::all();            
+          $dadosSeguindo[0] = [
+                            'id_seguidor' => 0,
+                            'identificador_id_seguida' => 0,
+                            'identificador_id_seguindo' => 0,
+                            'id' => 0];
+           $dadosSeguida = DB::table('seguidors')
+            ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+            foreach ($dadosSgndo as $value) {
+                $valor = $value->identificador_id;
+            }
+
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+            
+            $tt = 0;
+            foreach ($dadoSeguindo as $valor1) {                
+                if ($valor1->id == $account_name[0]->conta_id) {
+                        $key = 0;
+                        $dadosSeguindo[$key] = [
+                            'id_seguidor' => $valor1->seguidor_id,
+                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                            'id' => $valor1->id,
+                            ]; 
+                    }
+                }
+        //---------------------------------------------------------------------
             $checkUserStatus = $auth->isCasal(Auth::user()->conta_id);
             $profile_picture = $auth->profile_picture(Auth::user()->conta_id);
             $isUserHost = $auth->isUserHost($account_name[0]->conta_id);
@@ -202,7 +272,7 @@ class PerfilController extends Controller
             $allUserPages = $auth->allUserPages(new AuthController, Auth::user()->conta_id);
             $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
             $page_current = 'profile';               
-            return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
+            return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
         } catch (Exception $e) {
             dd('erro');
         }
