@@ -68,6 +68,7 @@ class AuthController extends Controller
         $dados[$a]['guardado?']=sizeof($guardado);
         $dados[$a]['formato']=$key->formato_id;
         $dados[$a]['estado_post']=$key->estado_post_id;
+        $dados[$a]['foto_page']=$page[$key->page_id - 1]->foto;
         if($dados[$a]['formato']==1 || $dados[$a]['formato']== 2){
         $dados[$a]['file']=$key->file;
         }
@@ -447,6 +448,13 @@ class AuthController extends Controller
         DB::table('contas')->where('conta_id', $account_id)->update(['foto' => $picture]);
         return redirect()->route('account.profile');
     }
+
+    public static function updatePageProfilePicture($picture, $uuid)
+    {
+        DB::table('pages')->where('uuid', $uuid)->update(['foto' => $picture]);
+        return back();
+    }
+
 
     public static function isUserHost($account_id)
     {
