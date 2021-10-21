@@ -40,75 +40,6 @@
                 </ul>
             </nav>
         </header>
-        <?php
-      /*  $posts_feed = [
-            [
-                "type" => "img",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "video",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "img",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "video",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "none",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "img",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "img",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "video",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-            [
-                "type" => "none",
-                "page" => "Famosos em Relacionamentos",
-                "time" => "50 min",
-                "link" => "",
-                "text-post" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
-            ],
-        ];*/
-        foreach ($dados as $key => $value): ?>
-
-        <?php endforeach ?>
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post']==1): ?>
         <div class="card br-10" id="m_post-{{$dados[$key]['post_id']}}">
@@ -180,7 +111,7 @@
                             <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
                         </li>
                         <li>
-                            <a href="{{route('couple.page.post', $dados[$key]['page_uuid'])}}" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
+                            <a href="{{route('post_index', $dados[$key]['post_uuid'])}}" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
                         </li>
                         <?php if (false): ?>
                         <li>
