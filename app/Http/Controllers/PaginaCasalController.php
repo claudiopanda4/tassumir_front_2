@@ -217,7 +217,7 @@ class PaginaCasalController extends Controller
             } else {
                 $this->store($request->message, null, $page_id, $this->formato_id('Textos'));
             }
-            return redirect()->route('couple.page');
+            return back();
 
         } catch (Exception $e) {
             dd($e);
