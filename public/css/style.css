@@ -538,8 +538,8 @@ label[for="hugo"]{
     position: relative;
     margin-left: 100px;
     padding: 20px;
-   border-radius: 5px;
- margin-left: 10px;
+    border-radius: 5px;
+    margin-left: 10px;
 
 }
 .couple-invite-icon {
@@ -1165,9 +1165,30 @@ label[for="hugo"]{
     box-shadow: 0 1px 2px #00000033;
 
 }
+.noti-card-first{
+	display: none;
+    position: absolute;
+	background-color: #242526;
+	width: 340px;
+    height: 470px;
+    padding: 20px;
+    right: -100px;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px #00000033;
+}
+.noti-see-all-btn{
+	display: flex;
+
+	justify-content:center;
+	align-items: center;
+	
+	padding:8px;
+}
+
 .change-look span:hover{
 
-	text-decoration: underline;
+	text-decoration: none;
 	cursor: pointer;
 }
 .more-option-post-n a {
@@ -1536,12 +1557,149 @@ label[for="hugo"]{
     flex-direction: row;
     background-color: transparent;
 }
+.noti-flex{
+
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	
+}
+.noti-flex-1{
+
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 10px;
+	
+	
+}
+.noti-span{
+	font-size:12pt;
+	color: #fff;
+}
+.noti-div-name{
+	align-self:center; 
+	align-items: center;
+}
+.novi-div-image{
+	align-self:center;
+}
+.noti-flex-info{
+
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	
+
+}
+.noti-hour{
+	flex-direction: row;
+	justify-content: flex-start; 
+	align-items: flex-start;
+}
+.noti-hour-1{
+	flex-direction: row;
+	justify-content: space-evenly; 
+	align-items: flex-start;
+}
+.noti-btn-aceitar{
+	border: 1px solid transparent;
+	border-radius: 5px;
+	text-align: center;
+	color: white;
+	padding: 8px;
+	background-color: #800080;
+	
+
+}
+
+.noti-btn-aceitar-1{
+	border: 1px solid transparent;
+	border-radius: 5px;
+	text-align: center;
+	color: white;
+	padding: 8px;
+	background-color: #800080;
+	
+
+}
+.noti-btn-aceitar:hover {
+	border: 1px solid transparent;
+	border-radius: 5px;
+	text-align: center;
+	color: white;
+	padding: 8px;
+	background-color: #800080;
+	
+
+}
+.noti-btn-rejeitar{
+
+	border: 1px solid transparent;
+	border-radius: 5px;
+	text-align: center;
+	color: white;
+	padding: 8px;
+	background-color: #5D5D5D;
+	
+}
+.noti-btn-rejeitar:hover{
+
+	border: 1px solid transparent;
+	border-radius: 5px;
+	text-align: center;
+	color: white;
+	padding: 8px;
+	background-color: #5D5D5D;
+	
+}
+.noti-hour a span{
+	font-size: 10pt;
+
+}
+.noti-hour a span:hover{
+	text-decoration: none;
+}
+
+.novi-div-others-options{
+	align-self: center;
+}
+.noti-div-elipsis{
+	padding:5px;
+	margin-right: 1px;
+}
+.noti-div-title{
+	margin-left: 10px;
+	padding: 5px;
+}
+.noti-div-subtitle{
+	margin-left: 13px;
+	padding: 5px;
+}
+.noti-title{
+	color: white;
+	font-size: 14pt;
+}
+.noti-subtitle{
+	color: white;
+
+	font-size: 12pt;
+}
 
 #card-ident {
 	flex: 2;
 	padding: 10px 15px 0;
 }
+#card-ident-1 {
+	flex: 2;
+	padding: 10px 15px 0;
+}
 .profile-name {
+	color: #efefef;
+    font-size: 19px;
+    width: 185px;
+}
+.profile-name-1 {
 	color: #efefef;
     font-size: 19px;
     width: 185px;
@@ -1552,6 +1710,13 @@ label[for="hugo"]{
 
 
 #ident-profile {
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#ident-profile-1 {
 	display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2258,4 +2423,14 @@ label[for="hugo"]{
 }
 #my-pages .card {
 	border: none;
+}
+.search-title{
+	display:flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+}
+.search-info{
+	display:flex;
+	justify-content:space-around;
+	align-content:center;
 }

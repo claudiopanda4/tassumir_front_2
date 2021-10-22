@@ -38,7 +38,7 @@
                     </div>
                 </li>
             </ul>
-            <nav class="menu-header">
+            <nav class="menu-header ">
 
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
@@ -51,49 +51,97 @@
                                 <i class="far fa-bell fa-24 fa-option" size="7"></i>
                             </label>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
-                            <ul class="clearfix more-option-post-n card-flex">
+                            <ul class="clearfix noti-card-first  br-10">
                                 <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
 
                                     <span style="color:#efefef;">Actividades</span>
                                 </li>
 
 
-                                <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                                <li class="noti-flex mt-2">
 
-                                    <span style="color:#fff;">Hoje</span>
+                                    <div class="noti-div-subtitle">
+                                        <h4 class="noti-subtitle">Hoje</h4>
+                                    </div>
                                 </li>
 
-                                <li class="change-look" style="display: flex;justify-content:flex-start;width: 300px;padding:8px;">
+                                <li class="change-look noti-flex-info" >
 
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >Delton Agostinho, gostou </span>
+                                    <div class="ml-2 novi-div-image">
+
+                                         <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                                         
+                                        
+                                    </div>
+                                    <div class="noti-div-name">
+                                    
+                                    <span class="noti-span">Delton Agostinho, gostou a foto do casal Panda </span>
+
+                                    <div class="noti-hour ml-2">
+                                        <a href=""><span class="">há um dia</span></a>
+                                    </div>
+
+                                   </div>
+                  
+                                </li>
+
+                                <li class="change-look noti-flex-info" >
+
+                                    <div class="ml-2 novi-div-image">
+
+                                         <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                                         
+                                        
+                                    </div>
+                                    <div class="noti-div-name">
+                                    
+                                    <span class="noti-span">Delton Agostinho, gostou a foto do casal Panda </span>
+
+                                    <div class="noti-hour ml-2">
+                                        <a href=""><span class="">há 20min</span></a>
+                                    </div>
+
+                                   </div>
+                  
                                 </li>
 
 
-                                <li class="change-look"style="display: flex;justify-content: flex-start;width: 300px;
-                                padding:8px;">
 
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >João Nunes comentou: Ola </span>
+                                <li class="noti-flex mt-2">
+
+                                    <div class="noti-div-subtitle">
+                                        <h4 class="noti-subtitle">Ontem</h4>
+                                    </div>
                                 </li>
 
-                                <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                                <li class="change-look noti-flex-info" >
 
-                                    <span style="color:#fff;">Ontem</span>
+                                <div class="noti-flex-info">
+                                    
+                                    <div class="ml-2 novi-div-image">
+
+                                         <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                                         
+                                        
+                                    </div>
+                                    <div class="noti-div-name ">
+                                        
+                                        <span class="noti-span">Delton Agostinho, fez-te um pedido de relacionamento </span>
+                                        <div class="noti-hour">
+                                            <a href=""><span class="">há um dia</span></a>
+                                        </div>
+                                        <div class="noti-hour-1 mt-2">
+                                            <button class="noti-btn-aceitar-1">Aceitar</button>
+                                            
+                                            <button class="noti-btn-rejeitar">Rejeitar</button>
+                                            
+                                        </div>
+                                    </div>
+
+
+                                </div>
                                 </li>
 
-                                <li class="change-look" style="display: flex;justify-content: flex-start;width: 300px;padding:8px;">
-
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >Delton Agostinho, gostou </span>
-                                </li>
-
-
-                                <li class="change-look" style="display: flex;justify-content: flex-start;width: 300px;padding:8px;">
-
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >João Nunes comentou:Ola </span>
-                                </li>
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
 
 
@@ -169,9 +217,15 @@
                     @forelse($dadosSeguida as $Seguida)
                         <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
                         <li class="li-component-aside-right clearfix">
+                        @if( !($Paginas->foto_page == null) )
                             <div class="page-cover circle l-5">
-                                <img class="img-full circle" src=<?php echo "../storage/img/page/t30_13_1092985.jpg"; ?>>
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
                             </div>
+                        @else
+                            <div class="page-cover circle l-5">
+                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                            </div>
+                        @endif                            
                             <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                             <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
                            <?php 
@@ -231,9 +285,15 @@
                     <?php if (($verifica1 != $verifica)  ) : ?>
                         <?php if (($verifica != 'B')  ) : ?>
                         <li class="li-component-aside-right clearfix">
-                        <div class="page-cover circle l-5">
-                            <img class="img-full circle" src=<?php echo "../storage/img/page/t30_13_1092985.jpg"; ?>>
-                        </div>
+                        @if( !($Paginas->foto_page == null) )
+                            <div class="page-cover circle l-5">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                            </div>
+                        @else
+                            <div class="page-cover circle l-5">
+                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                            </div>
+                        @endif
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
                       <?php  echo"  
@@ -246,9 +306,15 @@
                     <?php endif ?>
                     <?php if (($conta_page == $tamanho)  ) : ?>
                         <li class="li-component-aside-right clearfix">
-                        <div class="page-cover circle l-5">
-                            <img class="img-full circle" src=<?php echo "../storage/img/page/t30_13_1092985.jpg"; ?>>
-                        </div>
+                        @if( !($Paginas->foto_page == null) )
+                            <div class="page-cover circle l-5">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                            </div>
+                        @else
+                            <div class="page-cover circle l-5">
+                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                            </div>
+                        @endif
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
                       <?php  echo"  
