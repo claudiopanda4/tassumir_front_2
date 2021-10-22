@@ -494,8 +494,6 @@
 </div>
 <?php endif ?>
 <?php if (true): ?>
-<?php endif ?>
-<?php if (true): ?>
 <input type="checkbox" name="" id="target-invited-relationship" class="invisible">
 <div class="pop-up" id="invited-relationship">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 320px;">
@@ -687,12 +685,12 @@
             $('#comment-send-' + id_final).css({
                 display : 'block',
             });
-        })
+        });
 
         $('.follwing-btn follwing-btn-pop-up').click(function(e){
             e.preventDefault();
 
-        })
+        });
     });
 
 </script>
