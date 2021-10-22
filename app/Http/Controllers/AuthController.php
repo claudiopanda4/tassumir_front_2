@@ -222,13 +222,14 @@ class AuthController extends Controller
             $ja_reagiu = array();
         }
         $dados[0]['nome_pag'] = $page[$post[0]->page_id - 1]->nome;
+        $dados[0]['foto_page']=$page[$post[0]->page_id - 1]->foto;
         $dados[0]['post']=$post[0]->descricao;
         $dados[0]['qtd_likes']= sizeof($likes);
         $dados[0]['qtd_comment']=sizeof($comment);
         $dados[0]['seguir_S/N']=sizeof($seguidor);
         $dados[0]['post_id']=$post[0]->post_id;
         $dados[0]['page_id']= $post[0]->page_id ;
-        $dados[0]['page_uuid']= $page_uuid[0]->uuid ;
+        $dados[0]['page_uuid']= $page[$post[0]->page_id - 1]->uuid ;
         $dados[0]['reagir_S/N']=sizeof($ja_reagiu);
 //        $dados[0]['comment_S/N']=sizeof($ja_reagiu1);
         $dados[0]['guardado?']=sizeof($guardado);
@@ -251,8 +252,10 @@ class AuthController extends Controller
             $dados[$a]['nome_comment']=$conta[0]->nome;
             $dados[$a]['nome_comment'].=" ";
             $dados[$a]['nome_comment'].=$conta[0]->apelido;
+            $dados[$a]['foto_conta']=$conta[0]->foto;
           }elseif ($aux2[0]->tipo_identificador_id == 2) {
             $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
+            $dados[$a]['foto_conta']=$page[$aux2[0]->id - 1]->foto;
           }
           $a++;
         }
