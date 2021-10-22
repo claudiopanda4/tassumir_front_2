@@ -278,14 +278,12 @@
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
 
-
+<?php dd(sizeof($page_content)); if (sizeof($page_content) > 0): ?>
 @if($page_content[0]->uuid)
     <input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
 @endif
-
-
-<input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
-
+<input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">    
+<?php endif ?>
 
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
