@@ -538,8 +538,8 @@ label[for="hugo"]{
     position: relative;
     margin-left: 100px;
     padding: 20px;
-   border-radius: 5px;
- margin-left: 10px;
+    border-radius: 5px;
+    margin-left: 10px;
 
 }
 .couple-invite-icon {
@@ -1569,6 +1569,7 @@ label[for="hugo"]{
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-start;
+	padding: 10px;
 	
 	
 }
@@ -1689,7 +1690,16 @@ label[for="hugo"]{
 	flex: 2;
 	padding: 10px 15px 0;
 }
+#card-ident-1 {
+	flex: 2;
+	padding: 10px 15px 0;
+}
 .profile-name {
+	color: #efefef;
+    font-size: 19px;
+    width: 185px;
+}
+.profile-name-1 {
 	color: #efefef;
     font-size: 19px;
     width: 185px;
@@ -1700,6 +1710,13 @@ label[for="hugo"]{
 
 
 #ident-profile {
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#ident-profile-1 {
 	display: flex;
     justify-content: space-between;
     align-items: center;
@@ -2406,4 +2423,14 @@ label[for="hugo"]{
 }
 #my-pages .card {
 	border: none;
+}
+.search-title{
+	display:flex;
+	justify-content: flex-start;
+	align-content: flex-start;
+}
+.search-info{
+	display:flex;
+	justify-content:space-around;
+	align-content:center;
 }

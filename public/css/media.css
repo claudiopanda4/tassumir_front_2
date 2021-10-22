@@ -354,6 +354,16 @@
 	}
 }
 @media screen and (max-width: 720px) {
+	.card-p{
+		background-color: transparent;
+		
+    }
+    .profile-name-1{
+
+	font-size: 16px;
+	
+	width: 150px;
+}
 	.suggest-slide {
 		display: block;
 		margin-top: 5px;
@@ -412,6 +422,12 @@
 	    flex-direction: column;
 	    text-align: center;
 	    font-size: 16px;
+	}
+	#ident-profile-1 {
+	    flex-direction: row;
+	    text-align: center;
+	    font-size: 16px;
+	    margin-right: 4px;
 	}
 	.ul-left li.search-lg {
 		display: none;
@@ -549,5 +565,55 @@
     margin-top: 10px;
     border-radius: 10px;
     box-shadow: 0 1px 2px #00000033;
+}
+.couple-invite-icon-one{
+		background-color: #800080;
+		
+	    width: 40px;
+	    height: 40px;
+	    position: relative;
+	    
+	    padding: 20px;
+	   border-radius: 5px;
+	   
+}
+#ident-profile-1 {
+	    flex-direction: row;
+	    text-align: center;
+	    font-size: 16px;
+	    margin-right: 4px;
+	}
+	.couple-invite-icon-one {
+	background-color: #800080;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    padding: 20px;
+    border-radius: 5px;
+   
+
+}
+.circle{
+	border-radius: 50%;
+}
+.profile-name-1{
+
+	font-size: 16px;
+	
+	width: 150px;
+}
+.card-p{
+	background-color: transparent;
+	/*margin: 0 auto;
+	width: 300px;*/
+}
+
+}
+@media screen and (max-width: 720px){
+
+.card-p{
+	background-color: transparent;
+	/*margin: 0 auto;*/
+	width: 100%;
 }
 }
