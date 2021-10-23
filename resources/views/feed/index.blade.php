@@ -208,7 +208,7 @@
                             </div>
                             @endif
                         </div>
-                        <div class="comment-user-comment">
+                        <div class="comment-user-comment comment-user-comment-feed">
                             <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}">Amo muito esse casal</p>
                         </div>
                     </div>
@@ -231,7 +231,7 @@
                         @endif
                             <h2 class="text-ellips">{{$dados[$key]['nome_comment']}}</h2>
                         </div>
-                        <div class="comment-user-comment">
+                        <div class="comment-user-comment comment-user-comment-feed">
                             <p class="text-ellips">{{$dados[$key]['comment']}}</p>
                         </div>
                     </div>

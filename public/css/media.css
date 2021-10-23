@@ -358,12 +358,13 @@
 		background-color: transparent;
 		border: none;
     }
-    .profile-name-1{
-
-	font-size: 16px;
-	
-	width: 150px;
-}
+	.profile-name-1{
+		font-size: 16px;
+		width: 150px;
+	}
+	.comment-user-comment {
+		margin: 10px 5px;
+	}
 	.suggest-slide {
 		display: block;
 		margin-top: 5px;

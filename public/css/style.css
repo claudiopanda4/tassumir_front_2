@@ -2369,6 +2369,9 @@ label[for="hugo"]{
 	width: 180px;
 	display: flex;
 }
+.user-identify-comment.user-identify-comment-feed {
+	width: 130px;
+}
 .user-identify-comment .profille-img {
 	width: 28px;
 	height: 28px;
@@ -2387,7 +2390,7 @@ label[for="hugo"]{
 	display: inline-flex;
 }
 .comment-user-comment {
-	margin: 5px;
+	margin: 10px 5px;
 }
 .comment-user-comment p {
 	color: #fff;
@@ -2400,6 +2403,10 @@ label[for="hugo"]{
     background-color: #343a40;
     border-radius: 10px;
     padding-top: 5px;
+}
+.comment-user-comment.comment-user-comment-feed p {
+    max-width: 127px;
+    background-color: transparent;
 }
 .comment-user-container {
 	display: flex;
