@@ -356,7 +356,7 @@
 @media screen and (max-width: 720px) {
 	.card-p{
 		background-color: transparent;
-		
+		border: none;
     }
     .profile-name-1{
 
@@ -561,7 +561,7 @@
 	display: none;
     position: absolute;
 	background-color: #242526;
-	width: 340px;
+	width: 360px;
     height: 470px;
     padding: 20px;
     right: -90px;
@@ -607,16 +607,18 @@
 }
 .card-p{
 	background-color: transparent;
-	/*margin: 0 auto;
-	width: 300px;*/
+	margin: 0 auto;
+	/*width: 300px;*/
+	border: none;
 }
 
 }
-@media screen and (max-width: 720px){
+@media screen and (max-width: 768px){
 
 .card-p{
 	background-color: transparent;
 	/*margin: 0 auto;*/
 	width: 100%;
+	border: none;
 }
 }
