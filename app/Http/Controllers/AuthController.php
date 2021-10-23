@@ -33,6 +33,9 @@ class AuthController extends Controller
         //=================================================================
         //=========================Comecem Aqui-----------
         $dadosPage = Page::all();
+        if (sizeof($page_content) <= 0) {
+        }
+        //dd(sizeof($page_content));
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
