@@ -172,9 +172,9 @@
                     </ul>
                 </nav>
                 <div class="comment-send clearfix"  id="comment-send-{{$dados[$key]['post_id']}}">
-                  @if( !($dados[$key]['foto_conta_logada'] == null) )
+                  @if( !($conta_logada[0]->foto == null) )
                     <div class="img-user-comment l-5">
-                        <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta_logada'] }}">
+                        <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
                     </div>
                     @else
                     <div class="img-user-comment l-5">
@@ -198,9 +198,9 @@
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment">
-                          @if( !($dados[$key]['foto_conta_logada'] == null) )
+                          @if( !($conta_logada[0]->foto == null) )
                             <div class="profille-img">
-                                <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta_logada'] }}">
+                                <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
                             </div>
                             @else
                             <div class="profille-img">

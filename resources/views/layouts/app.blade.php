@@ -340,19 +340,11 @@
     </main>
     </div>
 </body>
+@if($page_current == "page")
 <?php if (true): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
-
-
-@if($page_content[0]->uuid)
-    <input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
-@endif
-
-
-<input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
-
-
+<input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">    
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
@@ -432,8 +424,42 @@
         </div>
     </div>
 </div>
-
 </form>
+
+<input type="checkbox" name="" id="target-profile-cover-page" class="invisible">
+<div class="pop-up" id="cover-profile-page">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Adicione Foto da Página</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-profile-cover">
+                    <div class="cancel-box div-img">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px;">
+            <div class="">
+                <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <?php if (sizeof($page_content)): ?>
+                        <input type="hidden" name="f" value="{{$page_content[0]->uuid}}">
+                    <?php endif ?>
+                    <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
+                    <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+                        <div class="cover-done" id="cover-done">
+                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 <?php endif ?>
 <?php if (true): ?>
 <input type="checkbox" name="" id="target-profile-cover" class="invisible">
@@ -454,39 +480,6 @@
             <div class="">
                 <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
-                    <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-                        <div class="cover-done" id="cover-done">
-                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<?php endif ?>
-<?php if (true): ?>
-<input type="checkbox" name="" id="target-profile-cover-page" class="invisible">
-<div class="pop-up" id="cover-profile-page">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
-        <header class="pop-up-component-header pop-up-component-header-default header-height">
-            <h1>Adicione Foto da Página</h1>
-            <div class="container-pop-up-component-header">
-                <label for="target-profile-cover">
-                    <div class="cancel-box div-img">
-                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
-                    </div>
-                </label>
-            </div>
-        </header>
-        <div class="header-height"></div>
-        <div style="margin-top: 15px; margin-bottom: 10px;">
-            <div class="">
-                <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="f" value="{{$page_content[0]->uuid}}">
                     <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
@@ -692,12 +685,12 @@
             $('#comment-send-' + id_final).css({
                 display : 'block',
             });
-        })
+        });
 
         $('.follwing-btn follwing-btn-pop-up').click(function(e){
             e.preventDefault();
 
-        })
+        });
     });
 
 </script>
