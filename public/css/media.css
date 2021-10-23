@@ -532,7 +532,7 @@
 	.user-identify-comment {
 	    width: 230px;
 	}
-	.user-identify-comment.user-identify-comment {
+	.user-identify-comment.user-identify-comment-feed {
 	    width: 127px;
 	}
 }
