@@ -197,7 +197,7 @@
                 </div>
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container">
-                        <div class="user-identify-comment">
+                        <div class="user-identify-comment user-identify-comment-feed">
                           @if( !($conta_logada[0]->foto == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
@@ -219,7 +219,7 @@
         <?php if ($dados[$key]['qtd_comment']>0): ?>
           <div class="comment-users" id="comment-users-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container" >
-                        <div class="user-identify-comment">
+                        <div class="user-identify-comment user-identify-comment-feed">
                             @if( !($dados[$key]['foto_conta'] == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">

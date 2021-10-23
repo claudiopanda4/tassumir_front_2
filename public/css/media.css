@@ -478,7 +478,7 @@
 	    width: 100%;
 	}
 	.user-identify-comment {
-	    width: 153px;
+	    width: 230px;
 	}
 	.comment-send-text {
 	    width: 77%;
@@ -529,7 +529,10 @@
 		width: 290px;
 	}
 	.user-identify-comment {
-	    width: 118px;
+	    width: 230px;
+	}
+	.user-identify-comment.user-identify-comment {
+	    width: 127px;
 	}
 }
 @media screen and (max-width: 328px){
