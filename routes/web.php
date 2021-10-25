@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     })->middleware('auth:web1');
     Route::get('/like', [App\Http\Controllers\AuthController::class, 'like'])->name('like');
     Route::get('/seguir', [App\Http\Controllers\AuthController::class, 'seguir'])->name('seguir');
+    Route::get('/oque_estao_falando', [App\Http\Controllers\AuthController::class, 'oque_estao_falando'])->name('oque_estao_falando');
     Route::get('/delete_post', [App\Http\Controllers\AuthController::class, 'delete_post'])->name('delete_post');
     Route::get('/ocultar_post', [App\Http\Controllers\AuthController::class, 'ocultar_post'])->name('ocultar_post');
     Route::get('/post_index/{id}', [App\Http\Controllers\AuthController::class, 'post_index'])->name('post_index');
@@ -37,9 +38,9 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/my_pages/', [App\Http\Controllers\PaginaCasalController::class, 'my_pages'])->name('couple.page.mine');
     Route::get('/posts/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'post'])->name('couple.page.post');
     Route::post('/couple_post/', [App\Http\Controllers\PaginaCasalController::class, 'store_post'])->name('post_couple.page');
-    
+
     Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
-    
+
     Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::class, 'edit_couple'])->name('edit_couple.page');
     Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
     Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');
