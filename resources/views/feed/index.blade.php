@@ -115,7 +115,7 @@
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
                         <div class="video-post">
-                            <video controls
+                            <video controls>
                                 <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -190,7 +190,7 @@
                     </div>
                     @else
                     <div class="img-user-comment l-5">
-                        <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                        <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                     </div>
                       @endif
                     <div class="input-text comment-send-text l-5 clearfix">
@@ -216,7 +216,7 @@
                             </div>
                             @else
                             <div class="profille-img">
-                              <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                              <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
                             @endif
                         </div>
@@ -238,7 +238,7 @@
                             </div>
                             @else
                             <div class="profille-img">
-                                  <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                                  <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
                         @endif
                             <h2 class="text-ellips">{{$dados[$key]['nome_comment']}}</h2>

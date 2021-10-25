@@ -152,9 +152,9 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="l-5 mobile-hidden">
+                    <!--<li class="l-5 mobile-hidden">
                         <a href=""><i class="fas fa-shield-alt fa-24"></i></a>
-                    </li>
+                    </li>-->s
                     <li class="user-tassumir clearfix l-5">
                         @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
                             <a href="{{route('account.profile')}}"><i class="far fa-user-circle fa-24 l-5" id="imgless"></i></a>
