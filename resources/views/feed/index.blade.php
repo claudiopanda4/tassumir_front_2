@@ -103,7 +103,7 @@
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
                         <div class="video-post">
-                            <video controls
+                            <video controls>
                                 <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>

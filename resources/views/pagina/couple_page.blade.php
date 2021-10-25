@@ -211,17 +211,57 @@
         <div class="card br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">
                 <ul class="">
-                    <li><a href=""><i class="far fa-images fas-32 center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
-                    <li><a href=""><i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
-                    <li><a href=""><i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                    <li><a href="?post-container-post=images"><i class="far fa-images fas-32 center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                    <li><a href="?post-container-post=video"><i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                    <li><a href="?post-container-post=post"><i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
                 </ul>
             </nav>
-            <div class="saved-container">
-                
+            <?php 
+                $posts = [
+                    [],[],[],
+                    [],[],[],
+                    [],[],[],
+                    [],[],[],
+                ];
+            ?>
+            <?php if (isset($_GET['post-container-post'])): ?>
+                <?php if ($_GET['post-container-post'] == 'post'): ?>
+                <div class="post-img-container-page post-page-container">
+                    <?php foreach ($posts as $key => $value): ?>
+                    
+                    <?php endforeach ?>
+                </div>
+                <?php endif ?>
+                <?php if ($_GET['post-container-post'] == 'video'): ?>
+                <div class="post-video-container-page post-page-container">
+                    <?php foreach ($posts as $key => $value): ?>
+                    <div class="img-post">
+                        <video> 
+                            <source src="{{asset('storage/video/page/gilmariovemba - 7022207987552931078.mp4')}}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <?php endforeach ?>
+                </div>
+                <?php endif ?>
+                <?php if ($_GET['post-container-post'] == 'images'): ?>
+                <div class="post-img-container-page post-page-container">
+                    <?php foreach ($posts as $key => $value): ?>
+                    <div class="img-post">
+                        <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full">
+                    </div>
+                    <?php endforeach ?>
+                </div>
+                <?php endif ?>
+            <?php else: ?>
+            <div class="post-img-container-page post-page-container">
+                <?php foreach ($posts as $key => $value): ?>
+                <div class="img-post">
+                    <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full">
+                </div>
+                <?php endforeach ?>
             </div>
-            <div class="invited-container">
-                
-            </div>
+            <?php endif ?>
         </div>
     </div>
 </div>
