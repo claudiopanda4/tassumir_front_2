@@ -2368,6 +2368,9 @@ label[for="hugo"]{
 	width: 180px;
 	display: flex;
 }
+.user-identify-comment.user-identify-comment-feed {
+	width: 130px;
+}
 .user-identify-comment .profille-img {
 	width: 28px;
 	height: 28px;
@@ -2386,15 +2389,23 @@ label[for="hugo"]{
 	display: inline-flex;
 }
 .comment-user-comment {
-	
+	margin: 10px 5px;
 }
 .comment-user-comment p {
 	color: #fff;
-	font-size: 11px;
-	padding: 7px;
-	display: inline-flex;
-	width: 130px;
+    font-size: 12px;
+    padding: 7px;
+    display: inline-flex;
+    width: auto;
+    max-width: 170px;
     padding-top: 14px;
+    background-color: #343a40;
+    border-radius: 10px;
+    padding-top: 5px;
+}
+.comment-user-comment.comment-user-comment-feed p {
+    max-width: 127px;
+    background-color: transparent;
 }
 .comment-user-container {
 	display: flex;

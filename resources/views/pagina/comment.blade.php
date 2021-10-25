@@ -16,7 +16,7 @@
                           </div>
                       @endif
                         <div class="page-identify l-5 clearfix">
-                            <a href="http://127.0.0.1:8000/couple_page/3e55d378-305f-403d-b996-ae3dac4f754b"><h1 class="text-ellips">{{$dados[0]['nome_pag']}}</h1></a>
+                            <a href="http://127.0.0.1:8000/couple_page/3e55d378-305f-403d-b996-ae3dac4f754b"><h1 class="">{{$dados[0]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
                                 <span class="time-posted l-5">50 min</span><div id="seguir"><?php if ($dados[0]['seguir_S/N'] == 0): ?>
                                   <a href="" class="seguir-a r-5" id="{{$dados[0]['page_id']}}">seguir</a>
@@ -169,7 +169,7 @@
                             @endif
                         </div>
                         <div class="comment-user-comment">
-                            <p class="text-ellips" id="comment-own-{{$dados[0]['post_id']}}">Amo muito esse casal</p>
+                            <p class="" id="comment-own-{{$dados[0]['post_id']}}">Amo muito esse casal</p>
                         </div>
                     </div>
                     <div class="comment-user-container comment-user-container-react">
@@ -193,7 +193,7 @@
                                   </div>
                               @endif
                                 <div class="comment-user-comment">
-                                    <p class="text-ellips">{{$value->comment}}</p>
+                                    <p class="">{{$value->comment}}</p>
                                 </div>
                               </div>
                             </div>
