@@ -1187,8 +1187,7 @@ label[for="hugo"]{
 }
 
 .change-look span:hover{
-
-	text-decoration: none;
+    text-decoration: none;
 	cursor: pointer;
 }
 .more-option-post-n a {
