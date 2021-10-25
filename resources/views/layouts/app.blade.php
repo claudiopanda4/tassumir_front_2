@@ -70,11 +70,11 @@
                                     <div class="ml-2 novi-div-image">
 
                                          <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                         
-                                        
+
+
                                     </div>
                                     <div class="noti-div-name">
-                                    
+
                                     <span class="noti-span">Delton Agostinho, gostou a foto do casal Panda </span>
 
                                     <div class="noti-hour ml-2">
@@ -82,7 +82,7 @@
                                     </div>
 
                                    </div>
-                  
+
                                 </li>
 
                                 <li class="change-look noti-flex-info" >
@@ -90,11 +90,11 @@
                                     <div class="ml-2 novi-div-image">
 
                                          <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                         
-                                        
+
+
                                     </div>
                                     <div class="noti-div-name">
-                                    
+
                                     <span class="noti-span">Delton Agostinho, gostou a foto do casal Panda </span>
 
                                     <div class="noti-hour ml-2">
@@ -102,7 +102,7 @@
                                     </div>
 
                                    </div>
-                  
+
                                 </li>
 
 
@@ -117,24 +117,24 @@
                                 <li class="change-look noti-flex-info" >
 
                                 <div class="noti-flex-info">
-                                    
+
                                     <div class="ml-2 novi-div-image">
 
                                          <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                         
-                                        
+
+
                                     </div>
                                     <div class="noti-div-name ">
-                                        
+
                                         <span class="noti-span">Delton Agostinho, fez-te um pedido de relacionamento </span>
                                         <div class="noti-hour">
                                             <a href=""><span class="">há um dia</span></a>
                                         </div>
                                         <div class="noti-hour-1 mt-2">
                                             <button class="noti-btn-aceitar-1">Aceitar</button>
-                                            
+
                                             <button class="noti-btn-rejeitar">Rejeitar</button>
-                                            
+
                                         </div>
                                     </div>
 
@@ -206,14 +206,14 @@
                                <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
                 @forelse($dadosPage as $Paginas)
                 <?php
-                $seguidors = 0; 
-                foreach ($dadosSeguida as  $val){ 
+                $seguidors = 0;
+                foreach ($dadosSeguida as  $val){
                         if ($val->id == $Paginas->page_id) {
                             $seguidors += 1;
                         }
                     }
                 ?>
-                
+
                     @forelse($dadosSeguida as $Seguida)
                         <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
                         <li class="li-component-aside-right clearfix">
@@ -225,14 +225,14 @@
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                             </div>
-                        @endif                            
+                        @endif
                             <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                             <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
-                           <?php 
+                           <?php
                            echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";?>
                         </li>
                         <?php endif ?>
-                    @empty   
+                    @empty
                     @endforelse
                 @empty
                 <li class="li-component-aside-right clearfix">
@@ -261,26 +261,26 @@
                  $seguidors = 0;
                  $tamanho = 0;
                  ?>
-                <?php                
-                foreach ($dadosSeguida as  $val){ 
+                <?php
+                foreach ($dadosSeguida as  $val){
                         if ($val->id == $Paginas->page_id) {
                             $seguidors += 1;
-                            
+
                         }
                     }
-                ?>               
+                ?>
                 @forelse($dadosSeguida as $Seguida)
-               <?php $tamanho = sizeof($dadosSeguida);?> 
+               <?php $tamanho = sizeof($dadosSeguida);?>
                 <?php if ($Paginas->page_id == $Seguida->id) : ?>
                         <?php if ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo) : ?>
                                 <?php $verifica1 = $Paginas->nome;?>
                             <?php else: ?>
                                 <?php $verifica = $Paginas->nome;?>
-                            <?php endif ?> 
-                 <?php else: ?>                        
-                      <?php $conta_page += 1;?>     
+                            <?php endif ?>
+                 <?php else: ?>
+                      <?php $conta_page += 1;?>
                 <?php endif ?>
-                    @empty   
+                    @empty
                     @endforelse
                     <?php if (($verifica1 != $verifica)  ) : ?>
                         <?php if (($verifica != 'B')  ) : ?>
@@ -296,13 +296,13 @@
                         @endif
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
-                      <?php  echo"  
+                      <?php  echo"
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 ?>
-                            </li>  
-                            <?php endif ?>                       
+                            </li>
+                            <?php endif ?>
                     <?php else: ?>
-                               
+
                     <?php endif ?>
                     <?php if (($conta_page == $tamanho)  ) : ?>
                         <li class="li-component-aside-right clearfix">
@@ -317,12 +317,12 @@
                         @endif
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
-                      <?php  echo"  
+                      <?php  echo"
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 ?>
-                            </li>                       
+                            </li>
                     <?php else: ?>
-                             
+
                     <?php endif ?>
                 @empty
                 <li class="li-component-aside-right clearfix">
@@ -344,7 +344,7 @@
 <?php if (true): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
-<input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">    
+<input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
@@ -519,16 +519,8 @@
                         </div>
                     </label>
                     <input type="checkbox" name="" id="relationship-type-target" class="invisible">
-                    <div class="relationship-type-all" id="relationship-type-container">
-                        <label for="relationship-type-target">
-                            <h2 id="relationship-type-all-1" class="relationship-type-component">Namoro</h2>
-                        </label>
-                        <label for="relationship-type-target">
-                            <h2 id="relationship-type-all-1" class="relationship-type-component">Noivado</h2>
-                        </label>
-                        <label for="relationship-type-target">
-                            <h2 id="relationship-type-all-1" class="relationship-type-component">Casamento</h2>
-                        </label>
+                    <div class="relationship-type-all" id="relationship-type-container" name="relationship-type-container">
+
                     </div>
                     <div class="justify-content-start marriage-proposal" style="margin-bottom: 10px;">
                         <span class="text-white">Caso seja aceite, qual nome da Página de casal, gostaria de usar? (Pode ser editado...).</span>
@@ -568,6 +560,35 @@
               document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
           }
       });
+
+      function tipos(){
+
+        $.ajax({
+          url: "{{ route('tipos')}}",
+          type: 'get',
+          dataType: 'json',
+          success:function(response){
+            var tipo='';
+            var a=0;
+            console.log(response);
+            $.each(response, function(key, value){
+              if(a==0){
+              tipo+='<div class="relationship-type-all" id="relationship-type-container">'
+            }
+              tipo+=   ' <label for="relationship-type-target">'
+              tipo+=        '<h2 id="value.tipo_relacionamento" class="relationship-type-component">'+value.tipo_relacionamento+'</h2>'
+              tipo+=   ' </label>'
+              tipo+=  '</div>'
+
+             a++;
+            })
+            $('div[name=relationship-type-container]').append(tipo);
+            }
+          });
+
+      }
+
+
 
       $('.seguir-a').click(function (e) {
           e.preventDefault();
@@ -611,8 +632,9 @@
       });
 
       $('.relationship-type-component').click(function(e){
-            $('#relationship-selected-type').text($('#' + e.target.id).text());
-            $('#relationship-type-selected').val(e.target.id.split('-')[3]);
+        alert('qualquer')
+          /*  $('#relationship-selected-type').text("cheguei aq");
+            $('#relationship-type-selected').val(e.target.id.split('-')[3]);*/
       });
       $('#genre-id').val($("input[name='genre']:checked").val());
       $('.genre-class').click(function(){
@@ -673,6 +695,7 @@
             });
         });
         $('.follwing-btn-pop-up').click(function(){
+          tipos();
             $('#invited-relationship').css({
                 opacity: 1,
                 zIndex: 1000
@@ -687,11 +710,9 @@
             });
         });
 
-        $('.follwing-btn follwing-btn-pop-up').click(function(e){
-            e.preventDefault();
 
-        });
     });
+
 
 </script>
 </html>

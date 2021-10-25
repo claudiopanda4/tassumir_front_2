@@ -15,23 +15,35 @@
             </header>
             <nav>
                 <ul class="clearfix">
-                    <?php
-                    $about_talking = [
-                        [],[],[],[],[],
-                    ];
-                    foreach ($about_talking as $key => $value): ?>
+
+
+                  @for ($i=0; $i< sizeof($what_are_talking); $i++)
+
                         <li class="li-component-stories l-5">
                             <a href="">
                                 <div class="identify-cover circle">
-                                    <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                                @if( !($what_are_talking[$i]['foto_page'] == null) )
+                                        <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
+                                @else
+                                        <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                @endif
                                 </div>
+                                <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
+                                    <img class="img-back-stories center" src="{{asset('storage/img/page/') . '/' . $what_are_talking[$i]['file']}}">
+                              <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>
+                                    <video controls
+                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
+                                    </video>
+                                <?php else: ?>
                                 <img class="img-back-stories center" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                <?php endif ?>
                                 <div class="headline">
-                                    <h2 class="center">Yola Araújo oferece presente de 1 ano de...</h2>
+                                    <h2 class="center">{{$what_are_talking[$i]['post']}}</h2>
                                 </div>
                             </a>
                         </li>
-                    <?php endforeach ?>
+
+                    @endfor
                     <div class="see-all-stories circle">
                         <a href="">
                             <i class="fas fa-arrow-right fa-16 center"></i>

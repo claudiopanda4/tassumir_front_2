@@ -26,13 +26,13 @@
         <div><?php if ($account_name[0]->uuid != $conta_logada[0]->uuid ): ?>
             <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
                 <label for="target-invited-relationship" style="width: 100%;">
-                    <div class="follwing-btn follwing-btn-pop-up">
+                    <div class="follwing-btn follwing-btn-pop-up" >
                         <h2>Assumir</h2>
                     </div>
                 </label>
                 <?php if (false): ?>
                     <label for="target-invited-relationship">
-                        <button type="submit" class="follwing-btn follwing-btn-pop-up">
+                        <button type="submit" class="follwing-btn follwing-btn-pop-up " id="btnteste">
                             Assumir
                         </button>
                     </label>
