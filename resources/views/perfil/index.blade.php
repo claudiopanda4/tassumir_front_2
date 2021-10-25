@@ -61,70 +61,61 @@
         </div>
     </div>
 </header>
-<div class="card br-10">
-    <?php if (false): ?>
-    <nav class="option-profile-menu">
-        <ul class="">
-            <li><a href=""><i class="fas fa-bookmark fa-15"></i><h1 class="menu-option-profile">Guardados</h1></a></li>
-            <?php if (false): ?>
-                <li><a href=""><i class="fas fa-ring fa-15"></i><h1 class="menu-option-profile">Pedidos</h1></a></li>
-            <?php endif ?>
-            <li><a href=""><i class="fas fa-eye fa-15"></i><h1 class="menu-option-profile">Seguindo</h1></a></li>
-            <li><a href=""><i class="fas fa-heart fa-15"></i><h1 class="menu-option-profile">Curtindo</h1></a></li>
-        </ul>
-    </nav>
-    <?php endif ?>
-
-    <nav class="option-profile-menu">
-        <ul class="">
-            <li><a href=""><i class="far fa-images fas-32 center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
-            <li><a href=""><i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
-            <li><a href=""><i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
-        </ul>
-    </nav>
-    <div class="invited-container">
-
-    </div>
-    <div class="saved-container">
-
-    </div>
-    <div class="invited-container">
-
-    </div>
-    <?php if (false): ?>
-    <div class="couple-page-container">
-        <div class="card br-10 card-page-maried">
-            <div id="" class="page-married">
-                <div class="img-profile-user-married">
-                    <img class="img-profile img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
-                    <div>
-                        <h2 class="text-ellips">Delton Agostinho</h2>
+<div class="card br-10 card-page" id="card-profile-option">
+            <nav class="option-profile-menu">
+                <ul class="">
+                    <li><a href="?post-container-post=images"><i class="far fa-images fas-32 center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                    <li><a href="?post-container-post=video"><i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                    <li><a href="?post-container-post=post"><i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                </ul>
+            </nav>
+            <?php 
+                $posts = [
+                    [],[],[],
+                    [],[],[],
+                    [],[],[],
+                    [],[],[],
+                ];
+            ?>
+            <?php if (isset($_GET['post-container-post'])): ?>
+                <?php if ($_GET['post-container-post'] == 'post'): ?>
+                <div class="post-img-container-page post-page-container">
+                    <?php foreach ($posts as $key => $value): ?>
+                    
+                    <?php endforeach ?>
+                </div>
+                <?php endif ?>
+                <?php if ($_GET['post-container-post'] == 'video'): ?>
+                <div class="post-video-container-page post-page-container">
+                    <?php foreach ($posts as $key => $value): ?>
+                    <div class="img-post">
+                        <video> 
+                            <source src="{{asset('storage/video/page/gilmariovemba - 7022207987552931078.mp4')}}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
+                    <?php endforeach ?>
                 </div>
-                <div class="identify-statist-profile-page">
-                    <h1 style="margin-top: 15px;">Página do Casal</h1>
-                    <ul>
-                        <li class="text-ellips">20 seguidores</li>
-                        <li class="text-ellips">50 publicações</li>
-                    </ul>
-                    <a href="">
-                        <div class="see-page-container">
-                            <i class="fas fa-eye fa-16"></i><h1 id="see-page">Ver</h1>
-                        </div>
-                    </a>
-                </div>
-                <div class="img-profile-user-married">
-                    <img class="img-profile img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
-                    <div>
-                        <h3 class="text-ellips">Ana Joyce</h3>
+                <?php endif ?>
+                <?php if ($_GET['post-container-post'] == 'images'): ?>
+                <div class="post-img-container-page post-page-container">
+                    <?php foreach ($posts as $key => $value): ?>
+                    <div class="img-post">
+                        <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full">
                     </div>
+                    <?php endforeach ?>
                 </div>
+                <?php endif ?>
+            <?php else: ?>
+            <div class="post-img-container-page post-page-container">
+                <?php foreach ($posts as $key => $value): ?>
+                <div class="img-post">
+                    <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full">
+                </div>
+                <?php endforeach ?>
             </div>
+            <?php endif ?>
         </div>
-    </div>
-    <?php endif ?>
-
-</div>
 <div>
     <a href="">
         <div class="container-logout">
