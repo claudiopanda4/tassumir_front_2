@@ -633,8 +633,8 @@
 
       $('.relationship-type-component').click(function(e){
         alert('qualquer')
-          /*  $('#relationship-selected-type').text("cheguei aq");
-            $('#relationship-type-selected').val(e.target.id.split('-')[3]);*/
+           $('#relationship-selected-type').text("cheguei aq");
+            $('#relationship-type-selected').val(e.target.id.split('-')[3]);
       });
       $('#genre-id').val($("input[name='genre']:checked").val());
       $('.genre-class').click(function(){
