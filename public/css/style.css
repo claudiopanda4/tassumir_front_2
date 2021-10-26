@@ -2264,6 +2264,7 @@ label[for="hugo"]{
     text-align: center;
     border: 1px solid #606060;
     display: none;
+    margin-top: 10px;
 }
 .fa-15 {
 	font-size: 15px;
