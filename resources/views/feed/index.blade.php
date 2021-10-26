@@ -18,7 +18,7 @@
 
 
                   @for ($i=0; $i< sizeof($what_are_talking); $i++)
-
+                    @if($i < 5)
                         <li class="li-component-stories l-5">
                             <a href="">
                                 <div class="identify-cover circle">
@@ -42,7 +42,7 @@
                                 </div>
                             </a>
                         </li>
-
+                    @endif
                     @endfor
                     <div class="see-all-stories circle">
                         <a href="">
@@ -108,7 +108,12 @@
                 </header>
                 <div class="card-post">
                     <div class="">
-                        <p>{{$dados[$key]['post']}}</p>
+                        @if($dados[$key]['post'] == "" || $dados[$key]['post'] == null 
+                        || $dados[$key]['post'] == " " || $dados[$key]['post'] == "null")
+                            <p class="untext"></p>
+                        @else
+                            <p>{{$dados[$key]['post']}}</p>
+                        @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
                         <div class="post-cover">
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">

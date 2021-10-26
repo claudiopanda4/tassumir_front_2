@@ -25,7 +25,8 @@
         <?php if (false): ?>
             <h1 class="profile-name">@_{{$account_name[0]->nome}}_{{$account_name[0]->apelido}}</h1>
         <?php endif ?>
-            <div><?php if ($account_name[0]->uuid != $conta_logada[0]->uuid ): ?>
+            <div>
+            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid ): ?>
             <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
                 <label for="target-invited-relationship" style="width: 100%;">
                     <div class="follwing-btn follwing-btn-pop-up" >
@@ -43,18 +44,25 @@
             <?php endif; ?>
             <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
 
-            <div class="options-profile-btn">
+            <div class="options-profile-btn options-profile-btn-center profile-item-center">
                 <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
             </div>
+            <?php else: ?>
+                <div class="options-profile-btn">
+                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
+                </div>
+            <?php endif; ?>
         </div>
-
-        <ul class="profile-follow">
+        <ul class="profile-follow profile-item-center">
             <li class="statistics-profile">
                 <h2>Seguindo {{$perfil[0]['qtd_ps']}}</h2>
                 <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
             </li>
+            <li class="statistics-profile">
+                <h2>Curtiu {{$perfil[0]['qtd_ps']}}</h2>
+                <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+            </li>
         </ul>
-                    <?php endif; ?>
         <div class="inform-profile">
             <h3>Namorado de <span>Ana Joyce</span></h3>
         </div>

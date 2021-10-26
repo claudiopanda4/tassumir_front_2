@@ -1218,6 +1218,7 @@ label[for="hugo"]{
 .last-component {
 	position: relative;
 	margin-right: 15px;
+	margin-top: 15px;
 }
 .last-component-n {
 	position: relative;
@@ -1441,8 +1442,8 @@ label[for="hugo"]{
 	border-radius: 10px;
 }
 .stories-about-talking nav ul li .img-back-stories {
-	max-width: 178px;
-	max-height: 178px;
+	width: 200px;
+	height:200px;
 }
 .stories-about-talking header h1 {
 	color: #fff;
@@ -1746,11 +1747,11 @@ label[for="hugo"]{
 }
 
 .statistics-profile {
-	display: flex;
+	display: inline-flex;
     justify-content: space-between;
-    padding-left: 0px;
-    padding-top: 10px;
-    font-size: 15px;
+    font-size: 17px;
+    padding: 10px;
+    width: 47.5%;
 }
 .statistics-profile h2 {
 	color: #efefef;
@@ -2282,6 +2283,15 @@ label[for="hugo"]{
 	width: 48%;
 	margin-left: 5px;
 }
+.options-profile-btn-center {
+	display: block;
+	margin: auto;
+	width: 60%;
+}
+.options-profile-btn-center .edit-profile-mobile{
+	background-color: #800080;
+	border: none;
+}
 .options-profile-btn a {
 	width: 100%;
 }
@@ -2474,4 +2484,7 @@ label[for="hugo"]{
 }
 .unliked {
 
+}
+.card-post p.untext {
+	padding: 0;
 }
