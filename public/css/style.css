@@ -916,7 +916,7 @@ label[for="hugo"]{
 }
 .aside header h1 {
 	color: #fff;
-	font-size: 16px;
+	font-size: 14px;
 }
 .aside ul li h1 {
 	color: #fff;
@@ -932,6 +932,8 @@ label[for="hugo"]{
 .aside nav footer a {
 	color: #efefef;
 	margin-top: 0;
+	font-size: 12px;
+	margin: 10px auto;
 }
 .img-full {
 	position: absolute;
@@ -1509,6 +1511,7 @@ label[for="hugo"]{
 	color: #fff;
 	font-size: 14px;
 	padding: 10px;
+    text-align: left;
 }
 .suggest-slide .name-suggest {
 	font-size: 13px;

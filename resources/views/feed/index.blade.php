@@ -247,7 +247,7 @@
             </div>
         </div>
       <?php endif; ?>
-        <?php if ($key == 2): ?>
+        <?php if ($key == 3 || $key == 7): ?>
                 <section class="suggest-slide">
                     <header>
                         <h1>Sugestões pra você</h1>

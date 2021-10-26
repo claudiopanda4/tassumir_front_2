@@ -35,6 +35,7 @@
 	}
 	.edit-profile-mobile {
 		display: block;
+		margin-top: 10px;
 	}
 	.edit-page-container {
 		display: none;
@@ -495,9 +496,13 @@
 		width: 100%;
 	}
 }
-@media screen and (min-width: 1240px) {
+@media screen and (min-width: 1540px) {
 	.main {
 		width: 650px;
+	}
+	.card {
+	    width: 90%;
+	    margin: 10px auto 0;
 	}
 	.post {
 	    width: 100%;
