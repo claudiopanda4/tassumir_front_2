@@ -1,11 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="card br-10 " style="height:380px;">
-
+<div class="main" style="margin-bottom: 15px;">
+    <div class="card br-10 " style="height:auto; margin: 15px auto 25px;">
     <header class="noti-flex-1">
-
             <div class="noti-div-title">
              <h3 class="noti-title">Notificações</h3>
             </div>
@@ -13,17 +11,12 @@
             <div class="noti-div-elipsis">
             <i class="fas fa-ellipsis-h fa-18 fa-option "></i>
             </div>
-
     </header>
-
     <div class="noti-flex mt-2">
-
         <div class="noti-div-subtitle">
             <h4 class="noti-subtitle">Novas</h4>
         </div>
-        
     </div>
-
     <div class="noti-flex-info mt-2">
         
         <div class="ml-2 novi-div-image">
@@ -42,7 +35,7 @@
 
     </div>
 
-    <div class="noti-flex-info mt-2">
+    <div class="noti-flex-info">
         
         <div class="ml-2 novi-div-image">
 
@@ -86,7 +79,7 @@
             <div class="noti-hour">
                 <a href=""><span class="">há um dia</span></a>
             </div>
-            <div class="noti-hour-1 mt-2">
+            <div class="noti-hour-1">
                 <a href="" class="noti-btn-aceitar"><span class="">Aceitar</span></a>
                 <a href="" class="noti-btn-rejeitar"><span class="">Rejeitar</span></a>
             </div>
@@ -97,5 +90,5 @@
 
     
 </div>
-
+</div>
 @stop
