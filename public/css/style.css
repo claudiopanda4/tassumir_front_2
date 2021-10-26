@@ -1189,8 +1189,7 @@ label[for="hugo"]{
 }
 
 .change-look span:hover{
-
-	text-decoration: none;
+    text-decoration: none;
 	cursor: pointer;
 }
 .more-option-post-n a {
@@ -1375,8 +1374,10 @@ label[for="hugo"]{
 	margin-left: 15px;
 }
 .comment-send {
-	margin-top: 10px;
-	margin-bottom: 10px;
+	width: 90%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .comment-send-couple {
 	margin-top: 10px;
@@ -1438,6 +1439,10 @@ label[for="hugo"]{
 .stories-about-talking nav ul li .img-back-stories,
 .stories-about-talking nav ul li {
 	border-radius: 10px;
+}
+.stories-about-talking nav ul li .img-back-stories {
+	max-width: 178px;
+	max-height: 178px;
 }
 .stories-about-talking header h1 {
 	color: #fff;
@@ -2369,7 +2374,7 @@ label[for="hugo"]{
 .user-identify-comment {
 	padding-left: 10px;
     padding-top: 7px;
-	width: 180px;
+	width: 220px;
 	display: flex;
 }
 .user-identify-comment.user-identify-comment-feed {
@@ -2447,4 +2452,26 @@ label[for="hugo"]{
 	display:flex;
 	justify-content:space-around;
 	align-content:center;
+}
+.post-page-container {
+	margin: 15px 20px 20px;
+}
+.img-post {
+	position: relative;
+	width: 32%;
+	height: 170px;
+	display: inline-block;
+	margin-top: -3px;
+
+}
+.img-post video {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+}
+.liked {
+	color: red;
+}
+.unliked {
+
 }
