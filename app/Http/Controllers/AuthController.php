@@ -32,7 +32,6 @@ class AuthController extends Controller
         $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
         $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
 
-
         //=================================================================
         //=========================Comecem Aqui-----------
         $dadosPage = Page::all();
@@ -84,6 +83,8 @@ class AuthController extends Controller
       foreach ($post as $key) {
 
         $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$page[$key->page_id - 1]->page_id, 2 ]);
+
+        //dd($aux);
         $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
         if (sizeof($aux1) > 0 && sizeof($aux) > 0) {
             $seguidor = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux[0]->identificador_id, $aux1[0]->identificador_id]);
@@ -92,6 +93,10 @@ class AuthController extends Controller
         }
 
         $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
+        $like_verify = DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
+        $liked = sizeof($like_verify) > 0 ? true : false;
+
+        //dd($likes);
         $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
         $guardado= DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$key->post_id,  $account_name[0]->conta_id]);
 

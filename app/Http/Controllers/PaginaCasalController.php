@@ -384,6 +384,9 @@ class PaginaCasalController extends Controller
         try {
             $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
             //dd($uuid);
+            if($description == null || $description == ""){
+                $description = "";
+            }
             DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id, estado_post_id) values(?, ?, ?, ?, ?, ?)',
                 [$uuid, $description, $file_name, $id, $format, 1]);
         } catch (Exception $e) {

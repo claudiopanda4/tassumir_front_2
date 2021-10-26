@@ -11,14 +11,14 @@
 </header>
 <header class="card br-10 stories stories-about-talking" id="stories-card">
             <header>
-                <h1>O que estão falando...</h1>
+                <h1>O que estão bombando...</h1>
             </header>
             <nav>
                 <ul class="clearfix">
 
 
                   @for ($i=0; $i< sizeof($what_are_talking); $i++)
-
+                    @if($i < 5)
                         <li class="li-component-stories l-5">
                             <a href="">
                                 <div class="identify-cover circle">
@@ -42,7 +42,7 @@
                                 </div>
                             </a>
                         </li>
-
+                    @endif
                     @endfor
                     <div class="see-all-stories circle">
                         <a href="">
@@ -78,7 +78,7 @@
                     </div>
                     <div class="last-component clearfix r-5">
                         <label for=<?php echo "more-option-".$key; ?>>
-                            <i class="fas fa-ellipsis-h fa-15 fa-option"></i>
+                            <i class="fas fa-ellipsis-h fa-14 fa-option"></i>
                         </label>
                         <input type="checkbox" name="" id=<?php echo "more-option-".$key; ?> class="hidden">
                         <ul class="clearfix more-option-post">
@@ -108,7 +108,12 @@
                 </header>
                 <div class="card-post">
                     <div class="">
-                        <p>{{$dados[$key]['post']}}</p>
+                        @if($dados[$key]['post'] == "" || $dados[$key]['post'] == null 
+                        || $dados[$key]['post'] == " " || $dados[$key]['post'] == "null")
+                            <p class="untext"></p>
+                        @else
+                            <p>{{$dados[$key]['post']}}</p>
+                        @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
                         <div class="post-cover">
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
@@ -142,17 +147,15 @@
                     <ul class="row clearfix ul-interaction-user">
                         <li class="l-5">
                             <div class="content-button">
-                              <?php if ($dados[$key]['reagir_S/N'] == 0): ?>
                                 <a href="" class="like-a" id="on-{{$dados[$key]['post_id']}}">
-                                    <i class="far fa-heart center fa-16" id="on-{{$dados[$key]['post_id']}}-i"></i>
+                                    @if($dados[$key]['reagir_S/N'] > 0)
+                                    <i class="fas fa-heart center fa-16 liked" id="on-{{$dados[$key]['post_id']}}-i"></i>
                                     <h2 id="on-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    @else
+                                    <i class="far fa-heart center fa-16 unliked" id="off-{{$dados[$key]['post_id']}}-i"></i>
+                                    <h2 id="off-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    @endif
                                 </a>
-                                <?php else: ?>
-                                  <a href="" class="like-a" id="off-{{$dados[$key]['post_id']}}">
-                                      <i class="far fa-heart center fa-16" id="off-{{$dados[$key]['post_id']}}-i"></i>
-                                      <h2 id="off-{{$dados[$key]['post_id']}}-h2">Like</h2>
-                                  </a>
-                                  <?php endif; ?>
                             </div>
                         </li>
                         <li class="l-5">
@@ -200,11 +203,14 @@
                                 <i class="far fa-paper-plane fa-20 fa-img-comment" id="{{$dados[$key]['post_id']}}"></i>
                             </a>
                         </div>
+                        <?php if (false): ?>
                         <div class="r-5 " id="">
                             <a href="">
                                 <i class="far fa-images fa-20 fa-img-comment"></i>
                             </a>
                         </div>
+                        <?php endif ?>
+                        
                     </div>
                 </div>
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
@@ -248,8 +254,12 @@
                         </div>
                     </div>
                       <div class="comment-user-container comment-user-container-react">
-                        <a href="" class="comments_like" id="on-{{$dados[$key]['comment_id']}}">
-                          <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}"></i>
+                        <a href="" class="comments_like comment-like-{{$dados[$key]['reagir_S/N']}}" id="on-{{$dados[$key]['comment_id']}}">
+                            @if($dados[$key]['reagir_S/N'] > 0)
+                                <i class="fas fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                            @else
+                                <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                            @endif
                       </div>
                 </div>
               <?php endif; ?>
@@ -259,7 +269,7 @@
             </div>
         </div>
       <?php endif; ?>
-        <?php if ($key == 2): ?>
+        <?php if ($key == 3 || $key == 7): ?>
                 <section class="suggest-slide">
                     <header>
                         <h1>Sugestões pra você</h1>

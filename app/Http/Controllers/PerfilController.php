@@ -250,6 +250,7 @@ class PerfilController extends Controller
             $allUserPages = AuthController::allUserPages(new AuthController, Auth::user()->conta_id);
 
             $auth = new AuthController();
+            $conta_logada = $auth->defaultDate();
             $page_couple = new PaginaCasalController();
             $account_name = $this->auth->defaultDate();
                         //---------------------------------------------------------------------
@@ -298,7 +299,7 @@ class PerfilController extends Controller
             $page_current = 'profile';
 
 
-            return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+            return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
 
         } catch (Exception $e) {
             dd('erro');

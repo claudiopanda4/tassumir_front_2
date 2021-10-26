@@ -46,10 +46,12 @@
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="last-component-n clearfix-n " >
-
-                            <label for="more-option-notify">
+                            <label for="more-option-notify" class="fa-option-mobile-hide">
                                 <i class="far fa-bell fa-24 fa-option" size="7"></i>
                             </label>
+                            <a href="{{route('account.all.notifications')}}" class="fa-option-mobile-lg-hide">
+                                <i class="far fa-bell fa-24 fa-option" size="7"></i>
+                            </a>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="clearfix noti-card-first  br-10">
                                 <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
@@ -145,7 +147,7 @@
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
 
 
-                                    <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:12pt;color: #fff;" > Ver todos </span></a>
+                                    <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
                                 </li>
 
 
@@ -159,7 +161,7 @@
                         @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
                             <a href="{{route('account.profile')}}"><i class="far fa-user-circle fa-24 l-5" id="imgless"></i></a>
                         @else
-                            <a href="{{route('account.profile')}}"><img class="l-5 border-grad" src="{{asset('storage/img/users') . '/' . $profile_picture}}"></a>
+                            <a href="{{route('account.profile')}}"><img class="l-5" src="{{asset('storage/img/users') . '/' . $profile_picture}}"></a>
                         @endif
                         <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" >{{$conta_logada[0]->nome}}</h1></a>
                     </li>
@@ -554,10 +556,16 @@
             gostar(id[1]);
             let new_id = "off-" + id[1] + "-i";
             document.getElementById("on-" + id[1] + "-i").setAttribute('id', new_id);
+            document.getElementById("off-" + id[1] + "-i").classList.remove('fas');
+            document.getElementById("off-" + id[1] + "-i").classList.remove('liked');
+            document.getElementById("off-" + id[1] + "-i").classList.add('far');
           } else if(id[0] == "off") {
-              gostar(id[1]);
-              let new_id = "on-" + id[1] + "-i";
-              document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
+            gostar(id[1]);
+            let new_id = "on-" + id[1] + "-i";
+            document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
+            document.getElementById("on-" + id[1] + "-i").classList.add('fas');
+            document.getElementById("on-" + id[1] + "-i").classList.add('liked');
+            document.getElementById("on-" + id[1] + "-i").classList.remove('far');
           }
       });
 
@@ -587,8 +595,6 @@
           });
 
       }
-
-
 
       $('.seguir-a').click(function (e) {
           e.preventDefault();
