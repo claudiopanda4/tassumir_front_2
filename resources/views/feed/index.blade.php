@@ -78,7 +78,7 @@
                     </div>
                     <div class="last-component clearfix r-5">
                         <label for=<?php echo "more-option-".$key; ?>>
-                            <i class="fas fa-ellipsis-h fa-15 fa-option"></i>
+                            <i class="fas fa-ellipsis-h fa-14 fa-option"></i>
                         </label>
                         <input type="checkbox" name="" id=<?php echo "more-option-".$key; ?> class="hidden">
                         <ul class="clearfix more-option-post">
@@ -142,17 +142,15 @@
                     <ul class="row clearfix ul-interaction-user">
                         <li class="l-5">
                             <div class="content-button">
-                              <?php if ($dados[$key]['reagir_S/N'] == 0): ?>
                                 <a href="" class="like-a" id="on-{{$dados[$key]['post_id']}}">
-                                    <i class="far fa-heart center fa-16" id="on-{{$dados[$key]['post_id']}}-i"></i>
+                                    @if($dados[$key]['reagir_S/N'] > 0)
+                                    <i class="fas fa-heart center fa-16 liked" id="on-{{$dados[$key]['post_id']}}-i"></i>
                                     <h2 id="on-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    @else
+                                    <i class="far fa-heart center fa-16 unliked" id="off-{{$dados[$key]['post_id']}}-i"></i>
+                                    <h2 id="off-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    @endif
                                 </a>
-                                <?php else: ?>
-                                  <a href="" class="like-a" id="off-{{$dados[$key]['post_id']}}">
-                                      <i class="far fa-heart center fa-16" id="off-{{$dados[$key]['post_id']}}-i"></i>
-                                      <h2 id="off-{{$dados[$key]['post_id']}}-h2">Like</h2>
-                                  </a>
-                                  <?php endif; ?>
                             </div>
                         </li>
                         <li class="l-5">
@@ -248,8 +246,12 @@
                         </div>
                     </div>
                       <div class="comment-user-container comment-user-container-react">
-                        <a href="" class="comments_like" id="on-{{$dados[$key]['comment_id']}}">
-                          <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}"></i>
+                        <a href="" class="comments_like comment-like-{{$dados[$key]['reagir_S/N']}}" id="on-{{$dados[$key]['comment_id']}}">
+                            @if($dados[$key]['reagir_S/N'] > 0)
+                                <i class="fas fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                            @else
+                                <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                            @endif
                       </div>
                 </div>
               <?php endif; ?>
@@ -259,7 +261,7 @@
             </div>
         </div>
       <?php endif; ?>
-        <?php if ($key == 2): ?>
+        <?php if ($key == 3 || $key == 7): ?>
                 <section class="suggest-slide">
                     <header>
                         <h1>Sugestões pra você</h1>

@@ -159,7 +159,7 @@
                         @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
                             <a href="{{route('account.profile')}}"><i class="far fa-user-circle fa-24 l-5" id="imgless"></i></a>
                         @else
-                            <a href="{{route('account.profile')}}"><img class="l-5 border-grad" src="{{asset('storage/img/users') . '/' . $profile_picture}}"></a>
+                            <a href="{{route('account.profile')}}"><img class="l-5" src="{{asset('storage/img/users') . '/' . $profile_picture}}"></a>
                         @endif
                         <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" >{{$conta_logada[0]->nome}}</h1></a>
                     </li>
@@ -554,10 +554,16 @@
             gostar(id[1]);
             let new_id = "off-" + id[1] + "-i";
             document.getElementById("on-" + id[1] + "-i").setAttribute('id', new_id);
+            document.getElementById("off-" + id[1] + "-i").classList.remove('fas');
+            document.getElementById("off-" + id[1] + "-i").classList.remove('liked');
+            document.getElementById("off-" + id[1] + "-i").classList.add('far');
           } else if(id[0] == "off") {
-              gostar(id[1]);
-              let new_id = "on-" + id[1] + "-i";
-              document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
+            gostar(id[1]);
+            let new_id = "on-" + id[1] + "-i";
+            document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
+            document.getElementById("on-" + id[1] + "-i").classList.add('fas');
+            document.getElementById("on-" + id[1] + "-i").classList.add('liked');
+            document.getElementById("on-" + id[1] + "-i").classList.remove('far');
           }
       });
 
@@ -587,8 +593,6 @@
           });
 
       }
-
-
 
       $('.seguir-a').click(function (e) {
           e.preventDefault();
