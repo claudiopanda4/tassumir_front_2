@@ -11,7 +11,7 @@
 </header>
 <header class="card br-10 stories stories-about-talking" id="stories-card">
             <header>
-                <h1>O que estão falando...</h1>
+                <h1>O que estão bombando...</h1>
             </header>
             <nav>
                 <ul class="clearfix">
@@ -203,11 +203,14 @@
                                 <i class="far fa-paper-plane fa-20 fa-img-comment" id="{{$dados[$key]['post_id']}}"></i>
                             </a>
                         </div>
+                        <?php if (false): ?>
                         <div class="r-5 " id="">
                             <a href="">
                                 <i class="far fa-images fa-20 fa-img-comment"></i>
                             </a>
                         </div>
+                        <?php endif ?>
+                        
                     </div>
                 </div>
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">

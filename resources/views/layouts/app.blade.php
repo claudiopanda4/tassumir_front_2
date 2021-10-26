@@ -46,10 +46,12 @@
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="last-component-n clearfix-n " >
-
-                            <label for="more-option-notify">
+                            <label for="more-option-notify" class="fa-option-mobile-hide">
                                 <i class="far fa-bell fa-24 fa-option" size="7"></i>
                             </label>
+                            <a href="{{route('account.all.notifications')}}" class="fa-option-mobile-lg-hide">
+                                <i class="far fa-bell fa-24 fa-option" size="7"></i>
+                            </a>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="clearfix noti-card-first  br-10">
                                 <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
@@ -145,7 +147,7 @@
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
 
 
-                                    <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:12pt;color: #fff;" > Ver todos </span></a>
+                                    <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
                                 </li>
 
 

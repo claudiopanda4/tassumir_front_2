@@ -73,10 +73,11 @@
 </header>
 <div class="card br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">
-                <ul class="">
+                <ul class="" id="ul-profile">
                     <li><a href="?post-container-post=images"><i class="far fa-images fas-32 center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
                     <li><a href="?post-container-post=video"><i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
                     <li><a href="?post-container-post=post"><i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 32px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                    <li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 28px;"></i><h1 class="menu-option-profile"></h1></a></li>
                 </ul>
             </nav>
             <?php 
@@ -115,6 +116,9 @@
                     </div>
                     <?php endforeach ?>
                 </div>
+                <?php endif ?>
+                <?php if ($_GET['post-container-post'] == 'saved'): ?>
+                
                 <?php endif ?>
             <?php else: ?>
             <div class="post-img-container-page post-page-container">

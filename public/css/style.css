@@ -1452,6 +1452,7 @@ label[for="hugo"]{
 }
 .identify-cover {
 	position: absolute;
+	display: none;
     width: 35px;
     height: 35px;
     border: 4px solid #800080;
@@ -1541,10 +1542,10 @@ label[for="hugo"]{
 	margin-bottom: 2px;
 }
 #main-login {
-	width: 360px;
-	height: 360px;
-	margin: auto;
-	top: 40%;
+	width: 320px;
+    height: 370px;
+    margin: auto;
+    top: 40%;
 }
 #img-profile-container {
 	width: 110px;
@@ -1583,7 +1584,7 @@ label[for="hugo"]{
 	
 }
 .noti-span{
-	font-size:12pt;
+	font-size:13px;
 	color: #fff;
 }
 .noti-div-name{
@@ -1591,7 +1592,7 @@ label[for="hugo"]{
 	align-items: center;
 }
 .novi-div-image{
-	align-self:center;
+	/*align-self:center;*/
 }
 .noti-flex-info{
 
@@ -1628,6 +1629,7 @@ label[for="hugo"]{
 	text-align: center;
 	color: white;
 	padding: 8px;
+    width: 100px;
 	background-color: #800080;
 	
 
@@ -1639,11 +1641,10 @@ label[for="hugo"]{
 	color: white;
 	padding: 8px;
 	background-color: #800080;
-	
-
+    width: 100px;
 }
 .noti-btn-rejeitar{
-
+    width: 100px;
 	border: 1px solid transparent;
 	border-radius: 5px;
 	text-align: center;
@@ -2175,6 +2176,9 @@ label[for="hugo"]{
 #card-profile-option .option-profile-menu li {
 	width: 31%;
 	position: relative;
+}
+#card-profile-option .option-profile-menu #ul-profile li {
+	width: 23%;
 }
 #card-profile-option .option-profile-menu li:hover > a .icon-hover-option-profile{
 	color: #800080;
