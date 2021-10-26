@@ -460,11 +460,12 @@
 	    padding: 0px 12px 5px;
 	}
 	.stories-about-talking nav ul li {
-	    width: 70px;
-	    height: 70px;
+	    width: 66px;
+	    height: 66px;
 	    border-radius: 50%;
 	    border: 2px solid transparent;
 	    padding: 7px;
+	    margin-right: 10px;
 	    background-image: linear-gradient(45deg, #d5cf12, #d708d7);
 	    background-image: -webkit-linear-gradient(45deg, #d5cf12, #d708d7);
 	    background-image: -o-linear-gradient(45deg, #d5cf12, #d708d7);
