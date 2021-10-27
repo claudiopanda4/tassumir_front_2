@@ -87,14 +87,26 @@ class PerfilController extends Controller
               $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
               $lenght = sizeof($aux1);
               $page_current = 'profile';
-              //dd($lenght);
+              $gostos=array();
+              $a=0;
               if ($lenght > 0) {
+                $post_reactions= DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                     $perfil[0]['qtd_ps']=sizeof($seguidor);
+               foreach ($post_reactions as $key ) {
+                 $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
+                 if (sizeof($posts) > 0) {
+                $gostos[$a]['formato']=$posts[0]->formato_id;
+                $gostos[$a]['file']=$posts[0]->file;
+                $gostos[$a]['post']=$posts[0]->descricao;
+                $gostos[$a]['post_id']=$posts[0]->post_id;
+                $gostos[$a]['post_uuid']=$posts[0]->uuid;
+                $a++;
+                }
+               }
 
 
-
-                    return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+                    return view('perfil.index', compact('account_name', 'gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
 
 
@@ -107,7 +119,7 @@ class PerfilController extends Controller
 
 
 
-              return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+              return view('perfil.index', compact('account_name','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
 
         } catch (Exception $e) {
@@ -161,10 +173,25 @@ class PerfilController extends Controller
               $account_name=DB::select('select * from contas where uuid  = ?', [$id]);
               $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
               $lenght = sizeof($aux1);
+              $gostos=array();
+              $a=0;
               //dd($lenght);
               if ($lenght > 0) {
+                $post_reactions= DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                     $perfil[0]['qtd_ps']=sizeof($seguidor);
+                    foreach ($post_reactions as $key ) {
+                      $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
+                      if (sizeof($posts) > 0) {
+                     $gostos[$a]['formato']=$posts[0]->formato_id;
+                     $gostos[$a]['file']=$posts[0]->file;
+                     $gostos[$a]['post']=$posts[0]->descricao;
+                     $gostos[$a]['post_id']=$posts[0]->post_id;
+                     $gostos[$a]['post_uuid']=$posts[0]->uuid;
+                     $a++;
+                     }
+                    }
+
               } else {
                 $perfil[0]['qtd_ps'] = 0;
               }
@@ -184,7 +211,7 @@ class PerfilController extends Controller
 
 
 
-              return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+              return view('perfil.index', compact('account_name', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
         } catch (Exception $e) {
             dd('erro');

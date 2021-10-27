@@ -402,6 +402,7 @@ class AuthController extends Controller
                 'identificador_id' => $aux[0]->identificador_id,
                 'post_id' => $request->id,
               ]);
+              if ($page[0]->conta_id_a != $conta[0]->conta_id) {
               DB::table('notifications')->insert([
                     'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                     'id_state_notification' => 2,
@@ -409,7 +410,8 @@ class AuthController extends Controller
                     'identificador_id_causador'=> $aux[0]->identificador_id,
                     'identificador_id_destino'=> $aux2[0]->identificador_id,
                     ]);
-
+                    }
+                    if ($page[0]->conta_id_b != $conta[0]->conta_id) {
                   DB::table('notifications')->insert([
                           'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                           'id_state_notification' => 2,
@@ -417,6 +419,7 @@ class AuthController extends Controller
                           'identificador_id_causador'=> $aux[0]->identificador_id,
                           'identificador_id_destino'=> $aux3[0]->identificador_id,
                           ]);
+                        }
 
               $resposta= 1;
 
@@ -441,22 +444,24 @@ class AuthController extends Controller
               'identificador_id_seguida' => $aux[0]->identificador_id,
               'identificador_id_seguindo' => $aux1[0]->identificador_id,
               ]);
-
+              if ($page[0]->conta_id_a != $conta[0]->conta_id) {
             DB::table('notifications')->insert([
                   'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                   'id_state_notification' => 2,
                   'id_action_notification' => 5,
-                  'identificador_id_causador'=> $aux[0]->identificador_id,
+                  'identificador_id_causador'=> $aux1[0]->identificador_id,
                   'identificador_id_destino'=> $aux2[0]->identificador_id,
                   ]);
-
+                }
+              if ($page[0]->conta_id_b != $conta[0]->conta_id) {
                 DB::table('notifications')->insert([
                         'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                         'id_state_notification' => 2,
                         'id_action_notification' => 5,
-                        'identificador_id_causador'=> $aux[0]->identificador_id,
+                        'identificador_id_causador'=> $aux1[0]->identificador_id,
                         'identificador_id_destino'=> $aux3[0]->identificador_id,
                         ]);
+                      }
               $resposta=1;
 
 
@@ -523,6 +528,7 @@ class AuthController extends Controller
               'tipo_estado_comment_id'=>1,
               'comment'=>$request->comment,
               ]);
+              if ($page[0]->conta_id_a != $conta[0]->conta_id) {
               DB::table('notifications')->insert([
                     'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                     'id_state_notification' => 2,
@@ -530,7 +536,8 @@ class AuthController extends Controller
                     'identificador_id_causador'=> $aux[0]->identificador_id,
                     'identificador_id_destino'=> $aux2[0]->identificador_id,
                     ]);
-
+                  }
+                  if ($page[0]->conta_id_b != $conta[0]->conta_id) {
                   DB::table('notifications')->insert([
                           'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                           'id_state_notification' => 2,
@@ -538,6 +545,7 @@ class AuthController extends Controller
                           'identificador_id_causador'=> $aux[0]->identificador_id,
                           'identificador_id_destino'=> $aux3[0]->identificador_id,
                           ]);
+                        }
               $resposta=1;
 
 

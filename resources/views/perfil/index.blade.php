@@ -47,7 +47,7 @@
             <div class="options-profile-btn options-profile-btn-center profile-item-center">
                 <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
             </div>
-            <?php else: ?>
+
                 <div class="options-profile-btn">
                     <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
                 </div>
@@ -56,11 +56,15 @@
         <ul class="profile-follow profile-item-center">
             <li class="statistics-profile">
                 <h2>Seguindo {{$perfil[0]['qtd_ps']}}</h2>
+                <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                 <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+              <?php endif; ?>
             </li>
             <li class="statistics-profile">
                 <h2>Curtiu {{$perfil[0]['qtd_ps']}}</h2>
+                <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                 <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+              <?php endif; ?>
             </li>
         </ul>
         <div class="inform-profile">
@@ -80,52 +84,58 @@
                     <li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 28px;"></i><h1 class="menu-option-profile"></h1></a></li>
                 </ul>
             </nav>
-            <?php 
+            <?php
                 $posts = [
-                    [],[],[],
-                    [],[],[],
-                    [],[],[],
-                    [],[],[],
+
                 ];
             ?>
             <?php if (isset($_GET['post-container-post'])): ?>
                 <?php if ($_GET['post-container-post'] == 'post'): ?>
                 <div class="post-img-container-page post-page-container">
-                    <?php foreach ($posts as $key => $value): ?>
-                    
+                    <?php foreach ($gostos as $key => $value): ?>
+                      <div class="img-post">
+                      <p><h5>  {{$gostos[$key]['post']}}   </h5></p>
+                      </div>
+
                     <?php endforeach ?>
                 </div>
                 <?php endif ?>
                 <?php if ($_GET['post-container-post'] == 'video'): ?>
                 <div class="post-video-container-page post-page-container">
-                    <?php foreach ($posts as $key => $value): ?>
+                    <?php foreach ($gostos as $key => $value): ?>
+                      <?php if ($gostos[$key]['formato']==1): ?>
                     <div class="img-post">
-                        <video> 
-                            <source src="{{asset('storage/video/page/gilmariovemba - 7022207987552931078.mp4')}}" type="video/mp4">
+                        <video>
+                            <source src="{{asset('storage/video/page/') . '/' . $gostos[$key]['file']}}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     </div>
+                      <?php endif; ?>
                     <?php endforeach ?>
                 </div>
                 <?php endif ?>
                 <?php if ($_GET['post-container-post'] == 'images'): ?>
                 <div class="post-img-container-page post-page-container">
-                    <?php foreach ($posts as $key => $value): ?>
+                    <?php foreach ($gostos as $key => $value): ?>
+                      <?php if ($gostos[$key]['formato']==2): ?>
                     <div class="img-post">
-                        <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full">
+                        <img src="{{asset('storage/img/page/') . '/' . $gostos[$key]['file']}}" class="img-full">
                     </div>
+                      <?php endif; ?>
                     <?php endforeach ?>
                 </div>
                 <?php endif ?>
                 <?php if ($_GET['post-container-post'] == 'saved'): ?>
-                
+
                 <?php endif ?>
             <?php else: ?>
             <div class="post-img-container-page post-page-container">
-                <?php foreach ($posts as $key => $value): ?>
+                <?php foreach ($gostos as $key => $value): ?>
+                  <?php if ($gostos[$key]['formato']==2): ?>
                 <div class="img-post">
-                    <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full">
+                    <img src="{{asset('storage/img/page/') . '/' . $gostos[$key]['file']}}" class="img-full">
                 </div>
+                  <?php endif; ?>
                 <?php endforeach ?>
             </div>
             <?php endif ?>
