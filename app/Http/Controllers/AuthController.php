@@ -388,6 +388,10 @@ class AuthController extends Controller
 
 
     public function like(Request $request){
+            $post=DB::select('select * from posts where post_id = ?', [$request->id]);
+            $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
+            $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+            $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
             $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
             $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
             $likes_verificacao = DB::select('select * from post_reactions where (post_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
@@ -398,6 +402,22 @@ class AuthController extends Controller
                 'identificador_id' => $aux[0]->identificador_id,
                 'post_id' => $request->id,
               ]);
+              DB::table('notifications')->insert([
+                    'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'id_state_notification' => 2,
+                    'id_action_notification' => 1,
+                    'identificador_id_causador'=> $aux[0]->identificador_id,
+                    'identificador_id_destino'=> $aux2[0]->identificador_id,
+                    ]);
+
+                  DB::table('notifications')->insert([
+                          'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                          'id_state_notification' => 2,
+                          'id_action_notification' => 1,
+                          'identificador_id_causador'=> $aux[0]->identificador_id,
+                          'identificador_id_destino'=> $aux3[0]->identificador_id,
+                          ]);
+
               $resposta= 1;
 
             } elseif (sizeof($likes_verificacao) == 1){
@@ -412,12 +432,31 @@ class AuthController extends Controller
           $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
           $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$request->id, 2 ]);
           $aux1= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+          $page= DB::select('select * from pages where page_id = ?', [$request->id]);
+          $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+          $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
 
           DB::table('seguidors')->insert([
               'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
               'identificador_id_seguida' => $aux[0]->identificador_id,
               'identificador_id_seguindo' => $aux1[0]->identificador_id,
               ]);
+
+            DB::table('notifications')->insert([
+                  'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'id_state_notification' => 2,
+                  'id_action_notification' => 5,
+                  'identificador_id_causador'=> $aux[0]->identificador_id,
+                  'identificador_id_destino'=> $aux2[0]->identificador_id,
+                  ]);
+
+                DB::table('notifications')->insert([
+                        'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                        'id_state_notification' => 2,
+                        'id_action_notification' => 5,
+                        'identificador_id_causador'=> $aux[0]->identificador_id,
+                        'identificador_id_destino'=> $aux3[0]->identificador_id,
+                        ]);
               $resposta=1;
 
 
@@ -471,16 +510,34 @@ class AuthController extends Controller
                     }
 
     public function comentar(Request $request){
-
+      $post=DB::select('select * from posts where post_id = ?', [$request->id]);
+      $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
+      $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+      $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
             $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
-            $aux1= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+            $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
 
             DB::table('comments')->insert([
               'post_id' => $request->id,
-              'identificador_id' => $aux1[0]->identificador_id,
+              'identificador_id' => $aux[0]->identificador_id,
               'tipo_estado_comment_id'=>1,
               'comment'=>$request->comment,
               ]);
+              DB::table('notifications')->insert([
+                    'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'id_state_notification' => 2,
+                    'id_action_notification' => 2,
+                    'identificador_id_causador'=> $aux[0]->identificador_id,
+                    'identificador_id_destino'=> $aux2[0]->identificador_id,
+                    ]);
+
+                  DB::table('notifications')->insert([
+                          'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                          'id_state_notification' => 2,
+                          'id_action_notification' => 2,
+                          'identificador_id_causador'=> $aux[0]->identificador_id,
+                          'identificador_id_destino'=> $aux3[0]->identificador_id,
+                          ]);
               $resposta=1;
 
 
@@ -692,9 +749,11 @@ class AuthController extends Controller
 
     public static function hasUserManyPages($account_id)
     {
+      $auth = new AuthController();
+          $conta_logada = $auth->defaultDate();
         return count(DB::table('pages')
-                    ->where('conta_id_a', $account_id)
-                    ->orwhere('conta_id_b', $account_id)
+                    ->where('conta_id_a', $conta_logada[0]->conta_id)
+                    ->orwhere('conta_id_b', $conta_logada[0]->conta_id)
                     ->get()) > 1;
     }
 

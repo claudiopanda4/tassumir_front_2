@@ -136,7 +136,6 @@
 																nome += '<div class="mt-4 page-cover circle l-5"><img class="ml-5 circle img-40" src=' + src1 + '/' + value.foto + '></div>'
 															}else {
 																nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
-
 															}
 															nome += '<div class="mb-1 mr-2" id="card-ident"><div id="ident-profile-1" class="" >'
 															nome += '<span class="profile-name-1">'+value.nome+'</span>'
@@ -166,6 +165,9 @@
 										data: {'dados': variavel , 'v':v},
 										 dataType: 'json',
 										 success:function(response){
+											 let src1 = '{{ asset("storage/img/page/") }}';
+											 let src2 = '{{ asset("storage/video/page/") }}';
+											 let src3 = '{{ asset("storage/img/page/") }}';
 											 var nome = '';
 											 var contador = 1;
 										 console.log(response.valor);
@@ -175,9 +177,11 @@
 										nome+='<div class="post">'
 										nome+='<header class="clearfix">'
 										nome+='<div class="first-component clearfix l-5">'
-										nome+='<div class="page-cover circle l-5">'
-										nome+='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}">'
-										nome+='</div>'
+										if (value.page_foto != null) {
+											nome += '<div class="mt-4 page-cover circle l-5"><img class="ml-5 circle img-40" src=' + src1 + '/' + value.page_foto + '></div>'
+										}else {
+											nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
+										}
 										nome+='<div class="page-identify r-5 clearfix">'
 										nome+='<h1 class="text-ellips">'+value.nome_page+'</h1>'
 										nome+='<div class="info-post clearfix">'
@@ -189,17 +193,29 @@
 										nome+='<div class="card-post">'
 										nome+='<div class="">'
 										nome+='<p>'+value.post+'</p>'
-										nome+='<div class="post-cover">'
-										nome+='<img class="img-full" src="{{asset("storage/img/page/unnamed.jpg")}}">'
+										if (value.formato == 1) {
+											nome+='<div class="post-cover">'
+											nome+='<img class="img-full" src='+ src2 + '/' + value.post_foto +'>'
+											nome+='</div>'
+										}else if (value.formato == 2) {
+											nome+='<div class="post-cover">'
+											nome+='<img class="img-full" src='+ src3 + '/' + value.post_foto +'>'
+											nome+='</div>'
+										}
 										nome+='</div>'
 										nome+='</div>'
 										nome+='</div>'
+										if (contador == 4) {
+											var route = "{{route('publicationsSearch1.page', 1) }}"
+											url_array = route.split('/');
+											url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
+											nome += '<a href='+url_link+' class="mr-4"> ver mais</a>'
+										}
 										nome+='</div>'
-										nome += '<a href=""class="mr-4"> ver mais</a>'
 
-										nome+='</div>'
 									$('div[name=post]').empty();
 									$('div[name=post]').append(nome);
+									contador++;
 								})
 							}
 						});

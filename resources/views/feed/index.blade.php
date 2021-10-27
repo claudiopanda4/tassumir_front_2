@@ -108,7 +108,7 @@
                 </header>
                 <div class="card-post">
                     <div class="">
-                        @if($dados[$key]['post'] == "" || $dados[$key]['post'] == null 
+                        @if($dados[$key]['post'] == "" || $dados[$key]['post'] == null
                         || $dados[$key]['post'] == " " || $dados[$key]['post'] == "null")
                             <p class="untext"></p>
                         @else
@@ -210,7 +210,7 @@
                             </a>
                         </div>
                         <?php endif ?>
-                        
+
                     </div>
                 </div>
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
