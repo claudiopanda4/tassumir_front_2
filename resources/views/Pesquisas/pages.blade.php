@@ -43,6 +43,7 @@ $(document).ready(function() {
 									data: {'dados': passa , 'v':v},
 									dataType: 'json',
 									success:function(response){
+										let src1 = '{{ asset("storage/img/page/") }}';
 										var nome = '';
 										var contador = 1;
 										console.log(response.valor);
@@ -58,7 +59,11 @@ $(document).ready(function() {
 												}
 												nome += '</li>'
 												nome += '<li class="change-look search-info">'
-												nome += '<div class="mt-4"><img class="ml-5 circle img-40" src="{{asset("storage/img/users/anselmoralph.jpg")}}"></div>'
+												if (value.foto != null) {
+													nome += '<div class="mt-4 page-cover circle l-5"><img class="ml-5 circle img-40" src=' + src1 + '/' + value.foto + '></div>'
+												}else {
+													nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
+												}
 												nome += '<div class="mb-1 mr-2" id="card-ident"><div id="ident-profile-1" class="" >'
 												nome += '<span class="profile-name-1">'+value.nome+'</span>'
 												nome += '<a href="" class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
@@ -90,6 +95,7 @@ $('#table_search').on('keyup',function(){
 						data: {'dados': variavel , 'v':v},
 						dataType: 'json',
 						success:function(response){
+							let src1 = '{{ asset("storage/img/page/") }}';
 							var nome = '';
 							var contador = 1;
 							console.log(response.valor);
@@ -105,7 +111,11 @@ $('#table_search').on('keyup',function(){
 									}
 									nome += '</li>'
 									nome += '<li class="change-look search-info" style="display:flex;justify-content:space-around;align-content:center;">'
-									nome += '<div class="mt-4"><img class="ml-5 circle img-40" src="{{asset("storage/img/users/anselmoralph.jpg")}}"></div>'
+									if (value.foto != null) {
+										nome += '<div class="mt-4 page-cover circle l-5"><img class="ml-5 circle img-40" src=' + src1 + '/' + value.foto + '></div>'
+									}else {
+										nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
+									}
 									nome += '<div class="mb-1 mr-2" id="card-ident"><div id="ident-profile-1" class="" >'
 									nome += '<span class="profile-name-1">'+value.nome+'</span>'
 									nome += '<a href="" class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'

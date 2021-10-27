@@ -84,7 +84,6 @@
 																nome += '<div class="mt-4 page-cover circle "><img class=" circle img-40" src= ' + src + '/' + value.foto + '></div>'
 															}else {
 																nome += '<div class="mt-4 page-cover circle "><i class="fas fa-user " style="font-size: 25px; color: #ccc;"></i></div>'
-
 															}
 															nome += '<div class="mb-1 mr-2" id="card-ident"><div id="ident-profile-1" class="" >'
 															var route1 = "{{route('account1.profile', 1) }}"
