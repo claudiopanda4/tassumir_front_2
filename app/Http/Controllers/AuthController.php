@@ -531,13 +531,16 @@ if (sizeof($notificacoes_aux)>0) {
 
     public function seguir(Request $request){
 
+
           $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
           $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$request->id, 2 ]);
           $aux1= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
           $page= DB::select('select * from pages where page_id = ?', [$request->id]);
           $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
           $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
+          $verificacao= DB::select('select * from seguidors where (identificador_id_seguida,identificador_id_seguindo) = (?, ?)', [$aux[0]->identificador_id, $aux1[0]->identificador_id ]);
 
+          if (sizeof($verificacao)==0) {
           DB::table('seguidors')->insert([
               'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
               'identificador_id_seguida' => $aux[0]->identificador_id,
@@ -561,6 +564,8 @@ if (sizeof($notificacoes_aux)>0) {
                         'identificador_id_destino'=> $aux3[0]->identificador_id,
                         ]);
                       }
+
+                    }
               $resposta=1;
 
 

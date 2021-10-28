@@ -506,7 +506,7 @@
                                 }
                             });
                             $('.relationship-type-component').click(function(e){
-                                
+
                             });
                         });
                     </script>
@@ -588,7 +588,11 @@
       $('.seguir-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
-            seguir(id);
+          let id1= id.split('-')[1];
+          let id2= id.split('-')[2];
+          
+            seguir(id1, id2);
+
       });
 
       $('.comentar-a').click(function (e) {
