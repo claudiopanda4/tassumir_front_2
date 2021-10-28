@@ -205,7 +205,7 @@
             <header>
                 <h1>Sugestões para Você</h1>
             </header>
-            <ul class="">
+            <ul class="segest">
              @forelse($dadosPage as $Paginas)
                 <?php $conta_page = 0;
                  $verifica1 = 'A';
@@ -236,7 +236,7 @@
                     @endforelse
                     <?php if (($verifica1 != $verifica)  ) : ?>
                         <?php if (($verifica != 'B')  ) : ?>
-                        <li class="li-component-aside-right clearfix">
+                        <li class="li-component-aside-right clearfix" class="page_sugest">
                         @if( !($Paginas->foto_page == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
@@ -248,16 +248,18 @@
                         @endif
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
-                      <?php  echo"  
+                       <a href="#" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
+                      <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
-                                ?>
-                            </li>  
+                                */?>
+                            </li> 
+                            <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">  
                             <?php endif ?>                       
                     <?php else: ?>
                                
                     <?php endif ?>
                     <?php if (($conta_page == $tamanho)  ) : ?>
-                        <li class="li-component-aside-right clearfix">
+                        <li class="li-component-aside-right clearfix" class="page_sugest">
                         @if( !($Paginas->foto_page == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
@@ -269,9 +271,10 @@
                         @endif
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
-                      <?php  echo"  
+                        <a href="#" class="seguir" value="{{ $account_name[0]->conta_id }}" id="{{ $Paginas->page_id }}">seguir</a>";
+                      <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
-                                ?>
+                                */?>
                             </li>                       
                     <?php else: ?>
                              
@@ -648,6 +651,23 @@
 
         $('.follwing-btn follwing-btn-pop-up').click(function(e){
             e.preventDefault();
+
+        })
+
+        $('.seguir').click(function(e){
+            e.preventDefault();
+            var valor_pagina_id = e.target.id;
+             var valor_idconta = $('#conta_id').val();
+             $('.sugest').find('li:(:0)').remove();
+             $.ajax({
+                url: "{{route('seguir.seguindo')}}",
+                type: 'get',
+                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id},
+                dataType: 'json',
+                success: function(response){
+                  console.log(response);
+                }
+              });
 
         })
     });
