@@ -1071,7 +1071,7 @@ label[for="hugo"]{
 }
 .post {
 	width: 100%;
-	max-width: 510px;
+	max-width: 540px;
 	margin: 0px auto;
 }
 .post header .first-component {
@@ -1113,10 +1113,12 @@ label[for="hugo"]{
 	background-color: #242526;
 	margin-top: 20px;    
 	width: 500px;
-    margin: 10px auto 0;
+    margin: 10px auto 20px;
 }
 #stories-card {
 	width: 650px;
+    margin-bottom: 10px;
+    margin-top: -10px;
     background-color: transparent;
     border: none;
 }
@@ -1349,7 +1351,7 @@ label[for="hugo"]{
 }
 .post-cover {
 	position: relative;
-    height: 330px;
+    height: 498px;
     margin-top: -10px;
     margin-bottom: 10px;
 }
@@ -2486,4 +2488,9 @@ label[for="hugo"]{
 }
 .card-post p.untext {
 	padding: 0;
+}
+.search-mobile {
+	display: none;
+	margin-top: 10px;
+	width: 96%;
 }

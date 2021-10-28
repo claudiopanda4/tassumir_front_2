@@ -545,20 +545,30 @@ class PerfilController extends Controller
           $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_pedida[0]->conta_id, $conta_pedinte]);
           $verificacao_page_conta_pedida_b=DB::select('select * from pages where conta_id_b  = ?', [$conta_pedida[0]->conta_id]);
           $verificacao_page_conta_pedida_a=DB::select('select * from pages where conta_id_a  = ?', [$conta_pedida[0]->conta_id]);
-
           }
-          if ( sizeof($verificacao_pedido) == 0 && sizeof($verificacao_page_conta_pedinte_a) == 0 && sizeof($verificacao_page_conta_pedinte_b) == 0 && sizeof($verificacao_page_conta_pedida_b) == 0 && sizeof($verificacao_page_conta_pedida_a) == 0 ) {
+          $conta= DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
+          if ( sizeof($verificacao_pedido) == 0 && sizeof($verificacao_page_conta_pedinte_a) == 0 && sizeof($verificacao_page_conta_pedinte_b) == 0 && sizeof($verificacao_page_conta_pedida_b) == 0 && sizeof($verificacao_page_conta_pedida_a) == 0 && $conta_pedida[0]->genero != $conta[0]->genero ) {
 
           DB::table('pedido_relacionamentos')->insert([
 
               'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
               'conta_id_pedida' => $conta_pedida[0]->conta_id,
               'conta_id_pedinte' =>  $conta_pedinte,
-              'estado_pedido_relac' => 1,
+              'estado_pedido_relac_id' => 1,
               'name_page' => $request->name_page,
-              'tipo_relacionamento_id' => 1,
+              'tipo_relacionamento_id' =>$request->tipo_relac,
 
           ]);
+          $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1 ]);
+          $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedinte, 1 ]);
+
+          DB::table('notifications')->insert([
+                  'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'id_state_notification' => 2,
+                  'id_action_notification' => 4,
+                  'identificador_id_causador'=> $aux[0]->identificador_id,
+                  'identificador_id_destino'=> $aux2[0]->identificador_id,
+                  ]);
 
         }
           return redirect()->route('account1.profile', $request->conta_pedida);

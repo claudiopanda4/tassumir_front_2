@@ -1,19 +1,17 @@
 @extends('layouts.search_menu')
-
 @section('content')
-
-
-
+<div class="main">
+	<div>
+	<div class="search-mobile">
+        <div class="input-search">
+            <i class="fas fa-search fa-16 fa-search-main"></i>
+            <input type="search" id="table_search" name="table_search" placeholder="O que está procurando?" class="input-text">
+        </div>
+    </div>
+</div>
 <div name="pessoa">
-
-	</div>
-
-
-
-
+</div>
  <div name="page">
-
-
            <!--<li class="change-look" style="display:flex;justify-content: space-between;align-content: space-between;" >
 
             <img class="l-5 circle img-40 " src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
@@ -38,15 +36,10 @@
                 <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
             </div>
            </li>-->
-
 </div>
-
-
-
  <div name="post">
 
-
-
+</div>
 </div>
 								<script>
 

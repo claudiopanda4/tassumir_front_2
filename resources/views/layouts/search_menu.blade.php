@@ -23,7 +23,7 @@
 </head>
 
 <body class="container-main">
-
+<div class="body-pop-up content-full-scroll">
   <header class="header-main-n header-main-component-n clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
@@ -105,10 +105,6 @@
             </nav>
     </header>
   <div class="header-main-component-n "></div>
-
-
-
-
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix card-flex">
@@ -137,8 +133,9 @@
 
 
 
-    <main class="main">
+    <main>
         @yield('content');
     </main>
+</div>
 </body>
 </html>

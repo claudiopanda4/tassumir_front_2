@@ -70,8 +70,8 @@
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
-                                <span class="time-posted l-5">50 min</span><div id="seguir-{{$dados[$key]['page_id']}}"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
-                                  <a href="" class="seguir-a r-5" id="{{$dados[$key]['page_id']}}">seguir</a>
+                                <span class="time-posted l-5">50 min</span><div id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
+                                  <a href="" class="seguir-a r-5" id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}">seguir</a>
                                 <?php endif; ?></div>
                             </div>
                         </div>
@@ -381,7 +381,7 @@ function gostar(id){
       }
     });
   }
-  function seguir(id){
+  function seguir(id, id2){
 
      $.ajax({
         url: "{{route('seguir')}}",
@@ -390,7 +390,7 @@ function gostar(id){
          dataType: 'json',
          success:function(response){
          console.log(response);
-         $('#seguir-' + id).hide();
+         $('#seguir-' + id +'-'+ id2).hide();
 
         }
       });

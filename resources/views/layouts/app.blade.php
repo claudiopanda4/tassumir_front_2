@@ -42,7 +42,7 @@
 
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
-                        <a href=""><i class="fas fa-search fa-24" size="7"></i></a>
+                        <a href="{{route('allSearch.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="last-component-n clearfix-n " >
@@ -73,10 +73,7 @@
                                     <?php if ($notificacoes[$key]['foto']!= null): ?>
 
                                     <div class="ml-2 novi-div-image">
-
                                          <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$key]['foto'] }}">
-
-
                                     </div>
                                     <?php else: ?>
                                       <div class="ml-2 novi-div-image">
@@ -120,12 +117,8 @@
                               <?php endforeach; ?>
 
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
-
-
                                     <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
                                 </li>
-
-
                             </ul>
                         </div>
                     </li>
@@ -144,9 +137,6 @@
             </nav>
     </header>
     <div class="header-main-component"></div>
-
-
-
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix">
@@ -506,15 +496,27 @@
                     </label>
                     <input type="checkbox" name="" id="relationship-type-target" class="invisible">
                     <div class="relationship-type-all" id="relationship-type-container" name="relationship-type-container">
-
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            $(document).click(function(e){
+                                //console.log(e.target.className);
+                                if(e.target.className == 'relationship-type-component'){
+                                    $('#relationship-selected-type').text(e.target.id.split('-')[0]);
+                                    $('#relationship-type-selected').val(e.target.id.split('-')[1]);
+                                }
+                            });
+                        });
+                    </script>
                     </div>
+
                     <div class="justify-content-start marriage-proposal" style="margin-bottom: 10px;">
                         <span class="text-white">Caso seja aceite, qual nome da Página de casal, gostaria de usar? (Pode ser editado...).</span>
                     </div>
                     <div class="form-group marriage-proposal">
                         <input type="text" class="input-text-default input-full" name="name_page" type="text" placeholder="Nome da Página do Casal">
                     </div>
-                    <input type="hidden" name="conta_pedida" value="{{$account_name[0]->uuid}}" id="relationship-type-selected">
+                    <input type="hidden" name="conta_pedida" value="{{$account_name[0]->uuid}}" id="conta_pedida">
+                    <input type="hidden" name="tipo_relac"  id="relationship-type-selected">
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done-marriage">
                           <button type="submit" name="button" style="padding: 10px; font-size: 14px;" >
@@ -560,17 +562,18 @@
           type: 'get',
           dataType: 'json',
           success:function(response){
-            var tipo='';
-            var a=0;
+            var tipo = '';
+            var a = 0;
             console.log(response);
+            $('.relationship-type-all').empty();
             $.each(response, function(key, value){
-              if(a==0){
-              tipo+='<div class="relationship-type-all" id="relationship-type-container">'
+              if(a == 0){
+              tipo += '<div class="relationship-type-all" id="relationship-type-container">'
             }
-              tipo+=   ' <label for="relationship-type-target">'
-              tipo+=        '<h2 id="value.tipo_relacionamento" class="relationship-type-component">'+value.tipo_relacionamento+'</h2>'
-              tipo+=   ' </label>'
-              tipo+=  '</div>'
+              tipo += ' <label for="relationship-type-target">'
+              tipo +=        '<h2 id="' + value.tipo_relacionamento + '-' + value.tipo_relacionamento_id + '" class="relationship-type-component">' + value.tipo_relacionamento + '</h2>'
+              tipo +=   ' </label>'
+              tipo +=  '</div>'
 
              a++;
             })
@@ -583,7 +586,10 @@
       $('.seguir-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
-            seguir(id);
+          let id1= id.split('-')[1];
+          let id2= id.split('-')[2];
+
+            seguir(id1, id2);
 
       });
 
@@ -622,8 +628,7 @@
       });
 
       $('.relationship-type-component').click(function(e){
-        alert('qualquer')
-           $('#relationship-selected-type').text("cheguei aq");
+            alert(e.target.id.split('-')[3]);
             $('#relationship-type-selected').val(e.target.id.split('-')[3]);
       });
       $('#genre-id').val($("input[name='genre']:checked").val());
