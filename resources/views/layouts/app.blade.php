@@ -66,18 +66,49 @@
                                         <h4 class="noti-subtitle">Hoje</h4>
                                     </div>
                                 </li>
+                              <?php foreach ($notificacoes as $key => $value): ?>
 
                                 <li class="change-look noti-flex-info" >
+                                  <?php if ($notificacoes[$key]['v']== 1): ?>
+                                    <?php if ($notificacoes[$key]['foto']!= null): ?>
 
                                     <div class="ml-2 novi-div-image">
 
-                                         <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                                         <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$key]['foto'] }}">
 
 
                                     </div>
+                                    <?php else: ?>
+                                      <div class="ml-2 novi-div-image">
+
+                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                      </div>
+                                      <?php endif; ?>
+                                    <?php elseif ($notificacoes[$key]['v']== 2): ?>
+                                      <?php if ($notificacoes[$key]['foto']!= null): ?>
+
+                                      <div class="ml-2 novi-div-image">
+
+                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                      </div>
+                                      <?php else: ?>
+                                        <div class="ml-2 novi-div-image">
+
+                                             <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                        </div>
+                                        <?php endif; ?>
+
+                                    <?php endif; ?>
+
                                     <div class="noti-div-name">
 
-                                    <span class="noti-span">Delton Agostinho, gostou a foto do casal Panda </span>
+                                    <span class="noti-span">{{$notificacoes[$key]['notificacao']}}</span>
 
                                     <div class="noti-hour ml-2">
                                         <a href=""><span class="">há um dia</span></a>
@@ -86,63 +117,7 @@
                                    </div>
 
                                 </li>
-
-                                <li class="change-look noti-flex-info" >
-
-                                    <div class="ml-2 novi-div-image">
-
-                                         <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
-                                    </div>
-                                    <div class="noti-div-name">
-
-                                    <span class="noti-span">Delton Agostinho, gostou a foto do casal Panda </span>
-
-                                    <div class="noti-hour ml-2">
-                                        <a href=""><span class="">há 20min</span></a>
-                                    </div>
-
-                                   </div>
-
-                                </li>
-
-
-
-                                <li class="noti-flex mt-2">
-
-                                    <div class="noti-div-subtitle">
-                                        <h4 class="noti-subtitle">Ontem</h4>
-                                    </div>
-                                </li>
-
-                                <li class="change-look noti-flex-info" >
-
-                                <div class="noti-flex-info">
-
-                                    <div class="ml-2 novi-div-image">
-
-                                         <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
-                                    </div>
-                                    <div class="noti-div-name ">
-
-                                        <span class="noti-span">Delton Agostinho, fez-te um pedido de relacionamento </span>
-                                        <div class="noti-hour">
-                                            <a href=""><span class="">há um dia</span></a>
-                                        </div>
-                                        <div class="noti-hour-1 mt-2">
-                                            <button class="noti-btn-aceitar-1">Aceitar</button>
-
-                                            <button class="noti-btn-rejeitar">Rejeitar</button>
-
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                </li>
+                              <?php endforeach; ?>
 
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
 

@@ -88,6 +88,57 @@ class PerfilController extends Controller
               $lenght = sizeof($aux1);
               $page_current = 'profile';
               $gostos=array();
+              //-----------------------------------------------------------------------------------------------------------------------------------------
+              $notificacoes=array();
+              $a=0;
+              $nome=array();
+              $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+              $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+              if (sizeof($notificacoes_aux)>0) {
+                foreach ($notificacoes_aux as $key) {
+                  $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+                  if ($aux2[0]->tipo_identificador_id == 1) {
+                    $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                    $nome[0]= $conta[0]->nome ;
+                    $nome[0].= " ";
+                    $nome[0].= $conta[0]->apelido;
+                    $nome[1]= $conta[0]->foto;
+                    $nome[2] =1;
+                  }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                    $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                      $nome[0] =$page[0]->nome;
+                      $nome[1] =$page[0]->foto;
+                      $nome[2] =2;
+                  }
+                  switch ($key->id_action_notification) {
+                    case 1:
+                      $notificacoes[$a]['notificacao']=$nome[0] ;
+                      $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                      break;
+                    case 2:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                        break;
+                      case 3:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          break;
+                        case 4:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                            break;
+                          case 5:
+                          $notificacoes[$a]['notificacao']=$nome[0];
+                          $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                              break;
+
+                  }
+                  $notificacoes[$a]['foto']=$nome[1];
+                  $notificacoes[$a]['v']=$nome[2];
+                  $a++;
+                }
+              }
+//------------------------------------------------------------------------------------------------------------------
               $a=0;
               if ($lenght > 0) {
                 $post_reactions= DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
@@ -106,7 +157,7 @@ class PerfilController extends Controller
                }
 
 
-                    return view('perfil.index', compact('account_name', 'gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+                    return view('perfil.index', compact('account_name', 'notificacoes', 'gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
 
 
@@ -119,7 +170,7 @@ class PerfilController extends Controller
 
 
 
-              return view('perfil.index', compact('account_name','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+              return view('perfil.index', compact('account_name', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
 
         } catch (Exception $e) {
@@ -208,10 +259,60 @@ class PerfilController extends Controller
 
               $page_current = 'profile';
 
+              //-----------------------------------------------------------------------------------------------------------------------------------------
+              $notificacoes=array();
+              $a=0;
+              $nome=array();
+              $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+              $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+              if (sizeof($notificacoes_aux)>0) {
+                foreach ($notificacoes_aux as $key) {
+                  $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+                  if ($aux2[0]->tipo_identificador_id == 1) {
+                    $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                    $nome[0]= $conta[0]->nome ;
+                    $nome[0].= " ";
+                    $nome[0].= $conta[0]->apelido;
+                    $nome[1]= $conta[0]->foto;
+                    $nome[2] =1;
+                  }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                    $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                      $nome[0] =$page[0]->nome;
+                      $nome[1] =$page[0]->foto;
+                      $nome[2] =2;
+                  }
+                  switch ($key->id_action_notification) {
+                    case 1:
+                      $notificacoes[$a]['notificacao']=$nome[0] ;
+                      $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                      break;
+                    case 2:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                        break;
+                      case 3:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          break;
+                        case 4:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                            break;
+                          case 5:
+                          $notificacoes[$a]['notificacao']=$nome[0];
+                          $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                              break;
+
+                  }
+                  $notificacoes[$a]['foto']=$nome[1];
+                  $notificacoes[$a]['v']=$nome[2];
+                  $a++;
+                }
+              }
 
 
 
-              return view('perfil.index', compact('account_name', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+              return view('perfil.index', compact('account_name','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
         } catch (Exception $e) {
             dd('erro');
@@ -325,8 +426,59 @@ class PerfilController extends Controller
             $page_content = $page_couple->page_default_date($account_name);
             $page_current = 'profile';
 
+            //-----------------------------------------------------------------------------------------------------------------------------------------
+            $notificacoes=array();
+            $a=0;
+            $nome=array();
+            $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+            $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+            if (sizeof($notificacoes_aux)>0) {
+              foreach ($notificacoes_aux as $key) {
+                $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+                if ($aux2[0]->tipo_identificador_id == 1) {
+                  $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                  $nome[0]= $conta[0]->nome ;
+                  $nome[0].= " ";
+                  $nome[0].= $conta[0]->apelido;
+                  $nome[1]= $conta[0]->foto;
+                  $nome[2] =1;
+                }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                  $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                    $nome[0] =$page[0]->nome;
+                    $nome[1] =$page[0]->foto;
+                    $nome[2] =2;
+                }
+                switch ($key->id_action_notification) {
+                  case 1:
+                    $notificacoes[$a]['notificacao']=$nome[0] ;
+                    $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                    break;
+                  case 2:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                      break;
+                    case 3:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                        break;
+                      case 4:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                          break;
+                        case 5:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                            break;
 
-            return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
+                }
+                $notificacoes[$a]['foto']=$nome[1];
+                $notificacoes[$a]['v']=$nome[2];
+                $a++;
+              }
+            }
+
+
+            return view('perfil.edit', compact('account_name', 'notificacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
 
         } catch (Exception $e) {
             dd('erro');
