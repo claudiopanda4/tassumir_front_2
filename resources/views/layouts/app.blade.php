@@ -500,13 +500,10 @@
                     <script type="text/javascript">
                         $(document).ready(function(){
                             $(document).click(function(e){
-                                console.log(e.target.className);
+                                //console.log(e.target.className);
                                 if(e.target.className == 'relationship-type-component'){
-                                    $('#relationship-selected-type').text(e.target.id);
+                                    $('#relationship-selected-type').text(e.target.id.split('-')[0]);
                                 }
-                            });
-                            $('.relationship-type-component').click(function(e){
-
                             });
                         });
                     </script>
@@ -573,7 +570,7 @@
               tipo += '<div class="relationship-type-all" id="relationship-type-container">'
             }
               tipo += ' <label for="relationship-type-target">'
-              tipo +=        '<h2 id="' + value.tipo_relacionamento + '" class="relationship-type-component">' + value.tipo_relacionamento + '</h2>'
+              tipo +=        '<h2 id="' + value.tipo_relacionamento + '-' + value.tipo_relacionamento_id + '" class="relationship-type-component">' + value.tipo_relacionamento + '</h2>'
               tipo +=   ' </label>'
               tipo +=  '</div>'
 
