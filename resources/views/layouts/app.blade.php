@@ -497,8 +497,21 @@
                     </label>
                     <input type="checkbox" name="" id="relationship-type-target" class="invisible">
                     <div class="relationship-type-all" id="relationship-type-container" name="relationship-type-container">
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            $(document).click(function(e){
+                                console.log(e.target.className);
+                                if(e.target.className == 'relationship-type-component'){
+                                    $('#relationship-selected-type').text(e.target.id);
+                                }
+                            });
+                            $('.relationship-type-component').click(function(e){
 
+                            });
+                        });
+                    </script>
                     </div>
+
                     <div class="justify-content-start marriage-proposal" style="margin-bottom: 10px;">
                         <span class="text-white">Caso seja aceite, qual nome da Página de casal, gostaria de usar? (Pode ser editado...).</span>
                     </div>
@@ -551,17 +564,18 @@
           type: 'get',
           dataType: 'json',
           success:function(response){
-            var tipo='';
-            var a=0;
+            var tipo = '';
+            var a = 0;
             console.log(response);
+            $('.relationship-type-all').empty();
             $.each(response, function(key, value){
-              if(a==0){
-              tipo+='<div class="relationship-type-all" id="relationship-type-container">'
+              if(a == 0){
+              tipo += '<div class="relationship-type-all" id="relationship-type-container">'
             }
-              tipo+=   ' <label for="relationship-type-target">'
-              tipo+=        '<h2 id="value.tipo_relacionamento" class="relationship-type-component">'+value.tipo_relacionamento+'</h2>'
-              tipo+=   ' </label>'
-              tipo+=  '</div>'
+              tipo += ' <label for="relationship-type-target">'
+              tipo +=        '<h2 id="' + value.tipo_relacionamento + '" class="relationship-type-component">' + value.tipo_relacionamento + '</h2>'
+              tipo +=   ' </label>'
+              tipo +=  '</div>'
 
              a++;
             })
@@ -616,8 +630,7 @@
       });
 
       $('.relationship-type-component').click(function(e){
-        alert('qualquer')
-           $('#relationship-selected-type').text("cheguei aq");
+            alert(e.target.id.split('-')[3]);
             $('#relationship-type-selected').val(e.target.id.split('-')[3]);
       });
       $('#genre-id').val($("input[name='genre']:checked").val());
