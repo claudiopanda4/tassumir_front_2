@@ -35,28 +35,41 @@ class SeguidorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function store($seguida, $seguindo)
+     public function store(Request $request)
     {
-        $identificador_seguida = DB::table('identificadors')->where('id', $seguida)->get();
-        $identificador_seguindo = DB::table('identificadors')->where('id', $seguindo)->get();
-        foreach ($identificador_seguindo as $valueseguindo) {
-            if ($valueseguindo->tipo_identificador_id == 1) {
-                $identi_id_seguindo = $valueseguindo->identificador_id;
-            } 
-        }
-        foreach ($identificador_seguida as $valueseguida) {
-            if ($valueseguida->tipo_identificador_id == 2) {
-                $identi_id_seguida = $valueseguida->identificador_id;
-                
+        if ($request->ajax()) {
+            $identificador_seguida = DB::table('identificadors')->where('id', $request->seguida)->get();
+            $identificador_seguindo = DB::table('identificadors')->where('id', $request->seguindo)->get();
+        
+            foreach ($identificador_seguindo as $valueseguindo) {
+                if ($valueseguindo->tipo_identificador_id == 1) {
+                    $identi_id_seguindo = $valueseguindo->identificador_id;
+                } 
+            }
+            foreach ($identificador_seguida as $valueseguida) {
+                if ($valueseguida->tipo_identificador_id == 2) {
+                    $identi_id_seguida = $valueseguida->identificador_id;                
+                }
+
+            }
+            
+            $incremento = 0;
+            $seguiu = DB::table('seguidors')->where('identificador_id_seguindo', $identi_id_seguindo)->get();
+            foreach ($seguiu as $value) {
+                if ($identi_id_seguida == $value->identificador_id_seguida) {
+                $incremento += 1;
+                }
+            }
+            if ($incremento < 1) {
+                $seguidor = new Seguidor;
+                $seguidor->identificador_id_seguindo = $identi_id_seguindo;
+                $seguidor->identificador_id_seguida = $identi_id_seguida;
+                $seguidor->save();
             }
 
+        
+            return response()->json('Salvou');
         }
-        $seguidor = new Seguidor;
-        $seguidor->identificador_id_seguindo = $identi_id_seguindo;
-        $seguidor->identificador_id_seguida = $identi_id_seguida;
-        $seguidor->save();
-
-        return back();
     }
 
     /**

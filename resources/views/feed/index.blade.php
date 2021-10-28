@@ -276,21 +276,83 @@
                     </header>
                     <nav class="clearfix">
                         <ul class="clearfix">
-                            <?php
-                            $suggest_page = [
-                                [],[],[],[],[],[],[],
-                            ];
-                            foreach ($suggest_page as $key => $value): ?>
-                                <li class="li-component-suggest clearfix l-5">
+                            @forelse($dadosPage as $Paginas)
+                                <?php $conta_page = 0;
+                                    $verifica1 = 'A';
+                                    $verifica = 'B';
+                                    $seguidors = 0;
+                                    $tamanho = 0;
+                                    ?>
+                                    <?php
+                                        foreach ($dadosSeguida as  $val){
+                                            if ($val->id == $Paginas->page_id) {
+                                                $seguidors += 1;
+
+                                            }
+                                        }
+                                    ?>
+                                @forelse($dadosSeguida as $Seguida)
+                                    <?php $tamanho = sizeof($dadosSeguida);?>
+                                    <?php if ($Paginas->page_id == $Seguida->id) : ?>
+                                        <?php if ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo) : ?>
+                                            <?php $verifica1 = $Paginas->nome;?>
+                                        <?php else: ?>
+                                            <?php $verifica = $Paginas->nome;?>
+                                        <?php endif ?>
+                                    <?php else: ?>
+                                        <?php $conta_page += 1;?>
+                                    <?php endif ?>
+                                @empty
+                                @endforelse                                
+                                <?php if (($verifica1 != $verifica)  ) : ?>
+                        <?php if (($verifica != 'B')  ) : ?>
+                        <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
-                                        <div class="sugest_component circle clearfix">
-                                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                        </div>
+                                        @if( !($Paginas->foto_page == null) )
+                                            <div class="sugest_component circle clearfix">
+                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                            </div>
+                                        @else
+                                            <div class="sugest_component circle clearfix">
+                                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                            </div>
+                                        @endif
                                     </div>
-                                    <h1 class="name-suggest text-ellips">Criticando casais</h1>
-                                    <a href="" class=""><div>seguir</div></a>
+                                    <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
+                                    <a href="" class="seguir_index" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
+                                    <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
                                 </li>
-                            <?php endforeach ?>
+                            <?php endif ?>
+
+                    <?php else: ?>
+
+                    <?php endif ?>
+                    <?php if (($conta_page == $tamanho)  ) : ?>
+                        <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
+                                    <div class="clearfix sugest_component_div">
+                                        @if( !($Paginas->foto_page == null) )
+                                            <div class="sugest_component circle clearfix">
+                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                            </div>
+                                        @else
+                                            <div class="sugest_component circle clearfix">
+                                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
+                                    <a href="" class="seguir_index" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
+                                    <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+                                </li>
+
+                    <?php else: ?>
+
+                    <?php endif ?>
+                             @empty
+                                <li class="li-component-aside-right clearfix">
+                                <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
+                                </li>
+                            @endforelse
                         </ul>
                     </nav>
                 </section>
@@ -393,5 +455,29 @@ function gostar(id){
                 }
               });
             }
+
+    $(document).ready(function () {
+            $('.seguir_index').click(function(e){
+            e.preventDefault();
+            var valor_pagina_id = e.target.id;
+            var valor_idconta = $('#conta_id').val();
+            var an = $('.seguir_index').text();
+            alert($('#' + valor_pagina_id).text());
+            //$('#' + valor_pagina_id).empty();
+            $('#li-component-suggest-' + valor_pagina_id).remove();
+             
+             $.ajax({
+                url: "{{route('seguir.seguindo')}}",
+                type: 'get',
+                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id},
+                dataType: 'json',
+                success: function(response){
+                  console.log(response);
+                }
+              });
+             
+             });
+            });
+        
 </script>
 @stop
