@@ -4,7 +4,7 @@
 		display: none;
 	}
 }
-@media screen and (max-width: 530px) {
+@media screen and (max-width: 540px) {
 	.main {
 		width: 100%;
 		margin-top: 6px;
@@ -12,6 +12,9 @@
 	}
 	.option-profile-menu ul {
 	    /*background-color: #242526;*/
+	}
+	.card {
+		border: none;
 	}
 	.menu-header {
 	    padding-right: 0px;
@@ -33,15 +36,15 @@
 	    height: 180px;
 	}
 	.post-cover {
-	    height: 250px;
+	    height: 540px;
 	}
 	.option-profile-menu {
 	    overflow-x: auto;
 	    /*background-color: #242526;*/
 	}
 	.img-profile-page {
-	    width: 100px;
-	    height: 100px;
+	    width: 90px;
+	    height: 90px;
 	}
 	.edit-profile {
 		display: none;
@@ -306,11 +309,29 @@
 	/**/
 }
 @media screen and (max-width: 360px) {
+	.post-cover {
+	    height: 375px;
+	}
+}
+@media screen and (max-width: 414px) {
+	.post-cover {
+	    height: 414px;
+	}
+}
+@media screen and (max-width: 411px) {
+	.post-cover {
+	    height: 411px;
+	}
+}
+@media screen and (max-width: 360px) {
 	#main-login {
 		width: 85%;
 	}
 	.input-container {
 	    width: 210px;
+	}
+	.post-cover {
+	    height: 360px;
 	}
 	.pop-up-component {
 	    width: 94%;
@@ -535,7 +556,7 @@
 	    max-width: 710px;
 	}
 	.post-cover {
-	    height: 390px;
+	    height: 538px;
 	}
 }
 @media screen and (max-width: 570px) {
@@ -559,8 +580,8 @@
 }
 @media screen and (max-width: 328px) {
 	.img-profile-page {
-	    width: 100px;
-	    height: 100px;
+	    width: 75px;
+	    height: 75px;
 	}
 	.input-container-radio {
 	    width: 100px;	
