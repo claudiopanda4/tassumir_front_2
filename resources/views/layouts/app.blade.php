@@ -503,6 +503,7 @@
                                 //console.log(e.target.className);
                                 if(e.target.className == 'relationship-type-component'){
                                     $('#relationship-selected-type').text(e.target.id.split('-')[0]);
+                                    $('#relationship-type-selected').val(e.target.id.split('-')[1]);
                                 }
                             });
                         });
@@ -515,7 +516,8 @@
                     <div class="form-group marriage-proposal">
                         <input type="text" class="input-text-default input-full" name="name_page" type="text" placeholder="Nome da Página do Casal">
                     </div>
-                    <input type="hidden" name="conta_pedida" value="{{$account_name[0]->uuid}}" id="relationship-type-selected">
+                    <input type="hidden" name="conta_pedida" value="{{$account_name[0]->uuid}}" id="conta_pedida">
+                    <input type="hidden" name="tipo_relac"  id="relationship-type-selected">
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done-marriage">
                           <button type="submit" name="button" style="padding: 10px; font-size: 14px;" >
@@ -587,7 +589,7 @@
           let id = e.target.id;
           let id1= id.split('-')[1];
           let id2= id.split('-')[2];
-          
+
             seguir(id1, id2);
 
       });
