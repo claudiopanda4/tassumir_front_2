@@ -2489,3 +2489,8 @@ label[for="hugo"]{
 .card-post p.untext {
 	padding: 0;
 }
+.search-mobile {
+	display: none;
+	margin-top: 10px;
+	width: 96%;
+}

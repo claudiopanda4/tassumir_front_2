@@ -105,10 +105,6 @@
             </nav>
     </header>
   <div class="header-main-component-n "></div>
-
-
-
-
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix card-flex">
@@ -137,7 +133,7 @@
 
 
 
-    <main class="main">
+    <main>
         @yield('content');
     </main>
 </body>

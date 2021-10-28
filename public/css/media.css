@@ -405,6 +405,9 @@
 	    margin-bottom: 0px;
 	    margin-top: 0px;
 	}
+	.search-mobile {
+		display: block;
+	}
 	.profile-name-1{
 		font-size: 16px;
 		width: 150px;
