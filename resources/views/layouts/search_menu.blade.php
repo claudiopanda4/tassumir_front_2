@@ -23,7 +23,7 @@
 </head>
 
 <body class="container-main">
-
+<div class="body-pop-up content-full-scroll">
   <header class="header-main-n header-main-component-n clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
@@ -136,5 +136,6 @@
     <main>
         @yield('content');
     </main>
+</div>
 </body>
 </html>
