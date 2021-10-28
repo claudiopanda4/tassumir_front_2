@@ -261,7 +261,7 @@
                     @endforelse
                     <?php if (($verifica1 != $verifica)  ) : ?>
                         <?php if (($verifica != 'B')  ) : ?>
-                        <li class="li-component-aside-right clearfix" class="page_sugest">
+                        <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
                         @if( !($Paginas->foto_page == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
@@ -278,21 +278,16 @@
                       <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
+                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name=""> 
                             </li> 
-                            <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">  
-                            <?php endif ?>                       
-
-                      <?php  echo"
-                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
-                                ?>
-                            </li>
+                             
                             <?php endif ?>
 
                     <?php else: ?>
 
                     <?php endif ?>
                     <?php if (($conta_page == $tamanho)  ) : ?>
-                        <li class="li-component-aside-right clearfix" class="page_sugest">
+                        <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
                         @if( !($Paginas->foto_page == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
@@ -309,12 +304,9 @@
                       <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
+                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name=""> 
                             </li>                       
-                      <?php  echo"
-                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
-                                ?>
-                            </li>
-
+                      
                     <?php else: ?>
 
                     <?php endif ?>
@@ -708,15 +700,12 @@
             });
         });
 
-
-
-        })
-
+        
         $('.seguir').click(function(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
              var valor_idconta = $('#conta_id').val();
-             $('.sugest').find('li:(:0)').remove();
+             $('#li-component-sugest-' + valor_pagina_id).remove();
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
