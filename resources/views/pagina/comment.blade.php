@@ -6,11 +6,17 @@
             <div class="post">
                 <header class="clearfix">
                     <div class="first-component clearfix l-5">
-                        <div class="page-cover circle l-5">
-                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                        </div>
+                      @if( !($dados[0]['foto_page'] == null) )
+                          <div class="page-cover circle l-5">
+                              <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[0]['foto_page'] }}">
+                          </div>
+                      @else
+                          <div class="page-cover circle l-5">
+                              <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          </div>
+                      @endif
                         <div class="page-identify l-5 clearfix">
-                            <a href="http://127.0.0.1:8000/couple_page/3e55d378-305f-403d-b996-ae3dac4f754b"><h1 class="text-ellips">{{$dados[0]['nome_pag']}}</h1></a>
+                            <a href="http://127.0.0.1:8000/couple_page/3e55d378-305f-403d-b996-ae3dac4f754b"><h1 class="">{{$dados[0]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
                                 <span class="time-posted l-5">50 min</span><div id="seguir"><?php if ($dados[0]['seguir_S/N'] == 0): ?>
                                   <a href="" class="seguir-a r-5" id="{{$dados[0]['page_id']}}">seguir</a>
@@ -126,9 +132,15 @@
                     </ul>
                 </nav>
                 <div class="comment-send clearfix"  id="comment-send-{{$dados[0]['post_id']}}">
+                  @if( !($conta_logada[0]->foto == null) )
                     <div class="img-user-comment l-5">
-                        <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                        <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
                     </div>
+                    @else
+                    <div class="img-user-comment l-5">
+                        <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                    </div>
+                      @endif
                     <div class="input-text comment-send-text l-5 clearfix">
                         <input type="text" class="" name="comentario" id="comentario-{{$dados[0]['post_id']}}" placeholder="O que você tem a dizer?">
                         <div class="r-5 ">
@@ -146,12 +158,18 @@
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[0]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment">
+                          @if( !($conta_logada[0]->foto == null) )
                             <div class="profille-img">
-                                <img  class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                                <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
                             </div>
+                            @else
+                            <div class="profille-img">
+                              <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                            </div>
+                            @endif
                         </div>
                         <div class="comment-user-comment">
-                            <p class="text-ellips" id="comment-own-{{$dados[0]['post_id']}}">Amo muito esse casal</p>
+                            <p class="" id="comment-own-{{$dados[0]['post_id']}}">Amo muito esse casal</p>
                         </div>
                     </div>
                     <div class="comment-user-container comment-user-container-react">
@@ -164,15 +182,20 @@
 
                   <div class="comment-users" id="comment-users-{{$dados[0]['post_id']}}">
                             <div class="comment-user-container" >
-                                <div class="user-identify-comment">
-                                    <div class="profille-img">
-                                        <img  class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
-                                    </div>
-                                    <h2 class="text-ellips">{{$dados[$key]['nome_comment']}}</h2>
-                                </div>
+                              <div class="user-identify-comment">
+                                  @if( !($dados[$key]['foto_conta'] == null) )
+                                  <div class="profille-img">
+                                      <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
+                                  </div>
+                                  @else
+                                  <div class="profille-img">
+                                        <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                                  </div>
+                              @endif
                                 <div class="comment-user-comment">
-                                    <p class="text-ellips">{{$value->comment}}</p>
+                                    <p class="">{{$value->comment}}</p>
                                 </div>
+                              </div>
                             </div>
                               <div class="comment-user-container comment-user-container-react">
                                 <a href="" class="comments_like" id="on-{{$dados[$key]['comment_id']}}">

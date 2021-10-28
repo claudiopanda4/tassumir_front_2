@@ -528,6 +528,19 @@
 #more-option-notify:checked ~ ul {
 	display: block;
 }
+@media screen and (min-width: 570px) {
+	.fa-option-mobile-lg-hide {
+		display: none;
+	}
+}
+@media screen and (max-width: 570px) {
+	#more-option-notify:checked ~ ul.noti-card-first {
+	    display: none;
+	}
+	.fa-option-mobile-hide {
+		display: none;
+	}
+}
 #target-profile-cover:checked ~ .pop-up#cover-profile {
 	opacity: 1;
     z-index: 1000;

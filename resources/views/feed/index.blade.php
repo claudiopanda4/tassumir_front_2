@@ -11,27 +11,39 @@
 </header>
 <header class="card br-10 stories stories-about-talking" id="stories-card">
             <header>
-                <h1>O que estão falando...</h1>
+                <h1>O que estão bombando...</h1>
             </header>
             <nav>
                 <ul class="clearfix">
-                    <?php
-                    $about_talking = [
-                        [],[],[],[],[],
-                    ];
-                    foreach ($about_talking as $key => $value): ?>
+
+
+                  @for ($i=0; $i< sizeof($what_are_talking); $i++)
+                    @if($i < 5)
                         <li class="li-component-stories l-5">
                             <a href="">
                                 <div class="identify-cover circle">
-                                    <img class="img-full circle" src="{{asset('storage/img/users/anselmoralph.jpg')}}">
+                                @if( !($what_are_talking[$i]['foto_page'] == null) )
+                                        <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
+                                @else
+                                        <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                @endif
                                 </div>
+                                <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
+                                    <img class="img-back-stories center" src="{{asset('storage/img/page/') . '/' . $what_are_talking[$i]['file']}}">
+                              <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>
+                                    <video controls
+                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
+                                    </video>
+                                <?php else: ?>
                                 <img class="img-back-stories center" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                <?php endif ?>
                                 <div class="headline">
-                                    <h2 class="center">Yola Araújo oferece presente de 1 ano de...</h2>
+                                    <h2 class="center">{{$what_are_talking[$i]['post']}}</h2>
                                 </div>
                             </a>
                         </li>
-                    <?php endforeach ?>
+                    @endif
+                    @endfor
                     <div class="see-all-stories circle">
                         <a href="">
                             <i class="fas fa-arrow-right fa-16 center"></i>
@@ -66,7 +78,7 @@
                     </div>
                     <div class="last-component clearfix r-5">
                         <label for=<?php echo "more-option-".$key; ?>>
-                            <i class="fas fa-ellipsis-h fa-15 fa-option"></i>
+                            <i class="fas fa-ellipsis-h fa-14 fa-option"></i>
                         </label>
                         <input type="checkbox" name="" id=<?php echo "more-option-".$key; ?> class="hidden">
                         <ul class="clearfix more-option-post">
@@ -96,14 +108,19 @@
                 </header>
                 <div class="card-post">
                     <div class="">
-                        <p>{{$dados[$key]['post']}}</p>
+                        @if($dados[$key]['post'] == "" || $dados[$key]['post'] == null
+                        || $dados[$key]['post'] == " " || $dados[$key]['post'] == "null")
+                            <p class="untext"></p>
+                        @else
+                            <p>{{$dados[$key]['post']}}</p>
+                        @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
                         <div class="post-cover">
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
                         <div class="video-post">
-                            <video controls
+                            <video controls>
                                 <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -130,17 +147,15 @@
                     <ul class="row clearfix ul-interaction-user">
                         <li class="l-5">
                             <div class="content-button">
-                              <?php if ($dados[$key]['reagir_S/N'] == 0): ?>
                                 <a href="" class="like-a" id="on-{{$dados[$key]['post_id']}}">
-                                    <i class="far fa-heart center fa-16" id="on-{{$dados[$key]['post_id']}}-i"></i>
+                                    @if($dados[$key]['reagir_S/N'] > 0)
+                                    <i class="fas fa-heart center fa-16 liked" id="on-{{$dados[$key]['post_id']}}-i"></i>
                                     <h2 id="on-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    @else
+                                    <i class="far fa-heart center fa-16 unliked" id="off-{{$dados[$key]['post_id']}}-i"></i>
+                                    <h2 id="off-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    @endif
                                 </a>
-                                <?php else: ?>
-                                  <a href="" class="like-a" id="off-{{$dados[$key]['post_id']}}">
-                                      <i class="far fa-heart center fa-16" id="off-{{$dados[$key]['post_id']}}-i"></i>
-                                      <h2 id="off-{{$dados[$key]['post_id']}}-h2">Like</h2>
-                                  </a>
-                                  <?php endif; ?>
                             </div>
                         </li>
                         <li class="l-5">
@@ -172,13 +187,13 @@
                     </ul>
                 </nav>
                 <div class="comment-send clearfix"  id="comment-send-{{$dados[$key]['post_id']}}">
-                  @if( !($dados[$key]['foto_conta_logada'] == null) )
+                  @if( !($conta_logada[0]->foto == null) )
                     <div class="img-user-comment l-5">
-                        <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta_logada'] }}">
+                        <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
                     </div>
                     @else
                     <div class="img-user-comment l-5">
-                        <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                        <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                     </div>
                       @endif
                     <div class="input-text comment-send-text l-5 clearfix">
@@ -188,27 +203,30 @@
                                 <i class="far fa-paper-plane fa-20 fa-img-comment" id="{{$dados[$key]['post_id']}}"></i>
                             </a>
                         </div>
+                        <?php if (false): ?>
                         <div class="r-5 " id="">
                             <a href="">
                                 <i class="far fa-images fa-20 fa-img-comment"></i>
                             </a>
                         </div>
+                        <?php endif ?>
+
                     </div>
                 </div>
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container">
-                        <div class="user-identify-comment">
-                          @if( !($dados[$key]['foto_conta_logada'] == null) )
+                        <div class="user-identify-comment user-identify-comment-feed">
+                          @if( !($conta_logada[0]->foto == null) )
                             <div class="profille-img">
-                                <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta_logada'] }}">
+                                <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
                             </div>
                             @else
                             <div class="profille-img">
-                              <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                              <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
                             @endif
                         </div>
-                        <div class="comment-user-comment">
+                        <div class="comment-user-comment comment-user-comment-feed">
                             <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}">Amo muito esse casal</p>
                         </div>
                     </div>
@@ -219,25 +237,29 @@
         <?php if ($dados[$key]['qtd_comment']>0): ?>
           <div class="comment-users" id="comment-users-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container" >
-                        <div class="user-identify-comment">
+                        <div class="user-identify-comment user-identify-comment-feed">
                             @if( !($dados[$key]['foto_conta'] == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
                             </div>
                             @else
                             <div class="profille-img">
-                                  <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                                  <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
                         @endif
                             <h2 class="text-ellips">{{$dados[$key]['nome_comment']}}</h2>
                         </div>
-                        <div class="comment-user-comment">
+                        <div class="comment-user-comment comment-user-comment-feed">
                             <p class="text-ellips">{{$dados[$key]['comment']}}</p>
                         </div>
                     </div>
                       <div class="comment-user-container comment-user-container-react">
-                        <a href="" class="comments_like" id="on-{{$dados[$key]['comment_id']}}">
-                          <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}"></i>
+                        <a href="" class="comments_like comment-like-{{$dados[$key]['reagir_S/N']}}" id="on-{{$dados[$key]['comment_id']}}">
+                            @if($dados[$key]['reagir_S/N'] > 0)
+                                <i class="fas fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                            @else
+                                <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                            @endif
                       </div>
                 </div>
               <?php endif; ?>
@@ -247,7 +269,7 @@
             </div>
         </div>
       <?php endif; ?>
-        <?php if ($key == 2): ?>
+        <?php if ($key == 3 || $key == 7): ?>
                 <section class="suggest-slide">
                     <header>
                         <h1>Sugestões pra você</h1>

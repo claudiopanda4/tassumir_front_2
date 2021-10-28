@@ -38,7 +38,7 @@
                     </div>
                 </li>
             </ul>
-            <nav class="menu-header">
+            <nav class="menu-header ">
 
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
@@ -46,72 +46,97 @@
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="last-component-n clearfix-n " >
-
-                            <label for="more-option-notify">
+                            <label for="more-option-notify" class="fa-option-mobile-hide">
                                 <i class="far fa-bell fa-24 fa-option" size="7"></i>
                             </label>
+                            <a href="{{route('account.all.notifications')}}" class="fa-option-mobile-lg-hide">
+                                <i class="far fa-bell fa-24 fa-option" size="7"></i>
+                            </a>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
-                            <ul class="clearfix more-option-post-n card-flex">
+                            <ul class="clearfix noti-card-first  br-10">
                                 <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
 
                                     <span style="color:#efefef;">Actividades</span>
                                 </li>
 
 
-                                <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                                <li class="noti-flex mt-2">
 
-                                    <span style="color:#fff;">Hoje</span>
+                                    <div class="noti-div-subtitle">
+                                        <h4 class="noti-subtitle">Hoje</h4>
+                                    </div>
                                 </li>
+                              <?php foreach ($notificacoes as $key => $value): ?>
 
-                                <li class="change-look" style="display: flex;justify-content:flex-start;width: 300px;padding:8px;">
+                                <li class="change-look noti-flex-info" >
+                                  <?php if ($notificacoes[$key]['v']== 1): ?>
+                                    <?php if ($notificacoes[$key]['foto']!= null): ?>
 
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >Delton Agostinho, gostou </span>
+                                    <div class="ml-2 novi-div-image">
+
+                                         <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$key]['foto'] }}">
+
+
+                                    </div>
+                                    <?php else: ?>
+                                      <div class="ml-2 novi-div-image">
+
+                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                      </div>
+                                      <?php endif; ?>
+                                    <?php elseif ($notificacoes[$key]['v']== 2): ?>
+                                      <?php if ($notificacoes[$key]['foto']!= null): ?>
+
+                                      <div class="ml-2 novi-div-image">
+
+                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                      </div>
+                                      <?php else: ?>
+                                        <div class="ml-2 novi-div-image">
+
+                                             <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                        </div>
+                                        <?php endif; ?>
+
+                                    <?php endif; ?>
+
+                                    <div class="noti-div-name">
+
+                                    <span class="noti-span">{{$notificacoes[$key]['notificacao']}}</span>
+
+                                    <div class="noti-hour ml-2">
+                                        <a href=""><span class="">há um dia</span></a>
+                                    </div>
+
+                                   </div>
+
                                 </li>
+                              <?php endforeach; ?>
 
-
-                                <li class="change-look"style="display: flex;justify-content: flex-start;width: 300px;
-                                padding:8px;">
-
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >João Nunes comentou: Ola </span>
-                                </li>
-
-                                <li style="display: flex;justify-content: flex-start;align-content: flex-start;">
-
-                                    <span style="color:#fff;">Ontem</span>
-                                </li>
-
-                                <li class="change-look" style="display: flex;justify-content: flex-start;width: 300px;padding:8px;">
-
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >Delton Agostinho, gostou </span>
-                                </li>
-
-
-                                <li class="change-look" style="display: flex;justify-content: flex-start;width: 300px;padding:8px;">
-
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2" style="font-size:12pt;color: #fff;" >João Nunes comentou:Ola </span>
-                                </li>
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
 
 
-                                    <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:12pt;color: #fff;" > Ver todos </span></a>
+                                    <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
                                 </li>
 
 
                             </ul>
                         </div>
                     </li>
-                    <li class="l-5 mobile-hidden">
+                    <!--<li class="l-5 mobile-hidden">
                         <a href=""><i class="fas fa-shield-alt fa-24"></i></a>
-                    </li>
+                    </li>-->s
                     <li class="user-tassumir clearfix l-5">
                         @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
                             <a href="{{route('account.profile')}}"><i class="far fa-user-circle fa-24 l-5" id="imgless"></i></a>
                         @else
-                            <a href="{{route('account.profile')}}"><img class="l-5 border-grad" src="{{asset('storage/img/users') . '/' . $profile_picture}}"></a>
+                            <a href="{{route('account.profile')}}"><img class="l-5" src="{{asset('storage/img/users') . '/' . $profile_picture}}"></a>
                         @endif
                         <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" >{{$conta_logada[0]->nome}}</h1></a>
                     </li>
@@ -158,14 +183,14 @@
                                <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
                 @forelse($dadosPage as $Paginas)
                 <?php
-                $seguidors = 0; 
-                foreach ($dadosSeguida as  $val){ 
+                $seguidors = 0;
+                foreach ($dadosSeguida as  $val){
                         if ($val->id == $Paginas->page_id) {
                             $seguidors += 1;
                         }
                     }
                 ?>
-                
+
                     @forelse($dadosSeguida as $Seguida)
                         <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
                         <li class="li-component-aside-right clearfix">
@@ -177,14 +202,14 @@
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                             </div>
-                        @endif                            
+                        @endif
                             <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                             <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
-                           <?php 
+                           <?php
                            echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";?>
                         </li>
                         <?php endif ?>
-                    @empty   
+                    @empty
                     @endforelse
                 @empty
                 <li class="li-component-aside-right clearfix">
@@ -213,26 +238,26 @@
                  $seguidors = 0;
                  $tamanho = 0;
                  ?>
-                <?php                
-                foreach ($dadosSeguida as  $val){ 
+                <?php
+                foreach ($dadosSeguida as  $val){
                         if ($val->id == $Paginas->page_id) {
                             $seguidors += 1;
-                            
+
                         }
                     }
-                ?>               
+                ?>
                 @forelse($dadosSeguida as $Seguida)
-               <?php $tamanho = sizeof($dadosSeguida);?> 
+               <?php $tamanho = sizeof($dadosSeguida);?>
                 <?php if ($Paginas->page_id == $Seguida->id) : ?>
                         <?php if ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo) : ?>
                                 <?php $verifica1 = $Paginas->nome;?>
                             <?php else: ?>
                                 <?php $verifica = $Paginas->nome;?>
-                            <?php endif ?> 
-                 <?php else: ?>                        
-                      <?php $conta_page += 1;?>     
+                            <?php endif ?>
+                 <?php else: ?>
+                      <?php $conta_page += 1;?>
                 <?php endif ?>
-                    @empty   
+                    @empty
                     @endforelse
                     <?php if (($verifica1 != $verifica)  ) : ?>
                         <?php if (($verifica != 'B')  ) : ?>
@@ -248,6 +273,7 @@
                         @endif
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
+
                        <a href="#" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
                       <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
@@ -255,8 +281,15 @@
                             </li> 
                             <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">  
                             <?php endif ?>                       
+
+                      <?php  echo"
+                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
+                                ?>
+                            </li>
+                            <?php endif ?>
+
                     <?php else: ?>
-                               
+
                     <?php endif ?>
                     <?php if (($conta_page == $tamanho)  ) : ?>
                         <li class="li-component-aside-right clearfix" class="page_sugest">
@@ -271,13 +304,19 @@
                         @endif
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
+
                         <a href="#" class="seguir" value="{{ $account_name[0]->conta_id }}" id="{{ $Paginas->page_id }}">seguir</a>";
                       <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
                             </li>                       
+                      <?php  echo"
+                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
+                                ?>
+                            </li>
+
                     <?php else: ?>
-                             
+
                     <?php endif ?>
                 @empty
                 <li class="li-component-aside-right clearfix">
@@ -295,19 +334,11 @@
     </main>
     </div>
 </body>
+@if($page_current == "page")
 <?php if (true): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
-
-
-@if($page_content[0]->uuid)
-    <input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
-@endif
-
-
 <input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
-
-
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
@@ -387,8 +418,42 @@
         </div>
     </div>
 </div>
-
 </form>
+
+<input type="checkbox" name="" id="target-profile-cover-page" class="invisible">
+<div class="pop-up" id="cover-profile-page">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Adicione Foto da Página</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-profile-cover">
+                    <div class="cancel-box div-img">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px;">
+            <div class="">
+                <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <?php if (sizeof($page_content)): ?>
+                        <input type="hidden" name="f" value="{{$page_content[0]->uuid}}">
+                    <?php endif ?>
+                    <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
+                    <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+                        <div class="cover-done" id="cover-done">
+                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 <?php endif ?>
 <?php if (true): ?>
 <input type="checkbox" name="" id="target-profile-cover" class="invisible">
@@ -409,39 +474,6 @@
             <div class="">
                 <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
-                    <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-                        <div class="cover-done" id="cover-done">
-                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<?php endif ?>
-<?php if (true): ?>
-<input type="checkbox" name="" id="target-profile-cover-page" class="invisible">
-<div class="pop-up" id="cover-profile-page">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
-        <header class="pop-up-component-header pop-up-component-header-default header-height">
-            <h1>Adicione Foto da Página</h1>
-            <div class="container-pop-up-component-header">
-                <label for="target-profile-cover">
-                    <div class="cancel-box div-img">
-                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
-                    </div>
-                </label>
-            </div>
-        </header>
-        <div class="header-height"></div>
-        <div style="margin-top: 15px; margin-bottom: 10px;">
-            <div class="">
-                <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="f" value="{{$page_content[0]->uuid}}">
                     <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
@@ -481,16 +513,8 @@
                         </div>
                     </label>
                     <input type="checkbox" name="" id="relationship-type-target" class="invisible">
-                    <div class="relationship-type-all" id="relationship-type-container">
-                        <label for="relationship-type-target">
-                            <h2 id="relationship-type-all-1" class="relationship-type-component">Namoro</h2>
-                        </label>
-                        <label for="relationship-type-target">
-                            <h2 id="relationship-type-all-1" class="relationship-type-component">Noivado</h2>
-                        </label>
-                        <label for="relationship-type-target">
-                            <h2 id="relationship-type-all-1" class="relationship-type-component">Casamento</h2>
-                        </label>
+                    <div class="relationship-type-all" id="relationship-type-container" name="relationship-type-container">
+
                     </div>
                     <div class="justify-content-start marriage-proposal" style="margin-bottom: 10px;">
                         <span class="text-white">Caso seja aceite, qual nome da Página de casal, gostaria de usar? (Pode ser editado...).</span>
@@ -524,12 +548,45 @@
             gostar(id[1]);
             let new_id = "off-" + id[1] + "-i";
             document.getElementById("on-" + id[1] + "-i").setAttribute('id', new_id);
+            document.getElementById("off-" + id[1] + "-i").classList.remove('fas');
+            document.getElementById("off-" + id[1] + "-i").classList.remove('liked');
+            document.getElementById("off-" + id[1] + "-i").classList.add('far');
           } else if(id[0] == "off") {
-              gostar(id[1]);
-              let new_id = "on-" + id[1] + "-i";
-              document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
+            gostar(id[1]);
+            let new_id = "on-" + id[1] + "-i";
+            document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
+            document.getElementById("on-" + id[1] + "-i").classList.add('fas');
+            document.getElementById("on-" + id[1] + "-i").classList.add('liked');
+            document.getElementById("on-" + id[1] + "-i").classList.remove('far');
           }
       });
+
+      function tipos(){
+
+        $.ajax({
+          url: "{{ route('tipos')}}",
+          type: 'get',
+          dataType: 'json',
+          success:function(response){
+            var tipo='';
+            var a=0;
+            console.log(response);
+            $.each(response, function(key, value){
+              if(a==0){
+              tipo+='<div class="relationship-type-all" id="relationship-type-container">'
+            }
+              tipo+=   ' <label for="relationship-type-target">'
+              tipo+=        '<h2 id="value.tipo_relacionamento" class="relationship-type-component">'+value.tipo_relacionamento+'</h2>'
+              tipo+=   ' </label>'
+              tipo+=  '</div>'
+
+             a++;
+            })
+            $('div[name=relationship-type-container]').append(tipo);
+            }
+          });
+
+      }
 
       $('.seguir-a').click(function (e) {
           e.preventDefault();
@@ -573,7 +630,8 @@
       });
 
       $('.relationship-type-component').click(function(e){
-            $('#relationship-selected-type').text($('#' + e.target.id).text());
+        alert('qualquer')
+           $('#relationship-selected-type').text("cheguei aq");
             $('#relationship-type-selected').val(e.target.id.split('-')[3]);
       });
       $('#genre-id').val($("input[name='genre']:checked").val());
@@ -635,6 +693,7 @@
             });
         });
         $('.follwing-btn-pop-up').click(function(){
+          tipos();
             $('#invited-relationship').css({
                 opacity: 1,
                 zIndex: 1000
@@ -647,10 +706,9 @@
             $('#comment-send-' + id_final).css({
                 display : 'block',
             });
-        })
+        });
 
-        $('.follwing-btn follwing-btn-pop-up').click(function(e){
-            e.preventDefault();
+
 
         })
 
@@ -670,7 +728,9 @@
               });
 
         })
+
     });
+
 
 </script>
 </html>

@@ -103,6 +103,9 @@ class searchController extends Controller
               $data[$i]['post_id']=$data1[$i]->post_id ;
               $data[$i]['post']=$data1[$i]->descricao ;
               $data[$i]['nome_page']=$data2[0]->nome ;
+              $data[$i]['page_foto']=$data2[0]->foto ;
+              $data[$i]['post_foto']=$data1[$i]->file ;
+              $data[$i]['formato']=$data1[$i]->formato_id;
 
             }
 

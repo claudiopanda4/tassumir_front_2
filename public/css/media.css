@@ -13,6 +13,19 @@
 	.option-profile-menu ul {
 	    /*background-color: #242526;*/
 	}
+	.menu-header {
+	    padding-right: 0px;
+	}
+	.post header .first-component .page-cover {
+	    width: 45px;
+	    height: 45px;
+	}
+	.post header .first-component .page-identify h1 {
+	    margin-top: 12px;
+	}
+	.page-identify {
+	    margin-top: 0px;
+	}
 	.interaction-user {
 	    justify-content: right;
 	}
@@ -27,14 +40,15 @@
 	    /*background-color: #242526;*/
 	}
 	.img-profile-page {
-	    width: 110px;
-	    height: 110px;
+	    width: 100px;
+	    height: 100px;
 	}
 	.edit-profile {
 		display: none;
 	}
 	.edit-profile-mobile {
 		display: block;
+		margin-top: 10px;
 	}
 	.edit-page-container {
 		display: none;
@@ -68,6 +82,7 @@
 	}
 	.menu-header ul {
 	    margin-left: -40px;
+	    margin-bottom: 0;
 	}
 	.post {
 	    width: 100%;
@@ -149,12 +164,15 @@
 	.stories-about-talking nav ul li .img-back-stories {
 	        width: 100%;
 		    height: 100%;
-		    border: 4px solid #000;
+		    border: 2px solid #000;
 		    border-radius: 50%;
 	}
 	#img-profile-container {
 	    width: 80px;
 	    height: 80px;
+	}
+	.stories-about-talking nav ul {
+	    width: 470px;
 	}
 	#img-profile-container {
 	    width: 80px;
@@ -224,8 +242,8 @@
 	    height: 80px;
 	}
 	#img-profile-container {
-	    width: 110px;
-	    height: 110px;
+	    width: 100px;
+	    height: 100px;
 	    position: relative;
 	    margin-top: 0;
 	    margin-left: 0;
@@ -271,7 +289,11 @@
 	    width: 75px;
 	}
 	.statistics-profile h2 {
-	    font-size: 13px;
+	    font-size: 13.5px;
+	}
+	.profile-item-center {
+		width: 240px;
+		margin: auto;
 	}
 	.card, .pop-up-component {
 	    width: 100%;
@@ -354,6 +376,17 @@
 	}
 }
 @media screen and (max-width: 720px) {
+	.card-p{
+		background-color: transparent;
+		border: none;
+    }
+	.profile-name-1{
+		font-size: 16px;
+		width: 150px;
+	}
+	.comment-user-comment {
+		margin: 10px 5px;
+	}
 	.suggest-slide {
 		display: block;
 		margin-top: 5px;
@@ -389,7 +422,7 @@
 	    background-color: var(--background-main-dark);
 	}
 	.post header {
-		margin-top: 10px;
+		margin-top: 5px;
 	}
 	.interaction-numbers {
 	    border-bottom: none;
@@ -413,15 +446,26 @@
 	    text-align: center;
 	    font-size: 16px;
 	}
+	#ident-profile-1 {
+	    flex-direction: row;
+	    text-align: center;
+	    font-size: 16px;
+	    margin-right: 4px;
+	}
 	.ul-left li.search-lg {
 		display: none;
 	}
+	.stories-about-talking header h1 {
+	    font-size: 14px;
+	    padding: 0px 12px 5px;
+	}
 	.stories-about-talking nav ul li {
-	    width: 75px;
-	    height: 75px;
+	    width: 66px;
+	    height: 66px;
 	    border-radius: 50%;
 	    border: 2px solid transparent;
 	    padding: 7px;
+	    margin-right: 10px;
 	    background-image: linear-gradient(45deg, #d5cf12, #d708d7);
 	    background-image: -webkit-linear-gradient(45deg, #d5cf12, #d708d7);
 	    background-image: -o-linear-gradient(45deg, #d5cf12, #d708d7);
@@ -462,7 +506,7 @@
 	    width: 100%;
 	}
 	.user-identify-comment {
-	    width: 153px;
+	    width: 230px;
 	}
 	.comment-send-text {
 	    width: 77%;
@@ -478,9 +522,13 @@
 		width: 100%;
 	}
 }
-@media screen and (min-width: 1240px) {
+@media screen and (min-width: 1440px) {
 	.main {
 		width: 650px;
+	}
+	.card {
+	    width: 90%;
+	    margin: 10px auto 0;
 	}
 	.post {
 	    width: 100%;
@@ -494,11 +542,28 @@
 	.card-page {
 	    width: 100%;
 	}
+	.noti-card-first {
+		display: none;
+	}
+	.img-post {
+		position: relative;
+		width: 32%;
+		height: 110px;
+		display: inline-block;
+		margin-top: -3px;
+
+	}
+	.last-component {
+	    margin-top: 5px;
+	}
 }
 @media screen and (max-width: 328px) {
 	.img-profile-page {
 	    width: 100px;
 	    height: 100px;
+	}
+	.input-container-radio {
+	    width: 100px;	
 	}
 	.statistics-profile-page {
 	    width: 170px;
@@ -513,6 +578,96 @@
 		width: 290px;
 	}
 	.user-identify-comment {
-	    width: 118px;
+	    width: 230px;
 	}
+	.user-identify-comment.user-identify-comment-feed {
+	    width: 127px;
+	}
+}
+@media screen and (max-width: 328px){
+	.noti-div-elipsis {
+		margin-right: 5px;
+	}
+	.noti-div-name span{
+
+		font-size: 10pt;
+
+	}
+	.noti-div-name{
+
+		align-self:center; 
+		align-items: center;
+		width: 100%;
+	}
+	.noti-hour a span{
+		font-size: 9pt;
+     }
+     .noti-hour a span:hover{
+     	text-decoration: none;
+     }
+    
+   .noti-card-first{
+	display: none;
+    position: absolute;
+	background-color: #242526;
+	width: 360px;
+    height: 470px;
+    padding: 20px;
+    right: -90px;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px #00000033;
+}
+.couple-invite-icon-one{
+		background-color: #800080;
+		
+	    width: 40px;
+	    height: 40px;
+	    position: relative;
+	    
+	    padding: 20px;
+	   border-radius: 5px;
+	   
+}
+#ident-profile-1 {
+	    flex-direction: row;
+	    text-align: center;
+	    font-size: 16px;
+	    margin-right: 4px;
+	}
+	.couple-invite-icon-one {
+	background-color: #800080;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    padding: 20px;
+    border-radius: 5px;
+   
+
+}
+.circle{
+	border-radius: 50%;
+}
+.profile-name-1{
+
+	font-size: 16px;
+	
+	width: 150px;
+}
+.card-p{
+	background-color: transparent;
+	margin: 0 auto;
+	/*width: 300px;*/
+	border: none;
+}
+
+}
+@media screen and (max-width: 768px){
+
+.card-p{
+	background-color: transparent;
+	/*margin: 0 auto;*/
+	width: 100%;
+	border: none;
+}
 }
