@@ -461,8 +461,7 @@ function gostar(id){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
             var valor_idconta = $('#conta_id').val();
-            var an = $('.seguir_index').text();
-            alert($('#' + valor_pagina_id).text());
+            var an = $('.seguir_index').text();            
             //$('#' + valor_pagina_id).empty();
             $('#li-component-suggest-' + valor_pagina_id).remove();
              
