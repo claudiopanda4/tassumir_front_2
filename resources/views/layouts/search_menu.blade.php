@@ -36,21 +36,27 @@
                     </div>
                 </li>
             </ul>
-            <nav class="menu-header">
+            <nav class="menu-header ">
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
-                        <a href=""><i class="fas fa-search fa-24" size="7"></i></a>
+                        <a href="{{route('allSearch.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
                     </li>
-                    <li class="l-5 mobile-header-icon  ">
-                        <div class="last-component-n clearfix-n ">
-                            <label for="more-option-notify">
+                    <li class="l-5 mobile-header-icon" style="z-index:2;">
+                        <div class="last-component-n clearfix-n " >
+                            <label for="more-option-notify" class="fa-option-mobile-hide">
                                 <i class="far fa-bell fa-24 fa-option" size="7"></i>
                             </label>
+                            <a href="{{route('account.all.notifications')}}" class="fa-option-mobile-lg-hide">
+                                <i class="far fa-bell fa-24 fa-option" size="7"></i>
+                            </a>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
-                            <ul class="clearfix more-option-post-n card-flex">
-                              <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
-                                  <span style="color:#efefef;">Actividades</span>
-                              </li>
+                            <ul class="clearfix noti-card-first  br-10">
+                                <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
+
+                                    <span style="color:#efefef;">Actividades</span>
+                                </li>
+
+
                                 <li class="noti-flex mt-2">
 
                                     <div class="noti-div-subtitle">

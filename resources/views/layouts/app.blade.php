@@ -39,7 +39,6 @@
                 </li>
             </ul>
             <nav class="menu-header ">
-
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
                         <a href="{{route('allSearch.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
@@ -265,12 +264,12 @@
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
                        <a href="#" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
-                      <?php /* echo"  
+                      <?php /* echo"
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
-                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name=""> 
-                            </li> 
-                             
+                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+                            </li>
+
                             <?php endif ?>
 
                     <?php else: ?>
@@ -291,12 +290,12 @@
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
                         <a href="#" class="seguir" value="{{ $account_name[0]->conta_id }}" id="{{ $Paginas->page_id }}">seguir</a>";
-                      <?php /* echo"  
+                      <?php /* echo"
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
-                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name=""> 
-                            </li>                       
-                      
+                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+                            </li>
+
                     <?php else: ?>
 
                     <?php endif ?>
@@ -705,7 +704,7 @@
             });
         });
 
-        
+
         $('.seguir').click(function(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;

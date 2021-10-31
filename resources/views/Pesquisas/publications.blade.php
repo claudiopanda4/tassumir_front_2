@@ -1,8 +1,10 @@
 @extends('layouts.search_menu')
 
 @section('content')
+<div class="main">
 <div name="post">
 	<input type="hidden" name="passa" id="passa" value="{{$val}}">
+</div>
 </div>
 <script>
 
