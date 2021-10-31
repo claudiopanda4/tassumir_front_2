@@ -216,15 +216,27 @@
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment user-identify-comment-feed">
-                          @if( !($conta_logada[0]->foto == null) )
+                          @if( $dados[$key]['dono_da_pag?']==0 )
+                            @if( !($conta_logada[0]->foto == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
                             </div>
                             @else
                             <div class="profille-img">
-                              <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
+                                  <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
-                            @endif
+                        @endif
+                      @elseif( $dados[$key]['dono_da_pag?']==1 )
+                        @if( !($dados[$key]['foto_page'] == null) )
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_page'] }}">
+                          </div>
+                        @else
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          </div>
+                          @endif
+                      @endif
                         </div>
                         <div class="comment-user-comment comment-user-comment-feed">
                             <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}">Amo muito esse casal</p>
@@ -238,6 +250,7 @@
           <div class="comment-users" id="comment-users-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container" >
                         <div class="user-identify-comment user-identify-comment-feed">
+                          @if( $dados[$key]['foto_ver']==1 )
                             @if( !($dados[$key]['foto_conta'] == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
@@ -247,6 +260,17 @@
                                   <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
                         @endif
+                      @elseif( $dados[$key]['foto_ver']==2 )
+                        @if( !($dados[$key]['foto_conta'] == null) )
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_conta'] }}">
+                          </div>
+                        @else
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          </div>
+                          @endif
+                      @endif
                             <h2 class="text-ellips">{{$dados[$key]['nome_comment']}}</h2>
                         </div>
                         <div class="comment-user-comment comment-user-comment-feed">
@@ -303,7 +327,7 @@
                                         <?php $conta_page += 1;?>
                                     <?php endif ?>
                                 @empty
-                                @endforelse                                
+                                @endforelse
                                 <?php if (($verifica1 != $verifica)  ) : ?>
                         <?php if (($verifica != 'B')  ) : ?>
                         <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
@@ -461,10 +485,10 @@ function gostar(id){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
             var valor_idconta = $('#conta_id').val();
-            var an = $('.seguir_index').text();            
+            var an = $('.seguir_index').text();
             //$('#' + valor_pagina_id).empty();
             $('#li-component-suggest-' + valor_pagina_id).remove();
-             
+
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
@@ -474,9 +498,9 @@ function gostar(id){
                   console.log(response);
                 }
               });
-             
+
              });
             });
-        
+
 </script>
 @stop

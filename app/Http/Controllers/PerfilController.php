@@ -84,8 +84,6 @@ class PerfilController extends Controller
 
             //-------------------------------------------------------------------------
               $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
-              $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-              $lenght = sizeof($aux1);
               $page_current = 'profile';
               $gostos=array();
               //-----------------------------------------------------------------------------------------------------------------------------------------
@@ -139,11 +137,14 @@ class PerfilController extends Controller
                 }
               }
 //------------------------------------------------------------------------------------------------------------------
+          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+          $lenght = sizeof($aux1);
               $a=0;
               if ($lenght > 0) {
                 $post_reactions= DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                     $perfil[0]['qtd_ps']=sizeof($seguidor);
+                    $perfil[0]['qtd_like']=sizeof($post_reactions);
                foreach ($post_reactions as $key ) {
                  $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
                  if (sizeof($posts) > 0) {
@@ -155,12 +156,6 @@ class PerfilController extends Controller
                 $a++;
                 }
                }
-
-
-                    return view('perfil.index', compact('account_name', 'notificacoes', 'gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
-
-
-
 
               } else {
                 $perfil[0]['qtd_ps'] = 0;
@@ -231,6 +226,7 @@ class PerfilController extends Controller
                 $post_reactions= DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                     $perfil[0]['qtd_ps']=sizeof($seguidor);
+                    $perfil[0]['qtd_like']=sizeof($post_reactions);
                     foreach ($post_reactions as $key ) {
                       $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
                       if (sizeof($posts) > 0) {

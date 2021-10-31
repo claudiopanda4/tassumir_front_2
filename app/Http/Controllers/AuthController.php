@@ -121,7 +121,6 @@ class AuthController extends Controller
         $dados[$a]['formato']=$key->formato_id;
         $dados[$a]['estado_post']=$key->estado_post_id;
         $dados[$a]['foto_page']=$page[$key->page_id - 1]->foto;
-        $dados[$a]['foto_conta_logada']=$account_name[0]->foto;
         if($dados[$a]['formato']==1 || $dados[$a]['formato']== 2){
         $dados[$a]['file']=$key->file;
         }
@@ -145,9 +144,11 @@ class AuthController extends Controller
             $dados[$a]['nome_comment'].=" ";
             $dados[$a]['nome_comment'].=$conta[0]->apelido;
             $dados[$a]['foto_conta']=$conta[0]->foto;
+            $dados[$a]['foto_ver']=1;
           }elseif ($aux2[0]->tipo_identificador_id == 2) {
             $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
-            $dados[$a]['foto_conta']=$conta[0]->foto;
+            $dados[$a]['foto_conta']=$page[$aux2[0]->id - 1]->foto;
+            $dados[$a]['foto_ver']=2;
           }
         }
       }
@@ -401,9 +402,11 @@ if (sizeof($notificacoes_aux)>0) {
             $dados[$a]['nome_comment'].=" ";
             $dados[$a]['nome_comment'].=$conta[0]->apelido;
             $dados[$a]['foto_conta']=$conta[0]->foto;
+            $dados[$a]['foto_ver']=1;
           }elseif ($aux2[0]->tipo_identificador_id == 2) {
             $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
             $dados[$a]['foto_conta']=$page[$aux2[0]->id - 1]->foto;
+            $dados[$a]['foto_ver']=2;
           }
           $a++;
         }
@@ -626,31 +629,38 @@ if (sizeof($notificacoes_aux)>0) {
             $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
             $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
 
-            DB::table('comments')->insert([
-              'post_id' => $request->id,
-              'identificador_id' => $aux[0]->identificador_id,
-              'tipo_estado_comment_id'=>1,
-              'comment'=>$request->comment,
-              ]);
-              if ($page[0]->conta_id_a != $conta[0]->conta_id) {
-              DB::table('notifications')->insert([
-                    'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                    'id_state_notification' => 2,
-                    'id_action_notification' => 2,
-                    'identificador_id_causador'=> $aux[0]->identificador_id,
-                    'identificador_id_destino'=> $aux2[0]->identificador_id,
-                    ]);
-                  }
-                  if ($page[0]->conta_id_b != $conta[0]->conta_id) {
+            if ($page[0]->conta_id_a == $conta[0]->conta_id || $page[0]->conta_id_b == $conta[0]->conta_id) {
+              $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$post[0]->page_id, 2 ]);
+              DB::table('comments')->insert([
+                'post_id' => $request->id,
+                'identificador_id' => $aux[0]->identificador_id,
+                'tipo_estado_comment_id'=>1,
+                'comment'=>$request->comment,
+                ]);
+                $resposta=1;
+              } else {
+                DB::table('comments')->insert([
+                'post_id' => $request->id,
+                'identificador_id' => $aux[0]->identificador_id,
+                'tipo_estado_comment_id'=>1,
+                'comment'=>$request->comment,
+                ]);
                   DB::table('notifications')->insert([
-                          'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                          'id_state_notification' => 2,
-                          'id_action_notification' => 2,
-                          'identificador_id_causador'=> $aux[0]->identificador_id,
-                          'identificador_id_destino'=> $aux3[0]->identificador_id,
-                          ]);
-                        }
-              $resposta=1;
+                      'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                      'id_state_notification' => 2,
+                      'id_action_notification' => 2,
+                      'identificador_id_causador'=> $aux[0]->identificador_id,
+                      'identificador_id_destino'=> $aux2[0]->identificador_id,
+                      ]);
+                    DB::table('notifications')->insert([
+                            'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                            'id_state_notification' => 2,
+                            'id_action_notification' => 2,
+                            'identificador_id_causador'=> $aux[0]->identificador_id,
+                            'identificador_id_destino'=> $aux3[0]->identificador_id,
+                            ]);
+                $resposta=1;
+              }
 
 
           return response()->json($resposta);
