@@ -48,58 +48,81 @@
                             </label>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="clearfix more-option-post-n card-flex">
-                                <li class="mb-4 couple-list-search" >
+                              <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
+                                  <span style="color:#efefef;">Actividades</span>
+                              </li>
+                                <li class="noti-flex mt-2">
 
-                                    <span class="couple-list-span-head">Actividades</span>
+                                    <div class="noti-div-subtitle">
+                                        <h4 class="noti-subtitle">Hoje</h4>
+                                    </div>
                                 </li>
+                              <?php foreach ($notificacoes as $key => $value): ?>
+
+                                <li class="change-look noti-flex-info" >
+                                  <?php if ($notificacoes[$key]['v']== 1): ?>
+                                    <?php if ($notificacoes[$key]['foto']!= null): ?>
+
+                                    <div class="ml-2 novi-div-image">
+                                         <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$key]['foto'] }}">
+                                    </div>
+                                    <?php else: ?>
+                                      <div class="ml-2 novi-div-image">
+
+                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
 
 
-                                <li class="couple-list-search">
+                                      </div>
+                                      <?php endif; ?>
+                                    <?php elseif ($notificacoes[$key]['v']== 2): ?>
+                                      <?php if ($notificacoes[$key]['foto']!= null): ?>
 
-                                    <span class="couple-list-span-head">Hoje</span>
+                                      <div class="ml-2 novi-div-image">
+
+                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                      </div>
+                                      <?php else: ?>
+                                        <div class="ml-2 novi-div-image">
+
+                                             <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                        </div>
+                                        <?php endif; ?>
+
+                                    <?php endif; ?>
+
+                                    <div class="noti-div-name">
+
+                                    <span class="noti-span">{{$notificacoes[$key]['notificacao']}}</span>
+
+                                    <div class="noti-hour ml-2">
+                                        <a href=""><span class="">há um dia</span></a>
+                                    </div>
+
+                                   </div>
+
                                 </li>
+                              <?php endforeach; ?>
 
-                                <li class="change-look couple-list-search2" >
-
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2 couple-list-span">Delton Agostinho, gostou </span>
+                                 <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
+                                    <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
                                 </li>
-
-
-                                <li class="change-look couple-list-search2">
-
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2 couple-list-span"  >João Nunes comentou: Ola </span>
-                                </li>
-
-                                <li class="couple-list-search">
-
-                                    <span class="couple-list-span-head">Ontem</span>
-                                </li>
-
-                                <li class="change-look couple-list-search2" >
-
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2 couple-list-span">Delton Agostinho, gostou </span>
-                                </li>
-
-
-                                <li class="change-look couple-list-search2" >
-
-                                    <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-                                    <span class="mt-2 couple-list-span">João Nunes comentou:Ola </span>
-                                </li>
-
-
                             </ul>
                         </div>
                     </li>
-                    <li class="l-5 mobile-hidden">
+                    <!--<li class="l-5 mobile-hidden">
                         <a href=""><i class="fas fa-shield-alt fa-24"></i></a>
-                    </li>
+                    </li>-->
                     <li class="user-tassumir clearfix l-5">
-                        <a href="{{route('account.profile')}}"><img class="l-5" src='{{asset("storage/img/users/anselmoralph.jpg")}}'></a>
-                        <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" >Delton</h1></a>
+                        @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
+                            <a href="{{route('account.profile')}}"><i class="far fa-user-circle fa-24 l-5" id="imgless"></i></a>
+                        @else
+                            <a href="{{route('account.profile')}}"><img class="l-5" src="{{asset('storage/img/users') . '/' . $profile_picture}}"></a>
+                        @endif
+                        <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" >{{$conta_logada[0]->nome}}</h1></a>
                     </li>
                 </ul>
             </nav>
