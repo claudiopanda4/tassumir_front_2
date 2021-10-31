@@ -337,11 +337,17 @@
             <div class="header-height"></div>
             <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
                 <div class="first-component clearfix l-5">
-                    <div class="page-cover circle l-5">
-                        <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                    </div>
+                    @if($page_content[0]->foto)
+                        <div class="page-cover circle l-5">
+                            <img class="img-full circle" src="{{asset('storage/img/page/' . $page_content[0]->foto)}}">
+                        </div>
+                    @else
+                        <div class="page-cover circle l-5">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                        </div>
+                    @endif
                     <div class="page-identify l-5 clearfix">
-                        <h1 class="text-ellips">Famosos em Relacionamentos</h1>
+                        <h1 class="text-ellips">{{ $page_content[0]->nome }}</h1>
                     </div>
                 </div>
                 <div class="textarea-container l-5" style="width:100%;">
@@ -420,9 +426,9 @@
                 <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <?php if (sizeof($page_content)): ?>
-                        <input type="hidden" name="f" value="{{$page_content[0]->uuid}}">
+                        <input type="hidden" name="uuidPage" value="{{$page_content[0]->uuid}}">
                     <?php endif ?>
-                    <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
+                    <input class="file" type="file" name="pagePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
                             <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>

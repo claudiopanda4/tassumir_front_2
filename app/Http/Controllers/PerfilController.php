@@ -575,20 +575,19 @@ class PerfilController extends Controller
 
 
     public function add_picture(Request $request)
-    {
+    {	
         try
-        {
-            if ($request->page_u)
+        {	
+            if ($request->hasFile('pagePicture') && PaginaCasalController::check_image_extension($request->pagePicture->extension()))
             {
-                if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
-                {
-                    $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
+                $file_name = time() . '_' . md5($request->file('pagePicture')->getClientOriginalName()) . '.' . $request->pagePicture->extension();
 
-                    $request->file('profilePicture')->storeAs('public/img/page', $file_name);
-                    AuthController::updatePageProfilePicture($file_name, $request->page_u);
-                }
+                $request->file('pagePicture')->storeAs('public/img/page', $file_name);
+                AuthController::updatePageProfilePicture($file_name, $request->uuidPage);
+            }
 
-            } else {
+            else if ($request->hasFile('profilePicture')) 
+            {
                 if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
                 {
                     $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();

@@ -57,6 +57,7 @@ class PaginaCasalController extends Controller
         $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
         $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
         $page_content = $this->page_default_date($account_name);
+
         $seguidores = Self::seguidores($page_content[0]->page_id);
         $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
@@ -115,7 +116,6 @@ class PaginaCasalController extends Controller
             $a++;
           }
         }
-
         return view('pagina.couple_page', compact('account_name','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
     }
 
@@ -166,7 +166,9 @@ class PaginaCasalController extends Controller
         $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
         $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
         $page_content = $this->page_default_date($account_name);
+        
         $seguidores = Self::seguidores($page_content[0]->page_id);
+
         $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
         $this->current_page_id = $page_content[0]->page_id;
@@ -295,10 +297,12 @@ class PaginaCasalController extends Controller
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
             $page_content = $this->page_default_date($account_name);
+
+
             $seguidores = Self::seguidores($page_content[0]->page_id);
             $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
             $publicacoes = $this->get_all_post($page_content[0]->page_id);
-            $this->current_page_id = $page_content[0]->page_id;
+            $this->current_page_id = $page_content[0]->uuid;
             $page_current = 'page';
             //dd($page_content);
             $conta_logada = $auth->defaultDate();
@@ -354,7 +358,14 @@ class PaginaCasalController extends Controller
               }
             }
 
-            return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+            //=============================================
+              // siene 
+            //=============================================
+
+            $sugerir = $this->suggest_pages($page_content[0]->page_id);
+            $allPosts = $this->get_post_types($page_content[0]->page_id);
+
+            return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -416,7 +427,7 @@ class PaginaCasalController extends Controller
 
           $this->current_page_uuid = $page_content[0]->uuid;
 
-          $seguidores = Self::seguidores($uuid);
+          $seguidores = Self::seguidores($page_content[0]->page_id);
           $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
           $publicacoes = $this->get_all_post($page_content[0]->page_id);
           $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
@@ -475,8 +486,14 @@ class PaginaCasalController extends Controller
               $a++;
             }
           }
+          //=============================================
+            // siene 
+          //=============================================
 
-          return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+          $sugerir = $this->suggest_pages($page_content[0]->page_id);
+          $allPosts = $this->get_post_types($page_content[0]->page_id);
+          
+          return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -582,10 +599,8 @@ class PaginaCasalController extends Controller
 
     public static function seguidores($id)
     {
-        return count(DB::select('select * from seguidors where uuid = ?', [$id]));
-
-        //dd($id);
-        //return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
+        //return count(DB::select('select * from seguidors where uuid = ?', [$id]));
+        return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
     }
 
     private function get_all_post($id) {
@@ -662,5 +677,35 @@ class PaginaCasalController extends Controller
         return DB::select('select formato_id from formatos where formato = ?', [$formato])[0]->formato_id;
     }
 
+    public function suggest_pages($hostId) 
+    {
+        $all_content = [];
+        $data = DB::select('select * from seguidors where identificador_id_seguindo != ? && identificador_id_seguida != ?', [$hostId, $hostId]);
+        foreach ($data as $value) {
+            $all_content = DB::table('pages')->where('page_id', $value->identificador_id_seguida)->get();
+        }
+        return $all_content;
+    }
 
+    public function get_post_types($id)
+    {   $index = 0;
+        $posts = [];
+        $data = DB::table('posts')->where('page_id', $id)->get();
+        foreach ($data as $d) {
+            $extension = explode('.', $d->file)[1];
+            if ($this->check_image_extension($extension))
+            {
+                $posts[$index]['postImages'] = $d->file;
+            }
+            else if ($this->check_video_extension($extension))
+            {
+                $posts[$index]['postVideos'] = $d->file;
+            }
+            $posts[$index]['postDescricao'] = $d->descricao;
+            $index++;
+        }
+        return $posts;
+    }
+
+    /* fim codigo siene */
 }
