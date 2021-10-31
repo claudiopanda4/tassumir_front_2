@@ -131,7 +131,7 @@
                 <nav class="row interaction-numbers">
                     <ul class="">
                         <li>
-                            <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
+                            <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_uuid']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
                         </li>
                         <li>
                             <a href="{{route('post_index', $dados[$key]['post_uuid'])}}" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
@@ -147,13 +147,13 @@
                     <ul class="row clearfix ul-interaction-user">
                         <li class="l-5">
                             <div class="content-button">
-                                <a href="" class="like-a" id="on-{{$dados[$key]['post_id']}}">
+                                <a href="" class="like-a" id="on|{{$dados[$key]['post_uuid']}}">
                                     @if($dados[$key]['reagir_S/N'] > 0)
-                                    <i class="fas fa-heart center fa-16 liked" id="on-{{$dados[$key]['post_id']}}-i"></i>
-                                    <h2 id="on-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    <i class="fas fa-heart center fa-16 liked" id="on|{{$dados[$key]['post_uuid']}}|i"></i>
+                                    <h2 id="on|{{$dados[$key]['post_uuid']}}|h2">Like</h2>
                                     @else
-                                    <i class="far fa-heart center fa-16 unliked" id="off-{{$dados[$key]['post_id']}}-i"></i>
-                                    <h2 id="off-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    <i class="far fa-heart center fa-16 unliked" id="off|{{$dados[$key]['post_uuid']}}|i"></i>
+                                    <h2 id="off|{{$dados[$key]['post_uuid']}}|h2">Like</h2>
                                     @endif
                                 </a>
                             </div>
@@ -278,11 +278,11 @@
                         </div>
                     </div>
                       <div class="comment-user-container comment-user-container-react">
-                        <a href="" class="comments_like comment-like-{{$dados[$key]['reagir_S/N']}}" id="on-{{$dados[$key]['comment_id']}}">
-                            @if($dados[$key]['reagir_S/N'] > 0)
-                                <i class="fas fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                        <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
+                            @if($dados[$key]['comment_S/N'] > 0)
+                                <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                             @else
-                                <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                                <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
                             @endif
                       </div>
                 </div>
@@ -405,6 +405,29 @@ function gostar(id){
       }
     });
   }
+
+  function comment_reac(id){
+      $.ajax({
+        url: "{{ route('comment_reac')}}",
+        type: 'get',
+        data: {'id': id},
+         dataType: 'json',
+         success:function(response){
+           console.log(response);
+         /*let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
+         if (response == 1) {
+           likes_qtd = parseInt(likes_qtd) + 1;
+           $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+         } else if (response == 2) {
+           likes_qtd = parseInt(likes_qtd) - 1;
+           if (likes_qtd >= 0) {
+             $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+           }
+         }*/
+        }
+      });
+    }
+
   function seguir(id, id2){
 
      $.ajax({

@@ -136,6 +136,14 @@ class AuthController extends Controller
           $dados[$a]['qtd_comment_reaction']=sizeof($reaction_comment);
           $dados[$a]['comment']=$comment[$j - 1]->comment;
           $dados[$a]['comment_id']=$comment[$j - 1]->comment_id;
+          $dados[$a]['comment_uuid']=$comment[$j - 1]->uuid;
+          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+          if (sizeof($aux1) > 0) {
+            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$j - 1]->comment_id, $aux1[0]->identificador_id]);
+          } else {
+              $ja_reagiu1 = array();
+          }
+           $dados[$a]['comment_S/N']=sizeof($ja_reagiu1);
 
           $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$j-1]->identificador_id ]);
           if ($aux2[0]->tipo_identificador_id == 1) {
@@ -396,6 +404,14 @@ if (sizeof($notificacoes_aux)>0) {
         foreach ($comment as $key) {
           $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id ]);
           $dados[$a]['comment_id']=$key->comment_id;
+          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+          if (sizeof($aux1) > 0) {
+            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$key->comment_id, $aux1[0]->identificador_id]);
+          } else {
+              $ja_reagiu1 = array();
+          }
+           $dados[$a]['comment_S/N']=sizeof($ja_reagiu1);
+
           if ($aux2[0]->tipo_identificador_id == 1) {
             $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
             $dados[$a]['nome_comment']=$conta[0]->nome;
@@ -490,19 +506,19 @@ if (sizeof($notificacoes_aux)>0) {
 
 
     public function like(Request $request){
-            $post=DB::select('select * from posts where post_id = ?', [$request->id]);
+            $post=DB::select('select * from posts where uuid = ?', [$request->id]);
             $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
             $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
             $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
             $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
             $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
-            $likes_verificacao = DB::select('select * from post_reactions where (post_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
+            $likes_verificacao = DB::select('select * from post_reactions where (post_id,identificador_id) = (?, ?)', [$post[0]->post_id, $aux[0]->identificador_id]);
             $resposta = 0;
             if (sizeof($likes_verificacao) == 0) {
               DB::table('post_reactions')->insert([
                 'reaction_id' => 1,
                 'identificador_id' => $aux[0]->identificador_id,
-                'post_id' => $request->id,
+                'post_id' => $post[0]->post_id,
               ]);
               if ($page[0]->conta_id_a != $conta[0]->conta_id) {
               DB::table('notifications')->insert([
@@ -526,11 +542,51 @@ if (sizeof($notificacoes_aux)>0) {
               $resposta= 1;
 
             } elseif (sizeof($likes_verificacao) == 1){
-              DB::table('post_reactions')->where(['post_id'=>$request->id])->delete();
+              DB::table('post_reactions')->where(['post_id'=>$post[0]->post_id])->delete();
               $resposta= 2;
             }
             return response()->json($resposta);
           }
+
+          public function comment_reac(Request $request){
+                  $comment=DB::select('select * from comments where comment_id = ?', [$request->id]);
+                  $post=DB::select('select * from posts where uuid = ?', [$comment[0]->post_id]);
+  //                $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
+//                  $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+//                  $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
+                  $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
+                  $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+                  $comment_reac_v = DB::select('select * from reactions_comments where (comment_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
+                  $resposta = 0;
+                  if (sizeof($comment_reac_v) == 0) {
+                    DB::table('reactions_comments')->insert([
+                      'comment_id' => $request->id,
+                      'reaction_id' => 1,
+                      'identificador_id' => $aux[0]->identificador_id,
+                    ]);
+                  /*  DB::table('notifications')->insert([
+                          'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                          'id_state_notification' => 2,
+                          'id_action_notification' => 1,
+                          'identificador_id_causador'=> $aux[0]->identificador_id,
+                          'identificador_id_destino'=> $aux2[0]->identificador_id,
+                          ]);
+                        DB::table('notifications')->insert([
+                                'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                                'id_state_notification' => 2,
+                                'id_action_notification' => 1,
+                                'identificador_id_causador'=> $aux[0]->identificador_id,
+                                'identificador_id_destino'=> $aux3[0]->identificador_id,
+                              ]);*/
+
+                    $resposta= 1;
+
+                  } elseif (sizeof($comment_reac_v) == 1){
+                    DB::table('reactions_comments')->where(['comment_id'=>$request->id])->delete();
+                    $resposta= 2;
+                  }
+                  return response()->json($resposta);
+                }
 
     public function seguir(Request $request){
 
