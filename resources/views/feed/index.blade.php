@@ -512,11 +512,10 @@ function gostar(id){
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
             //$('#' + valor_pagina_id).empty();
-<<<<<<< HEAD
-=======
+
             $('#li-component-suggest-' + valor_pagina_id).remove();
 
->>>>>>> c3128bfb47cc96a30457c6639233cd96d6f3f4ce
+
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',

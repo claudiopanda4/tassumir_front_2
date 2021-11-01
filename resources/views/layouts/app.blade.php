@@ -270,8 +270,8 @@
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
-                       <a href="#" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
-<<<<<<< HEAD
+                       <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
+
                        <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
 
                       <?php /* echo"  
@@ -279,15 +279,9 @@
                                 */?>
                                 
                             </li> 
-                             
-=======
-                      <?php /* echo"
-                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
-                                */?>
-                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                            </li>
+                            
 
->>>>>>> c3128bfb47cc96a30457c6639233cd96d6f3f4ce
+
                             <?php endif ?>
 
                     <?php else: ?>
@@ -307,7 +301,7 @@
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
-<<<<<<< HEAD
+
                         <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
                         <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
                       <?php /* echo"  
@@ -315,17 +309,8 @@
                                 */?>
                                  
                             </li>                       
-                      
-=======
-                        <a href="#" class="seguir" value="{{ $account_name[0]->conta_id }}" id="{{ $Paginas->page_id }}">seguir</a>";
-                      <?php /* echo"
-                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
-                                */?>
-                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                            </li>
-
->>>>>>> c3128bfb47cc96a30457c6639233cd96d6f3f4ce
-                    <?php else: ?>
+                   
+                      <?php else: ?>
 
                     <?php endif ?>
                 @empty

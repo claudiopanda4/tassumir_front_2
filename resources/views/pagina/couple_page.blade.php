@@ -190,85 +190,9 @@
             </header>
             <nav class="clearfix">
                 <ul class="clearfix">
-<<<<<<< HEAD
-                @forelse($dadosPage as $Paginas)
-                        <?php $conta_page = 0;
-                                   $verifica1 = 'A';
-                                   $verifica = 'B';
-                                   $seguidors = 0;
-                                   $tamanho = 0;
-                                   ?>
-                                    <?php
-                                        foreach ($dadosSeguida as  $val){
-                                            if ($val->id == $Paginas->page_id) {
-                                                $seguidors += 1;
 
-                                            }
-                                        }
-                                    ?>
-                                @forelse($dadosSeguida as $Seguida)
-                                    <?php $tamanho = sizeof($dadosSeguida);?>
-                                    <?php if ($Paginas->page_id == $Seguida->id) : ?>
-                                        <?php if ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo) : ?>
-                                            <?php $verifica1 = $Paginas->nome;?>
-                                        <?php else: ?>
-                                            <?php $verifica = $Paginas->nome;?>
-                                        <?php endif ?>
-                                    <?php else: ?>
-                                        <?php $conta_page += 1;?>
-                                    <?php endif ?>
-                                @empty
-                                @endforelse                                
-                                <?php if (($verifica1 != $verifica)  ) : ?>
-                        <?php if (($verifica != 'B')  ) : ?>
-                        <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
-                                    <div class="clearfix sugest_component_div">
-                                        @if( !($Paginas->foto_page == null) )
-                                            <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
-                                            </div>
-                                        @else
-                                            <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
-                                    <a href="" class="follow-suggest" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
-                                    <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                                </li>
-                            <?php endif ?>
 
-                    <?php else: ?>
 
-                    <?php endif ?>
-                    <?php if (($conta_page == $tamanho)  ) : ?>
-                        <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
-                                    <div class="clearfix sugest_component_div">
-                                        @if( !($Paginas->foto_page == null) )
-                                            <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
-                                            </div>
-                                        @else
-                                            <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
-                                    <a href="" class="follow-suggest" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
-                                    <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                                </li>
-
-                    <?php else: ?>
-
-                    <?php endif ?>
-                             @empty
-                                <li class="li-component-aside-right clearfix">
-                                <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
-                                </li>
-                            @endforelse
-=======
                 <?php 
                 $suggest_page = [
                     [],[],[],[],[],[],[],
@@ -292,7 +216,7 @@
                     </li>
                 @endfor
                 <?php //endforeach ?>
->>>>>>> c3128bfb47cc96a30457c6639233cd96d6f3f4ce
+
                 </ul>
             </nav>
         </section>
