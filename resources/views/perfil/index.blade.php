@@ -61,7 +61,7 @@
               <?php endif; ?>
             </li>
             <li class="statistics-profile">
-                <h2>Curtiu {{$perfil[0]['qtd_ps']}}</h2>
+                <h2>Curtiu {{$perfil[0]['qtd_like']}}</h2>
                 <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                 <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
               <?php endif; ?>

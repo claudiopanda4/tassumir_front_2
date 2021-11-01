@@ -2,9 +2,10 @@
 @extends('layouts.search_menu')
 
 @section('content')
-
+ <div class="main">
 <div name="pessoa">
 <input type="hidden" name="passa" id="passa" value="{{$val}}">
+</div>
 </div>
 <script >
 

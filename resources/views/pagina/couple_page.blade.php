@@ -190,6 +190,7 @@
             </header>
             <nav class="clearfix">
                 <ul class="clearfix">
+<<<<<<< HEAD
                 @forelse($dadosPage as $Paginas)
                         <?php $conta_page = 0;
                                    $verifica1 = 'A';
@@ -267,6 +268,31 @@
                                 <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
                                 </li>
                             @endforelse
+=======
+                <?php 
+                $suggest_page = [
+                    [],[],[],[],[],[],[],
+                ];
+                //foreach ($suggest_page as $key => $value): ?>
+                @for($i = 0; $i < count($sugerir); $i++)
+                    <li class="li-component-suggest clearfix l-5">
+                        <div class="clearfix sugest_component_div">
+                            @if($sugerir[$i]->foto != null)
+                                <div class="sugest_component circle clearfix">
+                                    <img class="img-full circle" src="{{asset('storage/img/page/' . $sugerir[$i]->foto)}}">
+                                </div>
+                            @else
+                                <div class="sugest_component circle clearfix">
+                                    <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                </div>
+                            @endif
+                        </div>
+                        <h1 class="name-suggest text-ellips">{{ $sugerir[$i]->nome }}</h1>
+                        <a href="" class="follow-suggest"><div>seguir</div></a>
+                    </li>
+                @endfor
+                <?php //endforeach ?>
+>>>>>>> c3128bfb47cc96a30457c6639233cd96d6f3f4ce
                 </ul>
             </nav>
         </section>
@@ -290,39 +316,48 @@
                 <?php if ($_GET['post-container-post'] == 'post'): ?>
                 <div class="post-img-container-page post-page-container">
                     <?php foreach ($posts as $key => $value): ?>
-                    
+                        
                     <?php endforeach ?>
                 </div>
                 <?php endif ?>
                 <?php if ($_GET['post-container-post'] == 'video'): ?>
                 <div class="post-video-container-page post-page-container">
-                    <?php foreach ($posts as $key => $value): ?>
-                    <div class="img-post">
-                        <video> 
-                            <source src="{{asset('storage/video/page/gilmariovemba - 7022207987552931078.mp4')}}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                    <?php endforeach ?>
+                    
+                    @for($i = 0; $i < count($allPosts); $i++)
+                        @if(isset($allPosts[$i]['postVideos']))
+                            <div class="img-post">
+                                <video> 
+                                    <source src="{{asset('storage/video/page/' . $allPosts[$i]['postVideos'])}}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        @endif
+                    @endfor
                 </div>
                 <?php endif ?>
+
                 <?php if ($_GET['post-container-post'] == 'images'): ?>
-                <div class="post-img-container-page post-page-container">
+                    <div class="post-img-container-page post-page-container">
+
+                        @for($i = 0; $i < count($allPosts); $i++)
+                            @if(isset($allPosts[$i]['postImages']))
+                                <div class="img-post">
+                                    <img src="{{asset('storage/img/page/' . $allPosts[$i]['postImages'])}}" class="img-full">
+                                </div>
+                            @endif
+                        @endfor
+
+                    </div>
+                <?php endif ?>
+
+            <?php else: ?>
+                <!--<div class="post-img-container-page post-page-container">
                     <?php foreach ($posts as $key => $value): ?>
                     <div class="img-post">
                         <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full">
                     </div>
                     <?php endforeach ?>
-                </div>
-                <?php endif ?>
-            <?php else: ?>
-            <div class="post-img-container-page post-page-container">
-                <?php foreach ($posts as $key => $value): ?>
-                <div class="img-post">
-                    <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full">
-                </div>
-                <?php endforeach ?>
-            </div>
+                </div> -->
             <?php endif ?>
         </div>
     </div>

@@ -39,7 +39,6 @@
                 </li>
             </ul>
             <nav class="menu-header ">
-
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
                         <a href="{{route('allSearch.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
@@ -272,6 +271,7 @@
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
                        <a href="#" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
+<<<<<<< HEAD
                        <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
 
                       <?php /* echo"  
@@ -280,6 +280,14 @@
                                 
                             </li> 
                              
+=======
+                      <?php /* echo"
+                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
+                                */?>
+                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+                            </li>
+
+>>>>>>> c3128bfb47cc96a30457c6639233cd96d6f3f4ce
                             <?php endif ?>
 
                     <?php else: ?>
@@ -299,6 +307,7 @@
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
+<<<<<<< HEAD
                         <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
                         <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
                       <?php /* echo"  
@@ -307,6 +316,15 @@
                                  
                             </li>                       
                       
+=======
+                        <a href="#" class="seguir" value="{{ $account_name[0]->conta_id }}" id="{{ $Paginas->page_id }}">seguir</a>";
+                      <?php /* echo"
+                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
+                                */?>
+                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+                            </li>
+
+>>>>>>> c3128bfb47cc96a30457c6639233cd96d6f3f4ce
                     <?php else: ?>
 
                     <?php endif ?>
@@ -348,11 +366,17 @@
             <div class="header-height"></div>
             <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
                 <div class="first-component clearfix l-5">
-                    <div class="page-cover circle l-5">
-                        <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                    </div>
+                    @if($page_content[0]->foto)
+                        <div class="page-cover circle l-5">
+                            <img class="img-full circle" src="{{asset('storage/img/page/' . $page_content[0]->foto)}}">
+                        </div>
+                    @else
+                        <div class="page-cover circle l-5">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                        </div>
+                    @endif
                     <div class="page-identify l-5 clearfix">
-                        <h1 class="text-ellips">Famosos em Relacionamentos</h1>
+                        <h1 class="text-ellips">{{ $page_content[0]->nome }}</h1>
                     </div>
                 </div>
                 <div class="textarea-container l-5" style="width:100%;">
@@ -431,9 +455,9 @@
                 <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <?php if (sizeof($page_content)): ?>
-                        <input type="hidden" name="f" value="{{$page_content[0]->uuid}}">
+                        <input type="hidden" name="uuidPage" value="{{$page_content[0]->uuid}}">
                     <?php endif ?>
-                    <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
+                    <input class="file" type="file" name="pagePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
                             <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
@@ -547,23 +571,44 @@
     $(document).ready(function () {
       $('.like-a').click(function (e) {
           e.preventDefault();
-          let id = e.target.id.split('-');
+          let id = e.target.id.split('|');
           if(id[0] == "on"){
             gostar(id[1]);
-            let new_id = "off-" + id[1] + "-i";
-            document.getElementById("on-" + id[1] + "-i").setAttribute('id', new_id);
-            document.getElementById("off-" + id[1] + "-i").classList.remove('fas');
-            document.getElementById("off-" + id[1] + "-i").classList.remove('liked');
-            document.getElementById("off-" + id[1] + "-i").classList.add('far');
+            let new_id = "off|" + id[1] + "|i";
+            document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+            document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+            document.getElementById("off|" + id[1] + "|i").classList.add('far');
           } else if(id[0] == "off") {
             gostar(id[1]);
-            let new_id = "on-" + id[1] + "-i";
-            document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
-            document.getElementById("on-" + id[1] + "-i").classList.add('fas');
-            document.getElementById("on-" + id[1] + "-i").classList.add('liked');
-            document.getElementById("on-" + id[1] + "-i").classList.remove('far');
+            let new_id = "on|" + id[1] + "|i";
+            document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+            document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+            document.getElementById("on|" + id[1] + "|i").classList.remove('far');
           }
       });
+
+      $('.comment-like-a').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id.split('|');
+          if(id[0] == "on"){
+            comment_reac(id[1]);
+            let new_id = "off|" + id[1] + "|i";
+            document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+            document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+            document.getElementById("off|" + id[1] + "|i").classList.add('far');
+          } else if(id[0] == "off") {
+            comment_reac(id[1]);
+            let new_id = "on|" + id[1] + "|i";
+            document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+            document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+            document.getElementById("on|" + id[1] + "|i").classList.remove('far');
+          }
+      });
+
 
       function tipos(){
 
@@ -715,7 +760,7 @@
             });
         });
 
-        
+
         $('.seguir').click(function(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;

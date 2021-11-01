@@ -131,7 +131,7 @@
                 <nav class="row interaction-numbers">
                     <ul class="">
                         <li>
-                            <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
+                            <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_uuid']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
                         </li>
                         <li>
                             <a href="{{route('post_index', $dados[$key]['post_uuid'])}}" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
@@ -147,13 +147,13 @@
                     <ul class="row clearfix ul-interaction-user">
                         <li class="l-5">
                             <div class="content-button">
-                                <a href="" class="like-a" id="on-{{$dados[$key]['post_id']}}">
+                                <a href="" class="like-a" id="on|{{$dados[$key]['post_uuid']}}">
                                     @if($dados[$key]['reagir_S/N'] > 0)
-                                    <i class="fas fa-heart center fa-16 liked" id="on-{{$dados[$key]['post_id']}}-i"></i>
-                                    <h2 id="on-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    <i class="fas fa-heart center fa-16 liked" id="on|{{$dados[$key]['post_uuid']}}|i"></i>
+                                    <h2 id="on|{{$dados[$key]['post_uuid']}}|h2">Like</h2>
                                     @else
-                                    <i class="far fa-heart center fa-16 unliked" id="off-{{$dados[$key]['post_id']}}-i"></i>
-                                    <h2 id="off-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    <i class="far fa-heart center fa-16 unliked" id="off|{{$dados[$key]['post_uuid']}}|i"></i>
+                                    <h2 id="off|{{$dados[$key]['post_uuid']}}|h2">Like</h2>
                                     @endif
                                 </a>
                             </div>
@@ -216,15 +216,27 @@
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment user-identify-comment-feed">
-                          @if( !($conta_logada[0]->foto == null) )
+                          @if( $dados[$key]['dono_da_pag?']==0 )
+                            @if( !($conta_logada[0]->foto == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
                             </div>
                             @else
                             <div class="profille-img">
-                              <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
+                                  <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
-                            @endif
+                        @endif
+                      @elseif( $dados[$key]['dono_da_pag?']==1 )
+                        @if( !($dados[$key]['foto_page'] == null) )
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_page'] }}">
+                          </div>
+                        @else
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          </div>
+                          @endif
+                      @endif
                         </div>
                         <div class="comment-user-comment comment-user-comment-feed">
                             <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}">Amo muito esse casal</p>
@@ -238,6 +250,7 @@
           <div class="comment-users" id="comment-users-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container" >
                         <div class="user-identify-comment user-identify-comment-feed">
+                          @if( $dados[$key]['foto_ver']==1 )
                             @if( !($dados[$key]['foto_conta'] == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
@@ -247,6 +260,17 @@
                                   <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
                         @endif
+                      @elseif( $dados[$key]['foto_ver']==2 )
+                        @if( !($dados[$key]['foto_conta'] == null) )
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_conta'] }}">
+                          </div>
+                        @else
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          </div>
+                          @endif
+                      @endif
                             <h2 class="text-ellips">{{$dados[$key]['nome_comment']}}</h2>
                         </div>
                         <div class="comment-user-comment comment-user-comment-feed">
@@ -254,11 +278,11 @@
                         </div>
                     </div>
                       <div class="comment-user-container comment-user-container-react">
-                        <a href="" class="comments_like comment-like-{{$dados[$key]['reagir_S/N']}}" id="on-{{$dados[$key]['comment_id']}}">
-                            @if($dados[$key]['reagir_S/N'] > 0)
-                                <i class="fas fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                        <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
+                            @if($dados[$key]['comment_S/N'] > 0)
+                                <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                             @else
-                                <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                                <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
                             @endif
                       </div>
                 </div>
@@ -303,7 +327,7 @@
                                         <?php $conta_page += 1;?>
                                     <?php endif ?>
                                 @empty
-                                @endforelse                                
+                                @endforelse
                                 <?php if (($verifica1 != $verifica)  ) : ?>
                         <?php if (($verifica != 'B')  ) : ?>
                         <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
@@ -381,6 +405,29 @@ function gostar(id){
       }
     });
   }
+
+  function comment_reac(id){
+      $.ajax({
+        url: "{{ route('comment_reac')}}",
+        type: 'get',
+        data: {'id': id},
+         dataType: 'json',
+         success:function(response){
+           console.log(response);
+         /*let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
+         if (response == 1) {
+           likes_qtd = parseInt(likes_qtd) + 1;
+           $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+         } else if (response == 2) {
+           likes_qtd = parseInt(likes_qtd) - 1;
+           if (likes_qtd >= 0) {
+             $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+           }
+         }*/
+        }
+      });
+    }
+
   function seguir(id, id2){
     
      $.ajax({
@@ -463,8 +510,13 @@ function gostar(id){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
             var valor_idconta = $('#conta_id').val();
-            var an = $('.seguir_index').text();            
+            var an = $('.seguir_index').text();
             //$('#' + valor_pagina_id).empty();
+<<<<<<< HEAD
+=======
+            $('#li-component-suggest-' + valor_pagina_id).remove();
+
+>>>>>>> c3128bfb47cc96a30457c6639233cd96d6f3f4ce
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
@@ -477,9 +529,9 @@ function gostar(id){
                   $('.seguir-' + valor_pagina_id).hide();
                 }
               });
-             
+
              });
             });
-        
+
 </script>
 @stop

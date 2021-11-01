@@ -3,6 +3,7 @@
 @extends('layouts.search_menu')
 
 @section('content')
+<div class="main">
 	<div name="page">
 <input type="hidden" name="passa" id="passa" value="{{$val}}">
             <!--<li class="change-look" style="display:flex;justify-content: space-between;align-content: space-between;" >
@@ -29,6 +30,7 @@
                  <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
              </div>
             </li>-->
+</div>
 </div>
 <script >
 
