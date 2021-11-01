@@ -71,7 +71,7 @@
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
                                 <span class="time-posted l-5">50 min</span><div id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
-                                  <a href="" class="seguir-a r-5" id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}">seguir</a>
+                                  <span class="seguir-{{$dados[$key]['page_id']}}"><a href="" class="seguir-a r-5"  id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}">seguir</a></span>
                                 <?php endif; ?></div>
                             </div>
                         </div>
@@ -382,7 +382,7 @@ function gostar(id){
     });
   }
   function seguir(id, id2){
-
+    
      $.ajax({
         url: "{{route('seguir')}}",
         type: 'get',
@@ -390,7 +390,9 @@ function gostar(id){
          dataType: 'json',
          success:function(response){
          console.log(response);
-         $('#seguir-' + id +'-'+ id2).hide();
+         $('.seguir-' + id).hide();
+         $('#li-component-suggest-' + id).remove();
+         $('#li-component-sugest-' + id).remove();
 
         }
       });
@@ -450,7 +452,7 @@ function gostar(id){
                  dataType: 'json',
                  success:function(response){
                  console.log(response);
-                 $("#m_post-" + id).hide();
+                 $("#m_post-" + valor_pagina_id).hide();
 
                 }
               });
@@ -463,8 +465,6 @@ function gostar(id){
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();            
             //$('#' + valor_pagina_id).empty();
-            $('#li-component-suggest-' + valor_pagina_id).remove();
-             
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
@@ -472,6 +472,9 @@ function gostar(id){
                 dataType: 'json',
                 success: function(response){
                   console.log(response);
+                  $('#li-component-suggest-' + valor_pagina_id).remove();
+                  $('#li-component-sugest-' + valor_pagina_id).remove(); 
+                  $('.seguir-' + valor_pagina_id).hide();
                 }
               });
              
