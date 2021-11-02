@@ -182,7 +182,7 @@
 
                     @forelse($dadosSeguida as $Seguida)
                         <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
-                        <li class="li-component-aside-right clearfix">
+                        <li class="li-component-aside-right clearfix" id="seguida-{{$Seguida->identificador_id_seguida}}">
                         @if( !($Paginas->foto_page == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
@@ -194,8 +194,15 @@
                         @endif
                             <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                             <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
+
+                            <a href="" class="nao_seguir">não seguir</a>";
+                            <input type="hidden" id="seguida" value="{{ $Seguida->identificador_id_seguida }}" name="">
+                            
+                            <input type="hidden" id="seguindo" value="{{ $Seguida->identificador_id_seguindo }}" name="">
+
+                            <input type="hidden" id="npage_id" value="{{ $account_name[0]->conta_id }}" name="">
                            <?php
-                           echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";?>
+                           /*echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";*/?>
                         </li>
                         <?php endif ?>
                     @empty
@@ -263,12 +270,17 @@
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
-                       <a href="#" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
-                      <?php /* echo"
+                       <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
+
+                       <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+
+                      <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
-                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                            </li>
+                                
+                            </li> 
+                            
+
 
                             <?php endif ?>
 
@@ -289,14 +301,16 @@
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
-                        <a href="#" class="seguir" value="{{ $account_name[0]->conta_id }}" id="{{ $Paginas->page_id }}">seguir</a>";
-                      <?php /* echo"
+
+                        <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
+                        <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+                      <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
-                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                            </li>
-
-                    <?php else: ?>
+                                 
+                            </li>                       
+                   
+                      <?php else: ?>
 
                     <?php endif ?>
                 @empty
@@ -542,23 +556,44 @@
     $(document).ready(function () {
       $('.like-a').click(function (e) {
           e.preventDefault();
-          let id = e.target.id.split('-');
+          let id = e.target.id.split('|');
           if(id[0] == "on"){
             gostar(id[1]);
-            let new_id = "off-" + id[1] + "-i";
-            document.getElementById("on-" + id[1] + "-i").setAttribute('id', new_id);
-            document.getElementById("off-" + id[1] + "-i").classList.remove('fas');
-            document.getElementById("off-" + id[1] + "-i").classList.remove('liked');
-            document.getElementById("off-" + id[1] + "-i").classList.add('far');
+            let new_id = "off|" + id[1] + "|i";
+            document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+            document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+            document.getElementById("off|" + id[1] + "|i").classList.add('far');
           } else if(id[0] == "off") {
             gostar(id[1]);
-            let new_id = "on-" + id[1] + "-i";
-            document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
-            document.getElementById("on-" + id[1] + "-i").classList.add('fas');
-            document.getElementById("on-" + id[1] + "-i").classList.add('liked');
-            document.getElementById("on-" + id[1] + "-i").classList.remove('far');
+            let new_id = "on|" + id[1] + "|i";
+            document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+            document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+            document.getElementById("on|" + id[1] + "|i").classList.remove('far');
           }
       });
+
+      $('.comment-like-a').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id.split('|');
+          if(id[0] == "on"){
+            comment_reac(id[1]);
+            let new_id = "off|" + id[1] + "|i";
+            document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+            document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+            document.getElementById("off|" + id[1] + "|i").classList.add('far');
+          } else if(id[0] == "off") {
+            comment_reac(id[1]);
+            let new_id = "on|" + id[1] + "|i";
+            document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+            document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+            document.getElementById("on|" + id[1] + "|i").classList.remove('far');
+          }
+      });
+
 
       function tipos(){
 
@@ -716,6 +751,8 @@
             var valor_pagina_id = e.target.id;
              var valor_idconta = $('#conta_id').val();
              $('#li-component-sugest-' + valor_pagina_id).remove();
+             $('#li-component-suggest-' + valor_pagina_id).remove();
+             $('.seguir-' + valor_pagina_id).hide();
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
@@ -727,6 +764,24 @@
               });
 
         })
+        $('.nao_seguir').click(function(e){
+            e.preventDefault();
+            var valor_seguida = $('#seguida').val();
+             var valor_seguindo = $('#seguindo').val()
+             var npage_id = $('#npage_id').val();             
+             $('#seguida-' + valor_seguida).remove();
+             $.ajax({
+                url: "{{route('nao.seguir.seguindo')}}",
+                type: 'get',
+                data: {'seguindo': valor_seguindo, 'seguida': valor_seguida},
+                dataType: 'json',
+                success: function(response){
+                  console.log(response);
+                  $('.seguir-' + npage_id).show();
+                }
+              });
+
+        });                  
 
     });
 

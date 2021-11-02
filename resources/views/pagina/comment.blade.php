@@ -222,8 +222,12 @@
                               </div>
                             </div>
                               <div class="comment-user-container comment-user-container-react">
-                                <a href="" class="comments_like" id="on-{{$dados[$key]['comment_id']}}">
-                                  <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}"></i>
+                                <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
+                                    @if($dados[$key]['comment_S/N'] > 0)
+                                        <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
+                                    @else
+                                        <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
+                                    @endif
                               </div>
                         </div>
                         <?php endforeach; ?>
@@ -256,6 +260,27 @@ function gostar(id){
       }
     });
   }
+  function comment_reac(id){
+      $.ajax({
+        url: "{{ route('comment_reac')}}",
+        type: 'get',
+        data: {'id': id},
+         dataType: 'json',
+         success:function(response){
+           console.log(response);
+         /*let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
+         if (response == 1) {
+           likes_qtd = parseInt(likes_qtd) + 1;
+           $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+         } else if (response == 2) {
+           likes_qtd = parseInt(likes_qtd) - 1;
+           if (likes_qtd >= 0) {
+             $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+           }
+         }*/
+        }
+      });
+    }
   function seguir(id){
 
      $.ajax({

@@ -190,6 +190,9 @@
             </header>
             <nav class="clearfix">
                 <ul class="clearfix">
+
+
+
                 <?php 
                 $suggest_page = [
                     [],[],[],[],[],[],[],
@@ -213,6 +216,7 @@
                     </li>
                 @endfor
                 <?php //endforeach ?>
+
                 </ul>
             </nav>
         </section>
