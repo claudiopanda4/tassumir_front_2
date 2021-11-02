@@ -143,7 +143,7 @@
                 <li class="li-component-aside"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}">{{$conta_logada[0]->nome}} {{$conta_logada[0]->apelido}}</a></li>
                 <!--<li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Criar Relacionamento</a></li>
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
-                @if($checkUserStatus)
+                    <!-- @if($checkUserStatus) -->
                     @if(!$hasUserManyPages)
                         <li class="li-component-aside"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Página de Casal</a></li>
                     @else
@@ -182,7 +182,7 @@
 
                     @forelse($dadosSeguida as $Seguida)
                         <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
-                        <li class="li-component-aside-right clearfix">
+                        <li class="li-component-aside-right clearfix" id="seguida-{{$Seguida->identificador_id_seguida}}">
                         @if( !($Paginas->foto_page == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
@@ -194,8 +194,15 @@
                         @endif
                             <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                             <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
+
+                            <a href="" class="nao_seguir">não seguir</a>";
+                            <input type="hidden" id="seguida" value="{{ $Seguida->identificador_id_seguida }}" name="">
+                            
+                            <input type="hidden" id="seguindo" value="{{ $Seguida->identificador_id_seguindo }}" name="">
+
+                            <input type="hidden" id="npage_id" value="{{ $account_name[0]->conta_id }}" name="">
                            <?php
-                           echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";?>
+                           /*echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";*/?>
                         </li>
                         <?php endif ?>
                     @empty
@@ -263,12 +270,17 @@
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
-                       <a href="#" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
-                      <?php /* echo"
+                       <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
+
+                       <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+
+                      <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
-                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                            </li>
+                                
+                            </li> 
+                            
+
 
                             <?php endif ?>
 
@@ -289,14 +301,16 @@
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
-                        <a href="#" class="seguir" value="{{ $account_name[0]->conta_id }}" id="{{ $Paginas->page_id }}">seguir</a>";
-                      <?php /* echo"
+
+                        <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
+                        <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+                      <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
-                                <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                            </li>
-
-                    <?php else: ?>
+                                 
+                            </li>                       
+                   
+                      <?php else: ?>
 
                     <?php endif ?>
                 @empty
@@ -737,6 +751,8 @@
             var valor_pagina_id = e.target.id;
              var valor_idconta = $('#conta_id').val();
              $('#li-component-sugest-' + valor_pagina_id).remove();
+             $('#li-component-suggest-' + valor_pagina_id).remove();
+             $('.seguir-' + valor_pagina_id).hide();
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
@@ -748,6 +764,24 @@
               });
 
         })
+        $('.nao_seguir').click(function(e){
+            e.preventDefault();
+            var valor_seguida = $('#seguida').val();
+             var valor_seguindo = $('#seguindo').val()
+             var npage_id = $('#npage_id').val();             
+             $('#seguida-' + valor_seguida).remove();
+             $.ajax({
+                url: "{{route('nao.seguir.seguindo')}}",
+                type: 'get',
+                data: {'seguindo': valor_seguindo, 'seguida': valor_seguida},
+                dataType: 'json',
+                success: function(response){
+                  console.log(response);
+                  $('.seguir-' + npage_id).show();
+                }
+              });
+
+        });                  
 
     });
 

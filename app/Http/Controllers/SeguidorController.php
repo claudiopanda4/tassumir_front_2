@@ -70,6 +70,7 @@ class SeguidorController extends Controller
         
             return response()->json('Salvou');
         }
+
     }
 
     /**
@@ -112,15 +113,18 @@ class SeguidorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($seguida, $seguindo)
+    public function destroy(Request $request)
     {
-        $identificador_seguindo = DB::table('seguidors')->where('identificador_id_seguindo', $seguindo)->get();
+        if ($request->ajax()) {
+        $identificador_seguindo = DB::table('seguidors')->where('identificador_id_seguindo', $request->seguindo)->get();
          foreach ($identificador_seguindo as $value) {
-            if ($value->identificador_id_seguida == $seguida) {
+            if ($value->identificador_id_seguida == $request->seguida) {
                 $identi_id_seguindo = $value->seguidor_id;
             }
          }
           DB::table('seguidors')->where(['seguidor_id'=>$identi_id_seguindo])->delete();
-         return back();
+         return response()->json('Deletou');
+        }
+        
     }
 }
