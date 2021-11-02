@@ -708,14 +708,16 @@ class PaginaCasalController extends Controller
         $posts = [];
         $data = DB::table('posts')->where('page_id', $id)->get();
         foreach ($data as $d) {
-            $extension = explode('.', $d->file)[1];
-            if ($this->check_image_extension($extension))
-            {
-                $posts[$index]['postImages'] = $d->file;
-            }
-            else if ($this->check_video_extension($extension))
-            {
-                $posts[$index]['postVideos'] = $d->file;
+            if ( sizeof(explode('.',$d->file)) > 1 ) {
+                $extension = explode('.', $d->file)[1];
+                if ($this->check_image_extension($extension))
+                {
+                    $posts[$index]['postImages'] = $d->file;
+                }
+                else if ($this->check_video_extension($extension))
+                {
+                    $posts[$index]['postVideos'] = $d->file;
+                }
             }
             $posts[$index]['postDescricao'] = $d->descricao;
             $index++;
