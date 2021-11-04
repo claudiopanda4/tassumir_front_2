@@ -16,7 +16,7 @@
                 @endif
 
                 @if($checkUserStatus)
-                @if (!$hasUserManyPages):
+                @if ($hasUserManyPages):
                     <label for="target-profile-cover-page">
                         <div class="add-edit-profile circle">
                             <i class="fas fa-plus center" style="font-size: 10px;"></i>
@@ -139,11 +139,13 @@
         </div>    
         <?php endif ?>
         @endif
+        @if($checkUserStatus)
         <label for="add-post-target" class="add-post-label">
             <div class="add-post circle">
                 <i class="fas fa-plus fas-16 center"></i>
             </div>
         </label>
+        @endif
         <section class="suggest-slide suggest-slide-page">
             <header>
                 <h1>Sugestões de Páginas pra Você</h1>

@@ -60,6 +60,7 @@
 	.edit-profile-mobile {
 		display: block;
 		margin-top: 10px;
+		padding: 13px;
 	}
 	.edit-page-container {
 		display: none;
@@ -251,6 +252,7 @@
 	    width: 100%;
 	    background: transparent;
     	border: 1px solid #343a40;
+    	padding: 13px;
 	}
 	#img-profile-container {
 	    width: 80px;
@@ -553,6 +555,15 @@
 @media screen and (max-width: 330px) {
 	#pop-up-component-create-post .pop-up-component-header {
 		width: 300px;
+	}
+}
+@media screen and (max-width: 520px) {
+	.statistics-profile-page-component h1, 
+	.statistics-profile-page-component h2 {
+	    font-size: 12px;
+	}
+	.statistics-profile-page-component h1 {
+	    font-size: 16px;
 	}
 }
 @media screen and (max-width: 501px) {
