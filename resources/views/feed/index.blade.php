@@ -429,7 +429,7 @@ function gostar(id){
     }
 
   function seguir(id, id2){
-    
+
      $.ajax({
         url: "{{route('seguir')}}",
         type: 'get',
@@ -454,8 +454,22 @@ function gostar(id){
            dataType: 'json',
            success:function(response){
            console.log(response);
+           var nome = '';
+           let src = '{{asset("storage/img/users/") }}';
            comment_qtd = parseInt(comment_qtd) + 1;
-           $("#comment-qtd-" + id).text((comment_qtd) + " comentários");
+           $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
+
+
+                    nome +=   '<div class="comment-user-container comment-user-container-react">'
+                    nome +=     <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
+                    nome +=         @if($response[0]['comment_S/N'] > 0)
+                    nome +=             <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
+                    nome +=         @else
+                    nome +=             <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
+                    nome +=         @endif
+                    nome +=   </div>
+                 nome +=</div>
+
           }
         });
       }
@@ -524,7 +538,7 @@ function gostar(id){
                 success: function(response){
                   console.log(response);
                   $('#li-component-suggest-' + valor_pagina_id).remove();
-                  $('#li-component-sugest-' + valor_pagina_id).remove(); 
+                  $('#li-component-sugest-' + valor_pagina_id).remove();
                   $('.seguir-' + valor_pagina_id).hide();
                 }
               });

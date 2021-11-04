@@ -678,12 +678,13 @@ if (sizeof($notificacoes_aux)>0) {
                     }
 
     public function comentar(Request $request){
-      $post=DB::select('select * from posts where post_id = ?', [$request->id]);
+      $post= DB::select('select * from posts where post_id = ?', [$request->id]);
       $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
       $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
       $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
-            $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
-            $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+      $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
+      $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+      $resposta=array();
 
             if ($page[0]->conta_id_a == $conta[0]->conta_id || $page[0]->conta_id_b == $conta[0]->conta_id) {
               $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$post[0]->page_id, 2 ]);
@@ -693,7 +694,28 @@ if (sizeof($notificacoes_aux)>0) {
                 'tipo_estado_comment_id'=>1,
                 'comment'=>$request->comment,
                 ]);
-                $resposta=1;
+
+                $variable=  DB::table('comments')->get();
+                foreach ($variable as $key) {
+                  $resposta[0]['post_id']=$key->post_id;
+                    $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$key->comment_id, $aux[0]->identificador_id]);
+                   $resposta[0]['comment_S/N']=sizeof($ja_reagiu1);
+                   $resposta[0]['comment_id']=$key->comment_id;
+                   if ($aux[0]->tipo_identificador_id == 1) {
+                    $resposta[0]['nome_comment']=$conta[0]->nome;
+                     $resposta[0]['nome_comment'].=" ";
+                     $resposta[0]['nome_comment'].=$conta[0]->apelido;
+                     $resposta[0]['foto_conta']=$conta[0]->foto;
+                     $resposta[0]['foto_ver']=1;
+                   }elseif ($aux[0]->tipo_identificador_id == 2) {
+                     $page= DB::table('pages')->get();
+                    $resposta[0]['nome_comment']=$page[$aux[0]->id - 1]->nome;
+                     $resposta[0]['foto_conta']=$page[$aux[0]->id - 1]->foto;
+                     $resposta[0]['foto_ver']=2;
+                   }
+                   $resposta[0]['comment']=$key->comment;
+                }
+
               } else {
                 DB::table('comments')->insert([
                 'post_id' => $request->id,
@@ -715,11 +737,31 @@ if (sizeof($notificacoes_aux)>0) {
                             'identificador_id_causador'=> $aux[0]->identificador_id,
                             'identificador_id_destino'=> $aux3[0]->identificador_id,
                             ]);
-                $resposta=1;
+
+                $variable=  DB::table('comments')->get();
+                foreach ($variable as $key) {
+                  $resposta[0]['post_id']=$key->post_id;
+                    $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$key->comment_id, $aux[0]->identificador_id]);
+                   $resposta[0]['comment_S/N']=sizeof($ja_reagiu1);
+                   $resposta[0]['comment_id']=$key->comment_id;
+                   if ($aux[0]->tipo_identificador_id == 1) {
+                    $resposta[0]['nome_comment']=$conta[0]->nome;
+                     $resposta[0]['nome_comment'].=" ";
+                     $resposta[0]['nome_comment'].=$conta[0]->apelido;
+                     $resposta[0]['foto_conta']=$conta[0]->foto;
+                     $resposta[0]['foto_ver']=1;
+                   }elseif ($aux[0]->tipo_identificador_id == 2) {
+                     $page= DB::table('pages')->get();
+                    $resposta[0]['nome_comment']=$page[$aux[0]->id - 1]->nome;
+                     $resposta[0]['foto_conta']=$page[$aux[0]->id - 1]->foto;
+                     $resposta[0]['foto_ver']=2;
+                   }
+                   $resposta[0]['comment']=$key->comment;
+                }
               }
 
 
-          return response()->json($resposta);
+       return response()->json($resposta);
           }
 
     public function defaultDate(){
