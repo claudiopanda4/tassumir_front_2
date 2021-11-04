@@ -169,7 +169,7 @@
                 <h1>Páginas que eu sigo</h1>
             </header>
             <ul class="">
-                               <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
+                <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
                 @forelse($dadosPage as $Paginas)
                 <?php
                 $seguidors = 0;

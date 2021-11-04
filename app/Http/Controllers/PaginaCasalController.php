@@ -116,7 +116,11 @@ class PaginaCasalController extends Controller
             $a++;
           }
         }
-        return view('pagina.couple_page', compact('account_name','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+
+        $sugerir = $this->suggest_pages($page_content[0]->page_id);
+        $allPosts = $this->get_post_types($page_content[0]->page_id);
+
+        return view('pagina.couple_page', compact('account_name','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
     }
 
     public function show_page()
@@ -176,6 +180,10 @@ class PaginaCasalController extends Controller
         $page_current = 'page';
         //dd($page_content);
         $conta_logada = $auth->defaultDate();
+
+        $sugerir = $this->suggest_pages($page_content[0]->page_id);
+        $allPosts = $this->get_post_types($page_content[0]->page_id);
+
         //dd($page_content);//-----------------------------------------------------------------------------------------------------------------------------------------
         $notificacoes=array();
         $a=0;
@@ -227,7 +235,9 @@ class PaginaCasalController extends Controller
           }
         }
 
-        return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current' , 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+        
+
+        return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current' , 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
         try {
             $auth = new AuthController();
             $account_name = $auth->defaultDate();
@@ -242,7 +252,7 @@ class PaginaCasalController extends Controller
             $publicacoes = $this->get_all_post($page_content[0]->page_id);
             $this->current_page_id = $page_content[0]->page_id;
             //dd($page_content);
-            return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+            return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -563,7 +573,10 @@ class PaginaCasalController extends Controller
               }
             }
 
-            return view('pagina.edit_couple', compact('account_name','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
+            $sugerir = $this->suggest_pages($page_content[0]->page_id);
+            $allPosts = $this->get_post_types($page_content[0]->page_id);
+
+            return view('pagina.edit_couple', compact('account_name','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -581,7 +594,10 @@ class PaginaCasalController extends Controller
             $page_current = 'page';
             $conta_logada = $auth->defaultDate();
 
-            return view('pagina.delete_couple_page', compact('account_name', 'conta_logada', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages', 'page_current'));
+            $sugerir = $this->suggest_pages($page_content[0]->page_id);
+            $allPosts = $this->get_post_types($page_content[0]->page_id);
+
+            return view('pagina.delete_couple_page', compact('account_name', 'conta_logada', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -692,14 +708,16 @@ class PaginaCasalController extends Controller
         $posts = [];
         $data = DB::table('posts')->where('page_id', $id)->get();
         foreach ($data as $d) {
-            $extension = explode('.', $d->file)[1];
-            if ($this->check_image_extension($extension))
-            {
-                $posts[$index]['postImages'] = $d->file;
-            }
-            else if ($this->check_video_extension($extension))
-            {
-                $posts[$index]['postVideos'] = $d->file;
+            if ( sizeof(explode('.',$d->file)) > 1 ) {
+                $extension = explode('.', $d->file)[1];
+                if ($this->check_image_extension($extension))
+                {
+                    $posts[$index]['postImages'] = $d->file;
+                }
+                else if ($this->check_video_extension($extension))
+                {
+                    $posts[$index]['postVideos'] = $d->file;
+                }
             }
             $posts[$index]['postDescricao'] = $d->descricao;
             $index++;
