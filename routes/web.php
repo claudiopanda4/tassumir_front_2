@@ -72,9 +72,21 @@ Route::get('/recuperarSenha/code', [App\Http\Controllers\AuthController::class, 
 Route::get('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'newCode'])->name('validate.newCode.form');
 Route::get('/completRegister', [App\Http\Controllers\AuthController::class, 'registrarUserComplete'])->name('account.registerComplete.form');
 
+
+Route::get('/confirmarCodigo', [App\Http\Controllers\AuthController::class, 'codigoRecebidoRegisto'])->name('account.codeConfirmation.form');
+
 Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.teste.form');
 
 Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.enter.form');
+
+Route::post('/verificarCodigo', [App\Http\Controllers\AuthController::class, 'verifyCodeSent'])->name('account.verifyCode.enter');
+
+Route::get('/verificarCodigo', [App\Http\Controllers\AuthController::class, 'verifyCodeSent'])->name('account.verifyCode.enter');
+
+Route::post('/verificarCodigo/Again', [App\Http\Controllers\AuthController::class, 'verifyAgainCodeSent'])->name('account.verifyAgainCode.enter');
+
+
+Route::post('/gerarNovamente', [App\Http\Controllers\AuthController::class, 'generateAgain'])->name('account.generateAgain.enter');
 
 Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
 
