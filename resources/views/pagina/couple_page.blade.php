@@ -204,12 +204,14 @@
                     
                     @for($i = 0; $i < count($allPosts); $i++)
                         @if(isset($allPosts[$i]['postVideos']))
+                        <a href="">
                             <div class="img-post">
                                 <video> 
                                     <source src="{{asset('storage/video/page/' . $allPosts[$i]['postVideos'])}}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
                             </div>
+                        </a>
                         @endif
                     @endfor
                 </div>
@@ -220,9 +222,11 @@
 
                         @for($i = 0; $i < count($allPosts); $i++)
                             @if(isset($allPosts[$i]['postImages']))
+                            <a href="">
                                 <div class="img-post">
                                     <img src="{{asset('storage/img/page/' . $allPosts[$i]['postImages'])}}" class="img-full">
                                 </div>
+                            </a>
                             @endif
                         @endfor
 
@@ -234,9 +238,11 @@
 
                         @for($i = 0; $i < count($allPosts); $i++)
                             @if(isset($allPosts[$i]['postImages']))
+                            <a href="">
                                 <div class="img-post">
                                     <img src="{{asset('storage/img/page/' . $allPosts[$i]['postImages'])}}" class="img-full">
                                 </div>
+                            </a>
                             @endif
                         @endfor
 

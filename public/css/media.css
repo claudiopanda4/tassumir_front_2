@@ -391,6 +391,9 @@
 	.description-couple {
 	    margin-left: 0px;
 	}
+	.post-cover {
+	    height: 375px;
+	}
 }
 @media screen and (max-width: 400px) {
 	.option-profile-menu {
@@ -453,7 +456,7 @@
 		width: 150px;
 	}
 	.comment-user-comment {
-		margin: 10px 5px;
+		margin: 10px 10px 10px;
 	}
 	.suggest-slide {
 		display: block;
@@ -753,12 +756,16 @@
 }
 
 }
-@media screen and (max-width: 768px){
-
-.card-p{
-	background-color: transparent;
-	/*margin: 0 auto;*/
-	width: 100%;
-	border: none;
+@media screen and (max-width: 320px){
+	.post-cover {
+    	height: 320px;
+	}
 }
+@media screen and (max-width: 768px){
+	.card-p{
+		background-color: transparent;
+		/*margin: 0 auto;*/
+		width: 100%;
+		border: none;
+	}
 }
