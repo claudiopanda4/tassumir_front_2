@@ -16,7 +16,7 @@
                 @endif
 
                 @if($checkUserStatus)
-                @if (!$hasUserManyPages):
+                @if ($hasUserManyPages):
                     <label for="target-profile-cover-page">
                         <div class="add-edit-profile circle">
                             <i class="fas fa-plus center" style="font-size: 10px;"></i>
@@ -142,11 +142,13 @@
         </div>    
         <?php endif ?>
         @endif
+        @if($checkUserStatus)
         <label for="add-post-target" class="add-post-label">
             <div class="add-post circle">
                 <i class="fas fa-plus fas-16 center"></i>
             </div>
         </label>
+        @endif
         <section class="suggest-slide suggest-slide-page">
             <header>
                 <h1>Sugestões de Páginas pra Você</h1>
@@ -265,12 +267,14 @@
                     
                     @for($i = 0; $i < count($allPosts); $i++)
                         @if(isset($allPosts[$i]['postVideos']))
+                        <a href="">
                             <div class="img-post">
                                 <video> 
                                     <source src="{{asset('storage/video/page/' . $allPosts[$i]['postVideos'])}}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
                             </div>
+                        </a>
                         @endif
                     @endfor
                 </div>
@@ -281,9 +285,11 @@
 
                         @for($i = 0; $i < count($allPosts); $i++)
                             @if(isset($allPosts[$i]['postImages']))
+                            <a href="">
                                 <div class="img-post">
                                     <img src="{{asset('storage/img/page/' . $allPosts[$i]['postImages'])}}" class="img-full">
                                 </div>
+                            </a>
                             @endif
                         @endfor
 
@@ -295,9 +301,11 @@
 
                         @for($i = 0; $i < count($allPosts); $i++)
                             @if(isset($allPosts[$i]['postImages']))
+                            <a href="">
                                 <div class="img-post">
                                     <img src="{{asset('storage/img/page/' . $allPosts[$i]['postImages'])}}" class="img-full">
                                 </div>
+                            </a>
                             @endif
                         @endfor
 
