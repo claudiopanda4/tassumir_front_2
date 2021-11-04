@@ -528,7 +528,6 @@ function gostar(id){
                   $('.seguir-' + valor_pagina_id).hide();
                 }
               });
-
              });
             });
 
