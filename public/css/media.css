@@ -5,6 +5,11 @@
 	}
 }
 @media screen and (max-width: 540px) {
+	#statistics-profile-page-component-container-lg-1 {
+		width: 230px;
+	}
+}
+@media screen and (max-width: 540px) {
 	.main {
 		width: 100%;
 		margin-top: 6px;
@@ -400,7 +405,7 @@
 }
 @media screen and (max-width: 420px) {
 	.statistics-profile-page-component {
-		
+		width: 24%;
 	}
 	#statistics-profile-page-component-container-lg {
 		display: block;
@@ -563,6 +568,7 @@
 	    border-radius: 0;
 	    margin: 0;
 	}
+
 	.description-couple h1, .description-couple h2 {
 	    padding-left: 20px;
 	}
