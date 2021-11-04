@@ -60,6 +60,7 @@
 	.edit-profile-mobile {
 		display: block;
 		margin-top: 10px;
+		padding: 13px;
 	}
 	.edit-page-container {
 		display: none;
@@ -251,6 +252,7 @@
 	    width: 100%;
 	    background: transparent;
     	border: 1px solid #343a40;
+    	padding: 13px;
 	}
 	#img-profile-container {
 	    width: 80px;
@@ -389,6 +391,9 @@
 	.description-couple {
 	    margin-left: 0px;
 	}
+	.post-cover {
+	    height: 375px;
+	}
 }
 @media screen and (max-width: 400px) {
 	.option-profile-menu {
@@ -451,7 +456,7 @@
 		width: 150px;
 	}
 	.comment-user-comment {
-		margin: 10px 5px;
+		margin: 10px 10px 10px;
 	}
 	.suggest-slide {
 		display: block;
@@ -553,6 +558,15 @@
 @media screen and (max-width: 330px) {
 	#pop-up-component-create-post .pop-up-component-header {
 		width: 300px;
+	}
+}
+@media screen and (max-width: 520px) {
+	.statistics-profile-page-component h1, 
+	.statistics-profile-page-component h2 {
+	    font-size: 12px;
+	}
+	.statistics-profile-page-component h1 {
+	    font-size: 14px;
 	}
 }
 @media screen and (max-width: 501px) {
@@ -742,12 +756,16 @@
 }
 
 }
-@media screen and (max-width: 768px){
-
-.card-p{
-	background-color: transparent;
-	/*margin: 0 auto;*/
-	width: 100%;
-	border: none;
+@media screen and (max-width: 320px){
+	.post-cover {
+    	height: 320px;
+	}
 }
+@media screen and (max-width: 768px){
+	.card-p{
+		background-color: transparent;
+		/*margin: 0 auto;*/
+		width: 100%;
+		border: none;
+	}
 }

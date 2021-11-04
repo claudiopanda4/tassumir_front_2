@@ -24,6 +24,29 @@
                     <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
                 </div>
         </div>
+        <ul class="profile-follow profile-item-center">
+            <li class="statistics-profile">
+                <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_ps']}}</h2>
+                <h2 style="justify-content: center; font-size: 11.5px;">Seguindo</h2>
+                <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+                <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+              <?php endif; ?>
+            </li>
+            <li class="statistics-profile">
+                <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_like']}}</h2>
+                <h2 style="justify-content: center; font-size: 11.5px;">Curtiu</h2>
+                <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+                <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+              <?php endif; ?>
+            </li>
+            <li class="statistics-profile">
+                <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_like']}}</h2>
+                <h2 style="justify-content: center; font-size: 11.5px;">Guardados</h2>
+                <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+                <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+              <?php endif; ?>
+            </li>
+        </ul>
         <?php if (false): ?>
             <h1 class="profile-name">@_{{$account_name[0]->nome}}_{{$account_name[0]->apelido}}</h1>
         <?php endif ?>
@@ -62,20 +85,6 @@
                 </div>
             <?php endif; ?>
         </div>
-        <ul class="profile-follow profile-item-center">
-            <li class="statistics-profile">
-                <h2>Seguindo {{$perfil[0]['qtd_ps']}}</h2>
-                <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
-              <?php endif; ?>
-            </li>
-            <li class="statistics-profile">
-                <h2>Curtiu {{$perfil[0]['qtd_like']}}</h2>
-                <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
-              <?php endif; ?>
-            </li>
-        </ul>
         <div class="inform-profile">
             <h3>Namorado de <span>Ana Joyce</span></h3>
         </div>

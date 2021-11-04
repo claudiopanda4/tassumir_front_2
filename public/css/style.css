@@ -1704,6 +1704,7 @@ label[for="hugo"]{
 	color: #efefef;
     font-size: 19px;
     width: 185px;
+    font-weight: bolder;
 }
 .profile-name-1 {
 	color: #efefef;
@@ -1745,10 +1746,11 @@ label[for="hugo"]{
 
 .statistics-profile {
 	display: inline-flex;
+	flex-direction: column;
     justify-content: space-between;
     font-size: 17px;
     padding: 10px;
-    width: 47.5%;
+    width: 30.5%;
 }
 .statistics-profile h2 {
 	color: #efefef;
@@ -1757,6 +1759,7 @@ label[for="hugo"]{
 }
 .inform-profile {
 	margin-left: 5px;
+	margin-top: 20px;
 }
 .inform-profile p, 
 .inform-profile h2, 
@@ -2082,6 +2085,7 @@ label[for="hugo"]{
 }
 .statistics-profile-page-component h1 {
 	font-weight: bolder;
+	font-size: 16px;
 }
 .statistics-profile-page-identify {
 	margin-top: 15px;
@@ -2170,7 +2174,7 @@ label[for="hugo"]{
 	cursor: pointer;
 }
 #card-profile-option {
-	margin-top: 20px;
+	margin-top: 0px;
 }
 #card-profile-option .option-profile-menu li {
 	width: 31%;
@@ -2412,7 +2416,7 @@ label[for="hugo"]{
 	display: inline-flex;
 }
 .comment-user-comment {
-	margin: 10px 5px;
+	margin: 10px 10px 10px;
 }
 .comment-user-comment p {
 	color: #fff;
@@ -2423,7 +2427,7 @@ label[for="hugo"]{
     max-width: 170px;
     padding-top: 14px;
     background-color: #343a40;
-    border-radius: 10px;
+    border-radius: 8px;
     padding-top: 5px;
 }
 .comment-user-comment.comment-user-comment-feed p {
@@ -2505,4 +2509,9 @@ label[for="hugo"]{
 }
 .mobile-user-name {
 	display: none;
+}
+.comment-user-comment .user {
+	font-size: 13px;
+	color: #fff;
+	margin-top: -5px;
 }

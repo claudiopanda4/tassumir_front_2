@@ -97,7 +97,7 @@
                                 </a>
                                 <?php else: ?>
                                   <a href="" class="like-a" id="off-{{$dados[0]['post_id']}}">
-                                      <i class="far fa-heart center fa-16" id="off-{{$dados[0]['post_id']}}-i"></i>
+                                      <i class="fas fa-heart center fa-16" id="off-{{$dados[0]['post_id']}}-i"></i>
                                       <h2 id="off-{{$dados[0]['post_id']}}-h2">Like</h2>
                                   </a>
                                   <?php endif; ?>
@@ -181,6 +181,7 @@
                       @endif
                         </div>
                         <div class="comment-user-comment">
+                            <h1></h1>
                             <p class="" id="comment-own-{{$dados[0]['post_id']}}">Amo muito esse casal</p>
                         </div>
                     </div>
@@ -217,6 +218,7 @@
                                 @endif
                             @endif
                                 <div class="comment-user-comment">
+                                    <h1 class="user">Claudio Panda</h1>
                                     <p class="">{{$value->comment}}</p>
                                 </div>
                               </div>
