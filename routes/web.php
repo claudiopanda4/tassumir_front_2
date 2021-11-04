@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
         return view('feed.index');
     })->middleware('auth:web1');
     Route::get('/like', [App\Http\Controllers\AuthController::class, 'like'])->name('like');
+    Route::get('/comment_reac', [App\Http\Controllers\AuthController::class, 'comment_reac'])->name('comment_reac');
     Route::get('/tipos', [App\Http\Controllers\AuthController::class, 'tipos'])->name('tipos');
     Route::get('/seguir', [App\Http\Controllers\AuthController::class, 'seguir'])->name('seguir');
     Route::get('/oque_estao_falando', [App\Http\Controllers\AuthController::class, 'oque_estao_falando'])->name('oque_estao_falando');
@@ -42,6 +43,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
 
     Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
 
+    Route::get('/couple_page_show/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple_page.show');
+
     Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::class, 'edit_couple'])->name('edit_couple.page');
     Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
     Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');
@@ -58,8 +61,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/pesquisa/publications', [App\Http\Controllers\searchController::class, 'publicationsSearch'])->name('publicationsSearch.page');
     Route::get('/pesquisa/publications1/{id}', [App\Http\Controllers\searchController::class, 'publicationsSearch1'])->name('publicationsSearch1.page');
     Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home.feed');
-    Route::get('/seguir/{seguida}/{seguindo}', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');
-    Route::get('nao/seguir/{seguida}/{seguindo}', [App\Http\Controllers\SeguidorController::class, 'destroy'])->name('nao.seguir.seguindo');
+    Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');
+    Route::get('nao/seguir', [App\Http\Controllers\SeguidorController::class, 'destroy'])->name('nao.seguir.seguindo');
 
     //Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('home');
 });

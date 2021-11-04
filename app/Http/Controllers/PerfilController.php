@@ -84,20 +84,78 @@ class PerfilController extends Controller
 
             //-------------------------------------------------------------------------
               $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
-              $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-              $lenght = sizeof($aux1);
               $page_current = 'profile';
-              //dd($lenght);
+              $gostos=array();
+              //-----------------------------------------------------------------------------------------------------------------------------------------
+              $notificacoes=array();
+              $a=0;
+              $nome=array();
+              $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+              $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+              if (sizeof($notificacoes_aux)>0) {
+                foreach ($notificacoes_aux as $key) {
+                  $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+                  if ($aux2[0]->tipo_identificador_id == 1) {
+                    $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                    $nome[0]= $conta[0]->nome ;
+                    $nome[0].= " ";
+                    $nome[0].= $conta[0]->apelido;
+                    $nome[1]= $conta[0]->foto;
+                    $nome[2] =1;
+                  }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                    $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                      $nome[0] =$page[0]->nome;
+                      $nome[1] =$page[0]->foto;
+                      $nome[2] =2;
+                  }
+                  switch ($key->id_action_notification) {
+                    case 1:
+                      $notificacoes[$a]['notificacao']=$nome[0] ;
+                      $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                      break;
+                    case 2:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                        break;
+                      case 3:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          break;
+                        case 4:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                            break;
+                          case 5:
+                          $notificacoes[$a]['notificacao']=$nome[0];
+                          $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                              break;
+
+                  }
+                  $notificacoes[$a]['foto']=$nome[1];
+                  $notificacoes[$a]['v']=$nome[2];
+                  $a++;
+                }
+              }
+//------------------------------------------------------------------------------------------------------------------
+          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+          $lenght = sizeof($aux1);
+              $a=0;
               if ($lenght > 0) {
+                $post_reactions= DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                     $perfil[0]['qtd_ps']=sizeof($seguidor);
-
-
-
-                    return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
-
-
-
+                    $perfil[0]['qtd_like']=sizeof($post_reactions);
+               foreach ($post_reactions as $key ) {
+                 $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
+                 if (sizeof($posts) > 0) {
+                $gostos[$a]['formato']=$posts[0]->formato_id;
+                $gostos[$a]['file']=$posts[0]->file;
+                $gostos[$a]['post']=$posts[0]->descricao;
+                $gostos[$a]['post_id']=$posts[0]->post_id;
+                $gostos[$a]['post_uuid']=$posts[0]->uuid;
+                $a++;
+                }
+               }
 
               } else {
                 $perfil[0]['qtd_ps'] = 0;
@@ -107,7 +165,7 @@ class PerfilController extends Controller
 
 
 
-              return view('perfil.index', compact('account_name', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+              return view('perfil.index', compact('account_name', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
 
         } catch (Exception $e) {
@@ -161,10 +219,26 @@ class PerfilController extends Controller
               $account_name=DB::select('select * from contas where uuid  = ?', [$id]);
               $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
               $lenght = sizeof($aux1);
+              $gostos=array();
+              $a=0;
               //dd($lenght);
               if ($lenght > 0) {
+                $post_reactions= DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                     $perfil[0]['qtd_ps']=sizeof($seguidor);
+                    $perfil[0]['qtd_like']=sizeof($post_reactions);
+                    foreach ($post_reactions as $key ) {
+                      $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
+                      if (sizeof($posts) > 0) {
+                     $gostos[$a]['formato']=$posts[0]->formato_id;
+                     $gostos[$a]['file']=$posts[0]->file;
+                     $gostos[$a]['post']=$posts[0]->descricao;
+                     $gostos[$a]['post_id']=$posts[0]->post_id;
+                     $gostos[$a]['post_uuid']=$posts[0]->uuid;
+                     $a++;
+                     }
+                    }
+
               } else {
                 $perfil[0]['qtd_ps'] = 0;
               }
@@ -181,10 +255,60 @@ class PerfilController extends Controller
 
               $page_current = 'profile';
 
+              //-----------------------------------------------------------------------------------------------------------------------------------------
+              $notificacoes=array();
+              $a=0;
+              $nome=array();
+              $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+              $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+              if (sizeof($notificacoes_aux)>0) {
+                foreach ($notificacoes_aux as $key) {
+                  $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+                  if ($aux2[0]->tipo_identificador_id == 1) {
+                    $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                    $nome[0]= $conta[0]->nome ;
+                    $nome[0].= " ";
+                    $nome[0].= $conta[0]->apelido;
+                    $nome[1]= $conta[0]->foto;
+                    $nome[2] =1;
+                  }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                    $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                      $nome[0] =$page[0]->nome;
+                      $nome[1] =$page[0]->foto;
+                      $nome[2] =2;
+                  }
+                  switch ($key->id_action_notification) {
+                    case 1:
+                      $notificacoes[$a]['notificacao']=$nome[0] ;
+                      $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                      break;
+                    case 2:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                        break;
+                      case 3:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          break;
+                        case 4:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                            break;
+                          case 5:
+                          $notificacoes[$a]['notificacao']=$nome[0];
+                          $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                              break;
+
+                  }
+                  $notificacoes[$a]['foto']=$nome[1];
+                  $notificacoes[$a]['v']=$nome[2];
+                  $a++;
+                }
+              }
 
 
 
-              return view('perfil.index', compact('account_name', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+              return view('perfil.index', compact('account_name','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
         } catch (Exception $e) {
             dd('erro');
@@ -298,8 +422,59 @@ class PerfilController extends Controller
             $page_content = $page_couple->page_default_date($account_name);
             $page_current = 'profile';
 
+            //-----------------------------------------------------------------------------------------------------------------------------------------
+            $notificacoes=array();
+            $a=0;
+            $nome=array();
+            $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+            $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+            if (sizeof($notificacoes_aux)>0) {
+              foreach ($notificacoes_aux as $key) {
+                $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+                if ($aux2[0]->tipo_identificador_id == 1) {
+                  $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                  $nome[0]= $conta[0]->nome ;
+                  $nome[0].= " ";
+                  $nome[0].= $conta[0]->apelido;
+                  $nome[1]= $conta[0]->foto;
+                  $nome[2] =1;
+                }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                  $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                    $nome[0] =$page[0]->nome;
+                    $nome[1] =$page[0]->foto;
+                    $nome[2] =2;
+                }
+                switch ($key->id_action_notification) {
+                  case 1:
+                    $notificacoes[$a]['notificacao']=$nome[0] ;
+                    $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                    break;
+                  case 2:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                      break;
+                    case 3:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                        break;
+                      case 4:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                          break;
+                        case 5:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                            break;
 
-            return view('perfil.edit', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
+                }
+                $notificacoes[$a]['foto']=$nome[1];
+                $notificacoes[$a]['v']=$nome[2];
+                $a++;
+              }
+            }
+
+
+            return view('perfil.edit', compact('account_name', 'notificacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
 
         } catch (Exception $e) {
             dd('erro');
@@ -366,20 +541,30 @@ class PerfilController extends Controller
           $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_pedida[0]->conta_id, $conta_pedinte]);
           $verificacao_page_conta_pedida_b=DB::select('select * from pages where conta_id_b  = ?', [$conta_pedida[0]->conta_id]);
           $verificacao_page_conta_pedida_a=DB::select('select * from pages where conta_id_a  = ?', [$conta_pedida[0]->conta_id]);
-
           }
-          if ( sizeof($verificacao_pedido) == 0 && sizeof($verificacao_page_conta_pedinte_a) == 0 && sizeof($verificacao_page_conta_pedinte_b) == 0 && sizeof($verificacao_page_conta_pedida_b) == 0 && sizeof($verificacao_page_conta_pedida_a) == 0 ) {
+          $conta= DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
+          if ( sizeof($verificacao_pedido) == 0 && sizeof($verificacao_page_conta_pedinte_a) == 0 && sizeof($verificacao_page_conta_pedinte_b) == 0 && sizeof($verificacao_page_conta_pedida_b) == 0 && sizeof($verificacao_page_conta_pedida_a) == 0 && $conta_pedida[0]->genero != $conta[0]->genero ) {
 
           DB::table('pedido_relacionamentos')->insert([
 
               'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
               'conta_id_pedida' => $conta_pedida[0]->conta_id,
               'conta_id_pedinte' =>  $conta_pedinte,
-              'estado_pedido_relac' => 1,
+              'estado_pedido_relac_id' => 1,
               'name_page' => $request->name_page,
-              'tipo_relacionamento_id' => 1,
+              'tipo_relacionamento_id' =>$request->tipo_relac,
 
           ]);
+          $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1 ]);
+          $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedinte, 1 ]);
+
+          DB::table('notifications')->insert([
+                  'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'id_state_notification' => 2,
+                  'id_action_notification' => 4,
+                  'identificador_id_causador'=> $aux[0]->identificador_id,
+                  'identificador_id_destino'=> $aux2[0]->identificador_id,
+                  ]);
 
         }
           return redirect()->route('account1.profile', $request->conta_pedida);
@@ -390,20 +575,19 @@ class PerfilController extends Controller
 
 
     public function add_picture(Request $request)
-    {
+    {	
         try
-        {
-            if ($request->page_u)
+        {	
+            if ($request->hasFile('pagePicture') && PaginaCasalController::check_image_extension($request->pagePicture->extension()))
             {
-                if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
-                {
-                    $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
+                $file_name = time() . '_' . md5($request->file('pagePicture')->getClientOriginalName()) . '.' . $request->pagePicture->extension();
 
-                    $request->file('profilePicture')->storeAs('public/img/page', $file_name);
-                    AuthController::updatePageProfilePicture($file_name, $request->page_u);
-                }
+                $request->file('pagePicture')->storeAs('public/img/page', $file_name);
+                AuthController::updatePageProfilePicture($file_name, $request->uuidPage);
+            }
 
-            } else {
+            else if ($request->hasFile('profilePicture')) 
+            {
                 if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
                 {
                     $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();

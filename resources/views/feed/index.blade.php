@@ -70,8 +70,8 @@
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
-                                <span class="time-posted l-5">50 min</span><div id="seguir-{{$dados[$key]['page_id']}}"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
-                                  <a href="" class="seguir-a r-5" id="{{$dados[$key]['page_id']}}">seguir</a>
+                                <span class="time-posted l-5">50 min</span><div id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
+                                  <span class="seguir-{{$dados[$key]['page_id']}}"><a href="" class="seguir-a r-5"  id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}">seguir</a></span>
                                 <?php endif; ?></div>
                             </div>
                         </div>
@@ -108,7 +108,7 @@
                 </header>
                 <div class="card-post">
                     <div class="">
-                        @if($dados[$key]['post'] == "" || $dados[$key]['post'] == null 
+                        @if($dados[$key]['post'] == "" || $dados[$key]['post'] == null
                         || $dados[$key]['post'] == " " || $dados[$key]['post'] == "null")
                             <p class="untext"></p>
                         @else
@@ -131,7 +131,7 @@
                 <nav class="row interaction-numbers">
                     <ul class="">
                         <li>
-                            <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
+                            <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_uuid']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
                         </li>
                         <li>
                             <a href="{{route('post_index', $dados[$key]['post_uuid'])}}" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
@@ -147,13 +147,13 @@
                     <ul class="row clearfix ul-interaction-user">
                         <li class="l-5">
                             <div class="content-button">
-                                <a href="" class="like-a" id="on-{{$dados[$key]['post_id']}}">
+                                <a href="" class="like-a" id="on|{{$dados[$key]['post_uuid']}}">
                                     @if($dados[$key]['reagir_S/N'] > 0)
-                                    <i class="fas fa-heart center fa-16 liked" id="on-{{$dados[$key]['post_id']}}-i"></i>
-                                    <h2 id="on-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    <i class="fas fa-heart center fa-16 liked" id="on|{{$dados[$key]['post_uuid']}}|i"></i>
+                                    <h2 id="on|{{$dados[$key]['post_uuid']}}|h2">Like</h2>
                                     @else
-                                    <i class="far fa-heart center fa-16 unliked" id="off-{{$dados[$key]['post_id']}}-i"></i>
-                                    <h2 id="off-{{$dados[$key]['post_id']}}-h2">Like</h2>
+                                    <i class="far fa-heart center fa-16 unliked" id="off|{{$dados[$key]['post_uuid']}}|i"></i>
+                                    <h2 id="off|{{$dados[$key]['post_uuid']}}|h2">Like</h2>
                                     @endif
                                 </a>
                             </div>
@@ -210,21 +210,33 @@
                             </a>
                         </div>
                         <?php endif ?>
-                        
+
                     </div>
                 </div>
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment user-identify-comment-feed">
-                          @if( !($conta_logada[0]->foto == null) )
+                          @if( $dados[$key]['dono_da_pag?']==0 )
+                            @if( !($conta_logada[0]->foto == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
                             </div>
                             @else
                             <div class="profille-img">
-                              <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
+                                  <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
-                            @endif
+                        @endif
+                      @elseif( $dados[$key]['dono_da_pag?']==1 )
+                        @if( !($dados[$key]['foto_page'] == null) )
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_page'] }}">
+                          </div>
+                        @else
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          </div>
+                          @endif
+                      @endif
                         </div>
                         <div class="comment-user-comment comment-user-comment-feed">
                             <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}">Amo muito esse casal</p>
@@ -238,6 +250,7 @@
           <div class="comment-users" id="comment-users-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container" >
                         <div class="user-identify-comment user-identify-comment-feed">
+                          @if( $dados[$key]['foto_ver']==1 )
                             @if( !($dados[$key]['foto_conta'] == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
@@ -247,6 +260,17 @@
                                   <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
                         @endif
+                      @elseif( $dados[$key]['foto_ver']==2 )
+                        @if( !($dados[$key]['foto_conta'] == null) )
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_conta'] }}">
+                          </div>
+                        @else
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          </div>
+                          @endif
+                      @endif
                             <h2 class="text-ellips">{{$dados[$key]['nome_comment']}}</h2>
                         </div>
                         <div class="comment-user-comment comment-user-comment-feed">
@@ -254,11 +278,11 @@
                         </div>
                     </div>
                       <div class="comment-user-container comment-user-container-react">
-                        <a href="" class="comments_like comment-like-{{$dados[$key]['reagir_S/N']}}" id="on-{{$dados[$key]['comment_id']}}">
-                            @if($dados[$key]['reagir_S/N'] > 0)
-                                <i class="fas fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                        <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
+                            @if($dados[$key]['comment_S/N'] > 0)
+                                <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                             @else
-                                <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}-i"></i>
+                                <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
                             @endif
                       </div>
                 </div>
@@ -276,21 +300,83 @@
                     </header>
                     <nav class="clearfix">
                         <ul class="clearfix">
-                            <?php
-                            $suggest_page = [
-                                [],[],[],[],[],[],[],
-                            ];
-                            foreach ($suggest_page as $key => $value): ?>
-                                <li class="li-component-suggest clearfix l-5">
+                            @forelse($dadosPage as $Paginas)
+                                <?php $conta_page = 0;
+                                    $verifica1 = 'A';
+                                    $verifica = 'B';
+                                    $seguidors = 0;
+                                    $tamanho = 0;
+                                    ?>
+                                    <?php
+                                        foreach ($dadosSeguida as  $val){
+                                            if ($val->id == $Paginas->page_id) {
+                                                $seguidors += 1;
+
+                                            }
+                                        }
+                                    ?>
+                                @forelse($dadosSeguida as $Seguida)
+                                    <?php $tamanho = sizeof($dadosSeguida);?>
+                                    <?php if ($Paginas->page_id == $Seguida->id) : ?>
+                                        <?php if ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo) : ?>
+                                            <?php $verifica1 = $Paginas->nome;?>
+                                        <?php else: ?>
+                                            <?php $verifica = $Paginas->nome;?>
+                                        <?php endif ?>
+                                    <?php else: ?>
+                                        <?php $conta_page += 1;?>
+                                    <?php endif ?>
+                                @empty
+                                @endforelse
+                                <?php if (($verifica1 != $verifica)  ) : ?>
+                        <?php if (($verifica != 'B')  ) : ?>
+                        <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
-                                        <div class="sugest_component circle clearfix">
-                                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                        </div>
+                                        @if( !($Paginas->foto_page == null) )
+                                            <div class="sugest_component circle clearfix">
+                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                            </div>
+                                        @else
+                                            <div class="sugest_component circle clearfix">
+                                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                            </div>
+                                        @endif
                                     </div>
-                                    <h1 class="name-suggest text-ellips">Criticando casais</h1>
-                                    <a href="" class=""><div>seguir</div></a>
+                                    <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
+                                    <a href="" class="seguir_index" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
+                                    <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
                                 </li>
-                            <?php endforeach ?>
+                            <?php endif ?>
+
+                    <?php else: ?>
+
+                    <?php endif ?>
+                    <?php if (($conta_page == $tamanho)  ) : ?>
+                        <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
+                                    <div class="clearfix sugest_component_div">
+                                        @if( !($Paginas->foto_page == null) )
+                                            <div class="sugest_component circle clearfix">
+                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                            </div>
+                                        @else
+                                            <div class="sugest_component circle clearfix">
+                                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
+                                    <a href="" class="seguir_index" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
+                                    <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+                                </li>
+
+                    <?php else: ?>
+
+                    <?php endif ?>
+                             @empty
+                                <li class="li-component-aside-right clearfix">
+                                <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
+                                </li>
+                            @endforelse
                         </ul>
                     </nav>
                 </section>
@@ -319,8 +405,31 @@ function gostar(id){
       }
     });
   }
-  function seguir(id){
 
+  function comment_reac(id){
+      $.ajax({
+        url: "{{ route('comment_reac')}}",
+        type: 'get',
+        data: {'id': id},
+         dataType: 'json',
+         success:function(response){
+           console.log(response);
+         /*let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
+         if (response == 1) {
+           likes_qtd = parseInt(likes_qtd) + 1;
+           $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+         } else if (response == 2) {
+           likes_qtd = parseInt(likes_qtd) - 1;
+           if (likes_qtd >= 0) {
+             $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+           }
+         }*/
+        }
+      });
+    }
+
+  function seguir(id, id2){
+    
      $.ajax({
         url: "{{route('seguir')}}",
         type: 'get',
@@ -328,7 +437,9 @@ function gostar(id){
          dataType: 'json',
          success:function(response){
          console.log(response);
-         $('#seguir-' + id).hide();
+         $('.seguir-' + id).hide();
+         $('#li-component-suggest-' + id).remove();
+         $('#li-component-sugest-' + id).remove();
 
         }
       });
@@ -388,10 +499,37 @@ function gostar(id){
                  dataType: 'json',
                  success:function(response){
                  console.log(response);
-                 $("#m_post-" + id).hide();
+                 $("#m_post-" + valor_pagina_id).hide();
 
                 }
               });
             }
+
+    $(document).ready(function () {
+            $('.seguir_index').click(function(e){
+            e.preventDefault();
+            var valor_pagina_id = e.target.id;
+            var valor_idconta = $('#conta_id').val();
+            var an = $('.seguir_index').text();
+            //$('#' + valor_pagina_id).empty();
+
+            $('#li-component-suggest-' + valor_pagina_id).remove();
+
+
+             $.ajax({
+                url: "{{route('seguir.seguindo')}}",
+                type: 'get',
+                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id},
+                dataType: 'json',
+                success: function(response){
+                  console.log(response);
+                  $('#li-component-suggest-' + valor_pagina_id).remove();
+                  $('#li-component-sugest-' + valor_pagina_id).remove(); 
+                  $('.seguir-' + valor_pagina_id).hide();
+                }
+              });
+             });
+            });
+
 </script>
 @stop

@@ -16,7 +16,7 @@
                           </div>
                       @endif
                         <div class="page-identify l-5 clearfix">
-                            <a href="http://127.0.0.1:8000/couple_page/3e55d378-305f-403d-b996-ae3dac4f754b"><h1 class="">{{$dados[0]['nome_pag']}}</h1></a>
+                            <a href="{{route('couple.page1', $dados[0]['page_uuid']) }}"><h1 class="">{{$dados[0]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
                                 <span class="time-posted l-5">50 min</span><div id="seguir"><?php if ($dados[0]['seguir_S/N'] == 0): ?>
                                   <a href="" class="seguir-a r-5" id="{{$dados[0]['page_id']}}">seguir</a>
@@ -97,7 +97,7 @@
                                 </a>
                                 <?php else: ?>
                                   <a href="" class="like-a" id="off-{{$dados[0]['post_id']}}">
-                                      <i class="far fa-heart center fa-16" id="off-{{$dados[0]['post_id']}}-i"></i>
+                                      <i class="fas fa-heart center fa-16" id="off-{{$dados[0]['post_id']}}-i"></i>
                                       <h2 id="off-{{$dados[0]['post_id']}}-h2">Like</h2>
                                   </a>
                                   <?php endif; ?>
@@ -158,17 +158,30 @@
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[0]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment">
-                          @if( !($conta_logada[0]->foto == null) )
+                          @if( $dados[0]['dono_da_pag?']==0 )
+                            @if( !($conta_logada[0]->foto == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
                             </div>
                             @else
                             <div class="profille-img">
-                              <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                                  <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
-                            @endif
+                        @endif
+                      @elseif( $dados[0]['dono_da_pag?']==1 )
+                        @if( !($dados[0]['foto_page'] == null) )
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[0]['foto_page'] }}">
+                          </div>
+                        @else
+                          <div class="profille-img">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          </div>
+                          @endif
+                      @endif
                         </div>
                         <div class="comment-user-comment">
+                            <h1></h1>
                             <p class="" id="comment-own-{{$dados[0]['post_id']}}">Amo muito esse casal</p>
                         </div>
                     </div>
@@ -183,23 +196,40 @@
                   <div class="comment-users" id="comment-users-{{$dados[0]['post_id']}}">
                             <div class="comment-user-container" >
                               <div class="user-identify-comment">
+                                @if( $dados[$key]['foto_ver']==1 )
                                   @if( !($dados[$key]['foto_conta'] == null) )
                                   <div class="profille-img">
                                       <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
                                   </div>
                                   @else
                                   <div class="profille-img">
-                                        <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                                        <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                                   </div>
                               @endif
+                            @elseif( $dados[$key]['foto_ver']==2 )
+                              @if( !($dados[$key]['foto_conta'] == null) )
+                                <div class="profille-img">
+                                  <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_conta'] }}">
+                                </div>
+                              @else
+                                <div class="profille-img">
+                                  <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                </div>
+                                @endif
+                            @endif
                                 <div class="comment-user-comment">
+                                    <h1 class="user">Claudio Panda</h1>
                                     <p class="">{{$value->comment}}</p>
                                 </div>
                               </div>
                             </div>
                               <div class="comment-user-container comment-user-container-react">
-                                <a href="" class="comments_like" id="on-{{$dados[$key]['comment_id']}}">
-                                  <i class="far fa-heart fa-12" id="on-{{$dados[$key]['comment_id']}}"></i>
+                                <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
+                                    @if($dados[$key]['comment_S/N'] > 0)
+                                        <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
+                                    @else
+                                        <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
+                                    @endif
                               </div>
                         </div>
                         <?php endforeach; ?>
@@ -232,6 +262,27 @@ function gostar(id){
       }
     });
   }
+  function comment_reac(id){
+      $.ajax({
+        url: "{{ route('comment_reac')}}",
+        type: 'get',
+        data: {'id': id},
+         dataType: 'json',
+         success:function(response){
+           console.log(response);
+         /*let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
+         if (response == 1) {
+           likes_qtd = parseInt(likes_qtd) + 1;
+           $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+         } else if (response == 2) {
+           likes_qtd = parseInt(likes_qtd) - 1;
+           if (likes_qtd >= 0) {
+             $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+           }
+         }*/
+        }
+      });
+    }
   function seguir(id){
 
      $.ajax({

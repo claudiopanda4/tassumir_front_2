@@ -39,10 +39,9 @@
                 </li>
             </ul>
             <nav class="menu-header ">
-
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
-                        <a href=""><i class="fas fa-search fa-24" size="7"></i></a>
+                        <a href="{{route('allSearch.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="last-component-n clearfix-n " >
@@ -66,18 +65,46 @@
                                         <h4 class="noti-subtitle">Hoje</h4>
                                     </div>
                                 </li>
+                              <?php foreach ($notificacoes as $key => $value): ?>
 
                                 <li class="change-look noti-flex-info" >
+                                  <?php if ($notificacoes[$key]['v']== 1): ?>
+                                    <?php if ($notificacoes[$key]['foto']!= null): ?>
 
                                     <div class="ml-2 novi-div-image">
-
-                                         <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
+                                         <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$key]['foto'] }}">
                                     </div>
+                                    <?php else: ?>
+                                      <div class="ml-2 novi-div-image">
+
+                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                      </div>
+                                      <?php endif; ?>
+                                    <?php elseif ($notificacoes[$key]['v']== 2): ?>
+                                      <?php if ($notificacoes[$key]['foto']!= null): ?>
+
+                                      <div class="ml-2 novi-div-image">
+
+                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                      </div>
+                                      <?php else: ?>
+                                        <div class="ml-2 novi-div-image">
+
+                                             <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                        </div>
+                                        <?php endif; ?>
+
+                                    <?php endif; ?>
+
                                     <div class="noti-div-name">
 
-                                    <span class="noti-span">Delton Agostinho, gostou a foto do casal Panda </span>
+                                    <span class="noti-span">{{$notificacoes[$key]['notificacao']}}</span>
 
                                     <div class="noti-hour ml-2">
                                         <a href=""><span class="">há um dia</span></a>
@@ -86,71 +113,11 @@
                                    </div>
 
                                 </li>
-
-                                <li class="change-look noti-flex-info" >
-
-                                    <div class="ml-2 novi-div-image">
-
-                                         <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
-                                    </div>
-                                    <div class="noti-div-name">
-
-                                    <span class="noti-span">Delton Agostinho, gostou a foto do casal Panda </span>
-
-                                    <div class="noti-hour ml-2">
-                                        <a href=""><span class="">há 20min</span></a>
-                                    </div>
-
-                                   </div>
-
-                                </li>
-
-
-
-                                <li class="noti-flex mt-2">
-
-                                    <div class="noti-div-subtitle">
-                                        <h4 class="noti-subtitle">Ontem</h4>
-                                    </div>
-                                </li>
-
-                                <li class="change-look noti-flex-info" >
-
-                                <div class="noti-flex-info">
-
-                                    <div class="ml-2 novi-div-image">
-
-                                         <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
-                                    </div>
-                                    <div class="noti-div-name ">
-
-                                        <span class="noti-span">Delton Agostinho, fez-te um pedido de relacionamento </span>
-                                        <div class="noti-hour">
-                                            <a href=""><span class="">há um dia</span></a>
-                                        </div>
-                                        <div class="noti-hour-1 mt-2">
-                                            <button class="noti-btn-aceitar-1">Aceitar</button>
-
-                                            <button class="noti-btn-rejeitar">Rejeitar</button>
-
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                </li>
+                              <?php endforeach; ?>
 
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
-
-
                                     <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
                                 </li>
-
-
                             </ul>
                         </div>
                     </li>
@@ -169,14 +136,11 @@
             </nav>
     </header>
     <div class="header-main-component"></div>
-
-
-
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix">
                 <li class="li-component-aside li-component-aside-active"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('account.home')}}">Feed de Notícias</a></li>
-                <li class="li-component-aside"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}">{{$conta_logada[0]->nome}} {{$conta_logada[0]->apelido}}</a></li>
+                <li class="li-component-aside text-ellips"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a class="text-ellips" href="{{route('account.profile')}}">{{$conta_logada[0]->nome}} {{$conta_logada[0]->apelido}}</a></li>
                 <!--<li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Criar Relacionamento</a></li>
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
                 @if($checkUserStatus)
@@ -205,7 +169,7 @@
                 <h1>Páginas que eu sigo</h1>
             </header>
             <ul class="">
-                               <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
+                <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
                 @forelse($dadosPage as $Paginas)
                 <?php
                 $seguidors = 0;
@@ -218,7 +182,7 @@
 
                     @forelse($dadosSeguida as $Seguida)
                         <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
-                        <li class="li-component-aside-right clearfix">
+                        <li class="li-component-aside-right clearfix" id="seguida-{{$Seguida->identificador_id_seguida}}">
                         @if( !($Paginas->foto_page == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
@@ -230,8 +194,15 @@
                         @endif
                             <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                             <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
+
+                            <a href="" class="nao_seguir">não seguir</a>";
+                            <input type="hidden" id="seguida" value="{{ $Seguida->identificador_id_seguida }}" name="">
+                            
+                            <input type="hidden" id="seguindo" value="{{ $Seguida->identificador_id_seguindo }}" name="">
+
+                            <input type="hidden" id="npage_id" value="{{ $account_name[0]->conta_id }}" name="">
                            <?php
-                           echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";?>
+                           /*echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";*/?>
                         </li>
                         <?php endif ?>
                     @empty
@@ -255,7 +226,7 @@
             <header>
                 <h1>Sugestões para Você</h1>
             </header>
-            <ul class="">
+            <ul class="segest">
              @forelse($dadosPage as $Paginas)
                 <?php $conta_page = 0;
                  $verifica1 = 'A';
@@ -286,7 +257,7 @@
                     @endforelse
                     <?php if (($verifica1 != $verifica)  ) : ?>
                         <?php if (($verifica != 'B')  ) : ?>
-                        <li class="li-component-aside-right clearfix">
+                        <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
                         @if( !($Paginas->foto_page == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
@@ -298,16 +269,26 @@
                         @endif
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
-                      <?php  echo"
+
+                       <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
+
+                       <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+
+                      <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
-                                ?>
-                            </li>
+                                */?>
+                                
+                            </li> 
+                            
+
+
                             <?php endif ?>
+
                     <?php else: ?>
 
                     <?php endif ?>
                     <?php if (($conta_page == $tamanho)  ) : ?>
-                        <li class="li-component-aside-right clearfix">
+                        <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
                         @if( !($Paginas->foto_page == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
@@ -319,11 +300,17 @@
                         @endif
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
-                      <?php  echo"
+
+
+                        <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
+                        <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+                      <?php /* echo"  
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
-                                ?>
-                            </li>
-                    <?php else: ?>
+                                */?>
+                                 
+                            </li>                       
+                   
+                      <?php else: ?>
 
                     <?php endif ?>
                 @empty
@@ -364,11 +351,17 @@
             <div class="header-height"></div>
             <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
                 <div class="first-component clearfix l-5">
-                    <div class="page-cover circle l-5">
-                        <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                    </div>
+                    @if($page_content[0]->foto)
+                        <div class="page-cover circle l-5">
+                            <img class="img-full circle" src="{{asset('storage/img/page/' . $page_content[0]->foto)}}">
+                        </div>
+                    @else
+                        <div class="page-cover circle l-5">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                        </div>
+                    @endif
                     <div class="page-identify l-5 clearfix">
-                        <h1 class="text-ellips">Famosos em Relacionamentos</h1>
+                        <h1 class="text-ellips">{{ $page_content[0]->nome }}</h1>
                     </div>
                 </div>
                 <div class="textarea-container l-5" style="width:100%;">
@@ -447,9 +440,9 @@
                 <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <?php if (sizeof($page_content)): ?>
-                        <input type="hidden" name="f" value="{{$page_content[0]->uuid}}">
+                        <input type="hidden" name="uuidPage" value="{{$page_content[0]->uuid}}">
                     <?php endif ?>
-                    <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
+                    <input class="file" type="file" name="pagePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
                             <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
@@ -522,15 +515,27 @@
                     </label>
                     <input type="checkbox" name="" id="relationship-type-target" class="invisible">
                     <div class="relationship-type-all" id="relationship-type-container" name="relationship-type-container">
-
+                    <script type="text/javascript">
+                        $(document).ready(function(){
+                            $(document).click(function(e){
+                                //console.log(e.target.className);
+                                if(e.target.className == 'relationship-type-component'){
+                                    $('#relationship-selected-type').text(e.target.id.split('-')[0]);
+                                    $('#relationship-type-selected').val(e.target.id.split('-')[1]);
+                                }
+                            });
+                        });
+                    </script>
                     </div>
+
                     <div class="justify-content-start marriage-proposal" style="margin-bottom: 10px;">
                         <span class="text-white">Caso seja aceite, qual nome da Página de casal, gostaria de usar? (Pode ser editado...).</span>
                     </div>
                     <div class="form-group marriage-proposal">
                         <input type="text" class="input-text-default input-full" name="name_page" type="text" placeholder="Nome da Página do Casal">
                     </div>
-                    <input type="hidden" name="conta_pedida" value="{{$account_name[0]->uuid}}" id="relationship-type-selected">
+                    <input type="hidden" name="conta_pedida" value="{{$account_name[0]->uuid}}" id="conta_pedida">
+                    <input type="hidden" name="tipo_relac"  id="relationship-type-selected">
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done-marriage">
                           <button type="submit" name="button" style="padding: 10px; font-size: 14px;" >
@@ -551,23 +556,44 @@
     $(document).ready(function () {
       $('.like-a').click(function (e) {
           e.preventDefault();
-          let id = e.target.id.split('-');
+          let id = e.target.id.split('|');
           if(id[0] == "on"){
             gostar(id[1]);
-            let new_id = "off-" + id[1] + "-i";
-            document.getElementById("on-" + id[1] + "-i").setAttribute('id', new_id);
-            document.getElementById("off-" + id[1] + "-i").classList.remove('fas');
-            document.getElementById("off-" + id[1] + "-i").classList.remove('liked');
-            document.getElementById("off-" + id[1] + "-i").classList.add('far');
+            let new_id = "off|" + id[1] + "|i";
+            document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+            document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+            document.getElementById("off|" + id[1] + "|i").classList.add('far');
           } else if(id[0] == "off") {
             gostar(id[1]);
-            let new_id = "on-" + id[1] + "-i";
-            document.getElementById("off-" + id[1] + "-i").setAttribute('id', new_id);
-            document.getElementById("on-" + id[1] + "-i").classList.add('fas');
-            document.getElementById("on-" + id[1] + "-i").classList.add('liked');
-            document.getElementById("on-" + id[1] + "-i").classList.remove('far');
+            let new_id = "on|" + id[1] + "|i";
+            document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+            document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+            document.getElementById("on|" + id[1] + "|i").classList.remove('far');
           }
       });
+
+      $('.comment-like-a').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id.split('|');
+          if(id[0] == "on"){
+            comment_reac(id[1]);
+            let new_id = "off|" + id[1] + "|i";
+            document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+            document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+            document.getElementById("off|" + id[1] + "|i").classList.add('far');
+          } else if(id[0] == "off") {
+            comment_reac(id[1]);
+            let new_id = "on|" + id[1] + "|i";
+            document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+            document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+            document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+            document.getElementById("on|" + id[1] + "|i").classList.remove('far');
+          }
+      });
+
 
       function tipos(){
 
@@ -576,17 +602,18 @@
           type: 'get',
           dataType: 'json',
           success:function(response){
-            var tipo='';
-            var a=0;
+            var tipo = '';
+            var a = 0;
             console.log(response);
+            $('.relationship-type-all').empty();
             $.each(response, function(key, value){
-              if(a==0){
-              tipo+='<div class="relationship-type-all" id="relationship-type-container">'
+              if(a == 0){
+              tipo += '<div class="relationship-type-all" id="relationship-type-container">'
             }
-              tipo+=   ' <label for="relationship-type-target">'
-              tipo+=        '<h2 id="value.tipo_relacionamento" class="relationship-type-component">'+value.tipo_relacionamento+'</h2>'
-              tipo+=   ' </label>'
-              tipo+=  '</div>'
+              tipo += ' <label for="relationship-type-target">'
+              tipo +=        '<h2 id="' + value.tipo_relacionamento + '-' + value.tipo_relacionamento_id + '" class="relationship-type-component">' + value.tipo_relacionamento + '</h2>'
+              tipo +=   ' </label>'
+              tipo +=  '</div>'
 
              a++;
             })
@@ -599,7 +626,10 @@
       $('.seguir-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
-            seguir(id);
+          let id1= id.split('-')[1];
+          let id2= id.split('-')[2];
+
+            seguir(id1, id2);
 
       });
 
@@ -638,9 +668,8 @@
       });
 
       $('.relationship-type-component').click(function(e){
-        alert('qualquer')
-          /*  $('#relationship-selected-type').text("cheguei aq");
-            $('#relationship-type-selected').val(e.target.id.split('-')[3]);*/
+            alert(e.target.id.split('-')[3]);
+            $('#relationship-type-selected').val(e.target.id.split('-')[3]);
       });
       $('#genre-id').val($("input[name='genre']:checked").val());
       $('.genre-class').click(function(){
@@ -716,6 +745,43 @@
             });
         });
 
+
+        $('.seguir').click(function(e){
+            e.preventDefault();
+            var valor_pagina_id = e.target.id;
+             var valor_idconta = $('#conta_id').val();
+             $('#li-component-sugest-' + valor_pagina_id).remove();
+             $('#li-component-suggest-' + valor_pagina_id).remove();
+             $('.seguir-' + valor_pagina_id).hide();
+             $.ajax({
+                url: "{{route('seguir.seguindo')}}",
+                type: 'get',
+                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id},
+                dataType: 'json',
+                success: function(response){
+                  console.log(response);
+                }
+              });
+
+        })
+        $('.nao_seguir').click(function(e){
+            e.preventDefault();
+            var valor_seguida = $('#seguida').val();
+             var valor_seguindo = $('#seguindo').val()
+             var npage_id = $('#npage_id').val();             
+             $('#seguida-' + valor_seguida).remove();
+             $.ajax({
+                url: "{{route('nao.seguir.seguindo')}}",
+                type: 'get',
+                data: {'seguindo': valor_seguindo, 'seguida': valor_seguida},
+                dataType: 'json',
+                success: function(response){
+                  console.log(response);
+                  $('.seguir-' + npage_id).show();
+                }
+              });
+
+        });                  
 
     });
 

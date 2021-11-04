@@ -35,28 +35,66 @@ class SeguidorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function store($seguida, $seguindo)
+     public function store(Request $request)
     {
-        $identificador_seguida = DB::table('identificadors')->where('id', $seguida)->get();
-        $identificador_seguindo = DB::table('identificadors')->where('id', $seguindo)->get();
-        foreach ($identificador_seguindo as $valueseguindo) {
-            if ($valueseguindo->tipo_identificador_id == 1) {
-                $identi_id_seguindo = $valueseguindo->identificador_id;
-            } 
-        }
-        foreach ($identificador_seguida as $valueseguida) {
-            if ($valueseguida->tipo_identificador_id == 2) {
-                $identi_id_seguida = $valueseguida->identificador_id;
-                
+        if ($request->ajax()) {
+            $identificador_seguida = DB::table('identificadors')->where('id', $request->seguida)->get();
+            $identificador_seguindo = DB::table('identificadors')->where('id', $request->seguindo)->get();
+        
+            foreach ($identificador_seguindo as $valueseguindo) {
+                if ($valueseguindo->tipo_identificador_id == 1) {
+                    $id_conta_seguindo = $valueseguindo->id;
+                    $identi_id_seguindo = $valueseguindo->identificador_id;
+                } 
             }
+            foreach ($identificador_seguida as $valueseguida) {
+                if ($valueseguida->tipo_identificador_id == 2) {
+                    $id_page_seguida = $valueseguida->id;
+                    $identi_id_seguida = $valueseguida->identificador_id;                
+                }
 
+            }
+            
+            $incremento = 0;
+            $seguiu = DB::table('seguidors')->where('identificador_id_seguindo', $identi_id_seguindo)->get();
+            foreach ($seguiu as $value) {
+                if ($identi_id_seguida == $value->identificador_id_seguida) {
+                $incremento += 1;
+                }
+            }
+            if ($incremento < 1) {
+                $seguidor = new Seguidor;
+                $seguidor->identificador_id_seguindo = $identi_id_seguindo;
+                $seguidor->identificador_id_seguida = $identi_id_seguida;
+                $seguidor->save();
+            
+            $page = DB::table('pages')->where('page_id', $id_page_seguida)->get();
+            
+            if ($page[0]->conta_id_a != $id_conta_seguindo) {
+                $destino_a = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+            DB::table('notifications')->insert([
+                  'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'id_state_notification' => 2,
+                  'id_action_notification' => 5,
+                  'identificador_id_causador'=> $identi_id_seguindo,
+                  'identificador_id_destino'=> $destino_a[0]->identificador_id,
+                  ]);
+                }
+              if ($page[0]->conta_id_b != $id_conta_seguindo) {
+                $destino_b = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
+                DB::table('notifications')->insert([
+                        'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                        'id_state_notification' => 2,
+                        'id_action_notification' => 5,
+                        'identificador_id_causador'=> $identi_id_seguindo,
+                        'identificador_id_destino'=> $destino_b[0]->identificador_id,
+                        ]);
+                      }
+                }
+        
+            return response()->json($destino_b);
         }
-        $seguidor = new Seguidor;
-        $seguidor->identificador_id_seguindo = $identi_id_seguindo;
-        $seguidor->identificador_id_seguida = $identi_id_seguida;
-        $seguidor->save();
 
-        return back();
     }
 
     /**
@@ -99,15 +137,18 @@ class SeguidorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($seguida, $seguindo)
+    public function destroy(Request $request)
     {
-        $identificador_seguindo = DB::table('seguidors')->where('identificador_id_seguindo', $seguindo)->get();
+        if ($request->ajax()) {
+        $identificador_seguindo = DB::table('seguidors')->where('identificador_id_seguindo', $request->seguindo)->get();
          foreach ($identificador_seguindo as $value) {
-            if ($value->identificador_id_seguida == $seguida) {
+            if ($value->identificador_id_seguida == $request->seguida) {
                 $identi_id_seguindo = $value->seguidor_id;
             }
          }
           DB::table('seguidors')->where(['seguidor_id'=>$identi_id_seguindo])->delete();
-         return back();
+         return response()->json('Deletou');
+        }
+        
     }
 }

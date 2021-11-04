@@ -57,6 +57,7 @@ class PaginaCasalController extends Controller
         $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
         $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
         $page_content = $this->page_default_date($account_name);
+
         $seguidores = Self::seguidores($page_content[0]->page_id);
         $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
@@ -65,7 +66,61 @@ class PaginaCasalController extends Controller
         $page_current = 'page';
         $conta_logada = $auth->defaultDate();
         //dd($page_content);
-        return view('pagina.couple_page', compact('account_name','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+        //-----------------------------------------------------------------------------------------------------------------------------------------
+        $notificacoes=array();
+        $a=0;
+        $nome=array();
+        $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+        $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+        if (sizeof($notificacoes_aux)>0) {
+          foreach ($notificacoes_aux as $key) {
+            $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+            if ($aux2[0]->tipo_identificador_id == 1) {
+              $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+              $nome[0]= $conta[0]->nome ;
+              $nome[0].= " ";
+              $nome[0].= $conta[0]->apelido;
+              $nome[1]= $conta[0]->foto;
+              $nome[2] =1;
+            }elseif ($aux2[0]->tipo_identificador_id == 2) {
+              $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                $nome[0] =$page[0]->nome;
+                $nome[1] =$page[0]->foto;
+                $nome[2] =2;
+            }
+            switch ($key->id_action_notification) {
+              case 1:
+                $notificacoes[$a]['notificacao']=$nome[0] ;
+                $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                break;
+              case 2:
+                  $notificacoes[$a]['notificacao']=$nome[0];
+                  $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                  break;
+                case 3:
+                  $notificacoes[$a]['notificacao']=$nome[0];
+                  $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                    break;
+                  case 4:
+                  $notificacoes[$a]['notificacao']=$nome[0];
+                  $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                      break;
+                    case 5:
+                    $notificacoes[$a]['notificacao']=$nome[0];
+                    $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                        break;
+
+            }
+            $notificacoes[$a]['foto']=$nome[1];
+            $notificacoes[$a]['v']=$nome[2];
+            $a++;
+          }
+        }
+
+        $sugerir = $this->suggest_pages($page_content[0]->page_id);
+        $allPosts = $this->get_post_types($page_content[0]->page_id);
+
+        return view('pagina.couple_page', compact('account_name','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
     }
 
     public function show_page()
@@ -115,7 +170,9 @@ class PaginaCasalController extends Controller
         $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
         $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
         $page_content = $this->page_default_date($account_name);
+        
         $seguidores = Self::seguidores($page_content[0]->page_id);
+
         $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
         $this->current_page_id = $page_content[0]->page_id;
@@ -123,8 +180,64 @@ class PaginaCasalController extends Controller
         $page_current = 'page';
         //dd($page_content);
         $conta_logada = $auth->defaultDate();
-        //dd($page_content);
-        return view('pagina.couple_page', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current' , 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+
+        $sugerir = $this->suggest_pages($page_content[0]->page_id);
+        $allPosts = $this->get_post_types($page_content[0]->page_id);
+
+        //dd($page_content);//-----------------------------------------------------------------------------------------------------------------------------------------
+        $notificacoes=array();
+        $a=0;
+        $nome=array();
+        $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+        $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+        if (sizeof($notificacoes_aux)>0) {
+          foreach ($notificacoes_aux as $key) {
+            $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+            if ($aux2[0]->tipo_identificador_id == 1) {
+              $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+              $nome[0]= $conta[0]->nome ;
+              $nome[0].= " ";
+              $nome[0].= $conta[0]->apelido;
+              $nome[1]= $conta[0]->foto;
+              $nome[2] =1;
+            }elseif ($aux2[0]->tipo_identificador_id == 2) {
+              $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                $nome[0] =$page[0]->nome;
+                $nome[1] =$page[0]->foto;
+                $nome[2] =2;
+            }
+            switch ($key->id_action_notification) {
+              case 1:
+                $notificacoes[$a]['notificacao']=$nome[0] ;
+                $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                break;
+              case 2:
+                  $notificacoes[$a]['notificacao']=$nome[0];
+                  $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                  break;
+                case 3:
+                  $notificacoes[$a]['notificacao']=$nome[0];
+                  $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                    break;
+                  case 4:
+                  $notificacoes[$a]['notificacao']=$nome[0];
+                  $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                      break;
+                    case 5:
+                    $notificacoes[$a]['notificacao']=$nome[0];
+                    $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                        break;
+
+            }
+            $notificacoes[$a]['foto']=$nome[1];
+            $notificacoes[$a]['v']=$nome[2];
+            $a++;
+          }
+        }
+
+        
+
+        return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current' , 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
         try {
             $auth = new AuthController();
             $account_name = $auth->defaultDate();
@@ -139,7 +252,7 @@ class PaginaCasalController extends Controller
             $publicacoes = $this->get_all_post($page_content[0]->page_id);
             $this->current_page_id = $page_content[0]->page_id;
             //dd($page_content);
-            return view('pagina.couple_page', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+            return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -194,15 +307,75 @@ class PaginaCasalController extends Controller
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
             $page_content = $this->page_default_date($account_name);
+
+
             $seguidores = Self::seguidores($page_content[0]->page_id);
             $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
             $publicacoes = $this->get_all_post($page_content[0]->page_id);
-            $this->current_page_id = $page_content[0]->page_id;
+            $this->current_page_id = $page_content[0]->uuid;
             $page_current = 'page';
             //dd($page_content);
             $conta_logada = $auth->defaultDate();
             //dd($page_content);
-            return view('pagina.pages', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+            //-----------------------------------------------------------------------------------------------------------------------------------------
+            $notificacoes=array();
+            $a=0;
+            $nome=array();
+            $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+            $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+            if (sizeof($notificacoes_aux)>0) {
+              foreach ($notificacoes_aux as $key) {
+                $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+                if ($aux2[0]->tipo_identificador_id == 1) {
+                  $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                  $nome[0]= $conta[0]->nome ;
+                  $nome[0].= " ";
+                  $nome[0].= $conta[0]->apelido;
+                  $nome[1]= $conta[0]->foto;
+                  $nome[2] =1;
+                }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                  $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                    $nome[0] =$page[0]->nome;
+                    $nome[1] =$page[0]->foto;
+                    $nome[2] =2;
+                }
+                switch ($key->id_action_notification) {
+                  case 1:
+                    $notificacoes[$a]['notificacao']=$nome[0] ;
+                    $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                    break;
+                  case 2:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                      break;
+                    case 3:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                        break;
+                      case 4:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                          break;
+                        case 5:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                            break;
+
+                }
+                $notificacoes[$a]['foto']=$nome[1];
+                $notificacoes[$a]['v']=$nome[2];
+                $a++;
+              }
+            }
+
+            //=============================================
+              // siene 
+            //=============================================
+
+            $sugerir = $this->suggest_pages($page_content[0]->page_id);
+            $allPosts = $this->get_post_types($page_content[0]->page_id);
+
+            return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -264,7 +437,7 @@ class PaginaCasalController extends Controller
 
           $this->current_page_uuid = $page_content[0]->uuid;
 
-          $seguidores = Self::seguidores($uuid);
+          $seguidores = Self::seguidores($page_content[0]->page_id);
           $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
           $publicacoes = $this->get_all_post($page_content[0]->page_id);
           $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
@@ -273,7 +446,64 @@ class PaginaCasalController extends Controller
           $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
           $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
           $conta_logada = $auth->defaultDate();
-          return view('pagina.couple_page', compact('account_name', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+          //-----------------------------------------------------------------------------------------------------------------------------------------
+          $notificacoes=array();
+          $a=0;
+          $nome=array();
+          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+          $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+          if (sizeof($notificacoes_aux)>0) {
+            foreach ($notificacoes_aux as $key) {
+              $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+              if ($aux2[0]->tipo_identificador_id == 1) {
+                $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                $nome[0]= $conta[0]->nome ;
+                $nome[0].= " ";
+                $nome[0].= $conta[0]->apelido;
+                $nome[1]= $conta[0]->foto;
+                $nome[2] =1;
+              }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                  $nome[0] =$page[0]->nome;
+                  $nome[1] =$page[0]->foto;
+                  $nome[2] =2;
+              }
+              switch ($key->id_action_notification) {
+                case 1:
+                  $notificacoes[$a]['notificacao']=$nome[0] ;
+                  $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                  break;
+                case 2:
+                    $notificacoes[$a]['notificacao']=$nome[0];
+                    $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                    break;
+                  case 3:
+                    $notificacoes[$a]['notificacao']=$nome[0];
+                    $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                      break;
+                    case 4:
+                    $notificacoes[$a]['notificacao']=$nome[0];
+                    $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                        break;
+                      case 5:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                          break;
+
+              }
+              $notificacoes[$a]['foto']=$nome[1];
+              $notificacoes[$a]['v']=$nome[2];
+              $a++;
+            }
+          }
+          //=============================================
+            // siene 
+          //=============================================
+
+          $sugerir = $this->suggest_pages($page_content[0]->page_id);
+          $allPosts = $this->get_post_types($page_content[0]->page_id);
+          
+          return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -292,7 +522,61 @@ class PaginaCasalController extends Controller
             $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $conta_logada = $auth->defaultDate();
-            return view('pagina.edit_couple', compact('account_name', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current'));
+            //-----------------------------------------------------------------------------------------------------------------------------------------
+            $notificacoes=array();
+            $a=0;
+            $nome=array();
+            $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+            $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+            if (sizeof($notificacoes_aux)>0) {
+              foreach ($notificacoes_aux as $key) {
+                $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+                if ($aux2[0]->tipo_identificador_id == 1) {
+                  $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                  $nome[0]= $conta[0]->nome ;
+                  $nome[0].= " ";
+                  $nome[0].= $conta[0]->apelido;
+                  $nome[1]= $conta[0]->foto;
+                  $nome[2] =1;
+                }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                  $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                    $nome[0] =$page[0]->nome;
+                    $nome[1] =$page[0]->foto;
+                    $nome[2] =2;
+                }
+                switch ($key->id_action_notification) {
+                  case 1:
+                    $notificacoes[$a]['notificacao']=$nome[0] ;
+                    $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                    break;
+                  case 2:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                      break;
+                    case 3:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                        break;
+                      case 4:
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                          break;
+                        case 5:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                            break;
+
+                }
+                $notificacoes[$a]['foto']=$nome[1];
+                $notificacoes[$a]['v']=$nome[2];
+                $a++;
+              }
+            }
+
+            $sugerir = $this->suggest_pages($page_content[0]->page_id);
+            $allPosts = $this->get_post_types($page_content[0]->page_id);
+
+            return view('pagina.edit_couple', compact('account_name','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -310,7 +594,10 @@ class PaginaCasalController extends Controller
             $page_current = 'page';
             $conta_logada = $auth->defaultDate();
 
-            return view('pagina.delete_couple_page', compact('account_name', 'conta_logada', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages', 'page_current'));
+            $sugerir = $this->suggest_pages($page_content[0]->page_id);
+            $allPosts = $this->get_post_types($page_content[0]->page_id);
+
+            return view('pagina.delete_couple_page', compact('account_name', 'conta_logada', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -328,10 +615,8 @@ class PaginaCasalController extends Controller
 
     public static function seguidores($id)
     {
-        return count(DB::select('select * from seguidors where uuid = ?', [$id]));
-
-        //dd($id);
-        //return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
+        //return count(DB::select('select * from seguidors where uuid = ?', [$id]));
+        return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
     }
 
     private function get_all_post($id) {
@@ -408,5 +693,37 @@ class PaginaCasalController extends Controller
         return DB::select('select formato_id from formatos where formato = ?', [$formato])[0]->formato_id;
     }
 
+    public function suggest_pages($hostId) 
+    {
+        $all_content = [];
+        $data = DB::select('select * from seguidors where identificador_id_seguindo != ? && identificador_id_seguida != ?', [$hostId, $hostId]);
+        foreach ($data as $value) {
+            $all_content = DB::table('pages')->where('page_id', $value->identificador_id_seguida)->get();
+        }
+        return $all_content;
+    }
 
+    public function get_post_types($id)
+    {   $index = 0;
+        $posts = [];
+        $data = DB::table('posts')->where('page_id', $id)->get();
+        foreach ($data as $d) {
+            if ( sizeof(explode('.',$d->file)) > 1 ) {
+                $extension = explode('.', $d->file)[1];
+                if ($this->check_image_extension($extension))
+                {
+                    $posts[$index]['postImages'] = $d->file;
+                }
+                else if ($this->check_video_extension($extension))
+                {
+                    $posts[$index]['postVideos'] = $d->file;
+                }
+            }
+            $posts[$index]['postDescricao'] = $d->descricao;
+            $index++;
+        }
+        return $posts;
+    }
+
+    /* fim codigo siene */
 }
