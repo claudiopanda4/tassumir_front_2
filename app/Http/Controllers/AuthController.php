@@ -969,7 +969,7 @@ if (sizeof($notificacoes_aux)>0) {
                 }
             }else{
 
-                dd("cheguei no else do verifyAgainCodeSent");
+                dd("Error again!");
                 //return view('auth.codigoRecebidoActualizar',compact('savedId'));
             }
 
