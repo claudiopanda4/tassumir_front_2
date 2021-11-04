@@ -1909,6 +1909,7 @@ label[for="hugo"]{
 	width: 140px;
     margin: 20px auto 10px;
 	width: 47%;
+	width: 239px;
 }
 .label-input label,
 .label-input .input-container {
@@ -2083,7 +2084,7 @@ label[for="hugo"]{
 	font-weight: bolder;
 }
 .statistics-profile-page-identify {
-	margin-top: 20px;
+	margin-top: 15px;
 }
 .statistics-profile-page-identify h1, 
 .statistics-profile-page-identify h2 {
@@ -2128,13 +2129,15 @@ label[for="hugo"]{
 	right: 10px;
 }
 .description-couple {
-
+	width: 343px;
+    margin-left: 145px;
 }
 .description-couple p {
 	color: #ffff;
     font-size: 13px;
     width: 340px;
     padding: 10px;
+    margin-bottom: 0;
 }
 
 	.suggest-slide-page {
@@ -2257,9 +2260,9 @@ label[for="hugo"]{
 }
 .edit-page-container-mobile button {
 	width: 100%;
-    padding: 8px;
+    padding: 10px;
     font-size: 13px;
-    background: var(--background-dark-input);
+    background: transparent;
     border: 1px solid #606060;
 }
 .edit-profile-mobile {
@@ -2493,4 +2496,13 @@ label[for="hugo"]{
 	display: none;
 	margin-top: 10px;
 	width: 96%;
+}
+.description-couple h1,
+.description-couple h2 {
+	font-size: 13.5px;
+	color: #fff;
+    padding-left: 10px;
+}
+.mobile-user-name {
+	display: none;
 }

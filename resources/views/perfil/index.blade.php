@@ -48,8 +48,15 @@
                 <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
             </div>
 
-                <div class="options-profile-btn">
+                <!--<div class="options-profile-btn">
                     <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
+                </div>-->
+                <div>
+                    <a href="">
+                        <div class="container-logout">
+                            <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Secção</h1></a>
+                        </div>
+                    </a>
                 </div>
             <?php endif; ?>
         </div>
@@ -140,12 +147,5 @@
             </div>
             <?php endif ?>
         </div>
-<div>
-    <a href="">
-        <div class="container-logout">
-            <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Secção</h1></a>
-        </div>
-    </a>
-</div>
 </div>
 @stop

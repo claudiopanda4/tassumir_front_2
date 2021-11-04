@@ -10,6 +10,9 @@
 		margin-top: 6px;
 		margin-top: 0;
 	}
+	.lg-invisible-user-name {
+		display: none;
+	}
 	.option-profile-menu ul {
 	    /*background-color: #242526;*/
 	}
@@ -63,7 +66,8 @@
 		display: block;
 	}
 	.statistics-profile-page-identify h1 {
-	    font-size: 16px;
+	    font-size: 20px;
+	    font-weight: bolder;
 	}
 	.user-account, .search-lg,
 	.mobile-hidden, .menu-header ul li.mobile-hidden,
@@ -239,6 +243,9 @@
 	}
 	.btn-a-default {
 	    display: block;
+	    width: 100%;
+	    background: transparent;
+    	border: 1px solid #343a40;
 	}
 	#img-profile-container {
 	    width: 80px;
@@ -317,14 +324,27 @@
 	.post-cover {
 	    height: 414px;
 	}
+	.statistics-profile-page-identify h1 {
+	    font-size: 16px;
+	}
+	.description-couple {
+	    margin-left: 20px;
+	}
 }
 @media screen and (max-width: 411px) {
 	.post-cover {
 	    height: 411px;
 	}
 	.img-profile-page {
-    	width: 90px;
-	    height: 90px;
+    	width: 70px;
+	    height: 70px;
+	}
+	.description-couple {
+	    width: 343px;
+		margin-left: 20px;
+	}
+	.statistics-profile-page-component h2 {
+	    font-size: 11.5px;
 	}
 }
 @media screen and (max-width: 360px) {
@@ -360,6 +380,11 @@
 	}
 	
 }
+@media screen and (max-width: 375px) {
+	.description-couple {
+	    margin-left: 0px;
+	}
+}
 @media screen and (max-width: 400px) {
 	.option-profile-menu {
 		overflow-x: auto;
@@ -375,10 +400,11 @@
 }
 @media screen and (max-width: 420px) {
 	.statistics-profile-page-component {
-		display: ;
+		
 	}
 	#statistics-profile-page-component-container-lg {
-		display: none;
+		display: block;
+		    width: 240px;
 	}
 	#statistics-profile-page-component-mobile {
 		display: block;
@@ -393,7 +419,7 @@
 	    margin-left: 10px;
 	}
 	.follwing-btn {
-	    padding: 5px;
+	    padding: 8px;
 	    width: 100%;
 	}	
 	.statistics-profile-page {
@@ -405,6 +431,9 @@
 		background-color: transparent;
 		border: none;
     }
+    .mobile-user-name {
+		display: block;
+	}
 	#stories-card {
 	    margin-bottom: 0px;
 	    margin-top: 0px;
@@ -534,6 +563,12 @@
 	    border-radius: 0;
 	    margin: 0;
 	}
+	.description-couple h1, .description-couple h2 {
+	    padding-left: 20px;
+	}
+	.follwing-btn-container {
+	    width: 200px;
+	}
 	#pop-up-component-create-post .pop-up-component-header {
 	    width: 100%;
 	}
@@ -591,8 +626,15 @@
 }
 @media screen and (max-width: 328px) {
 	.img-profile-page {
-	    width: 75px;
-	    height: 75px;
+	    width: 65px;
+	    height: 65px;
+	}
+	#statistics-profile-page-component-container-lg {
+	    display: block;
+	    width: 210px;
+	}
+	.statistics-profile-page-component {
+	    width: 50px;
 	}
 	.input-container-radio {
 	    width: 100px;	
