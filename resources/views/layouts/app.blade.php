@@ -143,7 +143,7 @@
                 <li class="li-component-aside"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}">{{$conta_logada[0]->nome}} {{$conta_logada[0]->apelido}}</a></li>
                 <!--<li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Criar Relacionamento</a></li>
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
-                    <!-- @if($checkUserStatus) -->
+                @if($checkUserStatus)
                     @if(!$hasUserManyPages)
                         <li class="li-component-aside"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Página de Casal</a></li>
                     @else
@@ -169,7 +169,7 @@
                 <h1>Páginas que eu sigo</h1>
             </header>
             <ul class="">
-                               <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
+                <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
                 @forelse($dadosPage as $Paginas)
                 <?php
                 $seguidors = 0;
