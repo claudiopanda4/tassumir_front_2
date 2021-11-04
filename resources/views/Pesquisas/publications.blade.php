@@ -32,7 +32,7 @@ $(document).ready(function() {
 				nome+='<header class="clearfix">'
 				nome+='<div class="first-component clearfix l-5">'
 				if (value.page_foto != null) {
-					nome += '<div class="mt-4 page-cover circle l-5"><img class="ml-5 circle img-40" src=' + src1 + '/' + value.page_foto + '></div>'
+					nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.page_foto + '></div>'
 				}else {
 					nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
 				}
@@ -95,7 +95,7 @@ $('#table_search').on('keyup',function(){
 			 nome+='<header class="clearfix">'
 			 nome+='<div class="first-component clearfix l-5">'
 			 if (value.page_foto != null) {
-				 nome += '<div class="mt-4 page-cover circle l-5"><img class="ml-5 circle img-40" src=' + src1 + '/' + value.page_foto + '></div>'
+				 nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.page_foto + '></div>'
 			 }else {
 				 nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
 			 }
