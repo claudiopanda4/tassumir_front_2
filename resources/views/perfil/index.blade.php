@@ -9,11 +9,13 @@
         @else
             <img class="img-profile img-full circle" src="{{asset('storage/img/users') . '/' . $profile_picture}}">
         @endif
+        @if ($account_name[0]->uuid == $conta_logada[0]->uuid)
         <label for="target-profile-cover">
             <div class="add-edit-profile circle">
                 <i class="fas fa-plus center" style="font-size: 10px;"></i>
             </div>
         </label>
+        @endif
     </div>
     <div class="" id="card-ident">
         <div id="ident-profile">
