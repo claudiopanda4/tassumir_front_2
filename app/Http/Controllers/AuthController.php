@@ -926,8 +926,96 @@ if (sizeof($notificacoes_aux)>0) {
 
         ]);
 
+        $code = random_int(1000,9000);
+        DB::table('codigo_confirmacaos')->insert([
 
-        return redirect()->route('account.login.form');
+            'codigoGerado' => $code,
+            'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+            'conta_id' => $saveRetriveId,
+        ]);
+
+       return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code'));
+    }
+
+    public function verifyCodeSent(Request $request){
+
+        $codeSent = $request->codeReceived;
+        $idSaved = $request->receivedId;
+
+        $takeCode2 = [];
+
+        $takeCode2 = DB::table('codigo_confirmacaos')
+            ->select('codigoGerado')
+            ->where('codigoGerado','=',$codeSent)
+            ->where('conta_id','=',$idSaved)
+            ->get();
+
+            if(sizeof($takeCode2) >= 1){
+
+                foreach($takeCode2 as $generateCode){
+
+                    $takeHim = $generateCode->codigoGerado;
+
+                    if($takeHim == $codeSent){
+
+                        return redirect()->route('account.login.form');
+
+                    }
+
+                }
+            }else{
+
+                //dd("cheguei no else");
+                return view('auth.codigoRecebidoActualizar',compact('idSaved'));
+            }        
+    }
+
+    public function generateAgain(Request $request){
+
+        $idReceived = $request->receivedId;
+
+        $code2 = random_int(1000,9000);
+
+        $newGeneratedCode = DB::table('codigo_confirmacaos')
+                  ->where('conta_id', $idReceived)
+                  ->update(['codigoGerado' => $code2]);
+
+        return view('auth.codigoRecebidoNovaConfirmation',compact('idReceived','code2'));          
+
+    }
+    public function verifyAgainCodeSent(Request $request){
+
+        $savedId = $request->receivedId1;
+        $codeSent = $request->codeReceived1;
+
+        //dd($savedId."<=>".$codeSent);
+        $takeCode2 = [];
+
+        $takeCode2 = DB::table('codigo_confirmacaos')
+            ->select('codigoGerado')
+            ->where('codigoGerado','=',$codeSent)
+            ->where('conta_id','=',$savedId)
+            ->get();
+
+            if(sizeof($takeCode2) >= 1){
+
+                foreach($takeCode2 as $generateCode){
+
+                    $takeHim = $generateCode->codigoGerado;
+
+                    if($takeHim == $codeSent){
+
+                        return redirect()->route('account.login.form');
+
+                    }
+
+                }
+            }else{
+
+                dd("Error again!");
+                //return view('auth.codigoRecebidoActualizar',compact('savedId'));
+            }
+
     }
 
     public function recuperarSenha(){
@@ -940,6 +1028,10 @@ if (sizeof($notificacoes_aux)>0) {
     public function newCode(){
         return view('auth.newCode');
     }
+    
+    /*public function codigoRecebidoRegisto(){
+        return view('auth.codigoRecebidoRegister');
+    }*/
 
     public function login(Request $request){
 
@@ -963,6 +1055,7 @@ if (sizeof($notificacoes_aux)>0) {
 
         }
         return redirect()->route('account.login.form');
+        
     }
     public function logout(Request $request)
     {
