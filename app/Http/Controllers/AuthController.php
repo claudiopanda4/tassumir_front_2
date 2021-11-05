@@ -385,6 +385,7 @@ if (sizeof($notificacoes_aux)>0) {
         $dados[0]['qtd_comment']=sizeof($comment);
         $dados[0]['seguir_S/N']=sizeof($seguidor);
         $dados[0]['post_id']=$post[0]->post_id;
+        $dados[0]['post_uuid']= $post[0]->uuid;
         $dados[0]['page_id']= $post[0]->page_id ;
         $dados[0]['page_uuid']= $page[$post[0]->page_id - 1]->uuid ;
         $dados[0]['reagir_S/N']=sizeof($ja_reagiu);

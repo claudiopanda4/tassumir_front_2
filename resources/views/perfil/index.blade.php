@@ -40,7 +40,7 @@
               <?php endif; ?>
             </li>
             <li class="statistics-profile">
-                <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_like']}}</h2>
+                <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_guardados']}}</h2>
                 <h2 style="justify-content: center; font-size: 11.5px;">Guardados</h2>
                 <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                 <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
@@ -51,22 +51,55 @@
             <h1 class="profile-name">@_{{$account_name[0]->nome}}_{{$account_name[0]->apelido}}</h1>
         <?php endif ?>
             <div>
-            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid ): ?>
+              <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $perfil[0]['verificacao_page'] == 0 && $perfil[0]['verificacao_page1'] == 0  && $perfil[0]['verificacao_page2'] == 0 && $perfil[0]['verificacao_page3'] == 0  ): ?>
+
+              <?php if ($perfil[0]['verificacao_pedido'] == 1 ): ?>
             <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
                 <label for="target-invited-relationship" style="width: 100%;">
                     <div class="follwing-btn follwing-btn-pop-up" >
-                        <h2>Assumir</h2>
+                        <h2>Pendente</h2>
                     </div>
                 </label>
                 <?php if (false): ?>
                     <label for="target-invited-relationship">
                         <button type="submit" class="follwing-btn follwing-btn-pop-up " id="btnteste">
-                            Assumir
+                            Pendente
                         </button>
                     </label>
                 <?php endif ?>
             </div>
-            <?php endif; ?>
+          <?php elseif ($perfil[0]['verificacao_pedido1'] == 1 ): ?>
+        <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
+            <label for="target-invited-relationship" style="width: 100%;">
+                <div class="follwing-btn follwing-btn-pop-up" >
+                    <h2>Aceitar</h2>
+                </div>
+            </label>
+            <?php if (false): ?>
+                <label for="target-invited-relationship">
+                    <button type="submit" class="follwing-btn follwing-btn-pop-up " id="btnteste">
+                        Aceitar
+                    </button>
+                </label>
+            <?php endif ?>
+        </div>
+    <?php else: ?>
+  <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
+      <label for="target-invited-relationship" style="width: 100%;">
+          <div class="follwing-btn follwing-btn-pop-up" >
+              <h2>Assumir</h2>
+          </div>
+      </label>
+      <?php if (false): ?>
+          <label for="target-invited-relationship">
+              <button type="submit" class="follwing-btn follwing-btn-pop-up " id="btnteste">
+                  Assumir
+              </button>
+          </label>
+      <?php endif ?>
+  </div>
+  <?php endif; ?>
+  <?php endif; ?>
             <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
 
             <div class="options-profile-btn options-profile-btn-center profile-item-center">
@@ -111,9 +144,52 @@
                 <?php if ($_GET['post-container-post'] == 'post'): ?>
                 <div class="post-img-container-page post-page-container">
                     <?php foreach ($gostos as $key => $value): ?>
+                      @if($value['formato']==3)
                       <div class="img-post">
-                      <p><h5>  {{$gostos[$key]['post']}}   </h5></p>
+                          <div class="post">
+                              <header class="clearfix">
+                                  <div class="first-component clearfix l-5">
+                                    @if( !($value['foto_page'] == null) )
+                                        <div class="page-cover circle l-5">
+                                            <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $value['foto_page'] }}">
+                                        </div>
+                                    @else
+                                        <div class="page-cover circle l-5">
+                                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                        </div>
+                                    @endif
+                                      <div class="page-identify l-5 clearfix">
+                                          <a href="{{route('couple.page1', $value['page_uuid']) }}"><h1 class="">{{$value['nome_page']}}</h1></a>
+                                          <div class="info-post clearfix">
+                                              <span class="time-posted l-5">50 min</span>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="last-component clearfix r-5">
+                                      <label for="more-option-1">
+                                          <i class="fas fa-ellipsis-h fa-15 fa-option"></i>
+                                      </label>
+                                      <input type="checkbox" name="" id="more-option-1" class="hidden">
+                                      <ul class="clearfix more-option-post">
+                                          <li>
+                                              <a href="">Denunciar</a>
+                                          </li>
+                                          <li>
+                                              <a href="">Copiar Link</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </header>
+                              <div class="card-post">
+                                  <div class="">
+                                      <p>{{$gostos[$key]['post']}}</p>
+
                       </div>
+              </div>
+              </div>
+                    </div>
+                   @endif
+
 
                     <?php endforeach ?>
                 </div>

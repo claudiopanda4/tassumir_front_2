@@ -143,11 +143,28 @@ class PerfilController extends Controller
               if ($lenght > 0) {
                 $post_reactions= DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
-                    $perfil[0]['qtd_ps']=sizeof($seguidor);
-                    $perfil[0]['qtd_like']=sizeof($post_reactions);
+                  $guardado= DB::select('select * from saveds where conta_id =  ?', [$account_name[0]->conta_id]);
+                  $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$account_name[0]->conta_id, $conta_logada[0]->conta_id]);
+                  $verificacao_pedido1= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_logada[0]->conta_id, $account_name[0]->conta_id]);
+                  $verificacao_page2= DB::select('select * from pages where conta_id_a = ?', [$conta_logada[0]->conta_id]);
+                  $verificacao_page3= DB::select('select * from pages where conta_id_b = ?', [$conta_logada[0]->conta_id]);
+                    $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
+                    $perfil[0]['verificacao_pedido1']=sizeof($verificacao_pedido1);
+                    $perfil[0]['verificacao_page']=sizeof($verificacao_page);
+                    $perfil[0]['verificacao_page1']=sizeof($verificacao_page1);
+                    $perfil[0]['verificacao_page2']=sizeof($verificacao_page2);
+                    $perfil[0]['verificacao_page3']=sizeof($verificacao_page3);
+                    $perfil[0]['verificacao_page']=sizeof($verificacao_page);
+                    $perfil[0]['verificacao_page1']=sizeof($verificacao_page1);
+                    $perfil[0]['qtd_ps']=sizeof($seguidor);                    $perfil[0]['qtd_like']=sizeof($post_reactions);
+                    $perfil[0]['qtd_guardados']=sizeof($guardado);
                foreach ($post_reactions as $key ) {
                  $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
                  if (sizeof($posts) > 0) {
+                $page= DB::select('select * from pages where page_id = ?', [$posts[0]->page_id]);
+                $gostos[$a]['nome_page']=$page[0]->nome;
+                $gostos[$a]['page_uuid']=$page[0]->uuid;
+                $gostos[$a]['foto_page']=$page[0]->foto;
                 $gostos[$a]['formato']=$posts[0]->formato_id;
                 $gostos[$a]['file']=$posts[0]->file;
                 $gostos[$a]['post']=$posts[0]->descricao;
@@ -162,7 +179,6 @@ class PerfilController extends Controller
               }
 
               //dd($account_name);
-
 
 
               return view('perfil.index', compact('account_name', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
@@ -225,11 +241,29 @@ class PerfilController extends Controller
               if ($lenght > 0) {
                 $post_reactions= DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
+                  $guardado= DB::select('select * from saveds where conta_id =  ?', [$account_name[0]->conta_id]);
+                  $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$account_name[0]->conta_id, $conta_logada[0]->conta_id]);
+                  $verificacao_pedido1= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_logada[0]->conta_id, $account_name[0]->conta_id]);
+                  $verificacao_page= DB::select('select * from pages where conta_id_a = ?', [$account_name[0]->conta_id]);
+                  $verificacao_page1= DB::select('select * from pages where conta_id_b = ?', [$account_name[0]->conta_id]);
+                  $verificacao_page2= DB::select('select * from pages where conta_id_a = ?', [$conta_logada[0]->conta_id]);
+                  $verificacao_page3= DB::select('select * from pages where conta_id_b = ?', [$conta_logada[0]->conta_id]);
+                    $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
+                    $perfil[0]['verificacao_pedido1']=sizeof($verificacao_pedido1);
+                    $perfil[0]['verificacao_page']=sizeof($verificacao_page);
+                    $perfil[0]['verificacao_page1']=sizeof($verificacao_page1);
+                    $perfil[0]['verificacao_page2']=sizeof($verificacao_page2);
+                    $perfil[0]['verificacao_page3']=sizeof($verificacao_page3);
                     $perfil[0]['qtd_ps']=sizeof($seguidor);
                     $perfil[0]['qtd_like']=sizeof($post_reactions);
+                    $perfil[0]['qtd_guardados']=sizeof($guardado);
                     foreach ($post_reactions as $key ) {
                       $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
                       if (sizeof($posts) > 0) {
+                     $page= DB::select('select * from pages where page_id = ?', [$posts[0]->page_id]);
+                     $gostos[$a]['nome_page']=$page[0]->nome;
+                     $gostos[$a]['page_uuid']=$page[0]->uuid;
+                     $gostos[$a]['foto_page']=$page[0]->foto;
                      $gostos[$a]['formato']=$posts[0]->formato_id;
                      $gostos[$a]['file']=$posts[0]->file;
                      $gostos[$a]['post']=$posts[0]->descricao;
@@ -575,9 +609,9 @@ class PerfilController extends Controller
 
 
     public function add_picture(Request $request)
-    {	
+    {
         try
-        {	
+        {
             if ($request->hasFile('pagePicture') && PaginaCasalController::check_image_extension($request->pagePicture->extension()))
             {
                 $file_name = time() . '_' . md5($request->file('pagePicture')->getClientOriginalName()) . '.' . $request->pagePicture->extension();
@@ -586,7 +620,7 @@ class PerfilController extends Controller
                 AuthController::updatePageProfilePicture($file_name, $request->uuidPage);
             }
 
-            else if ($request->hasFile('profilePicture')) 
+            else if ($request->hasFile('profilePicture'))
             {
                 if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
                 {

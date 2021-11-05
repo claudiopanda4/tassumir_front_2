@@ -242,8 +242,8 @@
                             <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}">Amo muito esse casal</p>
                         </div>
                     </div>
-                    <div class="comment-user-container comment-user-container-react">
-                        <i class="far fa-heart fa-12"></i>
+                    <div class="comment-user-container comment-user-container-react" name="novo-comment">
+                      
                     </div>
                 </div>
         <?php if ($dados[$key]['qtd_comment']>0): ?>
@@ -455,20 +455,17 @@ function gostar(id){
            success:function(response){
            console.log(response);
            var nome = '';
-           let src = '{{asset("storage/img/users/") }}';
            comment_qtd = parseInt(comment_qtd) + 1;
            $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
 
 
-                    nome +=   '<div class="comment-user-container comment-user-container-react">'
-                    nome +=     <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
-                    nome +=         @if($response[0]['comment_S/N'] > 0)
-                    nome +=             <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
-                    nome +=         @else
-                    nome +=             <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
-                    nome +=         @endif
-                    nome +=   </div>
-                 nome +=</div>
+                nome +=     '<a href="" class="comment-like-a" id="on|'+response[0]['comment_id']+'">'
+                if(response[0]['comment_S/N'] > 0){
+                  nome +=            ' <i class="fas fa-heart fa-12 liked" id="on|'+response[0]['comment_id']+'|i"></i>'
+                }else{
+                  nome +=             '<i class="fas fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
+                }
+                	$('div[name=novo-comment]').append(nome);
 
           }
         });
