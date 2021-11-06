@@ -550,7 +550,29 @@
 </div>
 <?php endif ?>
 <?php if (true): ?>
-
+<input type="checkbox" name="" id="options-invited-pop-up" class="invisible">
+<div class="pop-up" id="invited-relationship-response">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 320px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Pedido de Relacionamento</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-invited-relationship">
+                    <div class="cancel-box div-img" id="target-invited-relationship-id">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px; overflow-y: auto;">
+            <div>
+                <p>
+                    Ao clicar em  CONFIRMAR, você concorda com o que os termos dizem sobre o Noivado. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 <?php endif ?>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -647,6 +669,9 @@
           $("#comentario-" + id).val('');
           comentar(id, coment);
         }
+      });
+      $('.accept').click(function(e) {
+          e.preventDefault();
       });
       $('.savepost').click(function (e) {
           e.preventDefault();

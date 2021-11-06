@@ -50,7 +50,7 @@
         <?php if (false): ?>
             <h1 class="profile-name">@_{{$account_name[0]->nome}}_{{$account_name[0]->apelido}}</h1>
         <?php endif ?>
-            <div>
+            <div id="option-profile-no-own">
             <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid ): ?>
             <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
                 <label for="target-invited-relationship" style="width: 100%;">
@@ -58,6 +58,9 @@
                         <h2>Assumir</h2>
                     </div>
                 </label>
+                <button class="btn-message">
+                    <i class="fa-solid fa-message fa-24 fa-option center"></i>
+                </button>
                 <?php if (false): ?>
                     <label for="target-invited-relationship">
                         <button type="submit" class="follwing-btn follwing-btn-pop-up " id="btnteste">

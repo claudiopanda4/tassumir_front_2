@@ -564,3 +564,7 @@
 	opacity: 1;
     z-index: 1001;
 }
+#options-invited-pop-up:checked ~ #invited-relationship-response {
+	opacity: 1;
+    z-index: 1001;
+}

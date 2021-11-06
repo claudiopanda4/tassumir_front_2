@@ -1,6 +1,6 @@
 @extends('layouts.search_menu')
 @section('content')
-<div class="main">
+<div class="main" id="main-search">
 	<div>
 	<div class="search-mobile">
         <div class="input-search">

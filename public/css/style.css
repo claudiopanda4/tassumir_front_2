@@ -532,6 +532,7 @@ label[for="hugo"]{
 	margin-left: 100px;
 }
 .couple-invite-icon-one {
+	display: none;
 	background-color: #800080;
     width: 40px;
     height: 40px;
@@ -2287,8 +2288,7 @@ label[for="hugo"]{
 	font-size: 15px;
 }
 .options-profile-btn {
-	display: inline-flex;
-	width: 48%;
+	display: flex;
 	margin-left: 5px;
 }
 .options-profile-btn-center {
@@ -2514,4 +2514,88 @@ label[for="hugo"]{
 	font-size: 13px;
 	color: #fff;
 	margin-top: -5px;
+}
+.btn-message {
+	position: relative;
+	width: 60px;
+	height: 40px;
+	border: none;
+	border-radius: 5px;
+	margin-left: 10px;
+	background-color: #606060;
+}
+#option-profile-no-own {
+	width: 320px;
+	margin: auto;
+}
+#main-search {
+	
+}
+#main-search .card-p{
+	padding: 0;
+}
+.user-identify-img {
+	position: relative;
+	width: 60px;
+	height: 60px;
+}
+.description-invited {
+	font-size: 13px;
+	color: #fff;
+}
+.description-invited a {
+	font-size: 15px;
+	color: #fd09fd;
+}
+.details-invited {
+	width: 240px;
+}
+.options-invited a {
+	padding: 7px 15px;
+	border-radius: 5px;
+	color: #fff;
+	font-size: 13px;
+}
+.options-invited .label-invited {
+	width: 110px;
+	background-color: #800080;
+	border-radius: 5px;
+}
+.options-invited .label-invited label {
+	width: 100%;
+	padding: 0px;
+	margin-bottom: 0;
+}
+.options-invited .accept {
+	width: 100%;
+    background-color: #800080;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+    color: #fff;
+	border-radius: 5px;
+    font-size: 13px;
+}
+.options-invited .denied {
+	border: 1px solid #343a40;
+}
+.options-invited {
+	margin: 5px;
+}
+.send-invited-relationship {
+	padding-left: 15px;
+}
+#table_search_mobile {
+	width: 290px;
+}
+#main-search .card-flex {
+	padding-left: 10px;
+}
+#cover-done-marriage button {
+	padding: 10px;
+    font-size: 14px;
+    background: transparent;
+    color: #fff;
+    border: none;
+    width: 100%;
 }

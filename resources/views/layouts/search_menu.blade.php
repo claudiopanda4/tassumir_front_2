@@ -6,11 +6,10 @@
     <title>{{ config('app.name', 'Tassumir') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script scr="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+    <script src="{{ asset('js/jquery/jquery-3.5.1/jquery-3.5.1.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -44,7 +43,7 @@
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="last-component-n clearfix-n " >
                             <label for="more-option-notify" class="fa-option-mobile-hide">
-                                <i class="far fa-bell fa-24 fa-option" size="7"></i>
+                                <i class="fa fa-bell fa-24 fa-option" size="7"></i>
                             </label>
                             <a href="{{route('account.all.notifications')}}" class="fa-option-mobile-lg-hide">
                                 <i class="far fa-bell fa-24 fa-option" size="7"></i>
