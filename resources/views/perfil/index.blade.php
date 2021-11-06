@@ -3,99 +3,106 @@
 @section('content')
 <div class="main" id="main-profile">
     <header class="card br-10 card-flex">
-    <div id="img-profile-container" class="circle">
-        @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
-            <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
-        @else
-            <img class="img-profile img-full circle" src="{{asset('storage/img/users') . '/' . $profile_picture}}">
-        @endif
-        @if ($account_name[0]->uuid == $conta_logada[0]->uuid)
-        <label for="target-profile-cover">
-            <div class="add-edit-profile circle">
-                <i class="fas fa-plus center" style="font-size: 10px;"></i>
-            </div>
-        </label>
-        @endif
-    </div>
-    <div class="" id="card-ident">
-        <div id="ident-profile">
-            <h1 class="profile-name">{{$account_name[0]->nome}} {{$account_name[0]->apelido}}</h1>
-                <div class="invite-icon circle">
-                    <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
+        <div id="img-profile-container" class="circle">
+            @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
+                <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+            @else
+                <img class="img-profile img-full circle" src="{{asset('storage/img/users') . '/' . $profile_picture}}">
+            @endif;
+            @if ($account_name[0]->uuid == $conta_logada[0]->uuid)
+            <label for="target-profile-cover">
+                <div class="add-edit-profile circle">
+                    <i class="fas fa-plus center" style="font-size: 10px;"></i>
                 </div>
+            </label>
+            @endif;
         </div>
-        <ul class="profile-follow profile-item-center">
-            <li class="statistics-profile">
-                <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_ps']}}</h2>
-                <h2 style="justify-content: center; font-size: 11.5px;">Seguindo</h2>
-                <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
-              <?php endif; ?>
-            </li>
-            <li class="statistics-profile">
-                <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_like']}}</h2>
-                <h2 style="justify-content: center; font-size: 11.5px;">Curtiu</h2>
-                <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
-              <?php endif; ?>
-            </li>
-            <li class="statistics-profile">
-                <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_like']}}</h2>
-                <h2 style="justify-content: center; font-size: 11.5px;">Guardados</h2>
-                <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
-              <?php endif; ?>
-            </li>
-        </ul>
-        <?php if (false): ?>
-            <h1 class="profile-name">@_{{$account_name[0]->nome}}_{{$account_name[0]->apelido}}</h1>
-        <?php endif ?>
+        <div class="" id="card-ident">
+            <div id="ident-profile">
+                <h1 class="profile-name">{{$account_name[0]->nome}} {{$account_name[0]->apelido}}</h1>
+                    <div class="invite-icon circle">
+                        <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
+                    </div>
+            </div>
+            <ul class="profile-follow profile-item-center">
+                <li class="statistics-profile">
+                    <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_ps']}}</h2>
+                    <h2 style="justify-content: center; font-size: 11.5px;">Seguindo</h2>
+                    <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+                  <?php endif; ?>
+                </li>
+                <li class="statistics-profile">
+                    <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_like']}}</h2>
+                    <h2 style="justify-content: center; font-size: 11.5px;">Curtiu</h2>
+                    <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+                  <?php endif; ?>
+                </li>
+                <li class="statistics-profile">
+                    <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_guardados']}}</h2>
+                    <h2 style="justify-content: center; font-size: 11.5px;">Guardados</h2>
+                    <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+                  <?php endif; ?>
+                </li>
+            </ul>
             <div id="option-profile-no-own">
             <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid ): ?>
-            <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
-                <label for="target-invited-relationship" style="width: 100%;">
-                    <div class="follwing-btn follwing-btn-pop-up" >
-                        <h2>Assumir</h2>
-                    </div>
-                </label>
-                <button class="btn-message">
-                    <i class="fa-solid fa-message fa-24 fa-option center"></i>
-                </button>
-                <?php if (false): ?>
-                    <label for="target-invited-relationship">
-                        <button type="submit" class="follwing-btn follwing-btn-pop-up " id="btnteste">
-                            Assumir
+            <div>
+                <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $perfil[0]['verificacao_page'] == 0 && $perfil[0]['verificacao_page1'] == 0  && $perfil[0]['verificacao_page2'] == 0 && $perfil[0]['verificacao_page3'] == 0  ): ?>
+
+                    <?php if ($perfil[0]['verificacao_pedido'] == 1 ): ?>
+                    <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
+                        <label for="target-invited-relationship" style="width: 100%;">
+                            <div class="follwing-btn follwing-btn-pop-up" >
+                                <h2>Pendente</h2>
+                            </div>
+                        </label>
+                        <button class="btn-message">
+                            <i class="fa-solid fa-message fa-24 fa-option center"></i>
                         </button>
-                    </label>
-                <?php endif ?>
-            </div>
-            <?php endif; ?>
-            <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-
-            <div class="options-profile-btn options-profile-btn-center profile-item-center">
-                <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
-            </div>
-
-                <!--<div class="options-profile-btn">
-                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
-                </div>-->
-                <div>
-                    <a href="">
-                        <div class="container-logout">
-                            <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Secção</h1></a>
+                    </div>
+                    <?php elseif ($perfil[0]['verificacao_pedido1'] == 1 ): ?>
+                        <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
+                            <label for="target-invited-relationship" style="width: 100%;">
+                                <div class="follwing-btn follwing-btn-pop-up" >
+                                    <h2>Aceitar</h2>
+                                </div>
+                            </label>
                         </div>
-                    </a>
-                </div>
+                    <?php else: ?>
+                    <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
+                        <label for="target-invited-relationship" style="width: 100%;">
+                            <div class="follwing-btn follwing-btn-pop-up" >
+                                <h2>Assumir</h2>
+                            </div>
+                        </label>
+                    </div>
+                    <?php endif; ?>
+                    <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+                    <div class="options-profile-btn options-profile-btn-center profile-item-center">
+                        <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
+                    </div>
+                    <div>
+                        <a href="">
+                            <div class="container-logout">
+                                <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Secção</h1></a>
+                            </div>
+                        </a>
+                    </div>
+                    <?php endif; ?>
+                <?php endif; ?>
             <?php endif; ?>
+            </div>
+            <div class="inform-profile">
+                <h3>Namorado de <span>Ana Joyce</span></h3>
+            </div>
+            <div class="inform-profile">
+                <p>{{$account_name[0]->descricao}}</p>
+            </div>
         </div>
-        <div class="inform-profile">
-            <h3>Namorado de <span>Ana Joyce</span></h3>
-        </div>
-        <div class="inform-profile">
-            <p>{{$account_name[0]->descricao}}</p>
-        </div>
-    </div>
-</header>
+    </header>
 <div class="card br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">
                 <ul class="" id="ul-profile">
@@ -105,22 +112,58 @@
                     <li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 28px;"></i><h1 class="menu-option-profile"></h1></a></li>
                 </ul>
             </nav>
-            <?php
-                $posts = [
-
-                ];
-            ?>
+            
             <?php if (isset($_GET['post-container-post'])): ?>
                 <?php if ($_GET['post-container-post'] == 'post'): ?>
                 <div class="post-img-container-page post-page-container">
                     <?php foreach ($gostos as $key => $value): ?>
-                      <div class="img-post">
-                      <p><h5>  {{$gostos[$key]['post']}}   </h5></p>
+                      @if($value['formato']==3)
+                        <div class="img-post">
+                              <div class="post">
+                                  <header class="clearfix">
+                                      <div class="first-component clearfix l-5">
+                                        @if( !($value['foto_page'] == null) )
+                                            <div class="page-cover circle l-5">
+                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $value['foto_page'] }}">
+                                            </div>
+                                        @else
+                                            <div class="page-cover circle l-5">
+                                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                            </div>
+                                        @endif;
+                                          <div class="page-identify l-5 clearfix">
+                                              <a href="{{route('couple.page1', $value['page_uuid']) }}"><h1 class="">{{$value['nome_page']}}</h1></a>
+                                              <div class="info-post clearfix">
+                                                  <span class="time-posted l-5">50 min</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="last-component clearfix r-5">
+                                          <label for="more-option-1">
+                                              <i class="fas fa-ellipsis-h fa-15 fa-option"></i>
+                                          </label>
+                                          <input type="checkbox" name="" id="more-option-1" class="hidden">
+                                          <ul class="clearfix more-option-post">
+                                              <li>
+                                                  <a href="">Denunciar</a>
+                                              </li>
+                                              <li>
+                                                  <a href="">Copiar Link</a>
+                                              </li>
+                                          </ul>
+                                      </div>
+                                  </header>
+                                  <div class="card-post">
+                                      <div class="">
+                                          <p>{{$gostos[$key]['post']}}</p>
+                                      </div>
+                                  </div>
                       </div>
-
+                    </div>
+                   @endif;
                     <?php endforeach ?>
                 </div>
-                <?php endif ?>
+                <?php endif; ?>
                 <?php if ($_GET['post-container-post'] == 'video'): ?>
                 <div class="post-video-container-page post-page-container">
                     <?php foreach ($gostos as $key => $value): ?>
@@ -134,7 +177,7 @@
                       <?php endif; ?>
                     <?php endforeach ?>
                 </div>
-                <?php endif ?>
+                <?php endif; ?>
                 <?php if ($_GET['post-container-post'] == 'images'): ?>
                 <div class="post-img-container-page post-page-container">
                     <?php foreach ($gostos as $key => $value): ?>
@@ -145,10 +188,10 @@
                       <?php endif; ?>
                     <?php endforeach ?>
                 </div>
-                <?php endif ?>
+                <?php endif; ?>
                 <?php if ($_GET['post-container-post'] == 'saved'): ?>
 
-                <?php endif ?>
+                <?php endif; ?>
             <?php else: ?>
             <div class="post-img-container-page post-page-container">
                 <?php foreach ($gostos as $key => $value): ?>
@@ -159,7 +202,7 @@
                   <?php endif; ?>
                 <?php endforeach ?>
             </div>
-            <?php endif ?>
-        </div>
+            <?php endif; ?>
+</div>
 </div>
 @stop

@@ -16,13 +16,11 @@
                 @endif
 
                 @if($checkUserStatus)
-                @if ($hasUserManyPages):
                     <label for="target-profile-cover-page">
                         <div class="add-edit-profile circle">
                             <i class="fas fa-plus center" style="font-size: 10px;"></i>
                         </div>
                     </label>
-                @endif
                 @endif
             </div>
             <div class="statistics-profile-page l-5 clearfix">

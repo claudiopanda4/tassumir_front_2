@@ -1114,11 +1114,11 @@ label[for="hugo"]{
 	background-color: #242526;
 	margin-top: 20px;    
 	width: 500px;
-    margin: 10px auto 20px;
+    margin: 10px auto 10px;
 }
 #stories-card {
 	width: 650px;
-    margin-bottom: 10px;
+    margin-bottom: -10px;
     margin-top: -10px;
     background-color: transparent;
     border: none;
@@ -2563,8 +2563,30 @@ label[for="hugo"]{
 }
 .options-invited .label-invited label {
 	width: 100%;
-	padding: 0px;
-	margin-bottom: 0;
+    padding: 0px;
+    margin-bottom: 0;
+    text-align: center;
+    color: #fff;
+    font-size: 13px;
+}
+.label-invited h2 {
+	font-size: 14px;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+}
+.terms-use-alert {
+	color: #fd09fd;
+	font-size: 13px;
+	width: 100%;
+	text-align: center;
+}
+.alert-accept {
+	color: #fff;
+	padding: 5px;
+	font-size: 13px;
 }
 .options-invited .accept {
 	width: 100%;

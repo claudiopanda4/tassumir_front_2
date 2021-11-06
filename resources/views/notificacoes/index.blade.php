@@ -27,11 +27,12 @@
                     <a href="">Hugo Paulo</a> enviou um Pedido de Relacionamento para VOCÊ
                 </span>
                 <div class="options-invited clearfix">
-                    <div class="label-invited l-5">
-                        <label class="" for="options-invited-pop-up">
-                            <h2 class="accept">Aceitar</h2>
-                        </label>
-                    </div>
+                    <label class="l-5" for="options-invited-pop-up">
+                        <div class="label-invited">
+                            <!--<h2 class="accept">Aceitar</h2>-->
+                            <h2>Aceitar</h2>
+                        </div>
+                    </label>
                     <a href="" class="l-5 denied">Rejeitar</a>
                 </div>
             </div>

@@ -62,54 +62,60 @@
                                         <h4 class="noti-subtitle">Hoje</h4>
                                     </div>
                                 </li>
-                              <?php foreach ($notificacoes as $key => $value): ?>
+                              <?php
+                              $i = 0; 
+                              foreach ($notificacoes as $key => $value): ?>
+                                <?php if($i < 3): ?>
+                                    <?php $i++; ?>
+                                    <li class="change-look noti-flex-info" >
+                                      <?php if ($notificacoes[$key]['v']== 1): ?>
+                                        <?php if ($notificacoes[$key]['foto']!= null): ?>
 
-                                <li class="change-look noti-flex-info" >
-                                  <?php if ($notificacoes[$key]['v']== 1): ?>
-                                    <?php if ($notificacoes[$key]['foto']!= null): ?>
-
-                                    <div class="ml-2 novi-div-image">
-                                         <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$key]['foto'] }}">
-                                    </div>
-                                    <?php else: ?>
-                                      <div class="ml-2 novi-div-image">
-
-                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
-                                      </div>
-                                      <?php endif; ?>
-                                    <?php elseif ($notificacoes[$key]['v']== 2): ?>
-                                      <?php if ($notificacoes[$key]['foto']!= null): ?>
-
-                                      <div class="ml-2 novi-div-image">
-
-                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
-                                      </div>
-                                      <?php else: ?>
                                         <div class="ml-2 novi-div-image">
-
-                                             <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
+                                             <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$key]['foto'] }}">
                                         </div>
+                                        <?php else: ?>
+                                          <div class="ml-2 novi-div-image">
+
+                                               <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                          </div>
+                                          <?php endif; ?>
+                                        <?php elseif ($notificacoes[$key]['v']== 2): ?>
+                                          <?php if ($notificacoes[$key]['foto']!= null): ?>
+
+                                          <div class="ml-2 novi-div-image">
+
+                                               <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                          </div>
+                                          <?php else: ?>
+                                            <div class="ml-2 novi-div-image">
+
+                                                 <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                            </div>
+                                            <?php endif; ?>
+
                                         <?php endif; ?>
 
-                                    <?php endif; ?>
+                                        <div class="noti-div-name">
 
-                                    <div class="noti-div-name">
+                                        <span class="noti-span">{{$notificacoes[$key]['notificacao']}}</span>
 
-                                    <span class="noti-span">{{$notificacoes[$key]['notificacao']}}</span>
+                                        <div class="noti-hour ml-2">
+                                            <a href=""><span class="">há um dia</span></a>
+                                        </div>
 
-                                    <div class="noti-hour ml-2">
-                                        <a href=""><span class="">há um dia</span></a>
-                                    </div>
+                                       </div>
 
-                                   </div>
-
-                                </li>
+                                    </li>
+                                    
+                                <?php endif ?>
+                                
                               <?php endforeach; ?>
 
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
