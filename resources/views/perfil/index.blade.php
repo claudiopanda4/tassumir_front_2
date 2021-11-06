@@ -78,6 +78,9 @@
                                 <h2>Assumir</h2>
                             </div>
                         </label>
+                        <button class="btn-message">
+                            <i class="fa-solid fa-message fa-24 fa-option center"></i>
+                        </button>
                     </div>
                     <?php endif; ?>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
