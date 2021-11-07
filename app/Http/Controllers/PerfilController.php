@@ -145,7 +145,9 @@ class PerfilController extends Controller
                   $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
                   $guardado= DB::select('select * from saveds where conta_id =  ?', [$account_name[0]->conta_id]);
                   $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$account_name[0]->conta_id, $conta_logada[0]->conta_id]);
+                  $verificacao_page= DB::select('select * from pages where conta_id_a = ?', [$account_name[0]->conta_id]);
                   $verificacao_pedido1= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_logada[0]->conta_id, $account_name[0]->conta_id]);
+                  $verificacao_page1= DB::select('select * from pages where conta_id_b = ?', [$account_name[0]->conta_id]);
                   $verificacao_page2= DB::select('select * from pages where conta_id_a = ?', [$conta_logada[0]->conta_id]);
                   $verificacao_page3= DB::select('select * from pages where conta_id_b = ?', [$conta_logada[0]->conta_id]);
                     $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
@@ -154,8 +156,6 @@ class PerfilController extends Controller
                     $perfil[0]['verificacao_page1']=sizeof($verificacao_page1);
                     $perfil[0]['verificacao_page2']=sizeof($verificacao_page2);
                     $perfil[0]['verificacao_page3']=sizeof($verificacao_page3);
-                    $perfil[0]['verificacao_page']=sizeof($verificacao_page);
-                    $perfil[0]['verificacao_page1']=sizeof($verificacao_page1);
                     $perfil[0]['qtd_ps']=sizeof($seguidor);                    $perfil[0]['qtd_like']=sizeof($post_reactions);
                     $perfil[0]['qtd_guardados']=sizeof($guardado);
                foreach ($post_reactions as $key ) {

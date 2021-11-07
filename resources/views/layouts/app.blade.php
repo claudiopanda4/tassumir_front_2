@@ -65,8 +65,27 @@
                                         <h4 class="noti-subtitle">Hoje</h4>
                                     </div>
                                 </li>
+                            <li class="send-invited-relationship clearfix">
+                                <div class="user-identify-img circle l-5">
+                                    <img src="http://127.0.0.1:8000/storage/img/users/anselmoralph.jpg" class="img-full circle">
+                                </div>
+                                <div class="details-invited l-5">
+                                    <span class="description-invited">
+                                        <a href="">Hugo Paulo</a> enviou um Pedido de Relacionamento para VOCÊ
+                                    </span>
+                                    <div class="options-invited clearfix">
+                                        <label class="l-5" for="options-invited-pop-up">
+                                            <div class="label-invited">
+                                                <!--<h2 class="accept">Aceitar</h2>-->
+                                                <h2>Aceitar</h2>
+                                            </div>
+                                        </label>
+                                        <a href="" class="l-5 denied">Rejeitar</a>
+                                    </div>
+                                </div>
+                            </li>
                               <?php foreach ($notificacoes as $key => $value): ?>
-
+                                @if($key < 3)
                                 <li class="change-look noti-flex-info" >
                                   <?php if ($notificacoes[$key]['v']== 1): ?>
                                     <?php if ($notificacoes[$key]['foto']!= null): ?>
@@ -113,6 +132,8 @@
                                    </div>
 
                                 </li>
+                                @endif
+                                
                               <?php endforeach; ?>
 
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
@@ -550,7 +571,39 @@
 </div>
 <?php endif ?>
 <?php if (true): ?>
-
+<input type="checkbox" name="" id="options-invited-pop-up" class="invisible">
+<div class="pop-up" id="invited-relationship-response">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 320px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Pedido de Relacionamento</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-invited-relationship">
+                    <div class="cancel-box div-img" id="target-invited-relationship-id">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px; overflow-y: auto;">
+            <div>
+                <p class="alert-accept">
+                    Ao clicar em "Sim, Aceito", você concorda com o que os termos dizem sobre o Noivado. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes. Aceita ser NAMORADA do Hugo Paulo?
+                </p>
+            </div>
+            <div>
+                <label class="terms-use-alert" for="">Ler termos e responsabilidades sobre Noivado</label>
+            </div>
+            <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+                <div class="cover-done" id="cover-done-marriage">
+                    <button type="submit" name="button" style="padding: 10px; font-size: 14px;" >
+                        Sim, Aceito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php endif ?>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -647,6 +700,9 @@
           $("#comentario-" + id).val('');
           comentar(id, coment);
         }
+      });
+      $('.accept').click(function(e) {
+          e.preventDefault();
       });
       $('.savepost').click(function (e) {
           e.preventDefault();

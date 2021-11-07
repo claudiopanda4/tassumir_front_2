@@ -327,6 +327,20 @@
 	    height: 375px;
 	}
 }
+@media screen and (max-width: 350px) {
+	.post-cover {
+	    height: 350px;
+	}
+	.details-invited {
+    	width: 220px;
+	}
+	.options-invited label {
+    	width: 105px;
+	}
+	#table_search_mobile {
+		width: 250px;
+	}
+}
 @media screen and (max-width: 414px) {
 	.post-cover {
 	    height: 414px;
@@ -587,7 +601,7 @@
 	    padding-left: 20px;
 	}
 	.follwing-btn-container {
-	    width: 200px;
+	    width: 250px;
 	}
 	#pop-up-component-create-post .pop-up-component-header {
 	    width: 100%;
@@ -615,7 +629,7 @@
 	}
 	.card {
 	    width: 90%;
-	    margin: 10px auto 20px;
+	    margin: 10px auto 10px;
 	}
 	.post {
 	    width: 100%;
