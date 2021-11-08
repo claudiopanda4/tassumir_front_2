@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+   
 @section('content')
 <div class="main" id="main-profile">
     <header class="card br-10 card-flex">
@@ -60,7 +60,7 @@
                             </div>
                         </label>
                         <button class="btn-message">
-                            <i class="fas fa-sms fa-24 fa-option center"></i>
+                            <i class="fa-solid fa-message fa-24 fa-option center"></i>
                         </button>
                     </div>
                     <?php elseif ($perfil[0]['verificacao_pedido1'] == 1 ): ?>
@@ -79,7 +79,7 @@
                             </div>
                         </label>
                         <button class="btn-message">
-                            <i class="fas fa-sms fa-24 fa-option center"></i>
+                            <i class="fa-solid fa-message fa-24 fa-option center"></i>
                         </button>
                     </div>
                     <?php endif; ?>
@@ -115,7 +115,7 @@
                     <li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 28px;"></i><h1 class="menu-option-profile"></h1></a></li>
                 </ul>
             </nav>
-            
+
             <?php if (isset($_GET['post-container-post'])): ?>
                 <?php if ($_GET['post-container-post'] == 'post'): ?>
                 <div class="post-img-container-page post-page-container">
