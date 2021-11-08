@@ -60,7 +60,7 @@
                             </div>
                         </label>
                         <button class="btn-message">
-                            <i class="fa-solid fa-message fa-24 fa-option center"></i>
+                            <i class="fas fa-sms fa-24 fa-option center"></i>
                         </button>
                     </div>
                     <?php elseif ($perfil[0]['verificacao_pedido1'] == 1 ): ?>
@@ -79,7 +79,7 @@
                             </div>
                         </label>
                         <button class="btn-message">
-                            <i class="fa-solid fa-message fa-24 fa-option center"></i>
+                            <i class="fas fa-sms fa-24 fa-option center"></i>
                         </button>
                     </div>
                     <?php endif; ?>

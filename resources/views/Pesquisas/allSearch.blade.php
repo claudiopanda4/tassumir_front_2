@@ -69,11 +69,11 @@ function search(variavel, v){
 																nome += '</li>'
 																nome += '<li class="change-look search-info">'
 																if (value.foto != null) {
-																	nome += '<div class="mt-4 page-cover circle "><img class=" circle img-40" src= ' + src + '/' + value.foto + '></div>'
+																	nome += '<div class="page-cover circle "><img class=" circle img-40" src= ' + src + '/' + value.foto + '></div>'
 																}else {
-																	nome += '<div class="mt-4 page-cover circle "><i class="fas fa-user " style="font-size: 25px; color: #ccc;"></i></div>'
+																	nome += '<div class=" page-cover circle "><i class="fas fa-user center" style="font-size: 25px; color: #ccc;"></i></div>'
 																}
-																nome += '<div class="mb-1 mr-2" id="card-ident"><div id="ident-profile-1" class="" >'
+																nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
 																var route1 = "{{route('account1.profile', 1) }}"
 																url_array1 = route1.split('/');
 																url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
@@ -120,11 +120,11 @@ function search(variavel, v){
 																nome += '</li>'
 																nome += '<li class="change-look search-info">'
 																if (value.foto != null) {
-																	nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.foto + '></div>'
+																	nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.foto + '></div>'
 																}else {
-																	nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
+																	nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
 																}
-																nome += '<div class="mb-1 mr-2" id="card-ident"><div id="ident-profile-1" class="" >'
+																nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
 																nome += '<span class="profile-name-1">'+value.nome+'</span>'
 																nome += '<a href="" class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
 																nome += '</div></div></li><div class="couple-separator"></div>'
@@ -165,9 +165,9 @@ function search(variavel, v){
 											nome+='<header class="clearfix">'
 											nome+='<div class="first-component clearfix l-5">'
 											if (value.page_foto != null) {
-												nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.page_foto + '></div>'
+												nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.page_foto + '></div>'
 											}else {
-												nome += '<div class="mt-4 page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
+												nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
 											}
 											nome+='<div class="page-identify r-5 clearfix">'
 											nome+='<h1 class="text-ellips">'+value.nome_page+'</h1>'

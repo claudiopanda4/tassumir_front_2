@@ -37,6 +37,19 @@
                 </div>
             </div>
         </div>
+        <div class="send-invited-relationship clearfix">
+            <div class="user-identify-img circle l-5">
+                <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
+            </div>
+            <div class="details-invited l-5">
+                <span class="description-invited">
+                    <a href="">Hugo Paulo</a> Respondeu a sua Solicitação de Registo de compromisso
+                </span>
+                <div class="options-invited clearfix">
+                    <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
+                </div>
+            </div>
+        </div>
         <?php foreach ($notificacoes as $key => $value): ?>
     <div class="noti-flex-info mt-2">
         <div class="ml-2 novi-div-image">

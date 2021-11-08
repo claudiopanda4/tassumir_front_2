@@ -455,6 +455,18 @@
 		background-color: transparent;
 		border: none;
     }
+	.profile-name {
+	    margin-top: 0px;
+	}
+	#img-profile-container {
+	    margin: auto;
+	}
+	#main-profile {
+		background-color: transparent;
+	}
+	#main-container-profile {
+		background-color: transparent;
+	}
     .mobile-user-name {
 		display: block;
 	}
@@ -579,8 +591,30 @@
 	.statistics-profile-page-component h2 {
 	    font-size: 12px;
 	}
+	.couple-profile-img {
+	    position: absolute;
+	    width: 50px;
+	    height: 50px;
+	}
+	.couple-profile-container {
+    	width: 75px;
+	    height: 75px;
+	}
 	.statistics-profile-page-component h1 {
 	    font-size: 14px;
+	}
+	.info-invite-relationship {
+	    width: 250px;
+	}
+	#main-container-relationship .options-invited .label-invited {
+	    width: 200px;
+	    margin-left: 84px;
+	}
+	#main-container-relationship .options-invited .denied {
+	    margin-left: 86px;
+	}
+	.options-invited .denied {
+	    border: 1px solid #343a40;
 	}
 }
 @media screen and (max-width: 501px) {
@@ -611,6 +645,10 @@
 	}
 	.comment-send-text {
 	    width: 77%;
+	}
+	.user-identify-img {
+	    width: 50px;
+	    height: 50px;
 	}
 }
 @media screen and (max-width: 600px) {
@@ -662,6 +700,12 @@
 	.img-profile-page {
 	    width: 65px;
 	    height: 65px;
+	}
+	.info-invite-relationship {
+	    width: 220px;
+	}
+	#main-container-relationship .options-invited .label-invited {
+	    /*width: 180px;*/
 	}
 	#statistics-profile-page-component-container-lg {
 	    display: block;
