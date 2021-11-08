@@ -20,7 +20,7 @@
                   @for ($i=0; $i< sizeof($what_are_talking); $i++)
                     @if($i < 5)
                         <li class="li-component-stories l-5">
-                            <a href="">
+                            <a href="{{route('post_index', $what_are_talking[$i]['post_uuid'])}}">
                                 <div class="identify-cover circle">
                                 @if( !($what_are_talking[$i]['foto_page'] == null) )
                                         <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
@@ -243,7 +243,7 @@
                         </div>
                     </div>
                     <div class="comment-user-container comment-user-container-react" name="novo-comment">
-                      
+
                     </div>
                 </div>
         <?php if ($dados[$key]['qtd_comment']>0): ?>
