@@ -646,13 +646,13 @@ label[for="hugo"]{
 }
 
 .couple-separator{
-
 	padding-top: 5px;
     padding-bottom: 5px;
 	border-bottom: 1px solid #717171;
 	justify-items: flex-end;
 	justify-content: flex-end;
 	display: flex;
+	display: none;
 }
 
 .couple-numbering-text{
@@ -1706,11 +1706,16 @@ label[for="hugo"]{
     font-size: 19px;
     width: 185px;
     font-weight: bolder;
+    margin-top: 15px;
 }
 .profile-name-1 {
 	color: #efefef;
-    font-size: 19px;
+    font-size: 14px;
     width: 185px;
+    margin-top: 10px;
+}
+.search-info .mt4 {
+	margin-top: 0;
 }
 .profile-name-edit{
 	
@@ -1850,7 +1855,7 @@ label[for="hugo"]{
 	color: #efefef;
 }
 .option-profile-menu ul {
-	width: 300px;
+	/*width: 300px;*/
     margin: auto;
     padding-left: 0;
 }
@@ -1860,14 +1865,27 @@ label[for="hugo"]{
     position: relative;
     width: 30%;
 }
+.couple-profile-container {
+	width: 100px;
+	height: 100px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+.info-invite-relationship {
+	width: 330px;
+}
+.info-invite-relationship p {
+	color: #fff;
+	font-size: 13px;
+}
 .edit-profile {
 	padding: 8px;
 	width: 100px;
 	text-align: center;
-	/*display: inline-flex;*/
+	/*display: inline-flex;	
+	background-color: var(--background-dark-input);*/
 	color: #fff;
 	border-radius: 5px;
-	background-color: var(--background-dark-input);
     font-size: 13px;
     text-align: center;
     border: 1px solid #606060;
@@ -2118,8 +2136,10 @@ label[for="hugo"]{
     background-color: transparent;
 }
 #main-container-profile {
-	width: 650px;
+	width: 580px;
 	margin-top: 5px;
+	background-color: #242526;
+	border-radius: 10px;
 }
 #edit-page {
 	width: 110px;
@@ -2247,6 +2267,8 @@ label[for="hugo"]{
 }
 #main-profile {
 	width: 600px;
+	background-color: #242526;
+	border-radius: 10px;
 }
 #main-profile .card {
 	background-color: transparent;
@@ -2468,8 +2490,13 @@ label[for="hugo"]{
 }
 .search-info{
 	display:flex;
-	justify-content:space-around;
+	justify-content:flex-start;
 	align-content:center;
+	padding: 10px;
+}
+.profile-name-ident {
+	margin-left: 10px;
+	margin-top: 10px;
 }
 .post-page-container {
 	margin: 15px 20px 20px;
@@ -2522,7 +2549,8 @@ label[for="hugo"]{
 	border: none;
 	border-radius: 5px;
 	margin-left: 10px;
-	background-color: #606060;
+	border: 1px solid #343a40;
+	background: transparent;
 }
 #option-profile-no-own {
 	width: 320px;
@@ -2620,4 +2648,31 @@ label[for="hugo"]{
     color: #fff;
     border: none;
     width: 100%;
+}
+.couple-profile-img {
+	position: absolute;
+	width: 75px;
+	height: 75px;
+}
+.couple-2 {
+	top: 20px;
+    left: 30px;
+    border: 2px solid #000;
+}
+.couple-2 img {
+    border: 2px solid #fff;
+}
+#main-container-relationship .options-invited .label-invited {
+    width: 160px;
+}
+#main-container-relationship .card {
+    border-radius: 10px;
+}
+.alert-proof {
+	font-size: 12px;
+	color: #fff;
+	padding: 10px;
+}
+.couple-container {
+	position: relative;
 }

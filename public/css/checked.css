@@ -568,3 +568,7 @@
 	opacity: 1;
     z-index: 1001;
 }
+#target-proof:checked ~ #cover-proof {
+	opacity: 1;
+    z-index: 1001;
+}

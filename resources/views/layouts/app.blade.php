@@ -67,7 +67,7 @@
                                 </li>
                             <li class="send-invited-relationship clearfix">
                                 <div class="user-identify-img circle l-5">
-                                    <img src="http://127.0.0.1:8000/storage/img/users/anselmoralph.jpg" class="img-full circle">
+                                    <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
                                 </div>
                                 <div class="details-invited l-5">
                                     <span class="description-invited">
@@ -81,6 +81,19 @@
                                             </div>
                                         </label>
                                         <a href="" class="l-5 denied">Rejeitar</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="send-invited-relationship clearfix">
+                                <div class="user-identify-img circle l-5">
+                                    <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
+                                </div>
+                                <div class="details-invited l-5">
+                                    <span class="description-invited">
+                                        <a href="">Hugo Paulo</a> Respondeu a sua Solicitação de Registo de compromisso
+                                    </span>
+                                    <div class="options-invited clearfix">
+                                        <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
                                     </div>
                                 </div>
                             </li>
@@ -174,6 +187,7 @@
                 <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Guardados</a></li>
                 <li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Casais que eu sigo</a></li>
                 <li class="li-component-aside"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Ganhar Dinheiro</a></li>
+                <li class="li-component-aside"><i class="far fa-play-circle fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Tassumir Vídeos</a></li>
             </ul>
         </nav>
         <nav class="last-nav">
@@ -441,7 +455,6 @@
     </div>
 </div>
 </form>
-
 <input type="checkbox" name="" id="target-profile-cover-page" class="invisible">
 <div class="pop-up" id="cover-profile-page">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
@@ -508,6 +521,39 @@
         </div>
     </div>
 </div>
+<?php endif ?>
+<?php if (true): ?>
+<form action="">
+<input type="checkbox" name="" id="target-proof" class="invisible">
+<div class="pop-up" id="cover-proof">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 280px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1 class="">Enviar Comprovativo</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-proof">
+                    <div class="cancel-box div-img" id="cancel-box-add-file-post">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px;">
+            <p class="alert-proof">O comprovativo pode ser uma imagem de depósito ou um arquivo pdf. Aguardará a confirmação. Após verifivação, será enviada uma NOTIFICAÇÃO</p>
+            <div class="">
+                <input class="file" type="file" name="imgOrVideo" style="width: 250px; margin-left: 10px; color: #fff;">
+            </div>
+        </div>
+        <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+            <label for="target-profile-cover-post" class="label-full">
+                <div class="cover-done" id="cover-done-post">
+                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
+                </div>
+            </label>
+        </div>
+    </div>
+</div>
+</form>
 <?php endif ?>
 <?php if (true): ?>
 <input type="checkbox" name="" id="target-invited-relationship" class="invisible">
