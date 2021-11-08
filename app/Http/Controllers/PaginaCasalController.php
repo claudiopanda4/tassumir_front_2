@@ -854,6 +854,7 @@ class PaginaCasalController extends Controller
             $posts[$index]['postDescricao'] = $d->descricao;
             $index++;
         }
+        
         return $posts;
     }
 
