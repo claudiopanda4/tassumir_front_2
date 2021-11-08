@@ -967,7 +967,7 @@ if (sizeof($notificacoes_aux)>0) {
 
                 //dd("cheguei no else");
                 return view('auth.codigoRecebidoActualizar',compact('idSaved'));
-            }        
+            }
     }
 
     public function generateAgain(Request $request){
@@ -980,7 +980,7 @@ if (sizeof($notificacoes_aux)>0) {
                   ->where('conta_id', $idReceived)
                   ->update(['codigoGerado' => $code2]);
 
-        return view('auth.codigoRecebidoNovaConfirmation',compact('idReceived','code2'));          
+        return view('auth.codigoRecebidoNovaConfirmation',compact('idReceived','code2'));
 
     }
     public function verifyAgainCodeSent(Request $request){
@@ -1028,7 +1028,7 @@ if (sizeof($notificacoes_aux)>0) {
     public function newCode(){
         return view('auth.newCode');
     }
-    
+
     /*public function codigoRecebidoRegisto(){
         return view('auth.codigoRecebidoRegister');
     }*/
@@ -1055,7 +1055,7 @@ if (sizeof($notificacoes_aux)>0) {
 
         }
         return redirect()->route('account.login.form');
-        
+
     }
     public function logout(Request $request)
     {
@@ -1082,7 +1082,9 @@ if (sizeof($notificacoes_aux)>0) {
 
     public static function profile_picture($account_id)
     {
-        return DB::select('select foto from contas where conta_id = ?', [$account_id])[0]->foto;
+      $auth = new AuthController();
+          $conta_logada = $auth->defaultDate();
+        return DB::select('select foto from contas where conta_id = ?', [$conta_logada[0]->conta_id])[0]->foto;
     }
 
 /*  public static function post_files($post_id)
