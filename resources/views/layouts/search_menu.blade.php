@@ -6,11 +6,10 @@
     <title>{{ config('app.name', 'Tassumir') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script scr="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+    <script src="{{ asset('js/jquery/jquery-3.5.1/jquery-3.5.1.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -44,7 +43,7 @@
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="last-component-n clearfix-n " >
                             <label for="more-option-notify" class="fa-option-mobile-hide">
-                                <i class="far fa-bell fa-24 fa-option" size="7"></i>
+                                <i class="fa fa-bell fa-24 fa-option" size="7"></i>
                             </label>
                             <a href="{{route('account.all.notifications')}}" class="fa-option-mobile-lg-hide">
                                 <i class="far fa-bell fa-24 fa-option" size="7"></i>
@@ -63,54 +62,60 @@
                                         <h4 class="noti-subtitle">Hoje</h4>
                                     </div>
                                 </li>
-                              <?php foreach ($notificacoes as $key => $value): ?>
+                              <?php
+                              $i = 0; 
+                              foreach ($notificacoes as $key => $value): ?>
+                                <?php if($i < 3): ?>
+                                    <?php $i++; ?>
+                                    <li class="change-look noti-flex-info" >
+                                      <?php if ($notificacoes[$key]['v']== 1): ?>
+                                        <?php if ($notificacoes[$key]['foto']!= null): ?>
 
-                                <li class="change-look noti-flex-info" >
-                                  <?php if ($notificacoes[$key]['v']== 1): ?>
-                                    <?php if ($notificacoes[$key]['foto']!= null): ?>
-
-                                    <div class="ml-2 novi-div-image">
-                                         <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$key]['foto'] }}">
-                                    </div>
-                                    <?php else: ?>
-                                      <div class="ml-2 novi-div-image">
-
-                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
-                                      </div>
-                                      <?php endif; ?>
-                                    <?php elseif ($notificacoes[$key]['v']== 2): ?>
-                                      <?php if ($notificacoes[$key]['foto']!= null): ?>
-
-                                      <div class="ml-2 novi-div-image">
-
-                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
-                                      </div>
-                                      <?php else: ?>
                                         <div class="ml-2 novi-div-image">
-
-                                             <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
+                                             <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$key]['foto'] }}">
                                         </div>
+                                        <?php else: ?>
+                                          <div class="ml-2 novi-div-image">
+
+                                               <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                          </div>
+                                          <?php endif; ?>
+                                        <?php elseif ($notificacoes[$key]['v']== 2): ?>
+                                          <?php if ($notificacoes[$key]['foto']!= null): ?>
+
+                                          <div class="ml-2 novi-div-image">
+
+                                               <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                          </div>
+                                          <?php else: ?>
+                                            <div class="ml-2 novi-div-image">
+
+                                                 <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                            </div>
+                                            <?php endif; ?>
+
                                         <?php endif; ?>
 
-                                    <?php endif; ?>
+                                        <div class="noti-div-name">
 
-                                    <div class="noti-div-name">
+                                        <span class="noti-span">{{$notificacoes[$key]['notificacao']}}</span>
 
-                                    <span class="noti-span">{{$notificacoes[$key]['notificacao']}}</span>
+                                        <div class="noti-hour ml-2">
+                                            <a href=""><span class="">há um dia</span></a>
+                                        </div>
 
-                                    <div class="noti-hour ml-2">
-                                        <a href=""><span class="">há um dia</span></a>
-                                    </div>
+                                       </div>
 
-                                   </div>
-
-                                </li>
+                                    </li>
+                                    
+                                <?php endif ?>
+                                
                               <?php endforeach; ?>
 
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">

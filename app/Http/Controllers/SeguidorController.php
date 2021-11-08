@@ -43,11 +43,13 @@ class SeguidorController extends Controller
         
             foreach ($identificador_seguindo as $valueseguindo) {
                 if ($valueseguindo->tipo_identificador_id == 1) {
+                    $id_conta_seguindo = $valueseguindo->id;
                     $identi_id_seguindo = $valueseguindo->identificador_id;
                 } 
             }
             foreach ($identificador_seguida as $valueseguida) {
                 if ($valueseguida->tipo_identificador_id == 2) {
+                    $id_page_seguida = $valueseguida->id;
                     $identi_id_seguida = $valueseguida->identificador_id;                
                 }
 
@@ -65,10 +67,32 @@ class SeguidorController extends Controller
                 $seguidor->identificador_id_seguindo = $identi_id_seguindo;
                 $seguidor->identificador_id_seguida = $identi_id_seguida;
                 $seguidor->save();
-            }
-
+            
+            $page = DB::table('pages')->where('page_id', $id_page_seguida)->get();
+            
+            if ($page[0]->conta_id_a != $id_conta_seguindo) {
+                $destino_a = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+            DB::table('notifications')->insert([
+                  'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'id_state_notification' => 2,
+                  'id_action_notification' => 5,
+                  'identificador_id_causador'=> $identi_id_seguindo,
+                  'identificador_id_destino'=> $destino_a[0]->identificador_id,
+                  ]);
+                }
+              if ($page[0]->conta_id_b != $id_conta_seguindo) {
+                $destino_b = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
+                DB::table('notifications')->insert([
+                        'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                        'id_state_notification' => 2,
+                        'id_action_notification' => 5,
+                        'identificador_id_causador'=> $identi_id_seguindo,
+                        'identificador_id_destino'=> $destino_b[0]->identificador_id,
+                        ]);
+                      }
+                }
         
-            return response()->json('Salvou');
+            return response()->json($destino_b);
         }
 
     }

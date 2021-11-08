@@ -20,7 +20,7 @@
                   @for ($i=0; $i< sizeof($what_are_talking); $i++)
                     @if($i < 5)
                         <li class="li-component-stories l-5">
-                            <a href="">
+                            <a href="{{route('post_index', $what_are_talking[$i]['post_uuid'])}}">
                                 <div class="identify-cover circle">
                                 @if( !($what_are_talking[$i]['foto_page'] == null) )
                                         <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
@@ -242,8 +242,8 @@
                             <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}">Amo muito esse casal</p>
                         </div>
                     </div>
-                    <div class="comment-user-container comment-user-container-react">
-                        <i class="far fa-heart fa-12"></i>
+                    <div class="comment-user-container comment-user-container-react" name="novo-comment">
+
                     </div>
                 </div>
         <?php if ($dados[$key]['qtd_comment']>0): ?>
@@ -429,7 +429,7 @@ function gostar(id){
     }
 
   function seguir(id, id2){
-    
+
      $.ajax({
         url: "{{route('seguir')}}",
         type: 'get',
@@ -454,8 +454,19 @@ function gostar(id){
            dataType: 'json',
            success:function(response){
            console.log(response);
+           var nome = '';
            comment_qtd = parseInt(comment_qtd) + 1;
-           $("#comment-qtd-" + id).text((comment_qtd) + " comentários");
+           $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
+
+
+                nome +=     '<a href="" class="comment-like-a" id="on|'+response[0]['comment_id']+'">'
+                if(response[0]['comment_S/N'] > 0){
+                  nome +=            ' <i class="fas fa-heart fa-12 liked" id="on|'+response[0]['comment_id']+'|i"></i>'
+                }else{
+                  nome +=             '<i class="fas fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
+                }
+                	$('div[name=novo-comment]').append(nome);
+
           }
         });
       }
@@ -524,11 +535,10 @@ function gostar(id){
                 success: function(response){
                   console.log(response);
                   $('#li-component-suggest-' + valor_pagina_id).remove();
-                  $('#li-component-sugest-' + valor_pagina_id).remove(); 
+                  $('#li-component-sugest-' + valor_pagina_id).remove();
                   $('.seguir-' + valor_pagina_id).hide();
                 }
               });
-
              });
             });
 

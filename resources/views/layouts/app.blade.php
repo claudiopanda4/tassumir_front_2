@@ -65,8 +65,40 @@
                                         <h4 class="noti-subtitle">Hoje</h4>
                                     </div>
                                 </li>
+                            <li class="send-invited-relationship clearfix">
+                                <div class="user-identify-img circle l-5">
+                                    <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
+                                </div>
+                                <div class="details-invited l-5">
+                                    <span class="description-invited">
+                                        <a href="">Hugo Paulo</a> enviou um Pedido de Relacionamento para VOCÊ
+                                    </span>
+                                    <div class="options-invited clearfix">
+                                        <label class="l-5" for="options-invited-pop-up">
+                                            <div class="label-invited">
+                                                <!--<h2 class="accept">Aceitar</h2>-->
+                                                <h2>Aceitar</h2>
+                                            </div>
+                                        </label>
+                                        <a href="" class="l-5 denied">Rejeitar</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="send-invited-relationship clearfix">
+                                <div class="user-identify-img circle l-5">
+                                    <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
+                                </div>
+                                <div class="details-invited l-5">
+                                    <span class="description-invited">
+                                        <a href="">Hugo Paulo</a> Respondeu a sua Solicitação de Registo de compromisso
+                                    </span>
+                                    <div class="options-invited clearfix">
+                                        <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
+                                    </div>
+                                </div>
+                            </li>
                               <?php foreach ($notificacoes as $key => $value): ?>
-
+                                @if($key < 3)
                                 <li class="change-look noti-flex-info" >
                                   <?php if ($notificacoes[$key]['v']== 1): ?>
                                     <?php if ($notificacoes[$key]['foto']!= null): ?>
@@ -113,6 +145,8 @@
                                    </div>
 
                                 </li>
+                                @endif
+                                
                               <?php endforeach; ?>
 
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
@@ -140,10 +174,10 @@
         <nav>
             <ul class="clearfix">
                 <li class="li-component-aside li-component-aside-active"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('account.home')}}">Feed de Notícias</a></li>
-                <li class="li-component-aside"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}">{{$conta_logada[0]->nome}} {{$conta_logada[0]->apelido}}</a></li>
+                <li class="li-component-aside text-ellips"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a class="text-ellips" href="{{route('account.profile')}}">{{$conta_logada[0]->nome}} {{$conta_logada[0]->apelido}}</a></li>
                 <!--<li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Criar Relacionamento</a></li>
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
-                    <!-- @if($checkUserStatus) -->
+                @if($checkUserStatus)
                     @if(!$hasUserManyPages)
                         <li class="li-component-aside"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Página de Casal</a></li>
                     @else
@@ -153,6 +187,7 @@
                 <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Guardados</a></li>
                 <li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Casais que eu sigo</a></li>
                 <li class="li-component-aside"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Ganhar Dinheiro</a></li>
+                <li class="li-component-aside"><i class="far fa-play-circle fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Tassumir Vídeos</a></li>
             </ul>
         </nav>
         <nav class="last-nav">
@@ -169,7 +204,7 @@
                 <h1>Páginas que eu sigo</h1>
             </header>
             <ul class="">
-                               <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
+                <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
                 @forelse($dadosPage as $Paginas)
                 <?php
                 $seguidors = 0;
@@ -420,7 +455,6 @@
     </div>
 </div>
 </form>
-
 <input type="checkbox" name="" id="target-profile-cover-page" class="invisible">
 <div class="pop-up" id="cover-profile-page">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
@@ -489,6 +523,39 @@
 </div>
 <?php endif ?>
 <?php if (true): ?>
+<form action="">
+<input type="checkbox" name="" id="target-proof" class="invisible">
+<div class="pop-up" id="cover-proof">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 280px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1 class="">Enviar Comprovativo</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-proof">
+                    <div class="cancel-box div-img" id="cancel-box-add-file-post">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px;">
+            <p class="alert-proof">O comprovativo pode ser uma imagem de depósito ou um arquivo pdf. Aguardará a confirmação. Após verifivação, será enviada uma NOTIFICAÇÃO</p>
+            <div class="">
+                <input class="file" type="file" name="imgOrVideo" style="width: 250px; margin-left: 10px; color: #fff;">
+            </div>
+        </div>
+        <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+            <label for="target-profile-cover-post" class="label-full">
+                <div class="cover-done" id="cover-done-post">
+                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
+                </div>
+            </label>
+        </div>
+    </div>
+</div>
+</form>
+<?php endif ?>
+<?php if (true): ?>
 <input type="checkbox" name="" id="target-invited-relationship" class="invisible">
 <div class="pop-up" id="invited-relationship">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 320px;">
@@ -550,7 +617,39 @@
 </div>
 <?php endif ?>
 <?php if (true): ?>
-
+<input type="checkbox" name="" id="options-invited-pop-up" class="invisible">
+<div class="pop-up" id="invited-relationship-response">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 320px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Pedido de Relacionamento</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-invited-relationship">
+                    <div class="cancel-box div-img" id="target-invited-relationship-id">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px; overflow-y: auto;">
+            <div>
+                <p class="alert-accept">
+                    Ao clicar em "Sim, Aceito", você concorda com o que os termos dizem sobre o Noivado. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes. Aceita ser NAMORADA do Hugo Paulo?
+                </p>
+            </div>
+            <div>
+                <label class="terms-use-alert" for="">Ler termos e responsabilidades sobre Noivado</label>
+            </div>
+            <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+                <div class="cover-done" id="cover-done-marriage">
+                    <button type="submit" name="button" style="padding: 10px; font-size: 14px;" >
+                        Sim, Aceito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php endif ?>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -647,6 +746,9 @@
           $("#comentario-" + id).val('');
           comentar(id, coment);
         }
+      });
+      $('.accept').click(function(e) {
+          e.preventDefault();
       });
       $('.savepost').click(function (e) {
           e.preventDefault();

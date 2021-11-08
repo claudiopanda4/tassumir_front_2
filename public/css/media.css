@@ -5,10 +5,18 @@
 	}
 }
 @media screen and (max-width: 540px) {
+	#statistics-profile-page-component-container-lg-1 {
+		width: 230px;
+	}
+}
+@media screen and (max-width: 540px) {
 	.main {
 		width: 100%;
 		margin-top: 6px;
 		margin-top: 0;
+	}
+	.lg-invisible-user-name {
+		display: none;
 	}
 	.option-profile-menu ul {
 	    /*background-color: #242526;*/
@@ -20,8 +28,8 @@
 	    padding-right: 0px;
 	}
 	.post header .first-component .page-cover {
-	    width: 45px;
-	    height: 45px;
+	    width: 40px;
+	    height: 40px;
 	}
 	.post header .first-component .page-identify h1 {
 	    margin-top: 12px;
@@ -52,6 +60,7 @@
 	.edit-profile-mobile {
 		display: block;
 		margin-top: 10px;
+		padding: 13px;
 	}
 	.edit-page-container {
 		display: none;
@@ -63,7 +72,8 @@
 		display: block;
 	}
 	.statistics-profile-page-identify h1 {
-	    font-size: 16px;
+	    font-size: 20px;
+	    font-weight: bolder;
 	}
 	.user-account, .search-lg,
 	.mobile-hidden, .menu-header ul li.mobile-hidden,
@@ -239,6 +249,10 @@
 	}
 	.btn-a-default {
 	    display: block;
+	    width: 100%;
+	    background: transparent;
+    	border: 1px solid #343a40;
+    	padding: 13px;
 	}
 	#img-profile-container {
 	    width: 80px;
@@ -313,14 +327,45 @@
 	    height: 375px;
 	}
 }
+@media screen and (max-width: 350px) {
+	.post-cover {
+	    height: 350px;
+	}
+	.details-invited {
+    	width: 220px;
+	}
+	.options-invited label {
+    	width: 105px;
+	}
+	#table_search_mobile {
+		width: 250px;
+	}
+}
 @media screen and (max-width: 414px) {
 	.post-cover {
 	    height: 414px;
+	}
+	.statistics-profile-page-identify h1 {
+	    font-size: 16px;
+	}
+	.description-couple {
+	    margin-left: 20px;
 	}
 }
 @media screen and (max-width: 411px) {
 	.post-cover {
 	    height: 411px;
+	}
+	.img-profile-page {
+    	width: 70px;
+	    height: 70px;
+	}
+	.description-couple {
+	    width: 343px;
+		margin-left: 20px;
+	}
+	.statistics-profile-page-component h2 {
+	    font-size: 11.5px;
 	}
 }
 @media screen and (max-width: 360px) {
@@ -356,6 +401,14 @@
 	}
 	
 }
+@media screen and (max-width: 375px) {
+	.description-couple {
+	    margin-left: 0px;
+	}
+	.post-cover {
+	    height: 375px;
+	}
+}
 @media screen and (max-width: 400px) {
 	.option-profile-menu {
 		overflow-x: auto;
@@ -371,10 +424,11 @@
 }
 @media screen and (max-width: 420px) {
 	.statistics-profile-page-component {
-		display: ;
+		width: 24%;
 	}
 	#statistics-profile-page-component-container-lg {
-		display: none;
+		display: block;
+		    width: 240px;
 	}
 	#statistics-profile-page-component-mobile {
 		display: block;
@@ -389,7 +443,7 @@
 	    margin-left: 10px;
 	}
 	.follwing-btn {
-	    padding: 5px;
+	    padding: 8px;
 	    width: 100%;
 	}	
 	.statistics-profile-page {
@@ -401,6 +455,21 @@
 		background-color: transparent;
 		border: none;
     }
+	.profile-name {
+	    margin-top: 0px;
+	}
+	#img-profile-container {
+	    margin: auto;
+	}
+	#main-profile {
+		background-color: transparent;
+	}
+	#main-container-profile {
+		background-color: transparent;
+	}
+    .mobile-user-name {
+		display: block;
+	}
 	#stories-card {
 	    margin-bottom: 0px;
 	    margin-top: 0px;
@@ -413,7 +482,7 @@
 		width: 150px;
 	}
 	.comment-user-comment {
-		margin: 10px 5px;
+		margin: 10px 10px 10px;
 	}
 	.suggest-slide {
 		display: block;
@@ -517,6 +586,37 @@
 		width: 300px;
 	}
 }
+@media screen and (max-width: 520px) {
+	.statistics-profile-page-component h1, 
+	.statistics-profile-page-component h2 {
+	    font-size: 12px;
+	}
+	.couple-profile-img {
+	    position: absolute;
+	    width: 50px;
+	    height: 50px;
+	}
+	.couple-profile-container {
+    	width: 75px;
+	    height: 75px;
+	}
+	.statistics-profile-page-component h1 {
+	    font-size: 14px;
+	}
+	.info-invite-relationship {
+	    width: 250px;
+	}
+	#main-container-relationship .options-invited .label-invited {
+	    width: 200px;
+	    margin-left: 84px;
+	}
+	#main-container-relationship .options-invited .denied {
+	    margin-left: 86px;
+	}
+	.options-invited .denied {
+	    border: 1px solid #343a40;
+	}
+}
 @media screen and (max-width: 501px) {
 	.card {
 		width: 100%;
@@ -530,6 +630,13 @@
 	    border-radius: 0;
 	    margin: 0;
 	}
+
+	.description-couple h1, .description-couple h2 {
+	    padding-left: 20px;
+	}
+	.follwing-btn-container {
+	    width: 250px;
+	}
 	#pop-up-component-create-post .pop-up-component-header {
 	    width: 100%;
 	}
@@ -538,6 +645,10 @@
 	}
 	.comment-send-text {
 	    width: 77%;
+	}
+	.user-identify-img {
+	    width: 50px;
+	    height: 50px;
 	}
 }
 @media screen and (max-width: 600px) {
@@ -556,7 +667,7 @@
 	}
 	.card {
 	    width: 90%;
-	    margin: 10px auto 20px;
+	    margin: 10px auto 10px;
 	}
 	.post {
 	    width: 100%;
@@ -587,8 +698,21 @@
 }
 @media screen and (max-width: 328px) {
 	.img-profile-page {
-	    width: 75px;
-	    height: 75px;
+	    width: 65px;
+	    height: 65px;
+	}
+	.info-invite-relationship {
+	    width: 220px;
+	}
+	#main-container-relationship .options-invited .label-invited {
+	    /*width: 180px;*/
+	}
+	#statistics-profile-page-component-container-lg {
+	    display: block;
+	    width: 210px;
+	}
+	.statistics-profile-page-component {
+	    width: 50px;
 	}
 	.input-container-radio {
 	    width: 100px;	
@@ -690,12 +814,16 @@
 }
 
 }
-@media screen and (max-width: 768px){
-
-.card-p{
-	background-color: transparent;
-	/*margin: 0 auto;*/
-	width: 100%;
-	border: none;
+@media screen and (max-width: 320px){
+	.post-cover {
+    	height: 320px;
+	}
 }
+@media screen and (max-width: 768px){
+	.card-p{
+		background-color: transparent;
+		/*margin: 0 auto;*/
+		width: 100%;
+		border: none;
+	}
 }

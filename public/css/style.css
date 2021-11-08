@@ -532,6 +532,7 @@ label[for="hugo"]{
 	margin-left: 100px;
 }
 .couple-invite-icon-one {
+	display: none;
 	background-color: #800080;
     width: 40px;
     height: 40px;
@@ -645,13 +646,13 @@ label[for="hugo"]{
 }
 
 .couple-separator{
-
 	padding-top: 5px;
     padding-bottom: 5px;
 	border-bottom: 1px solid #717171;
 	justify-items: flex-end;
 	justify-content: flex-end;
 	display: flex;
+	display: none;
 }
 
 .couple-numbering-text{
@@ -1113,11 +1114,11 @@ label[for="hugo"]{
 	background-color: #242526;
 	margin-top: 20px;    
 	width: 500px;
-    margin: 10px auto 20px;
+    margin: 10px auto 10px;
 }
 #stories-card {
 	width: 650px;
-    margin-bottom: 10px;
+    margin-bottom: -10px;
     margin-top: -10px;
     background-color: transparent;
     border: none;
@@ -1704,11 +1705,17 @@ label[for="hugo"]{
 	color: #efefef;
     font-size: 19px;
     width: 185px;
+    font-weight: bolder;
+    margin-top: 15px;
 }
 .profile-name-1 {
 	color: #efefef;
-    font-size: 19px;
+    font-size: 14px;
     width: 185px;
+    margin-top: 10px;
+}
+.search-info .mt4 {
+	margin-top: 0;
 }
 .profile-name-edit{
 	
@@ -1745,10 +1752,11 @@ label[for="hugo"]{
 
 .statistics-profile {
 	display: inline-flex;
+	flex-direction: column;
     justify-content: space-between;
     font-size: 17px;
     padding: 10px;
-    width: 47.5%;
+    width: 30.5%;
 }
 .statistics-profile h2 {
 	color: #efefef;
@@ -1757,6 +1765,7 @@ label[for="hugo"]{
 }
 .inform-profile {
 	margin-left: 5px;
+	margin-top: 20px;
 }
 .inform-profile p, 
 .inform-profile h2, 
@@ -1846,7 +1855,7 @@ label[for="hugo"]{
 	color: #efefef;
 }
 .option-profile-menu ul {
-	width: 300px;
+	/*width: 300px;*/
     margin: auto;
     padding-left: 0;
 }
@@ -1856,14 +1865,27 @@ label[for="hugo"]{
     position: relative;
     width: 30%;
 }
+.couple-profile-container {
+	width: 100px;
+	height: 100px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+.info-invite-relationship {
+	width: 330px;
+}
+.info-invite-relationship p {
+	color: #fff;
+	font-size: 13px;
+}
 .edit-profile {
 	padding: 8px;
 	width: 100px;
 	text-align: center;
-	/*display: inline-flex;*/
+	/*display: inline-flex;	
+	background-color: var(--background-dark-input);*/
 	color: #fff;
 	border-radius: 5px;
-	background-color: var(--background-dark-input);
     font-size: 13px;
     text-align: center;
     border: 1px solid #606060;
@@ -1909,6 +1931,7 @@ label[for="hugo"]{
 	width: 140px;
     margin: 20px auto 10px;
 	width: 47%;
+	width: 239px;
 }
 .label-input label,
 .label-input .input-container {
@@ -2081,9 +2104,10 @@ label[for="hugo"]{
 }
 .statistics-profile-page-component h1 {
 	font-weight: bolder;
+	font-size: 16px;
 }
 .statistics-profile-page-identify {
-	margin-top: 20px;
+	margin-top: 15px;
 }
 .statistics-profile-page-identify h1, 
 .statistics-profile-page-identify h2 {
@@ -2112,8 +2136,10 @@ label[for="hugo"]{
     background-color: transparent;
 }
 #main-container-profile {
-	width: 650px;
+	width: 580px;
 	margin-top: 5px;
+	background-color: #242526;
+	border-radius: 10px;
 }
 #edit-page {
 	width: 110px;
@@ -2128,13 +2154,15 @@ label[for="hugo"]{
 	right: 10px;
 }
 .description-couple {
-
+	width: 343px;
+    margin-left: 145px;
 }
 .description-couple p {
 	color: #ffff;
     font-size: 13px;
     width: 340px;
     padding: 10px;
+    margin-bottom: 0;
 }
 
 	.suggest-slide-page {
@@ -2167,7 +2195,7 @@ label[for="hugo"]{
 	cursor: pointer;
 }
 #card-profile-option {
-	margin-top: 20px;
+	margin-top: 0px;
 }
 #card-profile-option .option-profile-menu li {
 	width: 31%;
@@ -2239,6 +2267,8 @@ label[for="hugo"]{
 }
 #main-profile {
 	width: 600px;
+	background-color: #242526;
+	border-radius: 10px;
 }
 #main-profile .card {
 	background-color: transparent;
@@ -2257,9 +2287,9 @@ label[for="hugo"]{
 }
 .edit-page-container-mobile button {
 	width: 100%;
-    padding: 8px;
+    padding: 10px;
     font-size: 13px;
-    background: var(--background-dark-input);
+    background: transparent;
     border: 1px solid #606060;
 }
 .edit-profile-mobile {
@@ -2280,8 +2310,7 @@ label[for="hugo"]{
 	font-size: 15px;
 }
 .options-profile-btn {
-	display: inline-flex;
-	width: 48%;
+	display: flex;
 	margin-left: 5px;
 }
 .options-profile-btn-center {
@@ -2409,7 +2438,7 @@ label[for="hugo"]{
 	display: inline-flex;
 }
 .comment-user-comment {
-	margin: 10px 5px;
+	margin: 10px 10px 10px;
 }
 .comment-user-comment p {
 	color: #fff;
@@ -2420,7 +2449,7 @@ label[for="hugo"]{
     max-width: 170px;
     padding-top: 14px;
     background-color: #343a40;
-    border-radius: 10px;
+    border-radius: 8px;
     padding-top: 5px;
 }
 .comment-user-comment.comment-user-comment-feed p {
@@ -2461,8 +2490,13 @@ label[for="hugo"]{
 }
 .search-info{
 	display:flex;
-	justify-content:space-around;
+	justify-content:flex-start;
 	align-content:center;
+	padding: 10px;
+}
+.profile-name-ident {
+	margin-left: 10px;
+	margin-top: 10px;
 }
 .post-page-container {
 	margin: 15px 20px 20px;
@@ -2493,4 +2527,152 @@ label[for="hugo"]{
 	display: none;
 	margin-top: 10px;
 	width: 96%;
+}
+.description-couple h1,
+.description-couple h2 {
+	font-size: 13.5px;
+	color: #fff;
+    padding-left: 10px;
+}
+.mobile-user-name {
+	display: none;
+}
+.comment-user-comment .user {
+	font-size: 13px;
+	color: #fff;
+	margin-top: -5px;
+}
+.btn-message {
+	position: relative;
+	width: 60px;
+	height: 40px;
+	border: none;
+	border-radius: 5px;
+	margin-left: 10px;
+	border: 1px solid #343a40;
+	background: transparent;
+}
+#option-profile-no-own {
+	width: 320px;
+	margin: auto;
+}
+#main-search {
+	
+}
+#main-search .card-p{
+	padding: 0;
+}
+.user-identify-img {
+	position: relative;
+	width: 60px;
+	height: 60px;
+}
+.description-invited {
+	font-size: 13px;
+	color: #fff;
+}
+.description-invited a {
+	font-size: 15px;
+	color: #fd09fd;
+}
+.details-invited {
+	width: 240px;
+}
+.options-invited a {
+	padding: 7px 15px;
+	border-radius: 5px;
+	color: #fff;
+	font-size: 13px;
+}
+.options-invited .label-invited {
+	width: 110px;
+	background-color: #800080;
+	border-radius: 5px;
+}
+.options-invited .label-invited label {
+	width: 100%;
+    padding: 0px;
+    margin-bottom: 0;
+    text-align: center;
+    color: #fff;
+    font-size: 13px;
+}
+.label-invited h2 {
+	font-size: 14px;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+}
+.terms-use-alert {
+	color: #fd09fd;
+	font-size: 13px;
+	width: 100%;
+	text-align: center;
+}
+.alert-accept {
+	color: #fff;
+	padding: 5px;
+	font-size: 13px;
+}
+.options-invited .accept {
+	width: 100%;
+    background-color: #800080;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+    color: #fff;
+	border-radius: 5px;
+    font-size: 13px;
+}
+.options-invited .denied {
+	border: 1px solid #343a40;
+}
+.options-invited {
+	margin: 5px;
+}
+.send-invited-relationship {
+	padding-left: 15px;
+}
+#table_search_mobile {
+	width: 290px;
+}
+#main-search .card-flex {
+	padding-left: 10px;
+}
+#cover-done-marriage button {
+	padding: 10px;
+    font-size: 14px;
+    background: transparent;
+    color: #fff;
+    border: none;
+    width: 100%;
+}
+.couple-profile-img {
+	position: absolute;
+	width: 75px;
+	height: 75px;
+}
+.couple-2 {
+	top: 20px;
+    left: 30px;
+    border: 2px solid #000;
+}
+.couple-2 img {
+    border: 2px solid #fff;
+}
+#main-container-relationship .options-invited .label-invited {
+    width: 160px;
+}
+#main-container-relationship .card {
+    border-radius: 10px;
+}
+.alert-proof {
+	font-size: 12px;
+	color: #fff;
+	padding: 10px;
+}
+.couple-container {
+	position: relative;
 }
