@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+   
 @section('content')
 <div class="main" id="main-profile">
     <header class="card br-10 card-flex">
@@ -60,7 +60,7 @@
                             </div>
                         </label>
                         <button class="btn-message">
-                            <i class="fas fa-sms fa-24 fa-option center"></i>
+                            <i class="fa-solid fa-message fa-24 fa-option center"></i>
                         </button>
                     </div>
                     <?php elseif ($perfil[0]['verificacao_pedido1'] == 1 ): ?>
@@ -79,10 +79,14 @@
                             </div>
                         </label>
                         <button class="btn-message">
-                            <i class="fas fa-sms fa-24 fa-option center"></i>
+                            <i class="fa-solid fa-message fa-24 fa-option center"></i>
                         </button>
                     </div>
                     <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+            </div>
+            
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                     <div class="options-profile-btn options-profile-btn-center profile-item-center">
                         <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
@@ -95,9 +99,6 @@
                         </a>
                     </div>
                     <?php endif; ?>
-                <?php endif; ?>
-            <?php endif; ?>
-            </div>
             <div class="inform-profile">
                 <h3>Namorado de <span>Ana Joyce</span></h3>
             </div>
@@ -115,7 +116,7 @@
                     <li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 28px;"></i><h1 class="menu-option-profile"></h1></a></li>
                 </ul>
             </nav>
-            
+
             <?php if (isset($_GET['post-container-post'])): ?>
                 <?php if ($_GET['post-container-post'] == 'post'): ?>
                 <div class="post-img-container-page post-page-container">
