@@ -86,19 +86,18 @@
                 <?php endif; ?>
             <?php endif; ?>
             </div>
-            
-                    <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                    <div class="options-profile-btn options-profile-btn-center profile-item-center">
-                        <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
-                    </div>
-                    <div>
-                        <a href="">
-                            <div class="container-logout">
-                                <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Secção</h1></a>
-                            </div>
-                        </a>
-                    </div>
-                    <?php endif; ?>
+            <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+                <div class="options-profile-btn options-profile-btn-center profile-item-center">
+                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
+                </div>
+                <div>
+                    <a href="">
+                        <div class="container-logout">
+                            <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Secção</h1></a>
+                        </div>
+                    </a>
+                </div>
+            <?php endif; ?>
             <div class="inform-profile">
                 <h3>Namorado de <span>Ana Joyce</span></h3>
             </div>

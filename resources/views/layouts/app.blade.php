@@ -885,8 +885,11 @@
 
         });
 
-        setInterval(function(){ alert("Hello"); }, 3000);
-        $('#stories-card').                
+        setInterval(function(e){
+            let margin_stories = $('#stories-card').attr(''); 
+            alert(margin_stories); 
+        }, 4000);
+        //$('#stories-card').                
 
     });
 
