@@ -1084,6 +1084,7 @@ if (sizeof($notificacoes_aux)>0) {
     {
       $auth = new AuthController();
           $conta_logada = $auth->defaultDate();
+
         return DB::select('select foto from contas where conta_id = ?', [$conta_logada[0]->conta_id])[0]->foto;
     }
 

@@ -1,13 +1,13 @@
 @extends('layouts.app')
-   
+
 @section('content')
 <div class="main" id="main-profile">
     <header class="card br-10 card-flex">
         <div id="img-profile-container" class="circle">
-            @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
+            @if ($account_name[0]->foto == null || $account_name[0]->foto == "null" || $account_name[0]->foto == NULL || $account_name[0]->foto == "NULL" || $account_name[0]->foto == "" || $account_name[0]->foto == " ")
                 <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
             @else
-                <img class="img-profile img-full circle" src="{{asset('storage/img/users') . '/' . $profile_picture}}">
+                <img class="img-profile img-full circle" src="{{asset('storage/img/users') . '/' . $account_name[0]->foto}}">
             @endif;
             @if ($account_name[0]->uuid == $conta_logada[0]->uuid)
             <label for="target-profile-cover">
@@ -98,6 +98,18 @@
                     </a>
                 </div>
             <?php endif; ?>
+                    <!--<?php //if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+                    <div class="options-profile-btn options-profile-btn-center profile-item-center">
+                        <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
+                    </div>
+                    <div>
+                        <a href="">
+                            <div class="container-logout">
+                                <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Secção</h1></a>
+                            </div>
+                        </a>
+                    </div>
+                    <?php //endif; ?>-->
             <div class="inform-profile">
                 <h3>Namorado de <span>Ana Joyce</span></h3>
             </div>
