@@ -81,12 +81,31 @@
                         </div>
                     </div>
                     <div class="follwing-btn-container">
-                       
+                        <?php $contador = 0;
+                              $sgda = 0;
+                              $sgdo = 0;  
+                         ?>
+                        @forelse($dadosSeguida as $Seguida)
+                        <?php if (($page_content[0]->page_id == $Seguida->id) && ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo)) : ?>   
+                         <?php $sgda = $Seguida->identificador_id_seguida;?>
+                         <?php $sgdo = $dadosSeguindo[0]['identificador_id_seguindo'];?>                                     
+                        <?php $contador = 1;?>
+                        <?php endif ?>
+                        @empty
+                        @endforelse
+                        <?php if ($contador == 1): ?>
+                        <button type="submit" class="follwing-btn" id="btn_nao_seguir">
+                            Não Seguir
+                        </button>
+                        <?php else : ?>
                         <button type="submit" class="follwing-btn" id="btn_seguir">
                             Seguir
                         </button>
+                        <?php endif ?>
                         <input type="hidden" id="seguinte" value="{{ $account_name[0]->conta_id }}" name="">
                         <input type="hidden" id="seguida_page" value="{{ $page_content[0]->page_id }}" name="">
+                        <input type="hidden" id="sgdo" value="{{ $sgdo }}" name="">
+                        <input type="hidden" id="sgda" value="{{ $sgda }}" name="">
                     </div>
                 @endif
             </div>
@@ -339,7 +358,6 @@
               });
              });
             
-            
             $('#btn_seguir').click(function(){
             var valor_pagina_id = $('#seguida_page').val();
             var valor_idconta = $('#seguinte').val();
@@ -356,7 +374,23 @@
                   $('#li-component-suggest-' + valor_pagina_id).remove();
                   $('#li-component-sugest-' + valor_pagina_id).remove(); 
                   $('.seguir-' + valor_pagina_id).hide();
-                  $('#btn_seguir').text('não seguir');
+                  $('#btn_seguir').remove();
+                }
+              });
+             });
+
+            $('#btn_nao_seguir').click(function(){
+            var seguida = $('#sgda').val();
+            var seguindo = $('#sgdo').val();    
+             $.ajax({
+                url: "{{route('nao.seguir.seguindo')}}",
+                type: 'get',
+                data: {'seguindo': seguindo, 'seguida': seguida},
+                dataType: 'json',
+                success: function(response){
+                  console.log(response);
+                  $('#seguida-' + seguida).remove();  
+                  $('#btn_nao_seguir').remove();
                 }
               });
              });

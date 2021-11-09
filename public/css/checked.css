@@ -572,3 +572,6 @@
 	opacity: 1;
     z-index: 1001;
 }
+#search-lg-home:checked ~ .container-search-home {
+	display: block;
+}
