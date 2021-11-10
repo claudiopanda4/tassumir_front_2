@@ -899,15 +899,21 @@
 
         setInterval(function(e){
             let margin_stories = $('.main-container').offset();
-            let height = $('.content-full-scroll').height();
+            //console.log('margin_stories ' + margin_stories.top);
+            let height = parseInt($('.main-container').height());
             let height_stories = $('#stories-card').height();
-            console.log('height ' + height); 
-            console.log('height stories ' + height_stories); 
-            console.log(margin_stories.top); 
-            if (margin_stories.top <= -2510) {
-                console.log('ENTROU...'); 
+            //console.log('height ' + height); 
+            //console.log('height stories ' + height_stories); 
+            //console.log(margin_stories.top); 
+            console.log('subt. ' + ((height - 400) + margin_stories.top)); 
+            let control = 0;
+            if ((height - 400) + margin_stories.top  <= 450) {
+                control++;
+                if(control == 3){
+
+                }
             } 
-        }, 1000);
+        }, 100);
         //$('#stories-card').     
         $('#search-lg-home-id').focus(function(){
             $('.container-search-home').css({
