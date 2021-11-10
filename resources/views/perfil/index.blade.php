@@ -78,9 +78,12 @@
                                 <h2>Assumir</h2>
                             </div>
                         </label>
-                        <button class="btn-message">
-                            <i class="fa-solid fa-message fa-24 fa-option center"></i>
-                        </button>
+                        <form action="{{route('message.index')}}">
+                            <button class="btn-message">
+                                <i class="far fa-comment-dots fa-24 fa-option center"></i>
+                            </button>
+                        </form>
+                        
                     </div>
                     <?php endif; ?>
                 <?php endif; ?>

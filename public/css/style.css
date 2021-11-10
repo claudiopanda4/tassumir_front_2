@@ -2431,6 +2431,7 @@ label[for="hugo"]{
 	height: 28px;
 	border-radius: 50%;
 	position: relative;
+	background-color: #343a40;
 }
 .user-identify-comment h2 {
 	padding: 5px;
@@ -2816,4 +2817,7 @@ label[for="hugo"]{
 }
 .other-user .message-body {
 	background-color: #3490dc;
+}
+.search-info .page-cover {
+	background-color: #343a40;
 }

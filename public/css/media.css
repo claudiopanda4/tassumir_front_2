@@ -667,7 +667,9 @@
 		width: 100%;
 	}
 }
-
+@media screen and (max-width: 967px) {
+	
+}
 @media screen and (max-width: 330px) {
 	#pop-up-component-create-post .pop-up-component-header {
 		width: 300px;

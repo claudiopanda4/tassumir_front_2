@@ -87,7 +87,7 @@ function search(variavel, v){
 																if (value.foto != null) {
 																	nome += '<div class="page-cover circle "><img class=" circle img-40" src= ' + src + '/' + value.foto + '></div>'
 																}else {
-																	nome += '<div class=" page-cover circle "><i class="fas fa-user center" style="font-size: 25px; color: #ccc;"></i></div>'
+																	nome += '<div class=" page-cover circle "><i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i></div>'
 																}
 																nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
 																var route1 = "{{route('account1.profile', 1) }}"
