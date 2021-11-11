@@ -861,3 +861,8 @@
 		border: none;
 	}
 }
+@media screen and (max-width: 500px) {
+	.video-post {
+	    height: 100vh;
+	}
+}
