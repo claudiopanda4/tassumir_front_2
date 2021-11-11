@@ -508,6 +508,11 @@ class PaginaCasalController extends Controller
             }
             DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id, estado_post_id) values(?, ?, ?, ?, ?, ?)',
                 [$uuid, $description, $file_name, $id, $format, 1]);
+
+                DB::table('identificadors')->insert([
+              'tipo_identificador_id' => 3,
+              'id' => DB::select('select * from posts where uuid = ?', [$uuid])[0]->post_id,
+         ]);
         } catch (Exception $e) {
             dd($e);
         }

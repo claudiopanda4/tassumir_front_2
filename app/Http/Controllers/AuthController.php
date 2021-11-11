@@ -53,22 +53,27 @@ class AuthController extends Controller
               case 1:
                 $notificacoes[$a]['notificacao']=$nome[0] ;
                 $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                $notificacoes[$a]['tipo']=1;
                 break;
               case 2:
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                  $notificacoes[$a]['tipo']=1;
                   break;
                 case 3:
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                  $notificacoes[$a]['tipo']=1;
                     break;
                   case 4:
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                  $notificacoes[$a]['tipo']=4;
                       break;
                     case 5:
                     $notificacoes[$a]['notificacao']=$nome[0];
                     $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                    $notificacoes[$a]['tipo']=1;
                         break;
 
             }
@@ -425,7 +430,7 @@ class AuthController extends Controller
 
         if (sizeof($aux1) > 0) {
             $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$post[0]->post_id, $aux1[0]->identificador_id]);
-//            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$key->post_id-1]->comment_id, $aux1[0]->identificador_id]);
+    //            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$key->post_id-1]->comment_id, $aux1[0]->identificador_id]);
         } else {
             $ja_reagiu = array();
         }
@@ -440,7 +445,7 @@ class AuthController extends Controller
         $dados[0]['page_id']= $post[0]->page_id ;
         $dados[0]['page_uuid']= $page[$post[0]->page_id - 1]->uuid ;
         $dados[0]['reagir_S/N']=sizeof($ja_reagiu);
-//        $dados[0]['comment_S/N']=sizeof($ja_reagiu1);
+       //        $dados[0]['comment_S/N']=sizeof($ja_reagiu1);
         $dados[0]['guardado?']=sizeof($guardado);
         $dados[0]['formato']=$post[0]->formato_id;
         $dados[0]['estado_post']=$post[0]->estado_post_id;
@@ -529,7 +534,8 @@ class AuthController extends Controller
                     'id_state_notification' => 2,
                     'id_action_notification' => 1,
                     'identificador_id_causador'=> $aux[0]->identificador_id,
-                    'identificador_id_destino'=> $aux2[0]->identificador_id,
+                    'identificador_id_destino'=> $post[0]->post_id,
+                    'identificador_id_receptor'=> $aux2[0]->identificador_id,
                     ]);
                     }
                     if ($page[0]->conta_id_b != $conta[0]->conta_id) {
@@ -538,7 +544,8 @@ class AuthController extends Controller
                           'id_state_notification' => 2,
                           'id_action_notification' => 1,
                           'identificador_id_causador'=> $aux[0]->identificador_id,
-                          'identificador_id_destino'=> $aux3[0]->identificador_id,
+                          'identificador_id_destino'=> $post[0]->post_id,
+                          'identificador_id_receptor'=> $aux3[0]->identificador_id,
                           ]);
                         }
 
@@ -554,9 +561,9 @@ class AuthController extends Controller
           public function comment_reac(Request $request){
                   $comment=DB::select('select * from comments where comment_id = ?', [$request->id]);
                   $post=DB::select('select * from posts where uuid = ?', [$comment[0]->post_id]);
-  //                $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
-//                  $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
-//                  $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
+        //                $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
+        //                  $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+      //                  $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
                   $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
                   $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
                   $comment_reac_v = DB::select('select * from reactions_comments where (comment_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
@@ -614,7 +621,9 @@ class AuthController extends Controller
                   'id_state_notification' => 2,
                   'id_action_notification' => 5,
                   'identificador_id_causador'=> $aux1[0]->identificador_id,
-                  'identificador_id_destino'=> $aux2[0]->identificador_id,
+                  'identificador_id_destino'=> $page[0]->page_id,
+                  'identificador_id_receptor'=> $aux2[0]->identificador_id,
+
                   ]);
                 }
               if ($page[0]->conta_id_b != $conta[0]->conta_id) {
@@ -623,7 +632,8 @@ class AuthController extends Controller
                         'id_state_notification' => 2,
                         'id_action_notification' => 5,
                         'identificador_id_causador'=> $aux1[0]->identificador_id,
-                        'identificador_id_destino'=> $aux3[0]->identificador_id,
+                        'identificador_id_destino'=> $page[0]->page_id,
+                        'identificador_id_receptor'=> $aux3[0]->identificador_id,
                         ]);
                       }
 
@@ -731,14 +741,16 @@ class AuthController extends Controller
                       'id_state_notification' => 2,
                       'id_action_notification' => 2,
                       'identificador_id_causador'=> $aux[0]->identificador_id,
-                      'identificador_id_destino'=> $aux2[0]->identificador_id,
+                      'identificador_id_destino'=> $request->id,
+                      'identificador_id_receptor'=> $aux3[0]->identificador_id,
                       ]);
                     DB::table('notifications')->insert([
                             'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                             'id_state_notification' => 2,
                             'id_action_notification' => 2,
                             'identificador_id_causador'=> $aux[0]->identificador_id,
-                            'identificador_id_destino'=> $aux3[0]->identificador_id,
+                            'identificador_id_destino'=> $request->id,
+                            'identificador_id_receptor'=> $aux3[0]->identificador_id,
                             ]);
 
                 $variable=  DB::table('comments')->get();
@@ -761,6 +773,10 @@ class AuthController extends Controller
                    }
                    $resposta[0]['comment']=$key->comment;
                 }
+                DB::table('identificadors')->insert([
+              'tipo_identificador_id' => 3,
+              'id' => $resposta[0]['comment_id'],
+         ]);
               }
 
 
@@ -1037,10 +1053,10 @@ class AuthController extends Controller
         return DB::select('select foto from contas where conta_id = ?', [$conta_logada[0]->conta_id])[0]->foto;
     }
 
-/*  public static function post_files($post_id)
-  {
-      return DB::select('select files from posts where post_id = ?', [$post_id])[0]->files;
-  }*/
+      /*  public static function post_files($post_id)
+      {
+          return DB::select('select files from posts where post_id = ?', [$post_id])[0]->files;
+        }*/
 
     public static function updateUserProfilePicture($picture, $account_id)
     {
