@@ -41,6 +41,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Models\\Home' => $baseDir . '/app/Models/Home.php',
     'App\\Models\\LoginFront' => $baseDir . '/app/Models/LoginFront.php',
+    'App\\Models\\Message' => $baseDir . '/app/Models/Message.php',
     'App\\Models\\Page' => $baseDir . '/app/Models/Page.php',
     'App\\Models\\Perfil' => $baseDir . '/app/Models/Perfil.php',
     'App\\Models\\Seguidor' => $baseDir . '/app/Models/Seguidor.php',

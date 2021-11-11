@@ -1,3 +1,4 @@
+@extends('layouts.app_message')
 @section('header')
 <header class="header-main header-main-component clearfix">
             <ul class="ul-left clearfix">
@@ -154,4 +155,93 @@
                 </ul>
             </nav>
     </header>
+@stop
+@section('content')
+<div class="main clearfix" id="main-direct">
+    <aside class="chat l-5">
+        <div class="search-container-chat">
+            <div class="input-search">
+                <i class="fas fa-search fa-16 fa-search-main"></i>
+                <input type="search" name="" placeholder="Quem você está procurando?" class="input-text" id="search-lg-home-id-container">
+            </div>
+        </div>
+        <nav class="nav-menu-chat">
+            <ul>
+                <?php $users = [
+                    [],[],[],[],[],[],[],[],
+                ]; 
+
+                foreach ($users as $key => $value):?>
+                <li class="clearfix">
+                    <a href="">
+                        <div class="container-img circle l-5">
+                            <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
+                        </div>
+                        <div class="nav-menu-chat-component-user l-5">
+                            <h1>Domingos Sobrinho</h1>
+                        </div>    
+                    </a>
+                </li>
+                <?php endforeach ?>
+            </ul>
+        </nav>
+    </aside>
+    <div class="container-message l-5">
+        <header class="clearfix">
+            <a href="">
+                <div class="container-img circle l-5">
+                    <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
+                </div>
+                <div class="nav-menu-chat-component-user l-5">
+                    <h1>Domingos Sobrinho</h1>
+                </div>    
+            </a>
+        </header>
+        <div class="body-message clearfix">
+            <?php foreach ($users as $key => $value):?>
+            <?php if (true): ?>
+                <div class="own-user l-5">
+                  <div class="clearfix">
+                      <div class="container-img circle l-5">
+                        <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
+                    </div>
+                    <div class="message-body l-5">
+                        <div>
+                            <p>OlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOla</p>
+                        </div>
+                    </div>
+                  </div>  
+                </div>        
+            <?php endif ?>
+            <?php if (true): ?>
+                <div class="other-user r-5">
+                    <div class="clearfix">
+                      <div class="container-img circle l-5">
+                        <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
+                    </div>
+                    <div class="message-body l-5">
+                        <div>
+                            <p>OlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOla</p>
+                        </div>
+                    </div>
+                  </div> 
+                </div>        
+            <?php endif ?>
+        <?php endforeach ?>
+        </div>
+        <div class="comment-send clearfix" id="comment-send-1">
+            <div class="img-user-comment l-5">
+                <img class="img-full circle" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+            </div>
+            <div class="input-text comment-send-text l-5 clearfix">
+                <input type="text" class="" name="comentario" id="comentario-1" placeholder="O que você tem a dizer?">
+                <div class="r-5 ">
+                    <a href="" class="comentar-a" id="1">
+                        <i class="far fa-paper-plane fa-20 fa-img-comment" id="1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @stop

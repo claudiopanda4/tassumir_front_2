@@ -65,6 +65,9 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');
     Route::get('nao/seguir', [App\Http\Controllers\SeguidorController::class, 'destroy'])->name('nao.seguir.seguindo');
 
+
+    Route::get('/direct/', [App\Http\Controllers\MessageController::class, 'index'])->name('message.index');
+
     //Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('home');
 });
 Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->name('account.logout');

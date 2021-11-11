@@ -163,7 +163,7 @@
                             </div>
                             @else
                             <div class="profille-img">
-                                  <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
+                                  <i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>
                             </div>
                         @endif
                       @elseif( $dados[0]['dono_da_pag?']==1 )
@@ -201,7 +201,7 @@
                                   </div>
                                   @else
                                   <div class="profille-img">
-                                        <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
+                                        <i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>
                                   </div>
                               @endif
                             @elseif( $dados[$key]['foto_ver']==2 )
