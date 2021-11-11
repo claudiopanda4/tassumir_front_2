@@ -43,10 +43,10 @@
                             <input type="search" name="" placeholder="O que está procurando?" class="input-text" id="search-lg-home-id-container">
                         </div>
                         <div class="search-id-container">
-                            
+
                         </div>
                         <div class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
-                            <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
+                            <a href="{{route('allSearch.page')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
                         </div>
                     </div>
                 </li>
@@ -77,7 +77,7 @@
                                         <h4 class="noti-subtitle">Hoje</h4>
                                     </div>
                                 </li>
-                            <li class="hidden-click-any-container send-invited-relationship clearfix">
+                            <!--<li class="hidden-click-any-container send-invited-relationship clearfix">
                                 <div class="hidden-click-any-container user-identify-img circle l-5">
                                     <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
                                 </div>
@@ -88,14 +88,14 @@
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited">
-                                                <!--<h2 class="accept">Aceitar</h2>-->
+                                                <!-<h2 class="accept">Aceitar</h2>->
                                                 <h2>Aceitar</h2>
                                             </div>
                                         </label>
                                         <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
                                     </div>
                                 </div>
-                            </li>
+                            </li> -->
                             <li class="hidden-click-any-container send-invited-relationship clearfix">
                                 <div class="hidden-click-any-container user-identify-img circle l-5">
                                     <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
@@ -153,12 +153,22 @@
                                     <div class="hidden-click-any-container noti-hour ml-2">
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
-
+                                    @if($notificacoes[$key]['tipo'] == 4)
+                                    <div class="hidden-click-any-container options-invited clearfix">
+                                        <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
+                                            <div class="hidden-click-any-container label-invited">
+                                                <!--<h2 class="accept">Aceitar</h2>-->
+                                                <h2>Aceitar</h2>
+                                            </div>
+                                        </label>
+                                        <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
+                                    </div>
+                                    @endif
                                    </div>
 
                                 </li>
                                 @endif
-                                
+
                               <?php endforeach; ?>
 
                                  <li class="hidden-click-any-container change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
@@ -244,7 +254,7 @@
 
                             <a href="" class="nao_seguir">não seguir</a>";
                             <input type="hidden" id="seguida" value="{{ $Seguida->identificador_id_seguida }}" name="">
-                            
+
                             <input type="hidden" id="seguindo" value="{{ $Seguida->identificador_id_seguindo }}" name="">
 
                             <input type="hidden" id="npage_id" value="{{ $account_name[0]->conta_id }}" name="">
@@ -321,12 +331,12 @@
 
                        <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
 
-                      <?php /* echo"  
+                      <?php /* echo"
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
-                                
-                            </li> 
-                            
+
+                            </li>
+
 
 
                             <?php endif ?>
@@ -351,12 +361,12 @@
 
                         <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
                         <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                      <?php /* echo"  
+                      <?php /* echo"
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
-                                 
-                            </li>                       
-                   
+
+                            </li>
+
                       <?php else: ?>
 
                     <?php endif ?>
@@ -882,7 +892,7 @@
             e.preventDefault();
             var valor_seguida = $('#seguida').val();
              var valor_seguindo = $('#seguindo').val()
-             var npage_id = $('#npage_id').val();             
+             var npage_id = $('#npage_id').val();
              $('#seguida-' + valor_seguida).remove();
              $.ajax({
                 url: "{{route('nao.seguir.seguindo')}}",
@@ -902,19 +912,19 @@
             //console.log('margin_stories ' + margin_stories.top);
             let height = parseInt($('.main-container').height());
             let height_stories = $('#stories-card').height();
-            //console.log('height ' + height); 
-            //console.log('height stories ' + height_stories); 
-            //console.log(margin_stories.top); 
-            console.log('subt. ' + ((height - 400) + margin_stories.top)); 
+            //console.log('height ' + height);
+            //console.log('height stories ' + height_stories);
+            //console.log(margin_stories.top);
+            console.log('subt. ' + ((height - 400) + margin_stories.top));
             let control = 0;
             if ((height - 400) + margin_stories.top  <= 450) {
                 control++;
                 if(control == 3){
 
                 }
-            } 
+            }
         }, 100);
-        //$('#stories-card').     
+        //$('#stories-card').
         $('#search-lg-home-id').focus(function(){
             $('.container-search-home').css({
                 display: 'block',
@@ -923,12 +933,12 @@
         });
         $(document).click(function(e){
             let className = e.target.className.split(' ');
-            if(className[0] == "container-search-home" || 
-                className[0] == "input-search" || 
-                className[0] == "search-lg" || 
-                className[0] == "search-id-container" || 
-                className[0] == "fa-search" || 
-                className[0] == "change-look" || 
+            if(className[0] == "container-search-home" ||
+                className[0] == "input-search" ||
+                className[0] == "search-lg" ||
+                className[0] == "search-id-container" ||
+                className[0] == "fa-search" ||
+                className[0] == "change-look" ||
                 className[0] == "input-search" ||
                 className[0] == "input-search"){
                 $('.container-search-home').css({
@@ -940,13 +950,13 @@
                 });
             }
             console.log(className[0]);
-            if (className[0] != "noti-card-first" || 
-                className[0] != "hidden-click-any-container" || 
-                className[0] != "fa-option-mobile-hide" || 
-                className[0] != "fa-option-mobile-hide" || 
+            if (className[0] != "noti-card-first" ||
+                className[0] != "hidden-click-any-container" ||
+                className[0] != "fa-option-mobile-hide" ||
+                className[0] != "fa-option-mobile-hide" ||
                 className[0] != "fa-option-mobile-hide") {
                 /*$('.noti-card-first').css({
-                   display: 'none', 
+                   display: 'none',
                 });*/
             }else {
                 $('#more-option-notify').css({
@@ -956,5 +966,8 @@
             //console.log(className[0]);
         });
     });
+
+
+
 </script>
 </html>

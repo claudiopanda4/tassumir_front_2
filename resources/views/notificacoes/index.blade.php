@@ -18,7 +18,7 @@
             <h4 class="noti-subtitle">Novas</h4>
         </div>
     </div>
-        <div class="send-invited-relationship clearfix">
+      <!--  <div class="send-invited-relationship clearfix">
             <div class="user-identify-img circle l-5">
                 <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
             </div>
@@ -29,14 +29,14 @@
                 <div class="options-invited clearfix">
                     <label class="l-5" for="options-invited-pop-up">
                         <div class="label-invited">
-                            <!--<h2 class="accept">Aceitar</h2>-->
+                            <!-<h2 class="accept">Aceitar</h2>->
                             <h2>Aceitar</h2>
                         </div>
                     </label>
                     <a href="" class="l-5 denied">Rejeitar</a>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="send-invited-relationship clearfix">
             <div class="user-identify-img circle l-5">
                 <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
@@ -64,6 +64,17 @@
             <div class="noti-hour">
                 <a href=""><span class="">há um dia</span></a>
             </div>
+            @if($notificacoes[$key]['tipo'] == 4)
+            <div class="options-invited clearfix">
+                <label class="l-5" for="options-invited-pop-up">
+                    <div class="label-invited">
+                        <!--<h2 class="accept">Aceitar</h2>-->
+                        <h2>Aceitar</h2>
+                    </div>
+                </label>
+                <a href="" class="l-5 denied">Rejeitar</a>
+            </div>
+            @endif
         </div>
 
     </div>

@@ -402,7 +402,7 @@ class PerfilController extends Controller
             $tt = 0;
             $page_current = 'profile';
 
-            
+
 
             return view('perfil.edit', compact('account_name', 'notificacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
 
@@ -488,12 +488,17 @@ class PerfilController extends Controller
           $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1 ]);
           $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedinte, 1 ]);
 
+         $a=DB::table('pedido_relacionamentos')->get();
+         foreach ($a as $key) {
+            $b=$key->pedido_relacionamento_id;
+            }
           DB::table('notifications')->insert([
                   'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                   'id_state_notification' => 2,
                   'id_action_notification' => 4,
                   'identificador_id_causador'=> $aux[0]->identificador_id,
-                  'identificador_id_destino'=> $aux2[0]->identificador_id,
+                  'identificador_id_destino'=> $b,
+                  'identificador_id_receptor'=> $aux2[0]->identificador_id,
                   ]);
 
         }

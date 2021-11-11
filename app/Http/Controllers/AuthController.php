@@ -32,7 +32,7 @@ class AuthController extends Controller
         $a=0;
         $nome=array();
         $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
-        $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+        $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
         if (sizeof($notificacoes_aux)>0) {
           foreach ($notificacoes_aux as $key) {
             $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
@@ -66,8 +66,11 @@ class AuthController extends Controller
                   $notificacoes[$a]['tipo']=1;
                     break;
                   case 4:
+                  $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$key->identificador_id_destino]);
+                  $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
                   $notificacoes[$a]['notificacao']=$nome[0];
-                  $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                  $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                  $notificacoes[$a]['notificacao'].=$tipos[0]->tipo_relacionamento;
                   $notificacoes[$a]['tipo']=4;
                       break;
                     case 5:
@@ -742,7 +745,7 @@ class AuthController extends Controller
                       'id_action_notification' => 2,
                       'identificador_id_causador'=> $aux[0]->identificador_id,
                       'identificador_id_destino'=> $request->id,
-                      'identificador_id_receptor'=> $aux3[0]->identificador_id,
+                      'identificador_id_receptor'=> $aux2[0]->identificador_id,
                       ]);
                     DB::table('notifications')->insert([
                             'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
