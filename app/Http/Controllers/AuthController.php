@@ -876,72 +876,121 @@ class AuthController extends Controller
         ]);
 
         $code = random_int(1000,9000);
+        $takePhone = $request->telefone;
+        $takeEmail = $request->email;
         DB::table('codigo_confirmacaos')->insert([
 
             'codigoGerado' => $code,
             'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
             'conta_id' => $saveRetriveId,
+            'email' => $request->email,
+            'telefone' => $request->telefone,
         ]);
 
-       return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code'));
+       return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
     }
 
     public function verifyCodeSent(Request $request){
 
         $codeSent = $request->codeReceived;
         $idSaved = $request->receivedId;
+        $phoneReceived = $request->receivedPhone;
+        $emailReceived = $request->takeEmail;
 
         $takeCode2 = [];
 
         $takeCode2 = DB::table('codigo_confirmacaos')
-            ->select('codigoGerado')
+            ->select('codigoGerado','telefone','email')
             ->where('codigoGerado','=',$codeSent)
             ->where('conta_id','=',$idSaved)
             ->get();
 
             if(sizeof($takeCode2) >= 1){
 
+
                 foreach($takeCode2 as $generateCode){
 
-                    $takeHim = $generateCode->codigoGerado;
 
-                    if($takeHim == $codeSent){
+                    $takeHim = $generateCode->codigoGerado;
+                    $phoneAquired = $generateCode->telefone;
+                    $emailAquired = $generateCode->email;
+
+                    if($takeHim == $codeSent && $phoneAquired == $phoneReceived ){
 
                         return redirect()->route('account.login.form');
 
+                    } else if($takeHim == $codeSent && $emailAquired == $emailReceived){
+
+                        return redirect()->route('account.login.form');
                     }
 
                 }
             }else{
 
                 //dd("cheguei no else");
-                return view('auth.codigoRecebidoActualizar',compact('idSaved'));
+                return view('auth.codigoRecebidoActualizar',compact('idSaved','phoneReceived','emailReceived'));
             }
     }
 
     public function generateAgain(Request $request){
 
         $idReceived = $request->receivedId;
+        $phoneAgain = $request->receivedPhoneAgain;
+        $emailAgain = $request->receivedEmailAgain; 
 
         $code2 = random_int(1000,9000);
 
-        $newGeneratedCode = DB::table('codigo_confirmacaos')
+
+       DB::table('codigo_confirmacaos')
                   ->where('conta_id', $idReceived)
                   ->update(['codigoGerado' => $code2]);
 
-        return view('auth.codigoRecebidoNovaConfirmation',compact('idReceived','code2'));
+
+        /*$verifyAndChange = DB::table('codigo_confirmacaos')
+                  ->select('telefone','email')
+                  ->where('conta_id', $idReceived)
+                  ->get();
+
+                  if (sizeof($verifyAndChange) >=1 ) {
+                    
+                    foreach($verifyAndChange as $info){
+
+                          $takeP = $info->telefone;
+                          $takeE = $info->email;
+
+                      if ( $takeP == $phoneAgain) {
+                          
+                          DB::table('codigo_confirmacaos')
+                          ->where('telefone',$phoneAgain)
+                          ->update(['codigoGerado' => $code2]);
+
+                      } else if ($takeE == $emailAgain) {
+                          
+                          DB::table('codigo_confirmacaos')
+                          ->where('email',$emailAgain)
+                          ->update(['codigoGerado' => $code2]);
+                      }
+                    }
+                  }else{
+
+                    return "erro";
+                  }*/
+
+        return view('auth.codigoRecebidoNovaConfirmation',compact('idReceived','code2','phoneAgain','emailAgain'));
 
     }
     public function verifyAgainCodeSent(Request $request){
 
         $savedId = $request->receivedId1;
         $codeSent = $request->codeReceived1;
+        $samePhone = $request->phoneConf;
+        $sameEmail = $request->emailConf;
 
         //dd($savedId."<=>".$codeSent);
         $takeCode2 = [];
 
         $takeCode2 = DB::table('codigo_confirmacaos')
-            ->select('codigoGerado')
+            ->select('codigoGerado','telefone','email')
             ->where('codigoGerado','=',$codeSent)
             ->where('conta_id','=',$savedId)
             ->get();
@@ -951,8 +1000,15 @@ class AuthController extends Controller
                 foreach($takeCode2 as $generateCode){
 
                     $takeHim = $generateCode->codigoGerado;
+                    $takePhoneA = $generateCode->telefone;
+                    $takeEmailA = $generateCode->email;
 
-                    if($takeHim == $codeSent){
+                    if($takeHim == $codeSent && $takePhoneA == $samePhone){
+
+                        return redirect()->route('account.login.form');
+
+                    }else if($takeHim == $codeSent && $takeEmailA == $sameEmail){
+
 
                         return redirect()->route('account.login.form');
 
