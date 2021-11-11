@@ -45,6 +45,11 @@
                     @csrf
 
                     <input type="text" name="receivedId1" class="hidden" value="{{$idReceived}}">
+
+                    <input type="text" name="phoneConf" class="hidden" value="{{$phoneAgain}}">
+
+                    <input type="text" name="emailConf" class="hidden" value="{{$emailAgain}}">
+
                     <div class="row">
                         <div class="col-md-8">
                             <span class="text-white">{{$code2}}</span>
