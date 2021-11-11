@@ -2144,7 +2144,7 @@ label[for="hugo"]{
 #main-container-profile {
 	width: 580px;
 	margin-top: 5px;
-	background-color: #242526;
+	/*background-color: #242526;*/
 	border-radius: 10px;
 }
 #edit-page {
@@ -2820,4 +2820,10 @@ label[for="hugo"]{
 }
 .search-info .page-cover {
 	background-color: #343a40;
+}
+.play_button {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	z-index: 2;
 }

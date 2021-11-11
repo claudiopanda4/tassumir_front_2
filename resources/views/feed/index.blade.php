@@ -120,7 +120,8 @@
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
                         <div class="video-post">
-                            <video controls>
+                            <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$key ?>>
+                            <video class="video-post-video" id=<?php echo "video_".$key; ?>>
                                 <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>

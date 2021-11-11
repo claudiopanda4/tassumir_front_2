@@ -45,6 +45,10 @@
                     @csrf
 
                     <input type="text" name="receivedId" class="hidden" value="{{$idSaved}}">
+
+                    <input type="text" name="receivedPhoneAgain" class="hidden" value="{{$phoneReceived}}">
+
+                    <input type="text" name="receivedEmailAgain" class="hidden" value="{{$emailReceived}}">
                     
                     <div class="form-group">
                         

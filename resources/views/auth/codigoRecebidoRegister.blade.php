@@ -44,6 +44,10 @@
                     @csrf
 
                     <input type="text" name="receivedId" class="hidden" value="{{$saveRetriveId}}">
+
+                    <input type="text" name="receivedPhone" class="hidden" value="{{$takePhone}}">
+
+                    <input type="text" name="receivedEmail" class="hidden" value="{{$takeEmail}}">
                     <div class="row">
                         <div class="col-md-8">
                             <span class="text-white">{{$code}}</span>
