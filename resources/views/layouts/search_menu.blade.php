@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/checked.css') }}" rel="stylesheet">
@@ -26,7 +27,7 @@
   <header class="header-main-n header-main-component-n clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
-                    <a href="{{route('account.home')}}"><i class="fas fa-link fa-24"></i><h1>Tass<span class="title-final">umir</span></h1></a>
+                    <a href="{{route('account.home')}}"><i class="fas fa-link fa-24"></i><h1 class="">Tass<span class="title-final">umir</span></h1></a>
                 </li>
                 <li class="search-lg mobile-hidden">
                     <div class="input-search">

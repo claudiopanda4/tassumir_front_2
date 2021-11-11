@@ -33,8 +33,21 @@
                 </li>
                 <li class="search-lg mobile-hidden">
                     <div class="input-search">
-                        <i class="fas fa-search fa-16 fa-search-main"></i>
-                        <input type="search" name="" placeholder="O que está procurando?" class="input-text" >
+                        <label for="search-lg-home"><i class="fas fa-search fa-16 fa-search-main"></i></label>
+                        <input type="search" name="" placeholder="O que está procurando?" class="input-text" id="search-lg-home-id">
+                    </div>
+                    <input type="checkbox" name="" class="invisible" id="search-lg-home">
+                    <div class="container-search-home">
+                        <div class="input-search">
+                            <i class="fas fa-search fa-16 fa-search-main"></i>
+                            <input type="search" name="" placeholder="O que está procurando?" class="input-text" id="search-lg-home-id-container">
+                        </div>
+                        <div class="search-id-container">
+                            
+                        </div>
+                        <div class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
+                            <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -44,72 +57,71 @@
                         <a href="{{route('allSearch.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
-                        <div class="last-component-n clearfix-n " >
-                            <label for="more-option-notify" class="fa-option-mobile-hide">
-                                <i class="far fa-bell fa-24 fa-option" size="7"></i>
+                        <div class="hidden-click-any-container last-component-n clearfix-n " >
+                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide">
+                                <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
                             </label>
-                            <a href="{{route('account.all.notifications')}}" class="fa-option-mobile-lg-hide">
-                                <i class="far fa-bell fa-24 fa-option" size="7"></i>
+                            <a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide">
+                                <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
                             </a>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
-                            <ul class="clearfix noti-card-first  br-10">
-                                <li class="mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
-
+                            <ul class="noti-card-first clearfix br-10">
+                                <li class="hidden-click-any-container mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
                                     <span style="color:#efefef;">Actividades</span>
                                 </li>
 
 
-                                <li class="noti-flex mt-2">
+                                <li class="hidden-click-any-container noti-flex mt-2">
 
-                                    <div class="noti-div-subtitle">
+                                    <div class="hidden-click-any-container noti-div-subtitle">
                                         <h4 class="noti-subtitle">Hoje</h4>
                                     </div>
                                 </li>
-                            <li class="send-invited-relationship clearfix">
-                                <div class="user-identify-img circle l-5">
+                            <li class="hidden-click-any-container send-invited-relationship clearfix">
+                                <div class="hidden-click-any-container user-identify-img circle l-5">
                                     <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
                                 </div>
-                                <div class="details-invited l-5">
-                                    <span class="description-invited">
+                                <div class="hidden-click-any-container details-invited l-5">
+                                    <span class="hidden-click-any-container description-invited">
                                         <a href="">Hugo Paulo</a> enviou um Pedido de Relacionamento para VOCÊ
                                     </span>
-                                    <div class="options-invited clearfix">
-                                        <label class="l-5" for="options-invited-pop-up">
-                                            <div class="label-invited">
+                                    <div class="hidden-click-any-container options-invited clearfix">
+                                        <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
+                                            <div class="hidden-click-any-container label-invited">
                                                 <!--<h2 class="accept">Aceitar</h2>-->
                                                 <h2>Aceitar</h2>
                                             </div>
                                         </label>
-                                        <a href="" class="l-5 denied">Rejeitar</a>
+                                        <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
                                     </div>
                                 </div>
                             </li>
-                            <li class="send-invited-relationship clearfix">
-                                <div class="user-identify-img circle l-5">
+                            <li class="hidden-click-any-container send-invited-relationship clearfix">
+                                <div class="hidden-click-any-container user-identify-img circle l-5">
                                     <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
                                 </div>
-                                <div class="details-invited l-5">
-                                    <span class="description-invited">
+                                <div class="hidden-click-any-container details-invited l-5">
+                                    <span class="hidden-click-any-container description-invited">
                                         <a href="">Hugo Paulo</a> Respondeu a sua Solicitação de Registo de compromisso
                                     </span>
-                                    <div class="options-invited clearfix">
+                                    <div class="hidden-click-any-container options-invited clearfix">
                                         <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
                                     </div>
                                 </div>
                             </li>
                               <?php foreach ($notificacoes as $key => $value): ?>
                                 @if($key < 3)
-                                <li class="change-look noti-flex-info" >
+                                <li class="hidden-click-any-container change-look noti-flex-info" >
                                   <?php if ($notificacoes[$key]['v']== 1): ?>
                                     <?php if ($notificacoes[$key]['foto']!= null): ?>
 
-                                    <div class="ml-2 novi-div-image">
+                                    <div class="hidden-click-any-container ml-2 novi-div-image">
                                          <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$key]['foto'] }}">
                                     </div>
                                     <?php else: ?>
-                                      <div class="ml-2 novi-div-image">
+                                      <div class="hidden-click-any-container ml-2 novi-div-image">
 
-                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                                           <img class="hidden-click-any-container l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
 
 
                                       </div>
@@ -117,14 +129,14 @@
                                     <?php elseif ($notificacoes[$key]['v']== 2): ?>
                                       <?php if ($notificacoes[$key]['foto']!= null): ?>
 
-                                      <div class="ml-2 novi-div-image">
+                                      <div class="hidden-click-any-container ml-2 novi-div-image">
 
-                                           <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                                           <img class="hidden-click-any-container l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
 
 
                                       </div>
                                       <?php else: ?>
-                                        <div class="ml-2 novi-div-image">
+                                        <div class="hidden-click-any-container ml-2 novi-div-image">
 
                                              <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
 
@@ -134,11 +146,11 @@
 
                                     <?php endif; ?>
 
-                                    <div class="noti-div-name">
+                                    <div class="hidden-click-any-container noti-div-name">
 
-                                    <span class="noti-span">{{$notificacoes[$key]['notificacao']}}</span>
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$key]['notificacao']}}</span>
 
-                                    <div class="noti-hour ml-2">
+                                    <div class="hidden-click-any-container noti-hour ml-2">
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
 
@@ -149,7 +161,7 @@
                                 
                               <?php endforeach; ?>
 
-                                 <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
+                                 <li class="hidden-click-any-container change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
                                     <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
                                 </li>
                             </ul>
@@ -184,7 +196,7 @@
                         <li class="li-component-aside"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page.mine')}}">Minhas Páginas</a></li>
                     @endif
                 @endif
-                <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Guardados</a></li>
+                <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}?post-container-post=saved">Guardados</a></li>
                 <li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Casais que eu sigo</a></li>
                 <li class="li-component-aside"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Ganhar Dinheiro</a></li>
                 <li class="li-component-aside"><i class="far fa-play-circle fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Tassumir Vídeos</a></li>
@@ -885,11 +897,64 @@
 
         });
 
-        setInterval(function(){ alert("Hello"); }, 3000);
-        $('#stories-card').                
+        setInterval(function(e){
+            let margin_stories = $('.main-container').offset();
+            //console.log('margin_stories ' + margin_stories.top);
+            let height = parseInt($('.main-container').height());
+            let height_stories = $('#stories-card').height();
+            //console.log('height ' + height); 
+            //console.log('height stories ' + height_stories); 
+            //console.log(margin_stories.top); 
+            console.log('subt. ' + ((height - 400) + margin_stories.top)); 
+            let control = 0;
+            if ((height - 400) + margin_stories.top  <= 450) {
+                control++;
+                if(control == 3){
 
+                }
+            } 
+        }, 100);
+        //$('#stories-card').     
+        $('#search-lg-home-id').focus(function(){
+            $('.container-search-home').css({
+                display: 'block',
+            });
+            $('#search-lg-home-id-container').focus();
+        });
+        $(document).click(function(e){
+            let className = e.target.className.split(' ');
+            if(className[0] == "container-search-home" || 
+                className[0] == "input-search" || 
+                className[0] == "search-lg" || 
+                className[0] == "search-id-container" || 
+                className[0] == "fa-search" || 
+                className[0] == "change-look" || 
+                className[0] == "input-search" ||
+                className[0] == "input-search"){
+                $('.container-search-home').css({
+                    display: 'block',
+                });
+            } else {
+                $('.container-search-home').css({
+                    display: 'none',
+                });
+            }
+            console.log(className[0]);
+            if (className[0] != "noti-card-first" || 
+                className[0] != "hidden-click-any-container" || 
+                className[0] != "fa-option-mobile-hide" || 
+                className[0] != "fa-option-mobile-hide" || 
+                className[0] != "fa-option-mobile-hide") {
+                /*$('.noti-card-first').css({
+                   display: 'none', 
+                });*/
+            }else {
+                $('#more-option-notify').css({
+
+                });
+            }
+            //console.log(className[0]);
+        });
     });
-
-
 </script>
 </html>
