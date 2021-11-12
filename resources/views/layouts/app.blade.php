@@ -950,7 +950,7 @@
                 }
             }
         }, 100);
-           
+
 >>>>>>> b23a73d6472061ba9c1bfe47251779418b8660a7
         $('#search-lg-home-id').focus(function(){
             $('.container-search-home').css({
