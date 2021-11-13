@@ -58,11 +58,20 @@
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " >
-                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide">
-                                <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
+                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container far fa-bell fa-24 fa-option notify-icon" size="7"></i>
+                                @if(sizeof($notificacoes) > 0)
+                                <div class="number-notification circle">
+                                    <span class="center">{{sizeof($notificacoes)}}</span>
+                                </div>
+                                @endif
                             </label>
-                            <a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide">
+                            <a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide notify-icon">
                                 <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
+                                @if(sizeof($notificacoes) > 0)
+                                <div class="number-notification circle">
+                                    <span class="center">{{sizeof($notificacoes)}}</span>
+                                </div>
+                                @endif
                             </a>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="noti-card-first clearfix br-10">
@@ -157,7 +166,11 @@
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
+<<<<<<< HEAD
                                                 <h2 class="btn_sim" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
+=======
+                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
+>>>>>>> d10ba96ede9508f5831f28b55ffa22516cb8ac46
                                             </div>
                                         </label>
                                         <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
@@ -243,9 +256,9 @@
                     @forelse($dadosSeguida as $Seguida)
                         <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
                         <li class="li-component-aside-right clearfix" id="seguida-{{$Seguida->identificador_id_seguida}}">
-                        @if( !($Paginas->foto_page == null) )
+                        @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
                             </div>
                         @else
                             <div class="page-cover circle l-5">
@@ -287,6 +300,7 @@
                 <h1>Sugestões para Você</h1>
             </header>
             <ul class="segest">
+
              @forelse($dadosPage as $Paginas)
                 <?php $conta_page = 0;
                  $verifica1 = 'A';
@@ -318,9 +332,9 @@
                     <?php if (($verifica1 != $verifica)  ) : ?>
                         <?php if (($verifica != 'B')  ) : ?>
                         <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
-                        @if( !($Paginas->foto_page == null) )
+                        @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
                             </div>
                         @else
                             <div class="page-cover circle l-5">
@@ -349,9 +363,9 @@
                     <?php endif ?>
                     <?php if (($conta_page == $tamanho)  ) : ?>
                         <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
-                        @if( !($Paginas->foto_page == null) )
+                        @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
                             </div>
                         @else
                             <div class="page-cover circle l-5">
@@ -444,7 +458,7 @@
             </div>
             <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
                 <div class="" id="cover-done">
-                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Publicar</button>
                 </div>
             </div>
         <!-- </form> -->
