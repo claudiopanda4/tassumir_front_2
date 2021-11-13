@@ -970,7 +970,8 @@
 
             let video_post1 = document.getElementsByClassName('video-post-video');
             console.log(video_post1);
-            console.log('video ' + video_post1[0].id);
+            
+            //console.log('video ' + video_post1[0].id);
             let id;
             let video_post = $('.video-');
             for (var i in video_post1) {
