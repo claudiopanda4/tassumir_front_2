@@ -968,9 +968,6 @@
                 }
             }
 
-        }, 100);
-        //$('#stories-card').
-
             let video_post1 = document.getElementsByClassName('video-post-video');
             console.log(video_post1);
             console.log('video ' + video_post1[0].id);
