@@ -88,14 +88,14 @@
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited">
-                                                <!-<h2 class="accept">Aceitar</h2>->
+                                                <h2 class="accept">Aceitar</h2>
                                                 <h2>Aceitar</h2>
                                             </div>
                                         </label>
                                         <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
                                     </div>
                                 </div>
-                            </li> ->
+                            </li>
                             <li class="hidden-click-any-container send-invited-relationship clearfix">
                                 <div class="hidden-click-any-container user-identify-img circle l-5">
                                     <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
@@ -156,11 +156,8 @@
                                     @if($notificacoes[$i- 1]['tipo'] == 4)
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
-                                          <div class="accept_relac" id="{{$notificacoes[$i- 1]['id']}}">
-                                            <div class="hidden-click-any-container label-invited" id="{{$notificacoes[$i- 1]['id']}}">
-                                                <!--<h2 class="accept">Aceitar</h2>-->
-                                                <h2>Aceitar</h2>
-                                            </div>
+                                            <div class="hidden-click-any-container label-invited" id="">
+                                                <h2 class="" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
                                             </div>
                                         </label>
                                         <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
@@ -659,7 +656,6 @@
             </div>
         </header>
         <div class="header-height"></div>
-        <form class=""  method="get">
         <div style="margin-top: 15px; margin-bottom: 10px; overflow-y: auto;">
             <div>
                 <p class="alert-accept" id="textr">  </p>
@@ -676,11 +672,10 @@
                         Sim, Aceito
                     </button>
                     <input type="hidden" name="accept_relacd" id="accept_relacd">
-                </div>
                 </form>
+                </div>
             </div>
         </div>
-      </form>
     </div>
 </div>
 <?php endif ?>
@@ -781,7 +776,7 @@
 
       });
 
-      $('.accept_relac').click(function (e) {
+      $('.accept').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
 
@@ -954,7 +949,7 @@
             //console.log('height ' + height);
             //console.log('height stories ' + height_stories);
             //console.log(margin_stories.top);
-            console.log('subt. ' + ((height - 400) + margin_stories.top));
+            //console.log('subt. ' + ((height - 400) + margin_stories.top));
             let control = 0;
             if ((height - 400) + margin_stories.top  <= 450) {
                 control++;
@@ -964,7 +959,7 @@
             }
 
             let video_post1 = document.getElementsByClassName('video-post-video');
-            console.log(video_post1);
+            //console.log(video_post1);
 
             //console.log('video ' + video_post1[0].id);
             let id;
@@ -974,9 +969,9 @@
             }
             for (var i = 0; i <= video_post1.length - 1; i++) {
                 let id = video_post1[i].id.split('_')[1];
-                console.log('idaqui ' + id);
+                //console.log('idaqui ' + id);
                 offset_video = $('#video_' + id).offset();
-                console.log(video_post1[i].id + ' top: ' + offset_video.top);
+                //console.log(video_post1[i].id + ' top: ' + offset_video.top);
                 if(offset_video.top < 140 && offset_video.top > -300){
                     document.getElementById('video_' + id).play();
                     document.getElementById('play_button_' + id).classList.add('invisible');
