@@ -508,9 +508,15 @@ class PerfilController extends Controller
               'tipo_relacionamento_id' =>$request->tipo_relac,
 
           ]);
+
+          $a=DB::table('pedido_relacionamentos')->get();
+          foreach ($a as $key) {
+             $b=$key->pedido_relacionamento_id;
+             }
+
           DB::table('identificadors')->insert([
         'tipo_identificador_id' => 5,
-        'id' => $resposta[0]['comment_id'],
+        'id' => $b,
    ]);
           $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1 ]);
           $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedinte, 1 ]);
