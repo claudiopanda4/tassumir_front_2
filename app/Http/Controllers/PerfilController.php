@@ -511,12 +511,12 @@ class PerfilController extends Controller
 
           $a=DB::table('pedido_relacionamentos')->get();
           foreach ($a as $key) {
-             $b=$key->pedido_relacionamento_id;
+             $c=$key->pedido_relacionamento_id;
              }
 
           DB::table('identificadors')->insert([
         'tipo_identificador_id' => 5,
-        'id' => $b,
+        'id' => $c,
    ]);
           $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1 ]);
           $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedinte, 1 ]);
