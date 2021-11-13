@@ -516,8 +516,8 @@
         </div>
     </div>
 </div>
-@endif
 <?php endif ?>
+@endif
 <?php if (true): ?>
 <input type="checkbox" name="" id="target-profile-cover" class="invisible">
 <div class="pop-up" id="cover-profile">
@@ -551,7 +551,6 @@
 </div>
 <?php endif ?>
 <?php if (true): ?>
-<form action="">
 <input type="checkbox" name="" id="target-proof" class="invisible">
 <div class="pop-up" id="cover-proof">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 280px;">
@@ -568,25 +567,21 @@
         <div class="header-height"></div>
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <p class="alert-proof">O comprovativo pode ser uma imagem de depósito ou um arquivo pdf. Aguardará a confirmação. Após verifivação, será enviada uma NOTIFICAÇÃO</p>
-
-
-            <div class="">
-
-              <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                   <input class="file" type="file" name="imgOrVideo" id="imgOrVideo" style="width: 250px; margin-left: 10px; color: #fff;">
-        </div>
-        <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-            <label for="target-profile-cover-post" class="label-full">
-                <div class="cover-done" id="cover-done-post">
-                  <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+
+                <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+                    <label for="target-profile-cover-post" class="label-full">
+                        <div class="cover-done" id="cover-done-post">
+                          <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                        </div>
+                    </label>
                 </div>
-            </label>
-        </div>
-        </form>
+            </form>
     </div>
 </div>
-</form>
+</div>
 <?php endif ?>
 <?php if (true): ?>
 <input type="checkbox" name="" id="target-invited-relationship" class="invisible">
@@ -968,12 +963,10 @@
                 }
             }
 
-        }, 100);
-        //$('#stories-card').
-
             let video_post1 = document.getElementsByClassName('video-post-video');
             console.log(video_post1);
-            console.log('video ' + video_post1[0].id);
+
+            //console.log('video ' + video_post1[0].id);
             let id;
             let video_post = $('.video-');
             for (var i in video_post1) {

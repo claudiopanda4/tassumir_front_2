@@ -27,7 +27,7 @@ class PaginaCasalController extends Controller
       $dadosSeguindo = $dates['dadosSeguindo'];
       $dadosPage = $dates['dadosPage'];
       $dadosSeguida = $dates['dadosSeguida'];
-      $page_current = 'relationship_request';
+      $page_current = 'page';
       $dadosPage = Page::all();
       $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
       $seguidores = Self::seguidores($page_content[0]->page_id);
