@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -31,7 +32,10 @@ class MessageController extends Controller
         $dadosPage = $dates['dadosPage'];
         $dadosSeguida = $dates['dadosSeguida'];
         $page_current = 'relationship_request';
-        return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));    }
+        $user_logado = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+        $message_user = DB::table('messages')->where('id_identificador_a', $user_logado[0]->identificador_id)->orwhere('id_identificador_b', $user_logado[0]->identificador_id)->get();
+        //dd($message_user);
+        return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida', 'message_user', 'user_logado'));    }
 
     /**
      * Show the form for creating a new resource.

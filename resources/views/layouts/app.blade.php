@@ -761,7 +761,7 @@
       }
 
       function tela_confirm(id){
-
+        
         $.ajax({
           url: "{{ route('tconfirm')}}",
           type: 'get',
@@ -993,7 +993,7 @@
                     //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
                 }
             }
-        }, 100);
+        //}, 100);
 
         $('#search-lg-home-id').focus(function(){
             $('.container-search-home').css({

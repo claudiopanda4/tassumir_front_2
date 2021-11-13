@@ -178,7 +178,7 @@
                             <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
                         </div>
                         <div class="nav-menu-chat-component-user l-5">
-                            <h1>Domingos Sobrinho</h1>
+                            <h1>{{$conta_logada[0]->nome}}</h1>
                         </div>    
                     </a>
                 </li>
@@ -193,13 +193,13 @@
                     <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
                 </div>
                 <div class="nav-menu-chat-component-user l-5">
-                    <h1>Domingos Sobrinho</h1>
+                    <h1>{{$conta_logada[0]->nome}}</h1>
                 </div>    
             </a>
         </header>
         <div class="body-message clearfix">
-            <?php foreach ($users as $key => $value):?>
-            <?php if (true): ?>
+            @forelse($message_user as $allMessage)
+            <?php if ($user_logado[0]->identificador_id == $allMessage->id_identificador_a): ?>
                 <div class="own-user l-5">
                   <div class="clearfix">
                       <div class="container-img circle l-5">
@@ -207,13 +207,13 @@
                     </div>
                     <div class="message-body l-5">
                         <div>
-                            <p>OlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOla</p>
+                            <p>{{$allMessage->message}}</p>
                         </div>
                     </div>
                   </div>  
                 </div>        
             <?php endif ?>
-            <?php if (true): ?>
+            <?php if ($user_logado[0]->identificador_id == $allMessage->id_identificador_b): ?>
                 <div class="other-user r-5">
                     <div class="clearfix">
                       <div class="container-img circle l-5">
@@ -221,13 +221,19 @@
                     </div>
                     <div class="message-body l-5">
                         <div>
-                            <p>OlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOla</p>
+                            <p>{{$allMessage->message}}</p>
                         </div>
                     </div>
                   </div> 
                 </div>        
             <?php endif ?>
-        <?php endforeach ?>
+        @empty
+        <div class="message-body l-5">
+                        <div>
+                            <p>Comece a Conersa, Mande uma mensagem!</p>
+                        </div>
+                    </div>
+        @endforelse
         </div>
         <div class="comment-send clearfix" id="comment-send-1">
             <div class="img-user-comment l-5">
