@@ -252,9 +252,9 @@
                     @forelse($dadosSeguida as $Seguida)
                         <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
                         <li class="li-component-aside-right clearfix" id="seguida-{{$Seguida->identificador_id_seguida}}">
-                        @if( !($Paginas->foto_page == null) )
+                        @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
                             </div>
                         @else
                             <div class="page-cover circle l-5">
@@ -296,6 +296,7 @@
                 <h1>Sugestões para Você</h1>
             </header>
             <ul class="segest">
+
              @forelse($dadosPage as $Paginas)
                 <?php $conta_page = 0;
                  $verifica1 = 'A';
@@ -327,9 +328,9 @@
                     <?php if (($verifica1 != $verifica)  ) : ?>
                         <?php if (($verifica != 'B')  ) : ?>
                         <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
-                        @if( !($Paginas->foto_page == null) )
+                        @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
                             </div>
                         @else
                             <div class="page-cover circle l-5">
@@ -358,9 +359,9 @@
                     <?php endif ?>
                     <?php if (($conta_page == $tamanho)  ) : ?>
                         <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
-                        @if( !($Paginas->foto_page == null) )
+                        @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
                             </div>
                         @else
                             <div class="page-cover circle l-5">
