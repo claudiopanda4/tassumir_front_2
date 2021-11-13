@@ -390,7 +390,14 @@ class AuthController extends Controller
     $tipo=DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->id]);
     $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
     $conta = DB::select('select * from contas where conta_id = ?', [$tipo[0]->conta_id_pedinte]);
-    $resposta='Ao clicar em "Sim, Aceito", você concorda com o que os termos dizem sobre o '+'$tipos[0]->tipo_relacionamento'+'. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes. Aceita ser Assumir o(a) '+'$conta[0]->nome'+' '+'$conta[0]->apelido'+'?';
+    $resposta='Ao clicar em "Sim, Aceito", você concorda com o que os termos dizem sobre o ';
+    $resposta.=$tipos[0]->tipo_relacionamento;
+    $resposta.='. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes. Aceita Assumir o(a)  ';
+    $resposta.= $conta[0]->nome;
+    $resposta.= ' ';
+    $resposta.= $conta[0]->apelido;
+    $resposta.= '?';
+
     return response()->json($resposta);
   }
 

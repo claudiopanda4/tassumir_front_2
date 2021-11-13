@@ -157,7 +157,7 @@
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
-                                                <h2 class="" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
+                                                <h2 class="btn_sim" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
                                             </div>
                                         </label>
                                         <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
@@ -751,7 +751,6 @@
       }
 
       function tela_confirm(id){
-
         $.ajax({
           url: "{{ route('tconfirm')}}",
           type: 'get',
@@ -776,7 +775,7 @@
 
       });
 
-      $('.accept').click(function (e) {
+      $('.btn_sim').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
 
