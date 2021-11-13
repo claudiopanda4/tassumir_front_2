@@ -58,11 +58,20 @@
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " >
-                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide">
-                                <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
+                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container far fa-bell fa-24 fa-option notify-icon" size="7"></i>
+                                @if(sizeof($notificacoes) > 0)
+                                <div class="number-notification circle">
+                                    <span class="center">{{sizeof($notificacoes)}}</span>
+                                </div>
+                                @endif
                             </label>
-                            <a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide">
+                            <a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide notify-icon">
                                 <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
+                                @if(sizeof($notificacoes) > 0)
+                                <div class="number-notification circle">
+                                    <span class="center">{{sizeof($notificacoes)}}</span>
+                                </div>
+                                @endif
                             </a>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="noti-card-first clearfix br-10">
@@ -157,7 +166,7 @@
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
-                                                <h2 class="" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
+                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
                                             </div>
                                         </label>
                                         <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
@@ -444,7 +453,7 @@
             </div>
             <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
                 <div class="" id="cover-done">
-                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Publicar</button>
                 </div>
             </div>
         <!-- </form> -->

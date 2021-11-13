@@ -2827,3 +2827,21 @@ label[for="hugo"]{
 	height: 40px;
 	z-index: 2;
 }
+.notify-icon {
+	position: relative;
+}
+.number-notification {
+	position: absolute;
+	width: 20px;
+	top: -10px;
+	right: -10px;
+	height: 20px;
+	background-color: red;
+	z-index: 3;
+}
+.number-notification span {
+	font-size: 12px;
+	color: #fff;
+	width: 100%;
+	text-align: center;
+}

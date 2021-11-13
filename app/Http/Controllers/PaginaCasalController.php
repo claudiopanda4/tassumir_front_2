@@ -422,9 +422,9 @@ class PaginaCasalController extends Controller
             ]);
 
           $this->current_page_uuid = $page_content[0]->uuid;
-
+          //dd($page_content[0]);
           $seguidores = Self::seguidores($page_content[0]->page_id);
-          $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
+          $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
           $publicacoes = $this->get_all_post($page_content[0]->page_id);
           $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
 
