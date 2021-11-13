@@ -18,7 +18,7 @@
             <h4 class="noti-subtitle">Novas</h4>
         </div>
     </div>
-        <div class="send-invited-relationship clearfix">
+      <!--  <div class="send-invited-relationship clearfix">
             <div class="user-identify-img circle l-5">
                 <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
             </div>
@@ -29,7 +29,7 @@
                 <div class="options-invited clearfix">
                     <label class="l-5" for="options-invited-pop-up">
                         <div class="label-invited">
-                            <!--<h2 class="accept">Aceitar</h2>-->
+                            <!-<h2 class="accept">Aceitar</h2>->
                             <h2>Aceitar</h2>
                         </div>
                     </label>
@@ -49,8 +49,8 @@
                     <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
                 </div>
             </div>
-        </div>
-        <?php foreach ($notificacoes as $key => $value): ?>
+        </div>-->
+        @for($i=sizeof($notificacoes); $i > 0 ; $i--)
     <div class="noti-flex-info mt-2">
         <div class="ml-2 novi-div-image">
 
@@ -60,15 +60,33 @@
         </div>
         <div class="noti-div-name">
 
-            <span class="noti-span">{{$notificacoes[$key]['notificacao']}}</span>
+            <span class="noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
             <div class="noti-hour">
                 <a href=""><span class="">há um dia</span></a>
             </div>
+            @if($notificacoes[$i- 1]['tipo'] == 4)
+            <div class="options-invited clearfix">
+                <label class="l-5" for="options-invited-pop-up">
+                  <div class="accept_relac" id="{{$notificacoes[$i- 1]['id']}}">
+                    <div class="hidden-click-any-container label-invited" id="{{$notificacoes[$i- 1]['id']}}">
+                        <!--<h2 class="accept">Aceitar</h2>-->
+                        <h2>Aceitar</h2>
+                    </div>
+                    </div>
+                </label>
+                <a href="" class="l-5 denied">Rejeitar</a>
+            </div>
+            @elseif($notificacoes[$i- 1]['tipo'] == 7)
+            <div class="options-invited clearfix">
+                <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
+                <!--                  <a href="{{route('relationship.page',$notificacoes[$i- 1]['id'])}}">Ver Resposta</a> -->
+            </div>
+            @endif
         </div>
 
     </div>
 
-  <?php endforeach; ?>
+  @endfor
 
 
 </div>

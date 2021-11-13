@@ -39,7 +39,36 @@ class PaginaCasalController extends Controller
 
         return view('pagina.couple_page', compact('account_name','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
     }
+
+    public function conf_PR(Request $request)
+      {
+        DB::table('pedido_relacionamentos')->where('uuid', $request->accept_relacd)
+        ->update(['estado_pedido_relac' => 2]);
+ $aux= DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->accept_relacd]);;
+ $aux1=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->pedido_relacionamento_id, 5 ]);;
+ $aux2=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedida, 1 ]);;
+ $aux3=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedinte, 1]);;
+        DB::table('notifications')->insert([
+                'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                'id_state_notification' => 2,
+                'id_action_notification' => 7,
+                'identificador_id_causador'=> $aux3[0]->identificador_id,
+                'identificador_id_destino'=> $aux1[0]->identificador_id,
+                'identificador_id_receptor'=> $aux2[0]->identificador_id,
+                ]);
+        return redirect()->route('feed.index');
+      }
+
     public function request_relationship() {
+    /*  $pedido=array();
+      $tipo=DB::select('select * from pedido_relacionamentos where uuid = ?', [$id]);
+      $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
+      $conta = DB::select('select * from contas where conta_id = ?', [$tipo[0]->conta_id_pedinte]);
+        $pedido[0]['nome']= $conta[0]->nome ;
+        $pedido[0]['nome'].= " ";
+        $pedido[0]['nome'].= $conta[0]->apelido;
+        $pedido[0]['foto']= $conta[0]->foto;
+        $pedido[0]['tipo']=$tipos[0]->tipo_relacionamento;*/
         $dates = $this->default_();
         $account_name = $dates['account_name'];
         $checkUserStatus = $dates['checkUserStatus'];
@@ -54,6 +83,7 @@ class PaginaCasalController extends Controller
         $dadosPage = $dates['dadosPage'];
         $dadosSeguida = $dates['dadosSeguida'];
         $page_current = 'relationship_request';
+        //return view('relacionamento.index', compact('account_name', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
         return view('relacionamento.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
     }
     public function default_(){
@@ -76,7 +106,7 @@ class PaginaCasalController extends Controller
         $a=0;
         $nome=array();
         $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
-        $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+        $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
         if (sizeof($notificacoes_aux)>0) {
           foreach ($notificacoes_aux as $key) {
             $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
@@ -97,23 +127,46 @@ class PaginaCasalController extends Controller
               case 1:
                 $notificacoes[$a]['notificacao']=$nome[0] ;
                 $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                $notificacoes[$a]['tipo']=1;
+                $notificacoes[$a]['id']=$key->identificador_id_destino;
                 break;
               case 2:
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                  $notificacoes[$a]['tipo']=1;
+                  $notificacoes[$a]['id']=$key->identificador_id_destino;
                   break;
                 case 3:
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                  $notificacoes[$a]['tipo']=1;
+                  $notificacoes[$a]['id']=$key->identificador_id_destino;
                     break;
                   case 4:
+                  $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                  $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                  $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
                   $notificacoes[$a]['notificacao']=$nome[0];
-                  $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                  $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                  $notificacoes[$a]['notificacao'].=$tipos[0]->tipo_relacionamento;
+                  $notificacoes[$a]['tipo']=4;
+                  $notificacoes[$a]['id']=$key->identificador_id_destino;
                       break;
                     case 5:
                     $notificacoes[$a]['notificacao']=$nome[0];
                     $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                    $notificacoes[$a]['tipo']=1;
+                    $notificacoes[$a]['id']=$key->identificador_id_destino;
                         break;
+                   case 7:
+                        $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                        $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                        $notificacoes[$a]['tipo']=7;
+                        $notificacoes[$a]['id']=$tipo[0]->uuid;
+                            break;
+
 
             }
             $notificacoes[$a]['foto']=$nome[1];
@@ -508,6 +561,11 @@ class PaginaCasalController extends Controller
             }
             DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id, estado_post_id) values(?, ?, ?, ?, ?, ?)',
                 [$uuid, $description, $file_name, $id, $format, 1]);
+
+                DB::table('identificadors')->insert([
+              'tipo_identificador_id' => 3,
+              'id' => DB::select('select * from posts where uuid = ?', [$uuid])[0]->post_id,
+         ]);
         } catch (Exception $e) {
             dd($e);
         }

@@ -15,7 +15,7 @@ class searchController extends Controller
       $a=0;
       $nome=array();
       $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
-      $notificacoes_aux=DB::select('select * from notifications where identificador_id_destino = ?', [$aux1[0]->identificador_id]);
+      $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
       if (sizeof($notificacoes_aux)>0) {
         foreach ($notificacoes_aux as $key) {
           $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
@@ -36,23 +36,46 @@ class searchController extends Controller
             case 1:
               $notificacoes[$a]['notificacao']=$nome[0] ;
               $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+              $notificacoes[$a]['tipo']=1;
+              $notificacoes[$a]['id']=$key->identificador_id_destino;
               break;
             case 2:
                 $notificacoes[$a]['notificacao']=$nome[0];
                 $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                $notificacoes[$a]['tipo']=1;
+                $notificacoes[$a]['id']=$key->identificador_id_destino;
                 break;
               case 3:
                 $notificacoes[$a]['notificacao']=$nome[0];
                 $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                $notificacoes[$a]['tipo']=1;
+                $notificacoes[$a]['id']=$key->identificador_id_destino;
                   break;
                 case 4:
+                $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
                 $notificacoes[$a]['notificacao']=$nome[0];
-                $notificacoes[$a]['notificacao'].=" enviou-lhe um pedido";
+                $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                $notificacoes[$a]['notificacao'].=$tipos[0]->tipo_relacionamento;
+                $notificacoes[$a]['tipo']=4;
+                $notificacoes[$a]['id']=$key->identificador_id_destino;
                     break;
                   case 5:
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                  $notificacoes[$a]['tipo']=1;
+                  $notificacoes[$a]['id']=$key->identificador_id_destino;
                       break;
+                 case 7:
+                      $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                      $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                      $notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                      $notificacoes[$a]['tipo']=7;
+                      $notificacoes[$a]['id']=$tipo[0]->uuid;
+                          break;
+
 
           }
           $notificacoes[$a]['foto']=$nome[1];
