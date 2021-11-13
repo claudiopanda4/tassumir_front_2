@@ -77,7 +77,7 @@ class SeguidorController extends Controller
                   'id_state_notification' => 2,
                   'id_action_notification' => 5,
                   'identificador_id_causador'=> $identi_id_seguindo,
-                  'identificador_id_destino'=> $page[0]->page_id,
+                  'identificador_id_destino'=> $identi_id_seguida,
                   'identificador_id_receptor'=> $destino_a[0]->identificador_id,
                   ]);
                 }
@@ -88,7 +88,7 @@ class SeguidorController extends Controller
                         'id_state_notification' => 2,
                         'id_action_notification' => 5,
                         'identificador_id_causador'=> $identi_id_seguindo,
-                        'identificador_id_destino'=> $page[0]->page_id,
+                        'identificador_id_destino'=> $identi_id_seguida,
                         'identificador_id_receptor'=> $destino_b[0]->identificador_id,
                         ]);
                       }

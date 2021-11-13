@@ -95,7 +95,7 @@
                                         <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
                                     </div>
                                 </div>
-                            </li> -->
+                            </li> ->
                             <li class="hidden-click-any-container send-invited-relationship clearfix">
                                 <div class="hidden-click-any-container user-identify-img circle l-5">
                                     <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
@@ -108,15 +108,15 @@
                                         <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
                                     </div>
                                 </div>
-                            </li>
-                              <?php foreach ($notificacoes as $key => $value): ?>
-                                @if($key < 3)
+                            </li>-->
+
+                            @for($i=sizeof($notificacoes); $i > 0 ; $i--)
                                 <li class="hidden-click-any-container change-look noti-flex-info" >
-                                  <?php if ($notificacoes[$key]['v']== 1): ?>
-                                    <?php if ($notificacoes[$key]['foto']!= null): ?>
+                                  <?php if ($notificacoes[$i- 1]['v']== 1): ?>
+                                    <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
 
                                     <div class="hidden-click-any-container ml-2 novi-div-image">
-                                         <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$key]['foto'] }}">
+                                         <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$i- 1]['foto'] }}">
                                     </div>
                                     <?php else: ?>
                                       <div class="hidden-click-any-container ml-2 novi-div-image">
@@ -126,8 +126,8 @@
 
                                       </div>
                                       <?php endif; ?>
-                                    <?php elseif ($notificacoes[$key]['v']== 2): ?>
-                                      <?php if ($notificacoes[$key]['foto']!= null): ?>
+                                    <?php elseif ($notificacoes[$i- 1]['v']== 2): ?>
+                                      <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
 
                                       <div class="hidden-click-any-container ml-2 novi-div-image">
 
@@ -148,28 +148,34 @@
 
                                     <div class="hidden-click-any-container noti-div-name">
 
-                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$key]['notificacao']}}</span>
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
 
                                     <div class="hidden-click-any-container noti-hour ml-2">
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
-                                    @if($notificacoes[$key]['tipo'] == 4)
+                                    @if($notificacoes[$i- 1]['tipo'] == 4)
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
-                                            <div class="hidden-click-any-container label-invited">
+                                          <div class="accept_relac" id="{{$notificacoes[$i- 1]['id']}}">
+                                            <div class="hidden-click-any-container label-invited" id="{{$notificacoes[$i- 1]['id']}}">
                                                 <!--<h2 class="accept">Aceitar</h2>-->
                                                 <h2>Aceitar</h2>
                                             </div>
+                                            </div>
                                         </label>
                                         <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
+                                    </div>
+                                    @elseif($notificacoes[$i- 1]['tipo'] == 7)
+                                    <div class="hidden-click-any-container options-invited clearfix">
+                                        <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
+                                        <!--                                          <a  href="{{route('relationship.page', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a> -->
                                     </div>
                                     @endif
                                    </div>
 
                                 </li>
-                                @endif
 
-                              <?php endforeach; ?>
+                              @endfor
 
                                  <li class="hidden-click-any-container change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
                                     <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
@@ -562,17 +568,22 @@
         <div class="header-height"></div>
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <p class="alert-proof">O comprovativo pode ser uma imagem de depósito ou um arquivo pdf. Aguardará a confirmação. Após verifivação, será enviada uma NOTIFICAÇÃO</p>
+
+
             <div class="">
-                <input class="file" type="file" name="imgOrVideo" style="width: 250px; margin-left: 10px; color: #fff;">
-            </div>
+
+              <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                  <input class="file" type="file" name="imgOrVideo" id="imgOrVideo" style="width: 250px; margin-left: 10px; color: #fff;">
         </div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
             <label for="target-profile-cover-post" class="label-full">
                 <div class="cover-done" id="cover-done-post">
-                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
+                  <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
                 </div>
             </label>
         </div>
+        </form>
     </div>
 </div>
 </form>
@@ -653,23 +664,28 @@
             </div>
         </header>
         <div class="header-height"></div>
+        <form class=""  method="get">
         <div style="margin-top: 15px; margin-bottom: 10px; overflow-y: auto;">
             <div>
-                <p class="alert-accept">
-                    Ao clicar em "Sim, Aceito", você concorda com o que os termos dizem sobre o Noivado. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes. Aceita ser NAMORADA do Hugo Paulo?
-                </p>
+                <p class="alert-accept" id="textr">  </p>
             </div>
             <div>
                 <label class="terms-use-alert" for="">Ler termos e responsabilidades sobre Noivado</label>
             </div>
             <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                 <div class="cover-done" id="cover-done-marriage">
+                  <form class="needs-validation" action="{{ route('conf_PR') }}" method="POST" novalidate>
+                  @csrf
+
                     <button type="submit" name="button" style="padding: 10px; font-size: 14px;" >
                         Sim, Aceito
                     </button>
+                    <input type="hidden" name="accept_relacd" id="accept_relacd">
                 </div>
+                </form>
             </div>
         </div>
+      </form>
     </div>
 </div>
 <?php endif ?>
@@ -744,6 +760,22 @@
 
       }
 
+      function tela_confirm(id){
+
+        $.ajax({
+          url: "{{ route('tconfirm')}}",
+          type: 'get',
+          data: {'id': id},
+          dataType: 'json',
+          success:function(response){
+            console.log(response);
+            $("#textr").text(response);
+            $("#accept_relacd").val(id);
+            }
+          });
+
+      }
+
       $('.seguir-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
@@ -753,6 +785,18 @@
             seguir(id1, id2);
 
       });
+
+      $('.accept_relac').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id;
+
+            tela_confirm(id);
+
+      });
+
+  
+
+
 
       $('.comentar-a').click(function (e) {
           e.preventDefault();
@@ -923,10 +967,10 @@
 
                 }
             }
-<<<<<<< HEAD
+
         }, 100);
         //$('#stories-card').
-=======
+
             let video_post1 = document.getElementsByClassName('video-post-video');
             console.log(video_post1);
             console.log('video ' + video_post1[0].id);
@@ -951,7 +995,6 @@
             }
         }, 100);
 
->>>>>>> b23a73d6472061ba9c1bfe47251779418b8660a7
         $('#search-lg-home-id').focus(function(){
             $('.container-search-home').css({
                 display: 'block',

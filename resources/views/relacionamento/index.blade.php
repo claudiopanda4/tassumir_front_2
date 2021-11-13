@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')	
+@section('content')
 <div class="main" id="main-container-relationship">
     <div class="card">
         <div class="clearfix">
@@ -9,19 +9,19 @@
                     <?php if (true): ?>
                         <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
                     <?php else: ?>
-                    
+
                     <?php endif ?>
                 </div>
                 <div class="couple-profile-img couple-2 circle" id="">
                     <?php if (true): ?>
                         <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
                     <?php else: ?>
-                    
+
                     <?php endif ?>
                 </div>
             </div>
             <div class="l-5 info-invite-relationship">
-                <p style="margin-top: 10px;">Sua solicitação para registar o seu <span>Noivado</span> foi aceite pelo Domingos</p>
+                <p style="margin-top: 10px;">Sua solicitação para registar o seu <span>$pedido[0]['tipo']</span> foi aceite pelo $pedido[0]['nome']</p>
                 <p>Para poder tornar público na rede social "tassumir" e assim criar a página do casal, você deve fazer o pagamento de <span>2.500 Kz</span> para a conta Tassumir e enviar o comprovativo para o Tassumir</p>
             </div>
             <div>
@@ -34,22 +34,22 @@
                     </label>
                     <a href="" class="l-5 denied">Pedir que o outro lado pague</a>
                 </div>
-            </div>    
+            </div>
         </div>
-        <div class="clearfix couple-container">
+        <!--<div class="clearfix couple-container">
             <div class="clearfix couple-profile-container l-5">
                 <div class="couple-profile-img couple-1 circle" id="">
                     <?php if (true): ?>
                         <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
                     <?php else: ?>
-                    
+
                     <?php endif ?>
                 </div>
                 <div class="couple-profile-img couple-2 circle" id="">
                     <?php if (true): ?>
                         <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
                     <?php else: ?>
-                    
+
                     <?php endif ?>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                 <div class="options-invited clearfix">
                     <a href="" class="l-5 denied">Ir à Página do casal</a>
                 </div>
-            </div>    
+            </div>
         </div>
         <div class="clearfix couple-container">
             <div class="clearfix couple-profile-container l-5">
@@ -68,14 +68,14 @@
                     <?php if (true): ?>
                         <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
                     <?php else: ?>
-                    
+
                     <?php endif ?>
                 </div>
                 <div class="couple-profile-img couple-2 circle" id="">
                     <?php if (true): ?>
                         <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
                     <?php else: ?>
-                    
+
                     <?php endif ?>
                 </div>
             </div>
@@ -86,9 +86,9 @@
                 <div class="options-invited clearfix">
                     <a href="" class="l-5 denied">Solicitar uma nova confirmação</a>
                 </div>
-            </div>    
-        </div>
-        
+            </div>
+        </div>-->
+
     </div>
 </div>
 <script>
@@ -97,4 +97,3 @@
     });
 </script>
 @stop
-
