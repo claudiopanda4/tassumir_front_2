@@ -52,12 +52,15 @@
         </div>-->
         @for($i=sizeof($notificacoes); $i > 0 ; $i--)
     <div class="noti-flex-info mt-2">
-        <div class="ml-2 novi-div-image">
-
-             <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
-        </div>
+        <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
+            <div class="hidden-click-any-container ml-2 novi-div-image circle">
+                <img class="circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$i- 1]['foto'] }}">
+            </div>
+        <?php else: ?>
+            <div class="hidden-click-any-container ml-2 novi-div-image circle">
+                <img class="hidden-click-any-container l-5 circle img-24" src='{{asset("storage/icons/user_.png")}}'>
+            </div>
+        <?php endif ?>
         <div class="noti-div-name">
 
             <span class="noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
