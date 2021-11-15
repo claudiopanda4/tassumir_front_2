@@ -1072,16 +1072,34 @@ class AuthController extends Controller
 
     }
 
+/* try to work here */
+
     public function recuperarSenha(){
 
         return view('auth.codeRecover');
     }
     public function codigoRecebido(){
+
         return view('auth.codigoRecebido');
+
     }
     public function newCode(){
+
         return view('auth.newCode');
+
     }
+
+/* end try to work here */
+
+  public function sendPhoneEmailRecover(Request $request){
+    //dd("Hugo");
+
+      $phone = $request->phoneNumber;
+      $email = $request->emailName;
+
+      dd($phone."".$email);
+
+  }
 
     /*public function codigoRecebidoRegisto(){
         return view('auth.codigoRecebidoRegister');

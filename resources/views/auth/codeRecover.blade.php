@@ -48,7 +48,7 @@
                     </div>
 
 
-                <form action="" method="POST">
+                <form action="{{route('account.sendToPhoneEmail')}}" method="POST">
                     @csrf
 
                      <div class="form-group">
@@ -63,16 +63,15 @@
 
                     <div class="form-group">
                         
-                        <input type="email" class="input-text-default input-full hidden" name="number_email_login" type="text" placeholder="Email" id="email">
+                        <input type="email" class="input-text-default input-full hidden" name="emailName" type="text" placeholder="Email" id="email">
                     </div>
 
                     <div class="form-group">
                         
-                        <input type="tel" class="input-text-default input-full hidden" name="number_email_login" type="text" placeholder="Telefone" id="telefone">
+                        <input type="tel" class="input-text-default input-full hidden" name="phoneNumber" type="text" placeholder="Telefone" id="telefone">
                     </div>
-                    
 
-                    <a href="{{route('code.received.form')}}" id="login-enter" type="submit" class=""><span class="text-white">Enviar</span></a>
+                    <button type="submit" id="login-enter" class="alerta">Enviar</button>
                 </form>
             </div>
         </main>
