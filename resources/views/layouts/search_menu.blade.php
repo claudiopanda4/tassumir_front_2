@@ -64,72 +64,72 @@
                                     </div>
                                 </li>
 
-                              @for($i=sizeof($notificacoes); $i > 0 ; $i--)
-                                  <li class="hidden-click-any-container change-look noti-flex-info" >
-                                    <?php if ($notificacoes[$i- 1]['v']== 1): ?>
-                                      <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
-
-                                      <div class="hidden-click-any-container ml-2 novi-div-image">
-                                           <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$i- 1]['foto'] }}">
-                                      </div>
-                                      <?php else: ?>
-                                        <div class="hidden-click-any-container ml-2 novi-div-image">
-
-                                             <img class="hidden-click-any-container l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
-                                        </div>
-                                        <?php endif; ?>
-                                      <?php elseif ($notificacoes[$i- 1]['v']== 2): ?>
+                                @for($i=sizeof($notificacoes); $i > 0 ; $i--)
+                                @if($notificacoes[$i- 1]['estado']!= 3)
+                                    <li class="hidden-click-any-container change-look noti-flex-info" id="{{$notificacoes[$i- 1]['id1']}}" name="{{$notificacoes[$i- 1]['id1']}}">
+                                      <?php if ($notificacoes[$i- 1]['v']== 1): ?>
                                         <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
 
                                         <div class="hidden-click-any-container ml-2 novi-div-image">
-
-                                             <img class="hidden-click-any-container l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
+                                             <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$i- 1]['foto'] }}">
                                         </div>
                                         <?php else: ?>
                                           <div class="hidden-click-any-container ml-2 novi-div-image">
 
-                                               <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                                               <img class="hidden-click-any-container l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
 
 
                                           </div>
                                           <?php endif; ?>
+                                        <?php elseif ($notificacoes[$i- 1]['v']== 2): ?>
+                                          <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
 
-                                      <?php endif; ?>
+                                          <div class="hidden-click-any-container ml-2 novi-div-image">
 
-                                      <div class="hidden-click-any-container noti-div-name">
+                                               <img class="hidden-click-any-container l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
 
-                                      <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
 
-                                      <div class="hidden-click-any-container noti-hour ml-2">
-                                          <a href=""><span class="">há um dia</span></a>
+                                          </div>
+                                          <?php else: ?>
+                                            <div class="hidden-click-any-container ml-2 novi-div-image">
+
+                                                 <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+
+
+                                            </div>
+                                            <?php endif; ?>
+
+                                        <?php endif; ?>
+
+                                        <div class="hidden-click-any-container noti-div-name">
+
+                                        <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+
+                                        <div class="hidden-click-any-container noti-hour ml-2">
+                                            <a href=""><span class="">há um dia</span></a>
+                                        </div>
+                                        @if($notificacoes[$i- 1]['tipo'] == 4)
+                                        <div class="hidden-click-any-container options-invited clearfix">
+                                            <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
+                                                <div class="hidden-click-any-container label-invited" id="">
+                                                    <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Aceitar</h2>
+                                                </div>
+                                            </label>
+                                            <div class="reject_relationship" id="{{$notificacoes[$i- 1]['id']}}">
+                                            <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
+                                        </div>
                                       </div>
-                                      @if($notificacoes[$i- 1]['tipo'] == 4)
-                                      <div class="hidden-click-any-container options-invited clearfix">
-                                          <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
-                                            <div class="accept_relac" id="{{$notificacoes[$i- 1]['id']}}">
-                                              <div class="hidden-click-any-container label-invited" id="{{$notificacoes[$i- 1]['id']}}">
-                                                  <!--<h2 class="accept">Aceitar</h2>-->
-                                                  <h2>Aceitar</h2>
-                                              </div>
-                                              </div>
-                                          </label>
-                                          <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
-                                      </div>
-                                      @elseif($notificacoes[$i- 1]['tipo'] == 7)
-                                      <div class="hidden-click-any-container options-invited clearfix">
-                                          <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
-                                          <!--                                          <a  href="{{route('relationship.page', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a> -->
-                                      </div>
-                                      @endif
-                                     </div>
+                                        @elseif($notificacoes[$i- 1]['tipo'] == 7)
+                                        <div class="hidden-click-any-container options-invited clearfix">
+                                            <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
+                                                                                      <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a>
+                                        </div>
+                                        @endif
+                                       </div>
 
-                                  </li>
-
-                                @endfor
+                                    </li>
+                                    @endif
+                                  @endfor
 
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
                                     <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>

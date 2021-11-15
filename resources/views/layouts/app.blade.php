@@ -52,17 +52,27 @@
                 </li>
             </ul>
             <nav class="menu-header ">
+                <?php $controller = 0; ?>
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
                         <a href="{{route('allSearch.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " >
-                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide">
-                                <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
+                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container far fa-bell fa-24 fa-option notify-icon" size="7"></i>
+                                @if(sizeof($notificacoes) > 0)
+                                <div class="number-notification circle">
+                                    <span class="center">{{sizeof($notificacoes)}}</span>
+                                </div>
+                                @endif
                             </label>
-                            <a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide">
+                            <a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide notify-icon">
                                 <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
+                                @if(sizeof($notificacoes) > 0)
+                                <div class="number-notification circle">
+                                    <span class="center">{{sizeof($notificacoes)}}</span>
+                                </div>
+                                @endif
                             </a>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="noti-card-first clearfix br-10">
@@ -88,14 +98,14 @@
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited">
-                                                <!-<h2 class="accept">Aceitar</h2>->
+                                                <h2 class="accept">Aceitar</h2>
                                                 <h2>Aceitar</h2>
                                             </div>
                                         </label>
                                         <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
                                     </div>
                                 </div>
-                            </li> ->
+                            </li>
                             <li class="hidden-click-any-container send-invited-relationship clearfix">
                                 <div class="hidden-click-any-container user-identify-img circle l-5">
                                     <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
@@ -111,40 +121,32 @@
                             </li>-->
 
                             @for($i=sizeof($notificacoes); $i > 0 ; $i--)
-                                <li class="hidden-click-any-container change-look noti-flex-info" >
+                            @if($notificacoes[$i- 1]['estado']!= 3)
+                                <li class="hidden-click-any-container change-look noti-flex-info" id="{{$notificacoes[$i- 1]['id1']}}" name="{{$notificacoes[$i- 1]['id1']}}">
                                   <?php if ($notificacoes[$i- 1]['v']== 1): ?>
                                     <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
 
-                                    <div class="hidden-click-any-container ml-2 novi-div-image">
-                                         <img class="l-5 circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$i- 1]['foto'] }}">
+                                    <div class="hidden-click-any-container ml-2 novi-div-image circle l-5">
+                                         <img class="circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$i- 1]['foto'] }}">
                                     </div>
                                     <?php else: ?>
-                                      <div class="hidden-click-any-container ml-2 novi-div-image">
-
-                                           <img class="hidden-click-any-container l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
+                                      <div class="hidden-click-any-container ml-2 novi-div-image circle l-5">
+                                           <img class="hidden-click-any-container circle img-24 center" src='{{asset("storage/icons/user_.png")}}'>
                                       </div>
-                                      <?php endif; ?>
+                                      <?php endif ?>
                                     <?php elseif ($notificacoes[$i- 1]['v']== 2): ?>
                                       <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
 
-                                      <div class="hidden-click-any-container ml-2 novi-div-image">
-
-                                           <img class="hidden-click-any-container l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
+                                      <div class="hidden-click-any-container ml-2 novi-div-image circle l-5">
+                                           <img class="hidden-click-any-container circle img-24 center" src='{{asset("storage/icons/user_.png")}}'>
                                       </div>
                                       <?php else: ?>
-                                        <div class="hidden-click-any-container ml-2 novi-div-image">
-
-                                             <img class="l-5 circle img-40" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-
-
+                                        <div class="hidden-click-any-container ml-2 novi-div-image circlel-5 ">
+                                             <img class="circle img-24 center" src='{{asset("storage/icons/user_.png")}}'>
                                         </div>
-                                        <?php endif; ?>
+                                        <?php endif ?>
 
-                                    <?php endif; ?>
+                                    <?php endif ?>
 
                                     <div class="hidden-click-any-container noti-div-name">
 
@@ -154,30 +156,30 @@
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
                                     @if($notificacoes[$i- 1]['tipo'] == 4)
+                                    $controller++;
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
-                                          <div class="accept_relac" id="{{$notificacoes[$i- 1]['id']}}">
-                                            <div class="hidden-click-any-container label-invited" id="{{$notificacoes[$i- 1]['id']}}">
-                                                <!--<h2 class="accept">Aceitar</h2>-->
-                                                <h2>Aceitar</h2>
-                                            </div>
+                                            <div class="hidden-click-any-container label-invited" id="">
+                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Aceitar</h2>
                                             </div>
                                         </label>
-                                        <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
+                                        <div class="reject_relationship" id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">
+                                        <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Rejeitar</a>
                                     </div>
+                                  </div>
                                     @elseif($notificacoes[$i- 1]['tipo'] == 7)
                                     <div class="hidden-click-any-container options-invited clearfix">
-                                        <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
-                                        <!--                                          <a  href="{{route('relationship.page', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a> -->
+                                        <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
+                                                                                  <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a>
                                     </div>
                                     @endif
                                    </div>
 
                                 </li>
-
+                                @endif
                               @endfor
 
-                                 <li class="hidden-click-any-container change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
+                                 <li class="hidden-click-any-container change-look" style="display: flex;justify-content:center; align-items: center; width: 300px; padding:8px;">
                                     <a href="{{route('account.all.notifications')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
                                 </li>
                             </ul>
@@ -227,12 +229,56 @@
         </nav>
     </aside>
     <aside class="aside aside-right" style="z-index:1;">
+        <?php if ($controller > 0): ?>
+        <header>
+            <h1>Registo de Relacionamento</h1>
+        </header>
+        <?php endif ?>
+        @for($i=sizeof($notificacoes); $i > 0 ; $i--)
+                                <li class="hidden-click-any-container change-look noti-flex-info noti-info-aside" >
+                                  <?php if ($notificacoes[$i- 1]['tipo'] == 4 || $notificacoes[$i- 1]['tipo'] == 7): ?>
+                                    <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
+                                    <div class="hidden-click-any-container ml-2 novi-div-image circle">
+                                         <img class="circle img-40" src="{{ asset('storage/img/users') . '/' . $notificacoes[$i- 1]['foto'] }}">
+                                    </div>
+                                    <?php else: ?>
+                                      <div class="hidden-click-any-container ml-2 novi-div-image circle">
+                                           <img class="hidden-click-any-container l-5 circle img-24" src='{{asset("storage/icons/user_.png")}}'>
+                                      </div>
+                                      <?php endif ?>
+                                      <div class="hidden-click-any-container noti-div-name">
+
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+
+                                    <div class="hidden-click-any-container noti-hour ml-2">
+                                        <a href=""><span class="">há um dia</span></a>
+                                    </div>
+                                    @if($notificacoes[$i- 1]['tipo'] == 4)
+                                    <div class="hidden-click-any-container options-invited clearfix">
+                                        <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
+                                            <div class="hidden-click-any-container label-invited" id="">
+                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
+                                            </div>
+                                        </label>
+                                        <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
+                                    </div>
+                                    @elseif($notificacoes[$i- 1]['tipo'] == 7)
+                                    <div class="hidden-click-any-container options-invited clearfix">
+                                        <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
+                                        <!--                                          <a  href="{{route('relationship.page', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a> -->
+                                    </div>
+                                    @endif
+                                   </div>
+                                    <?php endif ?>
+                                </li>
+
+                              @endfor
         <nav>
             <header>
                 <h1>Páginas que eu sigo</h1>
             </header>
             <ul class="">
-                <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
+                <?php if ($dadosSeguindo[0]['id'] ==  $conta_logada[0]->conta_id): ?>
                 @forelse($dadosPage as $Paginas)
                 <?php
                 $seguidors = 0;
@@ -246,9 +292,9 @@
                     @forelse($dadosSeguida as $Seguida)
                         <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
                         <li class="li-component-aside-right clearfix" id="seguida-{{$Seguida->identificador_id_seguida}}">
-                        @if( !($Paginas->foto_page == null) )
+                        @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
                             </div>
                         @else
                             <div class="page-cover circle l-5">
@@ -258,7 +304,7 @@
                             <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                             <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
-                            <a href="" class="nao_seguir">não seguir</a>";
+                            <a href="" class="nao_seguir">não seguir</a>
                             <input type="hidden" id="seguida" value="{{ $Seguida->identificador_id_seguida }}" name="">
 
                             <input type="hidden" id="seguindo" value="{{ $Seguida->identificador_id_seguindo }}" name="">
@@ -290,6 +336,7 @@
                 <h1>Sugestões para Você</h1>
             </header>
             <ul class="segest">
+
              @forelse($dadosPage as $Paginas)
                 <?php $conta_page = 0;
                  $verifica1 = 'A';
@@ -321,9 +368,9 @@
                     <?php if (($verifica1 != $verifica)  ) : ?>
                         <?php if (($verifica != 'B')  ) : ?>
                         <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
-                        @if( !($Paginas->foto_page == null) )
+                        @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
                             </div>
                         @else
                             <div class="page-cover circle l-5">
@@ -333,7 +380,7 @@
                         <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
-                       <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
+                       <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>
 
                        <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
 
@@ -352,9 +399,9 @@
                     <?php endif ?>
                     <?php if (($conta_page == $tamanho)  ) : ?>
                         <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
-                        @if( !($Paginas->foto_page == null) )
+                        @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
                             </div>
                         @else
                             <div class="page-cover circle l-5">
@@ -365,7 +412,7 @@
                         <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
 
-                        <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>";
+                        <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>
                         <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
                       <?php /* echo"
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
@@ -447,7 +494,7 @@
             </div>
             <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
                 <div class="" id="cover-done">
-                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Publicar</button>
                 </div>
             </div>
         <!-- </form> -->
@@ -659,7 +706,6 @@
             </div>
         </header>
         <div class="header-height"></div>
-        <form class=""  method="get">
         <div style="margin-top: 15px; margin-bottom: 10px; overflow-y: auto;">
             <div>
                 <p class="alert-accept" id="textr">  </p>
@@ -676,11 +722,11 @@
                         Sim, Aceito
                     </button>
                     <input type="hidden" name="accept_relacd" id="accept_relacd">
-                </div>
+                    <input type="hidden" name="id_notification" id="id_notification">
                 </form>
+                </div>
             </div>
         </div>
-      </form>
     </div>
 </div>
 <?php endif ?>
@@ -755,17 +801,22 @@
 
       }
 
-      function tela_confirm(id){
+
+     
         
+
+      function tela_confirm(id1, id2){
+
         $.ajax({
           url: "{{ route('tconfirm')}}",
           type: 'get',
-          data: {'id': id},
+          data: {'id1': id1},
           dataType: 'json',
           success:function(response){
             console.log(response);
             $("#textr").text(response);
-            $("#accept_relacd").val(id);
+            $("#accept_relacd").val(id1);
+            $("#id_notification").val(id2);
             }
           });
 
@@ -781,15 +832,35 @@
 
       });
 
-      $('.accept_relac').click(function (e) {
-          e.preventDefault();
+      $('.accept_relationship').click(function (e) {
           let id = e.target.id;
+          let id1= id.split('|')[0];
+          let id2= id.split('|')[1];
 
-            tela_confirm(id);
+
+            tela_confirm(id1, id2);
 
       });
 
-  
+      $('.reject_relationship').click(function (e) {
+        e.preventDefault();
+
+          let id = e.target.id;
+          let id1= id.split('|')[1];
+          let id2= id.split('|')[2];
+          $.ajax({
+            url: "{{ route('reject_relationship')}}",
+            type: 'get',
+            data: {'id1': id1, 'id2': id2},
+            dataType: 'json',
+            success:function(response){
+              console.log(response);
+             $('li[name='+id2+']').empty();
+              $('div[name='+id2+']').empty();
+              }
+            });
+      });
+
 
 
 
@@ -954,7 +1025,7 @@
             //console.log('height ' + height);
             //console.log('height stories ' + height_stories);
             //console.log(margin_stories.top);
-            console.log('subt. ' + ((height - 400) + margin_stories.top));
+            //console.log('subt. ' + ((height - 400) + margin_stories.top));
             let control = 0;
             if ((height - 400) + margin_stories.top  <= 450) {
                 control++;
@@ -964,7 +1035,7 @@
             }
 
             let video_post1 = document.getElementsByClassName('video-post-video');
-            console.log(video_post1);
+            //console.log(video_post1);
 
             //console.log('video ' + video_post1[0].id);
             let id;
@@ -974,9 +1045,9 @@
             }
             for (var i = 0; i <= video_post1.length - 1; i++) {
                 let id = video_post1[i].id.split('_')[1];
-                console.log('idaqui ' + id);
+                //console.log('idaqui ' + id);
                 offset_video = $('#video_' + id).offset();
-                console.log(video_post1[i].id + ' top: ' + offset_video.top);
+                //console.log(video_post1[i].id + ' top: ' + offset_video.top);
                 if(offset_video.top < 140 && offset_video.top > -300){
                     document.getElementById('video_' + id).play();
                     document.getElementById('play_button_' + id).classList.add('invisible');

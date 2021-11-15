@@ -20,7 +20,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/like', [App\Http\Controllers\AuthController::class, 'like'])->name('like');
     Route::get('/comment_reac', [App\Http\Controllers\AuthController::class, 'comment_reac'])->name('comment_reac');
     Route::get('/tipos', [App\Http\Controllers\AuthController::class, 'tipos'])->name('tipos');
-    Route::get('/tconfirm', [App\Http\Controllers\AuthController::class, 'tconfirm'])->name('tconfirm');
+    Route::get('/reject_relationship', [App\Http\Controllers\PaginaCasalController::class, 'reject_relationship'])->name('reject_relationship');
+    Route::get('/tconfirm', [App\Http\Controllers\PaginaCasalController::class, 'tconfirm'])->name('tconfirm');
     Route::get('/seguir', [App\Http\Controllers\AuthController::class, 'seguir'])->name('seguir');
     Route::get('/oque_estao_falando', [App\Http\Controllers\AuthController::class, 'oque_estao_falando'])->name('oque_estao_falando');
     Route::get('/delete_post', [App\Http\Controllers\AuthController::class, 'delete_post'])->name('delete_post');
@@ -42,6 +43,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/posts/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'post'])->name('couple.page.post');
     Route::post('/couple_post/', [App\Http\Controllers\PaginaCasalController::class, 'store_post'])->name('post_couple.page');
     Route::get('/request_relationship/', [App\Http\Controllers\PaginaCasalController::class, 'request_relationship'])->name('relationship.page');
+    Route::get('/request_relationship1/{id}', [App\Http\Controllers\PaginaCasalController::class, 'request_relationship1'])->name('relationship.page1');
     Route::post('/conf_PR/', [App\Http\Controllers\PaginaCasalController::class, 'conf_PR'])->name('conf_PR');
     Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
 

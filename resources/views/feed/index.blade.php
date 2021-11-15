@@ -15,8 +15,6 @@
             </header>
             <nav>
                 <ul class="clearfix">
-
-
                   @for ($i=0; $i< sizeof($what_are_talking); $i++)
                     @if($i < 5)
                         <li class="li-component-stories l-5">
@@ -31,8 +29,9 @@
                                 <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
                                     <img class="img-back-stories center" src="{{asset('storage/img/page/') . '/' . $what_are_talking[$i]['file']}}">
                               <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>
-                                    <video controls
+                                    <video controls>
                                         <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
+                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
                                     </video>
                                 <?php else: ?>
                                 <img class="img-back-stories center" src="{{asset('storage/img/page/unnamed.jpg')}}">
@@ -72,7 +71,7 @@
                             <div class="info-post clearfix">
                                 <span class="time-posted l-5">50 min</span><div id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
                                   <span class="seguir-{{$dados[$key]['page_id']}}"><a href="" class="seguir-a r-5"  id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}">seguir</a></span>
-                                <?php endif; ?></div>
+                                <?php endif ?></div>
                             </div>
                         </div>
                     </div>
@@ -86,17 +85,17 @@
                             <li>
                                 <a href="">Editar</a>
                             </li>
-                            <?php endif; ?>
+                            <?php endif ?>
                             <?php if ($dados[$key]['dono_da_pag?'] != 1): ?>
                             <li>
                                 <a href="" class="ocultar_post" id="ocultar_post-{{$dados[$key]['post_id']}}">Ocultar Publicação</a>
                             </li>
-                            <?php endif; ?>
+                            <?php endif ?>
                             <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
                             <li>
                                 <a href="" class="delete_post" id="delete_post-{{$dados[$key]['post_id']}}">Apagar Publicação</a>
                             </li>
-                            <?php endif; ?>
+                            <?php endif ?>
                             <li>
                                 <a href="">Denunciar</a>
                             </li>
@@ -184,7 +183,7 @@
                                 </a>
                             </div>
                         </li>
-                          <?php endif; ?>
+                          <?php endif ?>
                     </ul>
                 </nav>
                 <div class="comment-send clearfix"  id="comment-send-{{$dados[$key]['post_id']}}">
@@ -287,13 +286,13 @@
                             @endif
                       </div>
                 </div>
-              <?php endif; ?>
+              <?php endif ?>
                 <div>
 
                 </div>
             </div>
         </div>
-      <?php endif; ?>
+      <?php endif ?>
         <?php if ($key == 3 || $key == 7): ?>
                 <section class="suggest-slide">
                     <header>
@@ -333,7 +332,7 @@
                         <?php if (($verifica != 'B')  ) : ?>
                         <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
-                                        @if( !($Paginas->foto_page == null) )
+                                        @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
                                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
                                             </div>
@@ -355,7 +354,7 @@
                     <?php if (($conta_page == $tamanho)  ) : ?>
                         <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
-                                        @if( !($Paginas->foto_page == null) )
+                                        @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
                                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
                                             </div>

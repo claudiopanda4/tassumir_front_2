@@ -80,13 +80,14 @@ class PerfilController extends Controller
                      break;
                    case 4:
                    $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                   $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                   $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
+                 if (sizeof($aux)){  $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                   if (sizeof($tipo)){  $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
                    $notificacoes[$a]['notificacao']=$nome[0];
                    $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
                    $notificacoes[$a]['notificacao'].=$tipos[0]->tipo_relacionamento;
                    $notificacoes[$a]['tipo']=4;
-                   $notificacoes[$a]['id']=$key->identificador_id_destino;
+                   $notificacoes[$a]['id']=$tipo[0]->uuid;}
+                 }
                        break;
                      case 5:
                      $notificacoes[$a]['notificacao']=$nome[0];
@@ -95,22 +96,25 @@ class PerfilController extends Controller
                      $notificacoes[$a]['id']=$key->identificador_id_destino;
                          break;
                     case 7:
-                         $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                         $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                         $notificacoes[$a]['notificacao']=$nome[0];
-                         $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
-                         $notificacoes[$a]['tipo']=7;
-                         $notificacoes[$a]['id']=$tipo[0]->uuid;
+                    $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                    if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                    if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
+                    $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                    $notificacoes[$a]['tipo']=7;
+                    $notificacoes[$a]['id']=$tipo[0]->uuid;}}
                              break;
 
 
              }
              $notificacoes[$a]['foto']=$nome[1];
              $notificacoes[$a]['v']=$nome[2];
+             $notificacoes[$a]['estado']=$key->id_state_notification;
+             $notificacoes[$a]['id1']=$key->notification_id;
+
              $a++;
            }
          }
-         $dadosPage = Page::all();
+         $dadosPage = DB::table('pages')->limit(5)->get();
            $dadosSeguindo[0] = [
                              'id_seguidor' => 0,
                              'identificador_id_seguida' => 0,
@@ -182,7 +186,7 @@ class PerfilController extends Controller
             $dadosSeguida = $dates['dadosSeguida'];
             $this->active_account_id = $account_name[0]->conta_id;
             //---------------------------------------------------------------------
-            $dadosPage = Page::all();
+            $dadosPage = DB::table('pages')->limit(5)->get();
 
             $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
 
@@ -508,9 +512,15 @@ class PerfilController extends Controller
               'tipo_relacionamento_id' =>$request->tipo_relac,
 
           ]);
+
+          $a=DB::table('pedido_relacionamentos')->get();
+          foreach ($a as $key) {
+             $c=$key->pedido_relacionamento_id;
+             }
+
           DB::table('identificadors')->insert([
         'tipo_identificador_id' => 5,
-        'id' => $resposta[0]['comment_id'],
+        'id' => $c,
    ]);
           $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1 ]);
           $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedinte, 1 ]);
@@ -566,7 +576,7 @@ class PerfilController extends Controller
 
                                       $file_name = time() . '_' . md5($request->file('imgOrVideo')->getClientOriginalName()) . '.' . $request->imgOrVideo->extension();
 
-                                      $request->file('imgOrVideo')->storeAs('public/img/users', $file_name);
+                                      $request->file('imgOrVideo')->storeAs('public/img/comprovativos', $file_name);
 
 
 

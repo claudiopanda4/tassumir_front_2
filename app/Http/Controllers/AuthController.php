@@ -70,13 +70,14 @@ class AuthController extends Controller
                     break;
                   case 4:
                   $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                  $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                  $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
+                if (sizeof($aux)){  $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                  if (sizeof($tipo)){  $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
                   $notificacoes[$a]['notificacao'].=$tipos[0]->tipo_relacionamento;
                   $notificacoes[$a]['tipo']=4;
-                  $notificacoes[$a]['id']=$tipo[0]->uuid;
+                  $notificacoes[$a]['id']=$tipo[0]->uuid;}
+                }
                       break;
                     case 5:
                     $notificacoes[$a]['notificacao']=$nome[0];
@@ -86,21 +87,24 @@ class AuthController extends Controller
                         break;
                    case 7:
                         $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                        $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                        $notificacoes[$a]['notificacao']=$nome[0];
+                        if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                        if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
                         $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
                         $notificacoes[$a]['tipo']=7;
-                        $notificacoes[$a]['id']=$tipo[0]->uuid;
+                        $notificacoes[$a]['id']=$tipo[0]->uuid;}}
                             break;
 
 
             }
             $notificacoes[$a]['foto']=$nome[1];
             $notificacoes[$a]['v']=$nome[2];
+            $notificacoes[$a]['estado']=$key->id_state_notification;
+            $notificacoes[$a]['id1']=$key->notification_id;
             $a++;
           }
         }
-        $dadosPage = Page::all()->limit(5)->get();
+        $dadosPage = DB::table('pages')->limit(5)->get();
+        
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -169,7 +173,7 @@ class AuthController extends Controller
 
         //=================================================================
         //=========================Comecem Aqui-----------
-        $dadosPage = Page::all();
+        $dadosPage = DB::table('pages')->limit(5)->get();
 
 
             $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
@@ -385,14 +389,7 @@ class AuthController extends Controller
     return response()->json($tipos);
   }
 
-  public function tconfirm(Request $request){
 
-    $tipo=DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->id]);
-    $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
-    $conta = DB::select('select * from contas where conta_id = ?', [$tipo[0]->conta_id_pedinte]);
-    $resposta='Ao clicar em "Sim, Aceito", você concorda com o que os termos dizem sobre o '+'$tipos[0]->tipo_relacionamento'+'. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes. Aceita ser Assumir o(a) '+'$conta[0]->nome'+' '+'$conta[0]->apelido'+'?';
-    return response()->json($resposta);
-  }
 
   public function post_index($id){
 
