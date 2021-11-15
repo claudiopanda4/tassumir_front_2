@@ -120,7 +120,8 @@
                             </li>-->
 
                             @for($i=sizeof($notificacoes); $i > 0 ; $i--)
-                                <li class="hidden-click-any-container change-look noti-flex-info" >
+                            @if($notificacoes[$i- 1]['estado']!= 3)
+                                <li class="hidden-click-any-container change-look noti-flex-info" id="{{$notificacoes[$i- 1]['id1']}}" name="{{$notificacoes[$i- 1]['id1']}}">
                                   <?php if ($notificacoes[$i- 1]['v']== 1): ?>
                                     <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
 
@@ -166,25 +167,23 @@
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
-<<<<<<< HEAD
-                                                <h2 class="btn_sim" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
-=======
-                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
->>>>>>> d10ba96ede9508f5831f28b55ffa22516cb8ac46
+                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Aceitar</h2>
                                             </div>
                                         </label>
-                                        <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
+                                        <div class="reject_relationship" id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">
+                                        <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Rejeitar</a>
                                     </div>
+                                  </div>
                                     @elseif($notificacoes[$i- 1]['tipo'] == 7)
                                     <div class="hidden-click-any-container options-invited clearfix">
-                                        <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
-                                        <!--                                          <a  href="{{route('relationship.page', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a> -->
+                                        <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
+                                                                                  <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a>
                                     </div>
                                     @endif
                                    </div>
 
                                 </li>
-
+                                @endif
                               @endfor
 
                                  <li class="hidden-click-any-container change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
@@ -686,6 +685,7 @@
                         Sim, Aceito
                     </button>
                     <input type="hidden" name="accept_relacd" id="accept_relacd">
+                    <input type="hidden" name="id_notification" id="id_notification">
                 </form>
                 </div>
             </div>
@@ -764,16 +764,17 @@
 
       }
 
-      function tela_confirm(id){
+      function tela_confirm(id1, id2){
         $.ajax({
           url: "{{ route('tconfirm')}}",
           type: 'get',
-          data: {'id': id},
+          data: {'id1': id1},
           dataType: 'json',
           success:function(response){
             console.log(response);
             $("#textr").text(response);
-            $("#accept_relacd").val(id);
+            $("#accept_relacd").val(id1);
+            $("#id_notification").val(id2);
             }
           });
 
@@ -789,14 +790,34 @@
 
       });
 
-      $('.btn_sim').click(function (e) {
-          e.preventDefault();
+      $('.accept_relationship').click(function (e) {
           let id = e.target.id;
+          let id1= id.split('|')[0];
+          let id2= id.split('|')[1];
 
-            tela_confirm(id);
+
+            tela_confirm(id1, id2);
 
       });
 
+      $('.reject_relationship').click(function (e) {
+        e.preventDefault();
+
+          let id = e.target.id;
+          let id1= id.split('|')[1];
+          let id2= id.split('|')[2];
+          $.ajax({
+            url: "{{ route('reject_relationship')}}",
+            type: 'get',
+            data: {'id1': id1, 'id2': id2},
+            dataType: 'json',
+            success:function(response){
+              console.log(response);
+             $('li[name='+id2+']').empty();
+              $('div[name='+id2+']').empty();
+              }
+            });
+      });
 
 
 

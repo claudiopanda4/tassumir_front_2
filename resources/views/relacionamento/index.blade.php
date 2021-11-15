@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="l-5 info-invite-relationship">
-                <p style="margin-top: 10px;">Sua solicitação para registar o seu <span>$pedido[0]['tipo']</span> foi aceite pelo $pedido[0]['nome']</p>
+                <p style="margin-top: 10px;">Sua solicitação para registar o seu <span>{{$pedido[0]['tipo']}}</span> foi aceite pelo {{$pedido[0]['nome']}}</p>
                 <p>Para poder tornar público na rede social "tassumir" e assim criar a página do casal, você deve fazer o pagamento de <span>2.500 Kz</span> para a conta Tassumir e enviar o comprovativo para o Tassumir</p>
             </div>
             <div>

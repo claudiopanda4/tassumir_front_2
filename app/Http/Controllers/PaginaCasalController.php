@@ -42,8 +42,11 @@ class PaginaCasalController extends Controller
 
     public function conf_PR(Request $request)
       {
-        DB::table('pedido_relacionamentos')->where('uuid', $request->accept_relacd)
-        ->update(['estado_pedido_relac' => 2]);
+        DB::table('pedido_relacionamentos')->where('uuid',$request->accept_relacd)
+        ->update(['estado_pedido_relac_id' => 2]);
+        DB::table('notifications')->where('notification_id',$request->id_notification)
+        ->update(['id_state_notification' => 3]);
+
  $aux= DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->accept_relacd]);;
  $aux1=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->pedido_relacionamento_id, 5 ]);;
  $aux2=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedida, 1 ]);;
@@ -52,23 +55,68 @@ class PaginaCasalController extends Controller
                 'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                 'id_state_notification' => 2,
                 'id_action_notification' => 7,
-                'identificador_id_causador'=> $aux3[0]->identificador_id,
+                'identificador_id_causador'=> $aux2[0]->identificador_id,
                 'identificador_id_destino'=> $aux1[0]->identificador_id,
-                'identificador_id_receptor'=> $aux2[0]->identificador_id,
+                'identificador_id_receptor'=> $aux3[0]->identificador_id,
                 ]);
-        return redirect()->route('feed.index');
+        return redirect()->route('account.home.feed');
+      }
+      public function tconfirm(Request $request){
+
+        $tipo=DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->id1]);
+        $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
+        $conta = DB::select('select * from contas where conta_id = ?', [$tipo[0]->conta_id_pedinte]);
+        $resposta='Ao clicar em "Sim, Aceito", você concorda com o que os termos dizem sobre o ';
+        $resposta.=$tipos[0]->tipo_relacionamento;
+        $resposta.='. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes. Aceita Assumir o(a)  ';
+        $resposta.= $conta[0]->nome;
+        $resposta.= ' ';
+        $resposta.= $conta[0]->apelido;
+        $resposta.= '?';
+
+        return response()->json($resposta);
+      }
+
+      public function reject_relationship(Request $request){
+
+        DB::table('pedido_relacionamentos')->where('uuid',$request->id1)
+        ->delete();
+        DB::table('notifications')->where('notification_id',$request->id2)
+        ->update(['id_state_notification' => 3]);
+        $resposta.= 1;
+
+        return response()->json($resposta);
+      }
+
+      public function request_relationship1($id) {
+        $pedido=array();
+        $tipo=DB::select('select * from pedido_relacionamentos where uuid = ?', [$id]);
+        $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
+        $conta = DB::select('select * from contas where conta_id = ?', [$tipo[0]->conta_id_pedinte]);
+          $pedido[0]['nome']= $conta[0]->nome ;
+          $pedido[0]['nome'].= " ";
+          $pedido[0]['nome'].= $conta[0]->apelido;
+          $pedido[0]['foto']= $conta[0]->foto;
+          $pedido[0]['tipo']=$tipos[0]->tipo_relacionamento;
+          $dates = $this->default_();
+          $account_name = $dates['account_name'];
+          $checkUserStatus = $dates['checkUserStatus'];
+          $profile_picture = $dates['profile_picture'];
+          $isUserHost = $dates['isUserHost'];
+          $hasUserManyPages = $dates['hasUserManyPages'];
+          $allUserPages = $dates['allUserPages'];
+          $page_content = $dates['page_content'];
+          $conta_logada = $dates['conta_logada'];
+          $notificacoes = $dates['notificacoes'];
+          $dadosSeguindo = $dates['dadosSeguindo'];
+          $dadosPage = $dates['dadosPage'];
+          $dadosSeguida = $dates['dadosSeguida'];
+          $page_current = 'relationship_request';
+          //return view('relacionamento.index', compact('account_name', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
+          return view('relacionamento.index', compact('account_name', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
       }
 
     public function request_relationship() {
-    /*  $pedido=array();
-      $tipo=DB::select('select * from pedido_relacionamentos where uuid = ?', [$id]);
-      $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
-      $conta = DB::select('select * from contas where conta_id = ?', [$tipo[0]->conta_id_pedinte]);
-        $pedido[0]['nome']= $conta[0]->nome ;
-        $pedido[0]['nome'].= " ";
-        $pedido[0]['nome'].= $conta[0]->apelido;
-        $pedido[0]['foto']= $conta[0]->foto;
-        $pedido[0]['tipo']=$tipos[0]->tipo_relacionamento;*/
         $dates = $this->default_();
         $account_name = $dates['account_name'];
         $checkUserStatus = $dates['checkUserStatus'];
@@ -144,13 +192,14 @@ class PaginaCasalController extends Controller
                     break;
                   case 4:
                   $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                  $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                  $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
+                if (sizeof($aux)){  $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                  if (sizeof($tipo)){  $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
                   $notificacoes[$a]['notificacao'].=$tipos[0]->tipo_relacionamento;
                   $notificacoes[$a]['tipo']=4;
-                  $notificacoes[$a]['id']=$key->identificador_id_destino;
+                  $notificacoes[$a]['id']=$tipo[0]->uuid;}
+                }
                       break;
                     case 5:
                     $notificacoes[$a]['notificacao']=$nome[0];
@@ -159,18 +208,20 @@ class PaginaCasalController extends Controller
                     $notificacoes[$a]['id']=$key->identificador_id_destino;
                         break;
                    case 7:
-                        $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                        $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                        $notificacoes[$a]['notificacao']=$nome[0];
-                        $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
-                        $notificacoes[$a]['tipo']=7;
-                        $notificacoes[$a]['id']=$tipo[0]->uuid;
+                   $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                   if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                   if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
+                   $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                   $notificacoes[$a]['tipo']=7;
+                   $notificacoes[$a]['id']=$tipo[0]->uuid;}}
                             break;
 
 
             }
             $notificacoes[$a]['foto']=$nome[1];
             $notificacoes[$a]['v']=$nome[2];
+            $notificacoes[$a]['estado']=$key->id_state_notification;
+            $notificacoes[$a]['id1']=$key->notification_id;
             $a++;
           }
         }
