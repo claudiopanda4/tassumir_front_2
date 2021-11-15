@@ -572,12 +572,11 @@ class PerfilController extends Controller
             else if ($request->hasFile('imgOrVideo'))
             {
 
+                $file_name = time() . '_' . md5($request->file('imgOrVideo')->getClientOriginalName()) . '.' . $request->imgOrVideo->extension();
+                $request->file('imgOrVideo')->storeAs('public/img/comprovativos', $file_name);
 
-
-                                      $file_name = time() . '_' . md5($request->file('imgOrVideo')->getClientOriginalName()) . '.' . $request->imgOrVideo->extension();
-
-                                      $request->file('imgOrVideo')->storeAs('public/img/comprovativos', $file_name);
-
+                DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id', $request->Comprovativo)
+                ->update(['file'=> $file_name]);
 
 
 

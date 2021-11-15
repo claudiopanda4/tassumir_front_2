@@ -229,7 +229,6 @@ class AuthController extends Controller
 
         if (sizeof($aux1) > 0) {
             $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$key->post_id, $aux1[0]->identificador_id]);
-//            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$key->post_id-1]->comment_id, $aux1[0]->identificador_id]);
         } else {
             $ja_reagiu = array();
         }
@@ -243,7 +242,6 @@ class AuthController extends Controller
         $dados[$a]['page_uuid']= $page[$key->page_id - 1]->uuid ;
         $dados[$a]['post_uuid']= $key->uuid;
         $dados[$a]['reagir_S/N']=sizeof($ja_reagiu);
-//        $dados[$a]['comment_S/N']=sizeof($ja_reagiu1);
         $dados[$a]['guardado?']=sizeof($guardado);
         $dados[$a]['formato']=$key->formato_id;
         $dados[$a]['estado_post']=$key->estado_post_id;

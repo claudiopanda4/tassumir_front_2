@@ -78,11 +78,14 @@ class PaginaCasalController extends Controller
       }
 
       public function reject_relationship(Request $request){
-
+        $aux=DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->id1]);
+        $aux1 = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->pedido_relacionamento_id, 5 ]);
+        DB::table('identificadors')->where('identificador_id',$aux1[0]->identificador_id)
+        ->delete();
         DB::table('pedido_relacionamentos')->where('uuid',$request->id1)
         ->delete();
         DB::table('notifications')->where('notification_id',$request->id2)
-        ->update(['id_state_notification' => 3]);
+        ->delete();
         $resposta.= 1;
 
         return response()->json($resposta);
@@ -92,12 +95,14 @@ class PaginaCasalController extends Controller
         $pedido=array();
         $tipo=DB::select('select * from pedido_relacionamentos where uuid = ?', [$id]);
         $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
-        $conta = DB::select('select * from contas where conta_id = ?', [$tipo[0]->conta_id_pedinte]);
+        $conta = DB::select('select * from contas where conta_id = ?', [$tipo[0]->conta_id_pedida]);
           $pedido[0]['nome']= $conta[0]->nome ;
           $pedido[0]['nome'].= " ";
           $pedido[0]['nome'].= $conta[0]->apelido;
           $pedido[0]['foto']= $conta[0]->foto;
           $pedido[0]['tipo']=$tipos[0]->tipo_relacionamento;
+          $pedido[0]['pedido_relacionamento_id']=$tipo[0]->pedido_relacionamento_id;
+
           $dates = $this->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];

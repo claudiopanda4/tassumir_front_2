@@ -122,7 +122,7 @@
 
                             @for($i=sizeof($notificacoes); $i > 0 ; $i--)
                             @if($notificacoes[$i- 1]['estado']!= 3)
-                                <li class="hidden-click-any-container change-look noti-flex-info" id="{{$notificacoes[$i- 1]['id1']}}" name="{{$notificacoes[$i- 1]['id1']}}">
+                                <li class="hidden-click-any-container change-look noti-flex-info" id="not-{{$notificacoes[$i- 1]['id1']}}" name="not-{{$notificacoes[$i- 1]['id1']}}">
                                   <?php if ($notificacoes[$i- 1]['v']== 1): ?>
                                     <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
 
@@ -170,7 +170,9 @@
                                     @elseif($notificacoes[$i- 1]['tipo'] == 7)
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
-                                                                                  <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a>
+                                        <div class="ver_mais" id="{{$notificacoes[$i- 1]['id1']}}">
+                                        <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a>
+                                        </div>
                                     </div>
                                     @endif
                                    </div>
@@ -617,6 +619,8 @@
             <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                   <input class="file" type="file" name="imgOrVideo" id="imgOrVideo" style="width: 250px; margin-left: 10px; color: #fff;">
+                  <input type="hidden" name="Comprovativo" id="Comprovativo">
+                  <input type="hidden" name="notificacao" id="notificacao">
 
                 <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                     <label for="target-profile-cover-post" class="label-full">
@@ -827,6 +831,21 @@
 
       });
 
+      $('.send_proof').click(function (e) {
+          let id = e.target.id;
+       //let id1= id.split('|')[1];
+      // let id2= id.split('|')[2];
+          $("#Comprovativo").val(id);
+//         $("#id_notification").val(id2)
+
+
+      });
+
+      $('.ver_mais').click(function (e) {
+          let id = e.target.id;
+          $("#Comprovativo").val(id);
+      });
+
       $('.accept_relationship').click(function (e) {
           let id = e.target.id;
           let id1= id.split('|')[0];
@@ -850,8 +869,11 @@
             dataType: 'json',
             success:function(response){
               console.log(response);
-             $('li[name='+id2+']').empty();
-              $('div[name='+id2+']').empty();
+        //     $('li[name='id']').empty();
+            //  $('div[name='+id2+']').empty();
+              $('#not-'+id2).remove();
+            //  $('#not-'+id2).hide();
+
               }
             });
       });
