@@ -332,7 +332,7 @@
                         <?php if (($verifica != 'B')  ) : ?>
                         <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
-                                        @if( !($Paginas->foto_page == null) )
+                                        @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
                                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
                                             </div>
@@ -354,7 +354,7 @@
                     <?php if (($conta_page == $tamanho)  ) : ?>
                         <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
-                                        @if( !($Paginas->foto_page == null) )
+                                        @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
                                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
                                             </div>
