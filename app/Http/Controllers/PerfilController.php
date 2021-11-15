@@ -114,7 +114,7 @@ class PerfilController extends Controller
              $a++;
            }
          }
-         $dadosPage = Page::all();
+         $dadosPage = DB::table('pages')->limit(5)->get();
            $dadosSeguindo[0] = [
                              'id_seguidor' => 0,
                              'identificador_id_seguida' => 0,
@@ -186,7 +186,7 @@ class PerfilController extends Controller
             $dadosSeguida = $dates['dadosSeguida'];
             $this->active_account_id = $account_name[0]->conta_id;
             //---------------------------------------------------------------------
-            $dadosPage = Page::all();
+            $dadosPage = DB::table('pages')->limit(5)->get();
 
             $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
 
