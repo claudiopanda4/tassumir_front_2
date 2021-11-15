@@ -100,7 +100,7 @@ class AuthController extends Controller
             $a++;
           }
         }
-        $dadosPage = Page::all();
+        $dadosPage = Page::all()->limit(5)->get();
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,

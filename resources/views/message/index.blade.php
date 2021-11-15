@@ -166,54 +166,83 @@
             </div>
         </div>
         <nav class="nav-menu-chat">
+            <?php $print = 0; ?>
             <ul>
-                <?php $users = [
-                    [],[],[],[],[],[],[],[],
-                ]; 
-
-                foreach ($users as $key => $value):?>
+                @forelse($contas as $pessoas)
+                @if($pessoas->conta_id != $conta_logada[0]->conta_id)
+                
+                @forelse($message_contact as $contact)
+                @if($contact->id == $pessoas->conta_id)
+                    <?php $print = $contact->id ?>
+                @endif
+                @empty
+                @endforelse
+                @if($print == $pessoas->conta_id)
                 <li class="clearfix">
-                    <a href="">
-                        <div class="container-img circle l-5">
-                            <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
-                        </div>
+                    <input type="hidden" id="id_conta_send" value="{{$pessoas->conta_id}}">
+                    <a class="" href="{{route('message.show',  ['destinatario' => $pessoas->conta_id, 'user_logado' =>$conta_logada[0]->conta_id])}}">
+                        @if( !($pessoas->foto == null) )
+                            <div class="container-img circle l-5">
+                                <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $pessoas->foto }}">
+                            </div>
+                        @else
+                            <div class="container-img circle l-5">
+                                <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>
+                            </div>
+                        @endif
                         <div class="nav-menu-chat-component-user l-5">
-                            <h1>{{$conta_logada[0]->nome}}</h1>
+                            <h1>{{$pessoas->nome}}</h1>
                         </div>    
                     </a>
                 </li>
-                <?php endforeach ?>
+                @endif
+                @endif
+                @empty
+                @endforelse
             </ul>
         </nav>
     </aside>
     <div class="container-message l-5">
         <header class="clearfix">
             <a href="">
-                <div class="container-img circle l-5">
-                    <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
-                </div>
+                @if( isset($conta_destino)  )
+                    @if ($conta_destino[0]->foto == null || $conta_destino[0]->foto == "null" || $conta_destino[0]->foto == NULL || $conta_destino[0]->foto == "NULL" || $conta_destino[0]->foto == "" || $conta_destino[0]->foto == " ")
+                        <div class="container-img circle l-5">
+                                <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>
+                            </div>
+                    @else
+                    <div class="container-img circle l-5">
+                        <img src="{{asset('storage/img/users') . '/' . $conta_destino[0]->foto}}" class="circle img-full">
+                    </div>
+                    @endif                
                 <div class="nav-menu-chat-component-user l-5">
-                    <h1>{{$conta_logada[0]->nome}}</h1>
-                </div>    
+                    <h1>{{$conta_destino[0]->nome}}</h1>
+                </div>  
+                @else
+                <div class="nav-menu-chat-component-user l-5">
+                    <h1>Selecione o seu Amigo</h1>
+                </div>
+                @endif  
             </a>
         </header>
         <div class="body-message clearfix">
-            @forelse($message_user as $allMessage)
-            <?php if ($user_logado[0]->identificador_id == $allMessage->id_identificador_a): ?>
-                <div class="own-user l-5">
+            @if( isset($message_user)  )
+            @forelse($message_user as $allMessage)            
+            <?php if (($m_destinatario[0]->identificador_id == $allMessage->id_identificador_a) && ($m_user_logado[0]->identificador_id == $allMessage->id_identificador_b)): ?>
+                <div id="message_user_log" class="own-user l-5">
                   <div class="clearfix">
                       <div class="container-img circle l-5">
                         <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
                     </div>
                     <div class="message-body l-5">
                         <div>
-                            <p>{{$allMessage->message}}</p>
+                            <p class="corpo_mensagem">{{$allMessage->message}}</p>
                         </div>
                     </div>
                   </div>  
                 </div>        
             <?php endif ?>
-            <?php if ($user_logado[0]->identificador_id == $allMessage->id_identificador_b): ?>
+            <?php if  (($m_user_logado[0]->identificador_id == $allMessage->id_identificador_a) && ($m_destinatario[0]->identificador_id == $allMessage->id_identificador_b) ): ?>
                 <div class="other-user r-5">
                     <div class="clearfix">
                       <div class="container-img circle l-5">
@@ -234,15 +263,20 @@
                         </div>
                     </div>
         @endforelse
+        @endif
         </div>
         <div class="comment-send clearfix" id="comment-send-1">
             <div class="img-user-comment l-5">
                 <img class="img-full circle" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
             </div>
             <div class="input-text comment-send-text l-5 clearfix">
-                <input type="text" class="" name="comentario" id="comentario-1" placeholder="O que você tem a dizer?">
+                <input type="text" class="" name="comentario" id="message_send" placeholder="O que você tem a dizer?">
+                @if( isset($message_user)  )
+                <input type="hidden" name="" id="user_logado" value="{{$m_user_logado[0]->identificador_id}}">
+                <input type="hidden" name="" id="destinatario" value="{{$m_destinatario[0]->identificador_id}}">
+                @endif
                 <div class="r-5 ">
-                    <a href="" class="comentar-a" id="1">
+                    <a href="" class="comentar-a" id="enviar">
                         <i class="far fa-paper-plane fa-20 fa-img-comment" id="1"></i>
                     </a>
                 </div>
@@ -250,4 +284,35 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#enviar').click(function(e){
+            e.preventDefault();
+            var message = $('#message_send').val();
+            let user_send = $('#user_logado').val();
+            let conta_send = $('#destinatario').val();
+             $.ajax({
+                url: "{{route('message.send')}}",
+                type: 'get',
+                data: {'user_send': user_send, 'conta_send': conta_send, 'message_send': message},
+                dataType: 'json',
+                success: function(response){
+                  if (response == "Salvou") {
+                    $('#message_send').val("");
+                  }
+                   console.log(response); 
+                }
+              });
+
+        });
+        $('.person_message').click(function(e){
+            e.preventDefault();
+            let conta_send = $('#id_conta_send').val();
+            let user_send = $('#user_logado').val();
+          
+
+        })
+    });
+       
+</script>
 @stop

@@ -68,6 +68,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
 
 
     Route::get('/direct/', [App\Http\Controllers\MessageController::class, 'index'])->name('message.index');
+    Route::get('/send/', [App\Http\Controllers\MessageController::class, 'store'])->name('message.send');
+    Route::get('/show/{destinatario}/{user_logado}', [App\Http\Controllers\MessageController::class, 'show'])->name('message.show');
 
     //Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('home');
 });
