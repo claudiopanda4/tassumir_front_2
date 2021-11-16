@@ -31,7 +31,7 @@ class PaginaCasalController extends Controller
       $dadosPage = Page::all();
       $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
       $seguidores = Self::seguidores($page_content[0]->page_id);
-      $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
+      $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
       $publicacoes = $this->get_all_post($page_content[0]->page_id);
       $this->current_page_id = $page_content[0]->page_id;
       $sugerir = $this->suggest_pages($page_content[0]->page_id);
@@ -162,7 +162,7 @@ class PaginaCasalController extends Controller
         $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
         if (sizeof($notificacoes_aux)>0) {
           foreach ($notificacoes_aux as $key) {
-            $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+            if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
             if ($aux2[0]->tipo_identificador_id == 1) {
               $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
               $nome[0]= $conta[0]->nome ;
@@ -225,10 +225,10 @@ class PaginaCasalController extends Controller
             }
             $notificacoes[$a]['foto']=$nome[1];
             $notificacoes[$a]['v']=$nome[2];
-            $notificacoes[$a]['estado']=$key->id_state_notification;
             $notificacoes[$a]['id1']=$key->notification_id;
             $a++;
           }
+        }
         }
         $dadosPage = Page::all();
           $dadosSeguindo[0] = [
@@ -321,7 +321,7 @@ class PaginaCasalController extends Controller
 
         $seguidores = Self::seguidores($page_content[0]->page_id);
 
-        $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
+        $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
         $this->current_page_id = $page_content[0]->page_id;
         $conta_logada = $auth->defaultDate();
@@ -343,7 +343,7 @@ class PaginaCasalController extends Controller
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $page_content = $this->page_default_date($account_name);
             $seguidores = Self::seguidores($page_content[0]->page_id);
-            $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
+            $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
             $publicacoes = $this->get_all_post($page_content[0]->page_id);
             $this->current_page_id = $page_content[0]->page_id;
             //dd($page_content);
@@ -400,7 +400,7 @@ class PaginaCasalController extends Controller
                 }
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $seguidores = Self::seguidores($page_content[0]->page_id);
-            $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
+            $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
             $publicacoes = $this->get_all_post($page_content[0]->page_id);
             $this->current_page_id = $page_content[0]->uuid;
 

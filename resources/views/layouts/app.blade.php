@@ -121,7 +121,6 @@
                             </li>-->
 
                             @for($i=sizeof($notificacoes); $i > 0 ; $i--)
-                            @if($notificacoes[$i- 1]['estado']!= 3)
                                 <li class="hidden-click-any-container change-look noti-flex-info" id="not-{{$notificacoes[$i- 1]['id1']}}" name="not-{{$notificacoes[$i- 1]['id1']}}">
                                   <?php if ($notificacoes[$i- 1]['v']== 1): ?>
                                     <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
@@ -170,15 +169,12 @@
                                     @elseif($notificacoes[$i- 1]['tipo'] == 7)
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
-                                        <div class="ver_mais" id="{{$notificacoes[$i- 1]['id1']}}">
-                                        <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a>
-                                        </div>
+                                        <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="ver_mais" id="VR|{{$notificacoes[$i- 1]['id1']}}">Ver Resposta</a>
                                     </div>
                                     @endif
                                    </div>
 
                                 </li>
-                                @endif
                               @endfor
 
                                  <li class="hidden-click-any-container change-look" style="display: flex;justify-content:center; align-items: center; width: 300px; padding:8px;">
@@ -806,8 +802,8 @@
       }
 
 
-     
-        
+
+
 
       function tela_confirm(id1, id2){
 
@@ -838,17 +834,20 @@
 
       $('.send_proof').click(function (e) {
           let id = e.target.id;
-       //let id1= id.split('|')[1];
-      // let id2= id.split('|')[2];
+
           $("#Comprovativo").val(id);
-//         $("#id_notification").val(id2)
 
 
       });
 
       $('.ver_mais').click(function (e) {
-          let id = e.target.id;
-          $("#Comprovativo").val(id);
+        let id = e.target.id;
+        let id1= id.split('|')[1];
+         //                            <input type="hidden" name="not1" id="not1">
+
+          $("#notificacao").val(id1);
+
+
       });
 
       $('.accept_relationship').click(function (e) {

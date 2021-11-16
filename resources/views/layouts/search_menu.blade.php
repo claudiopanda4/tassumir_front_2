@@ -65,7 +65,6 @@
                                 </li>
 
                                 @for($i=sizeof($notificacoes); $i > 0 ; $i--)
-                                @if($notificacoes[$i- 1]['estado']!= 3)
                                     <li class="hidden-click-any-container change-look noti-flex-info" id="{{$notificacoes[$i- 1]['id1']}}" name="{{$notificacoes[$i- 1]['id1']}}">
                                       <?php if ($notificacoes[$i- 1]['v']== 1): ?>
                                         <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
@@ -128,7 +127,6 @@
                                        </div>
 
                                     </li>
-                                    @endif
                                   @endfor
 
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">

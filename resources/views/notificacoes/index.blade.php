@@ -51,7 +51,6 @@
             </div>
         </div>-->
         @for($i=sizeof($notificacoes); $i > 0 ; $i--)
-        @if($notificacoes[$i- 1]['estado']!= 3)
     <div class="noti-flex-info mt-2" id="{{$notificacoes[$i- 1]['id1']}}" name="{{$notificacoes[$i- 1]['id1']}}">
         <div class="ml-2 novi-div-image">
 
@@ -86,7 +85,6 @@
         </div>
 
     </div>
-   @endif
   @endfor
 
 
