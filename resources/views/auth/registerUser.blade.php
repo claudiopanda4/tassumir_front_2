@@ -28,7 +28,7 @@
 </head>
 <body id="body-reg">
     <div id="app-log-reg">
-        <main class="main clearfix" id="main-register-container" style="">
+        <main class="main" id="main-register-container" style="">
             <div class="" id="main-reg">
                 <header class="logo-form" id="title-login">
                     <div class="title">
