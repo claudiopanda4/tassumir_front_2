@@ -394,6 +394,9 @@
 	.video-post {
 	    height: 411px;
 	}
+	.noti-div-name {
+	    max-width: 220px;
+	}
 	.img-profile-page {
     	width: 70px;
 	    height: 70px;
