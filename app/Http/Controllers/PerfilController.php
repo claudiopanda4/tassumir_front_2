@@ -45,7 +45,7 @@ class PerfilController extends Controller
          $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
          if (sizeof($notificacoes_aux)>0) {
            foreach ($notificacoes_aux as $key) {
-             $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+             if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
              if ($aux2[0]->tipo_identificador_id == 1) {
                $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
                $nome[0]= $conta[0]->nome ;
@@ -95,6 +95,12 @@ class PerfilController extends Controller
                      $notificacoes[$a]['tipo']=1;
                      $notificacoes[$a]['id']=$key->identificador_id_destino;
                          break;
+                     case 6:
+                         $notificacoes[$a]['notificacao']=$nome[0];
+                         $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                         $notificacoes[$a]['tipo']=1;
+                         $notificacoes[$a]['id']=$key->identificador_id_destino;
+                             break;
                     case 7:
                     $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
                     if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
@@ -103,16 +109,26 @@ class PerfilController extends Controller
                     $notificacoes[$a]['tipo']=7;
                     $notificacoes[$a]['id']=$tipo[0]->uuid;}}
                              break;
+                 case 8:
+                             $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                             $notificacoes[$a]['tipo']=1;
+                             $notificacoes[$a]['id']=$key->identificador_id_destino;
+                                 break;
+
+               case 9:
+                                 $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
+                                 $notificacoes[$a]['tipo']=1;
+                                 $notificacoes[$a]['id']=$key->identificador_id_destino;
+                                     break;
 
 
              }
              $notificacoes[$a]['foto']=$nome[1];
              $notificacoes[$a]['v']=$nome[2];
-             $notificacoes[$a]['estado']=$key->id_state_notification;
              $notificacoes[$a]['id1']=$key->notification_id;
-
              $a++;
            }
+         }
          }
          $dadosPage = DB::table('pages')->limit(5)->get();
            $dadosSeguindo[0] = [
@@ -170,7 +186,6 @@ class PerfilController extends Controller
     {
         try {
 
-            $page_couple = new PaginaCasalController();
             $dates = $this->default_();
             $account_name = $dates['account_name'];
             $checkUserStatus = $dates['checkUserStatus'];
@@ -218,6 +233,51 @@ class PerfilController extends Controller
                   $verificacao_page1= DB::select('select * from pages where conta_id_b = ?', [$account_name[0]->conta_id]);
                   $verificacao_page2= DB::select('select * from pages where conta_id_a = ?', [$conta_logada[0]->conta_id]);
                   $verificacao_page3= DB::select('select * from pages where conta_id_b = ?', [$conta_logada[0]->conta_id]);
+
+                  $perfil[0]['verificacao_relac']=0;
+                  if (sizeof($verificacao_page2) > 0){
+                    foreach ($verificacao_page2 as $key) {
+                      if ($key->tipo_relacionamento_id != 1) {
+                        $perfil[0]['verificacao_relac']=1;
+                        if ($key->tipo_relacionamento_id == 2) {
+                        $perfil[0]['relac']="Noivo de ";
+                      }elseif ($key->tipo_relacionamento_id == 3) {
+                        $perfil[0]['relac']="Apresentado(a) ";
+                      }elseif ($key->tipo_relacionamento_id == 4) {
+                        $perfil[0]['relac']="Casado(a) com ";
+                      }elseif ($key->tipo_relacionamento_id == 5) {
+                        $perfil[0]['relac']="Namorado(a) de ";
+                      }
+
+                      $conta = DB::select('select * from contas where conta_id = ?', [$key->conta_id_b]);
+
+                        $perfil[0]['relac1']=$conta[0]->nome;
+                        $perfil[0]['relac1'].=" ";
+                        $perfil[0]['relac1'].=$conta[0]->apelido;
+                  }
+                }
+              }elseif (sizeof($verificacao_page3) > 0){
+                foreach ($verificacao_page3 as $key) {
+                  if ($key->tipo_relacionamento_id != 1) {
+                    $perfil[0]['verificacao_relac']=1;
+                    if ($key->tipo_relacionamento_id == 2) {
+                    $perfil[0]['relac']="Noivo de ";
+                  }elseif ($key->tipo_relacionamento_id == 3) {
+                    $perfil[0]['relac']="Apresentado(a) ";
+                  }elseif ($key->tipo_relacionamento_id == 4) {
+                    $perfil[0]['relac']="Casado(a) com ";
+                  }elseif ($key->tipo_relacionamento_id == 5) {
+                    $perfil[0]['relac']="Namorado(a) de ";
+                  }
+
+                  $conta = DB::select('select * from contas where conta_id = ?', [$key->conta_id_a]);
+
+                    $perfil[0]['relac1']=$conta[0]->nome;
+                    $perfil[0]['relac1'].=" ";
+                    $perfil[0]['relac1'].=$conta[0]->apelido;
+              }
+            }
+          }
                     $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
                     $perfil[0]['verificacao_pedido1']=sizeof($verificacao_pedido1);
                     $perfil[0]['verificacao_page']=sizeof($verificacao_page);
@@ -260,9 +320,7 @@ class PerfilController extends Controller
     public function perfil_das_contas($id)
     {
         try {
-            $page_couple = new PaginaCasalController();
             $dates = $this->default_();
-            $account_name = $dates['account_name'];
             $checkUserStatus = $dates['checkUserStatus'];
             $profile_picture = $dates['profile_picture'];
             $isUserHost = $dates['isUserHost'];
@@ -304,6 +362,52 @@ class PerfilController extends Controller
                   $verificacao_page1= DB::select('select * from pages where conta_id_b = ?', [$account_name[0]->conta_id]);
                   $verificacao_page2= DB::select('select * from pages where conta_id_a = ?', [$conta_logada[0]->conta_id]);
                   $verificacao_page3= DB::select('select * from pages where conta_id_b = ?', [$conta_logada[0]->conta_id]);
+
+                  $perfil[0]['verificacao_relac']=0;
+                  if (sizeof($verificacao_page) > 0){
+                    foreach ($verificacao_page as $key) {
+                      if ($key->tipo_relacionamento_id != 1) {
+                        $perfil[0]['verificacao_relac']=1;
+                        if ($key->tipo_relacionamento_id == 2) {
+                        $perfil[0]['relac']="Noivo de ";
+                      }elseif ($key->tipo_relacionamento_id == 3) {
+                        $perfil[0]['relac']="Apresentado(a) ";
+                      }elseif ($key->tipo_relacionamento_id == 4) {
+                        $perfil[0]['relac']="Casado(a) com ";
+                      }elseif ($key->tipo_relacionamento_id == 5) {
+                        $perfil[0]['relac']="Namorado(a) de ";
+                      }
+
+                      $conta = DB::select('select * from contas where conta_id = ?', [$key->conta_id_b]);
+
+                        $perfil[0]['relac1']=$conta[0]->nome;
+                        $perfil[0]['relac1'].=" ";
+                        $perfil[0]['relac1'].=$conta[0]->apelido;
+                  }
+                  }
+                  }elseif (sizeof($verificacao_page1) > 0){
+                  foreach ($verificacao_page1 as $key) {
+                  if ($key->tipo_relacionamento_id != 1) {
+                    $perfil[0]['verificacao_relac']=1;
+                    if ($key->tipo_relacionamento_id == 2) {
+                    $perfil[0]['relac']="Noivo(a) de ";
+                  }elseif ($key->tipo_relacionamento_id == 3) {
+                    $perfil[0]['relac']="Apresentado(a) ";
+                  }elseif ($key->tipo_relacionamento_id == 4) {
+                    $perfil[0]['relac']="Casado(a) com ";
+                  }elseif ($key->tipo_relacionamento_id == 5) {
+                    $perfil[0]['relac']="Namorado(a) de";
+                  }
+
+                  $conta = DB::select('select * from contas where conta_id = ?', [$key->conta_id_a]);
+
+                    $perfil[0]['relac1']=$conta[0]->nome;
+                    $perfil[0]['relac1'].=" ";
+                    $perfil[0]['relac1'].=$conta[0]->apelido;
+                  }
+                  }
+                  }
+
                     $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
                     $perfil[0]['verificacao_pedido1']=sizeof($verificacao_pedido1);
                     $perfil[0]['verificacao_page']=sizeof($verificacao_page);
@@ -577,6 +681,10 @@ class PerfilController extends Controller
 
                 DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id', $request->Comprovativo)
                 ->update(['file'=> $file_name]);
+                DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id', $request->Comprovativo)
+                ->update(['estado_pedido_relac_id'=> 4]);
+                DB::table('notifications')->where('notification_id',$request->notificacao)
+                ->update(['id_state_notification' => 3]);
 
 
 

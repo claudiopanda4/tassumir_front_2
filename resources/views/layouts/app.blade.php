@@ -121,7 +121,6 @@
                             </li>-->
 
                             @for($i=sizeof($notificacoes); $i > 0 ; $i--)
-                            @if($notificacoes[$i- 1]['estado']!= 3)
                                 <li class="hidden-click-any-container change-look noti-flex-info" id="not-{{$notificacoes[$i- 1]['id1']}}" name="not-{{$notificacoes[$i- 1]['id1']}}">
                                   <?php if ($notificacoes[$i- 1]['v']== 1): ?>
                                     <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
@@ -170,15 +169,12 @@
                                     @elseif($notificacoes[$i- 1]['tipo'] == 7)
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
-                                        <div class="ver_mais" id="{{$notificacoes[$i- 1]['id1']}}">
-                                        <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a>
-                                        </div>
+                                        <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="ver_mais" id="VR|{{$notificacoes[$i- 1]['id1']}}">Ver Resposta</a>
                                     </div>
                                     @endif
                                    </div>
 
                                 </li>
-                                @endif
                               @endfor
 
                                  <li class="hidden-click-any-container change-look" style="display: flex;justify-content:center; align-items: center; width: 300px; padding:8px;">
@@ -256,18 +252,21 @@
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
                                     @if($notificacoes[$i- 1]['tipo'] == 4)
+                                    $controller++;
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
-                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
+                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Aceitar</h2>
                                             </div>
                                         </label>
-                                        <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
+                                        <div class="reject_relationship" id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">
+                                        <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Rejeitar</a>
                                     </div>
+                                  </div>
                                     @elseif($notificacoes[$i- 1]['tipo'] == 7)
                                     <div class="hidden-click-any-container options-invited clearfix">
-                                        <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
-                                        <!--                                          <a  href="{{route('relationship.page', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a> -->
+                                        <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
+                                        <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="ver_mais" id="VR|{{$notificacoes[$i- 1]['id1']}}">Ver Resposta</a>
                                     </div>
                                     @endif
                                    </div>
@@ -806,8 +805,8 @@
       }
 
 
-     
-        
+
+
 
       function tela_confirm(id1, id2){
 
@@ -838,17 +837,14 @@
 
       $('.send_proof').click(function (e) {
           let id = e.target.id;
-       //let id1= id.split('|')[1];
-      // let id2= id.split('|')[2];
-          $("#Comprovativo").val(id);
-//         $("#id_notification").val(id2)
+          let id1= id.split('|')[0];
+          let id2= id.split('|')[1];
 
 
-      });
+          $("#Comprovativo").val(id1);
+          $("#notificacao").val(id2);
 
-      $('.ver_mais').click(function (e) {
-          let id = e.target.id;
-          $("#Comprovativo").val(id);
+
       });
 
       $('.accept_relationship').click(function (e) {
@@ -862,7 +858,6 @@
       });
 
       $('.reject_relationship').click(function (e) {
-        e.preventDefault();
 
           let id = e.target.id;
           let id1= id.split('|')[1];

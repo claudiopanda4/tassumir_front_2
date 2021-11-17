@@ -27,20 +27,18 @@
     <meta name="viewport" content="width=device-width-width, initial-scale=1,0">
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
-<body>
-    <div id="app">
-        <main class="main" id="main-login-container">
-            <div class="center" id="main-login">
-                <header class="logo-form mb-4" id="title-login">
-
-                    <div>
-                        <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final">umir</span></h1></a>
+<body id="body-reg">
+    <div id="app-log-reg">
+        <main class="main" id="main-register-container">
+            <div class="" id="main-reg">
+                <header class="logo-form" id="title-login">
+                    <div class="title">
+                        <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                     </div>
-
+                    <div class="row justify-content-center">
+                        <h3 class="text-white">Olá</h3>
+                    </div>
                 </header>
-
-                <!--{{ route('account.verifyAgainCode.enter') }}-->
-
                 <form action="{{ route('account.verifyAgainCode.enter') }}" method="POST">
                     @csrf
 
@@ -57,7 +55,7 @@
                     </div>
                     <div class="form-group">
                         
-                        <input type="text" class="input-text-default input-full" name="codeReceived1" placeholder="Escreva o código que recebeu" id="codeReceived">
+                        <input type="text" class="input-text-default input-full input-login" name="codeReceived1" placeholder="Escreva o código que recebeu" id="codeReceived">
                     </div>
 
                     
