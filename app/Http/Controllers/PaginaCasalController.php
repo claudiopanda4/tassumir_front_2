@@ -13,8 +13,8 @@ class PaginaCasalController extends Controller
     private $current_page_uuid;
 
     public function index(){
-
-      $dates = $this->default_();
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
       $account_name = $dates['account_name'];
       $checkUserStatus = $dates['checkUserStatus'];
       $profile_picture = $dates['profile_picture'];
@@ -27,8 +27,9 @@ class PaginaCasalController extends Controller
       $dadosSeguindo = $dates['dadosSeguindo'];
       $dadosPage = $dates['dadosPage'];
       $dadosSeguida = $dates['dadosSeguida'];
+
+
       $page_current = 'page';
-      $dadosPage = Page::all();
       $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
       $seguidores = Self::seguidores($page_content[0]->page_id);
       $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
@@ -103,7 +104,8 @@ class PaginaCasalController extends Controller
           $pedido[0]['tipo']=$tipos[0]->tipo_relacionamento;
           $pedido[0]['pedido_relacionamento_id']=$tipo[0]->pedido_relacionamento_id;
 
-          $dates = $this->default_();
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -379,7 +381,8 @@ class PaginaCasalController extends Controller
 
     public function my_pages(){
         try {
-          $dates = $this->default_();
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -451,7 +454,8 @@ class PaginaCasalController extends Controller
 
     public function paginas($uuid){
         try {
-          $dates = $this->default_();
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -521,7 +525,8 @@ class PaginaCasalController extends Controller
 
     public function edit_couple(){
         try {
-          $dates = $this->default_();
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -545,7 +550,8 @@ class PaginaCasalController extends Controller
 
     public function delete_couple_page(){
         try {
-          $dates = $this->default_();
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];

@@ -2377,7 +2377,7 @@ label[for="hugo"]{
 }
 #main-profile {
 	width: 600px;
-	background-color: #242526;
+	/*background-color: #242526;*/
 	border-radius: 10px;
 }
 #main-profile .card {
