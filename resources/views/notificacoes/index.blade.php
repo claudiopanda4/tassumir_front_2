@@ -65,21 +65,21 @@
                 <a href=""><span class="">há um dia</span></a>
             </div>
             @if($notificacoes[$i- 1]['tipo'] == 4)
-            <div class="options-invited clearfix">
-                <label class="l-5" for="options-invited-pop-up">
-                    <div class="hidden-click-any-container label-invited" id="{{$notificacoes[$i- 1]['id']}}">
-                        <!--<h2 class="accept">Aceitar</h2>-->
-                        <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
+            $controller++;
+            <div class="hidden-click-any-container options-invited clearfix">
+                <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
+                    <div class="hidden-click-any-container label-invited" id="">
+                        <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Aceitar</h2>
                     </div>
                 </label>
-                <div class="reject_relationship" id="{{$notificacoes[$i- 1]['id']}}">
-                <a href="" class="l-5 denied">Rejeitar</a>
-                </div>
+                <div class="reject_relationship" id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">
+                <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Rejeitar</a>
             </div>
+          </div>
             @elseif($notificacoes[$i- 1]['tipo'] == 7)
-            <div class="options-invited clearfix">
-                <!--   <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a> -->
-                               <a href="{{route('relationship.page1',$notificacoes[$i- 1]['id'])}}">Ver Resposta</a>
+            <div class="hidden-click-any-container options-invited clearfix">
+                <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
+                <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="ver_mais" id="VR|{{$notificacoes[$i- 1]['id1']}}">Ver Resposta</a>
             </div>
             @endif
         </div>

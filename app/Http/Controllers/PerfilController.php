@@ -95,6 +95,12 @@ class PerfilController extends Controller
                      $notificacoes[$a]['tipo']=1;
                      $notificacoes[$a]['id']=$key->identificador_id_destino;
                          break;
+                     case 6:
+                         $notificacoes[$a]['notificacao']=$nome[0];
+                         $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                         $notificacoes[$a]['tipo']=1;
+                         $notificacoes[$a]['id']=$key->identificador_id_destino;
+                             break;
                     case 7:
                     $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
                     if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
@@ -103,6 +109,17 @@ class PerfilController extends Controller
                     $notificacoes[$a]['tipo']=7;
                     $notificacoes[$a]['id']=$tipo[0]->uuid;}}
                              break;
+                 case 8:
+                             $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                             $notificacoes[$a]['tipo']=1;
+                             $notificacoes[$a]['id']=$key->identificador_id_destino;
+                                 break;
+
+               case 9:
+                                 $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
+                                 $notificacoes[$a]['tipo']=1;
+                                 $notificacoes[$a]['id']=$key->identificador_id_destino;
+                                     break;
 
 
              }
@@ -668,6 +685,8 @@ class PerfilController extends Controller
                 ->update(['file'=> $file_name]);
                 DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id', $request->Comprovativo)
                 ->update(['estado_pedido_relac_id'=> 4]);
+                DB::table('notifications')->where('notification_id',$request->notificacao)
+                ->update(['id_state_notification' => 3]);
 
 
 
