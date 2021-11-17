@@ -66,10 +66,12 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         if ($request->ajax()) {
+            $m_user_logado = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->user_send, 1 ]);
+            $m_destinatario = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->conta_send, 1 ]);
             $mensagem = new Message;
             $mensagem->message = $request->message_send;
-            $mensagem->id_identificador_a = $request->user_send;
-            $mensagem->id_identificador_b = $request->conta_send;
+            $mensagem->id_identificador_a = $m_user_logado[0]->identificador_id;
+            $mensagem->id_identificador_b = $m_destinatario[0]->identificador_id;
             $mensagem->id_state_message = 1;
             $mensagem->save();
             return response()->json('Salvou');
@@ -84,8 +86,10 @@ class MessageController extends Controller
      * @param  \App\Models\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show($destinatario, $user_logado)
+    public function show(Request $request)
     {
+        if ($request->ajax()) {
+            /*
         $controll = new PaginaCasalController();
         $dates = $controll->default_();
         $account_name = $dates['account_name'];
@@ -101,22 +105,24 @@ class MessageController extends Controller
         $dadosSeguindo = $dates['dadosSeguindo'];
         $dadosPage = $dates['dadosPage'];
         $dadosSeguida = $dates['dadosSeguida'];
-        $page_current = 'relationship_request';
-        $m_user_logado = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$user_logado, 1 ]);
-        $m_destinatario = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$destinatario, 1 ]);
-      
+        $page_current = 'relationship_request';*/
+        $m_user_logado = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->user_send, 1 ]);
+        $m_destinatario = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->conta_send, 1 ]);
+      /*
         $message_contact = DB::table('messages')->where('id_identificador_a', $m_user_logado[0]->identificador_id)->orwhere('id_identificador_b', $m_user_logado[0]->identificador_id)->join('identificadors', function ($join) {
             $join->on('messages.id_identificador_a', '=', 'identificadors.identificador_id' )->orOn('messages.id_identificador_b', '=', 'identificadors.identificador_id');
-        })->select('messages.*', 'identificadors.id')->get();
+        })->select('messages.*', 'identificadors.id')->get();*/
+  $message_user['destinatario'] = $m_destinatario[0]->identificador_id;
+        $message_user['valor'] = DB::table('messages')->where('id_identificador_a', $m_user_logado[0]->identificador_id)->orwhere('id_identificador_a', $m_destinatario[0]->identificador_id)->limit(6)->get();
 
-        $message_user = DB::table('messages')->where('id_identificador_a', $m_user_logado[0]->identificador_id)->orwhere('id_identificador_a',$m_destinatario[0]->identificador_id)->limit(6)->get();
-         
+    /*     
          
             $contas = DB::table('contas')->limit(8)->get();
             $conta_destino = DB::table('contas')->where('conta_id', $destinatario)->get();
                
-        
-        return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida', 'm_user_logado', 'contas', 'message_user', 'm_destinatario', 'message_contact', 'conta_destino')); 
+    */    
+            return response()->json($message_user);
+        } 
     }
 
     /**
@@ -129,6 +135,26 @@ class MessageController extends Controller
     {
         //
     }
+
+    public function pesquisar_destinatario(Request $request)
+    {
+        if($request->ajax()){
+     
+            $conta = DB::table('contas')->where('nome', 'like', '%'.$request->dados.'%')
+            ->orwhere('apelido', 'like', '%'.$request->dados.'%')->limit(5)->get();
+
+            $data = $conta;
+            if(count($data)>0){
+                $output['valor']=$data;
+            }else{
+              $output['valor']='Sem Resultado';
+            }
+
+            return response()->json($output);
+        }
+
+    }
+   
 
     /**
      * Update the specified resource in storage.

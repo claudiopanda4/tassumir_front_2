@@ -252,18 +252,21 @@
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
                                     @if($notificacoes[$i- 1]['tipo'] == 4)
+                                    $controller++;
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
-                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
+                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Aceitar</h2>
                                             </div>
                                         </label>
-                                        <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
+                                        <div class="reject_relationship" id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">
+                                        <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Rejeitar</a>
                                     </div>
+                                  </div>
                                     @elseif($notificacoes[$i- 1]['tipo'] == 7)
                                     <div class="hidden-click-any-container options-invited clearfix">
-                                        <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
-                                        <!--                                          <a  href="{{route('relationship.page', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a> -->
+                                        <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
+                                        <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="ver_mais" id="VR|{{$notificacoes[$i- 1]['id1']}}">Ver Resposta</a>
                                     </div>
                                     @endif
                                    </div>
@@ -834,18 +837,12 @@
 
       $('.send_proof').click(function (e) {
           let id = e.target.id;
+          let id1= id.split('|')[0];
+          let id2= id.split('|')[1];
 
-          $("#Comprovativo").val(id);
 
-
-      });
-
-      $('.ver_mais').click(function (e) {
-        let id = e.target.id;
-        let id1= id.split('|')[1];
-         //                            <input type="hidden" name="not1" id="not1">
-
-          $("#notificacao").val(id1);
+          $("#Comprovativo").val(id1);
+          $("#notificacao").val(id2);
 
 
       });
@@ -861,7 +858,6 @@
       });
 
       $('.reject_relationship').click(function (e) {
-        e.preventDefault();
 
           let id = e.target.id;
           let id1= id.split('|')[1];
