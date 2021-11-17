@@ -27,10 +27,10 @@
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
 <body>
-    <div id="app">
-        <main class="main" id="main-login-container" style="background-color: var(--background-dark-main);">
-            <div class="center" id="main-login">
-                <header class="logo-form" id="title-login">
+    <div id="app-log-reg">
+        <main class="main clearfix" id="main-login-container" style="background-color: var(--background-dark-main);">
+            <div class="" id="main-reg">
+                <header class="logo-form title-log-reg" id="">
                     <div>
                         <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final">umir</span></h1></a>
                     </div>

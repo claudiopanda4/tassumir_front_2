@@ -334,7 +334,7 @@
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
                                             </div>
                                         @else
                                             <div class="sugest_component circle clearfix">
@@ -356,7 +356,7 @@
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
+                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
                                             </div>
                                         @else
                                             <div class="sugest_component circle clearfix">

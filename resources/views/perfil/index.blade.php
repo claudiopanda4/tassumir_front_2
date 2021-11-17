@@ -96,7 +96,7 @@
                 <div>
                     <a href="">
                         <div class="container-logout">
-                            <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Secção</h1></a>
+                            <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Sessão</h1></a>
                         </div>
                     </a>
                 </div>
