@@ -60,7 +60,41 @@
         </div>
         <div class="noti-div-name">
 
-            <span class="noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+          @if($notificacoes[$i- 1]['tipo'] == 1)
+          <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+           <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+          </a>
+          @elseif($notificacoes[$i- 1]['tipo'] == 2)
+          <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+           <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+          </a>
+          @elseif($notificacoes[$i- 1]['tipo'] == 3)
+          <a href="">
+           <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+          </a>
+          @elseif($notificacoes[$i- 1]['tipo'] == 4 || $notificacoes[$i- 1]['tipo'] == 7)
+           <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+          @elseif($notificacoes[$i- 1]['tipo'] == 5)
+          <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}">
+           <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+          </a>
+          @elseif($notificacoes[$i- 1]['tipo'] == 6)
+          <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+           <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+          </a>
+          @elseif($notificacoes[$i- 1]['tipo'] == 8)
+          <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}">
+           <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+          </a>
+          @elseif($notificacoes[$i- 1]['tipo'] == 9)
+          <a href="">
+           <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+          </a>
+          @elseif($notificacoes[$i- 1]['tipo'] == 10)
+          <a href="">
+           <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+          </a>
+          @endif
             <div class="noti-hour">
                 <a href=""><span class="">há um dia</span></a>
             </div>
