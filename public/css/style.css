@@ -20,7 +20,20 @@ body {
 	height: auto;
 }
 #body-login {
-	background-color: #3b3b3b;
+	
+}
+#body-reg {
+	
+}
+#body-login,
+#body-reg {
+	background-color: #3b3b3b;	
+}
+#main-reg-container {
+    width: 570px;
+    height: 100%;
+    margin: auto;
+    display: block;
 }
 .input-text-default {
 	background-color: var(--background-dark-input);
@@ -93,7 +106,7 @@ body {
     background-color: #606060;
 }
 .input-login {
-	background-color: #3a3b3c;
+	background-color: #242526;
 }
 .risk h2 {
 	padding: 10px;
@@ -1607,14 +1620,15 @@ label[for="hugo"]{
 	margin-bottom: 2px;
 }
 #main-login {
-	width: 320px;
-    height: auto;
     float: left;
 }
+#main-login,
 #main-reg {
     width: 320px;
     height: auto;
-    float: left;
+}
+#main-reg {
+    margin: 60px auto 20px;
 }
 #logo-login-form-lg {
 	margin-top: 80px;
