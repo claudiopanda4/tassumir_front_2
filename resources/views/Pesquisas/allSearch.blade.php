@@ -4,13 +4,22 @@
 	<nav class="filter-main-search-mobile">
 		<ul>
 			<li>
-				<a href="">Solteiros</a>
+				<a href="">Solteiro(a)s</a>
+			</li>
+			<li>
+				<a href="">Casado(a)s</a>
+			</li>
+			<li>
+				<a href="">Namorados</a>
+			</li>
+			<li>
+				<a href="">Apresentados</a>
 			</li>
 			<li>
 				<a href="">Casados</a>
 			</li>
 			<li>
-				<a href="">Casais</a>
+				<a href="">Vivendo Maritalmente</a>
 			</li>
 			<li>
 				<a href="">Páginas</a>

@@ -2380,6 +2380,9 @@ label[for="hugo"]{
 	/*background-color: #242526;*/
 	border-radius: 10px;
 }
+.filter-main-search-mobile {
+	display: none;
+}
 #main-profile .card {
 	background-color: transparent;
 	border: none;
@@ -2812,7 +2815,7 @@ label[for="hugo"]{
 	overflow-x: auto;
 }
 .filter-main-search-mobile ul {
-	width: 360px;
+	width: 820px;
 	margin-bottom: 0;
 	padding: 0;
 }

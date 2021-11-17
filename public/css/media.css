@@ -496,6 +496,9 @@
 		background-color: transparent;
 		border: none;
     }
+    .filter-main-search-mobile {
+    	display: block;
+    }
     .input-login {
 	    background-color: #3b3b3b;
 	}
