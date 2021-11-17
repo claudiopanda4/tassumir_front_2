@@ -18,7 +18,7 @@ class searchController extends Controller
       $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
       if (sizeof($notificacoes_aux)>0) {
         foreach ($notificacoes_aux as $key) {
-          $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+          if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
           if ($aux2[0]->tipo_identificador_id == 1) {
             $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
             $nome[0]= $conta[0]->nome ;
@@ -81,10 +81,10 @@ class searchController extends Controller
           }
           $notificacoes[$a]['foto']=$nome[1];
           $notificacoes[$a]['v']=$nome[2];
-          $notificacoes[$a]['estado']=$key->id_state_notification;
           $notificacoes[$a]['id1']=$key->notification_id;
           $a++;
         }
+      }
       }
 
       $dates = [

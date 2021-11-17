@@ -35,7 +35,7 @@ class AuthController extends Controller
         $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
         if (sizeof($notificacoes_aux)>0) {
           foreach ($notificacoes_aux as $key) {
-            $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+            if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
             if ($aux2[0]->tipo_identificador_id == 1) {
               $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
               $nome[0]= $conta[0]->nome ;
@@ -86,25 +86,25 @@ class AuthController extends Controller
                     $notificacoes[$a]['id']=$key->identificador_id_destino;
                         break;
                    case 7:
-                        $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                        if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                        if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
-                        $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
-                        $notificacoes[$a]['tipo']=7;
-                        $notificacoes[$a]['id']=$tipo[0]->uuid;}}
+                   $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                   if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                   if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
+                   $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                   $notificacoes[$a]['tipo']=7;
+                   $notificacoes[$a]['id']=$tipo[0]->uuid;}}
                             break;
 
 
             }
             $notificacoes[$a]['foto']=$nome[1];
             $notificacoes[$a]['v']=$nome[2];
-            $notificacoes[$a]['estado']=$key->id_state_notification;
             $notificacoes[$a]['id1']=$key->notification_id;
             $a++;
           }
         }
+        }
         $dadosPage = DB::table('pages')->limit(5)->get();
-        
+
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,

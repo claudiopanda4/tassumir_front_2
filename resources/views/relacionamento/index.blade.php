@@ -29,7 +29,6 @@
                     <label class="l-5" for="target-proof">
                         <div class="label-invited">
                             <!--<h2 class="accept">Aceitar</h2>-->
-                            <input type="hidden" name="not1" id="not1">
                             <h2 class="send_proof" id="{{$pedido[0]['pedido_relacionamento_id']}}">Enviar comprovativo</h2>
                         </div>
                     </label>
