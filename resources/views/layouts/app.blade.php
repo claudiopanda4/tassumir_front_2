@@ -1113,13 +1113,13 @@
             }
             let offset_post;
             let post_view = document.getElementsByClassName('post-view');
-            console.log(post_view);
+            //console.log(post_view);
             for (var i = 0; i <= post_view.length - 1; i++) {
-                let id = post_view[i].id.split('_')[1];
-                console.log('id post ' + id);
-                offset_post = $('#post-view-' + id).offset();
-                if(offset_post.top < 90 && offset_post.top > -100){
-
+                let id = post_view[i].id;
+                //console.log('id post ' + id);
+                offset_post = $('#' + id).offset();
+                if(offset_post.top < 120 && offset_post.top > -100){
+                    console.log('post entrou: ' + id);
                 } else {
                    
                 }
