@@ -16,7 +16,8 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $controll = new PaginaCasalController();
+        try {
+            $controll = new PaginaCasalController();
         $dates = $controll->default_();
         $account_name = $dates['account_name'];
         $checkUserStatus = $dates['checkUserStatus'];
@@ -45,7 +46,11 @@ class MessageController extends Controller
         
                 
         //dd($contas);
-        return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida', 'user_logado', 'contas', 'message_contact'));    }
+        return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida', 'user_logado', 'contas', 'message_contact'));
+        } catch (Exception $e) {
+            
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -65,18 +70,27 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
+        try {
+           
         if ($request->ajax()) {
             $m_user_logado = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->user_send, 1 ]);
             $m_destinatario = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->conta_send, 1 ]);
+            $foto_user =  DB::table('contas')->where('conta_id', $request->user_send)->get();
+
             $mensagem = new Message;
             $mensagem->message = $request->message_send;
             $mensagem->id_identificador_a = $m_user_logado[0]->identificador_id;
             $mensagem->id_identificador_b = $m_destinatario[0]->identificador_id;
             $mensagem->id_state_message = 1;
             $mensagem->save();
-            return response()->json('Salvou');
+            $resposta['resultado'] = 'Salvou';
+            $resposta['foto_reme'] = $foto_user[0]->foto;
+            return response()->json($resposta);
         }else{
             return response()->json('Nenhum dado Enviado');
+        } 
+        } catch (Exception $e) {
+            
         }
     }
 
@@ -88,7 +102,8 @@ class MessageController extends Controller
      */
     public function show(Request $request)
     {
-        if ($request->ajax()) {
+        try {
+            if ($request->ajax()) {
             /*
         $controll = new PaginaCasalController();
         $dates = $controll->default_();
@@ -108,11 +123,15 @@ class MessageController extends Controller
         $page_current = 'relationship_request';*/
         $m_user_logado = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->user_send, 1 ]);
         $m_destinatario = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->conta_send, 1 ]);
+        $foto_user =  DB::table('contas')->where('conta_id', $request->user_send)->get();
+        $foto_dest =  DB::table('contas')->where('conta_id', $request->conta_send)->get();
       /*
         $message_contact = DB::table('messages')->where('id_identificador_a', $m_user_logado[0]->identificador_id)->orwhere('id_identificador_b', $m_user_logado[0]->identificador_id)->join('identificadors', function ($join) {
             $join->on('messages.id_identificador_a', '=', 'identificadors.identificador_id' )->orOn('messages.id_identificador_b', '=', 'identificadors.identificador_id');
         })->select('messages.*', 'identificadors.id')->get();*/
-  $message_user['destinatario'] = $m_destinatario[0]->identificador_id;
+        $message_user['foto_des'] = $foto_dest[0]->foto;
+        $message_user['foto_rem'] = $foto_user[0]->foto;
+        $message_user['destinatario'] = $m_destinatario[0]->identificador_id;
         $message_user['valor'] = DB::table('messages')->where('id_identificador_a', $m_user_logado[0]->identificador_id)->orwhere('id_identificador_a', $m_destinatario[0]->identificador_id)->limit(6)->get();
 
     /*     
@@ -122,7 +141,11 @@ class MessageController extends Controller
                
     */    
             return response()->json($message_user);
-        } 
+        }
+        } catch (Exception $e) {
+            
+        }
+         
     }
 
     /**
