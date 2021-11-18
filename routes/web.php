@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/request_relationship/', [App\Http\Controllers\PaginaCasalController::class, 'request_relationship'])->name('relationship.page');
     Route::get('/request_relationship1/{id}', [App\Http\Controllers\PaginaCasalController::class, 'request_relationship1'])->name('relationship.page1');
     Route::post('/conf_PR/', [App\Http\Controllers\PaginaCasalController::class, 'conf_PR'])->name('conf_PR');
+    Route::post('/Outra_pessoa/', [App\Http\Controllers\PaginaCasalController::class, 'Outra_pessoa'])->name('Outra_pessoa');
     Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
 
     Route::get('/couple_page_show/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple_page.show');
@@ -72,6 +73,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/direct/', [App\Http\Controllers\MessageController::class, 'index'])->name('message.index');
     Route::get('/send/', [App\Http\Controllers\MessageController::class, 'store'])->name('message.send');
     Route::get('/show/', [App\Http\Controllers\MessageController::class, 'show'])->name('message.show');
+    Route::get('/mostrar/{uuid_remetente}/{uuid_destino}', [App\Http\Controllers\MessageController::class, 'mostrar_sms'])->name('message.mostrar');
     Route::get('/pesquisar/destinatario', [App\Http\Controllers\MessageController::class, 'pesquisar_destinatario'])->name('people.send.message');
 
     //Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('home');
