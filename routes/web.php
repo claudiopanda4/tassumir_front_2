@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/request_relationship/', [App\Http\Controllers\PaginaCasalController::class, 'request_relationship'])->name('relationship.page');
     Route::get('/request_relationship1/{id}', [App\Http\Controllers\PaginaCasalController::class, 'request_relationship1'])->name('relationship.page1');
     Route::post('/conf_PR/', [App\Http\Controllers\PaginaCasalController::class, 'conf_PR'])->name('conf_PR');
+    Route::post('/Outra_pessoa/', [App\Http\Controllers\PaginaCasalController::class, 'Outra_pessoa'])->name('Outra_pessoa');
     Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
 
     Route::get('/couple_page_show/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple_page.show');
