@@ -1505,6 +1505,7 @@ label[for="hugo"]{
 	position: relative;
    	margin-left: -20px;
     width: 655px;
+    min-height: 80px;
 }
 .stories-about-talking nav ul li {
 	position: relative;
@@ -1683,6 +1684,7 @@ label[for="hugo"]{
 .noti-div-name{
 	align-self:center; 
 	align-items: center;
+	max-width: 220px;
 }
 .novi-div-image{
 	position: relative;
@@ -2697,6 +2699,7 @@ label[for="hugo"]{
 	border-radius: 5px;
 	color: #fff;
 	font-size: 13px;
+	border: 1px solid #343a40;
 }
 .options-invited .label-invited {
 	width: 110px;
