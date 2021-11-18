@@ -341,6 +341,8 @@ class PerfilController extends Controller
     public function perfil_das_contas($id)
     {
         try {
+          
+          $page_couple = new PaginaCasalController();
             $dates = $this->default_();
             $checkUserStatus = $dates['checkUserStatus'];
             $profile_picture = $dates['profile_picture'];

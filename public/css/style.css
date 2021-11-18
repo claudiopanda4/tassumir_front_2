@@ -1505,6 +1505,7 @@ label[for="hugo"]{
 	position: relative;
    	margin-left: -20px;
     width: 655px;
+    min-height: 80px;
 }
 .stories-about-talking nav ul li {
 	position: relative;
@@ -1683,6 +1684,7 @@ label[for="hugo"]{
 .noti-div-name{
 	align-self:center; 
 	align-items: center;
+	max-width: 220px;
 }
 .novi-div-image{
 	position: relative;
@@ -2380,6 +2382,9 @@ label[for="hugo"]{
 	/*background-color: #242526;*/
 	border-radius: 10px;
 }
+.filter-main-search-mobile {
+	display: none;
+}
 #main-profile .card {
 	background-color: transparent;
 	border: none;
@@ -2694,6 +2699,7 @@ label[for="hugo"]{
 	border-radius: 5px;
 	color: #fff;
 	font-size: 13px;
+	border: 1px solid #343a40;
 }
 .options-invited .label-invited {
 	width: 110px;
@@ -2812,7 +2818,7 @@ label[for="hugo"]{
 	overflow-x: auto;
 }
 .filter-main-search-mobile ul {
-	width: 360px;
+	width: 820px;
 	margin-bottom: 0;
 	padding: 0;
 }

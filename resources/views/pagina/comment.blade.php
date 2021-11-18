@@ -63,7 +63,7 @@
                         </div>
                       <?php elseif ($dados[0]['formato'] == 1): ?>
                         <div class="video-post">
-                            <video controls
+                            <video controls>
                                 <source src="{{asset('storage/video/page/') . '/' . $dados[0]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -136,7 +136,7 @@
                     </div>
                     @else
                     <div class="img-user-comment l-5">
-                        <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
+                        <i class="fas fa-user center" style="font-size: 24px; color: #ccc;"></i>
                     </div>
                       @endif
                     <div class="input-text comment-send-text l-5 clearfix">

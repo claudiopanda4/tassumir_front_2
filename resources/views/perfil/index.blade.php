@@ -59,9 +59,11 @@
                                 <h2>Pendente</h2>
                             </div>
                         </label>
-                        <button class="btn-message">
-                            <i class="fa-solid fa-message fa-24 fa-option center"></i>
-                        </button>
+                        <form action="{{route('message.index')}}">
+                            <button class="btn-message">
+                                <i class="far fa-comment-dots fa-24 fa-option center"></i>
+                            </button>
+                        </form>
                     </div>
                     <?php elseif ($perfil[0]['verificacao_pedido1'] == 1 ): ?>
                         <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
@@ -70,6 +72,11 @@
                                     <h2>Aceitar</h2>
                                 </div>
                             </label>
+                            <form action="{{route('message.index')}}">
+                                <button class="btn-message">
+                                    <i class="far fa-comment-dots fa-24 fa-option center"></i>
+                                </button>
+                            </form>
                         </div>
                     <?php else: ?>
                     <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
