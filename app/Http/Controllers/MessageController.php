@@ -148,6 +148,54 @@ class MessageController extends Controller
          
     }
 
+        public function mostrar_sms($remetente, $destinatario)
+    {      
+        try {
+            
+           $controll = new PaginaCasalController();
+        $dates = $controll->default_();
+        $account_name = $dates['account_name'];
+        $checkUserStatus = $dates['checkUserStatus'];
+        $profile_picture = $dates['profile_picture'];
+        $isUserHost = $dates['isUserHost'];
+        $hasUserManyPages = $dates['hasUserManyPages'];
+        $allUserPages = $dates['allUserPages'];
+        $page_content = $dates['page_content'];
+        $checkUserStatus = $dates['checkUserStatus'];
+        $conta_logada = $dates['conta_logada'];
+        $notificacoes = $dates['notificacoes'];
+        $dadosSeguindo = $dates['dadosSeguindo'];
+        $dadosPage = $dates['dadosPage'];
+        $dadosSeguida = $dates['dadosSeguida'];
+        $page_current = 'relationship_request';
+
+        $conta_logada = DB::table('contas')->where('uuid', $remetente)->get();
+        $conta_destino = DB::table('contas')->where('uuid', $destinatario)->get();
+        
+        $user_logado = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+
+        $identificador_user = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+        $identificador_dest = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_destino[0]->conta_id, 1 ]);
+        
+        $message_text = DB::table('messages')->where('id_identificador_a', $identificador_user[0]->identificador_id)->orwhere('id_identificador_b', $identificador_user[0]->identificador_id)->limit(6)->get();
+
+          $message_contact = DB::table('messages')->where('id_identificador_a', $identificador_user[0]->identificador_id)->orwhere('id_identificador_b', $identificador_user[0]->identificador_id)->join('identificadors', function ($join) {
+            $join->on('messages.id_identificador_a', '=', 'identificadors.identificador_id' )->orOn('messages.id_identificador_b', '=', 'identificadors.identificador_id');
+        })->select('messages.*', 'identificadors.id')->get();  
+        
+
+        $contas = DB::table('contas')->limit(8)->get();
+        
+                
+        //dd($contas);
+        return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida', 'user_logado', 'contas', 'message_contact', 'message_text', 'identificador_user', 'identificador_dest', 'conta_destino'));
+        
+        } catch (Exception $e) {
+            
+        }
+         
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
