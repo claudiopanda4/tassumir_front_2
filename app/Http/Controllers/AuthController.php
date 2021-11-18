@@ -18,7 +18,6 @@ class AuthController extends Controller
         //$this->middleware('auth:web1');
         $this->casalPage = new PaginaCasalController();
     }
-
     public function default_(){
         $account_name = $this->defaultDate();
         $checkUserStatus = Self::isCasal($account_name[0]->conta_id);
@@ -55,17 +54,23 @@ class AuthController extends Controller
                 $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
                 $notificacoes[$a]['tipo']=1;
                 $notificacoes[$a]['id']=$key->identificador_id_destino;
+                $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
+                $notificacoes[$a]['link']=$post[0]->uuid;
                 break;
               case 2:
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
-                  $notificacoes[$a]['tipo']=1;
+                  $notificacoes[$a]['tipo']=2;
                   $notificacoes[$a]['id']=$key->identificador_id_destino;
+                  $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                  $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
+                  $notificacoes[$a]['link']=$post[0]->uuid;
                   break;
                 case 3:
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
-                  $notificacoes[$a]['tipo']=1;
+                  $notificacoes[$a]['tipo']=3;
                   $notificacoes[$a]['id']=$key->identificador_id_destino;
                     break;
                   case 4:
@@ -82,14 +87,20 @@ class AuthController extends Controller
                     case 5:
                     $notificacoes[$a]['notificacao']=$nome[0];
                     $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                    $notificacoes[$a]['tipo']=1;
+                    $notificacoes[$a]['tipo']=5;
                     $notificacoes[$a]['id']=$key->identificador_id_destino;
+                    $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                    $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
+                    $notificacoes[$a]['link']=$page[0]->uuid;
                         break;
                     case 6:
                         $notificacoes[$a]['notificacao']=$nome[0];
                         $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                        $notificacoes[$a]['tipo']=1;
+                        $notificacoes[$a]['tipo']=5;
                         $notificacoes[$a]['id']=$key->identificador_id_destino;
+                        $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                        $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
+                        $notificacoes[$a]['link']=$post[0]->uuid;
                             break;
                    case 7:
                    $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
@@ -101,21 +112,30 @@ class AuthController extends Controller
                             break;
                 case 8:
                             $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
-                            $notificacoes[$a]['tipo']=1;
+                            $notificacoes[$a]['tipo']=8;
                             $notificacoes[$a]['id']=$key->identificador_id_destino;
+                            $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                            $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
+                            $notificacoes[$a]['link']=$page[0]->uuid;
                                 break;
 
               case 9:
                                 $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
-                                $notificacoes[$a]['tipo']=1;
+                                $notificacoes[$a]['tipo']=9;
                                 $notificacoes[$a]['id']=$key->identificador_id_destino;
                                     break;
+           case 10:
+                                                      $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
+                                                      $notificacoes[$a]['tipo']=9;
+                                                      $notificacoes[$a]['id']=$key->identificador_id_destino;
+                                                          break;
 
 
             }
             $notificacoes[$a]['foto']=$nome[1];
             $notificacoes[$a]['v']=$nome[2];
             $notificacoes[$a]['id1']=$key->notification_id;
+
             $a++;
           }
         }
@@ -220,7 +240,7 @@ class AuthController extends Controller
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
 
-      $post=  DB::table('posts')->get();
+      $post= DB::table('posts')->limit(5)->get();
       $page= DB::table('pages')->get();
       $a=0;
 
@@ -747,10 +767,7 @@ class AuthController extends Controller
                 'tipo_estado_comment_id'=>1,
                 'comment'=>$request->comment,
                 ]);
-                DB::table('identificadors')->insert([
-              'tipo_identificador_id' => 4,
-              'id' => $resposta[0]['comment_id'],
-         ]);
+
 
                 $variable=  DB::table('comments')->get();
                 foreach ($variable as $key) {
@@ -772,6 +789,10 @@ class AuthController extends Controller
                    }
                    $resposta[0]['comment']=$key->comment;
                 }
+                DB::table('identificadors')->insert([
+                'tipo_identificador_id' => 4,
+                'id' => $resposta[0]['comment_id'],
+                ]);
 
               } else {
                 DB::table('comments')->insert([
@@ -780,20 +801,15 @@ class AuthController extends Controller
                 'tipo_estado_comment_id'=>1,
                 'comment'=>$request->comment,
                 ]);
-                DB::table('identificadors')->insert([
-              'tipo_identificador_id' => 4,
-              'id' => $resposta[0]['comment_id'],
-         ]);
-         $a=   DB::table('identificadors')->get();
-         foreach ($a as $key ) {
-          $b= $key->identificador_id;
-         }
+
+         $a=   DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->id, 3 ]);
+
                   DB::table('notifications')->insert([
                       'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                       'id_state_notification' => 2,
                       'id_action_notification' => 2,
                       'identificador_id_causador'=> $aux[0]->identificador_id,
-                      'identificador_id_destino'=> $b,
+                      'identificador_id_destino'=> $a[0]->identificador_id,
                       'identificador_id_receptor'=> $aux2[0]->identificador_id,
                       ]);
                     DB::table('notifications')->insert([
@@ -801,7 +817,7 @@ class AuthController extends Controller
                             'id_state_notification' => 2,
                             'id_action_notification' => 2,
                             'identificador_id_causador'=> $aux[0]->identificador_id,
-                            'identificador_id_destino'=> $b,
+                            'identificador_id_destino'=> $a[0]->identificador_id,
                             'identificador_id_receptor'=> $aux3[0]->identificador_id,
                             ]);
 
@@ -825,6 +841,10 @@ class AuthController extends Controller
                    }
                    $resposta[0]['comment']=$key->comment;
                 }
+                DB::table('identificadors')->insert([
+              'tipo_identificador_id' => 4,
+              'id' => $resposta[0]['comment_id'],
+         ]);
 
               }
 

@@ -148,14 +148,46 @@
                                     <?php endif ?>
 
                                     <div class="hidden-click-any-container noti-div-name">
-
+                                   @if($notificacoes[$i- 1]['tipo'] == 1)
+                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
-
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 2)
+                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 3)
+                                   <a href="">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 4 || $notificacoes[$i- 1]['tipo'] == 7)
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 5)
+                                   <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 6)
+                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 8)
+                                   <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 9)
+                                   <a href="">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 10)
+                                   <a href="">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @endif
                                     <div class="hidden-click-any-container noti-hour ml-2">
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
                                     @if($notificacoes[$i- 1]['tipo'] == 4)
-                                    $controller++;
+                                    <?php $controller++; ?>
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
@@ -167,6 +199,7 @@
                                     </div>
                                   </div>
                                     @elseif($notificacoes[$i- 1]['tipo'] == 7)
+                                    <?php $controller++; ?>
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
                                         <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="ver_mais" id="VR|{{$notificacoes[$i- 1]['id1']}}">Ver Resposta</a>
@@ -1064,16 +1097,37 @@
                 let id = video_post1[i].id.split('_')[1];
                 //console.log('idaqui ' + id);
                 offset_video = $('#video_' + id).offset();
-                //console.log(video_post1[i].id + ' top: ' + offset_video.top);
+                //console.log(document.getElementById('video_' + id).paused);
                 if(offset_video.top < 140 && offset_video.top > -300){
                     document.getElementById('video_' + id).play();
-                    document.getElementById('play_button_' + id).classList.add('invisible');
+                    if (!document.getElementById('video_' + id).paused) {
+                        document.getElementById('play_button_' + id).classList.add('invisible');
+                    }
                 } else {
                     document.getElementById('video_' + id).pause();
                     document.getElementById('play_button_' + id).classList.remove('invisible');
                     //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
                 }
             }
+            let offset_post = $('#video_' + id).offset();
+            let post_view = document.getElementsByClassName('post-view');
+            for (var i = 0; i <= post_view.length - 1; i++) {
+                let id = post_view[i].id.split('_')[1];
+                //console.log('idaqui ' + id);
+                offset_post = $('#_' + id).offset();
+                //console.log(document.getElementById('video_' + id).paused);
+                if(offset_video.top < 140 && offset_video.top > -300){
+                    document.getElementById('video_' + id).play();
+                    if (!document.getElementById('video_' + id).paused) {
+                        document.getElementById('play_button_' + id).classList.add('invisible');
+                    }
+                } else {
+                    document.getElementById('video_' + id).pause();
+                    document.getElementById('play_button_' + id).classList.remove('invisible');
+                    //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
+                }
+            }
+            document.get
         }, 100);
 
         $('#search-lg-home-id').focus(function(){
