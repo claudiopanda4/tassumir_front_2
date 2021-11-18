@@ -90,11 +90,11 @@
            <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
           </a>
           @elseif($notificacoes[$i- 1]['tipo'] == 9)
-          <a href="">
+          <a href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}">
            <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
           </a>
           @elseif($notificacoes[$i- 1]['tipo'] == 10)
-          <a href="">
+          <a href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}">
            <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
           </a>
           @endif
