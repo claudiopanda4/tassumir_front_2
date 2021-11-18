@@ -3,6 +3,7 @@
 @section('content')
 <div class="main" id="main-container-relationship">
     <div class="card">
+      @if($pedido[0]['estado'] == 2)
         <div class="clearfix">
             <div class="clearfix couple-profile-container l-5">
                 <div class="couple-profile-img couple-1 circle" id="">
@@ -36,7 +37,8 @@
                 </div>
             </div>
         </div>
-        <!--<div class="clearfix couple-container">
+        @elseif($pedido[0]['estado'] == 3)
+        <div class="clearfix couple-container">
             <div class="clearfix couple-profile-container l-5">
                 <div class="couple-profile-img couple-1 circle" id="">
                     <?php if (true): ?>
@@ -62,6 +64,7 @@
                 </div>
             </div>
         </div>
+        @elseif($pedido[0]['estado'] == 4)
         <div class="clearfix couple-container">
             <div class="clearfix couple-profile-container l-5">
                 <div class="couple-profile-img couple-1 circle" id="">
@@ -87,7 +90,8 @@
                     <a href="" class="l-5 denied">Solicitar uma nova confirmação</a>
                 </div>
             </div>
-        </div>-->
+        </div>
+        @endif
 
     </div>
 </div>

@@ -103,6 +103,7 @@ class PaginaCasalController extends Controller
           $pedido[0]['foto']= $conta[0]->foto;
           $pedido[0]['tipo']=$tipos[0]->tipo_relacionamento;
           $pedido[0]['pedido_relacionamento_id']=$tipo[0]->pedido_relacionamento_id;
+          $pedido[0]['estado']=$tipo[0]->estado_pedido_relac;
 
       $page_couple = new PerfilController();
       $dates = $page_couple->default_();
