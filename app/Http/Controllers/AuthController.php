@@ -18,7 +18,6 @@ class AuthController extends Controller
         //$this->middleware('auth:web1');
         $this->casalPage = new PaginaCasalController();
     }
-
     public function default_(){
         $account_name = $this->defaultDate();
         $checkUserStatus = Self::isCasal($account_name[0]->conta_id);
@@ -241,7 +240,7 @@ class AuthController extends Controller
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
 
-      $post=  DB::table('posts')->get();
+      $post= DB::table('posts')->limit(5)->get();
       $page= DB::table('pages')->get();
       $a=0;
 

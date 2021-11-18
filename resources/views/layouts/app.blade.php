@@ -1097,16 +1097,37 @@
                 let id = video_post1[i].id.split('_')[1];
                 //console.log('idaqui ' + id);
                 offset_video = $('#video_' + id).offset();
-                //console.log(video_post1[i].id + ' top: ' + offset_video.top);
+                //console.log(document.getElementById('video_' + id).paused);
                 if(offset_video.top < 140 && offset_video.top > -300){
                     document.getElementById('video_' + id).play();
-                    document.getElementById('play_button_' + id).classList.add('invisible');
+                    if (!document.getElementById('video_' + id).paused) {
+                        document.getElementById('play_button_' + id).classList.add('invisible');
+                    }
                 } else {
                     document.getElementById('video_' + id).pause();
                     document.getElementById('play_button_' + id).classList.remove('invisible');
                     //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
                 }
             }
+            let offset_post = $('#video_' + id).offset();
+            let post_view = document.getElementsByClassName('post-view');
+            for (var i = 0; i <= post_view.length - 1; i++) {
+                let id = post_view[i].id.split('_')[1];
+                //console.log('idaqui ' + id);
+                offset_post = $('#_' + id).offset();
+                //console.log(document.getElementById('video_' + id).paused);
+                if(offset_video.top < 140 && offset_video.top > -300){
+                    document.getElementById('video_' + id).play();
+                    if (!document.getElementById('video_' + id).paused) {
+                        document.getElementById('play_button_' + id).classList.add('invisible');
+                    }
+                } else {
+                    document.getElementById('video_' + id).pause();
+                    document.getElementById('play_button_' + id).classList.remove('invisible');
+                    //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
+                }
+            }
+            document.get
         }, 100);
 
         $('#search-lg-home-id').focus(function(){
