@@ -54,7 +54,7 @@
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post']==1): ?>
         <div class="card br-10" id="m_post-{{$dados[$key]['post_id']}}">
-            <div class="post post-view">
+            <div class="post post-view" id="post-view-{{$key}}">
                 <header class="clearfix">
                     <div class="first-component clearfix l-5">
                         @if( !($dados[$key]['foto_page'] == null) )

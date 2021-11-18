@@ -140,7 +140,7 @@ class AuthController extends Controller
           }
         }
         }
-        $dadosPage = DB::table('pages')->limit(5)->get();
+        $dadosPage = DB::table('pages')->limit(8)->get();
 
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
@@ -240,7 +240,7 @@ class AuthController extends Controller
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
 
-      $post= DB::table('posts')->limit(5)->get();
+      $post= DB::table('posts')->limit(7)->get();
       $page= DB::table('pages')->get();
       $a=0;
 
