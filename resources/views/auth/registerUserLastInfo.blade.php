@@ -13,6 +13,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
 
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -47,7 +48,7 @@
                         <span class="text-white mb-2">Estamos concluindo o seu cadastro...</span>
                     </div>
 
-                <form action="{{route('account.enter.form')}}" method="POST">
+                <form action="{{route('account.enter.form')}}" method="POST" class="needs-validation" novalidate>
                     @csrf
 
                     <input type="text" name="nome1" class="hidden" value="{{$nome}}" >
@@ -56,8 +57,10 @@
                     <input type="text" name="sexo1" class="hidden" value="{{$sexo}}">
 
                      <div class="form-group">
-                        <input type="text" class="input-text-default input-full" name="nacionalidade" type="text" placeholder="Nacionalidade" value="">
-
+                        <input type="text" class="input-text-default input-full" name="nacionalidade" id="nacionalidade" placeholder="Nacionalidade" value="" required>
+                        <div class="invalid-feedback">
+                            Insira a Nacionalidade
+                      </div>
                     </div>
 
                     <div class="row mt-2">
@@ -71,17 +74,21 @@
 
                         <div class="col-md-6">
                             
-                        <input type="email" class="input-text-default input-full hidden" placeholder="Email" id="email" name="email">
+                        <input type="email" class="input-text-default input-full hidden" placeholder="Email" id="email" name="email" >
+                        
+                        <input type="text" class="input-text-default input-full hidden" name="telefone" placeholder="Telefone" id="telefone" data-mask="000-000-000">
 
-                        <input type="text" class="input-text-default input-full hidden" name="telefone" placeholder="Telefone" id="telefone">
 
                         </div>
                          
                     </div>
 
                      <div class="form-group mt-2">
-                        <input type="password" class="input-text-default input-full" name="password" type="text" placeholder="Password" value="">
-
+                        <input type="password" class="input-text-default input-full" name="password"placeholder="Password" value="" required id="password">
+                        <div class="invalid-feedback">
+                            Insira o Password
+                      </div>
+                      <label id="labelt" class="hidden">Insira pelo menos 9 caracteres</label>
                     </div>
 
                     <button type="submit" id="login-enter" class="alerta">Criar Conta</button>
@@ -93,8 +100,61 @@
 </body>
 </html>
 
+    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
+    
 
 <script>
+
+    $("#password").on('keyup',function(){
+
+        let passwordValue = $("#password").val();
+
+        let passwordLenght = passwordValue.length;
+
+        if (passwordLenght <= 4) {
+
+            $("#labelt").fadeIn().css({
+
+                color:'red',
+            });
+            setTimeout(()=>{
+
+                    $("#labelt").fadeOut();
+
+            },4000)
+
+        }else if(passwordLenght <= 9){
+
+            $("#labelt").fadeIn()
+                .text("Password mediana")
+                .css({
+
+                color:'#800080',
+            });
+            setTimeout(()=>{
+
+                    $("#labelt").fadeOut();
+
+            },4000)
+        }
+        else{
+
+            $("#labelt")
+                .fadeIn()
+                .text("Password forte")
+                .css({
+
+                color:'#800080',
+            });
+
+            setTimeout(()=>{
+
+                    $("#labelt").fadeOut();
+
+            },4000)
+        }
+
+    });
 
 $(document).ready(function() {
 
@@ -121,6 +181,37 @@ $(document).ready(function() {
 
     });
 
+    $("#nacionalidade").bind('keydown', function(e) {
+
+      var codTecla = e.which;
+      var teclas = (codTecla > 64 && codTecla <= 90);
+      var teclasAlter = (",8,32,46,37,38,39,40".indexOf("," + codTecla + ",") > -1);
+      if (teclas || teclasAlter) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('needs-validation');
+
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          } else {
+            //teste();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
 });
     
 </script>

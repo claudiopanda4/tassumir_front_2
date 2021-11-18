@@ -12,6 +12,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -49,14 +51,20 @@
                         <span class="text-white">Agora vamos conhecer-te</span>
                     </div>
 
-                <form action="{{route('account.teste.form')}}" method="POST">
+                <form action="{{route('account.teste.form')}}" method="POST" class="needs-validation" novalidate>
                     @csrf
 
                      <div class="form-group">
-                        <input type="text" class="input-text-default input-full" name="nome" placeholder="Nome">
+                        <input type="text" class="input-text-default input-full" name="nome" placeholder="Nome" id="nome" required>
+                        <div class="invalid-feedback">
+                            Insira o Nome
+                      </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="apelido" class="input-text-default input-full" placeholder="Apelido">
+                        <input type="text" name="apelido" class="input-text-default input-full" placeholder="Apelido" id="apelido" required>
+                        <div class="invalid-feedback">
+                            Insira o Apelido
+                      </div>
                     </div>
                     <div class="row">
 
@@ -84,7 +92,10 @@
                     </div>
                     <div class="form-group mt-2">
 
-                        <input type="date" name="dat" class="input-text-default input-full" id="" placeholder="12/09/2002">
+                        <input type="date" name="dat" class="input-text-default input-full" id="" placeholder="12/09/2002" required>
+                        <div class="invalid-feedback">
+                            Insira a Data
+                      </div>
 
                     </div>
                     <button type="submit" id="login-enter">Seguinte</button>
@@ -106,3 +117,47 @@
     </div>
 </body>
 </html>
+<script>
+    
+    $("#nome").bind('keydown', function(e) {
+
+      var codTecla = e.which;
+      var teclas = (codTecla > 64 && codTecla <= 90);
+      var teclasAlter = (",8,32,46,37,38,39,40".indexOf("," + codTecla + ",") > -1);
+      if (teclas || teclasAlter) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    $("#apelido").bind('keydown', function(e) {
+
+      var codTecla = e.which;
+      var teclas = (codTecla > 64 && codTecla <= 90);
+      var teclasAlter = (",8,32,46,37,38,39,40".indexOf("," + codTecla + ",") > -1);
+      if (teclas || teclasAlter) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('needs-validation');
+
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          } else {
+            //teste();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>

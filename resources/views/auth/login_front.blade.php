@@ -12,6 +12,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -35,15 +37,33 @@
                         <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final">umir</span></h1></a>
                     </div>
                 </header>
-                <form action="{{ route('account.login.enter') }}" method="POST">
+                <form action="{{ route('account.login.enter') }}" method="POST" class="needs-validation" novalidate>
                     @csrf
                      <div class="form-group">
-                        <label for="exampleInputPassword1">Número ou Email</label>
-                        <input class="input-text-default input-full" name="number_email_login" type="text" placeholder="email ou telefone">
+                        <label for="">Número ou Email</label>
+                        <input class="input-text-default input-full" name="number_email_login" type="text" placeholder="email ou telefone" id="tipos" required>
+                        <div class="invalid-feedback">
+                            Insira o Telefone ou Email
+                      </div>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" name="password_login" class="input-text-default input-full" id="exampleInputPassword1" placeholder="password">
+
+                        <label for="">Password</label>
+                        <input type="password" name="password_login" class="input-text-default input-full changeType" id=""  placeholder="password" required>
+
+
+                        <input type="text" class="input-text-default input-full " name="teste" id="teste1" style="display:none;">
+
+
+
+                        <div class="invalid-feedback">
+                            Insira a Password
+                      </div>
+
+                        <!--<button id="mudar" type="button">Password</button>
+                        <button id="outro" type="button">Texto_Legivel</button>-->
+
+
                     </div>
                     <button id="login-enter" type="submit" class=""><span class="enter-login">Ent</span>rar</button>
                     <div class="clearfix">
@@ -60,3 +80,45 @@
     </div>
 </body>
 </html>
+<script>
+
+   /* $("#mudar").click(function(e) {
+        e.preventDefault();
+            if ($(":password")) {
+                $(":password").show().text();
+                $(" #teste1").hide().val();
+            }
+        });
+        $("#outro").click(function(e) {
+            e.preventDefault();
+            if ($(":password")) {
+                let takeToChange = $(".changeType");
+                let changeToPass = takeToChange.val();
+                $(" #teste1").show().val(changeToPass);
+                $(":password").hide();
+
+            }
+        });*/
+
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('needs-validation');
+
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          } else {
+            //teste();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+
+</script>
+
+
