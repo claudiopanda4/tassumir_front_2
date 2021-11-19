@@ -1171,7 +1171,6 @@ class AuthController extends Controller
         return count(DB::table('pages')
                 ->where('conta_id_a', $conta_logada[0]->conta_id)
                 ->orwhere('conta_id_b', $conta_logada[0]->conta_id)
-                ->orwhere('tipo_page_id', 1)
                 ->get()) > 0;
         //return DB::select('select page_id from pages where conta_id_a = ? or conta_id_b = ? and tipo_page_id = ?', [$account_id, $account_id, 1]);
     }
@@ -1204,10 +1203,11 @@ class AuthController extends Controller
 
     public static function isUserHost($account_id)
     {
-
+      $auth = new AuthController();
+          $conta_logada = $auth->defaultDate();
         return count(DB::table('pages')
-                    ->where('conta_id_a', $account_id)
-                    ->orwhere('conta_id_b', $account_id)
+                    ->where('conta_id_a',  $conta_logada[0]->conta_id)
+                    ->orwhere('conta_id_b',  $conta_logada[0]->conta_id)
                     ->get()) > 0;
     }
 

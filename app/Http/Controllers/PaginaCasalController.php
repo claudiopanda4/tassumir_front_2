@@ -37,8 +37,8 @@ class PaginaCasalController extends Controller
       $this->current_page_id = $page_content[0]->page_id;
       $sugerir = $this->suggest_pages($page_content[0]->page_id);
       $allPosts = $this->get_post_types($page_content[0]->page_id);
-
-        return view('pagina.couple_page', compact('account_name','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
+$v=1;
+        return view('pagina.couple_page', compact('account_name','v','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
     }
 
     public function conf_PR(Request $request)
@@ -154,6 +154,7 @@ class PaginaCasalController extends Controller
     }
     public function default_(){
         $auth = new AuthController();
+        $conta_logada = $auth->defaultDate();
         $account_name = $auth->defaultDate();
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
@@ -167,7 +168,6 @@ class PaginaCasalController extends Controller
             $seguidores = array();
         }
         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
-        $conta_logada = $auth->defaultDate();
         $notificacoes=array();
         $a=0;
         $nome=array();
@@ -341,57 +341,8 @@ class PaginaCasalController extends Controller
     public function show_page()
     {
 
-      $dates = $this->default_();
-      $account_name = $dates['account_name'];
-      $checkUserStatus = $dates['checkUserStatus'];
-      $profile_picture = $dates['profile_picture'];
-      $isUserHost = $dates['isUserHost'];
-      $hasUserManyPages = $dates['hasUserManyPages'];
-      $allUserPages = $dates['allUserPages'];
-      $page_content = $dates['page_content'];
-      $conta_logada = $dates['conta_logada'];
-      $notificacoes = $dates['notificacoes'];
-      $dadosSeguindo = $dates['dadosSeguindo'];
-      $dadosPage = $dates['dadosPage'];
-      $dadosSeguida = $dates['dadosSeguida'];
-      $page_current = 'relationship_request';
-      $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-
-            foreach ($dadosSgndo as $value) {
-                $valor = $value->identificador_id;
-            }
-
-
-            $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {
-                if ($valor1->id == $account_name[0]->conta_id) {
-                        $key = 0;
-                        $dadosSeguindo[$key] = [
-                            'id_seguidor' => $valor1->seguidor_id,
-                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
-                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
-                            'id' => $valor1->id,
-                            ];
-                    }
-                }
-        $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-
-        $seguidores = Self::seguidores($page_content[0]->page_id);
-
-        $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
-        $publicacoes = $this->get_all_post($page_content[0]->page_id);
-        $this->current_page_id = $page_content[0]->page_id;
-        $conta_logada = $auth->defaultDate();
-
-        $sugerir = $this->suggest_pages($page_content[0]->page_id);
-        $allPosts = $this->get_post_types($page_content[0]->page_id);
-
-
-
-
-        return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current' , 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
         try {
-            $auth = new AuthController();
+            /*$auth = new AuthController();
             $account_name = $auth->defaultDate();
             $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
             $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
@@ -402,9 +353,60 @@ class PaginaCasalController extends Controller
             $seguidores = Self::seguidores($page_content[0]->page_id);
             $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
             $publicacoes = $this->get_all_post($page_content[0]->page_id);
-            $this->current_page_id = $page_content[0]->page_id;
+            $this->current_page_id = $page_content[0]->page_id;*/
             //dd($page_content);
-            return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
+
+
+                  $dates = $this->default_();
+                  $account_name = $dates['account_name'];
+                  $checkUserStatus = $dates['checkUserStatus'];
+                  $profile_picture = $dates['profile_picture'];
+                  $isUserHost = $dates['isUserHost'];
+                  $hasUserManyPages = $dates['hasUserManyPages'];
+                  $allUserPages = $dates['allUserPages'];
+                  $page_content = $dates['page_content'];
+                  $conta_logada = $dates['conta_logada'];
+                  $notificacoes = $dates['notificacoes'];
+                  $dadosSeguindo = $dates['dadosSeguindo'];
+                  $dadosPage = $dates['dadosPage'];
+                  $dadosSeguida = $dates['dadosSeguida'];
+                  $page_current = 'relationship_request';
+                  $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+                        foreach ($dadosSgndo as $value) {
+                            $valor = $value->identificador_id;
+                        }
+
+
+                        $tt = 0;
+                        foreach ($dadoSeguindo as $valor1) {
+                            if ($valor1->id == $account_name[0]->conta_id) {
+                                    $key = 0;
+                                    $dadosSeguindo[$key] = [
+                                        'id_seguidor' => $valor1->seguidor_id,
+                                        'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                                        'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                                        'id' => $valor1->id,
+                                        ];
+                                }
+                            }
+                    $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
+
+                    $seguidores = Self::seguidores($page_content[0]->page_id);
+
+                    $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
+                    $publicacoes = $this->get_all_post($page_content[0]->page_id);
+                    $this->current_page_id = $page_content[0]->page_id;
+                    $conta_logada = $auth->defaultDate();
+
+                    $sugerir = $this->suggest_pages($page_content[0]->page_id);
+                    $allPosts = $this->get_post_types($page_content[0]->page_id);
+
+
+
+
+                    return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
+            //        return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -550,7 +552,14 @@ class PaginaCasalController extends Controller
           $sugerir = $this->suggest_pages($page_content[0]->page_id);
           $allPosts = $this->get_post_types($page_content[0]->page_id);
 
-          return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts'));
+          $a=DB::select('select * from pages where uuid = ?', [$uuid]);
+
+          if ($a[0]->conta_id_a == $conta_logada[0]->conta_id || $a[0]->conta_id_b == $conta_logada[0]->conta_id) {
+            $v=1;
+          }else {
+            $v=0;
+          }
+          return view('pagina.couple_page', compact('account_name','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts'));
         } catch (Exception $e) {
             dd($e);
         }
