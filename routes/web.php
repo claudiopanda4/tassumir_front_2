@@ -91,6 +91,10 @@ Route::get('/recuperarSenha/code', [App\Http\Controllers\AuthController::class, 
 Route::get('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'newCode'])->name('validate.newCode.form');
 Route::get('/completRegister', [App\Http\Controllers\AuthController::class, 'registrarUserComplete'])->name('account.registerComplete.form');
 
+//posts
+Route::get('/view/', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
+//endposts
+
 
 Route::get('/confirmarCodigo', [App\Http\Controllers\AuthController::class, 'codigoRecebidoRegisto'])->name('account.codeConfirmation.form');
 

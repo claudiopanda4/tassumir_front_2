@@ -1090,18 +1090,33 @@
             //console.log('video ' + video_post1[0].id);
             let id;
             let video_post = $('.video-');
-            for (var i in video_post1) {
-                //console.log(video_post1);
-            }
+            let currentTime;
+            let duration;
+            let watched_video;
+            //console.log(video_post1);
+            let video_post_time;
             for (var i = 0; i <= video_post1.length - 1; i++) {
                 let id = video_post1[i].id.split('_')[1];
                 //console.log('idaqui ' + id);
                 if ($('#video_' + id)) {
                     offset_video = $('#video_' + id).offset();
+                    video_post_time = $('#video-post-time-' + id);
                     if(offset_video.top < 140 && offset_video.top > -300){
                         document.getElementById('video_' + id).play();
+                        $('#video-post-time-all-' + id).val(document.getElementById('video_' + id).duration / 2);
                         if (!(document.getElementById('video_' + id).paused)) {
                             document.getElementById('play_button_' + id).classList.add('invisible');
+                            currentTime = document.getElementById('video_' + id).currentTime;
+                            duration = document.getElementById('video_' + id).duration;
+                            $('#video-post-time-' + id).val(currentTime);
+                            //console.log('currentTime de video_' + id + ' = ' + $('#video-post-time-' + id).val());
+                            if (currentTime >= (duration / 2)) {
+                                watched_video = $('#watch-video-' + id).val();
+                                //console.log('entrou no video watch-video ' + watched_video);
+                                add_view(watched_video);
+                            }
+                        } else {
+                            //console.log('currentTime de video_' + id + ' = ' + $('#video-post-time-' + id).val());
                         }
                     } else {
                         document.getElementById('video_' + id).pause();
@@ -1119,13 +1134,27 @@
                 //console.log('id post ' + id);
                 offset_post = $('#' + id).offset();
                 if(offset_post.top < 120 && offset_post.top > -100){
-                    console.log('post entrou: ' + id);
+                    console.log($('#format-' + id.split('_')[2]).val());
+                    if ($('#format-' + id.split('_')[2]).val() != 1) {
+                        add_view(post_view[i].id);
+                    }
                 } else {
                    
                 }
             }
             document.get
         }, 100);
+        function add_view(data) {
+            $.ajax({
+                url: "{{route('post.view.save')}}",
+                type: 'get',
+                data: {'data': data},
+                dataType: 'json',
+                success: function(response){
+                    console.log(response);
+                }
+            });
+        }
         $('.play_button').click(function(e){
             let id = e.target.id.split('_')[2];
         });
