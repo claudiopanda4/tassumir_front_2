@@ -217,7 +217,7 @@
             $('#user_logado').val(remetente);
             $('#destinatario').val(conta_destino); 
             alert(nome_conta_dest);
-             $.ajax({
+            $.ajax({
                 url: "{{ route('message.show')}}",
                 type: 'get',
                 data: {'user_send': remetente, 'conta_send': conta_destino},
@@ -226,7 +226,7 @@
                   
                         let destinatario = response.destinatario;
                         let foto_user_logado = response.foto_rem;
-                        
+                    $('#message_user_destino').empty();
                     $('#user_chat').empty();
                     $('#zona_foto').empty();
                     if (response.foto_des == null) {
@@ -241,18 +241,22 @@
                         if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
                             if (response.foto_rem == null) {
                         $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div>");
+                        $('#message_user_destino').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div>");
                     }else{
                         let src = "{{asset('storage/img/users/')}}" + "/" + response.foto_rem;
                         $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                        $('#message_user_destino').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
                     }
                     }else {
                         if ((value.id_identificador_a == destinatario ) && (value.id_identificador_b == identificador_user)) {
                             if (response.foto_des == null) {
-                                console.log(response.foto_des);
+                                
                         $('#message_user_dest').append("<div  class='own-user l-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                        $('#message_user_destino').append("<div  class='own-user l-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
                         }else{
                             let src = "{{asset('storage/img/users/')}}" + "/" + response.foto_des;
                             $('#message_user_dest').append("<div  class='own-user l-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                            $('#message_user_destino').append("<div  class='own-user l-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
                         }
                       }  
                     }
@@ -287,33 +291,51 @@
                 @endif  
             </a>
         </header>
-        @if(false)
+        @if(isset($message_text))            
         <div id="message_user_destino" class="body-message clearfix">
-                <div  class="own-user l-5">
-                  <div class="clearfix">
-                      <div class="container-img circle l-5">
-                        <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
-                    </div>
-                    <div class="message-body l-5">
-                        <div>
-                            <p>destino</p>
-                        </div>
-                    </div>
-                  </div>  
-                </div>        
+            @forelse($message_text as $mensagem)
+                @if(($mensagem->id_identificador_a == $identificador_user[0]->identificador_id) && ($mensagem->id_identificador_b == $identificador_dest[0]->identificador_id))
                 <div class="other-user r-5">
                     <div class="clearfix">
-                      <div class="container-img circle l-5">
-                        <img src="{{ asset('storage/img/users') . '/' . $pessoas->foto }}"  class="circle img-full">
-                    </div>
+                      @if($conta_logada[0]->foto != null)
+                        <div class="container-img circle l-5">
+                        <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto}}">
+                        </div>
+                      @else
+                        <div class="container-img circle l-5">
+                        <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>  
+                        </div>
+                      @endif
                     <div class="message-body l-5">
                         <div>
-                            <p>user_log</p>
+                            <p>{{$mensagem->message}}p</p>
                         </div>
                     </div>
                   </div> 
-                </div>        
-        </div>
+                </div>    
+                @elseif(($mensagem->id_identificador_a == $identificador_dest[0]->identificador_id) && ($mensagem->id_identificador_b == $identificador_user[0]->identificador_id))
+                <div  class="own-user l-5">
+                  <div class="clearfix">
+                      @if($conta_destino[0]->foto != null)
+                        <div class="container-img circle l-5">
+                        <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_destino[0]->foto}}">
+                        </div>
+                      @else
+                        <div class="container-img circle l-5">
+                        <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>  
+                        </div>
+                      @endif
+                    <div class="message-body l-5">
+                        <div>
+                            <p>{{$mensagem->message}}</p>
+                        </div>
+                    </div>
+                  </div>  
+                </div>
+            @endif
+            @empty
+            @endforelse        
+        </div>           
         @else
         <div id="message_user_dest" class="body-message clearfix">
          </div>           
@@ -390,7 +412,7 @@
                   
                         let destinatario = response.destinatario;
                         let foto_user_logado = response.foto_rem;
-                        console.log(foto_user_logado);
+                    $('#message_user_destino').empty();
                     $('#user_chat').empty();
                     $('#zona_foto').empty();
                     if (response.foto_des == null) {
@@ -405,18 +427,22 @@
                         if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
                             if (response.foto_rem == null) {
                         $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div>");
+                        $('#message_user_destino').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div>");
                     }else{
                         let src = "{{asset('storage/img/users/')}}" + "/" + response.foto_rem;
                         $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                        $('#message_user_destino').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
                     }
                     }else {
                         if ((value.id_identificador_a == destinatario ) && (value.id_identificador_b == identificador_user)) {
                             if (response.foto_des == null) {
-                                console.log(response.foto_des);
+                                
                         $('#message_user_dest').append("<div  class='own-user l-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                        $('#message_user_destino').append("<div  class='own-user l-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
                         }else{
                             let src = "{{asset('storage/img/users/')}}" + "/" + response.foto_des;
                             $('#message_user_dest').append("<div  class='own-user l-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                            $('#message_user_destino').append("<div  class='own-user l-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
                         }
                       }  
                     }

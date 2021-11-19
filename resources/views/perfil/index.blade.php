@@ -85,7 +85,7 @@
                                 <h2>Assumir</h2>
                             </div>
                         </label>
-                        <form action="{{route('message.index')}}">
+                        <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
                             <button class="btn-message">
                                 <i class="far fa-comment-dots fa-24 fa-option center"></i>
                             </button>

@@ -103,6 +103,7 @@ class PaginaCasalController extends Controller
           $pedido[0]['foto']= $conta[0]->foto;
           $pedido[0]['tipo']=$tipos[0]->tipo_relacionamento;
           $pedido[0]['pedido_relacionamento_id']=$tipo[0]->pedido_relacionamento_id;
+          $pedido[0]['estado']=$tipo[0]->estado_pedido_relac_id;
 
       $page_couple = new PerfilController();
       $dates = $page_couple->default_();
@@ -119,10 +120,17 @@ class PaginaCasalController extends Controller
           $dadosPage = $dates['dadosPage'];
           $dadosSeguida = $dates['dadosSeguida'];
           $page_current = 'relationship_request';
+          if (  $pedido[0]['estado'] == 2) {
           $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
           $aux2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$tipo[0]->pedido_relacionamento_id, 5 ]);
           $notificacoes_aux=DB::select('select * from notifications where (identificador_id_receptor,id_action_notification,identificador_id_destino) = (?,?,?)', [$aux1[0]->identificador_id, 7, $aux2[0]->identificador_id]);
           $pedido[0]['not']=$notificacoes_aux[0]->notification_id ;
+        }elseif (  $pedido[0]['estado'] == 6) {
+          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+          $aux2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$tipo[0]->pedido_relacionamento_id, 5 ]);
+          $notificacoes_aux=DB::select('select * from notifications where (identificador_id_receptor,id_action_notification,identificador_id_destino) = (?,?,?)', [$aux1[0]->identificador_id, 10, $aux2[0]->identificador_id]);
+          $pedido[0]['not']=$notificacoes_aux[0]->notification_id ;
+        }
                     return view('relacionamento.index', compact('account_name', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
       }
 
@@ -253,14 +261,20 @@ class PaginaCasalController extends Controller
                                 break;
 
               case 9:
-                                $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
-                                $notificacoes[$a]['tipo']=9;
-                                $notificacoes[$a]['id']=$key->identificador_id_destino;
+              $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+              if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+              if (sizeof($tipo)){
+              $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+              $notificacoes[$a]['tipo']=9;
+              $notificacoes[$a]['id']=$tipo[0]->uuid;}}
                                     break;
            case 10:
-                                                      $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
-                                                      $notificacoes[$a]['tipo']=9;
-                                                      $notificacoes[$a]['id']=$key->identificador_id_destino;
+            $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+            if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+            if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
+            $notificacoes[$a]['notificacao'].=" Pediu que você page";
+            $notificacoes[$a]['tipo']=10;
+            $notificacoes[$a]['id']=$tipo[0]->uuid;}}
                                                           break;
 
 
@@ -620,6 +634,28 @@ class PaginaCasalController extends Controller
     /**
      * @param
      */
+
+     public function Outra_pessoa(Request $request)
+     {
+         try
+         {
+           DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$request->p_id)
+           ->update(['estado_pedido_relac_id' => 6]);
+           $not= DB::select('select * from notifications where notification_id = ?',[$request->n_id]);
+           DB::table('notifications')->where('notification_id',$request->n_id)
+           ->update(['identificador_id_causador' => $not[0]->identificador_id_receptor]);
+           DB::table('notifications')->where('notification_id',$request->n_id)
+           ->update(['identificador_id_receptor' => $not[0]->identificador_id_causador]);
+           DB::table('notifications')->where('notification_id',$request->n_id)
+           ->update(['id_action_notification' => 10]);
+
+           return redirect()->route('account.home.feed');
+
+
+         } catch (Exception $e) {
+             dd($e);
+         }
+     }
     public function store_post(Request $request)
     {
         try
