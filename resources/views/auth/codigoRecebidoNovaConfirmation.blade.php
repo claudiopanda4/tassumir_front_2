@@ -39,7 +39,13 @@
                         <h3 class="text-white">Olá</h3>
                     </div>
                 </header>
-                <form action="{{ route('account.verifyAgainCode.enter') }}" method="POST">
+
+
+                <!--{{ route('account.verifyAgainCode.enter') }}-->
+
+                <form action="{{ route('account.verifyAgainCode.enter') }}" method="POST" class="needs-validation" novalidate>
+
+
                     @csrf
 
                     <input type="text" name="receivedId1" class="hidden" value="{{$idReceived}}">
@@ -55,11 +61,12 @@
                     </div>
                     <div class="form-group">
                         
-                        <input type="text" class="input-text-default input-full input-login" name="codeReceived1" placeholder="Escreva o código que recebeu" id="codeReceived">
+            
+                        <input type="text" class="input-text-default input-full input-login" name="codeReceived1" placeholder="Escreva o código que recebeu" id="codeReceived" required>
+                        <div class="invalid-feedback">
+                            Insira o Código
+                      </div>
                     </div>
-
-                    
-                    
 
                     <button type="submit" id="login-enter" class="alerta">Validar código</button>
                     
@@ -71,4 +78,36 @@
     </div>
 </body>
 </html>
+<script>
+    
+    $("#codeReceived").bind('keydown', function(e) {
+
+      var codTecla = e.which;
+      var teclas = (codTecla >= 48 && codTecla <= 57);
+      var teclasAlter = (",8,32,46,37,38,39,40".indexOf("," + codTecla + ",") > -1);
+      if (teclas || teclasAlter) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('needs-validation');
+
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          } else {
+            //teste();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
 

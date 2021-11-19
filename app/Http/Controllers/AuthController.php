@@ -146,7 +146,7 @@ class AuthController extends Controller
           }
         }
         }
-        $dadosPage = DB::table('pages')->limit(5)->get();
+        $dadosPage = DB::table('pages')->limit(8)->get();
 
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
@@ -246,7 +246,7 @@ class AuthController extends Controller
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
 
-      $post= DB::table('posts')->limit(5)->get();
+      $post= DB::table('posts')->limit(7)->get();
       $page= DB::table('pages')->get();
       $a=0;
 
@@ -924,6 +924,14 @@ class AuthController extends Controller
 
     public function sendtoOtherForm(Request $request){
 
+        /*$credentials = $request->validate([
+            'nome' => ['required'],
+            'apelido' =>['required'],
+            'dat' =>['required'],
+            'sexo'=>['required'],
+            
+        ]);*/
+
         $nome = $request->nome;
         $apelido = $request->apelido;
         $sexo = $request->sexo;
@@ -937,6 +945,23 @@ class AuthController extends Controller
     }
     public function joinAndSave(Request $request){
 
+        /*$credentials = $request->validate([
+            'nome1' => ['required'],
+            'apelido1' =>['required'],
+            'dataNasc1' =>['required'],
+            'nacionalidade'=>['required'],
+            'sexo1'=>['required'],
+        ]);*/
+
+        $credentials = $request->validate([
+
+            'password' => ['required','min:9','max:255'],
+
+          ]);
+
+        $takePhone = str_replace("-","",$request->telefone);
+
+        //dd($takePhone);
 
         $saveRetriveId = DB::table('contas')->insertGetId([
             'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -946,7 +971,7 @@ class AuthController extends Controller
             'genero' => $request->sexo1,
             'estado_civil_id' => 1,
             'email' => $request->email,
-            'telefone' => $request->telefone,
+            'telefone' => $takePhone,
             'estado_conta_id' => 1,
             'nacionalidade' => $request->nacionalidade
 
@@ -960,14 +985,14 @@ class AuthController extends Controller
         DB::table('logins')->insert([
 
             'email' => $request->email,
-            'telefone' => $request->telefone,
+            'telefone' => $takePhone,
             'password' => Hash::make($request->password),
             'conta_id' => $saveRetriveId,
 
         ]);
 
         $code = random_int(1000,9000);
-        $takePhone = $request->telefone;
+        $takePhone = $takePhone;
         $takeEmail = $request->email;
         DB::table('codigo_confirmacaos')->insert([
 
@@ -975,13 +1000,18 @@ class AuthController extends Controller
             'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
             'conta_id' => $saveRetriveId,
             'email' => $request->email,
-            'telefone' => $request->telefone,
+            'telefone' => $takePhone,
         ]);
 
        return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
     }
 
     public function verifyCodeSent(Request $request){
+
+        /*$credentials = $request->validate([
+            
+            'codeReceived' => ['required','max:4'],
+        ]);*/
 
         $codeSent = $request->codeReceived;
         $idSaved = $request->receivedId;
@@ -1018,7 +1048,6 @@ class AuthController extends Controller
                 }
             }else{
 
-                //dd("cheguei no else");
                 return view('auth.codigoRecebidoActualizar',compact('idSaved','phoneReceived','emailReceived'));
             }
     }
@@ -1036,46 +1065,20 @@ class AuthController extends Controller
                   ->where('conta_id', $idReceived)
                   ->update(['codigoGerado' => $code2]);
 
-
-        /*$verifyAndChange = DB::table('codigo_confirmacaos')
-                  ->select('telefone','email')
-                  ->where('conta_id', $idReceived)
-                  ->get();
-
-                  if (sizeof($verifyAndChange) >=1 ) {
-
-                    foreach($verifyAndChange as $info){
-
-                          $takeP = $info->telefone;
-                          $takeE = $info->email;
-
-                      if ( $takeP == $phoneAgain) {
-
-                          DB::table('codigo_confirmacaos')
-                          ->where('telefone',$phoneAgain)
-                          ->update(['codigoGerado' => $code2]);
-
-                      } else if ($takeE == $emailAgain) {
-
-                          DB::table('codigo_confirmacaos')
-                          ->where('email',$emailAgain)
-                          ->update(['codigoGerado' => $code2]);
-                      }
-                    }
-                  }else{
-
-                    return "erro";
-                  }*/
-
         return view('auth.codigoRecebidoNovaConfirmation',compact('idReceived','code2','phoneAgain','emailAgain'));
 
     }
     public function verifyAgainCodeSent(Request $request){
 
-        $savedId = $request->receivedId1;
+        /*$credentials = $request->validate([
+            
+            'codeReceived1' => ['required','max:4'],
+        ]);*/
+
+        $idSaved = $request->receivedId1;
         $codeSent = $request->codeReceived1;
-        $samePhone = $request->phoneConf;
-        $sameEmail = $request->emailConf;
+        $phoneReceived = $request->phoneConf;
+        $emailReceived = $request->emailConf;
 
         //dd($savedId."<=>".$codeSent);
         $takeCode2 = [];
@@ -1083,7 +1086,7 @@ class AuthController extends Controller
         $takeCode2 = DB::table('codigo_confirmacaos')
             ->select('codigoGerado','telefone','email')
             ->where('codigoGerado','=',$codeSent)
-            ->where('conta_id','=',$savedId)
+            ->where('conta_id','=',$idSaved)
             ->get();
 
             if(sizeof($takeCode2) >= 1){
@@ -1094,11 +1097,11 @@ class AuthController extends Controller
                     $takePhoneA = $generateCode->telefone;
                     $takeEmailA = $generateCode->email;
 
-                    if($takeHim == $codeSent && $takePhoneA == $samePhone){
+                    if($takeHim == $codeSent && $takePhoneA == $phoneReceived){
 
                         return redirect()->route('account.login.form');
 
-                    }else if($takeHim == $codeSent && $takeEmailA == $sameEmail){
+                    }else if($takeHim == $codeSent && $takeEmailA == $emailReceived){
 
 
                         return redirect()->route('account.login.form');
@@ -1108,22 +1111,201 @@ class AuthController extends Controller
                 }
             }else{
 
-                dd("Error again!");
-                //return view('auth.codigoRecebidoActualizar',compact('savedId'));
+              return view('auth.codigoRecebidoActualizar',compact('idSaved','phoneReceived','emailReceived'));
+
             }
 
     }
 
+/* here */
     public function recuperarSenha(){
 
         return view('auth.codeRecover');
     }
     public function codigoRecebido(){
+
         return view('auth.codigoRecebido');
+
     }
     public function newCode(){
+
         return view('auth.newCode');
+
     }
+
+
+  public function sendPhoneEmailRecover(Request $request){
+    
+      $phone = $request->phoneNumber;
+      $email = $request->emailName;
+
+if ($phone != null) {
+  
+        $takePhone = DB::table('contas')
+          ->select('telefone','conta_id')
+          ->where('telefone','=',$phone)
+          ->get();
+
+          if (isset($takePhone)) {
+            
+              foreach($takePhone as $info){
+
+                $foundedId = $info->conta_id;
+
+                $foundedPhone = $info->telefone;
+                
+                  $codeToSend = random_int(1000,9000);
+
+                   DB::table('codigo_confirmacaos')
+                              ->where('conta_id', $foundedId)
+                              ->update(['codigoGerado' => $codeToSend]);
+
+                    return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
+            }
+      }
+
+      return view('auth.codeRecover');
+
+}else if ($email != null) {
+
+        $takeEmail = DB::table('contas')
+          ->select('email','conta_id')
+          ->where('email','=',$email)
+          ->get();
+
+
+          if (isset($takeEmail)) {
+            
+              foreach($takeEmail as $info){
+
+                $foundedId = $info->conta_id;
+
+                $foundedEmail = $info->email;
+                
+                  $codeToSend = random_int(1000,9000);
+
+                   DB::table('codigo_confirmacaos')
+                              ->where('conta_id', $foundedId)
+                              ->update(['codigoGerado' => $codeToSend]);
+
+                    return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
+            }
+      }
+
+      return view('auth.codeRecover');
+  
+}
+
+      return view('auth.codeRecover');
+  }
+
+  public function verifyToRecoverPass(Request $request){
+
+      $id = $request->Id;
+      $codeSent = $request->codeSend;
+
+
+        $takeThem = DB::table('codigo_confirmacaos')
+            ->select('codigoGerado','conta_id')
+            ->where('codigoGerado','=',$codeSent)
+            ->where('conta_id','=',$id)
+            ->get();
+
+        if(isset($takeThem)){
+
+
+            foreach($takeThem as $newInfo){
+
+                $takeCode = $newInfo->codigoGerado;
+                $takeId = $newInfo->conta_id;
+
+                if($takeCode == $codeSent && $takeId == $id){
+
+
+                     return view('auth.newCode',compact('takeId'));
+
+                }
+            }
+
+
+        }
+
+            return view('auth.codeRecover');
+        
+  }
+
+  public function updatePassword(Request $request){
+
+        /*$credentials = $request->validate([
+
+            'password' => ['required','min:9','max:255'],
+            'confirmarPassword' =>['required','min:9','max:255'],
+            
+          ]);*/
+
+
+      $idToCompare = $request->theId;
+
+      $password = $request->password;
+      $confirmPass = $request->confirmarPassword;
+
+
+      if($password == $confirmPass){
+
+        DB::table('logins')
+              ->where('conta_id', $idToCompare)
+              ->update(['password' =>Hash::make($password)]);
+
+
+        return redirect()->route('account.login.form');
+
+
+      }
+      else{
+
+
+          return view('auth.newCode2',compact('idToCompare'));
+          
+
+      }
+  }
+  public function updatePassword2(Request $request){
+
+
+        /*$credentials = $request->validate([
+
+            'password1' => ['required','min:9','max:255'],
+            'confirmarPassword1' =>['required','min:9','max:255'],
+          ]);*/
+        //
+
+      $idToCompare = $request->theId1;
+
+      $password = $request->password1;
+      $confirmPass = $request->confirmarPassword1;
+
+
+      if($password == $confirmPass){
+
+        DB::table('logins')
+              ->where('conta_id', $idToCompare)
+              ->update(['password' =>Hash::make($password)]);
+
+
+        return redirect()->route('account.login.form');
+
+
+      }
+      else{
+
+
+          return view('auth.newCode2',compact('idToCompare'));
+          
+
+      }
+
+  }
+/* final here */
 
     /*public function codigoRecebidoRegisto(){
         return view('auth.codigoRecebidoRegister');
@@ -1131,10 +1313,10 @@ class AuthController extends Controller
 
     public function login(Request $request){
 
-        /*$credentials = $request->validate([
-            'email_login' => ['required'],
-            'password_login' => ['required'],
-        ]);*/
+        $credentials = $request->validate([
+            'number_email_login' => ['required'],
+            'password_login' => ['required','min:9','max:255'],
+        ]);
 
         //dd($request);
 
@@ -1149,8 +1331,10 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->route('account.home');
 
+
         }
         return redirect()->route('account.login.form');
+
 
     }
     public function logout(Request $request)

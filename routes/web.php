@@ -58,7 +58,11 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/pesquisa', [App\Http\Controllers\searchController::class, 'index'])->name('allSearch.page');
     Route::get('/pesquisa/peoples', [App\Http\Controllers\searchController::class, 'peoplesSearch'])->name('peoplesSearch.page');
     Route::get('/pesquisa/peoples1/{id}', [App\Http\Controllers\searchController::class, 'peoplesSearch1'])->name('peoplesSearch1.page');
+    
     Route::get('/pessoapesquisa', [\App\Http\Controllers\searchController::class, 'pessoapesquisa'])->name('pessoa.pesquisa');
+
+    Route::get('/peoplepesquisa', [\App\Http\Controllers\searchController::class, 'peoplepesquisa'])->name('people.pesquisa');
+
     Route::get('/paginapesquisa', [App\Http\Controllers\searchController::class, 'paginapesquisa'])->name('pagina.pesquisa');
     Route::get('/postpesquisa', [App\Http\Controllers\searchController::class, 'postpesquisa'])->name('post.pesquisa');
     Route::get('/pesquisa/pages', [App\Http\Controllers\searchController::class, 'pagesSearch'])->name('pagesSearch.page');
@@ -73,6 +77,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/direct/', [App\Http\Controllers\MessageController::class, 'index'])->name('message.index');
     Route::get('/send/', [App\Http\Controllers\MessageController::class, 'store'])->name('message.send');
     Route::get('/show/', [App\Http\Controllers\MessageController::class, 'show'])->name('message.show');
+    Route::get('/mostrar/{uuid_remetente}/{uuid_destino}', [App\Http\Controllers\MessageController::class, 'mostrar_sms'])->name('message.mostrar');
     Route::get('/pesquisar/destinatario', [App\Http\Controllers\MessageController::class, 'pesquisar_destinatario'])->name('people.send.message');
 
     //Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('home');
@@ -84,7 +89,14 @@ Route::get('registrar/completRegister', [App\Http\Controllers\AuthController::cl
 Route::get('/recuperarSenha', [App\Http\Controllers\AuthController::class, 'recuperarSenha'])->name('account.code.form');
 Route::get('/recuperarSenha/code', [App\Http\Controllers\AuthController::class, 'codigoRecebido'])->name('code.received.form');
 Route::get('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'newCode'])->name('validate.newCode.form');
+
+Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'updatePassword'])->name('account.newPasswordSave');
+
 Route::get('/completRegister', [App\Http\Controllers\AuthController::class, 'registrarUserComplete'])->name('account.registerComplete.form');
+
+//posts
+Route::get('/view/', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
+//endposts
 
 
 Route::get('/confirmarCodigo', [App\Http\Controllers\AuthController::class, 'codigoRecebidoRegisto'])->name('account.codeConfirmation.form');
@@ -103,6 +115,19 @@ Route::post('/verificarCodigo/Again', [App\Http\Controllers\AuthController::clas
 Route::post('/gerarNovamente', [App\Http\Controllers\AuthController::class, 'generateAgain'])->name('account.generateAgain.enter');
 
 Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
+
+/* here */
+Route::post('/sendTo',[App\Http\Controllers\AuthController::class, 'sendPhoneEmailRecover'])->name('account.sendToPhoneEmail');
+
+Route::post('/codeVerification',[App\Http\Controllers\AuthController::class, 'verifyToRecoverPass'])->name('account.verifyToRecoverPass');
+
+
+Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updatePassword'])->name('account.newPasswordSave');
+
+
+Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updatePassword2'])->name('account.newPasswordSave2');
+
+/* end here */
 
 Route::get('/allNotifications', [App\Http\Controllers\AuthController::class, 'seeAllNotifications'])->name('account.all.notifications');
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');
