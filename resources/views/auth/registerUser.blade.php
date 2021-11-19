@@ -28,21 +28,18 @@
     <meta name="viewport" content="width=device-width-width, initial-scale=1,0">
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
-<body>
-    <div id="app">
-        <main class="main" id="main-login-container" style="background-color: var(--background-dark-main);">
-            <div class="center" id="main-login">
+<body id="body-reg">
+    <div id="app-log-reg">
+        <main class="main" id="main-register-container" style="">
+            <div class="" id="main-reg">
                 <header class="logo-form" id="title-login">
-                    <div>
-                        <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final">umir</span></h1></a>
+                    <div class="title">
+                        <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                     </div>
-
                     <div class="row justify-content-center">
-                    	<h3 class="text-white">Olá</h3>
+                        <h3 class="text-white">Olá</h3>
                     </div>
-
                 </header>
-
                     <div class="row justify-content-center" style="text-align: center; margin-bottom: 5px;">
                         <span class="text-white">Seja Bem Vindo(a) a maior plataforma de relacionamento.</span>
                     </div>
@@ -54,14 +51,14 @@
                 <form action="{{route('account.teste.form')}}" method="POST" class="needs-validation" novalidate>
                     @csrf
 
-                     <div class="form-group">
-                        <input type="text" class="input-text-default input-full" name="nome" placeholder="Nome" id="nome" required>
+                      <div class="form-group">
+                        <input type="text" class="input-text-default input-full input-login" name="nome" placeholder="Nome" required>
                         <div class="invalid-feedback">
                             Insira o Nome
                       </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="apelido" class="input-text-default input-full" placeholder="Apelido" id="apelido" required>
+                        <input type="text" name="apelido" class="input-text-default input-full input-login" placeholder="Apelido" required>
                         <div class="invalid-feedback">
                             Insira o Apelido
                       </div>
@@ -90,12 +87,12 @@
                     	</div>
 
                     </div>
-                    <div class="form-group mt-2">
+                    <div class="form-group mt-2">                        
 
-                        <input type="date" name="dat" class="input-text-default input-full" id="" placeholder="12/09/2002" required>
+                        <input type="date" name="dat" class="input-text-default input-full input-login" id="" placeholder="12/09/2002" required>
                         <div class="invalid-feedback">
                             Insira a Data
-                      </div>
+                       </div>
 
                     </div>
                     <button type="submit" id="login-enter">Seguinte</button>

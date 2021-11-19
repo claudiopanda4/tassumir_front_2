@@ -27,10 +27,10 @@
     <meta name="viewport" content="width=device-width-width, initial-scale=1,0">
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
-<body>
-    <div id="app">
+<body id="body-reg">
+    <div id="app-log-reg">
         <main class="main" id="main-login-container">
-            <div class="center" id="main-login">
+            <div id="main-reg">
                 <header class="logo-form mb-4" id="title-login">
 
                     <div>
@@ -47,7 +47,7 @@
 
                     <div class="form-group">
                         
-                        <input type="password" class="input-text-default input-full" name="password" placeholder="Escreva a nova senha" required id="password">
+                        <input type="password" class="input-text-default input-full input-login" name="password" placeholder="Escreva a nova senha" required id="password">
                         <div class="invalid-feedback">
                             Insira a Password
                       </div>
@@ -57,7 +57,7 @@
 
                     <div class="form-group">
                         
-                        <input type="password" class="input-text-default input-full" name="confirmarPassword" placeholder="Repita a nova senha" required id="confirmarPassword">
+                        <input type="password" class="input-text-default input-full input-login" name="confirmarPassword" placeholder="Repita a nova senha" required id="confirmarPassword">
                         <div class="invalid-feedback">
                             Confirme a Password
                       </div>

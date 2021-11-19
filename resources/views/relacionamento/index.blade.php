@@ -6,17 +6,17 @@
         <div class="clearfix">
             <div class="clearfix couple-profile-container l-5">
                 <div class="couple-profile-img couple-1 circle" id="">
-                    <?php if (true): ?>
-                        <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
+                  <?php if ($account_name[0]->foto == null || $account_name[0]->foto == "null" || $account_name[0]->foto == NULL || $account_name[0]->foto == "NULL" || $account_name[0]->foto == "" || $account_name[0]->foto == " "): ?>
+                        <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>
                     <?php else: ?>
-
+                      <img class="img-profile img-full circle" src="{{asset('storage/img/users') . '/' . $account_name[0]->foto}}">
                     <?php endif ?>
                 </div>
                 <div class="couple-profile-img couple-2 circle" id="">
-                    <?php if (true): ?>
-                        <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
+                <?php if ($pedido[0]['foto'] == null || $pedido[0]['foto'] == "null" || $pedido[0]['foto'] == NULL || $pedido[0]['foto'] == "NULL" || $pedido[0]['foto'] == "" || $pedido[0]['foto'] == " "): ?>
+                      <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>
                     <?php else: ?>
-
+                      <img class="img-profile img-full circle" src="{{asset('storage/img/users') . '/' . $pedido[0]['foto']}}">
                     <?php endif ?>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     <label class="l-5" for="target-proof">
                         <div class="label-invited">
                             <!--<h2 class="accept">Aceitar</h2>-->
-                            <h2>Enviar comprovativo</h2>
+                            <h2 class="send_proof" id="{{$pedido[0]['pedido_relacionamento_id']}}|{{$pedido[0]['not']}}">Enviar comprovativo</h2>
                         </div>
                     </label>
                     <a href="" class="l-5 denied">Pedir que o outro lado pague</a>

@@ -28,27 +28,27 @@
     <meta name="viewport" content="width=device-width-width, initial-scale=1,0">
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
-<body>
-    <div id="app">
-        <main class="main" id="main-login-container">
+<body id="body-reg">
+    <div id="app-log-reg">
+        <main class="main clearfix" id="main-register-container">
             
-            <div class="center" id="main-login">
+            <div class="" id="main-reg">
                 <header class="logo-form" id="title-login">
-                    <div>
-                        <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final">umir</span></h1></a>
+                    <div class="title">
+                        <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                     </div>
-
                     <div class="row justify-content-center">
-                    	<span class="text-white">Só mais algumas informações</span>
+                        <span class="text-white">Só mais algumas informações</span>
                     </div>
-
                 </header>
+
 
                     <div class="row justify-content-start ml-1">
                         <span class="text-white mb-2">Estamos concluindo o seu cadastro...</span>
                     </div>
 
                 <form action="{{route('account.enter.form')}}" method="POST" class="needs-validation" novalidate>
+
                     @csrf
 
                     <input type="text" name="nome1" class="hidden" value="{{$nome}}" >
@@ -57,38 +57,46 @@
                     <input type="text" name="sexo1" class="hidden" value="{{$sexo}}">
 
                      <div class="form-group">
-                        <input type="text" class="input-text-default input-full" name="nacionalidade" id="nacionalidade" placeholder="Nacionalidade" value="" required>
+
+                        <input type="text" class="input-text-default input-full input-login" name="nacionalidade" id="nacionalidade" placeholder="Nacionalidade" value="" required>
                         <div class="invalid-feedback">
                             Insira a Nacionalidade
                       </div>
+
                     </div>
 
                     <div class="row mt-2">
                         <div class="col-md-6">
-                            <select id="inputState" class="input-text-default input-full" >
+                            <select id="inputState" class="input-text-default input-full input-login" required>
                                 <option selected>Choose...</option>
                                 <option value="emailSele">Email</option>
                                 <option value="telefSele">Telefone</option>
                             </select>
+                            <div class="invalid-feedback">
+                            Escolha uma Opção
+                           </div>
                         </div>
 
                         <div class="col-md-6">
-                            
-                        <input type="email" class="input-text-default input-full hidden" placeholder="Email" id="email" name="email" >
+            
                         
-                        <input type="text" class="input-text-default input-full hidden" name="telefone" placeholder="Telefone" id="telefone" data-mask="000-000-000">
 
+                        <input type="email" class="input-text-default input-full input-login hidden input-emai-log" placeholder="Email" id="email" name="email">
+
+                        <input type="text" class="input-text-default input-full input-login hidden input-emai-log" name="telefone" placeholder="Telefone" id="telefone" data-mask="000-000-000">
 
                         </div>
                          
                     </div>
 
                      <div class="form-group mt-2">
-                        <input type="password" class="input-text-default input-full" name="password"placeholder="Password" value="" required id="password">
+
+                        <input type="password" class="input-text-default input-full input-login" name="password"placeholder="Password" value="" required id="password" required>
                         <div class="invalid-feedback">
                             Insira o Password
                       </div>
                       <label id="labelt" class="hidden">Insira pelo menos 9 caracteres</label>
+
                     </div>
 
                     <button type="submit" id="login-enter" class="alerta">Criar Conta</button>

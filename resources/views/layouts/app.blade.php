@@ -121,8 +121,7 @@
                             </li>-->
 
                             @for($i=sizeof($notificacoes); $i > 0 ; $i--)
-                            @if($notificacoes[$i- 1]['estado']!= 3)
-                                <li class="hidden-click-any-container change-look noti-flex-info" id="{{$notificacoes[$i- 1]['id1']}}" name="{{$notificacoes[$i- 1]['id1']}}">
+                                <li class="hidden-click-any-container change-look noti-flex-info" id="not-{{$notificacoes[$i- 1]['id1']}}" name="not-{{$notificacoes[$i- 1]['id1']}}">
                                   <?php if ($notificacoes[$i- 1]['v']== 1): ?>
                                     <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
 
@@ -149,9 +148,41 @@
                                     <?php endif ?>
 
                                     <div class="hidden-click-any-container noti-div-name">
-
+                                   @if($notificacoes[$i- 1]['tipo'] == 1)
+                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
-
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 2)
+                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 3)
+                                   <a href="">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 4 || $notificacoes[$i- 1]['tipo'] == 7)
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 5)
+                                   <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 6)
+                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 8)
+                                   <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 9)
+                                   <a href="">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 10)
+                                   <a href="">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @endif
                                     <div class="hidden-click-any-container noti-hour ml-2">
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
@@ -170,13 +201,12 @@
                                     @elseif($notificacoes[$i- 1]['tipo'] == 7)
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
-                                                                                  <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a>
+                                        <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="ver_mais" id="VR|{{$notificacoes[$i- 1]['id1']}}">Ver Resposta</a>
                                     </div>
                                     @endif
                                    </div>
 
                                 </li>
-                                @endif
                               @endfor
 
                                  <li class="hidden-click-any-container change-look" style="display: flex;justify-content:center; align-items: center; width: 300px; padding:8px;">
@@ -254,18 +284,21 @@
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
                                     @if($notificacoes[$i- 1]['tipo'] == 4)
+                                    $controller++;
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
-                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}">Aceitar</h2>
+                                                <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Aceitar</h2>
                                             </div>
                                         </label>
-                                        <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
+                                        <div class="reject_relationship" id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">
+                                        <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Rejeitar</a>
                                     </div>
+                                  </div>
                                     @elseif($notificacoes[$i- 1]['tipo'] == 7)
                                     <div class="hidden-click-any-container options-invited clearfix">
-                                        <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
-                                        <!--                                          <a  href="{{route('relationship.page', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a> -->
+                                        <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
+                                        <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="ver_mais" id="VR|{{$notificacoes[$i- 1]['id1']}}">Ver Resposta</a>
                                     </div>
                                     @endif
                                    </div>
@@ -278,7 +311,7 @@
                 <h1>Páginas que eu sigo</h1>
             </header>
             <ul class="">
-                <?php if ($dadosSeguindo[0]['id'] ==  $account_name[0]->conta_id): ?>
+                <?php if ($dadosSeguindo[0]['id'] ==  $conta_logada[0]->conta_id): ?>
                 @forelse($dadosPage as $Paginas)
                 <?php
                 $seguidors = 0;
@@ -617,6 +650,8 @@
             <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                   <input class="file" type="file" name="imgOrVideo" id="imgOrVideo" style="width: 250px; margin-left: 10px; color: #fff;">
+                  <input type="hidden" name="Comprovativo" id="Comprovativo">
+                  <input type="hidden" name="notificacao" id="notificacao">
 
                 <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                     <label for="target-profile-cover-post" class="label-full">
@@ -801,7 +836,12 @@
 
       }
 
+
+
+
+
       function tela_confirm(id1, id2){
+
         $.ajax({
           url: "{{ route('tconfirm')}}",
           type: 'get',
@@ -827,6 +867,18 @@
 
       });
 
+      $('.send_proof').click(function (e) {
+          let id = e.target.id;
+          let id1= id.split('|')[0];
+          let id2= id.split('|')[1];
+
+
+          $("#Comprovativo").val(id1);
+          $("#notificacao").val(id2);
+
+
+      });
+
       $('.accept_relationship').click(function (e) {
           let id = e.target.id;
           let id1= id.split('|')[0];
@@ -838,7 +890,6 @@
       });
 
       $('.reject_relationship').click(function (e) {
-        e.preventDefault();
 
           let id = e.target.id;
           let id1= id.split('|')[1];
@@ -850,8 +901,11 @@
             dataType: 'json',
             success:function(response){
               console.log(response);
-             $('li[name='+id2+']').empty();
-              $('div[name='+id2+']').empty();
+        //     $('li[name='id']').empty();
+            //  $('div[name='+id2+']').empty();
+              $('#not-'+id2).remove();
+            //  $('#not-'+id2).hide();
+
               }
             });
       });

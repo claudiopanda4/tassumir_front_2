@@ -162,81 +162,155 @@
         <div class="search-container-chat">
             <div class="input-search">
                 <i class="fas fa-search fa-16 fa-search-main"></i>
-                <input type="search" name="" placeholder="Quem você está procurando?" class="input-text" id="search-lg-home-id-container">
+                <input type="search" name="" placeholder="Quem você está procurando?" class="input-text" id="campo_pesquisa">
+                <input type="hidden" name="" value="{{$conta_logada[0]->conta_id}}" id="conta_log">
+                 @if($conta_logada[0]->foto != null)
+                <input type="hidden" name="" value="{{$conta_logada[0]->foto}}" id="valor_foto">
+                @else
+                <input type="hidden" name="" id="valor_foto" value="<i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i>">
+                @endif
+                <input type="hidden" name="" value="{{$user_logado[0]->identificador_id}}" id="remetente">
             </div>
         </div>
         <nav class="nav-menu-chat">
-            <ul>
-                <?php $users = [
-                    [],[],[],[],[],[],[],[],
-                ]; 
-
-                foreach ($users as $key => $value):?>
+            <?php $print = 0; ?>
+            <ul id="contactos_message">
+                @forelse($contas as $pessoas)
+                @if($pessoas->conta_id != $conta_logada[0]->conta_id)
+                
+                @forelse($message_contact as $contact)
+                @if($contact->id == $pessoas->conta_id)
+                    <?php $print = $contact->id ?>
+                @endif
+                @empty
+                @endforelse
+                @if($print == $pessoas->conta_id)
+                
                 <li class="clearfix">
-                    <a href="">
-                        <div class="container-img circle l-5">
-                            <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
-                        </div>
+                    <input type="hidden" class="destino" value="{{$print}}">
+                    <a class="person_message" href="">
+                        @if( !($pessoas->foto == null) )
+                            <div class="container-img circle l-5">
+                                <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $pessoas->foto }}">
+                                <input type="hidden" name="" id="valor_foto-{{$pessoas->conta_id}}" value="{{$pessoas->foto}}">
+                            </div>
+                        @else
+                            <div class="container-img circle l-5">
+                                <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>
+                                <input type="hidden" name="" id="valor_foto-{{$pessoas->conta_id}}" value="<i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i>">
+                            </div>
+                        @endif
                         <div class="nav-menu-chat-component-user l-5">
-                            <h1>Domingos Sobrinho</h1>
+                            <h1 class="nome_dest">{{$pessoas->nome}}</h1>
                         </div>    
                     </a>
                 </li>
-                <?php endforeach ?>
+                @endif
+                @endif
+                @empty
+                @endforelse
             </ul>
+            <script type="text/javascript">
+                function carregar_sms(e){
+            e.preventDefault();
+            let conta_destino = $('.destino').val();
+            let remetente = $('#conta_log').val();
+            let identificador_user = $('#remetente').val();
+            let nome_conta_dest = $('.nome_dest').text();
+            $('#user_logado').val(remetente);
+            $('#destinatario').val(conta_destino);
+             $.ajax({
+                url: "{{ route('message.show')}}",
+                type: 'get',
+                data: {'user_send': remetente, 'conta_send': conta_destino},
+                dataType: 'json',
+                success:function(response){
+                  
+                        let destinatario = response.destinatario;
+                    $('#user_chat').empty();
+                    $('#user_chat').append("<h1>"+nome_conta_dest+"</h1>");
+                    $('#message_user_dest').empty();
+                    $.each(response.valor, function(key, value){
+                        if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
+                        $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div>");
+                    }else {
+                        if ((value.id_identificador_a == destinatario ) && (value.id_identificador_b == identificador_user)) {
+                        $('#message_user_dest').append("<div  class='own-user l-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                    }
+                    }
+                  })
+                 }
+               })
+             }
+            </script>
         </nav>
     </aside>
     <div class="container-message l-5">
         <header class="clearfix">
             <a href="">
-                <div class="container-img circle l-5">
-                    <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
-                </div>
+                @if( isset($conta_destino)  )
+                    @if ($conta_destino[0]->foto == null || $conta_destino[0]->foto == "null" || $conta_destino[0]->foto == NULL || $conta_destino[0]->foto == "NULL" || $conta_destino[0]->foto == "" || $conta_destino[0]->foto == " ")
+                        <div class="container-img circle l-5">
+                                <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>
+                            </div>
+                    @else
+                    
+                    @endif                
                 <div class="nav-menu-chat-component-user l-5">
-                    <h1>Domingos Sobrinho</h1>
-                </div>    
+                    <h1>{{$conta_destino[0]->nome}}</h1>
+                </div>  
+                @else
+                <div class="container-img circle l-5">
+                        <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>
+                    </div>
+                <div id="user_chat" class="nav-menu-chat-component-user l-5">
+                    <h1>Selecione o seu Amigo</h1>
+                </div>
+                @endif  
             </a>
         </header>
-        <div class="body-message clearfix">
-            <?php foreach ($users as $key => $value):?>
-            <?php if (true): ?>
-                <div class="own-user l-5">
+        <div id="message_user_dest" class="body-message clearfix">
+                <div  class="own-user l-5">
                   <div class="clearfix">
                       <div class="container-img circle l-5">
                         <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
                     </div>
                     <div class="message-body l-5">
                         <div>
-                            <p>OlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOla</p>
+                            <p>destino</p>
                         </div>
                     </div>
                   </div>  
                 </div>        
-            <?php endif ?>
-            <?php if (true): ?>
                 <div class="other-user r-5">
                     <div class="clearfix">
                       <div class="container-img circle l-5">
-                        <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="circle img-full">
+                        <img src="{{ asset('storage/img/users') . '/' . $pessoas->foto }}"  class="circle img-full">
                     </div>
                     <div class="message-body l-5">
                         <div>
-                            <p>OlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOlaOla</p>
+                            <p>user_log</p>
                         </div>
                     </div>
                   </div> 
                 </div>        
-            <?php endif ?>
-        <?php endforeach ?>
         </div>
         <div class="comment-send clearfix" id="comment-send-1">
+            @if($conta_logada[0]->foto != null)
             <div class="img-user-comment l-5">
-                <img class="img-full circle" src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
+                <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
             </div>
+             @else
+            <div class="img-user-comment l-5">
+            <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>  
+            </div>
+            @endif
             <div class="input-text comment-send-text l-5 clearfix">
-                <input type="text" class="" name="comentario" id="comentario-1" placeholder="O que você tem a dizer?">
+                <input type="text" class="" name="sms" id="message_send" placeholder="O que você tem a dizer?">
+                <input type="hidden" name="" id="user_logado" value="">
+                <input type="hidden" name="" id="destinatario" value="">
                 <div class="r-5 ">
-                    <a href="" class="comentar-a" id="1">
+                    <a href="" class="comentar-a" id="enviar">
                         <i class="far fa-paper-plane fa-20 fa-img-comment" id="1"></i>
                     </a>
                 </div>
@@ -244,4 +318,87 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#enviar').click(function(e){
+            e.preventDefault();
+            var message = $('#message_send').val();
+            let user_send = $('#user_logado').val();
+            let conta_send = $('#destinatario').val();
+             $.ajax({
+                url: "{{route('message.send')}}",
+                type: 'get',
+                data: {'user_send': user_send, 'conta_send': conta_send, 'message_send': message},
+                dataType: 'json',
+                success: function(response){
+                  if (response == "Salvou") {
+                    $('#message_send').val("");
+                    $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
+                  }
+                   console.log(response); 
+                }
+              });
+
+        });
+        $('.person_message').click(function(e){
+            e.preventDefault();
+            let conta_destino = $('.destino').val();
+            let remetente = $('#conta_log').val();
+            let identificador_user = $('#remetente').val();
+            let nome_conta_dest = $('.nome_dest').text()
+            $('#user_logado').val(remetente);
+            $('#destinatario').val(conta_destino);
+             $.ajax({
+                url: "{{ route('message.show')}}",
+                type: 'get',
+                data: {'user_send': remetente, 'conta_send': conta_destino},
+                dataType: 'json',
+                success:function(response){
+                  
+                        let destinatario = response.destinatario;
+                    $('#user_chat').empty();
+                    $('#user_chat').append("<h1>"+nome_conta_dest+"</h1>");
+                    $('#message_user_dest').empty();
+                    $.each(response.valor, function(key, value){
+                        if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
+                        $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div>");
+                    }else {
+                        if ((value.id_identificador_a == destinatario ) && (value.id_identificador_b == identificador_user)) {
+                        $('#message_user_dest').append("<div  class='own-user l-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                      }  
+                    }
+                  })
+                 }
+               })
+             })
+
+             /* CAMPO PESQUISAR */
+          $('#campo_pesquisa').on('keyup',function(){
+            if ($('#campo_pesquisa').val() != "") {
+                  let valor_pesquisa= $('#campo_pesquisa').val();
+                  let logado = $('#conta_log').val();
+                $.ajax({
+                url: "{{ route('people.send.message')}}",
+                type: 'get',
+                data: {'dados': valor_pesquisa},
+                dataType: 'json',
+                success:function(response){
+                    $('#contactos_message').empty();
+                    $.each(response.valor, function(key, value){
+                        if (value.conta_id != logado) {
+                        if (value.foto == null) {
+                    $('#contactos_message').append("<li class='clearfix'><input type='hidden' class='destino' value="+value.conta_id+"><a onclick='carregar_sms(event)' class='person_message' href=''><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i>  </div><div class='nav-menu-chat-component-user l-5'><h1 class='nome_dest'>"+value.nome+"</h1></div></a></li>");
+                }else{
+                    $('#contactos_message').append("<li class='clearfix'><input type='hidden' class='destino' value="+value.conta_id+"><a onclick='carregar_sms(event)' class='person_message' href=''><div class='container-img circle l-5'><img class='img-full circle' src='{{ asset('storage/img/users') . '/' . "+value.foto+" }}'>  </div><div class='nav-menu-chat-component-user l-5'><h1 class='nome_dest'>>"+value.nome+"</h1></div></a></li>");
+                }
+                }              
+                })    
+                }
+              });
+            }
+            });
+          /* FIM CAMPO PESQUISAR */
+    });
+       
+</script>
 @stop

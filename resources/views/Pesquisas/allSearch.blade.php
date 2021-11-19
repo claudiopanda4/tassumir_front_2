@@ -141,8 +141,13 @@ function search(variavel, v){
 																	nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
 																}
 																nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
+																var route10 = "{{route('couple.page1', 1) }}"
+																url_array10 = route10.split('/');
+																url_link10 = url_array10[0] + "/" + url_array10[1] + "/" + url_array10[2] + "/"+ url_array10[3] +  "/" + value.uuid;
+																nome +='<a href='+url_link10+'>'
 																nome += '<span class="profile-name-1">'+value.nome+'</span>'
-																nome += '<a href="" class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
+																nome +='</a>'
+																nome += '<a href='+url_link10+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
 																nome += '</div></div></li><div class="couple-separator"></div>'
 																if (contador == 4) {
 																	var route = "{{route('pagesSearch1.page', 1) }}"

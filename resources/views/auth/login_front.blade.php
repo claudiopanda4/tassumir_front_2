@@ -28,53 +28,69 @@
     <meta name="viewport" content="width=device-width-width, initial-scale=1,0">
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
-<body>
-    <div id="app">
+<body id="body-login">
+    <div id="app-log-reg" style="" class="clearfix">
+
         <main class="main" id="main-login-container">
-            <div class="center" id="main-login">
+            <div style="height: 1px;"></div>
+            <header class="logo-form" id="logo-login-form-lg" style="margin-left: 10px;">
+                <div class="title">
+                    <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
+                </div>
+            </header>
+            <div class="cover-login" id="cover-login-id">
+                <img src='{{asset("storage/others/tassumir_aside.png")}}' class="img-full">
+            </div>
+            <div class="" id="main-login">
                 <header class="logo-form" id="title-login">
-                    <div>
-                        <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final">umir</span></h1></a>
+                    <div class="title">
+                        <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                     </div>
                 </header>
                 <form action="{{ route('account.login.enter') }}" method="POST" class="needs-validation" novalidate>
                     @csrf
-                     <div class="form-group">
-                        <label for="">Número ou Email</label>
-                        <input class="input-text-default input-full" name="number_email_login" type="text" placeholder="email ou telefone" id="tipos" required>
+                     
+
+                    <div class="form-group">
+
+
+                        <label for="exampleInputPassword1">Número ou Email</label>
+                        <input class="input-text-default input-full input-login" name="number_email_login" type="text" placeholder="email ou telefone" required>
                         <div class="invalid-feedback">
                             Insira o Telefone ou Email
                       </div>
                     </div>
+
                     <div class="form-group">
-
-                        <label for="">Password</label>
-                        <input type="password" name="password_login" class="input-text-default input-full changeType" id=""  placeholder="password" required>
-
-
-                        <input type="text" class="input-text-default input-full " name="teste" id="teste1" style="display:none;">
-
-
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" name="password_login" class="input-text-default input-full input-login" id="exampleInputPassword1" placeholder="password" required>
 
                         <div class="invalid-feedback">
                             Insira a Password
-                      </div>
-
-                        <!--<button id="mudar" type="button">Password</button>
-                        <button id="outro" type="button">Texto_Legivel</button>-->
-
+                       </div>
 
                     </div>
                     <button id="login-enter" type="submit" class=""><span class="enter-login">Ent</span>rar</button>
-                    <div class="clearfix">
-                        <div id="forget-password" class="l-5">
-                            <a href="{{route('account.code.form')}}"><h1>Esqueceu a senha?</h1></a>
-                        </div>
-                        <div class="r-5" id="register-enter-container">
-                            <a href="{{ route('account.register.form') }}"  id="register-enter" type="submit" class=""><span class="enter-login"></span>Registar</a>
-                        </div>
+                    <div class="risk">
+                        <h2 class="center">ou</h2>
                     </div>
                 </form>
+                <form action="{{ route('account.register.form') }}" method="GET">
+                    <button id="login-register" type="submit" class=""><span class="enter-login">Criar uma Nova conta</button>
+                </form>
+
+                    <div class="clearfix">
+
+                        <div id="forget-password" class="l-5">
+                            <a href="{{route('account.code.form')}}" class="hp-style"><h1>Esqueceu a Senha?</h1></a>
+                            
+                        </div>
+                    </div>
+
+                <div class="clearfix" style="padding: 10px;">
+                    <span class="alert-login">Ao clicar em criar uma nova conta, você aceita o Contrato de Utilizador, a Política de Privacidade e a Política de Cookies do Tassumir</span><br>
+                    <a href="" class="politic-privacy">Política de Privacidade e a Política de Cookies do Tassumir</a>
+                </div>
             </div>
         </main>
     </div>

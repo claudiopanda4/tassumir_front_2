@@ -65,7 +65,6 @@
                                 </li>
 
                                 @for($i=sizeof($notificacoes); $i > 0 ; $i--)
-                                @if($notificacoes[$i- 1]['estado']!= 3)
                                     <li class="hidden-click-any-container change-look noti-flex-info" id="{{$notificacoes[$i- 1]['id1']}}" name="{{$notificacoes[$i- 1]['id1']}}">
                                       <?php if ($notificacoes[$i- 1]['v']== 1): ?>
                                         <?php if ($notificacoes[$i- 1]['foto']!= null): ?>
@@ -103,32 +102,66 @@
 
                                         <div class="hidden-click-any-container noti-div-name">
 
-                                        <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
 
+                                                    @if($notificacoes[$i- 1]['tipo'] == 1)
+                                                    <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+                                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                                    </a>
+                                                    @elseif($notificacoes[$i- 1]['tipo'] == 2)
+                                                    <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+                                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                                    </a>
+                                                    @elseif($notificacoes[$i- 1]['tipo'] == 3)
+                                                    <a href="">
+                                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                                    </a>
+                                                    @elseif($notificacoes[$i- 1]['tipo'] == 4 || $notificacoes[$i- 1]['tipo'] == 7)
+                                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                                    @elseif($notificacoes[$i- 1]['tipo'] == 5)
+                                                    <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}">
+                                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                                    </a>
+                                                    @elseif($notificacoes[$i- 1]['tipo'] == 6)
+                                                    <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+                                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                                    </a>
+                                                    @elseif($notificacoes[$i- 1]['tipo'] == 8)
+                                                    <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}">
+                                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                                    </a>
+                                                    @elseif($notificacoes[$i- 1]['tipo'] == 9)
+                                                    <a href="">
+                                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                                    </a>
+                                                    @elseif($notificacoes[$i- 1]['tipo'] == 10)
+                                                    <a href="">
+                                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                                    </a>
+                                                    @endif
                                         <div class="hidden-click-any-container noti-hour ml-2">
                                             <a href=""><span class="">há um dia</span></a>
                                         </div>
                                         @if($notificacoes[$i- 1]['tipo'] == 4)
+                                        $controller++;
                                         <div class="hidden-click-any-container options-invited clearfix">
                                             <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                                 <div class="hidden-click-any-container label-invited" id="">
                                                     <h2 class="accept_relationship" id="{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Aceitar</h2>
                                                 </div>
                                             </label>
-                                            <div class="reject_relationship" id="{{$notificacoes[$i- 1]['id']}}">
-                                            <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
+                                            <div class="reject_relationship" id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">
+                                            <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$notificacoes[$i- 1]['id']}}|{{$notificacoes[$i- 1]['id1']}}">Rejeitar</a>
                                         </div>
                                       </div>
                                         @elseif($notificacoes[$i- 1]['tipo'] == 7)
                                         <div class="hidden-click-any-container options-invited clearfix">
                                             <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
-                                                                                      <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}"class="l-5 denied">Ver Resposta</a>
+                                            <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="ver_mais" id="VR|{{$notificacoes[$i- 1]['id1']}}">Ver Resposta</a>
                                         </div>
                                         @endif
                                        </div>
 
                                     </li>
-                                    @endif
                                   @endfor
 
                                  <li class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">

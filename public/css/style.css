@@ -10,8 +10,30 @@ body {
 }
 #app {
 	background-color: var(--background-dark-main);
+}
+#app-log-reg {
+	background-color: #3b3b3b;
+}
+#app-log-reg,
+#app {
 	width: 100vw;
-	height: 100vh;
+	height: auto;
+}
+#body-login {
+	
+}
+#body-reg {
+	
+}
+#body-login,
+#body-reg {
+	background-color: #3b3b3b;	
+}
+#main-reg-container {
+    width: 570px;
+    height: 100%;
+    margin: auto;
+    display: block;
 }
 .input-text-default {
 	background-color: var(--background-dark-input);
@@ -69,18 +91,51 @@ body {
 	text-decoration: underline;
 }
 #main-login-container {
-	width: 100%;
-	height: 100%;
-	margin: 0;
+	width: 850px;
+    height: 100%;
+    margin: auto;
+    margin-left: 170px;
+    display: block;
 }
-#title-login h1 {
+.risk {
+	position: relative;
+	margin-top: 20px;
+    position: relative;
+    width: 100%;
+    height: 1px;
+    background-color: #606060;
+}
+.input-login {
+	background-color: #242526;
+}
+.risk h2 {
+	padding: 10px;
+	font-size: 12px;
+	color: #fff;
+    background-color: #3b3b3b;
+}
+#login-register {
+	background-color: #800080;
+    border: 1px solid #800080;
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    color: #fff;
+    margin-top: 20px;
+    font-weight: bolder;
+    text-align: center;
+}
+#title-login h1,
+.title-log-reg h1 {
 	width: 150px;
     text-align: center;
     color: #fff;
     margin: 5px auto;
 }
 #title-login i,
-#title-login h1 {
+#title-login h1, 
+.title-log-reg i, 
+.title-log-reg h1 {
 	display: inline-block;
 }
 #title-login i {
@@ -89,7 +144,8 @@ body {
 #title-login .title-final {
 	color: #800080;
 }
-#title-login div {
+#title-login div, 
+.title-log-reg div {
 	width: 200px;
     margin: 5px auto;
 }
@@ -1564,10 +1620,21 @@ label[for="hugo"]{
 	margin-bottom: 2px;
 }
 #main-login {
-	width: 320px;
-    height: 370px;
-    margin: auto;
-    top: 40%;
+    float: left;
+}
+#main-login,
+#main-reg {
+    width: 320px;
+    height: auto;
+}
+#main-reg {
+    margin: 60px auto 20px;
+}
+#logo-login-form-lg {
+	margin-top: 80px;
+}
+#title-login {
+	display: none;
 }
 #img-profile-container {
 	width: 110px;
@@ -1576,6 +1643,13 @@ label[for="hugo"]{
 	margin-top: 15px;
 	margin-left: 15px;
 	background-color: #fff;
+}
+.alert-login {
+	font-size: 12px;
+	color: #fff;
+}
+.politic-privacy {
+	font-size: 12px;
 }
 .img-profile {
 	border: 0px solid #000;
@@ -1617,6 +1691,14 @@ label[for="hugo"]{
     height: 40px;
     margin-right: 15px;
     background-color: #343a40;
+}
+.cover-login {
+	position: relative;
+	float: left;
+	width: 480px;
+	height: 480px;
+	margin-left: 0px;
+	margin-right: 40px;
 }
 .noti-flex-info{
 	display: flex;
@@ -2295,7 +2377,7 @@ label[for="hugo"]{
 }
 #main-profile {
 	width: 600px;
-	background-color: #242526;
+	/*background-color: #242526;*/
 	border-radius: 10px;
 }
 #main-profile .card {

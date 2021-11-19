@@ -4,12 +4,44 @@
 		display: none;
 	}
 }
+@media screen and (max-width: 1240px) {
+	#main-login-container {
+	    margin: auto;
+	    margin-left: 50px;
+	}
+}
+@media screen and (max-width: 1100px) {
+	.cover-login {
+	    width: 380px;
+	    height: 400px;
+	    margin-left: 0px;
+	    margin-right: 40px;
+	}
+	#main-login-container {
+	    width: 760px;
+	    margin-left: 15px;
+	}
+}
+@media screen and (max-width: 968px){
+	.cover-login {
+		width: 310px;
+		height: 380px;
+	    margin-right: 20px;
+	}
+	#main-login-container {
+	    width: 665px;
+		margin-left: 15px;
+	}
+}
 @media screen and (max-width: 540px) {
 	#statistics-profile-page-component-container-lg-1 {
 		width: 230px;
 	}
 }
 @media screen and (max-width: 540px) {
+	#title-login {
+		display: block;
+	}
 	.main {
 		width: 100%;
 		margin-top: 6px;
@@ -84,7 +116,7 @@
 	    margin-left: -30px;
 	}
 	.title h1 {
-	    font-size: 25px;
+	    font-size: 30px;
 	}
 	.card.stories-about-talking {
 		margin-top: 0px;
@@ -464,6 +496,43 @@
 		background-color: transparent;
 		border: none;
     }
+    .input-login {
+	    background-color: #3b3b3b;
+	}
+	.input-emai-log {
+		margin-top: 10px;
+	}
+	#body-login, #body-reg {
+	    background-color: #000000;
+	}
+    .cover-login {
+    	display: none;
+	}
+	#main-login-container {
+	    width: 100%;
+	    margin: auto;
+	}
+	#main-login {
+	    width: 320px;
+	    height: auto;
+	    margin: 55px auto;
+	    float: none;
+	}
+	#app-log-reg {
+	    background-color: #000;
+	}
+	#body-login {
+		background-color: #000;
+	}
+	.risk h2 {
+	    background-color: #000;
+	}
+	#title-login {
+	    display: block;
+	}
+	#logo-login-form-lg {
+		display: none;
+	}
 	.profile-name {
 	    margin-top: 0px;
 	}
@@ -725,6 +794,9 @@
 	.img-profile-page {
 	    width: 65px;
 	    height: 65px;
+	}
+	#main-login {
+	    width: 298px;
 	}
 	.video-post {
 	    height: 328px;

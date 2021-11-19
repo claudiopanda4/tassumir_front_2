@@ -83,7 +83,7 @@
                                 <i class="far fa-comment-dots fa-24 fa-option center"></i>
                             </button>
                         </form>
-                        
+
                     </div>
                     <?php endif; ?>
                 <?php endif; ?>
@@ -96,7 +96,7 @@
                 <div>
                     <a href="">
                         <div class="container-logout">
-                            <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Secção</h1></a>
+                            <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Sessão</h1></a>
                         </div>
                     </a>
                 </div>
@@ -113,9 +113,11 @@
                         </a>
                     </div>
                     <?php //endif; ?>-->
+          @if( $perfil[0]['verificacao_relac'] == 1)
             <div class="inform-profile">
-                <h3>Namorado de <span>Ana Joyce</span></h3>
+                <h3>{{$perfil[0]['relac']}}<span>{{$perfil[0]['relac1']}}</span></h3>
             </div>
+            @endif
             <div class="inform-profile">
                 <p>{{$account_name[0]->descricao}}</p>
             </div>

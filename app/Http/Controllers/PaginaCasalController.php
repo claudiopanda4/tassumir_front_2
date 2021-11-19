@@ -13,8 +13,8 @@ class PaginaCasalController extends Controller
     private $current_page_uuid;
 
     public function index(){
-
-      $dates = $this->default_();
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
       $account_name = $dates['account_name'];
       $checkUserStatus = $dates['checkUserStatus'];
       $profile_picture = $dates['profile_picture'];
@@ -27,11 +27,12 @@ class PaginaCasalController extends Controller
       $dadosSeguindo = $dates['dadosSeguindo'];
       $dadosPage = $dates['dadosPage'];
       $dadosSeguida = $dates['dadosSeguida'];
+
+
       $page_current = 'page';
-      $dadosPage = Page::all();
       $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
       $seguidores = Self::seguidores($page_content[0]->page_id);
-      $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
+      $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
       $publicacoes = $this->get_all_post($page_content[0]->page_id);
       $this->current_page_id = $page_content[0]->page_id;
       $sugerir = $this->suggest_pages($page_content[0]->page_id);
@@ -78,11 +79,14 @@ class PaginaCasalController extends Controller
       }
 
       public function reject_relationship(Request $request){
-
+        $aux=DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->id1]);
+        $aux1 = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->pedido_relacionamento_id, 5 ]);
+        DB::table('identificadors')->where('identificador_id',$aux1[0]->identificador_id)
+        ->delete();
         DB::table('pedido_relacionamentos')->where('uuid',$request->id1)
         ->delete();
         DB::table('notifications')->where('notification_id',$request->id2)
-        ->update(['id_state_notification' => 3]);
+        ->delete();
         $resposta.= 1;
 
         return response()->json($resposta);
@@ -92,13 +96,16 @@ class PaginaCasalController extends Controller
         $pedido=array();
         $tipo=DB::select('select * from pedido_relacionamentos where uuid = ?', [$id]);
         $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
-        $conta = DB::select('select * from contas where conta_id = ?', [$tipo[0]->conta_id_pedinte]);
+        $conta = DB::select('select * from contas where conta_id = ?', [$tipo[0]->conta_id_pedida]);
           $pedido[0]['nome']= $conta[0]->nome ;
           $pedido[0]['nome'].= " ";
           $pedido[0]['nome'].= $conta[0]->apelido;
           $pedido[0]['foto']= $conta[0]->foto;
           $pedido[0]['tipo']=$tipos[0]->tipo_relacionamento;
-          $dates = $this->default_();
+          $pedido[0]['pedido_relacionamento_id']=$tipo[0]->pedido_relacionamento_id;
+
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -112,8 +119,11 @@ class PaginaCasalController extends Controller
           $dadosPage = $dates['dadosPage'];
           $dadosSeguida = $dates['dadosSeguida'];
           $page_current = 'relationship_request';
-          //return view('relacionamento.index', compact('account_name', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
-          return view('relacionamento.index', compact('account_name', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
+          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+          $aux2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$tipo[0]->pedido_relacionamento_id, 5 ]);
+          $notificacoes_aux=DB::select('select * from notifications where (identificador_id_receptor,id_action_notification,identificador_id_destino) = (?,?,?)', [$aux1[0]->identificador_id, 7, $aux2[0]->identificador_id]);
+          $pedido[0]['not']=$notificacoes_aux[0]->notification_id ;
+                    return view('relacionamento.index', compact('account_name', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
       }
 
     public function request_relationship() {
@@ -157,7 +167,7 @@ class PaginaCasalController extends Controller
         $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
         if (sizeof($notificacoes_aux)>0) {
           foreach ($notificacoes_aux as $key) {
-            $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+            if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
             if ($aux2[0]->tipo_identificador_id == 1) {
               $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
               $nome[0]= $conta[0]->nome ;
@@ -177,17 +187,23 @@ class PaginaCasalController extends Controller
                 $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
                 $notificacoes[$a]['tipo']=1;
                 $notificacoes[$a]['id']=$key->identificador_id_destino;
+                $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
+                $notificacoes[$a]['link']=$post[0]->uuid;
                 break;
               case 2:
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
-                  $notificacoes[$a]['tipo']=1;
+                  $notificacoes[$a]['tipo']=2;
                   $notificacoes[$a]['id']=$key->identificador_id_destino;
+                  $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                  $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
+                  $notificacoes[$a]['link']=$post[0]->uuid;
                   break;
                 case 3:
                   $notificacoes[$a]['notificacao']=$nome[0];
                   $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
-                  $notificacoes[$a]['tipo']=1;
+                  $notificacoes[$a]['tipo']=3;
                   $notificacoes[$a]['id']=$key->identificador_id_destino;
                     break;
                   case 4:
@@ -204,9 +220,21 @@ class PaginaCasalController extends Controller
                     case 5:
                     $notificacoes[$a]['notificacao']=$nome[0];
                     $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                    $notificacoes[$a]['tipo']=1;
+                    $notificacoes[$a]['tipo']=5;
                     $notificacoes[$a]['id']=$key->identificador_id_destino;
+                    $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                    $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
+                    $notificacoes[$a]['link']=$page[0]->uuid;
                         break;
+                    case 6:
+                        $notificacoes[$a]['notificacao']=$nome[0];
+                        $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                        $notificacoes[$a]['tipo']=5;
+                        $notificacoes[$a]['id']=$key->identificador_id_destino;
+                        $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                        $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
+                        $notificacoes[$a]['link']=$post[0]->uuid;
+                            break;
                    case 7:
                    $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
                    if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
@@ -215,15 +243,35 @@ class PaginaCasalController extends Controller
                    $notificacoes[$a]['tipo']=7;
                    $notificacoes[$a]['id']=$tipo[0]->uuid;}}
                             break;
+                case 8:
+                            $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                            $notificacoes[$a]['tipo']=8;
+                            $notificacoes[$a]['id']=$key->identificador_id_destino;
+                            $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                            $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
+                            $notificacoes[$a]['link']=$page[0]->uuid;
+                                break;
+
+              case 9:
+                                $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
+                                $notificacoes[$a]['tipo']=9;
+                                $notificacoes[$a]['id']=$key->identificador_id_destino;
+                                    break;
+           case 10:
+                                                      $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
+                                                      $notificacoes[$a]['tipo']=9;
+                                                      $notificacoes[$a]['id']=$key->identificador_id_destino;
+                                                          break;
 
 
             }
             $notificacoes[$a]['foto']=$nome[1];
             $notificacoes[$a]['v']=$nome[2];
-            $notificacoes[$a]['estado']=$key->id_state_notification;
             $notificacoes[$a]['id1']=$key->notification_id;
+
             $a++;
           }
+        }
         }
         $dadosPage = Page::all();
           $dadosSeguindo[0] = [
@@ -316,7 +364,7 @@ class PaginaCasalController extends Controller
 
         $seguidores = Self::seguidores($page_content[0]->page_id);
 
-        $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
+        $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
         $publicacoes = $this->get_all_post($page_content[0]->page_id);
         $this->current_page_id = $page_content[0]->page_id;
         $conta_logada = $auth->defaultDate();
@@ -338,7 +386,7 @@ class PaginaCasalController extends Controller
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $page_content = $this->page_default_date($account_name);
             $seguidores = Self::seguidores($page_content[0]->page_id);
-            $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
+            $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
             $publicacoes = $this->get_all_post($page_content[0]->page_id);
             $this->current_page_id = $page_content[0]->page_id;
             //dd($page_content);
@@ -354,7 +402,8 @@ class PaginaCasalController extends Controller
 
     public function my_pages(){
         try {
-          $dates = $this->default_();
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -395,7 +444,7 @@ class PaginaCasalController extends Controller
                 }
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $seguidores = Self::seguidores($page_content[0]->page_id);
-            $tipo_relac = $this->type_of_relac($page_content[0]->page_id);
+            $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
             $publicacoes = $this->get_all_post($page_content[0]->page_id);
             $this->current_page_id = $page_content[0]->uuid;
 
@@ -426,7 +475,8 @@ class PaginaCasalController extends Controller
 
     public function paginas($uuid){
         try {
-          $dates = $this->default_();
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -496,7 +546,8 @@ class PaginaCasalController extends Controller
 
     public function edit_couple(){
         try {
-          $dates = $this->default_();
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -520,7 +571,8 @@ class PaginaCasalController extends Controller
 
     public function delete_couple_page(){
         try {
-          $dates = $this->default_();
+      $page_couple = new PerfilController();
+      $dates = $page_couple->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
