@@ -131,15 +131,20 @@ class PerfilController extends Controller
                                  break;
 
                case 9:
-                                 $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
-                                 $notificacoes[$a]['tipo']=9;
-                                 $notificacoes[$a]['id']=$key->identificador_id_destino;
+               $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+               if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+               if (sizeof($tipo)){
+               $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+               $notificacoes[$a]['tipo']=9;
+               $notificacoes[$a]['id']=$tipo[0]->uuid;}}
                                      break;
             case 10:
-                                                       $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
-                                                       $notificacoes[$a]['tipo']=9;
-                                                       $notificacoes[$a]['id']=$key->identificador_id_destino;
-                                                           break;
+            $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+            if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+            if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
+            $notificacoes[$a]['notificacao'].=" Pediu que você page";
+            $notificacoes[$a]['tipo']=10;
+            $notificacoes[$a]['id']=$tipo[0]->uuid;}}                                                           break;
 
 
              }
@@ -341,6 +346,8 @@ class PerfilController extends Controller
     public function perfil_das_contas($id)
     {
         try {
+
+          $page_couple = new PaginaCasalController();
             $dates = $this->default_();
             $checkUserStatus = $dates['checkUserStatus'];
             $profile_picture = $dates['profile_picture'];

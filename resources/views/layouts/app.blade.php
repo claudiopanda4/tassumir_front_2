@@ -175,11 +175,11 @@
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @elseif($notificacoes[$i- 1]['tipo'] == 9)
-                                   <a href="">
+                                   <a href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @elseif($notificacoes[$i- 1]['tipo'] == 10)
-                                   <a href="">
+                                   <a href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @endif
@@ -187,7 +187,7 @@
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
                                     @if($notificacoes[$i- 1]['tipo'] == 4)
-                                    $controller++;
+                                    <?php $controller++; ?>
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
@@ -199,6 +199,7 @@
                                     </div>
                                   </div>
                                     @elseif($notificacoes[$i- 1]['tipo'] == 7)
+                                    <?php $controller++; ?>
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
                                         <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="ver_mais" id="VR|{{$notificacoes[$i- 1]['id1']}}">Ver Resposta</a>
@@ -550,12 +551,12 @@
         <div class="header-height"></div>
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <div class="">
-                <input class="file" type="file" name="imgOrVideo" style="width: 250px; margin-left: 10px; color: #fff;">
+                <input class="file" type="file" name="imgOrVideo" id="testeVid" style="width: 250px; margin-left: 10px; color: #fff;">
             </div>
         </div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
             <label for="target-profile-cover-post" class="label-full">
-                <div class="cover-done" id="cover-done-post">
+                <div class="cover-done checker" id="cover-done-post">
                     <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
                 </div>
             </label>
@@ -1028,6 +1029,13 @@
             });
         });
 
+        $('.checker').click(function(e) {
+          
+          var video = $('#testeVid').val();
+          console.log(video.duration);
+
+        });
+
 
         $('.seguir').click(function(e){
             e.preventDefault();
@@ -1096,16 +1104,37 @@
                 let id = video_post1[i].id.split('_')[1];
                 //console.log('idaqui ' + id);
                 offset_video = $('#video_' + id).offset();
-                //console.log(video_post1[i].id + ' top: ' + offset_video.top);
+                //console.log(document.getElementById('video_' + id).paused);
                 if(offset_video.top < 140 && offset_video.top > -300){
                     document.getElementById('video_' + id).play();
-                    document.getElementById('play_button_' + id).classList.add('invisible');
+                    if (!document.getElementById('video_' + id).paused) {
+                        document.getElementById('play_button_' + id).classList.add('invisible');
+                    }
                 } else {
                     document.getElementById('video_' + id).pause();
                     document.getElementById('play_button_' + id).classList.remove('invisible');
                     //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
                 }
             }
+            let offset_post = $('#video_' + id).offset();
+            let post_view = document.getElementsByClassName('post-view');
+            for (var i = 0; i <= post_view.length - 1; i++) {
+                let id = post_view[i].id.split('_')[1];
+                //console.log('idaqui ' + id);
+                offset_post = $('#_' + id).offset();
+                //console.log(document.getElementById('video_' + id).paused);
+                if(offset_video.top < 140 && offset_video.top > -300){
+                    document.getElementById('video_' + id).play();
+                    if (!document.getElementById('video_' + id).paused) {
+                        document.getElementById('play_button_' + id).classList.add('invisible');
+                    }
+                } else {
+                    document.getElementById('video_' + id).pause();
+                    document.getElementById('play_button_' + id).classList.remove('invisible');
+                    //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
+                }
+            }
+            document.get
         }, 100);
 
         $('#search-lg-home-id').focus(function(){
@@ -1158,6 +1187,8 @@
                 $('#video_' + id).get(0).pause();
             }
         });
+
+  
     });
 
 
