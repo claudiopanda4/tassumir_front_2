@@ -39,15 +39,15 @@
 
                 </header>
 
-                <form action="{{route('account.newPasswordSave')}}" method="POST" class="needs-validation" novalidate>
+                <form action="{{route('account.newPasswordSave2')}}" method="POST" class="needs-validation" novalidate>
                     @csrf
 
 
-                    <input type="text" name="theId" class="hidden" value="{{$takeId}}">
+                    <input type="text" name="theId1" class="hidden" value="{{$idToCompare}}">
 
                     <div class="form-group">
                         
-                        <input type="password" class="input-text-default input-full input-login" name="password" placeholder="Escreva a nova senha" required id="password">
+                        <input type="password" class="input-text-default input-full input-login" name="password1" placeholder="Escreva a nova senha" required id="password1">
                         <div class="invalid-feedback">
                             Insira a Password
                       </div>
@@ -57,7 +57,7 @@
 
                     <div class="form-group">
                         
-                        <input type="password" class="input-text-default input-full input-login" name="confirmarPassword" placeholder="Repita a nova senha" required id="confirmarPassword">
+                        <input type="password" class="input-text-default input-full input-login" name="confirmarPassword1" placeholder="Repita a nova senha" required id="confirmarPassword1">
                         <div class="invalid-feedback">
                             Confirme a Password
                       </div>
@@ -77,9 +77,9 @@
 </html>
 <script>
 
-$("#password").on('keyup',function(){
+$("#password1").on('keyup',function(){
 
-        let passwordValue = $("#password").val();
+        let passwordValue = $("#password1").val();
 
         let passwordLenght = passwordValue.length;
 
@@ -128,15 +128,17 @@ $("#password").on('keyup',function(){
 
     });
 
-    $("#confirmarPassword").on('keyup',function(){
 
-        let password = $("#password").val();
+    $("#confirmarPassword1").on('keyup',function(){
+
+        let password = $("#password1").val();
         let passwordLenght =password.length;
 
-        let confirmPassword = $("#confirmarPassword").val();
+        let confirmPassword = $("#confirmarPassword1").val();
         let confirmPasswordLenght = confirmPassword.length;
 
-        if(password === confirmPassword && passwordLenght === confirmPasswordLenght ){
+        
+        if(password === confirmPassword && passwordLenght === confirmPasswordLenght){
 
 
 
@@ -151,6 +153,9 @@ $("#password").on('keyup',function(){
                     $("#labelC").fadeOut();
 
             },4000)
+
+
+
 
         }else{
 

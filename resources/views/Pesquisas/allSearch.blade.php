@@ -276,67 +276,67 @@ function expe(ccc, v){
 		data: {'data': ccc, 'val': v},
 		success: function(res) {
 			console.log(res);
+			var content = '';
+			var count = 1;
+			let src = '{{ asset("storage/img/users/") }}';
 
-			if (res.length != 0) {
-				for (var i = 0; i < res.length; i++) {
+			$.each(res, function(key, value) {
+				//console.log(value);
+				if (value.estado_conta_id == 1) {
 
-					//$.each(res, function(k, value) {
-						var nome = '';
-						var contador = 1;
-						let src = '{{asset("storage/img/users/") }}';
-						console.log(src);
-						console.log(res[i].estado_conta_id);
-						//if (res[k].estado_conta_id == 1) {
-							
-							if (contador == 1) {
-								nome+='<div class="card-p ">'
-							}
-							
-							nome += '<ul class="card-flex">'
-							nome += '<li class="search-title">'
+					if (count == 1) {
+						content = '<div class="card-p">'
+					}
+					content += '<ul class="card-flex">';
+					content += '<li class="search-title">';
 
-							if (contador == 1) {
-								nome += '<span style="color:#fff;" class="mt-2">Pessoas</span>'
-							}
-							nome += '</li>'
-							nome += '<li class="change-look search-info">'
+					if (count == 1) {
+						content += '<span style="color: #fff;" class="mt-2">Pessoas</span>';
+					}
 
-							if (res[i].foto != null) {
-								nome += '<div class="page-cover circle "><img class=" circle img-40" src= ' + src + '/' + res[i].foto + '></div>'
-							}else {
-								nome += '<div class=" page-cover circle "><i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i></div>'
-							}
-							nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
+					content += '</li>';
+					content += '<li class="change-look search-info">';
 
-							var route1 = "{{route('account1.profile', 1) }}"
-							url_array1 = route1.split('/');
-							url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + res[i].uuid;
+					if (value.foto != null) {
+						content += '<div class="page-cover circle ">' 
+						content += '<img class=" circle img-40" src= ' + src + '/' + value.foto + '>'
+						content += '</div>'
+					}else {
+						content += '<div class=" page-cover circle ">'
+						content += '<i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>'
+						content += '</div>'
+					}
+					content += '<div class="mb-1 mr-2 profile-name-ident" id="">'
+					content += '<div id="" class="" >'
 
-							nome += '<a href='+url_link1+' <span class="profile-name-1">'+res[i].nome+' '+res[i].apelido+'</span>'
-							nome += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
-							nome += '</div></div></li><div class="couple-separator"></div>'
+					var route1 = "{{route('account1.profile', 1) }}"
+					url_array1 = route1.split('/');
+					url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
 
-							/*if (contador == 4) {
-								var route = "{{route('peoplesSearch1.page', 1) }}"
-								url_array = route.split('/');
-								url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
-								nome += '<a href='+url_link+' class="mr-4"> ver mais</a>'
-							}*/
-							nome += '</ul>'
+					content += '<a href='+url_link1
+					
+					content += '<span class="profile-name-1">'+value.nome
+					content += ' '+value.apelido
+					content += '</span>'
 
-							if (contador == 4) {
-								nome += '</div>'														
-							}
-								$('div[name=pessoa]').empty();
-								$('div[name=pessoa]').append(nome);
-								contador++;
+					content += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4">'
+					content += '<i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i>'
+					content += '</a>'
+					content += '</div></div></li>'
+					content += '<div class="couple-separator"></div>'
 
-						//}
+					if (count == res.length) {
 
-						//console.log(res[k].conta_id);
-					//});
+						content += '</div>'														
+					}
+					//content += '</div>'														
+
+					$('div[name=pessoa]').empty();
+					$('div[name=pessoa]').append(content);
+					count++;
+
 				}
-			}
+			});
 		}
 	});
 }

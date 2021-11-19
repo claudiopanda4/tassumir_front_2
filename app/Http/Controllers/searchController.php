@@ -251,63 +251,63 @@ public function default_(){
 
     public function peoplepesquisa(Request $r) 
     {
-      if ($r->ajax()) {
-        $default = [];
-        $index = 0;
+      try {
+        if ($r->ajax()) {
+          $default = [];
+          $index = 0;
 
-        if (Self::checkAjaxValueType($r->val) == 'espec') {  
-          
-          if ($r->val == 'sol') {
-              
-              $conta = DB::table('contas')->where('nome', 'like', '%'.$r->ccc.'%')
-              ->orwhere('apelido', 'like', '%'.$r->ccc.'%')->limit(4)->get();
+          if (Self::checkAjaxValueType($r->val) == 'espec') {  
+            
+            if ($r->val == 'sol') {
+                
+                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->ccc.'%')
+                ->orwhere('apelido', 'like', '%'.$r->ccc.'%')->limit(4)->get();
 
-              foreach ($conta as $valor) {
-                if ($valor->estado_civil_id == 1) { // 1 : por ser o id do est_civil solteiro na tabela conta
-                  $default[$index] = $valor;
-                  $index++;
+                foreach ($conta as $valor) {
+                  if ($valor->estado_civil_id == 1) { // 1 : por ser o id do est_civil solteiro na tabela conta
+                    $default[$index] = $valor;
+                    $index++;
+                  }
                 }
-              }
-              return response()->json($default);  
+                //return response()->json($default);  
 
-          } else if ($r->val == 'nam') {
-              
-              $conta = DB::table('contas')->where('nome', 'like', '%'.$r->ccc.'%')
-              ->orwhere('apelido', 'like', '%'.$r->ccc.'%')->limit(4)->get();
+            } else if ($r->val == 'nam') {
+                
+                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->ccc.'%')
+                ->orwhere('apelido', 'like', '%'.$r->ccc.'%')->limit(4)->get();
 
-              foreach ($conta as $valor) {
-                if ($valor->estado_civil_id == 2) { // 1 : por ser o id do est_civil solteiro na tabela conta
-                  $default[$index] = $valor;
-                  $index++;
+                foreach ($conta as $valor) {
+                  if ($valor->estado_civil_id == 2) { // 1 : por ser o id do est_civil solteiro na tabela conta
+                    $default[$index] = $valor;
+                    $index++;
+                  }
                 }
-              }
-              return response()->json($default);  
+                //return response()->json($default);  
 
-          } else if ($r->val == 'cas') {
-              
-              $conta = DB::table('contas')->where('nome', 'like', '%'.$r->ccc.'%')
-              ->orwhere('apelido', 'like', '%'.$r->ccc.'%')->limit(4)->get();
+            } else if ($r->val == 'cas') {
+                
+                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->ccc.'%')
+                ->orwhere('apelido', 'like', '%'.$r->ccc.'%')->limit(4)->get();
 
-              foreach ($conta as $valor) {
-                if ($valor->estado_civil_id == 3) { // 1 : por ser o id do est_civil solteiro na tabela conta
-                  $default[$index] = $valor;
-                  $index++;
+                foreach ($conta as $valor) {
+                  if ($valor->estado_civil_id == 3) { // 1 : por ser o id do est_civil solteiro na tabela conta
+                    $default[$index] = $valor;
+                    $index++;
+                  }
                 }
-              }
-              return response()->json($default);  
+                //return response()->json($default);  
 
+            }
+            return response()->json($default);
+
+          } else {
+            return response()->json('fora');
           }
 
-
-
-        } else {
-          return response()->json('fora');
         }
-
-
-      }
-
-
+      } catch (Exception $ex) {
+        dd($ex);
+      } 
     }    
 
 
@@ -316,7 +316,7 @@ public function default_(){
       return ($v == 'sol' || $v == 'cas' || $v == 'nam' || $v == 'pag') ? 'espec' : '';
     }
 
-    private static function pesquisasespecificas($r) 
+    private static function searchByEstado($r) 
     {
 
     }

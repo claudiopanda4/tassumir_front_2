@@ -551,12 +551,12 @@
         <div class="header-height"></div>
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <div class="">
-                <input class="file" type="file" name="imgOrVideo" style="width: 250px; margin-left: 10px; color: #fff;">
+                <input class="file" type="file" name="imgOrVideo" id="testeVid" style="width: 250px; margin-left: 10px; color: #fff;">
             </div>
         </div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
             <label for="target-profile-cover-post" class="label-full">
-                <div class="cover-done" id="cover-done-post">
+                <div class="cover-done checker" id="cover-done-post">
                     <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
                 </div>
             </label>
@@ -1029,6 +1029,13 @@
             });
         });
 
+        $('.checker').click(function(e) {
+          
+          var video = $('#testeVid').val();
+          console.log(video.duration);
+
+        });
+
 
         $('.seguir').click(function(e){
             e.preventDefault();
@@ -1208,6 +1215,8 @@
                 $('#video_' + id).get(0).pause();
             }
         });
+
+  
     });
 
 
