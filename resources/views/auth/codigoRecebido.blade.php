@@ -27,10 +27,10 @@
     <meta name="viewport" content="width=device-width-width, initial-scale=1,0">
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
-<body>
-    <div id="app">
+<body id="body-reg">
+    <div id="app-log-reg">
         <main class="main" id="main-login-container">
-            <div class="center" id="main-login">
+            <div id="main-reg">
                 <header class="logo-form mb-4" id="title-login">
 
                     <div>
@@ -40,16 +40,25 @@
                 </header>
 
 
-                <form action="" method="POST">
+                <form action="{{route('account.verifyToRecoverPass')}}" method="POST" class="needs-validation" novalidate>
                     @csrf
-
+                    <input type="text" name="Id" value="{{$foundedId}}" class="hidden">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <span class="text-white">{{$codeToSend}}</span>
+                        </div>
+                    </div>
                     <div class="form-group">
                         
-                        <input type="text" class="input-text-default input-full" name="number_email_login" placeholder="Escreva o código que recebeu" id="email">
+                        <input type="text" class="input-text-default input-full input-login" name="codeSend" placeholder="Escreva o código que recebeu" id="codeReceived" required> 
+
+                        <div class="invalid-feedback">
+                            Insira o Código
+                      </div>
                     </div>
                     
 
-                    <a href="{{route('validate.newCode.form')}}" id="login-enter" type="submit" class=""><span class="text-white">Validar código</span></a>
+                    <button type="submit" id="login-enter" class="alerta">Validar código</button>
                 </form>
 
                 <div class="couple-separator mt-3"></div>
@@ -58,4 +67,36 @@
     </div>
 </body>
 </html>
+<script>
+    
+    $("#codeReceived").bind('keydown', function(e) {
+
+      var codTecla = e.which;
+      var teclas = (codTecla >= 48 && codTecla <= 57);
+      var teclasAlter = (",8,32,46,37,38,39,40".indexOf("," + codTecla + ",") > -1);
+      if (teclas || teclasAlter) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('needs-validation');
+
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          } else {
+            //teste();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')	
+@section('content')
 <div class="main" id="main-container-profile">
     <div class="card br-10 card-flex card-page">
         <div class="clearfix">
@@ -15,7 +15,7 @@
                     </div>
                 @endif
 
-                @if($checkUserStatus)
+                @if($v==1)
                     <label for="target-profile-cover-page">
                         <div class="add-edit-profile circle">
                             <i class="fas fa-plus center" style="font-size: 10px;"></i>
@@ -83,12 +83,12 @@
                     <div class="follwing-btn-container">
                         <?php $contador = 0;
                               $sgda = 0;
-                              $sgdo = 0;  
+                              $sgdo = 0;
                          ?>
                         @forelse($dadosSeguida as $Seguida)
-                        <?php if (($page_content[0]->page_id == $Seguida->id) && ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo)) : ?>   
+                        <?php if (($page_content[0]->page_id == $Seguida->id) && ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo)) : ?>
                          <?php $sgda = $Seguida->identificador_id_seguida;?>
-                         <?php $sgdo = $dadosSeguindo[0]['identificador_id_seguindo'];?>                                     
+                         <?php $sgdo = $dadosSeguindo[0]['identificador_id_seguindo'];?>
                         <?php $contador = 1;?>
                         <?php endif ?>
                         @empty
@@ -116,7 +116,7 @@
                 </button>
             </div>
             <?php endif ?>
-            
+
         </div>
         <?php if (false): ?>
             <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-mobile">
@@ -139,7 +139,7 @@
                     <h1>{{ $seguidores }}</h1>
                     <h2>Seguindo</h2>
                 </div>
-            </div>    
+            </div>
         <?php endif ?>
         <div class="clearfix">
             <div class="description-couple">
@@ -150,16 +150,16 @@
                 <p> {{ $page_content[0]->descricao }} </p>
             </div>
         </div>
-        @if($checkUserStatus)
+        @if($v == 1)
         <?php if (!$hasUserManyPages): ?>
         <div class="edit-page-container-mobile">
             <button type="submit" class="follwing-btn">
                 Editar Página
             </button>
-        </div>    
+        </div>
         <?php endif ?>
         @endif
-        @if($checkUserStatus)
+        @if($v == 1)
         <label for="add-post-target" class="add-post-label">
             <div class="add-post circle">
                 <i class="fas fa-plus fas-16 center"></i>
@@ -201,7 +201,7 @@
                                 @empty
                                 @endforelse
                                 <?php if (($verifica1 != $verifica)  ) : ?>
-                        <?php if (($verifica != 'B')  ) : ?> 
+                        <?php if (($verifica != 'B')  ) : ?>
                             <?php if ($page_content[0]->page_id != $Paginas->page_id) : ?>
                         <li class="li-component-suggest clearfix l-5" id="li-component_suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
@@ -243,7 +243,7 @@
                                     <a href="" class="seguir_couple" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
                                     <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
                                 </li>
-                            <?php endif ?>    
+                            <?php endif ?>
                     <?php else: ?>
 
                     <?php endif ?>
@@ -263,7 +263,7 @@
                     <li><a href="?post-container-post=post"><i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 24px;"></i><h1 class="menu-option-profile"></h1></a></li>
                 </ul>
             </nav>
-            <?php 
+            <?php
                 $posts = [
                     [],[],[],
                     [],[],[],
@@ -275,18 +275,18 @@
                 <?php if ($_GET['post-container-post'] == 'post'): ?>
                 <div class="post-img-container-page post-page-container">
                     <?php foreach ($posts as $key => $value): ?>
-                        
+
                     <?php endforeach ?>
                 </div>
                 <?php endif ?>
                 <?php if ($_GET['post-container-post'] == 'video'): ?>
                 <div class="post-video-container-page post-page-container">
-                    
+
                     @for($i = 0; $i < count($allPosts); $i++)
                         @if(isset($allPosts[$i]['postVideos']))
                         <a href="">
                             <div class="img-post">
-                                <video> 
+                                <video>
                                     <source src="{{asset('storage/video/page/' . $allPosts[$i]['postVideos'])}}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
@@ -352,12 +352,12 @@
                   console.log(response);
                   $('#li-component_suggest-' + valor_pagina_id).remove();
                   $('#li-component-suggest-' + valor_pagina_id).remove();
-                  $('#li-component-sugest-' + valor_pagina_id).remove(); 
+                  $('#li-component-sugest-' + valor_pagina_id).remove();
                   $('.seguir-' + valor_pagina_id).hide();
                 }
               });
              });
-            
+
             $('#btn_seguir').click(function(){
             var valor_pagina_id = $('#seguida_page').val();
             var valor_idconta = $('#seguinte').val();
@@ -372,7 +372,7 @@
                   console.log(response);
                   $('#li-component_suggest-' + valor_pagina_id).remove();
                   $('#li-component-suggest-' + valor_pagina_id).remove();
-                  $('#li-component-sugest-' + valor_pagina_id).remove(); 
+                  $('#li-component-sugest-' + valor_pagina_id).remove();
                   $('.seguir-' + valor_pagina_id).hide();
                   $('#btn_seguir').remove();
                 }
@@ -381,7 +381,7 @@
 
             $('#btn_nao_seguir').click(function(){
             var seguida = $('#sgda').val();
-            var seguindo = $('#sgdo').val();    
+            var seguindo = $('#sgdo').val();
              $.ajax({
                 url: "{{route('nao.seguir.seguindo')}}",
                 type: 'get',
@@ -389,7 +389,7 @@
                 dataType: 'json',
                 success: function(response){
                   console.log(response);
-                  $('#seguida-' + seguida).remove();  
+                  $('#seguida-' + seguida).remove();
                   $('#btn_nao_seguir').remove();
                 }
               });
@@ -397,4 +397,3 @@
             });
 </script>
 @stop
-

@@ -12,6 +12,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -45,15 +47,32 @@
                         <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                     </div>
                 </header>
-                <form action="{{ route('account.login.enter') }}" method="POST">
+                <form action="{{ route('account.login.enter') }}" method="POST" >
                     @csrf
-                     <div class="form-group">
+                     
+
+                    <div class="form-group">
+
+
                         <label for="exampleInputPassword1">Número ou Email</label>
-                        <input class="input-text-default input-full input-login" name="number_email_login" type="text" placeholder="email ou telefone">
+                        <input class="input-text-default input-full input-login" name="number_email_login" type="text" placeholder="email ou telefone" >
+
+                        @error('number_email_login')
+
+                            <span style="color: red;">{{$message}}</span>
+                        @enderror
+                        
                     </div>
+
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" name="password_login" class="input-text-default input-full input-login" id="exampleInputPassword1" placeholder="password">
+                        <input type="password" name="password_login" class="input-text-default input-full input-login" id="exampleInputPassword1" placeholder="password" >
+
+                        @error('password_login')
+
+                            <span style="color: red;">{{$message}}</span>
+                        @enderror
+
                     </div>
                     <button id="login-enter" type="submit" class=""><span class="enter-login">Ent</span>rar</button>
                     <div class="risk">
@@ -63,6 +82,15 @@
                 <form action="{{ route('account.register.form') }}" method="GET">
                     <button id="login-register" type="submit" class=""><span class="enter-login">Criar uma Nova conta</button>
                 </form>
+
+                    <div class="clearfix">
+
+                        <div id="forget-password" class="l-5">
+                            <a href="{{route('account.code.form')}}" class="hp-style"><h1>Esqueceu a Senha?</h1></a>
+                            
+                        </div>
+                    </div>
+
                 <div class="clearfix" style="padding: 10px;">
                     <span class="alert-login">Ao clicar em criar uma nova conta, você aceita o Contrato de Utilizador, a Política de Privacidade e a Política de Cookies do Tassumir</span><br>
                     <a href="" class="politic-privacy">Política de Privacidade e a Política de Cookies do Tassumir</a>
@@ -72,3 +100,46 @@
     </div>
 </body>
 </html>
+
+<script>
+
+   /* $("#mudar").click(function(e) {
+        e.preventDefault();
+            if ($(":password")) {
+                $(":password").show().text();
+                $(" #teste1").hide().val();
+            }
+        });
+        $("#outro").click(function(e) {
+            e.preventDefault();
+            if ($(":password")) {
+                let takeToChange = $(".changeType");
+                let changeToPass = takeToChange.val();
+                $(" #teste1").show().val(changeToPass);
+                $(":password").hide();
+
+            }
+        });
+
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('needs-validation');
+
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          } else {
+            //teste();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();*/
+
+</script>
+
+

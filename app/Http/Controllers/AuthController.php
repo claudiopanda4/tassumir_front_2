@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Http\Controllers\PaginaCasalController;
 
+use Illuminate\Support\Facades\Validator;
+
 class AuthController extends Controller
 {
     private $casalPage;
@@ -18,181 +20,184 @@ class AuthController extends Controller
         //$this->middleware('auth:web1');
         $this->casalPage = new PaginaCasalController();
     }
-    public function default_(){
-        $account_name = $this->defaultDate();
-        $checkUserStatus = Self::isCasal($account_name[0]->conta_id);
-        $profile_picture = Self::profile_picture(Auth::user()->conta_id);
-        $isUserHost =Self::isUserHost($account_name[0]->conta_id);
-        $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
-        $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
-        $page_content = $this->casalPage->page_default_date($account_name);
-        $conta_logada = $this->defaultDate();
-        $notificacoes=array();
-        $a=0;
-        $nome=array();
-        $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
-        $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
-        if (sizeof($notificacoes_aux)>0) {
-          foreach ($notificacoes_aux as $key) {
-            if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
-            if ($aux2[0]->tipo_identificador_id == 1) {
-              $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
-              $nome[0]= $conta[0]->nome ;
-              $nome[0].= " ";
-              $nome[0].= $conta[0]->apelido;
-              $nome[1]= $conta[0]->foto;
-              $nome[2] =1;
-            }elseif ($aux2[0]->tipo_identificador_id == 2) {
-              $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
-                $nome[0] =$page[0]->nome;
-                $nome[1] =$page[0]->foto;
-                $nome[2] =2;
-            }
-            switch ($key->id_action_notification) {
-              case 1:
-                $notificacoes[$a]['notificacao']=$nome[0] ;
-                $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
-                $notificacoes[$a]['tipo']=1;
-                $notificacoes[$a]['id']=$key->identificador_id_destino;
-                $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
-                $notificacoes[$a]['link']=$post[0]->uuid;
-                break;
-              case 2:
-                  $notificacoes[$a]['notificacao']=$nome[0];
-                  $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
-                  $notificacoes[$a]['tipo']=2;
-                  $notificacoes[$a]['id']=$key->identificador_id_destino;
-                  $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                  $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
-                  $notificacoes[$a]['link']=$post[0]->uuid;
-                  break;
-                case 3:
-                  $notificacoes[$a]['notificacao']=$nome[0];
-                  $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
-                  $notificacoes[$a]['tipo']=3;
-                  $notificacoes[$a]['id']=$key->identificador_id_destino;
-                    break;
-                  case 4:
-                  $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                if (sizeof($aux)){  $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                  if (sizeof($tipo)){  $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
-                  $notificacoes[$a]['notificacao']=$nome[0];
-                  $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
-                  $notificacoes[$a]['notificacao'].=$tipos[0]->tipo_relacionamento;
-                  $notificacoes[$a]['tipo']=4;
-                  $notificacoes[$a]['id']=$tipo[0]->uuid;}
-                }
-                      break;
-                    case 5:
-                    $notificacoes[$a]['notificacao']=$nome[0];
-                    $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                    $notificacoes[$a]['tipo']=5;
-                    $notificacoes[$a]['id']=$key->identificador_id_destino;
-                    $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                    $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
-                    $notificacoes[$a]['link']=$page[0]->uuid;
-                        break;
-                    case 6:
-                        $notificacoes[$a]['notificacao']=$nome[0];
-                        $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                        $notificacoes[$a]['tipo']=5;
-                        $notificacoes[$a]['id']=$key->identificador_id_destino;
-                        $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                        $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
-                        $notificacoes[$a]['link']=$post[0]->uuid;
-                            break;
-                   case 7:
-                   $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                   if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                   if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
-                   $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
-                   $notificacoes[$a]['tipo']=7;
-                   $notificacoes[$a]['id']=$tipo[0]->uuid;}}
-                            break;
-                case 8:
-                            $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
-                            $notificacoes[$a]['tipo']=8;
-                            $notificacoes[$a]['id']=$key->identificador_id_destino;
-                            $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                            $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
-                            $notificacoes[$a]['link']=$page[0]->uuid;
-                                break;
 
-              case 9:
+   public function default_(){
+           $account_name = $this->defaultDate();
+           $checkUserStatus = Self::isCasal($account_name[0]->conta_id);
+           $profile_picture = Self::profile_picture(Auth::user()->conta_id);
+           $isUserHost =Self::isUserHost($account_name[0]->conta_id);
+           $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
+           $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
+           $page_content = $this->casalPage->page_default_date($account_name);
+           $conta_logada = $this->defaultDate();
+           $notificacoes=array();
+           $a=0;
+           $nome=array();
+           $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+           $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
+           if (sizeof($notificacoes_aux)>0) {
+             foreach ($notificacoes_aux as $key) {
+               if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
+               if ($aux2[0]->tipo_identificador_id == 1) {
+                 $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                 $nome[0]= $conta[0]->nome ;
+                 $nome[0].= " ";
+                 $nome[0].= $conta[0]->apelido;
+                 $nome[1]= $conta[0]->foto;
+                 $nome[2] =1;
+               }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                 $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
+                   $nome[0] =$page[0]->nome;
+                   $nome[1] =$page[0]->foto;
+                   $nome[2] =2;
+               }
+               switch ($key->id_action_notification) {
+                 case 1:
+                   $notificacoes[$a]['notificacao']=$nome[0] ;
+                   $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                   $notificacoes[$a]['tipo']=1;
+                   $notificacoes[$a]['id']=$key->identificador_id_destino;
+                   $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                   $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
+                   $notificacoes[$a]['link']=$post[0]->uuid;
+                   break;
+                 case 2:
+                     $notificacoes[$a]['notificacao']=$nome[0];
+                     $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                     $notificacoes[$a]['tipo']=2;
+                     $notificacoes[$a]['id']=$key->identificador_id_destino;
+                     $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                     $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
+                     $notificacoes[$a]['link']=$post[0]->uuid;
+                     break;
+                   case 3:
+                     $notificacoes[$a]['notificacao']=$nome[0];
+                     $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                     $notificacoes[$a]['tipo']=3;
+                     $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       break;
+                     case 4:
+                     $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                   if (sizeof($aux)){  $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                     if (sizeof($tipo)){  $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
+                     $notificacoes[$a]['notificacao']=$nome[0];
+                     $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                     $notificacoes[$a]['notificacao'].=$tipos[0]->tipo_relacionamento;
+                     $notificacoes[$a]['tipo']=4;
+                     $notificacoes[$a]['id']=$tipo[0]->uuid;}
+                   }
+                         break;
+                       case 5:
+                       $notificacoes[$a]['notificacao']=$nome[0];
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                       $notificacoes[$a]['tipo']=5;
+                       $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                       $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
+                       $notificacoes[$a]['link']=$page[0]->uuid;
+                           break;
+                       case 6:
+                           $notificacoes[$a]['notificacao']=$nome[0];
+                           $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                           $notificacoes[$a]['tipo']=5;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                           $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
+                           $notificacoes[$a]['link']=$post[0]->uuid;
+                               break;
+                      case 7:
+                      $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                      if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                      if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
+                      $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                      $notificacoes[$a]['tipo']=7;
+                      $notificacoes[$a]['id']=$tipo[0]->uuid;}}
+                               break;
+                   case 8:
+                               $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                               $notificacoes[$a]['tipo']=8;
+                               $notificacoes[$a]['id']=$key->identificador_id_destino;
+                               $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                               $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
+                               $notificacoes[$a]['link']=$page[0]->uuid;
+                                   break;
+
+                 case 9:
+                 $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                 if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+                 if (sizeof($tipo)){
+                 $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+                 $notificacoes[$a]['tipo']=9;
+                 $notificacoes[$a]['id']=$tipo[0]->uuid;}}
+                                       break;
+              case 10:
               $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
               if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-              if (sizeof($tipo)){
-              $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
-              $notificacoes[$a]['tipo']=9;
+              if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
+              $notificacoes[$a]['notificacao'].=" Pediu que você page";
+              $notificacoes[$a]['tipo']=10;
               $notificacoes[$a]['id']=$tipo[0]->uuid;}}
-                                    break;
-           case 10:
-           $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-           if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-           if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
-           $notificacoes[$a]['notificacao'].=" Pediu que você page";
-           $notificacoes[$a]['tipo']=10;
-           $notificacoes[$a]['id']=$tipo[0]->uuid;}}
-                                                          break;
+
+                                                             break;
 
 
-            }
-            $notificacoes[$a]['foto']=$nome[1];
-            $notificacoes[$a]['v']=$nome[2];
-            $notificacoes[$a]['id1']=$key->notification_id;
+               }
+               $notificacoes[$a]['foto']=$nome[1];
+               $notificacoes[$a]['v']=$nome[2];
+               $notificacoes[$a]['id1']=$key->notification_id;
 
-            $a++;
-          }
-        }
-        }
-        $dadosPage = DB::table('pages')->limit(5)->get();
+               $a++;
+             }
+           }
+           }
+           $dadosPage = DB::table('pages')->limit(5)->get();
 
-          $dadosSeguindo[0] = [
-                            'id_seguidor' => 0,
-                            'identificador_id_seguida' => 0,
-                            'identificador_id_seguindo' => 0,
-                            'id' => 0];
-           $dadosSeguida = DB::table('seguidors')
-            ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
-            ->select('seguidors.*', 'identificadors.id')
-            ->get();
+             $dadosSeguindo[0] = [
+                               'id_seguidor' => 0,
+                               'identificador_id_seguida' => 0,
+                               'identificador_id_seguindo' => 0,
+                               'id' => 0];
+              $dadosSeguida = DB::table('seguidors')
+               ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+               ->select('seguidors.*', 'identificadors.id')
+               ->get();
 
-            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+               $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
 
-            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $dadosSgndo[0]->identificador_id)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
-            ->select('seguidors.*', 'identificadors.id')
-            ->get();
+               $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $dadosSgndo[0]->identificador_id)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+               ->select('seguidors.*', 'identificadors.id')
+               ->get();
 
-            $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {
-                if ($valor1->id == $account_name[0]->conta_id) {
-                        $key = 0;
-                        $dadosSeguindo[$key] = [
-                            'id_seguidor' => $valor1->seguidor_id,
-                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
-                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
-                            'id' => $valor1->id,
-                            ];
-                    }
-                }
-        $dates = [
-            "account_name" => $account_name,
-            "checkUserStatus" => $checkUserStatus,
-            "profile_picture" => $profile_picture,
-            "isUserHost" => $isUserHost,
-            "hasUserManyPages" => $hasUserManyPages,
-            "allUserPages" => $allUserPages,
-            "page_content" => $page_content,
-            "checkUserStatus" => $checkUserStatus,
-            "conta_logada" => $conta_logada,
-            "dadosSeguindo" => $dadosSeguindo,
-            "dadosSeguida" => $dadosSeguida,
-            "dadosPage" => $dadosPage,
-            "notificacoes" => $notificacoes,
-        ];
-        return $dates;
-    }
+               $tt = 0;
+               foreach ($dadoSeguindo as $valor1) {
+                   if ($valor1->id == $account_name[0]->conta_id) {
+                           $key = 0;
+                           $dadosSeguindo[$key] = [
+                               'id_seguidor' => $valor1->seguidor_id,
+                               'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                               'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                               'id' => $valor1->id,
+                               ];
+                       }
+                   }
+           $dates = [
+               "account_name" => $account_name,
+               "checkUserStatus" => $checkUserStatus,
+               "profile_picture" => $profile_picture,
+               "isUserHost" => $isUserHost,
+               "hasUserManyPages" => $hasUserManyPages,
+               "allUserPages" => $allUserPages,
+               "page_content" => $page_content,
+               "checkUserStatus" => $checkUserStatus,
+               "conta_logada" => $conta_logada,
+               "dadosSeguindo" => $dadosSeguindo,
+               "dadosSeguida" => $dadosSeguida,
+               "dadosPage" => $dadosPage,
+               "notificacoes" => $notificacoes,
+           ];
+           return $dates;
+       }
+    
 
     public function index(){
         if (Auth::check() == true) {
@@ -212,7 +217,7 @@ class AuthController extends Controller
 
         //=================================================================
         //=========================Comecem Aqui-----------
-        $dadosPage = DB::table('pages')->limit(5)->get();
+        $dadosPage = Page::all();
 
 
             $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
@@ -242,7 +247,7 @@ class AuthController extends Controller
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
 
-      $post= DB::table('posts')->limit(5)->get();
+      $post= DB::table('posts')->limit(7)->get();
       $page= DB::table('pages')->get();
       $a=0;
 
@@ -269,6 +274,7 @@ class AuthController extends Controller
 
         if (sizeof($aux1) > 0) {
             $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$key->post_id, $aux1[0]->identificador_id]);
+//            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$key->post_id-1]->comment_id, $aux1[0]->identificador_id]);
         } else {
             $ja_reagiu = array();
         }
@@ -282,6 +288,7 @@ class AuthController extends Controller
         $dados[$a]['page_uuid']= $page[$key->page_id - 1]->uuid ;
         $dados[$a]['post_uuid']= $key->uuid;
         $dados[$a]['reagir_S/N']=sizeof($ja_reagiu);
+//        $dados[$a]['comment_S/N']=sizeof($ja_reagiu1);
         $dados[$a]['guardado?']=sizeof($guardado);
         $dados[$a]['formato']=$key->formato_id;
         $dados[$a]['estado_post']=$key->estado_post_id;
@@ -769,7 +776,10 @@ class AuthController extends Controller
                 'tipo_estado_comment_id'=>1,
                 'comment'=>$request->comment,
                 ]);
-
+                DB::table('identificadors')->insert([
+              'tipo_identificador_id' => 4,
+              'id' => $resposta[0]['comment_id'],
+         ]);
 
                 $variable=  DB::table('comments')->get();
                 foreach ($variable as $key) {
@@ -791,10 +801,6 @@ class AuthController extends Controller
                    }
                    $resposta[0]['comment']=$key->comment;
                 }
-                DB::table('identificadors')->insert([
-                'tipo_identificador_id' => 4,
-                'id' => $resposta[0]['comment_id'],
-                ]);
 
               } else {
                 DB::table('comments')->insert([
@@ -803,15 +809,20 @@ class AuthController extends Controller
                 'tipo_estado_comment_id'=>1,
                 'comment'=>$request->comment,
                 ]);
-
-         $a=   DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->id, 3 ]);
-
+                DB::table('identificadors')->insert([
+              'tipo_identificador_id' => 4,
+              'id' => $resposta[0]['comment_id'],
+         ]);
+         $a=   DB::table('identificadors')->get();
+         foreach ($a as $key ) {
+          $b= $key->identificador_id;
+         }
                   DB::table('notifications')->insert([
                       'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                       'id_state_notification' => 2,
                       'id_action_notification' => 2,
                       'identificador_id_causador'=> $aux[0]->identificador_id,
-                      'identificador_id_destino'=> $a[0]->identificador_id,
+                      'identificador_id_destino'=> $b,
                       'identificador_id_receptor'=> $aux2[0]->identificador_id,
                       ]);
                     DB::table('notifications')->insert([
@@ -819,7 +830,7 @@ class AuthController extends Controller
                             'id_state_notification' => 2,
                             'id_action_notification' => 2,
                             'identificador_id_causador'=> $aux[0]->identificador_id,
-                            'identificador_id_destino'=> $a[0]->identificador_id,
+                            'identificador_id_destino'=> $b,
                             'identificador_id_receptor'=> $aux3[0]->identificador_id,
                             ]);
 
@@ -843,10 +854,6 @@ class AuthController extends Controller
                    }
                    $resposta[0]['comment']=$key->comment;
                 }
-                DB::table('identificadors')->insert([
-              'tipo_identificador_id' => 4,
-              'id' => $resposta[0]['comment_id'],
-         ]);
 
               }
 
@@ -859,17 +866,6 @@ class AuthController extends Controller
         return $account_name;
     }
 
-    public function showLoginForm(){
-        return view('auth.login_front');
-    }
-    public function registrarUser(){
-
-        return view('auth.registerUser');
-    }
-    public function registrarUserComplete(Request $request){
-
-        return view('auth.registerUserLastInfo');
-    }
     public function seeAllNotifications(){
       $dates = $this->default_();
       $account_name = $dates['account_name'];
@@ -918,7 +914,27 @@ class AuthController extends Controller
         return view('notificacoes.index', compact('profile_picture','notificacoes', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages', 'page_current', 'page_content', 'conta_logada', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
     }
 
+
+
+    public function showLoginForm(){
+        return view('auth.login_front');
+    }
+    public function registrarUser(){
+
+        return view('auth.registerUser');
+    }
+    
+
+
     public function sendtoOtherForm(Request $request){
+
+        $credentials = $request->validate([
+            'nome' => ['required'],
+            'apelido' =>['required'],
+            'dat' =>['required'],
+            'sexo'=>['required'],
+            
+        ]);
 
         $nome = $request->nome;
         $apelido = $request->apelido;
@@ -926,58 +942,99 @@ class AuthController extends Controller
         $data = $request->dat;
         $page_current = 'auth';
 
-        //dd($nome."=>".$apelido."=>".$sexo."=>".$data);
 
         return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data', 'page_current'));
 
     }
+    public function registrarUserComplete(Request $request){
+
+        return view('auth.registerUserLastInfo');
+    }
+
     public function joinAndSave(Request $request){
 
 
-        $saveRetriveId = DB::table('contas')->insertGetId([
-            'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-            'nome' => $request->nome1,
-            'apelido' => $request->apelido1,
-            'data_nasc' => $request->dataNasc1,
-            'genero' => $request->sexo1,
-            'estado_civil_id' => 1,
-            'email' => $request->email,
-            'telefone' => $request->telefone,
-            'estado_conta_id' => 1,
-            'nacionalidade' => $request->nacionalidade
+          try{
 
-        ]);
-        DB::table('identificadors')->insertGetId([
-             'tipo_identificador_id' => 1,
-             'id' => $saveRetriveId,
-        ]);
-        //$countId = DB::table('contas')->select(count(['conta_id']))->count();
 
-        DB::table('logins')->insert([
+                $takePhone = str_replace("-","",$request->telefone);
+                
+                /* to play with the code on my mind */
 
-            'email' => $request->email,
-            'telefone' => $request->telefone,
-            'password' => Hash::make($request->password),
-            'conta_id' => $saveRetriveId,
+                  $nome = $request->nome1;
+                  $apelido = $request->apelido1;
+                  $data = $request->dataNasc1;
+                  $sexo = $request->sexo1;
+                  $page_current = 'auth';
 
-        ]);
+                /* end play with the code on my mind */
 
-        $code = random_int(1000,9000);
-        $takePhone = $request->telefone;
-        $takeEmail = $request->email;
-        DB::table('codigo_confirmacaos')->insert([
 
-            'codigoGerado' => $code,
-            'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-            'conta_id' => $saveRetriveId,
-            'email' => $request->email,
-            'telefone' => $request->telefone,
-        ]);
+            $passwordLength = strlen($request->password);
 
-       return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
+              if ($passwordLength<9) {
+                  
+
+                  return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data', 'page_current'));
+
+              }else{
+
+
+                  $saveRetriveId = DB::table('contas')->insertGetId([
+                  'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'nome' => $request->nome1,
+                  'apelido' => $request->apelido1,
+                  'data_nasc' => $request->dataNasc1,
+                  'genero' => $request->sexo1,
+                  'estado_civil_id' => 1,
+                  'email' => $request->email,
+                  'telefone' => $takePhone,
+                  'estado_conta_id' => 1,
+                  'nacionalidade' => $request->nacionalidade
+
+              ]);
+              DB::table('identificadors')->insertGetId([
+                   'tipo_identificador_id' => 1,
+                   'id' => $saveRetriveId,
+              ]);
+                //$countId = DB::table('contas')->select(count(['conta_id']))->count();
+
+              DB::table('logins')->insert([
+
+                  'email' => $request->email,
+                  'telefone' => $takePhone,
+                  'password' => Hash::make($request->password),
+                  'conta_id' => $saveRetriveId,
+
+              ]);
+
+              $code = random_int(1000,9000);
+              $takePhone = $takePhone;
+              $takeEmail = $request->email;
+              DB::table('codigo_confirmacaos')->insert([
+
+                  'codigoGerado' => $code,
+                  'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'conta_id' => $saveRetriveId,
+                  'email' => $request->email,
+                  'telefone' => $takePhone,
+              ]);
+
+             return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
+
+              }
+              
+
+          }catch(\Exception $e){
+              return back()->with('error','Erro Hugo Paulo');
+          }
+
+
+        
     }
 
     public function verifyCodeSent(Request $request){
+
 
         $codeSent = $request->codeReceived;
         $idSaved = $request->receivedId;
@@ -1002,7 +1059,9 @@ class AuthController extends Controller
                     $phoneAquired = $generateCode->telefone;
                     $emailAquired = $generateCode->email;
 
-                    if($takeHim == $codeSent && $phoneAquired == $phoneReceived ){
+                    
+                }
+                if($takeHim == $codeSent && $phoneAquired == $phoneReceived ){
 
                         return redirect()->route('account.login.form');
 
@@ -1010,11 +1069,8 @@ class AuthController extends Controller
 
                         return redirect()->route('account.login.form');
                     }
-
-                }
             }else{
 
-                //dd("cheguei no else");
                 return view('auth.codigoRecebidoActualizar',compact('idSaved','phoneReceived','emailReceived'));
             }
     }
@@ -1032,54 +1088,23 @@ class AuthController extends Controller
                   ->where('conta_id', $idReceived)
                   ->update(['codigoGerado' => $code2]);
 
-
-        /*$verifyAndChange = DB::table('codigo_confirmacaos')
-                  ->select('telefone','email')
-                  ->where('conta_id', $idReceived)
-                  ->get();
-
-                  if (sizeof($verifyAndChange) >=1 ) {
-
-                    foreach($verifyAndChange as $info){
-
-                          $takeP = $info->telefone;
-                          $takeE = $info->email;
-
-                      if ( $takeP == $phoneAgain) {
-
-                          DB::table('codigo_confirmacaos')
-                          ->where('telefone',$phoneAgain)
-                          ->update(['codigoGerado' => $code2]);
-
-                      } else if ($takeE == $emailAgain) {
-
-                          DB::table('codigo_confirmacaos')
-                          ->where('email',$emailAgain)
-                          ->update(['codigoGerado' => $code2]);
-                      }
-                    }
-                  }else{
-
-                    return "erro";
-                  }*/
-
         return view('auth.codigoRecebidoNovaConfirmation',compact('idReceived','code2','phoneAgain','emailAgain'));
 
     }
     public function verifyAgainCodeSent(Request $request){
 
-        $savedId = $request->receivedId1;
-        $codeSent = $request->codeReceived1;
-        $samePhone = $request->phoneConf;
-        $sameEmail = $request->emailConf;
 
-        //dd($savedId."<=>".$codeSent);
+        $idSaved = $request->receivedId1;
+        $codeSent = $request->codeReceived1;
+        $phoneReceived = $request->phoneConf;
+        $emailReceived = $request->emailConf;
+
         $takeCode2 = [];
 
         $takeCode2 = DB::table('codigo_confirmacaos')
             ->select('codigoGerado','telefone','email')
             ->where('codigoGerado','=',$codeSent)
-            ->where('conta_id','=',$savedId)
+            ->where('conta_id','=',$idSaved)
             ->get();
 
             if(sizeof($takeCode2) >= 1){
@@ -1090,47 +1115,218 @@ class AuthController extends Controller
                     $takePhoneA = $generateCode->telefone;
                     $takeEmailA = $generateCode->email;
 
-                    if($takeHim == $codeSent && $takePhoneA == $samePhone){
+
+                }
+
+                    if($takeHim == $codeSent && $takePhoneA == $phoneReceived){
 
                         return redirect()->route('account.login.form');
 
-                    }else if($takeHim == $codeSent && $takeEmailA == $sameEmail){
+                    }else if($takeHim == $codeSent && $takeEmailA == $emailReceived){
 
 
                         return redirect()->route('account.login.form');
 
                     }
-
-                }
             }else{
 
-                dd("Error again!");
-                //return view('auth.codigoRecebidoActualizar',compact('savedId'));
+              return view('auth.codigoRecebidoActualizar',compact('idSaved','phoneReceived','emailReceived'));
+
             }
 
     }
 
+/* here */
     public function recuperarSenha(){
 
         return view('auth.codeRecover');
     }
     public function codigoRecebido(){
+
         return view('auth.codigoRecebido');
+
     }
     public function newCode(){
+
         return view('auth.newCode');
+
     }
 
-    /*public function codigoRecebidoRegisto(){
+
+  public function sendPhoneEmailRecover(Request $request){
+    
+      $email = $request->emailName;
+
+      $phone = str_replace("-","",$request->phoneNumber);
+
+if ($phone != null) {
+  
+        $takePhone = DB::table('contas')
+          ->select('telefone','conta_id')
+          ->where('telefone','=',$phone)
+          ->get();
+
+          if (isset($takePhone)) {
+            
+              foreach($takePhone as $info){
+
+                $foundedId = $info->conta_id;
+
+                $foundedPhone = $info->telefone;
+                
+                  $codeToSend = random_int(1000,9000);
+
+                   DB::table('codigo_confirmacaos')
+                              ->where('conta_id', $foundedId)
+                              ->update(['codigoGerado' => $codeToSend]);
+
+                    return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
+            }
+      }
+
+      return view('auth.codeRecover');
+
+}else if ($email != null) {
+
+        $takeEmail = DB::table('contas')
+          ->select('email','conta_id')
+          ->where('email','=',$email)
+          ->get();
+
+
+          if (isset($takeEmail)) {
+            
+              foreach($takeEmail as $info){
+
+                $foundedId = $info->conta_id;
+
+                $foundedEmail = $info->email;
+                
+                  $codeToSend = random_int(1000,9000);
+
+                   DB::table('codigo_confirmacaos')
+                              ->where('conta_id', $foundedId)
+                              ->update(['codigoGerado' => $codeToSend]);
+
+                    return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
+            }
+      }
+
+      return view('auth.codeRecover');
+  
+}
+
+      return view('auth.codeRecover');
+  }
+
+  public function verifyToRecoverPass(Request $request){
+
+
+      $id = $request->Id;
+      $codeSent = $request->codeSend;
+
+
+        $takeThem = DB::table('codigo_confirmacaos')
+            ->select('codigoGerado','conta_id')
+            ->where('codigoGerado','=',$codeSent)
+            ->where('conta_id','=',$id)
+            ->get();
+
+        if(isset($takeThem)){
+
+
+            foreach($takeThem as $newInfo){
+
+                $takeCode = $newInfo->codigoGerado;
+                $takeId = $newInfo->conta_id;
+
+            }
+
+                if($takeCode == $codeSent && $takeId == $id){
+
+
+                     return view('auth.newCode',compact('takeId'));
+
+                }
+
+
+        }
+
+            return view('auth.codeRecover');
+        
+  }
+
+  public function updatePassword(Request $request){
+
+
+      $idToCompare = $request->theId;
+
+      $password = $request->password;
+      $confirmPass = $request->confirmarPassword;
+
+      $passwordLength = strlen($request->password);
+      $confirmPassLength = strlen($request->confirmarPassword);
+
+      if($password == $confirmPass && $passwordLength>=9 && $confirmPassLength>=9){
+
+        DB::table('logins')
+              ->where('conta_id', $idToCompare)
+              ->update(['password' =>Hash::make($password)]);
+
+
+        return redirect()->route('account.login.form');
+
+
+      }
+      else{
+
+
+          return view('auth.newCode2',compact('idToCompare'));
+          
+
+      }
+  }
+  public function updatePassword2(Request $request){
+
+
+      $idToCompare = $request->theId1;
+
+      $password = $request->password1;
+      $confirmPass = $request->confirmarPassword1;
+
+      $passwordLength = strlen($request->password1);
+      $confirmPassLength = strlen($request->confirmarPassword1);
+
+      if($password == $confirmPass && $passwordLength>=9 && $confirmPassLength>=9){
+
+        DB::table('logins')
+              ->where('conta_id', $idToCompare)
+              ->update(['password' =>Hash::make($password)]);
+
+
+        return redirect()->route('account.login.form');
+
+
+      }
+      else{
+
+          return view('auth.newCode2',compact('idToCompare'));
+          
+      }
+
+  }
+/* final here */
+
+    public function codigoRecebidoRegisto(){
         return view('auth.codigoRecebidoRegister');
-    }*/
+    }
 
     public function login(Request $request){
 
-        /*$credentials = $request->validate([
-            'email_login' => ['required'],
-            'password_login' => ['required'],
-        ]);*/
+        $credentials = $request->validate([
+            'number_email_login' => ['required'],
+            'password_login' => ['required','min:9','max:255'],
+        ]);
 
         //dd($request);
 
@@ -1145,8 +1341,10 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->route('account.home');
 
+
         }
         return redirect()->route('account.login.form');
+
 
     }
     public function logout(Request $request)
@@ -1167,7 +1365,6 @@ class AuthController extends Controller
         return count(DB::table('pages')
                 ->where('conta_id_a', $conta_logada[0]->conta_id)
                 ->orwhere('conta_id_b', $conta_logada[0]->conta_id)
-                ->orwhere('tipo_page_id', 1)
                 ->get()) > 0;
         //return DB::select('select page_id from pages where conta_id_a = ? or conta_id_b = ? and tipo_page_id = ?', [$account_id, $account_id, 1]);
     }
@@ -1200,10 +1397,11 @@ class AuthController extends Controller
 
     public static function isUserHost($account_id)
     {
-
+      $auth = new AuthController();
+          $conta_logada = $auth->defaultDate();
         return count(DB::table('pages')
-                    ->where('conta_id_a', $account_id)
-                    ->orwhere('conta_id_b', $account_id)
+                    ->where('conta_id_a',  $conta_logada[0]->conta_id)
+                    ->orwhere('conta_id_b',  $conta_logada[0]->conta_id)
                     ->get()) > 0;
     }
 

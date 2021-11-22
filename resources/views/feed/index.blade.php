@@ -53,8 +53,10 @@
         </header>
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post']==1): ?>
+    <?php //dd($conta_logada[0]->uuid); ?>
         <div class="card br-10" id="m_post-{{$dados[$key]['post_id']}}">
-            <div class="post post-view">
+            <div class="post post-view" id="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}">
+                <input type="hidden" name="" value="{{$dados[$key]['formato']}}" id="format-{{$dados[$key]['post_uuid']}}">
                 <header class="clearfix">
                     <div class="first-component clearfix l-5">
                         @if( !($dados[$key]['foto_page'] == null) )
@@ -124,6 +126,9 @@
                                 <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
+                            <input type="hidden" name="" value="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}" id="watch-video-{{$key}}">
+                            <input type="hidden" name="" id="video-post-time-{{$key}}">
+                            <input type="hidden" name="" id="video-post-time-all-{{$key}}">
                         </div>
                         <?php endif ?>
                     </div>

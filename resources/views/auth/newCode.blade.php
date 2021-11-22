@@ -27,10 +27,10 @@
     <meta name="viewport" content="width=device-width-width, initial-scale=1,0">
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
-<body>
-    <div id="app">
+<body id="body-reg">
+    <div id="app-log-reg">
         <main class="main" id="main-login-container">
-            <div class="center" id="main-login">
+            <div id="main-reg">
                 <header class="logo-form mb-4" id="title-login">
 
                     <div>
@@ -39,22 +39,36 @@
 
                 </header>
 
-
-                <form action="" method="POST">
+                <form action="{{route('account.newPasswordSave')}}" method="POST" class="needs-validation" novalidate>
                     @csrf
 
+
+                    <input type="text" name="theId" class="hidden" value="{{$takeId}}">
+
                     <div class="form-group">
                         
-                        <input type="password" class="input-text-default input-full" name="number_email_login" placeholder="Escreva a nova senha" >
+                        <input type="password" class="input-text-default input-full input-login" name="password" placeholder="Escreva a nova senha" required id="password">
+                        <div class="invalid-feedback">
+                            Insira a Password
+                      </div>
+
+                      <label id="labelt" class="hidden">Insira pelo menos 9 caracteres ou os seus dados não serão guardados</label>
+
+                      <label id="labelAprovado" class="hidden">Password aceitável</label>
                     </div>
 
                     <div class="form-group">
                         
-                        <input type="password" class="input-text-default input-full" name="number_email_login" placeholder="Repita a nova senha">
-                    </div>
-                    
+                        <input type="password" class="input-text-default input-full input-login" name="confirmarPassword" placeholder="Repita a nova senha" required id="confirmarPassword">
+                        <div class="invalid-feedback">
+                            Confirme a Password
+                      </div>
 
-                    <a href="{{route('validate.newCode.form')}}" id="login-enter" type="submit" class=""><span class="text-white">Guardar senha</span></a>
+                      <label id="labelC" class="hidden">As passswords não são iguais</label>
+                    </div>
+
+
+                    <button type="submit" id="login-enter" class="alerta">Guardar senha</button>
                 </form>
 
                 <div class="couple-separator mt-3"></div>
@@ -63,4 +77,120 @@
     </div>
 </body>
 </html>
+<script>
+
+$("#password").on('keyup',function(){
+
+        let passwordValue = $("#password").val();
+
+        let passwordLenght = passwordValue.length;
+
+        
+        if (passwordLenght < 9) {
+
+            $("#labelt").fadeIn().css({
+
+                color:'red',
+            });
+
+            $("#labelAprovado").fadeOut(1000);
+            /*setTimeout(()=>{
+
+                    $("#labelt").fadeOut();
+
+            },5000)*/
+
+        }else if(passwordLenght >= 9){
+
+            
+                $("#password").css({
+
+                    border:'1px solid green',
+                });
+                $("#labelAprovado").fadeIn()
+                                   .css({
+                                        
+                                        color:'#efefef',
+                                   })
+
+                                   $("#labelt").fadeOut(1000);
+            /*$("#labelt").fadeIn()
+                .text("Password aceitável")
+                .css({
+
+                color:'#fff',
+            });
+            setTimeout(()=>{
+
+                    $("#labelt").fadeOut();
+
+            },5000)*/
+        }
+
+    });
+
+    $("#confirmarPassword").on('keyup',function(){
+
+        let password = $("#password").val();
+        let passwordLenght =password.length;
+
+        let confirmPassword = $("#confirmarPassword").val();
+        let confirmPasswordLenght = confirmPassword.length;
+
+        if(password === confirmPassword && passwordLenght === confirmPasswordLenght ){
+
+
+
+            $("#labelC")
+                .fadeIn()
+                .text("As passswords são iguais")
+                .css({
+                color:'#fff',
+            });
+            setTimeout(()=>{
+
+                    $("#labelC").fadeOut();
+
+            },4000)
+
+        }else{
+
+
+            $("#labelC").fadeIn()
+                .css({
+                color:'red',
+            });
+            setTimeout(()=>{
+
+                    $("#labelC").fadeOut();
+
+            },4000)
+
+        }
+
+
+    });
+
+
+
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      var forms = document.getElementsByClassName('needs-validation');
+
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          } else {
+            //teste();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+
+</script>
 

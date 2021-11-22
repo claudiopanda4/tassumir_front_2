@@ -27,7 +27,7 @@
     <meta name="viewport" content="width=device-width-width, initial-scale=1,0">
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
-<body>
+<body id="body-reg">
     <div id="app-log-reg">
         <main class="main" id="main-register-container">
             <div class="" id="main-reg">

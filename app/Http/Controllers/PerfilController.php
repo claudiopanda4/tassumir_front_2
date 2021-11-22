@@ -714,6 +714,7 @@ class PerfilController extends Controller
                 DB::table('notifications')->where('notification_id',$request->notificacao)
                 ->update(['id_state_notification' => 3]);
 
+                return redirect()->route('account.home.feed');
 
 
             }
