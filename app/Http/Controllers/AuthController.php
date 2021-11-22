@@ -105,7 +105,9 @@ class AuthController extends Controller
             $a++;
           }
         }
-        $dadosPage = Page::all();
+        }
+        $dadosPage = DB::table('pages')->limit(8)->get();
+
           $dadosSeguindo[0] = [
                             'id_seguidor' => 0,
                             'identificador_id_seguida' => 0,
@@ -204,7 +206,7 @@ class AuthController extends Controller
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
 
-      $post=  DB::table('posts')->get();
+      $post= DB::table('posts')->limit(7)->get();
       $page= DB::table('pages')->get();
       $a=0;
 
@@ -1322,7 +1324,6 @@ if ($phone != null) {
         return count(DB::table('pages')
                 ->where('conta_id_a', $conta_logada[0]->conta_id)
                 ->orwhere('conta_id_b', $conta_logada[0]->conta_id)
-                ->orwhere('tipo_page_id', 1)
                 ->get()) > 0;
         //return DB::select('select page_id from pages where conta_id_a = ? or conta_id_b = ? and tipo_page_id = ?', [$account_id, $account_id, 1]);
     }
@@ -1355,10 +1356,11 @@ if ($phone != null) {
 
     public static function isUserHost($account_id)
     {
-
+      $auth = new AuthController();
+          $conta_logada = $auth->defaultDate();
         return count(DB::table('pages')
-                    ->where('conta_id_a', $account_id)
-                    ->orwhere('conta_id_b', $account_id)
+                    ->where('conta_id_a',  $conta_logada[0]->conta_id)
+                    ->orwhere('conta_id_b',  $conta_logada[0]->conta_id)
                     ->get()) > 0;
     }
 

@@ -43,7 +43,7 @@ class MailMakeCommand extends GeneratorCommand
             return;
         }
 
-        if ($this->option('markdown') !== false) {
+        if ($this->hasOption('markdown')) {
             $this->writeMarkdownTemplate();
         }
     }
@@ -55,8 +55,14 @@ class MailMakeCommand extends GeneratorCommand
      */
     protected function writeMarkdownTemplate()
     {
+        $view = $this->option('markdown');
+
+        if (! $view) {
+            $view = 'mail.'.Str::kebab(class_basename($this->argument('name')));
+        }
+
         $path = $this->viewPath(
-            str_replace('.', '/', $this->getView()).'.blade.php'
+            str_replace('.', '/', $view).'.blade.php'
         );
 
         if (! $this->files->isDirectory(dirname($path))) {
@@ -76,27 +82,11 @@ class MailMakeCommand extends GeneratorCommand
     {
         $class = parent::buildClass($name);
 
-        if ($this->option('markdown') !== false) {
-            $class = str_replace(['DummyView', '{{ view }}'], $this->getView(), $class);
+        if ($this->option('markdown')) {
+            $class = str_replace('DummyView', $this->option('markdown'), $class);
         }
 
         return $class;
-    }
-
-    /**
-     * Get the view name.
-     *
-     * @return string
-     */
-    protected function getView()
-    {
-        $view = $this->option('markdown');
-
-        if (! $view) {
-            $view = 'mail.'.Str::kebab(class_basename($this->argument('name')));
-        }
-
-        return $view;
     }
 
     /**
@@ -107,7 +97,7 @@ class MailMakeCommand extends GeneratorCommand
     protected function getStub()
     {
         return $this->resolveStubPath(
-            $this->option('markdown') !== false
+            $this->option('markdown')
                 ? '/stubs/markdown-mail.stub'
                 : '/stubs/mail.stub');
     }
@@ -146,7 +136,7 @@ class MailMakeCommand extends GeneratorCommand
         return [
             ['force', 'f', InputOption::VALUE_NONE, 'Create the class even if the mailable already exists'],
 
-            ['markdown', 'm', InputOption::VALUE_OPTIONAL, 'Create a new Markdown template for the mailable', false],
+            ['markdown', 'm', InputOption::VALUE_OPTIONAL, 'Create a new Markdown template for the mailable'],
         ];
     }
 }

@@ -78,7 +78,15 @@ trait CompilesComponents
      */
     protected function compileEndComponent()
     {
-        return '<?php echo $__env->renderComponent(); ?>';
+        $hash = array_pop(static::$componentHashStack);
+
+        return implode("\n", [
+            '<?php if (isset($__componentOriginal'.$hash.')): ?>',
+            '<?php $component = $__componentOriginal'.$hash.'; ?>',
+            '<?php unset($__componentOriginal'.$hash.'); ?>',
+            '<?php endif; ?>',
+            '<?php echo $__env->renderComponent(); ?>',
+        ]);
     }
 
     /**
@@ -88,13 +96,7 @@ trait CompilesComponents
      */
     public function compileEndComponentClass()
     {
-        $hash = array_pop(static::$componentHashStack);
-
         return $this->compileEndComponent()."\n".implode("\n", [
-            '<?php endif; ?>',
-            '<?php if (isset($__componentOriginal'.$hash.')): ?>',
-            '<?php $component = $__componentOriginal'.$hash.'; ?>',
-            '<?php unset($__componentOriginal'.$hash.'); ?>',
             '<?php endif; ?>',
         ]);
     }
