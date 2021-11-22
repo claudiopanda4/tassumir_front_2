@@ -4,25 +4,25 @@
 	<nav class="filter-main-search-mobile">
 		<ul>
 			<li>
-				<div style="cursor: pointer; color: white;" id="solButtonTrigger" >Solteiro(a)s</div>
+				<div style="cursor: pointer; color: white;" class="nameclass">Solteiro(a)s</div>
 			</li>
 			<li>
-				<div style="cursor: pointer; color: white;" id="casButtonTrigger">Casado(a)s</div>
+				<div style="cursor: pointer; color: white;" class="nameclass">Casado(a)s</div>
 			</li>
 			<li>
-				<div style="cursor: pointer; color: white;" id="namButtonTrigger">Namorados</div>
+				<div style="cursor: pointer; color: white;" class="nameclass">Namorados</div>
 			</li>
 			<li>
-				<a href="">Apresentados</a>
+				<div style="cursor: pointer; color: white;" class="nameclass">Apresentados</div>
 			</li>
 			<li>
-				<a href="">Casados</a>
+				<div style="cursor: pointer; color: white;" class="">Casados</div>
 			</li>
 			<li>
-				<a href="">Vivendo Maritalmente</a>
+				<div style="cursor: pointer; color: white;" class="nameclass">Vivendo Maritalmente</div>
 			</li>
 			<li>
-				<a href="">Páginas</a>
+				<div style="cursor: pointer; color: white;" class="nameclass">Páginas</div>
 			</li>
 		</ul>
 	</nav>
@@ -279,90 +279,112 @@ function expe(ccc, v){
 			var content = '';
 			var count = 1;
 			let src = '{{ asset("storage/img/users/") }}';
+			if (res.length > 0) {
+				$.each(res, function(key, value) {
+					//console.log(value);
+					if (value.estado_conta_id == 1) {
 
-			$.each(res, function(key, value) {
-				//console.log(value);
-				if (value.estado_conta_id == 1) {
+						if (count == 1) {
+							content = '<div class="card-p">'
+						}
+						content += '<ul class="card-flex">';
+						content += '<li class="search-title">';
 
-					if (count == 1) {
-						content = '<div class="card-p">'
+						if (count == 1) {
+							content += '<span style="color: #fff;" class="mt-2">Pessoas</span>';
+						}
+
+						content += '</li>';
+						content += '<li class="change-look search-info">';
+
+						if (value.foto != null) {
+							content += '<div class="page-cover circle ">' 
+							content += '<img class=" circle img-40" src= ' + src + '/' + value.foto + '>'
+							content += '</div>'
+						}else {
+							content += '<div class=" page-cover circle ">'
+							content += '<i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>'
+							content += '</div>'
+						}
+						content += '<div class="mb-1 mr-2 profile-name-ident" id="">'
+						content += '<div id="" class="" >'
+
+						var route1 = "{{route('account1.profile', 1) }}"
+						url_array1 = route1.split('/');
+						url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
+
+						content += '<a href='+url_link1
+						
+						content += '<span class="profile-name-1">'+value.nome
+						content += ' '+value.apelido
+						content += '</span>'
+
+						content += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4">'
+						content += '<i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i>'
+						content += '</a>'
+						content += '</div></div></li>'
+						content += '<div class="couple-separator"></div>'
+
+						if (count == res.length) {
+
+							content += '</div>'														
+						}
+						//content += '</div>'														
+
+						$('div[name=pessoa]').empty();
+						$('div[name=pessoa]').append(content);
+						count++;
+
 					}
-					content += '<ul class="card-flex">';
-					content += '<li class="search-title">';
+				});
+			} else {
 
-					if (count == 1) {
-						content += '<span style="color: #fff;" class="mt-2">Pessoas</span>';
-					}
-
-					content += '</li>';
-					content += '<li class="change-look search-info">';
-
-					if (value.foto != null) {
-						content += '<div class="page-cover circle ">' 
-						content += '<img class=" circle img-40" src= ' + src + '/' + value.foto + '>'
-						content += '</div>'
-					}else {
-						content += '<div class=" page-cover circle ">'
-						content += '<i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>'
-						content += '</div>'
-					}
-					content += '<div class="mb-1 mr-2 profile-name-ident" id="">'
-					content += '<div id="" class="" >'
-
-					var route1 = "{{route('account1.profile', 1) }}"
-					url_array1 = route1.split('/');
-					url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
-
-					content += '<a href='+url_link1
-					
-					content += '<span class="profile-name-1">'+value.nome
-					content += ' '+value.apelido
-					content += '</span>'
-
-					content += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4">'
-					content += '<i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i>'
-					content += '</a>'
-					content += '</div></div></li>'
-					content += '<div class="couple-separator"></div>'
-
-					if (count == res.length) {
-
-						content += '</div>'														
-					}
-					//content += '</div>'														
-
-					$('div[name=pessoa]').empty();
-					$('div[name=pessoa]').append(content);
-					count++;
-
-				}
-			});
+				content = '<div class="card-p" style="color: white">';
+				content += 'Sem resultado';
+				content += '</div>';
+				$('div[name=pessoa]').empty();
+				$('div[name=pessoa]').append(content);
+			}
 		}
 	});
 }
 
-
-
-$('#solButtonTrigger').on('click', function() {
-	let variavel= $('#table_search_mobile').val();
-	let v= 'sol';
-	expe(variavel, v);
+$('.nameclass').on('click', function() {
+	let variavel = $('#table_search_mobile').text();
+	let value = analyze_value($(this).text());
+	//expe(variavel, value);
+	console.log(value);
 });
 
+function analyze_value(value) {
+	var str_value = '';
+	switch (value) {
+		case 'Solteiro(a)s':
+			str_value = 'sol';
+			break;
 
-$('#casButtonTrigger').on('click', function() {
-	let variavel= $('#table_search_mobile').val();
-	let v= 'cas';
-	expe(variavel, v);
-});
+		case 'Casado(a)s':
+			str_value = 'cas';
+			break;
 
+		case 'Namorados':
+			str_value = 'nam';
+			break;
 
-$('#namButtonTrigger').on('click', function() {
-	let variavel= $('#table_search_mobile').val();
-	let v= 'nam';
-	expe(variavel, v);
-});
+		case 'Apresentados':
+			str_value = 'apr';
+			break;
 
+		case 'Páginas':
+			str_value = 'pag';
+			break;
+
+		case 'Vivendo Maritalmente':
+			str_value = 'vma';
+			break;
+	}
+	return str_value;
+}
 
 /*END SIENE*/
 </script>
