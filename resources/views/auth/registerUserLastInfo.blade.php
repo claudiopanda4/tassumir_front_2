@@ -47,7 +47,7 @@
                         <span class="text-white mb-2">Estamos concluindo o seu cadastro...</span>
                     </div>
 
-                <form action="{{route('account.enter.form')}}" method="POST" class="needs-validation" novalidate>
+                <form action="{{route('account.enter.form')}}" method="POST" class="needs-validation" novalidate >
 
                     @csrf
 
@@ -59,6 +59,12 @@
                      <div class="form-group">
 
                         <input type="text" class="input-text-default input-full input-login" name="nacionalidade" id="nacionalidade" placeholder="Nacionalidade" value="" required>
+                        
+                        <!--@error('nacionalidade')
+
+                            <span style="color: red;">{{$message}}</span>
+                        @enderror-->
+
                         <div class="invalid-feedback">
                             Insira a Nacionalidade
                       </div>
@@ -72,9 +78,10 @@
                                 <option value="emailSele">Email</option>
                                 <option value="telefSele">Telefone</option>
                             </select>
+                                
                             <div class="invalid-feedback">
-                            Escolha uma Opção
-                           </div>
+                                Selecione uma Opção
+                          </div>
                         </div>
 
                         <div class="col-md-6">
@@ -91,11 +98,20 @@
 
                      <div class="form-group mt-2">
 
-                        <input type="password" class="input-text-default input-full input-login" name="password"placeholder="Password" value="" required id="password" required>
+                        <input type="password" class="input-text-default input-full input-login" name="password"placeholder="Password" value=""  id="password" required>
+
+                       <!-- @error('password')
+
+                            <span style="color: red;">{{$message}}</span>
+                        @enderror-->
+
                         <div class="invalid-feedback">
-                            Insira o Password
+                            Insira a Password
                       </div>
-                      <label id="labelt" class="hidden">Insira pelo menos 9 caracteres</label>
+                        
+                      <label id="labelt" class="hidden">Insira pelo menos 9 caracteres ou os seus dados não serão guardados</label>
+
+                      <label id="labelAprovado" class="hidden">Password aceitável</label>
 
                     </div>
 
@@ -119,47 +135,49 @@
 
         let passwordLenght = passwordValue.length;
 
-        if (passwordLenght <= 4) {
+        if (passwordLenght < 9) {
+            $("#password").css({
 
+                    border:'1px solid red',
+                });
             $("#labelt").fadeIn().css({
 
                 color:'red',
             });
-            setTimeout(()=>{
+
+            $("#labelAprovado").fadeOut(1000);
+
+            /*setTimeout(()=>{
 
                     $("#labelt").fadeOut();
 
-            },4000)
+            },2000)*/
 
-        }else if(passwordLenght <= 9){
+        }else if(passwordLenght >= 9){
 
-            $("#labelt").fadeIn()
-                .text("Password mediana")
+                $("#password").css({
+
+                    border:'1px solid green',
+                });
+                $("#labelAprovado").fadeIn()
+                                   .css({
+                                        
+                                        color:'#efefef',
+                                   })
+
+                                   $("#labelt").fadeOut(1000);
+            /*$("#labelt").fadeIn()
+                .text("Password aceitável")
                 .css({
 
-                color:'#800080',
-            });
-            setTimeout(()=>{
+                color:'#efefef',
+            });*/
 
-                    $("#labelt").fadeOut();
+            /*setTimeout(()=>{
 
-            },4000)
-        }
-        else{
+                    $("#labelAprovado").fadeOut();
 
-            $("#labelt")
-                .fadeIn()
-                .text("Password forte")
-                .css({
-
-                color:'#800080',
-            });
-
-            setTimeout(()=>{
-
-                    $("#labelt").fadeOut();
-
-            },4000)
+            },2000)*/
         }
 
     });
