@@ -58,19 +58,14 @@
                     </div>
                     <div class="form-group">
                         
-
-
                         <input type="text" class="input-text-default input-full input-login" name="codeReceived" placeholder="Escreva o código que recebeu" id="codeReceived" required>
                         <div class="invalid-feedback">
                             Insira o Código
                       </div>
 
                     </div>
-
-                    
-                    
-
-                    <button type="submit" id="login-enter" class="alerta">Validar código</button>
+   
+                 <button type="submit" id="login-enter" class="alerta">Validar código</button>
                     
                 </form>
 

@@ -1,22 +1,8 @@
 <?php
 
-
-
-
-
-
-
-
-
-
-
 namespace Composer;
 
 use Composer\Semver\VersionParser;
-
-
-
-
 
 
 class InstalledVersions
@@ -1553,7 +1539,7 @@ public static function reload($data)
 {
 self::$installed = $data;
 }
-=======
+
 /**
  * This class is copied in every Composer installed project and available to all
  *
