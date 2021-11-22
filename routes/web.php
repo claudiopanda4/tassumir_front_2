@@ -63,6 +63,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
 
     Route::get('/peoplepesquisa', [\App\Http\Controllers\searchController::class, 'peoplepesquisa'])->name('people.pesquisa');
 
+    Route::get('/allpeoplepesquisa', [\App\Http\Controllers\searchController::class, 'allpagepesquisa'])->name('allpage.pesquisa');
+
     Route::get('/paginapesquisa', [App\Http\Controllers\searchController::class, 'paginapesquisa'])->name('pagina.pesquisa');
     Route::get('/postpesquisa', [App\Http\Controllers\searchController::class, 'postpesquisa'])->name('post.pesquisa');
     Route::get('/pesquisa/pages', [App\Http\Controllers\searchController::class, 'pagesSearch'])->name('pagesSearch.page');
