@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -15,7 +16,55 @@ class PostController extends Controller
      */
     public function index()
     {
-        
+        DB::beginTransaction();
+        try {
+            $account_id = Auth::id();
+            $posts_return = array();
+            $post_views;
+            $i = 0;
+            $post_views = DB::select('select * from views limit 1');
+            $aux = $post_views[0]->view_id - 1;
+            $posts_return1 = array();
+            $returns = array();
+            //dd($aux);
+            while (sizeof($posts_return) < 4) {
+                $post_views = DB::select('select post_id, conta_id from views where conta_id = ? and view_id > ? limit 10', [$account_id, $aux]);
+                //dd($post_views);
+                $post = DB::select('select * from posts limit 1');
+                $aux1 = $post[0]->post_id - 1;
+                $ii = 0;
+                foreach ($post_views as $key => $value) {
+                    //dd($post_views[$key]->post_id);
+                    $post = DB::table('posts')
+                            ->where('estado_post_id', '=', 1)
+                            ->where('post_id', '<>', $post_views[$key]->post_id)
+                            ->where('post_id', '>', $aux1)
+                            ->limit(1)
+                            ->get();
+                    if (sizeof($post) > 0) {
+                        $posts_return[$i] = $post;
+                    }
+                            
+                    //dd($post);
+                    //dd($post_views[$key]->post_id);
+                    //dd($posts);
+                    $returns[$key] = $post_views[$key]->post_id;
+                    $ii++;
+                }
+                $aux = $aux + sizeof($post_views);
+                $i++;
+                $posts_return1 = [[],[],[],[],[],[]];
+            } 
+            
+            //dd($returns);
+            dd($posts_return);
+            $post = DB::select('select * from posts where estado_post_id = ?', [1]);
+                //dd($post);
+            DB::commit();
+            return $return_video;
+        } catch (Exception $e) {
+            DB::rollback();
+        }
     }
 
     /**
@@ -25,9 +74,36 @@ class PostController extends Controller
      */
     public function create()
     {
-        
+        /*<source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
+                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/3gp">
+                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/avi">
+                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mov">
+                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/webm">
+                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mkv">
+                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/wmv">
+                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/flv">*/
     }
 
+    public function get_video(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $post = DB::select('select * from posts where uuid = ?', [$request->data]);
+            //dd($post);
+            $video = $post[0]->file;
+            //$path = {{asset('storage/video/page/')}};
+            $type_file = 'video/'.explode('.', $video)[1];
+            //dd($type_file);
+            $return_video = [
+                'video' => $video,
+                'type_file' => $type_file,
+            ];
+            DB::commit();
+            return $return_video;
+        } catch (Exception $e) {
+            DB::rollback();
+        }
+    }
     public function view_post(Request $request)
     {
         DB::beginTransaction();

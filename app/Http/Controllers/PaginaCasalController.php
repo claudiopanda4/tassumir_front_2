@@ -726,7 +726,7 @@ $v=1;
 
     public function check_video_extension( $extension )
     {
-        return $extension === 'mp4' || $extension === 'avi' || $extension === 'mkv';
+        return $extension === 'mp4' || $extension === 'avi' || $extension === 'mkv' || $extension === '3gp' || $extension === 'wmv'|| $extension === 'flv' || $extension === 'webm' || $extension === 'ogg';
     }
 
     private function formato_id( $formato ) {
