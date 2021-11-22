@@ -48,20 +48,24 @@
                         <span class="text-white">Agora vamos conhecer-te</span>
                     </div>
 
-                <form action="{{route('account.teste.form')}}" method="POST" class="needs-validation" novalidate>
+                <form action="{{route('account.teste.form')}}" method="POST" >
                     @csrf
 
                       <div class="form-group">
-                        <input type="text" class="input-text-default input-full input-login" name="nome" placeholder="Nome" required>
-                        <div class="invalid-feedback">
-                            Insira o Nome
-                      </div>
+                        <input type="text" class="input-text-default input-full input-login" name="nome" placeholder="Nome" id="nome">
+                        
+                        @error('nome')
+
+                            <span style="color: red;">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <input type="text" name="apelido" class="input-text-default input-full input-login" placeholder="Apelido" required>
-                        <div class="invalid-feedback">
-                            Insira o Apelido
-                      </div>
+                        <input type="text" name="apelido" class="input-text-default input-full input-login" placeholder="Apelido" id="apelido">
+
+                        @error('apelido')
+
+                            <span style="color: red;">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="row">
 
@@ -72,6 +76,7 @@
 							  <label class="form-check-label text-white" for="exampleRadios1">
 							    Masculino
 							  </label>
+
 						</div>
 
                     	</div>
@@ -89,14 +94,16 @@
                     </div>
                     <div class="form-group mt-2">                        
 
-                        <input type="date" name="dat" class="input-text-default input-full input-login" id="" placeholder="12/09/2002" required>
-                        <div class="invalid-feedback">
-                            Insira a Data
-                       </div>
+                        <input type="date" name="dat" class="input-text-default input-full input-login" id="" placeholder="12/09/2002" >
+                        
+                        @error('dat')
+
+                            <span style="color: red;">{{$message}}</span>
+                        @enderror
 
                     </div>
                     <button type="submit" id="login-enter">Seguinte</button>
-                    <!--<a href="{{route('account.teste.form')}}" id="login-enter" type="button" class=""><span class="text-white">Seguinte</span></a>-->
+                    
 
                     <div class="clearfix">
 

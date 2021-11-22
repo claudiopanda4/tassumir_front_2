@@ -50,7 +50,8 @@
                     </div>
                     <div class="form-group">
                         
-                        <input type="text" class="input-text-default input-full input-login" name="codeSend" placeholder="Escreva o código que recebeu" id="codeReceived">
+                        <input type="text" class="input-text-default input-full input-login" name="codeSend" placeholder="Escreva o código que recebeu" id="codeReceived" required> 
+
                         <div class="invalid-feedback">
                             Insira o Código
                       </div>

@@ -52,7 +52,9 @@
                             Insira a Password
                       </div>
 
-                      <label id="labelt" class="hidden">Insira pelo menos 9 caracteres</label>
+                      <label id="labelt" class="hidden">Insira pelo menos 9 caracteres ou os seus dados não serão guardados</label>
+
+                      <label id="labelAprovado" class="hidden">Password aceitável</label>
                     </div>
 
                     <div class="form-group">
@@ -83,47 +85,46 @@ $("#password").on('keyup',function(){
 
         let passwordLenght = passwordValue.length;
 
-        if (passwordLenght <= 4) {
+        
+        if (passwordLenght < 9) {
 
             $("#labelt").fadeIn().css({
 
                 color:'red',
             });
-            setTimeout(()=>{
+
+            $("#labelAprovado").fadeOut(1000);
+            /*setTimeout(()=>{
 
                     $("#labelt").fadeOut();
 
-            },4000)
+            },5000)*/
 
-        }else if(passwordLenght <= 9){
+        }else if(passwordLenght >= 9){
 
-            $("#labelt").fadeIn()
-                .text("Password mediana")
+            
+                $("#password").css({
+
+                    border:'1px solid green',
+                });
+                $("#labelAprovado").fadeIn()
+                                   .css({
+                                        
+                                        color:'#efefef',
+                                   })
+
+                                   $("#labelt").fadeOut(1000);
+            /*$("#labelt").fadeIn()
+                .text("Password aceitável")
                 .css({
 
-                color:'#800080',
+                color:'#fff',
             });
             setTimeout(()=>{
 
                     $("#labelt").fadeOut();
 
-            },4000)
-        }
-        else{
-
-            $("#labelt")
-                .fadeIn()
-                .text("Password forte")
-                .css({
-
-                color:'#800080',
-            });
-
-            setTimeout(()=>{
-
-                    $("#labelt").fadeOut();
-
-            },4000)
+            },5000)*/
         }
 
     });
@@ -144,7 +145,7 @@ $("#password").on('keyup',function(){
                 .fadeIn()
                 .text("As passswords são iguais")
                 .css({
-                color:'#800080',
+                color:'#fff',
             });
             setTimeout(()=>{
 

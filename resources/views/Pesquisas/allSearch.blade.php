@@ -4,25 +4,25 @@
 	<nav class="filter-main-search-mobile">
 		<ul>
 			<li>
-				<div style="cursor: pointer; color: white;" id="solButtonTrigger" >Solteiro(a)s</div>
+				<div style="cursor: pointer; color: white;" class="nameclass">Solteiro(a)s</div>
 			</li>
 			<li>
-				<div style="cursor: pointer; color: white;" id="casButtonTrigger">Casado(a)s</div>
+				<div style="cursor: pointer; color: white;" class="nameclass">Casado(a)s</div>
 			</li>
 			<li>
-				<div style="cursor: pointer; color: white;" id="namButtonTrigger">Namorados</div>
+				<div style="cursor: pointer; color: white;" class="nameclass">Namorados</div>
 			</li>
 			<li>
-				<a href="">Apresentados</a>
+				<div style="cursor: pointer; color: white;" class="nameclass">Apresentados</div>
 			</li>
 			<li>
-				<a href="">Casados</a>
+				<div style="cursor: pointer; color: white;" class="">Casados</div>
 			</li>
 			<li>
-				<a href="">Vivendo Maritalmente</a>
+				<div style="cursor: pointer; color: white;" class="nameclass">Vivendo Maritalmente</div>
 			</li>
 			<li>
-				<a href="">Páginas</a>
+				<div style="cursor: pointer; color: white;" class="nameclass">Páginas</div>
 			</li>
 		</ul>
 	</nav>
@@ -279,90 +279,187 @@ function expe(ccc, v){
 			var content = '';
 			var count = 1;
 			let src = '{{ asset("storage/img/users/") }}';
+			
+			if (res.length > 0) {
 
-			$.each(res, function(key, value) {
-				//console.log(value);
-				if (value.estado_conta_id == 1) {
+				$.each(res, function(key, value) {
+					//console.log(value);
+					if (value.estado_conta_id == 1) {
 
-					if (count == 1) {
-						content = '<div class="card-p">'
+						if (count == 1) {
+							content = '<div class="card-p">'
+						}
+						content += '<ul class="card-flex">';
+						content += '<li class="search-title">';
+
+						if (count == 1) {
+							content += '<span style="color: #fff;" class="mt-2">Pessoas</span>';
+						}
+
+						content += '</li>';
+						content += '<li class="change-look search-info">';
+
+						if (value.foto != null) {
+							content += '<div class="page-cover circle ">' 
+							content += '<img class=" circle img-40" src= ' + src + '/' + value.foto + '>'
+							content += '</div>'
+						}else {
+							content += '<div class=" page-cover circle ">'
+							content += '<i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>'
+							content += '</div>'
+						}
+						content += '<div class="mb-1 mr-2 profile-name-ident" id="">'
+						content += '<div id="" class="" >'
+
+						var route1 = "{{route('account1.profile', 1) }}"
+						url_array1 = route1.split('/');
+						url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
+
+						content += '<a href='+url_link1
+						
+						content += '<span class="profile-name-1">'+value.nome
+						content += ' '+value.apelido
+						content += '</span>'
+
+						content += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4">'
+						content += '<i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i>'
+						content += '</a>'
+						content += '</div></div></li>'
+						content += '<div class="couple-separator"></div>'
+
+						if (count == res.length) {
+
+							content += '</div>'														
+						}
+						//content += '</div>'														
+
+						$('div[name=pessoa]').empty();
+						$('div[name=pessoa]').append(content);
+						count++;
+
 					}
-					content += '<ul class="card-flex">';
-					content += '<li class="search-title">';
+				});
+			} else {
 
-					if (count == 1) {
-						content += '<span style="color: #fff;" class="mt-2">Pessoas</span>';
-					}
-
-					content += '</li>';
-					content += '<li class="change-look search-info">';
-
-					if (value.foto != null) {
-						content += '<div class="page-cover circle ">' 
-						content += '<img class=" circle img-40" src= ' + src + '/' + value.foto + '>'
-						content += '</div>'
-					}else {
-						content += '<div class=" page-cover circle ">'
-						content += '<i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>'
-						content += '</div>'
-					}
-					content += '<div class="mb-1 mr-2 profile-name-ident" id="">'
-					content += '<div id="" class="" >'
-
-					var route1 = "{{route('account1.profile', 1) }}"
-					url_array1 = route1.split('/');
-					url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
-
-					content += '<a href='+url_link1
-					
-					content += '<span class="profile-name-1">'+value.nome
-					content += ' '+value.apelido
-					content += '</span>'
-
-					content += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4">'
-					content += '<i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i>'
-					content += '</a>'
-					content += '</div></div></li>'
-					content += '<div class="couple-separator"></div>'
-
-					if (count == res.length) {
-
-						content += '</div>'														
-					}
-					//content += '</div>'														
-
-					$('div[name=pessoa]').empty();
-					$('div[name=pessoa]').append(content);
-					count++;
-
-				}
-			});
+				content = '<div class="card-p" style="color: white">';
+				content += 'Sem resultado';
+				content += '</div>';
+				$('div[name=pessoa]').empty();
+				$('div[name=pessoa]').append(content);
+			}
 		}
 	});
 }
 
+function expePg(ccc, v) {
+	
+	$.ajax({
+		url: "{{ route('allpage.pesquisa')}}",
+		type: 'get',
+		data: {'dados': ccc , 'v':v},
+		dataType: 'json',
+		success:function(response){
 
+			let src1 = '{{ asset("storage/img/page/") }}';
+			let src2 = '{{ asset("storage/video/page/") }}';
+			let src3 = '{{ asset("storage/img/page/") }}';
+			var nome = '';
+			var contador = 1;
+			console.log(response);
+			
+			$.each(response, function(key, value){
 
-$('#solButtonTrigger').on('click', function() {
-	let variavel= $('#table_search_mobile').val();
-	let v= 'sol';
-	expe(variavel, v);
+				nome+='<div class="card-p mb-5">'
+				nome+='<div class="post">'
+				nome+='<header class="clearfix">'
+				nome+='<div class="first-component clearfix l-5">'
+				if (value.page_foto != null) {
+					nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.page_foto + '></div>'
+				}else {
+					nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
+				}
+				nome+='<div class="page-identify r-5 clearfix">'
+				nome+='<h1 class="text-ellips">'+value.nome_page+'</h1>'
+				nome+='<div class="info-post clearfix">'
+				nome+='<span class="time-posted">50 min</span>'
+				nome+='</div>'
+				nome+='</div>'
+				nome+='</div>'
+				nome+='</header>'
+				nome+='<div class="card-post">'
+				nome+='<div class="">'
+				nome+='<p>'+value.post+'</p>'
+				if (value.formato == 1) {
+					nome+='<div class="post-cover">'
+					nome+='<img class="img-full" src='+ src2 + '/' + value.post_foto +'>'
+					nome+='</div>'
+				}else if (value.formato == 2) {
+					nome+='<div class="post-cover">'
+					nome+='<img class="img-full" src='+ src3 + '/' + value.post_foto +'>'
+					nome+='</div>'
+				}
+				nome+='</div>'
+				nome+='</div>'
+				nome+='</div>'
+				if (contador == 4) {
+					var route = "{{route('publicationsSearch1.page', 1) }}"
+					url_array = route.split('/');
+					url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
+					nome += '<a href='+url_link+' class="mr-4"> ver mais</a>'
+				}
+				nome+='</div>'
+
+				$('div[name=post]').empty();
+				$('div[name=post]').append(nome);
+				contador++;
+			})
+		}
+	});
+}
+
+$('.nameclass').on('click', function() {
+	let variavel = $('#table_search_mobile').text();
+	let value = analyze_value($(this).text());
+	//expe(variavel, value);
+
+	if (value === 'pag') {
+		expePg(variavel, value);
+	} else {
+		expe(variavel, value);
+	}
+
+	console.log(value);
 });
 
+function analyze_value(value) {
+	var str_value = '';
+	switch (value) {
+		case 'Solteiro(a)s':
+			str_value = 'sol';
+			break;
 
-$('#casButtonTrigger').on('click', function() {
-	let variavel= $('#table_search_mobile').val();
-	let v= 'cas';
-	expe(variavel, v);
-});
+		case 'Casado(a)s':
+			str_value = 'cas';
+			break;
 
+		case 'Namorados':
+			str_value = 'nam';
+			break;
 
-$('#namButtonTrigger').on('click', function() {
-	let variavel= $('#table_search_mobile').val();
-	let v= 'nam';
-	expe(variavel, v);
-});
+		case 'Apresentados':
+			str_value = 'apr';
+			break;
 
+		case 'Páginas':
+			str_value = 'pag';
+			break;
+
+		case 'Vivendo Maritalmente':
+			str_value = 'vma';
+			break;
+	}
+	return str_value;
+}
 
 /*END SIENE*/
 </script>
