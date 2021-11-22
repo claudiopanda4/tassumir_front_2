@@ -249,6 +249,23 @@ public function default_(){
 
     /* START SIENE COD */
 
+    public function allpagepesquisa(Request $r) {
+      if ($r->ajax()) {
+        $default = [];
+        $index = 0;
+       if ($r->val == 'pag') {
+                       
+                       $pages = DB::table('pages')->where('nome','like','%'.$r->dados.'%')->limit(4)->get();
+
+                       foreach ($pages as $valor) {
+                           $default[$index] = $valor;
+                           $index++;
+                       }
+                   } 
+          return response()->json($default);
+      }
+    }
+
     public function peoplepesquisa(Request $r) 
     {
       try {
@@ -260,42 +277,39 @@ public function default_(){
             
             if ($r->val == 'sol') {
                 
-                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->ccc.'%')
-                ->orwhere('apelido', 'like', '%'.$r->ccc.'%')->limit(4)->get();
+                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')
+                ->orwhere('apelido', 'like', '%'.$r->data.'%')->limit(4)->get();
 
                 foreach ($conta as $valor) {
                   if ($valor->estado_civil_id == 1) { // 1 : por ser o id do est_civil solteiro na tabela conta
                     $default[$index] = $valor;
                     $index++;
                   }
-                }
-                //return response()->json($default);  
+                } 
 
             } else if ($r->val == 'nam') {
                 
-                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->ccc.'%')
-                ->orwhere('apelido', 'like', '%'.$r->ccc.'%')->limit(4)->get();
+                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')
+                ->orwhere('apelido', 'like', '%'.$r->data.'%')->limit(4)->get();
 
                 foreach ($conta as $valor) {
-                  if ($valor->estado_civil_id == 2) { // 1 : por ser o id do est_civil solteiro na tabela conta
+                  if ($valor->estado_civil_id == 2) { // 1 : por ser o id do est_civil namorando na tabela conta
                     $default[$index] = $valor;
                     $index++;
                   }
-                }
-                //return response()->json($default);  
+                } 
 
             } else if ($r->val == 'cas') {
                 
-                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->ccc.'%')
-                ->orwhere('apelido', 'like', '%'.$r->ccc.'%')->limit(4)->get();
+                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')
+                ->orwhere('apelido', 'like', '%'.$r->data.'%')->limit(4)->get();
 
                 foreach ($conta as $valor) {
-                  if ($valor->estado_civil_id == 3) { // 1 : por ser o id do est_civil solteiro na tabela conta
+                  if ($valor->estado_civil_id == 3) { // 1 : por ser o id do est_civil casal na tabela conta
                     $default[$index] = $valor;
                     $index++;
                   }
-                }
-                //return response()->json($default);  
+                } 
 
             }
             return response()->json($default);

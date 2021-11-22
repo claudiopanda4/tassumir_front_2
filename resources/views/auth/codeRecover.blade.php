@@ -32,7 +32,7 @@
         <main class="main" id="main-login-container">
             <!--class="center" id="main-login"-->
             
-            <div id="main-reg" >
+            <div id="main-reg">
                 <header class="logo-form" id="title-login">
 
                     <div>
@@ -70,7 +70,7 @@
 
                     <div class="form-group">
                         
-                        <input type="tel" class="input-text-default input-full hidden input-login" name="phoneNumber" type="text" placeholder="Telefone" id="telefone">
+                        <input type="tel" class="input-text-default input-full hidden input-login" name="phoneNumber" type="text" placeholder="Telefone" id="telefone" data-mask="000-000-000">
                     </div>
 
                     <button type="submit" id="login-enter" class="alerta">Enviar</button>
@@ -81,6 +81,7 @@
 </body>
 </html>
 
+    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script>
 
 $(document).ready(function() {

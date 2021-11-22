@@ -47,7 +47,7 @@
                         <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                     </div>
                 </header>
-                <form action="{{ route('account.login.enter') }}" method="POST" class="needs-validation" novalidate>
+                <form action="{{ route('account.login.enter') }}" method="POST" >
                     @csrf
                      
 
@@ -55,19 +55,23 @@
 
 
                         <label for="exampleInputPassword1">Número ou Email</label>
-                        <input class="input-text-default input-full input-login" name="number_email_login" type="text" placeholder="email ou telefone" required>
-                        <div class="invalid-feedback">
-                            Insira o Telefone ou Email
-                      </div>
+                        <input class="input-text-default input-full input-login" name="number_email_login" type="text" placeholder="email ou telefone" >
+
+                        @error('number_email_login')
+
+                            <span style="color: red;">{{$message}}</span>
+                        @enderror
+                        
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" name="password_login" class="input-text-default input-full input-login" id="exampleInputPassword1" placeholder="password" required>
+                        <input type="password" name="password_login" class="input-text-default input-full input-login" id="exampleInputPassword1" placeholder="password" >
 
-                        <div class="invalid-feedback">
-                            Insira a Password
-                       </div>
+                        @error('password_login')
+
+                            <span style="color: red;">{{$message}}</span>
+                        @enderror
 
                     </div>
                     <button id="login-enter" type="submit" class=""><span class="enter-login">Ent</span>rar</button>
@@ -96,6 +100,7 @@
     </div>
 </body>
 </html>
+
 <script>
 
    /* $("#mudar").click(function(e) {
@@ -114,7 +119,7 @@
                 $(":password").hide();
 
             }
-        });*/
+        });
 
     (function() {
     'use strict';
@@ -133,7 +138,7 @@
         }, false);
       });
     }, false);
-  })();
+  })();*/
 
 </script>
 

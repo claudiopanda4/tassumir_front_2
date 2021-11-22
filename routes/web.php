@@ -63,6 +63,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
 
     Route::get('/peoplepesquisa', [\App\Http\Controllers\searchController::class, 'peoplepesquisa'])->name('people.pesquisa');
 
+    Route::get('/allpeoplepesquisa', [\App\Http\Controllers\searchController::class, 'allpagepesquisa'])->name('allpage.pesquisa');
+
     Route::get('/paginapesquisa', [App\Http\Controllers\searchController::class, 'paginapesquisa'])->name('pagina.pesquisa');
     Route::get('/postpesquisa', [App\Http\Controllers\searchController::class, 'postpesquisa'])->name('post.pesquisa');
     Route::get('/pesquisa/pages', [App\Http\Controllers\searchController::class, 'pagesSearch'])->name('pagesSearch.page');
@@ -83,16 +85,39 @@ Route::group(['middleware' => 'auth:web1'], function () {
     //Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('home');
 });
 Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->name('account.logout');
+
+/* inicio get e post login*/
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('account.login.form');
+Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
+/*end get e post login*/
+
+
+/* registrar */
 Route::get('/registrar', [App\Http\Controllers\AuthController::class, 'registrarUser'])->name('account.register.form');
-Route::get('registrar/completRegister', [App\Http\Controllers\AuthController::class, 'registrarUserComplete'])->name('account.registerComplete.form');
+
+Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.teste.form');
+
+
+Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.enter.form');
+
+//Route::get('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.teste.form');
+
+
+
+
+
+
+
+
+
+/* */
 Route::get('/recuperarSenha', [App\Http\Controllers\AuthController::class, 'recuperarSenha'])->name('account.code.form');
 Route::get('/recuperarSenha/code', [App\Http\Controllers\AuthController::class, 'codigoRecebido'])->name('code.received.form');
 Route::get('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'newCode'])->name('validate.newCode.form');
 
 Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'updatePassword'])->name('account.newPasswordSave');
 
-Route::get('/completRegister', [App\Http\Controllers\AuthController::class, 'registrarUserComplete'])->name('account.registerComplete.form');
+//Route::get('/completRegister', [App\Http\Controllers\AuthController::class, 'registrarUserComplete'])->name('account.registerComplete.form');
 
 //posts
 Route::get('/view/', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
@@ -103,9 +128,7 @@ Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])-
 
 Route::get('/confirmarCodigo', [App\Http\Controllers\AuthController::class, 'codigoRecebidoRegisto'])->name('account.codeConfirmation.form');
 
-Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.teste.form');
 
-Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.enter.form');
 
 Route::post('/verificarCodigo', [App\Http\Controllers\AuthController::class, 'verifyCodeSent'])->name('account.verifyCode.enter');
 
@@ -116,7 +139,6 @@ Route::post('/verificarCodigo/Again', [App\Http\Controllers\AuthController::clas
 
 Route::post('/gerarNovamente', [App\Http\Controllers\AuthController::class, 'generateAgain'])->name('account.generateAgain.enter');
 
-Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
 
 /* here */
 Route::post('/sendTo',[App\Http\Controllers\AuthController::class, 'sendPhoneEmailRecover'])->name('account.sendToPhoneEmail');
