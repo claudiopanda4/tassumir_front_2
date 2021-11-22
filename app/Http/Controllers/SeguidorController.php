@@ -93,7 +93,6 @@ class SeguidorController extends Controller
                         ]);
                       }
                 }
-
             return response()->json($destino_b);
         }
 

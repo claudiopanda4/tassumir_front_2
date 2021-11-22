@@ -132,10 +132,22 @@ class MessageController extends Controller
         $message_user['foto_des'] = $foto_dest[0]->foto;
         $message_user['foto_rem'] = $foto_user[0]->foto;
         $message_user['destinatario'] = $m_destinatario[0]->identificador_id;
-        $message_user['valor'] = DB::table('messages')->where('id_identificador_a', $m_user_logado[0]->identificador_id)->orwhere('id_identificador_a', $m_destinatario[0]->identificador_id)->limit(6)->get();
+        $message_user['valor'] = DB::table('messages')->where([
+                  ['id_identificador_a', '=', $m_user_logado[0]->identificador_id],
+                  ['id_identificador_b', '=', $m_destinatario[0]->identificador_id],
+            ])->orwhere([
+                  ['id_identificador_a', '=', $m_destinatario[0]->identificador_id],
+                  ['id_identificador_b', '=', $m_user_logado[0]->identificador_id],
+            ])->orderBy('message_id', 'desc')->limit(5)->get()->reverse();
 
     /*     
-         
+         $users = DB::table('users')
+                ->orderBy('name', 'desc')
+                ->get();
+         $users = DB::table('users')->where([
+                  ['status', '=', '1'],
+                  ['subscribed', '<>', '1'],
+            ])->get();
             $contas = DB::table('contas')->limit(8)->get();
             $conta_destino = DB::table('contas')->where('conta_id', $destinatario)->get();
                
@@ -177,7 +189,16 @@ class MessageController extends Controller
         $identificador_user = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
         $identificador_dest = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_destino[0]->conta_id, 1 ]);
         
-        $message_text = DB::table('messages')->where('id_identificador_a', $identificador_user[0]->identificador_id)->orwhere('id_identificador_b', $identificador_user[0]->identificador_id)->limit(6)->get();
+         $message_text = DB::table('messages')->where([
+                  ['id_identificador_a', '=', $identificador_user[0]->identificador_id],
+                  ['id_identificador_b', '=', $identificador_dest[0]->identificador_id],
+            ])->orwhere([
+                  ['id_identificador_a', '=', $identificador_dest[0]->identificador_id],
+                  ['id_identificador_b', '=', $identificador_user[0]->identificador_id],
+            ])->orderBy('message_id', 'desc')->limit(5)->get()->reverse();
+            
+        
+               
 
           $message_contact = DB::table('messages')->where('id_identificador_a', $identificador_user[0]->identificador_id)->orwhere('id_identificador_b', $identificador_user[0]->identificador_id)->join('identificadors', function ($join) {
             $join->on('messages.id_identificador_a', '=', 'identificadors.identificador_id' )->orOn('messages.id_identificador_b', '=', 'identificadors.identificador_id');

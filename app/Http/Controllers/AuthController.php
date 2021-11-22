@@ -160,11 +160,7 @@ class AuthController extends Controller
 
             $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
 
-            foreach ($dadosSgndo as $value) {
-                $valor = $value->identificador_id;
-            }
-
-            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $dadosSgndo[0]->identificador_id)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
             ->select('seguidors.*', 'identificadors.id')
             ->get();
 
