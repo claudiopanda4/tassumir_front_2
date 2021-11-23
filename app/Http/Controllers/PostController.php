@@ -44,11 +44,10 @@ class PostController extends Controller
                     if (sizeof($post) > 0) {
                         $posts_return[$i] = $post;
                     }
-                            
-                    //dd($post);
                     //dd($post_views[$key]->post_id);
                     //dd($posts);
                     $returns[$key] = $post_views[$key]->post_id;
+                    $posts_return[$i][$ii] = $post;
                     $ii++;
                 }
                 $aux = $aux + sizeof($post_views);
