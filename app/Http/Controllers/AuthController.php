@@ -1033,8 +1033,6 @@ class AuthController extends Controller
           }catch(\Exception $e){
               return back()->with('error','Erro Hugo Paulo');
           }
-
-
         
     }
 
@@ -1048,7 +1046,7 @@ class AuthController extends Controller
         $codHugo = random_int(1000,9000);
 
         Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
-        return "Email enviado para";
+        return "Email enviado";
 
     }
 
