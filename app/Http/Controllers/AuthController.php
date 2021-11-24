@@ -13,6 +13,13 @@ use App\Http\Controllers\PaginaCasalController;
 
 use Illuminate\Support\Facades\Validator;
 
+/* email */
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendVerificationCode;
+
+/* end email*/
+
 class AuthController extends Controller
 {
     private $casalPage;
@@ -1029,6 +1036,20 @@ class AuthController extends Controller
 
 
         
+    }
+
+    public function testandoEmail(){
+
+       /* $dadosEmail =[
+
+            'title' =>'Comprovativo',
+            'body' =>'Hugo Luvumbo Sadi Paulo'
+        ];*/
+        $codHugo = random_int(1000,9000);
+
+        Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
+        return "Email enviado para";
+
     }
 
     public function verifyCodeSent(Request $request){

@@ -48,6 +48,9 @@
                     <div class="form-group">
                         
                         <input type="password" class="input-text-default input-full input-login" name="password" placeholder="Escreva a nova senha" required id="password">
+
+                        <i class="fa fa-eye" id="eye"></i>
+
                         <div class="invalid-feedback">
                             Insira a Password
                       </div>
@@ -60,6 +63,9 @@
                     <div class="form-group">
                         
                         <input type="password" class="input-text-default input-full input-login" name="confirmarPassword" placeholder="Repita a nova senha" required id="confirmarPassword">
+
+                        <i class="fa fa-eye" id="eye2"></i>
+
                         <div class="invalid-feedback">
                             Confirme a Password
                       </div>
@@ -78,6 +84,43 @@
 </body>
 </html>
 <script>
+
+    const pass = $("#password");
+
+    const confP = $("#confirmarPassword");
+
+    $("#eye").click(function(){
+
+        if (pass.prop('type') == 'password') {
+
+            $(this).addClass('fa fa-slash');
+            pass.attr('type','text');
+
+        }else{
+
+            $(this).removeClass('fa fa-slash');
+            pass.attr('type','password');
+            $(this).addClass('fa fa-eye');
+        }
+    });
+
+    $("#eye2").on('click',function(){
+
+
+        if (confP.prop('type') == 'password') {
+
+            $(this).addClass('fa fa-slash');
+
+            confP.attr('type','text');
+
+        }else{
+
+            $(this).removeClass('fa fa-slash');
+            confP.attr('type','password');
+            $(this).addClass('fa fa-eye');
+        }
+
+    });
 
 $("#password").on('keyup',function(){
 
