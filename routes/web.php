@@ -107,6 +107,12 @@ Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAnd
 
 
 
+/* email start*/
+
+Route::get('/email', [App\Http\Controllers\AuthController::class, 'testandoEmail'])->name('email.test');
+
+/* end email */
+
 
 
 

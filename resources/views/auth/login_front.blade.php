@@ -67,6 +67,7 @@
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
                         <input type="password" name="password_login" class="input-text-default input-full input-login" id="exampleInputPassword1" placeholder="password" >
+                        <i class="fa fa-eye" id="eye"></i>
 
                         @error('password_login')
 
@@ -103,42 +104,27 @@
 
 <script>
 
-   /* $("#mudar").click(function(e) {
-        e.preventDefault();
-            if ($(":password")) {
-                $(":password").show().text();
-                $(" #teste1").hide().val();
-            }
-        });
-        $("#outro").click(function(e) {
-            e.preventDefault();
-            if ($(":password")) {
-                let takeToChange = $(".changeType");
-                let changeToPass = takeToChange.val();
-                $(" #teste1").show().val(changeToPass);
-                $(":password").hide();
+    const password = $("#exampleInputPassword1");
 
-            }
-        });
+    $("#eye").on('click',function(){
 
-    (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-      var forms = document.getElementsByClassName('needs-validation');
+        if (password.prop('type') == 'password' ) {
 
-      var validation = Array.prototype.filter.call(forms, function(form) {
-        form.addEventListener('submit', function(event) {
-          if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-          } else {
-            //teste();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      });
-    }, false);
-  })();*/
+                $(this).addClass('fa fa-slash');
+                password.attr('type','text');
+                
+
+        }else{
+
+            $(this).removeClass('fa fa-slash');
+            password.attr('type','password');
+            $(this).addClass('fa fa-eye');
+        }
+
+
+
+
+    });
 
 </script>
 
