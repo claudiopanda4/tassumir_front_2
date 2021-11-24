@@ -120,13 +120,16 @@
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
-                        <div class="video-post">
+                        <div class="video-post" id="video-post-{{$dados[$key]['post_uuid']}}">
                             <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$key ?>>
-                            <video class="video-post-video" id=<?php echo "video_".$key; ?>>
-                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
+                            <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$key ?>>
+                            <video class="video-post-video" id="video_{{$key}}">
+                                
                                 Your browser does not support the video tag.
                             </video>
                             <input type="hidden" name="" value="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}" id="watch-video-{{$key}}">
+                            <input type="hidden" name="" value="{{$dados[$key]['post_uuid']}}" id="vid-{{$key}}">
+                            <input type="hidden" name="" id="has-video-{{$key}}">
                             <input type="hidden" name="" id="video-post-time-{{$key}}">
                             <input type="hidden" name="" id="video-post-time-all-{{$key}}">
                         </div>

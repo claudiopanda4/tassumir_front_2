@@ -121,6 +121,8 @@ Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController
 
 //posts
 Route::get('/view/', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
+Route::get('/getvideo/', [App\Http\Controllers\PostController::class, 'get_video'])->name('post.video.get');
+Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])->name('post.get');
 //endposts
 
 
