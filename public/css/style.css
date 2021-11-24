@@ -270,11 +270,12 @@ body {
     overflow: hidden;
 }
 ::-webkit-scrollbar {
-	width: 4px;
+	width: 8px;
 	/*background-color: #efefef;*/
 }
 ::-webkit-scrollbar-thumb {
-	width: 4px;
+	width: 8px;
+	border-radius: 20px;
 	background-color: #efefef;
 }
 .header-main-component {

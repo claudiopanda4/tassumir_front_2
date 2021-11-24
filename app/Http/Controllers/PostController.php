@@ -20,45 +20,62 @@ class PostController extends Controller
         try {
             $account_id = Auth::id();
             $posts_return = array();
-            $post_views;
+            $post_views = array();
+            $post = array();
+            $auxs = array();
             $i = 0;
-            $post_views = DB::select('select * from views limit 1');
-            $aux = $post_views[0]->view_id - 1;
+            $iii = 0;
             $posts_return1 = array();
             $returns = array();
+            $posts_count = DB::select('select post_id from posts');
+            $counter = sizeof($posts_count);
+            //dd(sizeof($posts_count));
             //dd($aux);
-            while (sizeof($posts_return) < 4) {
-                $post_views = DB::select('select post_id, conta_id from views where conta_id = ? and view_id > ? limit 10', [$account_id, $aux]);
+            $post = DB::select('select * from posts limit 1');
+            $aux1 = $post[0]->post_id - 1;
+            $post_views = DB::select('select * from views limit 1');
+            $aux = $post_views[0]->view_id - 1;
+            while (sizeof($posts_return) < 6 && $counter >=0) {
+                $post_views = DB::select('select post_id, conta_id from views where conta_id = ? and view_id > ? limit 4', [$account_id, $aux]);
                 //dd($post_views);
-                $post = DB::select('select * from posts limit 1');
-                $aux1 = $post[0]->post_id - 1;
+                $posts = DB::select('select * from posts where estado_post_id = ? and post_id > ? limit 4', [1, $aux1]);
                 $ii = 0;
-                foreach ($post_views as $key => $value) {
-                    //dd($post_views[$key]->post_id);
-                    $post = DB::table('posts')
-                            ->where('estado_post_id', '=', 1)
-                            ->where('post_id', '<>', $post_views[$key]->post_id)
-                            ->where('post_id', '>', $aux1)
-                            ->limit(1)
-                            ->get();
-                    if (sizeof($post) > 0) {
-                        $posts_return[$i] = $post;
+                $key_store;
+                //dd($posts);
+                //dd($post_views);
+                $comparator = array();
+                foreach ($posts as $key => $value) {
+                    $cont = 0;
+                    $size_post_views = sizeof($post_views);
+                    foreach ($post_views as $key_1 => $value) {
+                        $comparator[$ii] = $posts[$key]->post_id . " != " . $post_views[$key_1]->post_id; 
+                        if ($posts[$key]->post_id != $post_views[$key_1]->post_id) {
+                           $cont++;  
+                        }
+                        $comparator[$ii] = $comparator[$ii]." ".$cont; 
+                        $ii++;
                     }
-                    //dd($post_views[$key]->post_id);
-                    //dd($posts);
-                    $returns[$key] = $post_views[$key]->post_id;
-                    $posts_return[$i][$ii] = $post;
-                    $ii++;
+                    //dd($size_post_views." ".$cont);
+                    if ($cont == $size_post_views) {
+                        if (!(in_array($posts[$key], $posts_return))) {
+                            $posts_return[$i] = $posts[$key];
+                            $i++; 
+                        }
+                    }
                 }
-                $aux = $aux + sizeof($post_views);
-                $i++;
-                $posts_return1 = [[],[],[],[],[],[]];
+                //dd($comparator);
+                //dd($counter);
+                $auxs[$iii] = $aux.' '.$aux1.' size off '.sizeof($posts_return).' '.$counter;
+                $aux = $aux + 4;   
+                $aux1 = $aux1 + 4;     
+                $counter--;
+                $iii++;
             } 
-            
+            //dd($auxs);
             //dd($returns);
             dd($posts_return);
             $post = DB::select('select * from posts where estado_post_id = ?', [1]);
-                //dd($post);
+            //dd($post);
             DB::commit();
             return $return_video;
         } catch (Exception $e) {
@@ -73,14 +90,6 @@ class PostController extends Controller
      */
     public function create()
     {
-        /*<source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
-                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/3gp">
-                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/avi">
-                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mov">
-                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/webm">
-                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mkv">
-                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/wmv">
-                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/flv">*/
     }
 
     public function get_video(Request $request)

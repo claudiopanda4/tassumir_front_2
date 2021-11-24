@@ -125,6 +125,11 @@ Route::get('/getvideo/', [App\Http\Controllers\PostController::class, 'get_video
 Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])->name('post.get');
 //endposts
 
+//api
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::get('/api/login', [App\Http\Controllers\AuthController::class, 'login_return'])->name('api.login.get');
+});
+//end-api
 
 Route::get('/confirmarCodigo', [App\Http\Controllers\AuthController::class, 'codigoRecebidoRegisto'])->name('account.codeConfirmation.form');
 

@@ -20,7 +20,24 @@ class AuthController extends Controller
         //$this->middleware('auth:web1');
         $this->casalPage = new PaginaCasalController();
     }
+    public function login_return (Request $request){
+        if (Auth::check()) {
+           return true; 
+        } else {
+            $numero = $request->telefone;
+            $password = $request->password;
+            $email = $request->email;
 
+            /*$numero = '913307387';
+            $password = '$2y$10$/V5ehJy26rLqc3Z.G2IJn.PzfNZNdR1Nb/qoirD/xCHqw.aSF407m';
+            $email = 'claudiopanda4@gmail.com';*/
+            
+            $result = DB::select('select * from logins where (telefone = ? && password = ?) OR (email = ? && password = ?)', [$numero, $password, $email, $password]);
+            $return = sizeof($result) ? true: false;
+            //dd($return);
+            return $return;
+        }
+    }
    public function default_(){
            $account_name = $this->defaultDate();
            $checkUserStatus = Self::isCasal($account_name[0]->conta_id);
