@@ -249,22 +249,26 @@ public function default_(){
 
     /* START SIENE COD */
 
+    private static $ajaxErrorMsg = 'erro do ajax, verifica o código';
+
     public function allpagepesquisa(Request $r) {
       if ($r->ajax()) {
         $default = [];
         $index = 0;
-       if ($r->val == 'pag') {
-                       
-                       $pages = DB::table('pages')->where('nome','like','%'.$r->dados.'%')->limit(4)->get();
+       if ($r->v == 'pag') {    
+         $pages = DB::table('pages')->where('nome','like','%'.$r->data.'%')->limit(4)->get();
 
-                       foreach ($pages as $valor) {
-                           $default[$index] = $valor;
-                           $index++;
-                       }
-                   } 
-          return response()->json($default);
+         foreach ($pages as $valor) {
+             $default[$index] = $valor;
+             $index++;
+         }
+        return response()->json($default);
+       } else {
+        return response()->json(Self::$ajaxErrorMsg);
+       } 
       }
     }
+
 
     public function peoplepesquisa(Request $r) 
     {
@@ -315,7 +319,7 @@ public function default_(){
             return response()->json($default);
 
           } else {
-            return response()->json('fora');
+            return response()->json(Self::$ajaxErrorMsg);
           }
 
         }
@@ -327,7 +331,7 @@ public function default_(){
 
     private static function checkAjaxValueType($v)
     {
-      return ($v == 'sol' || $v == 'cas' || $v == 'nam' || $v == 'pag') ? 'espec' : '';
+      return ($v == 'sol' || $v == 'cas' || $v == 'nam' || $v == 'pag' || $v == 'apr' || $v == 'vma') ? 'espec' : '';
     }
 
     private static function searchByEstado($r) 
