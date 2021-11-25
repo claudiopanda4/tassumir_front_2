@@ -13,6 +13,13 @@ use App\Http\Controllers\PaginaCasalController;
 
 use Illuminate\Support\Facades\Validator;
 
+/* email */
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendVerificationCode;
+
+/* end email*/
+
 class AuthController extends Controller
 {
     private $casalPage;
@@ -20,7 +27,24 @@ class AuthController extends Controller
         //$this->middleware('auth:web1');
         $this->casalPage = new PaginaCasalController();
     }
+    public function login_return (Request $request){
+        if (Auth::check()) {
+           return true; 
+        } else {
+            $numero = $request->telefone;
+            $password = $request->password;
+            $email = $request->email;
 
+            /*$numero = '913307387';
+            $password = '$2y$10$/V5ehJy26rLqc3Z.G2IJn.PzfNZNdR1Nb/qoirD/xCHqw.aSF407m';
+            $email = 'claudiopanda4@gmail.com';*/
+            
+            $result = DB::select('select * from logins where (telefone = ? && password = ?) OR (email = ? && password = ?)', [$numero, $password, $email, $password]);
+            $return = sizeof($result) ? true: false;
+            //dd($return);
+            return $return;
+        }
+    }
    public function default_(){
            $account_name = $this->defaultDate();
            $checkUserStatus = Self::isCasal($account_name[0]->conta_id);
@@ -1028,9 +1052,21 @@ class AuthController extends Controller
           }catch(\Exception $e){
               return back()->with('error','Erro Hugo Paulo');
           }
-
-
         
+    }
+
+    public function testandoEmail(){
+
+       /* $dadosEmail =[
+
+            'title' =>'Comprovativo',
+            'body' =>'Hugo Luvumbo Sadi Paulo'
+        ];*/
+        $codHugo = random_int(1000,9000);
+
+        Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
+        return "Email enviado";
+
     }
 
     public function verifyCodeSent(Request $request){

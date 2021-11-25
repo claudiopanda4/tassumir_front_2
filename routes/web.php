@@ -107,6 +107,12 @@ Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAnd
 
 
 
+/* email start*/
+
+Route::get('/email', [App\Http\Controllers\AuthController::class, 'testandoEmail'])->name('email.test');
+
+/* end email */
+
 
 
 
@@ -121,8 +127,15 @@ Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController
 
 //posts
 Route::get('/view/', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
+Route::get('/getvideo/', [App\Http\Controllers\PostController::class, 'get_video'])->name('post.video.get');
+Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])->name('post.get');
 //endposts
 
+//api
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::get('/api/login', [App\Http\Controllers\AuthController::class, 'login_return'])->name('api.login.get');
+});
+//end-api
 
 Route::get('/confirmarCodigo', [App\Http\Controllers\AuthController::class, 'codigoRecebidoRegisto'])->name('account.codeConfirmation.form');
 

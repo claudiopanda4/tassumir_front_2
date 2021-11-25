@@ -79,48 +79,55 @@
 			var nome = '';
 			var contador = 1;
 			console.log(response.valor);
-			$.each(response.valor, function(key, value){
-				let src = '{{asset("storage/img/users/") }}';
-				console.log(src);
-				if (value.estado_conta_id == 1) {
-					if (contador == 1) {
-						nome+='<div class="card-p ">'
-					}
-					nome += '<ul class="card-flex">'
-					nome += '<li class="search-title">'
-					if (contador == 1) {
-						nome += '<span style="color:#fff;" class="mt-2">Pessoas</span>'
-					}
-					nome += '</li>'
-					nome += '<li class="change-look search-info">'
-					if (value.foto != null) {
-						nome += '<div class="page-cover circle "><img class=" circle img-40" src= ' + src + '/' + value.foto + '></div>'
-					}else {
-						nome += '<div class=" page-cover circle "><i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i></div>'
-					}
-					nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
-					var route1 = "{{route('account1.profile', 1) }}"
-					url_array1 = route1.split('/');
-					url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
+			if (response.length > 0) {
 
-					nome += '<a href='+url_link1+' <span class="profile-name-1">'+value.nome+' '+value.apelido+'</span>'
-					nome += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
-					nome += '</div></div></li><div class="couple-separator"></div>'
-					if (contador == 4) {
-						var route = "{{route('peoplesSearch1.page', 1) }}"
-						url_array = route.split('/');
-						url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
-						nome += '<a href='+url_link+' class="mr-4"> ver mais</a>'
-					}
-					nome += '</ul>'
-					if (contador == 4) {
-						nome += '</div>'														
-					}
-						$('div[name=pessoa]').empty();
-						$('div[name=pessoa]').append(nome);
-						contador++;
-					}
-				})
+				$.each(response.valor, function(key, value){
+					let src = '{{asset("storage/img/users/") }}';
+					console.log(src);
+					if (value.estado_conta_id == 1) {
+						if (contador == 1) {
+							nome+='<div class="card-p ">'
+						}
+						nome += '<ul class="card-flex">'
+						nome += '<li class="search-title">'
+						if (contador == 1) {
+							nome += '<span style="color:#fff;" class="mt-2">Pessoas</span>'
+						}
+						nome += '</li>'
+						nome += '<li class="change-look search-info">'
+						if (value.foto != null) {
+							nome += '<div class="page-cover circle "><img class=" circle img-40" src= ' + src + '/' + value.foto + '></div>'
+						}else {
+							nome += '<div class=" page-cover circle "><i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i></div>'
+						}
+						nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
+						var route1 = "{{route('account1.profile', 1) }}"
+						url_array1 = route1.split('/');
+						url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
+
+						nome += '<a href='+url_link1+' <span class="profile-name-1">'+value.nome+' '+value.apelido+'</span>'
+						nome += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
+						nome += '</div></div></li><div class="couple-separator"></div>'
+						if (contador == 4) {
+							var route = "{{route('peoplesSearch1.page', 1) }}"
+							url_array = route.split('/');
+							url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
+							nome += '<a href='+url_link+' class="mr-4"> ver mais</a>'
+						}
+						nome += '</ul>'
+						if (contador == 4) {
+							nome += '</div>'														
+						}
+							$('div[name=pessoa]').empty();
+							$('div[name=pessoa]').append(nome);
+							contador++;
+						}
+					})
+			} else {
+				nome = '<div style="color: white;" class="ml-2 mt-2">Sem resultados</div>';
+				$('div[name=pessoa]').empty();
+				$('div[name=pessoa]').append(nome);
+			}
 		}
 	});
 	//----------------------------------------------------------------------
@@ -134,46 +141,53 @@
 			var nome = '';
 			var contador = 1;
 			console.log(response.valor);
-			$.each(response.valor, function(key, value){
-				if (value.estado_pagina_id==1) {
-					if (contador == 1) {
-						nome+='<div class="card-p mt-3">'
-					}
-					nome += '<ul class="card-flex">'
-					nome += '<li class="search-title">'
-					if (contador == 1) {
-						nome += '<span style="color:#fff;" class="mt-2">Páginas</span>'
-					}
-					nome += '</li>'
-					nome += '<li class="change-look search-info">'
-					if (value.foto != null) {
-						nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.foto + '></div>'
-					}else {
-						nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
-					}
-					nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
-					var route10 = "{{route('couple.page1', 1) }}"
-					url_array10 = route10.split('/');
-					url_link10 = url_array10[0] + "/" + url_array10[1] + "/" + url_array10[2] + "/"+ url_array10[3] +  "/" + value.uuid;
-					nome +='<a href='+url_link10+'>'
-					nome += '<span class="profile-name-1">'+value.nome+'</span>'
-					nome +='</a>'
-					nome += '<a href='+url_link10+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
-					nome += '</div></div></li><div class="couple-separator"></div>'
-					if (contador == 4) {
-						var route = "{{route('pagesSearch1.page', 1) }}"
-						url_array = route.split('/');
-						url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
-						nome += '<a href='+url_link+' class="mr-4"> ver mais</a>'
-					}
-					nome += '</ul>'
-					if (contador == 4) {
-						nome += '</div>'														}
-						$('div[name=page]').empty();
-						$('div[name=page]').append(nome);
-						contador++;
-					}
-				})
+			if (response.length > 0) {
+				$.each(response.valor, function(key, value){
+					if (value.estado_pagina_id==1) {
+						if (contador == 1) {
+							nome+='<div class="card-p mt-3">'
+						}
+						nome += '<ul class="card-flex">'
+						nome += '<li class="search-title">'
+						if (contador == 1) {
+							nome += '<span style="color:#fff;" class="mt-2">Páginas</span>'
+						}
+						nome += '</li>'
+						nome += '<li class="change-look search-info">'
+						if (value.foto != null) {
+							nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.foto + '></div>'
+						}else {
+							nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
+						}
+						nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
+						var route10 = "{{route('couple.page1', 1) }}"
+						url_array10 = route10.split('/');
+						url_link10 = url_array10[0] + "/" + url_array10[1] + "/" + url_array10[2] + "/"+ url_array10[3] +  "/" + value.uuid;
+						nome +='<a href='+url_link10+'>'
+						nome += '<span class="profile-name-1">'+value.nome+'</span>'
+						nome +='</a>'
+						nome += '<a href='+url_link10+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
+						nome += '</div></div></li><div class="couple-separator"></div>'
+						if (contador == 4) {
+							var route = "{{route('pagesSearch1.page', 1) }}"
+							url_array = route.split('/');
+							url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
+							nome += '<a href='+url_link+' class="mr-4"> ver mais</a>'
+						}
+						nome += '</ul>'
+						if (contador == 4) {
+							nome += '</div>'														}
+							$('div[name=page]').empty();
+							$('div[name=page]').append(nome);
+							contador++;
+						}
+					})
+			} else {
+				nome = '<div style="color: white;" class="ml-2 mt-2">Sem resultados</div>';
+				$('div[name=page]').empty();
+				$('div[name=page]').append(nome);
+			}
+			
 		}
 	});
 
@@ -287,65 +301,66 @@ function expe(ccc, v){
 					if (value.estado_conta_id == 1) {
 
 						if (count == 1) {
-							content = '<div class="card-p">'
+							content+='<div class="card-p ">'
 						}
-						content += '<ul class="card-flex">';
-						content += '<li class="search-title">';
+						
+						content += '<ul class="card-flex">'
+						content += '<li class="search-title">'
 
 						if (count == 1) {
-							content += '<span style="color: #fff;" class="mt-2">Pessoas</span>';
+							content += '<span style="color:#fff;" class="mt-2">Pessoas</span>'
 						}
-
-						content += '</li>';
-						content += '<li class="change-look search-info">';
-
+						content += '</li>'
+						content += '<li class="change-look search-info">'
+						
 						if (value.foto != null) {
-							content += '<div class="page-cover circle ">' 
-							content += '<img class=" circle img-40" src= ' + src + '/' + value.foto + '>'
-							content += '</div>'
+							content += '<div class="page-cover circle ">'
+							content += '<img class=" circle img-40" src= ' + src + '/' + value.foto + '>' 
+							content +='</div>'
 						}else {
 							content += '<div class=" page-cover circle ">'
 							content += '<i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>'
 							content += '</div>'
 						}
+
 						content += '<div class="mb-1 mr-2 profile-name-ident" id="">'
 						content += '<div id="" class="" >'
-
 						var route1 = "{{route('account1.profile', 1) }}"
 						url_array1 = route1.split('/');
 						url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
 
-						content += '<a href='+url_link1
-						
-						content += '<span class="profile-name-1">'+value.nome
-						content += ' '+value.apelido
-						content += '</span>'
-
-						content += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4">'
-						content += '<i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i>'
-						content += '</a>'
-						content += '</div></div></li>'
-						content += '<div class="couple-separator"></div>'
-
+						content += '<a href='+url_link1+' <span class="profile-name-1">'+value.nome+' '+value.apelido+'</span>'
+						content += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
+						content += '</div></div></li><div class="couple-separator"></div>'
+						if (count == 4) {
+							var route = "{{route('peoplesSearch1.page', 1) }}"
+							url_array = route.split('/');
+							url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
+							content += '<a href='+url_link+' class="mr-4"> ver mais</a>'
+						}
+						content += '</ul>'
 						if (count == res.length) {
-
 							content += '</div>'														
 						}
-						//content += '</div>'														
-
-						$('div[name=pessoa]').empty();
-						$('div[name=pessoa]').append(content);
-						count++;
-
+							$('div[name=pessoa]').empty();
+							$('div[name=pessoa]').append(content);
+							count++;
 					}
 				});
+				// empty page div
+				$('div[name=page]').empty();
+
 			} else {
 
-				content = '<div class="card-p" style="color: white">';
-				content += 'Sem resultado';
+				content = '<div class="mt-4 card-p" style="color: white">';
+				content += '<span class="mt-2 ml-2">Sem resultado</span>';
 				content += '</div>';
 				$('div[name=pessoa]').empty();
 				$('div[name=pessoa]').append(content);
+				
+				// empty page div
+				$('div[name=page]').empty();
+
 			}
 		}
 	});
@@ -356,79 +371,103 @@ function expePg(ccc, v) {
 	$.ajax({
 		url: "{{ route('allpage.pesquisa')}}",
 		type: 'get',
-		data: {'dados': ccc , 'v':v},
+		data: {'data': ccc , 'v':v},
 		dataType: 'json',
-		success:function(response){
-
+		success:function(result){
+			
 			let src1 = '{{ asset("storage/img/page/") }}';
 			let src2 = '{{ asset("storage/video/page/") }}';
 			let src3 = '{{ asset("storage/img/page/") }}';
-			var nome = '';
-			var contador = 1;
-			console.log(response);
-			
-			$.each(response, function(key, value){
+			var content = '';
+			var count = 1;
 
-				nome+='<div class="card-p mb-5">'
-				nome+='<div class="post">'
-				nome+='<header class="clearfix">'
-				nome+='<div class="first-component clearfix l-5">'
-				if (value.page_foto != null) {
-					nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.page_foto + '></div>'
-				}else {
-					nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
-				}
-				nome+='<div class="page-identify r-5 clearfix">'
-				nome+='<h1 class="text-ellips">'+value.nome_page+'</h1>'
-				nome+='<div class="info-post clearfix">'
-				nome+='<span class="time-posted">50 min</span>'
-				nome+='</div>'
-				nome+='</div>'
-				nome+='</div>'
-				nome+='</header>'
-				nome+='<div class="card-post">'
-				nome+='<div class="">'
-				nome+='<p>'+value.post+'</p>'
-				if (value.formato == 1) {
-					nome+='<div class="post-cover">'
-					nome+='<img class="img-full" src='+ src2 + '/' + value.post_foto +'>'
-					nome+='</div>'
-				}else if (value.formato == 2) {
-					nome+='<div class="post-cover">'
-					nome+='<img class="img-full" src='+ src3 + '/' + value.post_foto +'>'
-					nome+='</div>'
-				}
-				nome+='</div>'
-				nome+='</div>'
-				nome+='</div>'
-				if (contador == 4) {
-					var route = "{{route('publicationsSearch1.page', 1) }}"
-					url_array = route.split('/');
-					url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
-					nome += '<a href='+url_link+' class="mr-4"> ver mais</a>'
-				}
-				nome+='</div>'
+			//console.log(result);
+			if (result.length > 0) {
+				$.each(result, (key, value) => {
 
-				$('div[name=post]').empty();
-				$('div[name=post]').append(nome);
-				contador++;
-			})
-		}
+					if (value.estado_pagina_id==1) {
+						
+						if (count == 1) {
+							content = '<div class="card-p mt-3">';
+						}
+						content += '<ul class="card-flex">';
+						content += '<li class="search-title">';
+						
+						if (count == 1) {
+							content += '<span style="color:#fff;" class="mt-2">Páginas</span>';
+						}
+						content += '</li>'
+						content += '<li class="change-look search-info">';
+
+						if (value.foto != null) {
+							content += '<div class=" page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.foto + '></div>';
+						}else {
+							content += '<div class=" page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>';
+						}
+						content += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >';
+
+						// getting link
+						var route10 = "{{route('couple.page1', 1) }}"
+						url_array10 = route10.split('/');
+						url_link10 = url_array10[0] + "/" + url_array10[1] + "/" + url_array10[2] + "/"+ url_array10[3] +  "/" + value.uuid;
+
+						content +='<a href='+url_link10+'>'
+						content += '<span class="profile-name-1">'+value.nome+'</span>'
+						content +='</a>'
+						content += '<a href='+url_link10+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
+						content += '</div></div></li><div class="couple-separator"></div>'
+
+						if (count == 4) {
+							var route = "{{route('pagesSearch1.page', 1) }}"
+							url_array = route.split('/');
+							url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + ccc;
+							content += '<a href='+url_link+' class="mr-4"> ver mais</a>'
+
+							console.log(url_link);
+						}
+						content += '</ul>'
+						
+						if (count == result.length) {
+							content += '</div>'	
+						}
+							$('div[name=pessoa]').empty();
+							$('div[name=page]').empty();
+							$('div[name=page]').append(content);
+							count++;
+
+					}
+				})
+
+			} else {
+				content = '<div style="color: white;" class="ml-2 mt-2">Sem resultados</div>';
+				$('div[name=page]').empty();
+				$('div[name=page]').append(content);
+				
+				// empty page div
+				$('div[name=pessoa]').empty();
+			}
+
+		}				
 	});
 }
 
 $('.nameclass').on('click', function() {
-	let variavel = $('#table_search_mobile').text();
+	let variavel = $('#table_search_mobile').val();
 	let value = analyze_value($(this).text());
-	//expe(variavel, value);
-
-	if (value === 'pag') {
-		expePg(variavel, value);
+	
+	if (variavel != ''){
+		if (value === 'pag') {
+			expePg(variavel, value); 
+		} else {
+			expe(variavel, value);
+		}
 	} else {
-		expe(variavel, value);
+		$('div[name=pessoa]').empty();
+		$('div[name=page]').empty();
+		$('div[name=post]').empty();	
 	}
-
 	console.log(value);
+
 });
 
 function analyze_value(value) {

@@ -60,10 +60,6 @@
 
                         <input type="text" class="input-text-default input-full input-login" name="nacionalidade" id="nacionalidade" placeholder="Nacionalidade" value="" required>
                         
-                        <!--@error('nacionalidade')
-
-                            <span style="color: red;">{{$message}}</span>
-                        @enderror-->
 
                         <div class="invalid-feedback">
                             Insira a Nacionalidade
@@ -100,14 +96,11 @@
 
                         <input type="password" class="input-text-default input-full input-login" name="password"placeholder="Password" value=""  id="password" required>
 
-                       <!-- @error('password')
-
-                            <span style="color: red;">{{$message}}</span>
-                        @enderror-->
-
+                        <i class="fa fa-eye" id="eye"></i>
+                        
                         <div class="invalid-feedback">
                             Insira a Password
-                      </div>
+                       </div>
                         
                       <label id="labelt" class="hidden">Insira pelo menos 9 caracteres ou os seus dados não serão guardados</label>
 
@@ -128,6 +121,25 @@
     
 
 <script>
+
+    const pass = $("#password");
+
+    $("#eye").on('click',function(){
+
+        if (pass.prop('type') == 'password') {
+
+            $(this).addClass('fa fa-slash');
+            pass.attr('type','text');
+        }else{
+
+            $(this).removeClass('fa fa-slash');
+            pass.attr('type','password');
+            $(this).addClass('fa fa-eye');
+        }
+
+
+
+    });
 
     $("#password").on('keyup',function(){
 

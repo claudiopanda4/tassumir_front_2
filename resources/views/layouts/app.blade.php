@@ -1102,29 +1102,44 @@
             let watched_video;
             //console.log(video_post1);
             let video_post_time;
+            let storage_video;
             for (var i = 0; i <= video_post1.length - 1; i++) {
-                let id = video_post1[i].id.split('_')[1];
-                //console.log('idaqui ' + id);
+                /*if ($('#has-video-' + id).val() != "ok") {
+                    console.log('entrou');
+                    getVideo($('#vid-' + id).val(), id);
+                }*/
+                id = video_post1[i].id.split('_')[1];
+                
                 if ($('#video_' + id)) {
                     offset_video = $('#video_' + id).offset();
+                    //console.log('offset video ' + offset_video.top);
                     video_post_time = $('#video-post-time-' + id);
-                    if(offset_video.top < 140 && offset_video.top > -300){
-                        document.getElementById('video_' + id).play();
-                        $('#video-post-time-all-' + id).val(document.getElementById('video_' + id).duration / 2);
-                        if (!(document.getElementById('video_' + id).paused)) {
-                            document.getElementById('play_button_' + id).classList.add('invisible');
-                            currentTime = document.getElementById('video_' + id).currentTime;
-                            duration = document.getElementById('video_' + id).duration;
-                            $('#video-post-time-' + id).val(currentTime);
-                            //console.log('currentTime de video_' + id + ' = ' + $('#video-post-time-' + id).val());
-                            if (currentTime >= (duration / 2)) {
-                                watched_video = $('#watch-video-' + id).val();
-                                //console.log('entrou no video watch-video ' + watched_video);
-                                add_view(watched_video);
-                            }
-                        } else {
-                            //console.log('currentTime de video_' + id + ' = ' + $('#video-post-time-' + id).val());
+                    if(offset_video.top < 190 && offset_video.top > -300){
+                        console.log('hasvideo ' + id + ' ' + $('#has-video-' + id).val());
+                        if ($('#has-video-' + id).val() != "ok") {
+                            console.log('entrou');
+                            getVideo($('#vid-' + id).val(), id);
+                        }else{
+                            console.log('não entrou');
+                            $('#video-post-time-all-' + id).val(document.getElementById('video_' + id).duration / 2);
+                            if (!(document.getElementById('video_' + id).paused) && $('#has-video-' + id).val() == 'ok') {
+                                currentTime = document.getElementById('video_' + id).currentTime;
+                                duration = document.getElementById('video_' + id).duration;
+                                $('#video-post-time-' + id).val(currentTime);
+                                //console.log('currentTime de video_' + id + ' = ' + $('#video-post-time-' + id).val());
+                                if (currentTime >= (duration / 2)) {
+                                    watched_video = $('#watch-video-' + id).val();
+                                    //console.log('entrou no video watch-video ' + watched_video);
+                                    add_view(watched_video);
+                                }
+                            } else {
+                                if (document.getElementById('video_' + id).readyState == 4) {
+                                    document.getElementById('video_' + id).play();
+                                    document.getElementById('play_button_' + id).classList.add('invisible');
+                                }
+                            }    
                         }
+                        
                     } else {
                         document.getElementById('video_' + id).pause();
                         document.getElementById('play_button_' + id).classList.remove('invisible');
@@ -1151,6 +1166,33 @@
             }
             document.get
         }, 100);
+
+        function getVideo(post, id){
+            let storage_video, video, type_file, source;
+            $.ajax({
+                url: "{{route('post.video.get')}}",
+                type: 'get',
+                data: {'data': post},
+                dataType: 'json',
+                success: function(response){
+                    console.log('Respondeu...');
+                    console.log(response);
+                    video = response.video;
+                    type_file = response.type_file;
+                    storage_video = "{{asset('storage/video/page/') . '/'}}" + video;
+                    console.log(storage_video);
+                    source = document.createElement('source');
+                    source.setAttribute('src', storage_video);
+                    source.setAttribute('type', type_file);
+                    source.setAttribute('autoload', 'true');
+                    document.getElementById('video_' + id).setAttribute('src', storage_video);
+                    document.getElementById('video_' + id).setAttribute('autoload', 'true');
+                    document.getElementById('video_' + id).append(source);
+                    $('#has-video-' + id).val('ok');
+                }
+            });
+        }
+
         function add_view(data) {
             $.ajax({
                 url: "{{route('post.view.save')}}",

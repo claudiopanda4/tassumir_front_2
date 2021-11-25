@@ -48,6 +48,9 @@
                     <div class="form-group">
                         
                         <input type="password" class="input-text-default input-full input-login" name="password1" placeholder="Escreva a nova senha" required id="password1">
+
+                        <i class="fa fa-eye" id="eye"></i>
+
                         <div class="invalid-feedback">
                             Insira a Password
                       </div>
@@ -56,12 +59,14 @@
 
                       <label id="labelAprovado" class="hidden">Password aceitável</label>
                       
-                      <label id="labelAprovado" class="hidden">Password aceitável</label>
                     </div>
 
                     <div class="form-group">
                         
                         <input type="password" class="input-text-default input-full input-login" name="confirmarPassword1" placeholder="Repita a nova senha" required id="confirmarPassword1">
+
+                        <i class="fa fa-eye" id="eye2"></i>
+
                         <div class="invalid-feedback">
                             Confirme a Password
                       </div>
@@ -80,6 +85,42 @@
 </body>
 </html>
 <script>
+
+    const password = $("#password1");
+
+    const confPass = $("#confirmarPassword1");
+
+    $("#eye").on('click',function(){
+
+        if (password.prop('type') == 'password') {
+
+            $(this).addClass('fa fa-slash');
+            password.attr('type','text');
+
+        }else{
+
+            $(this).removeClass('fa fa-slash');
+            password.attr('type','password');
+            $(this).addClass('fa fa-eye');
+        }
+
+    });
+
+    $("#eye2").on('click',function(){
+
+        if(confPass.prop('type') == 'password'){
+
+            $(this).addClass('fa fa-slash');
+            confPass.attr('type','text');
+        }else{
+
+            $(this).removeClass('fa fa-slash');
+            confPass.attr('type','password');
+            $(this).addClass('fa fa-eye');
+        }
+
+    });
+
 
 $("#password1").on('keyup',function(){
 

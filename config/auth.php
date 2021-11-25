@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'logins',
         ],
+        'api' => [
+            'driver' => 'session',
+            'provider' => 'logins',
+        ],
     ],
 
     /*
@@ -78,6 +82,11 @@ return [
              'driver' => 'database',
              'table' => 'logins',
         ],
+
+        'api' => [
+             'driver' => 'database',
+             'table' => 'logins',
+        ],
     ],
 
     /*
@@ -103,6 +112,12 @@ return [
             'throttle' => 60,
         ],
         'logins' => [
+            'provider' => 'logins',
+            'table' => 'logins',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'api' => [
             'provider' => 'logins',
             'table' => 'logins',
             'expire' => 60,

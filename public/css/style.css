@@ -20,7 +20,6 @@ body {
 	height: auto;
 }
 #body-login {
-	
 }
 #body-reg {
 	
@@ -28,6 +27,7 @@ body {
 #body-login,
 #body-reg {
 	background-color: #3b3b3b;	
+	overflow-x: hidden;
 }
 #main-reg-container {
     width: 570px;
@@ -268,6 +268,15 @@ body {
     width: 100vw;
     height: auto;
     overflow: hidden;
+}
+::-webkit-scrollbar {
+	width: 8px;
+	/*background-color: #efefef;*/
+}
+::-webkit-scrollbar-thumb {
+	width: 8px;
+	border-radius: 20px;
+	background-color: #efefef;
 }
 .header-main-component {
 	height: 60px;
@@ -1578,7 +1587,7 @@ label[for="hugo"]{
     width: 118px;
     border-radius: 10px;
     padding: 10px;
-    border: 1px solid #343a40;
+    border: 1px solid #151618;
 }
 .li-component-suggest div.sugest_component {
 	position: relative;
