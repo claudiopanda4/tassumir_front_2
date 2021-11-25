@@ -276,7 +276,9 @@
                                 <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>
                             </div>
                     @else
-                    
+                          <div class="container-img circle l-5">
+                        <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_destino[0]->foto}}">
+                        </div>
                     @endif                
                 <div class="nav-menu-chat-component-user l-5">
                     <h1>{{$conta_destino[0]->nome}}</h1>
@@ -293,8 +295,8 @@
         </header>
         @if(isset($message_text))            
         <div id="message_user_destino" class="body-message clearfix">
+            
             @forelse($message_text as $mensagem)
-
                 @if(($mensagem->id_identificador_a == $identificador_user[0]->identificador_id) && ($mensagem->id_identificador_b == $identificador_dest[0]->identificador_id))
                 <div class="other-user r-5">
                     <div class="clearfix">
@@ -309,13 +311,13 @@
                       @endif
                     <div class="message-body l-5">
                         <div>
-                            <p>{{$mensagem->message}}p</p>
+                            <p>{{$mensagem->message}}</p>
                         </div>
                     </div>
                   </div> 
                 </div>    
                 @elseif(($mensagem->id_identificador_a == $identificador_dest[0]->identificador_id) && ($mensagem->id_identificador_b == $identificador_user[0]->identificador_id))
-                <div  class="own-user l-5">
+                <div class="own-user l-5">
                   <div class="clearfix">
                       @if($conta_destino[0]->foto != null)
                         <div class="container-img circle l-5">
@@ -400,8 +402,10 @@
                 dataType: 'json',
                 success: function(response){
                   if (response.resultado == "Salvou") {
+                    $('div:eq(4)').text('Angola');
                     $('#message_send').val("");
                     if (response.foto_reme == null) {
+
                     $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
                     $('#message_user_destino').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
                 }else{
@@ -417,6 +421,12 @@
               });
 
         });
+
+        $('#sms_antiga').click(function(e){
+            e.preventDefault();
+            alert('Carregando mensagens anteriores');
+        });
+
         $('.person_message').click(function(e){
             e.preventDefault();
             let conta_destino = e.target.id.split('-')[1];            

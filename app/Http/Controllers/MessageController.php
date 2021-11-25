@@ -132,7 +132,7 @@ class MessageController extends Controller
         $message_user['foto_des'] = $foto_dest[0]->foto;
         $message_user['foto_rem'] = $foto_user[0]->foto;
         $message_user['destinatario'] = $m_destinatario[0]->identificador_id;
-        $message_user['valor'] = DB::table('messages')->where([
+        $message = DB::table('messages')->where([
                   ['id_identificador_a', '=', $m_user_logado[0]->identificador_id],
                   ['id_identificador_b', '=', $m_destinatario[0]->identificador_id],
             ])->orwhere([
@@ -140,18 +140,13 @@ class MessageController extends Controller
                   ['id_identificador_b', '=', $m_user_logado[0]->identificador_id],
             ])->orderBy('message_id', 'desc')->limit(5)->get()->reverse();
 
-    /*     
-         $users = DB::table('users')
-                ->orderBy('name', 'desc')
-                ->get();
-         $users = DB::table('users')->where([
-                  ['status', '=', '1'],
-                  ['subscribed', '<>', '1'],
-            ])->get();
-            $contas = DB::table('contas')->limit(8)->get();
-            $conta_destino = DB::table('contas')->where('conta_id', $destinatario)->get();
-               
-    */    
+            $tamanho = sizeof($message);
+            $key = 0;
+            foreach ($message as $value) {
+                $resultado[$key] = $value;
+                $key ++;
+            }   
+            $message_user['valor'] = $resultado;
             return response()->json($message_user);
         }
         } catch (Exception $e) {
