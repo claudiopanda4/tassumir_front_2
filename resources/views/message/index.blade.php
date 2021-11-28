@@ -276,7 +276,9 @@
                                 <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>
                             </div>
                     @else
-                    
+                          <div class="container-img circle l-5">
+                        <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_destino[0]->foto}}">
+                        </div>
                     @endif                
                 <div class="nav-menu-chat-component-user l-5">
                     <h1>{{$conta_destino[0]->nome}}</h1>
@@ -293,6 +295,7 @@
         </header>
         @if(isset($message_text))            
         <div id="message_user_destino" class="body-message clearfix">
+            
             @forelse($message_text as $mensagem)
                 @if(($mensagem->id_identificador_a == $identificador_user[0]->identificador_id) && ($mensagem->id_identificador_b == $identificador_dest[0]->identificador_id))
                 <div class="other-user r-5">
@@ -308,13 +311,13 @@
                       @endif
                     <div class="message-body l-5">
                         <div>
-                            <p>{{$mensagem->message}}p</p>
+                            <p>{{$mensagem->message}}</p>
                         </div>
                     </div>
                   </div> 
                 </div>    
                 @elseif(($mensagem->id_identificador_a == $identificador_dest[0]->identificador_id) && ($mensagem->id_identificador_b == $identificador_user[0]->identificador_id))
-                <div  class="own-user l-5">
+                <div class="own-user l-5">
                   <div class="clearfix">
                       @if($conta_destino[0]->foto != null)
                         <div class="container-img circle l-5">
@@ -335,12 +338,32 @@
             @endif
             @empty
             @endforelse        
-        </div>           
+        </div> 
+        <div class="comment-send clearfix" id="comment-send-1">
+            @if($conta_logada[0]->foto != null)
+            <div class="img-user-comment l-5">
+                <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto}}">
+            </div>
+             @else
+            <div class="img-user-comment l-5">
+            <i class="fas fa-user center" style="font-size: 30px; color: #ccc;"></i>  
+            </div>
+            @endif
+            <div class="input-text comment-send-text l-5 clearfix">
+                <input type="text" class="" name="sms" id="message_send" placeholder="O que você tem a dizer?">
+                <input type="hidden" name="" id="user_logado" value="{{$conta_logada[0]->conta_id}}">
+                <input type="hidden" name="" id="destinatario" value="{{$conta_destino[0]->conta_id}}">
+                <div class="r-5 ">
+                    <a href="" class="comentar-a" id="enviar">
+                        <i class="far fa-paper-plane fa-20 fa-img-comment" id="1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>          
         @else
         <div id="message_user_dest" class="body-message clearfix">
-         </div>           
-        @endif
-        <div class="comment-send clearfix" id="comment-send-1">
+         </div>  
+         <div class="comment-send clearfix" id="comment-send-1">
             @if($conta_logada[0]->foto != null)
             <div class="img-user-comment l-5">
                 <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto}}">
@@ -361,7 +384,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>         
+        @endif
+        
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -370,21 +395,23 @@
             var message = $('#message_send').val();
             let user_send = $('#user_logado').val();
             let conta_send = $('#destinatario').val();
-            let url =
-             $.ajax({
+            $.ajax({
                 url: "{{route('message.send')}}",
                 type: 'get',
                 data: {'user_send': user_send, 'conta_send': conta_send, 'message_send': message},
                 dataType: 'json',
                 success: function(response){
                   if (response.resultado == "Salvou") {
+                    $('div:eq(4)').text('Angola');
                     $('#message_send').val("");
                     if (response.foto_reme == null) {
+
                     $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
+                    $('#message_user_destino').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
                 }else{
                     
                     let src = "{{asset('storage/img/users/')}}" + "/" + response.foto_reme;
-                    
+                    $('#message_user_destino').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='" + src + "' class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
                     $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='" + src + "' class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
                 }
                 
@@ -394,6 +421,12 @@
               });
 
         });
+
+        $('#sms_antiga').click(function(e){
+            e.preventDefault();
+            alert('Carregando mensagens anteriores');
+        });
+
         $('.person_message').click(function(e){
             e.preventDefault();
             let conta_destino = e.target.id.split('-')[1];            
@@ -409,7 +442,7 @@
                 data: {'user_send': remetente, 'conta_send': conta_destino},
                 dataType: 'json',
                 success:function(response){
-                  
+                        console.log(response.valor);
                         let destinatario = response.destinatario;
                         let foto_user_logado = response.foto_rem;
                     $('#message_user_destino').empty();

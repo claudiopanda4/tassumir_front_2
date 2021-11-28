@@ -185,14 +185,24 @@ public function default_(){
     return $dates;
 }
 
-  public function index(){
-    $dates = $this->default_();
-    $profile_picture = $dates['profile_picture'];
-    $conta_logada = $dates['conta_logada'];
-    $notificacoes = $dates['notificacoes'];
+public function index(){
+  $val='';
+  $dates = $this->default_();
+  $profile_picture = $dates['profile_picture'];
+  $conta_logada = $dates['conta_logada'];
+  $notificacoes = $dates['notificacoes'];
 
-      return view('Pesquisas.allSearch',compact('notificacoes','conta_logada','profile_picture'));
-  }
+    return view('Pesquisas.allSearch',compact('val','notificacoes','conta_logada','profile_picture'));
+}
+
+public function index1($val){
+  $dates = $this->default_();
+  $profile_picture = $dates['profile_picture'];
+  $conta_logada = $dates['conta_logada'];
+  $notificacoes = $dates['notificacoes'];
+
+    return view('Pesquisas.allSearch',compact('val','notificacoes','conta_logada','profile_picture'));
+}
 
   public function peoplesSearch(){
        $val='';
@@ -255,7 +265,7 @@ public function default_(){
       if ($r->ajax()) {
         $default = [];
         $index = 0;
-       if ($r->v == 'pag') {    
+       if ($r->v == 'pag') {
          $pages = DB::table('pages')->where('nome','like','%'.$r->data.'%')->limit(4)->get();
 
          foreach ($pages as $valor) {
@@ -265,22 +275,22 @@ public function default_(){
         return response()->json($default);
        } else {
         return response()->json(Self::$ajaxErrorMsg);
-       } 
+       }
       }
     }
 
 
-    public function peoplepesquisa(Request $r) 
+    public function peoplepesquisa(Request $r)
     {
       try {
         if ($r->ajax()) {
           $default = [];
           $index = 0;
 
-          if (Self::checkAjaxValueType($r->val) == 'espec') {  
-            
+          if (Self::checkAjaxValueType($r->val) == 'espec') {
+
             if ($r->val == 'sol') {
-                
+
                 $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')
                 ->orwhere('apelido', 'like', '%'.$r->data.'%')->limit(4)->get();
 
@@ -289,10 +299,10 @@ public function default_(){
                     $default[$index] = $valor;
                     $index++;
                   }
-                } 
+                }
 
             } else if ($r->val == 'nam') {
-                
+
                 $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')
                 ->orwhere('apelido', 'like', '%'.$r->data.'%')->limit(4)->get();
 
@@ -301,10 +311,10 @@ public function default_(){
                     $default[$index] = $valor;
                     $index++;
                   }
-                } 
+                }
 
             } else if ($r->val == 'cas') {
-                
+
                 $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')
                 ->orwhere('apelido', 'like', '%'.$r->data.'%')->limit(4)->get();
 
@@ -313,7 +323,7 @@ public function default_(){
                     $default[$index] = $valor;
                     $index++;
                   }
-                } 
+                }
 
             }
             return response()->json($default);
@@ -325,8 +335,8 @@ public function default_(){
         }
       } catch (Exception $ex) {
         dd($ex);
-      } 
-    }    
+      }
+    }
 
 
     private static function checkAjaxValueType($v)
@@ -334,7 +344,7 @@ public function default_(){
       return ($v == 'sol' || $v == 'cas' || $v == 'nam' || $v == 'pag' || $v == 'apr' || $v == 'vma') ? 'espec' : '';
     }
 
-    private static function searchByEstado($r) 
+    private static function searchByEstado($r)
     {
 
     }
@@ -343,8 +353,8 @@ public function default_(){
 
   public function pessoapesquisa(Request $request) {
         if($request->ajax()){
-          
-          
+
+
             if($request->v==1){
               $conta = DB::table('contas')->where('nome', 'like', '%'.$request->dados.'%')
               ->orwhere('apelido', 'like', '%'.$request->dados.'%')->limit(4)->get();
@@ -366,11 +376,11 @@ public function default_(){
             }
 
             return response()->json($output);
-          
+
         }
       }
 
-     
+
 
 
 
