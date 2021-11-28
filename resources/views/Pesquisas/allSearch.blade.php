@@ -79,7 +79,7 @@
 			var nome = '';
 			var contador = 1;
 			console.log(response.valor);
-			if (response.length > 0) {
+			if (response.valor.length > 0) {
 
 				$.each(response.valor, function(key, value){
 					let src = '{{asset("storage/img/users/") }}';
@@ -116,7 +116,7 @@
 						}
 						nome += '</ul>'
 						if (contador == 4) {
-							nome += '</div>'														
+							nome += '</div>'
 						}
 							$('div[name=pessoa]').empty();
 							$('div[name=pessoa]').append(nome);
@@ -141,7 +141,7 @@
 			var nome = '';
 			var contador = 1;
 			console.log(response.valor);
-			if (response.length > 0) {
+			if (response.valor.length > 0) {
 				$.each(response.valor, function(key, value){
 					if (value.estado_pagina_id==1) {
 						if (contador == 1) {
@@ -187,7 +187,7 @@
 				$('div[name=page]').empty();
 				$('div[name=page]').append(nome);
 			}
-			
+
 		}
 	});
 
@@ -252,7 +252,7 @@
 			})
 		}
 	});
-	
+
 	}
 
 $('#table_search').on('keyup',function(){
@@ -293,7 +293,7 @@ function expe(ccc, v){
 			var content = '';
 			var count = 1;
 			let src = '{{ asset("storage/img/users/") }}';
-			
+
 			if (res.length > 0) {
 
 				$.each(res, function(key, value) {
@@ -303,7 +303,7 @@ function expe(ccc, v){
 						if (count == 1) {
 							content+='<div class="card-p ">'
 						}
-						
+
 						content += '<ul class="card-flex">'
 						content += '<li class="search-title">'
 
@@ -312,10 +312,10 @@ function expe(ccc, v){
 						}
 						content += '</li>'
 						content += '<li class="change-look search-info">'
-						
+
 						if (value.foto != null) {
 							content += '<div class="page-cover circle ">'
-							content += '<img class=" circle img-40" src= ' + src + '/' + value.foto + '>' 
+							content += '<img class=" circle img-40" src= ' + src + '/' + value.foto + '>'
 							content +='</div>'
 						}else {
 							content += '<div class=" page-cover circle ">'
@@ -340,7 +340,7 @@ function expe(ccc, v){
 						}
 						content += '</ul>'
 						if (count == res.length) {
-							content += '</div>'														
+							content += '</div>'
 						}
 							$('div[name=pessoa]').empty();
 							$('div[name=pessoa]').append(content);
@@ -357,7 +357,7 @@ function expe(ccc, v){
 				content += '</div>';
 				$('div[name=pessoa]').empty();
 				$('div[name=pessoa]').append(content);
-				
+
 				// empty page div
 				$('div[name=page]').empty();
 
@@ -367,14 +367,14 @@ function expe(ccc, v){
 }
 
 function expePg(ccc, v) {
-	
+
 	$.ajax({
 		url: "{{ route('allpage.pesquisa')}}",
 		type: 'get',
 		data: {'data': ccc , 'v':v},
 		dataType: 'json',
 		success:function(result){
-			
+
 			let src1 = '{{ asset("storage/img/page/") }}';
 			let src2 = '{{ asset("storage/video/page/") }}';
 			let src3 = '{{ asset("storage/img/page/") }}';
@@ -386,13 +386,13 @@ function expePg(ccc, v) {
 				$.each(result, (key, value) => {
 
 					if (value.estado_pagina_id==1) {
-						
+
 						if (count == 1) {
 							content = '<div class="card-p mt-3">';
 						}
 						content += '<ul class="card-flex">';
 						content += '<li class="search-title">';
-						
+
 						if (count == 1) {
 							content += '<span style="color:#fff;" class="mt-2">Páginas</span>';
 						}
@@ -426,9 +426,9 @@ function expePg(ccc, v) {
 							console.log(url_link);
 						}
 						content += '</ul>'
-						
+
 						if (count == result.length) {
-							content += '</div>'	
+							content += '</div>'
 						}
 							$('div[name=pessoa]').empty();
 							$('div[name=page]').empty();
@@ -442,29 +442,29 @@ function expePg(ccc, v) {
 				content = '<div style="color: white;" class="ml-2 mt-2">Sem resultados</div>';
 				$('div[name=page]').empty();
 				$('div[name=page]').append(content);
-				
+
 				// empty page div
 				$('div[name=pessoa]').empty();
 			}
 
-		}				
+		}
 	});
 }
 
 $('.nameclass').on('click', function() {
 	let variavel = $('#table_search_mobile').val();
 	let value = analyze_value($(this).text());
-	
+
 	if (variavel != ''){
 		if (value === 'pag') {
-			expePg(variavel, value); 
+			expePg(variavel, value);
 		} else {
 			expe(variavel, value);
 		}
 	} else {
 		$('div[name=pessoa]').empty();
 		$('div[name=page]').empty();
-		$('div[name=post]').empty();	
+		$('div[name=post]').empty();
 	}
 	console.log(value);
 
