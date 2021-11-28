@@ -42,7 +42,11 @@
                             <i class="fas fa-search fa-16 fa-search-main"></i>
                             <input type="search" name="table_search" placeholder="O que está procurando?" class="input-text" id="table_search">
                         </div>
-                        <div class="search-id-container" name="search_app">
+                        <div class="search-id-container">
+                          <div name="pessoa">
+                        	</div>
+                        	<div name="page">
+                            </div>
                         </div>
                         <div class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
                             <a href="{{route('allSearch.page')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
@@ -1213,7 +1217,8 @@
   if (variavel!='') {
     searchP(variavel, v);
   }else {
-    $('div[name=search_app]').empty();
+    $('div[name=pessoa]').empty();
+    $('div[name=page]').empty();
   }
 });
 
@@ -1221,7 +1226,6 @@ function searchP(variavel, v){
   var s1=0;
   var s2=1;
   var s3;
-    $('div[name=search_app]').empty();
 $.ajax({
   url: "{{ route('pessoa.pesquisa')}}",
   type: 'get',
@@ -1235,13 +1239,13 @@ $.ajax({
       $.each(response.valor, function(key, value){
         let src = '{{asset("storage/img/users/")}}';
         if (value.estado_conta_id == 1) {
-
           nome += '<ul class="card-flex">'
-          nome += '<li class="search-title">'
           if (contador == 1) {
+            nome += '<ul class="card-flex">'
             nome += '<span style="color:#fff;" class="mt-2">Pessoas</span>'
+            nome += '</ul>'
+
           }
-          nome += '</li>'
           nome += '<li class="change-look search-info">'
           if (value.foto != null) {
             nome += '<div class="page-cover circle "><img class=" circle img-40" src= ' + src + '/' + value.foto + '></div>'
@@ -1257,16 +1261,15 @@ $.ajax({
           nome += '</div></div></li><div class="couple-separator"></div>'
           nome += '</ul>'
 
-             contador=0;
-            $('div[name=search_app]').append(nome);
-
+            $('div[name=pessoa]').empty();
+            $('div[name=pessoa]').append(nome);
+            contador++;
           }
         })
     }
 
 
 });
-//----------------------------------------------------------------------
 $.ajax({
   url: "{{ route('pagina.pesquisa')}}",
   type: 'get',
@@ -1281,12 +1284,15 @@ $.ajax({
       $.each(response.valor, function(key, value){
         if (value.estado_pagina_id==1) {
 
-          nome += '<ul class="card-flex">'
-          nome += '<li class="search-title">'
           if (contador == 1) {
+            nome += '<li class="change-look search-info">'
+            nome += '<ul class="card-flex">'
             nome += '<span style="color:#fff;" class="mt-2">Páginas</span>'
+            nome += '</ul>'
+            nome += '</li>'
+            nome += '<li class="change-look search-info">'
           }
-          nome += '</li>'
+          nome += '<ul class="card-flex">'
           nome += '<li class="change-look search-info">'
           if (value.foto != null) {
             nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.foto + '></div>'
@@ -1303,8 +1309,8 @@ $.ajax({
           nome += '<a href='+url_link10+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
           nome += '</div></div></li><div class="couple-separator"></div>'
           nome += '</ul>'
-
-            $('div[name=search_app]').append(nome);
+            $('div[name=page]').empty();
+            $('div[name=page]').append(nome);
             contador++;
           }
         })
@@ -1315,8 +1321,8 @@ $.ajax({
   s3=s1+s2;
  if (s3 == 0) {
   nome = '<div style="color: white;" class="ml-2 mt-2">Sem resultados</div>';
-  $('div[name=search_app]').empty();
-  $('div[name=search_app]').append(nome);
+  $('div[name=page]').empty();
+  $('div[name=page]').append(nome);
 }
 }
 
