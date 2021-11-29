@@ -11,6 +11,7 @@ class PaginaCasalController extends Controller
 
     private $current_page_id = 1;
     private $current_page_uuid;
+    private static $uuid = '';
 
     public function index(){
       $page_couple = new PerfilController();
@@ -28,6 +29,7 @@ class PaginaCasalController extends Controller
       $dadosPage = $dates['dadosPage'];
       $dadosSeguida = $dates['dadosSeguida'];
 
+      /*siene*/ //$casalPageName = $this->get_casalPage_name($uuid);
 
       $page_current = 'page';
       $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
@@ -120,6 +122,9 @@ $v=1;
           $dadosPage = $dates['dadosPage'];
           $dadosSeguida = $dates['dadosSeguida'];
           $page_current = 'relationship_request';
+
+          /*siene*/// $casalPageName = $this->get_casalPage_name($page_content);
+
           if (  $pedido[0]['estado'] == 2) {
           $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
           $aux2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$tipo[0]->pedido_relacionamento_id, 5 ]);
@@ -150,7 +155,9 @@ $v=1;
         $dadosSeguida = $dates['dadosSeguida'];
         $page_current = 'relationship_request';
         //return view('relacionamento.index', compact('account_name', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
-        return view('relacionamento.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
+
+        /*siene*/ //$casalPageName = $this->get_casalPage_name($page_content);
+        return view('relacionamento.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida', ));
     }
     public function default_(){
         $auth = new AuthController();
@@ -402,10 +409,10 @@ $v=1;
                     $sugerir = $this->suggest_pages($page_content[0]->page_id);
                     $allPosts = $this->get_post_types($page_content[0]->page_id);
 
+                    /*siene*/ //$casalPageName = $this->get_casalPage_name($page_content);
 
 
-
-                    return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
+                    return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir',));
             //        return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
             dd($e);
@@ -472,7 +479,9 @@ $v=1;
             $sugerir = $this->suggest_pages($page_content[0]->page_id);
             $allPosts = $this->get_post_types($page_content[0]->page_id);
 
-            return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts'));
+            //$casalPageName = $this->get_casalPage_name($page_content);
+
+            return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts',));
         } catch (Exception $e) {
             dd($e);
         }
@@ -491,8 +500,8 @@ $v=1;
 
     public function paginas($uuid){
         try {
-      $page_couple = new PerfilController();
-      $dates = $page_couple->default_();
+          $page_couple = new PerfilController();
+          $dates = $page_couple->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -507,9 +516,13 @@ $v=1;
           $dadosSeguida = $dates['dadosSeguida'];
           $page_current = 'relationship_request';
 
+        //***************** siene *******************//
+          $casalPageName = self::get_casalPage_name($uuid);
+          $uuidToCompare = $uuid;
+
+        //***************** fim ********************//
 
             $dadosPage = Page::all();
-
             $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
 
             foreach ($dadosSgndo as $value) {
@@ -559,7 +572,7 @@ $v=1;
           }else {
             $v=0;
           }
-          return view('pagina.couple_page', compact('account_name','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts'));
+          return view('pagina.couple_page', compact('account_name','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts', 'casalPageName', 'uuidToCompare'));
         } catch (Exception $e) {
             dd($e);
         }
@@ -585,6 +598,9 @@ $v=1;
             $sugerir = $this->suggest_pages($page_content[0]->page_id);
             $allPosts = $this->get_post_types($page_content[0]->page_id);
 
+            /*siene*/
+
+
             return view('pagina.edit_couple', compact('account_name','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
             dd($e);
@@ -609,6 +625,8 @@ $v=1;
 
             $sugerir = $this->suggest_pages($page_content[0]->page_id);
             $allPosts = $this->get_post_types($page_content[0]->page_id);
+
+            /*siene*/ //$casalPageName = $this->get_casalPage_name($page_content);
 
             return view('pagina.delete_couple_page', compact('account_name', 'conta_logada', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
@@ -765,6 +783,23 @@ $v=1;
 
         return $posts;
     }
+
+
+    //---------------------------------------------------------
+
+    // Pega o nome do casal da pagina 
+    private static function get_casalPage_name($uid) 
+    {
+      //dd($uid);
+      $data = DB::table('pages')->where('uuid', $uid)->select('conta_id_a', 'conta_id_b')->get();
+      return self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b);
+    }
+
+    private static function get_account_nomeAndApelido($table_name, $account_id) {
+      $account_name = DB::table($table_name)->where('conta_id', $account_id)->select('nome', 'apelido')->get()[0];
+      return $account_name->nome . ' ' . $account_name->apelido;
+    }
+
 
     /* fim codigo siene */
 }
