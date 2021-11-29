@@ -452,16 +452,8 @@ class AuthController extends Controller
 
 
       }
-<<<<<<< HEAD
 
         return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
-=======
-        
-          $dadosSeguindo = $dates['dadosSeguindo'];
-          $dadosPage = $dates['dadosPage'];
-          $dadosSeguida = $dates['dadosSeguida'];
-        return view('feed.index', compact('account_name','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
->>>>>>> 0344cdb98a37523c9b1196d6f1ec87c854b78ae1
 
     }
     return redirect()->route('account.login.form');
