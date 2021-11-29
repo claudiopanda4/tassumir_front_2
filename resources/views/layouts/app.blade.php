@@ -555,6 +555,9 @@
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <div class="">
                 <input class="file" type="file" name="imgOrVideo" id="testeVid" style="width: 250px; margin-left: 10px; color: #fff;">
+                <video style="display: none;" id="vidAnalyzer">
+                  <source src="" type="">
+                </video>
             </div>
         </div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
@@ -1392,7 +1395,23 @@ $.ajax({
         });
 
 
-    });
+});
+  
+
+
+  const trigger = document.querySelector('#cover-done-post');
+  trigger.addEventListener('click', function(e) {
+    const vid = document.querySelector('#testeVid');
+    const vid_container = document.querySelector('#vidAnalyzer > source');
+    for (var i = 0; i < vid.files.length; i++) {
+      console.log(vid.files[i].type);
+      vid_container.src = "video.mp4";
+      //vid_container
+      console.log(vid_container.src);
+    }
+    e.preventDefault();
+  });
+  //console.log(vid);
 
 
 
