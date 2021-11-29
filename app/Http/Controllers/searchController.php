@@ -12,12 +12,16 @@ public function default_(){
     $conta_logada = $auth->defaultDate();
     $profile_picture = AuthController::profile_picture($conta_logada[0]->conta_id);
     $notificacoes=array();
+    $notificacoes_count=0;
     $a=0;
     $nome=array();
     $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
     $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
     if (sizeof($notificacoes_aux)>0) {
       foreach ($notificacoes_aux as $key) {
+        if ($key->id_state_notification == 2) {
+          $notificacoes_count++;
+        }
         if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
         if ($aux2[0]->tipo_identificador_id == 1) {
           $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
@@ -77,7 +81,6 @@ public function default_(){
                 $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
                 $notificacoes[$a]['link']=$page[0]->uuid;
                     break;
-
                 case 6:
                     $notificacoes[$a]['notificacao']=$nome[0];
                     $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
@@ -105,67 +108,22 @@ public function default_(){
                             break;
 
           case 9:
-                            $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
-                            $notificacoes[$a]['tipo']=9;
-                            $notificacoes[$a]['id']=$key->identificador_id_destino;
+          $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+          if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+          if (sizeof($tipo)){
+          $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+          $notificacoes[$a]['tipo']=9;
+          $notificacoes[$a]['id']=$tipo[0]->uuid;}}
                                 break;
        case 10:
-                                                  $notificacoes[$a]['notificacao']=" o seu pedido de criação de pagina foi negado";
-                                                  $notificacoes[$a]['tipo']=9;
-                                                  $notificacoes[$a]['id']=$key->identificador_id_destino;
+       $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+       if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
+       if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
+       $notificacoes[$a]['notificacao'].=" Pediu que você page";
+       $notificacoes[$a]['tipo']=10;
+       $notificacoes[$a]['id']=$tipo[0]->uuid;}}
+
                                                       break;
-
-                  case 5:
-                  $notificacoes[$a]['notificacao']=$nome[0];
-                  $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                  $notificacoes[$a]['tipo']=5;
-                  $notificacoes[$a]['id']=$key->identificador_id_destino;
-                  $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                  $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
-                  $notificacoes[$a]['link']=$page[0]->uuid;
-                      break;
-                  case 6:
-                      $notificacoes[$a]['notificacao']=$nome[0];
-                      $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                      $notificacoes[$a]['tipo']=5;
-                      $notificacoes[$a]['id']=$key->identificador_id_destino;
-                      $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                      $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
-                      $notificacoes[$a]['link']=$post[0]->uuid;
-                          break;
-                 case 7:
-                 $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                 if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                 if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
-                 $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
-                 $notificacoes[$a]['tipo']=7;
-                 $notificacoes[$a]['id']=$tipo[0]->uuid;}}
-                          break;
-              case 8:
-                          $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
-                          $notificacoes[$a]['tipo']=8;
-                          $notificacoes[$a]['id']=$key->identificador_id_destino;
-                          $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                          $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
-                          $notificacoes[$a]['link']=$page[0]->uuid;
-                              break;
-
-            case 9:
-            $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-            if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-            if (sizeof($tipo)){
-            $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
-            $notificacoes[$a]['tipo']=9;
-            $notificacoes[$a]['id']=$tipo[0]->uuid;}}
-                                  break;
-         case 10:
-         $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-         if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-         if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
-         $notificacoes[$a]['notificacao'].=" Pediu que você page";
-         $notificacoes[$a]['tipo']=10;
-         $notificacoes[$a]['id']=$tipo[0]->uuid;}}                                                        break;
-
 
 
         }
@@ -181,6 +139,7 @@ public function default_(){
         "profile_picture" => $profile_picture,
         "conta_logada" => $conta_logada,
         "notificacoes" => $notificacoes,
+        "notificacoes_count" => $notificacoes_count,
     ];
     return $dates;
 }
@@ -191,8 +150,10 @@ public function index(){
   $profile_picture = $dates['profile_picture'];
   $conta_logada = $dates['conta_logada'];
   $notificacoes = $dates['notificacoes'];
+  $notificacoes_count = $dates['notificacoes_count'];
 
-    return view('Pesquisas.allSearch',compact('val','notificacoes','conta_logada','profile_picture'));
+
+    return view('Pesquisas.allSearch',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
 }
 
 public function index1($val){
@@ -200,8 +161,10 @@ public function index1($val){
   $profile_picture = $dates['profile_picture'];
   $conta_logada = $dates['conta_logada'];
   $notificacoes = $dates['notificacoes'];
+  $notificacoes_count = $dates['notificacoes_count'];
 
-    return view('Pesquisas.allSearch',compact('val','notificacoes','conta_logada','profile_picture'));
+
+    return view('Pesquisas.allSearch',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
 }
 
   public function peoplesSearch(){
@@ -210,7 +173,9 @@ public function index1($val){
        $profile_picture = $dates['profile_picture'];
        $conta_logada = $dates['conta_logada'];
        $notificacoes = $dates['notificacoes'];
-        return view('Pesquisas.peoples',compact('val', 'notificacoes','conta_logada','profile_picture'));
+       $notificacoes_count = $dates['notificacoes_count'];
+
+        return view('Pesquisas.peoples',compact('val','notificacoes_count', 'notificacoes','conta_logada','profile_picture'));
     }
 
   public function pagesSearch(){
@@ -219,7 +184,8 @@ public function index1($val){
          $profile_picture = $dates['profile_picture'];
          $conta_logada = $dates['conta_logada'];
          $notificacoes = $dates['notificacoes'];
-        return view('Pesquisas.pages',compact('val','notificacoes','conta_logada','profile_picture'));
+         $notificacoes_count = $dates['notificacoes_count'];
+        return view('Pesquisas.pages',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
     }
 
   public function publicationsSearch(){
@@ -228,7 +194,8 @@ public function index1($val){
          $profile_picture = $dates['profile_picture'];
          $conta_logada = $dates['conta_logada'];
          $notificacoes = $dates['notificacoes'];
-        return view('Pesquisas.publications',compact('val','notificacoes','conta_logada','profile_picture'));
+         $notificacoes_count = $dates['notificacoes_count'];
+        return view('Pesquisas.publications',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
     }
 
   public function peoplesSearch1($val){
@@ -236,7 +203,8 @@ public function index1($val){
     $profile_picture = $dates['profile_picture'];
     $conta_logada = $dates['conta_logada'];
     $notificacoes = $dates['notificacoes'];
-        return view('Pesquisas.peoples', compact('val','notificacoes','conta_logada','profile_picture'));
+    $notificacoes_count = $dates['notificacoes_count'];
+        return view('Pesquisas.peoples', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
     }
 
   public function pagesSearch1($val){
@@ -244,7 +212,8 @@ public function index1($val){
     $profile_picture = $dates['profile_picture'];
     $conta_logada = $dates['conta_logada'];
     $notificacoes = $dates['notificacoes'];
-        return view('Pesquisas.pages', compact('val','notificacoes','conta_logada','profile_picture'));
+    $notificacoes_count = $dates['notificacoes_count'];
+        return view('Pesquisas.pages', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
     }
 
   public function publicationsSearch1($val){
@@ -252,7 +221,8 @@ public function index1($val){
     $profile_picture = $dates['profile_picture'];
     $conta_logada = $dates['conta_logada'];
     $notificacoes = $dates['notificacoes'];
-        return view('Pesquisas.publications', compact('val','notificacoes','conta_logada','profile_picture'));
+    $notificacoes_count = $dates['notificacoes_count'];
+        return view('Pesquisas.publications', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
     }
 
 
