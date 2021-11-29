@@ -29,7 +29,7 @@ class AuthController extends Controller
     }
     public function login_return (Request $request){
         if (Auth::check()) {
-           return true; 
+           return true;
         } else {
             $numero = $request->telefone;
             $password = $request->password;
@@ -38,7 +38,7 @@ class AuthController extends Controller
             /*$numero = '913307387';
             $password = '$2y$10$/V5ehJy26rLqc3Z.G2IJn.PzfNZNdR1Nb/qoirD/xCHqw.aSF407m';
             $email = 'claudiopanda4@gmail.com';*/
-            
+
             $result = DB::select('select * from logins where (telefone = ? && password = ?) OR (email = ? && password = ?)', [$numero, $password, $email, $password]);
             $return = sizeof($result) ? true: false;
             //dd($return);
@@ -56,12 +56,16 @@ class AuthController extends Controller
            $page_content = $this->casalPage->page_default_date($account_name);
            $conta_logada = $this->defaultDate();
            $notificacoes=array();
+           $notificacoes_count=0;
            $a=0;
            $nome=array();
            $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
            $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
            if (sizeof($notificacoes_aux)>0) {
              foreach ($notificacoes_aux as $key) {
+               if ($key->id_state_notification == 2) {
+                 $notificacoes_count++;
+               }
                if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
                if ($aux2[0]->tipo_identificador_id == 1) {
                  $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
@@ -219,10 +223,11 @@ class AuthController extends Controller
                "dadosSeguida" => $dadosSeguida,
                "dadosPage" => $dadosPage,
                "notificacoes" => $notificacoes,
+               "notificacoes_count" => $notificacoes_count,
            ];
            return $dates;
        }
-    
+
 
     public function index(){
         if (Auth::check() == true) {
@@ -240,6 +245,8 @@ class AuthController extends Controller
           $dadosSeguindo = $dates['dadosSeguindo'];
           $dadosPage = $dates['dadosPage'];
           $dadosSeguida = $dates['dadosSeguida'];
+          $notificacoes_count = $dates['notificacoes_count'];
+
 
         //=================================================================
         //=========================Comecem Aqui-----------
@@ -445,11 +452,8 @@ class AuthController extends Controller
 
 
       }
-        
-          $dadosSeguindo = $dates['dadosSeguindo'];
-          $dadosPage = $dates['dadosPage'];
-          $dadosSeguida = $dates['dadosSeguida'];
-        return view('feed.index', compact('account_name','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+
+        return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
     }
     return redirect()->route('account.login.form');
@@ -480,6 +484,8 @@ class AuthController extends Controller
       $dadosPage = $dates['dadosPage'];
       $dadosSeguida = $dates['dadosSeguida'];
       $allUserPages = $dates['allUserPages'];
+      $notificacoes_count = $dates['notificacoes_count'];
+
 
             $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
 
@@ -604,10 +610,20 @@ class AuthController extends Controller
 
 
 
-      return view('pagina.comment', compact('account_name','notificacoes', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
+      return view('pagina.comment', compact('account_name','notificacoes_count','notificacoes', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
 
     }
 
+
+    public function updatenot(Request $request){
+      DB::table('notifications')
+            ->where('notification_id', $request->id1)
+            ->update([
+              'id_state_notification' => 1,
+          ]);
+       $resposta=1;
+            return response()->json($resposta);
+          }
 
 
     public function like(Request $request){
@@ -910,6 +926,8 @@ class AuthController extends Controller
       $dadosPage = $dates['dadosPage'];
       $dadosSeguida = $dates['dadosSeguida'];
       $allUserPages = $dates['allUserPages'];
+      $notificacoes_count = $dates['notificacoes_count'];
+
         $page_current = 'auth';
 
         //----------------------------------------------------------------
@@ -940,7 +958,7 @@ class AuthController extends Controller
         //----------------------------------------------------------------
 
 
-        return view('notificacoes.index', compact('profile_picture','notificacoes', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages', 'page_current', 'page_content', 'conta_logada', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+        return view('notificacoes.index', compact('profile_picture','notificacoes_count','notificacoes', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages', 'page_current', 'page_content', 'conta_logada', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
     }
 
 
@@ -952,7 +970,7 @@ class AuthController extends Controller
 
         return view('auth.registerUser');
     }
-    
+
 
 
     public function sendtoOtherForm(Request $request){
@@ -962,7 +980,7 @@ class AuthController extends Controller
             'apelido' =>['required'],
             'dat' =>['required'],
             'sexo'=>['required'],
-            
+
         ]);
 
         $nome = $request->nome;
@@ -987,7 +1005,7 @@ class AuthController extends Controller
 
 
                 $takePhone = str_replace("-","",$request->telefone);
-                
+
                 /* to play with the code on my mind */
 
                   $nome = $request->nome1;
@@ -1002,7 +1020,7 @@ class AuthController extends Controller
             $passwordLength = strlen($request->password);
 
               if ($passwordLength<9) {
-                  
+
 
                   return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data', 'page_current'));
 
@@ -1052,12 +1070,12 @@ class AuthController extends Controller
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
 
               }
-              
+
 
           }catch(\Exception $e){
               return back()->with('error','Erro Hugo Paulo');
           }
-        
+
     }
 
     public function testandoEmail(){
@@ -1100,7 +1118,7 @@ class AuthController extends Controller
                     $phoneAquired = $generateCode->telefone;
                     $emailAquired = $generateCode->email;
 
-                    
+
                 }
                 if($takeHim == $codeSent && $phoneAquired == $phoneReceived ){
 
@@ -1195,26 +1213,26 @@ class AuthController extends Controller
 
 
   public function sendPhoneEmailRecover(Request $request){
-    
+
       $email = $request->emailName;
 
       $phone = str_replace("-","",$request->phoneNumber);
 
 if ($phone != null) {
-  
+
         $takePhone = DB::table('contas')
           ->select('telefone','conta_id')
           ->where('telefone','=',$phone)
           ->get();
 
           if (isset($takePhone)) {
-            
+
               foreach($takePhone as $info){
 
                 $foundedId = $info->conta_id;
 
                 $foundedPhone = $info->telefone;
-                
+
                   $codeToSend = random_int(1000,9000);
 
                    DB::table('codigo_confirmacaos')
@@ -1236,13 +1254,13 @@ if ($phone != null) {
 
 
           if (isset($takeEmail)) {
-            
+
               foreach($takeEmail as $info){
 
                 $foundedId = $info->conta_id;
 
                 $foundedEmail = $info->email;
-                
+
                   $codeToSend = random_int(1000,9000);
 
                    DB::table('codigo_confirmacaos')
@@ -1254,7 +1272,7 @@ if ($phone != null) {
       }
 
       return view('auth.codeRecover');
-  
+
 }
 
       return view('auth.codeRecover');
@@ -1294,7 +1312,7 @@ if ($phone != null) {
         }
 
             return view('auth.codeRecover');
-        
+
   }
 
   public function updatePassword(Request $request){
@@ -1323,7 +1341,7 @@ if ($phone != null) {
 
 
           return view('auth.newCode2',compact('idToCompare'));
-          
+
 
       }
   }
@@ -1352,7 +1370,7 @@ if ($phone != null) {
       else{
 
           return view('auth.newCode2',compact('idToCompare'));
-          
+
       }
 
   }

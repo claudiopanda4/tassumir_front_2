@@ -39,12 +39,16 @@ class PerfilController extends Controller
          $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
          $conta_logada = $auth->defaultDate();
          $notificacoes=array();
+         $notificacoes_count=0;
          $a=0;
          $nome=array();
          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
          $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
          if (sizeof($notificacoes_aux)>0) {
            foreach ($notificacoes_aux as $key) {
+             if ($key->id_state_notification == 2) {
+               $notificacoes_count++;
+             }
              if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
              if ($aux2[0]->tipo_identificador_id == 1) {
                $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
@@ -144,7 +148,9 @@ class PerfilController extends Controller
             if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
             $notificacoes[$a]['notificacao'].=" Pediu que você page";
             $notificacoes[$a]['tipo']=10;
-            $notificacoes[$a]['id']=$tipo[0]->uuid;}}                                                           break;
+            $notificacoes[$a]['id']=$tipo[0]->uuid;}}
+
+                                                           break;
 
 
              }
@@ -203,6 +209,7 @@ class PerfilController extends Controller
              "dadosSeguida" => $dadosSeguida,
              "dadosPage" => $dadosPage,
              "notificacoes" => $notificacoes,
+             "notificacoes_count" => $notificacoes_count,
          ];
          return $dates;
      }
@@ -222,6 +229,7 @@ class PerfilController extends Controller
             $page_content = $dates['page_content'];
             $conta_logada = $dates['conta_logada'];
             $notificacoes = $dates['notificacoes'];
+            $notificacoes_count = $dates['notificacoes_count'];
             $dadosSeguindo = $dates['dadosSeguindo'];
             $dadosPage = $dates['dadosPage'];
             $dadosSeguida = $dates['dadosSeguida'];
@@ -335,7 +343,7 @@ class PerfilController extends Controller
               //dd($account_name);
 
 
-              return view('perfil.index', compact('account_name', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+              return view('perfil.index', compact('account_name','notificacoes_count', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
 
         } catch (Exception $e) {
@@ -357,6 +365,7 @@ class PerfilController extends Controller
             $page_content = $dates['page_content'];
             $conta_logada = $dates['conta_logada'];
             $notificacoes = $dates['notificacoes'];
+            $notificacoes_count = $dates['notificacoes_count'];
             $dadosSeguindo = $dates['dadosSeguindo'];
             $dadosPage = $dates['dadosPage'];
             $dadosSeguida = $dates['dadosSeguida'];
@@ -481,7 +490,7 @@ class PerfilController extends Controller
 
 
 
-              return view('perfil.index', compact('account_name','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+              return view('perfil.index', compact('account_name', 'notificacoes_count','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
         } catch (Exception $e) {
             dd('erro');
@@ -542,6 +551,7 @@ class PerfilController extends Controller
           $page_content = $dates['page_content'];
           $conta_logada = $dates['conta_logada'];
           $notificacoes = $dates['notificacoes'];
+          $notificacoes_count = $dates['notificacoes_count'];
           $dadosSeguindo = $dates['dadosSeguindo'];
           $dadosPage = $dates['dadosPage'];
           $dadosSeguida = $dates['dadosSeguida'];
@@ -563,7 +573,7 @@ class PerfilController extends Controller
 
 
 
-            return view('perfil.edit', compact('account_name', 'notificacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
+            return view('perfil.edit', compact('account_name','notificacoes_count', 'notificacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
 
         } catch (Exception $e) {
             dd('erro');
