@@ -1070,13 +1070,14 @@ class AuthController extends Controller
         $codHugo = random_int(1000,9000);
 
         Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
+
         return "Email enviado";
+
+        //return redirect()->route('account.login.form');
 
     }
 
     public function verifyCodeSent(Request $request){
-
-
         $codeSent = $request->codeReceived;
         $idSaved = $request->receivedId;
         $phoneReceived = $request->receivedPhone;

@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Email</title>
-</head>
-<body>
 
-	<h1>Vista do Email Enviado</h1>
+@component('mail::message')
 
-	<h4>{{$codHugo}}</h4>
+	Vista do Email Enviado
 
-</body>
-</html>
+	Este é o código gerado: {{$codHugo}}
+
+	@component('mail::button',['url'=>'http://127.0.0.1:8001/'])
+	
+			Validar o codigo
+
+	@endcomponent
+
+@endcomponent
