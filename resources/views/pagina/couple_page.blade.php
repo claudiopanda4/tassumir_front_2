@@ -142,9 +142,13 @@
             </div>
         <?php endif ?>
         <div class="clearfix">
+
             <div class="description-couple">
-                <h2 class="mobile-user-name">@<span></span><?php echo strtolower($page_content[0]->nome); ?></h2>
-                <h2><span>Hugo Paulo</span> & <span>Jeremias Dembi</span></h2>
+                <h2 class="mobile-user-name">@<span></span>
+                    <?php echo strtolower($page_content[0]->nome); ?>
+                </h2>
+                
+                <h2><span>{{ $casalPageName }}</h2>
             </div>
             <div class="description-couple">
                 <p> {{ $page_content[0]->descricao }} </p>
