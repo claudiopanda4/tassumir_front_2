@@ -44,9 +44,9 @@
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="last-component-n clearfix-n " >
                             <label for="more-option-notify" class="fa-option-mobile-hide">
-                              @if(sizeof($notificacoes) > 0)
+                              @if($notificacoes_count > 0)
                               <div class="number-notification circle">
-                                  <span class="center">{{sizeof($notificacoes)}}</span>
+                                  <span class="center">{{$notificacoes_count}}</span>
                               </div>
                               @endif
                                 <i class="fa fa-bell fa-24 fa-option" size="7"></i>

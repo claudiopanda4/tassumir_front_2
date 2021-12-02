@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/like', [App\Http\Controllers\AuthController::class, 'like'])->name('like');
     Route::get('/comment_reac', [App\Http\Controllers\AuthController::class, 'comment_reac'])->name('comment_reac');
     Route::get('/tipos', [App\Http\Controllers\AuthController::class, 'tipos'])->name('tipos');
+    Route::get('/updatenot', [App\Http\Controllers\AuthController::class, 'updatenot'])->name('updatenot');
     Route::get('/reject_relationship', [App\Http\Controllers\PaginaCasalController::class, 'reject_relationship'])->name('reject_relationship');
     Route::get('/tconfirm', [App\Http\Controllers\PaginaCasalController::class, 'tconfirm'])->name('tconfirm');
     Route::get('/seguir', [App\Http\Controllers\AuthController::class, 'seguir'])->name('seguir');
@@ -55,10 +56,11 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');
     Route::get('/help_support', [App\Http\Controllers\HelpSupport::class, 'index'])->name('help_support.page');
 
+    Route::get('/pesquisa/{id}', [App\Http\Controllers\searchController::class, 'index1'])->name('allSearch1.page');
     Route::get('/pesquisa', [App\Http\Controllers\searchController::class, 'index'])->name('allSearch.page');
     Route::get('/pesquisa/peoples', [App\Http\Controllers\searchController::class, 'peoplesSearch'])->name('peoplesSearch.page');
     Route::get('/pesquisa/peoples1/{id}', [App\Http\Controllers\searchController::class, 'peoplesSearch1'])->name('peoplesSearch1.page');
-    
+
     Route::get('/pessoapesquisa', [\App\Http\Controllers\searchController::class, 'pessoapesquisa'])->name('pessoa.pesquisa');
 
     Route::get('/peoplepesquisa', [\App\Http\Controllers\searchController::class, 'peoplepesquisa'])->name('people.pesquisa');

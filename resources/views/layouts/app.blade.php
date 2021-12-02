@@ -40,10 +40,13 @@
                     <div class="container-search-home">
                         <div class="input-search">
                             <i class="fas fa-search fa-16 fa-search-main"></i>
-                            <input type="search" name="" placeholder="O que está procurando?" class="input-text" id="search-lg-home-id-container">
+                            <input type="search" name="table_search" placeholder="O que está procurando?" class="input-text" id="table_search">
                         </div>
                         <div class="search-id-container">
-
+                          <div name="pessoa">
+                        	</div>
+                        	<div name="page">
+                            </div>
                         </div>
                         <div class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
                             <a href="{{route('allSearch.page')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
@@ -60,17 +63,17 @@
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " >
                             <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container far fa-bell fa-24 fa-option notify-icon" size="7"></i>
-                                @if(sizeof($notificacoes) > 0)
+                                @if($notificacoes_count > 0)
                                 <div class="number-notification circle">
-                                    <span class="center">{{sizeof($notificacoes)}}</span>
+                                    <span class="center">{{$notificacoes_count}}</span>
                                 </div>
                                 @endif
                             </label>
                             <a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide notify-icon">
                                 <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
-                                @if(sizeof($notificacoes) > 0)
+                                @if($notificacoes_count > 0)
                                 <div class="number-notification circle">
-                                    <span class="center">{{sizeof($notificacoes)}}</span>
+                                    <span class="center">{{$notificacoes_count}}</span>
                                 </div>
                                 @endif
                             </a>
@@ -149,37 +152,37 @@
 
                                     <div class="hidden-click-any-container noti-div-name">
                                    @if($notificacoes[$i- 1]['tipo'] == 1)
-                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}" class="mudar_estado_not" >
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @elseif($notificacoes[$i- 1]['tipo'] == 2)
-                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @elseif($notificacoes[$i- 1]['tipo'] == 3)
-                                   <a href="">
+                                   <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @elseif($notificacoes[$i- 1]['tipo'] == 4 || $notificacoes[$i- 1]['tipo'] == 7)
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    @elseif($notificacoes[$i- 1]['tipo'] == 5)
-                                   <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}">
+                                   <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @elseif($notificacoes[$i- 1]['tipo'] == 6)
-                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}">
+                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @elseif($notificacoes[$i- 1]['tipo'] == 8)
-                                   <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}">
+                                   <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @elseif($notificacoes[$i- 1]['tipo'] == 9)
-                                   <a href="">
+                                   <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @elseif($notificacoes[$i- 1]['tipo'] == 10)
-                                   <a href="">
+                                   <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @endif
@@ -552,6 +555,9 @@
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <div class="">
                 <input class="file" type="file" name="imgOrVideo" id="testeVid" style="width: 250px; margin-left: 10px; color: #fff;">
+                <video style="display: none;" id="vidAnalyzer">
+                  <source src="" type="">
+                </video>
             </div>
         </div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
@@ -890,6 +896,20 @@
 
       });
 
+      $('.mudar_estado_not').click(function (e) {
+          let id = e.currentTarget.id;
+          let id1= id.split('|')[1];
+          $.ajax({
+            url: "{{ route('updatenot')}}",
+            type: 'get',
+            data: {'id1': id1},
+            dataType: 'json',
+            success:function(response){
+              console.log(response);
+              }
+            });
+      });
+
       $('.reject_relationship').click(function (e) {
 
           let id = e.target.id;
@@ -1030,7 +1050,7 @@
         });
 
         $('.checker').click(function(e) {
-          
+
           var video = $('#testeVid').val();
           console.log(video.duration);
 
@@ -1109,7 +1129,7 @@
                     getVideo($('#vid-' + id).val(), id);
                 }*/
                 id = video_post1[i].id.split('_')[1];
-                
+
                 if ($('#video_' + id)) {
                     offset_video = $('#video_' + id).offset();
                     //console.log('offset video ' + offset_video.top);
@@ -1137,16 +1157,16 @@
                                     document.getElementById('video_' + id).play();
                                     document.getElementById('play_button_' + id).classList.add('invisible');
                                 }
-                            }    
+                            }
                         }
-                        
+
                     } else {
                         document.getElementById('video_' + id).pause();
                         document.getElementById('play_button_' + id).classList.remove('invisible');
                         //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
-                    }    
+                    }
                 }
-                
+
             }
             let offset_post;
             let post_view = document.getElementsByClassName('post-view');
@@ -1161,7 +1181,7 @@
                         add_view(post_view[i].id);
                     }
                 } else {
-                   
+
                 }
             }
             document.get
@@ -1207,6 +1227,122 @@
         $('.play_button').click(function(e){
             let id = e.target.id.split('_')[2];
         });
+        $('#search-lg-home-id').on('keyup',function(){
+  let variavel= $('#search-lg-home-id').val();
+  $('#table_search').val(variavel);
+  let v= 1;
+  if (variavel!='') {
+    searchP(variavel, v);
+  }else {
+    $('div[name=pessoa]').empty();
+    $('div[name=page]').empty();
+  }
+});
+
+function searchP(variavel, v){
+  var s1=0;
+  var s2=1;
+  var s3;
+$.ajax({
+  url: "{{ route('pessoa.pesquisa')}}",
+  type: 'get',
+  data: {'dados': variavel, 'v':v},
+  dataType: 'json',
+  success:function(response){
+    var nome = '';
+    var contador = 1;
+    console.log(response.valor);
+    s1 =response.valor.length;
+      $.each(response.valor, function(key, value){
+        let src = '{{asset("storage/img/users/")}}';
+        if (value.estado_conta_id == 1) {
+          nome += '<ul class="card-flex">'
+          if (contador == 1) {
+            nome += '<ul class="card-flex">'
+            nome += '<span style="color:#fff;" class="mt-2">Pessoas</span>'
+            nome += '</ul>'
+
+          }
+          nome += '<li class="change-look search-info">'
+          if (value.foto != null) {
+            nome += '<div class="page-cover circle "><img class=" circle img-40" src= ' + src + '/' + value.foto + '></div>'
+          }else {
+            nome += '<div class=" page-cover circle "><i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i></div>'
+          }
+          nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
+          var route1 = "{{route('account1.profile', 1) }}"
+          url_array1 = route1.split('/');
+          url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
+          nome += '<a href='+url_link1+' <span class="profile-name-1">'+value.nome+' '+value.apelido+'</span>'
+          nome += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
+          nome += '</div></div></li><div class="couple-separator"></div>'
+          nome += '</ul>'
+
+            $('div[name=pessoa]').empty();
+            $('div[name=pessoa]').append(nome);
+            contador++;
+          }
+        })
+    }
+
+
+});
+$.ajax({
+  url: "{{ route('pagina.pesquisa')}}",
+  type: 'get',
+  data: {'dados': variavel , 'v':v},
+  dataType: 'json',
+  success:function(response){
+    let src1 = '{{ asset("storage/img/page/") }}';
+    var nome = '';
+    var contador = 1;
+    console.log(response.valor);
+    s2 =response.valor.length;
+      $.each(response.valor, function(key, value){
+        if (value.estado_pagina_id==1) {
+
+          if (contador == 1) {
+            nome += '<li class="change-look search-info">'
+            nome += '<ul class="card-flex">'
+            nome += '<span style="color:#fff;" class="mt-2">Páginas</span>'
+            nome += '</ul>'
+            nome += '</li>'
+            nome += '<li class="change-look search-info">'
+          }
+          nome += '<ul class="card-flex">'
+          nome += '<li class="change-look search-info">'
+          if (value.foto != null) {
+            nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.foto + '></div>'
+          }else {
+            nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
+          }
+          nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
+          var route10 = "{{route('couple.page1', 1) }}"
+          url_array10 = route10.split('/');
+          url_link10 = url_array10[0] + "/" + url_array10[1] + "/" + url_array10[2] + "/"+ url_array10[3] +  "/" + value.uuid;
+          nome +='<a href='+url_link10+'>'
+          nome += '<span class="profile-name-1">'+value.nome+'</span>'
+          nome +='</a>'
+          nome += '<a href='+url_link10+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
+          nome += '</div></div></li><div class="couple-separator"></div>'
+          nome += '</ul>'
+            $('div[name=page]').empty();
+            $('div[name=page]').append(nome);
+            contador++;
+          }
+        })
+
+    }
+});
+
+  s3=s1+s2;
+ if (s3 == 0) {
+  nome = '<div style="color: white;" class="ml-2 mt-2">Sem resultados</div>';
+  $('div[name=page]').empty();
+  $('div[name=page]').append(nome);
+}
+}
+
         $('#search-lg-home-id').focus(function(){
             $('.container-search-home').css({
                 display: 'block',
@@ -1258,8 +1394,24 @@
             }
         });
 
+
+});
   
-    });
+
+
+  const trigger = document.querySelector('#cover-done-post');
+  trigger.addEventListener('click', function(e) {
+    const vid = document.querySelector('#testeVid');
+    const vid_container = document.querySelector('#vidAnalyzer > source');
+    for (var i = 0; i < vid.files.length; i++) {
+      console.log(vid.files[i].type);
+      vid_container.src = "video.mp4";
+      //vid_container
+      console.log(vid_container.src);
+    }
+    e.preventDefault();
+  });
+  //console.log(vid);
 
 
 
