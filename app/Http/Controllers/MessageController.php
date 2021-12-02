@@ -223,6 +223,85 @@ class MessageController extends Controller
         //
     }
 
+     public function last_sms(Request $request)
+    {
+        try {
+            if ($request->ajax()) {
+        
+                $foto_user =  DB::table('contas')->where('conta_id', $request->user_send)->get();
+                $foto_dest =  DB::table('contas')->where('conta_id', $request->conta_send)->get();                
+                $message_user['foto_des'] = $foto_dest[0]->foto;
+                $message_user['foto_rem'] = $foto_user[0]->foto;
+                $message_user['nome_des'] = $foto_dest[0]->nome;
+                $message_user['code'] = 1;
+                
+                $identificador_user = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->user_send, 1 ]);
+                $identificador_dest = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->conta_send, 1 ]);
+
+                $message_user['destinatario'] = $identificador_dest[0]->identificador_id;
+                $message = DB::table('messages')->where([
+                  ['id_identificador_a', '=', $identificador_user[0]->identificador_id],
+                  ['message_id', '<', $request->id_sms], 
+                  ['id_identificador_b', '=', $identificador_dest[0]->identificador_id],
+                    ])->orwhere([
+                  ['id_identificador_a', '=', $identificador_dest[0]->identificador_id],
+                  ['message_id', '<', $request->id_sms],
+                  ['id_identificador_b', '=', $identificador_user[0]->identificador_id],
+                    ])->orderBy('message_id', 'desc')->limit(5)->get()->reverse();
+            if (sizeof($message) == 0) {
+                $message_user['code'] = 2;
+                $message_user['valor'] = 0;
+            }else {   
+                $key = 0;
+            foreach ($message as $value) {
+                $resultado[$key] = $value;
+                $key ++;
+            }   
+            $message_user['valor'] = $resultado;
+            }
+            return response()->json($message_user); 
+            }
+        } catch (Exception $e) {
+            
+        }
+    }
+
+    public function first_sms(Request $request)
+    {
+        try {
+            if ($request->ajax()) {
+        
+                $foto_user =  DB::table('contas')->where('conta_id', $request->user_send)->get();
+                $foto_dest =  DB::table('contas')->where('conta_id', $request->conta_send)->get();                
+                $message_user['foto_des'] = $foto_dest[0]->foto;
+                $message_user['foto_rem'] = $foto_user[0]->foto;
+                $message_user['nome_des'] = $foto_dest[0]->nome;
+                $message_user['code'] = 1;
+                
+                $identificador_user = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->user_send, 1 ]);
+                $identificador_dest = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->conta_send, 1 ]);
+
+                $message_user['destinatario'] = $identificador_dest[0]->identificador_id;
+                $message_user['valor'] = DB::table('messages')->where([
+                  ['id_identificador_a', '=', $identificador_user[0]->identificador_id],
+                  ['message_id', '>', $request->id_sms], 
+                  ['id_identificador_b', '=', $identificador_dest[0]->identificador_id],
+                    ])->orwhere([
+                  ['id_identificador_a', '=', $identificador_dest[0]->identificador_id],
+                  ['message_id', '>', $request->id_sms],
+                  ['id_identificador_b', '=', $identificador_user[0]->identificador_id],
+                    ])->orderBy('message_id', 'asc')->limit(5)->get()->reverse();
+                
+            if (sizeof($message_user['valor']) == 0) {
+                $message_user['code'] = 2;
+            }
+            return response()->json($message_user); 
+            }
+        } catch (Exception $e) {
+            
+        }
+    }
+
     public function pesquisar_destinatario(Request $request)
     {
         if($request->ajax()){
