@@ -35,9 +35,7 @@ class SendVerificationCode extends Mailable
     public function build()
     {
         return $this->subject('H20 is on all night long')
-                    ->view('Email.testeEmail');
-                    /*->with(['title' => $this->dadosEmail->title,
-                            'body' => $this->dadosEmail->body
-                    ]);*/
+                    ->markdown('Email.testeEmail');
+                    
     }
 }
