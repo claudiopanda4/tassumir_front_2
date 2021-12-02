@@ -235,6 +235,7 @@
                     $('#user_chat').append("<h1>"+response.nome_des+"</h1>");
                     $('#message_user_dest').empty();
                     $('#message_user_dest').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                    $('#message_user_destino').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
                     $.each(response.valor, function(key, value){
                         if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
                             if (response.foto_rem == null) {
@@ -259,7 +260,7 @@
                           }  
                         }
                       });
-                        $('#sms_nova').show();
+                        $('.sms_nova').show();
                      }else{ $('#sms_antiga').hide(); }   
                    }
                     });
@@ -318,7 +319,7 @@
                       }  
                     }
                   });
-                    $('#sms_nova').hide();
+                    $('.sms_nova').hide();
                  }
                });
              }
@@ -369,7 +370,7 @@
                       @endif
                     <div class="message-body l-5">
                         <div>
-                            <p>{{$mensagem->message}} -- {{$mensagem->message_id}}</p>
+                            <p>{{$mensagem->message}}</p>
                         </div>
                     </div>
                   </div> 
@@ -388,7 +389,7 @@
                       @endif
                     <div class="message-body l-5">
                         <div>
-                            <p>{{$mensagem->message}} -- {{ $mensagem->message_id}}</p>
+                            <p>{{$mensagem->message}}</p>
                         </div>
                     </div>
                   </div>  
@@ -398,6 +399,7 @@
             @endforelse        
         </div> 
         <div class="comment-send clearfix" id="comment-send-1">
+            <div  class='sms_nova' ><p style='text-align: center; color: white;  cursor: pointer'>Ver Mensagens Recentes</p></div>
             @if($conta_logada[0]->foto != null)
             <div class="img-user-comment l-5">
                 <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto}}">
@@ -422,7 +424,7 @@
         <div id="message_user_dest" class="body-message clearfix">
          </div>  
          <div class="comment-send clearfix" id="comment-send-1">
-            <div  id='sms_nova' ><p style='text-align: center; color: white;  cursor: pointer'>Ver Mensagens Recentes</p></div>
+            <div  class='sms_nova' ><p style='text-align: center; color: white;  cursor: pointer'>Ver Mensagens Recentes</p></div>
             @if($conta_logada[0]->foto != null)
             <div class="img-user-comment l-5">
                 <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto}}">
@@ -483,8 +485,8 @@
 
         });
 
-        $('#sms_nova').hide();
-        $('#sms_nova').click(function (e){
+        $('.sms_nova').hide();
+        $('.sms_nova').click(function (e){
                     e.preventDefault();
                     let id_first_sms = $('.uma_sms').eq(4).attr("id");
                     let user_send = $('#user_logado').val();
@@ -512,7 +514,9 @@
                     }
                     $('#user_chat').append("<h1>"+response.nome_des+"</h1>");
                     $('#message_user_dest').empty();
+                    $('#message_user_destino').empty();
                     $('#message_user_dest').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                    $('#message_user_destino').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
                     $.each(response.valor, function(key, value){
                         if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
                             if (response.foto_rem == null) {
@@ -537,15 +541,69 @@
                           }  
                         }
                       });
-                        $('#sms_nova').show();
-                    }else{ $('#sms_nova').hide(); }
+                        $('.sms_nova').show();
+                    }else{ $('.sms_nova').hide(); }
                    }
                     });
         })
 
         $('#sms_antiga').click(function(e){
-            e.preventDefault();
-            alert('Carregando mensagens anteriores');
+                    e.preventDefault();
+                    let id_last_sms = $('.uma_sms').eq(0).attr("id");
+                    let user_send = $('#user_logado').val();
+                    let conta_send = $('#destinatario').val();
+                    let identificador_user = $('#remetente').val();
+                    $.ajax({
+                        url: "{{ route('message.antigas')}}",
+                        type: 'get',
+                        data: {'user_send': user_send, 'conta_send': conta_send, 'id_sms': id_last_sms },
+                        dataType: 'json',
+                        success:function(response){
+                            if (response.code == 1) {
+                                console.log(response.code);
+                            let destinatario = response.destinatario;
+                        let foto_user_logado = response.foto_rem;
+                    $('#message_user_destino').empty();
+                    $('#user_chat').empty();
+                    $('#zona_foto').empty();
+                    if (response.foto_des == null) {
+                        $('#zona_foto').append("<i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i>");
+                    }else{
+                         let src = "{{asset('storage/img/users/')}}" + "/" + response.foto_des;
+                        $('#zona_foto').append("<img src='"+src+"'  class='circle img-full'>");    
+                    }
+                    $('#user_chat').append("<h1>"+response.nome_des+"</h1>");
+                    $('#message_user_dest').empty();
+                    $('#message_user_dest').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                     $('#message_user_destino').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                    $.each(response.valor, function(key, value){
+                        if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
+                            if (response.foto_rem == null) {
+                        $('#message_user_dest').append("<div id="+value.message_id+" class='other-user uma_sms r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div>");
+                        $('#message_user_destino').append("<div id="+value.message_id+" class='other-user uma_sms r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div>");
+                    }else{
+                        let src = "{{asset('storage/img/users/')}}" + "/" + response.foto_rem;
+                        $('#message_user_dest').append("<div id="+value.message_id+" class='other-user uma_sms r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+" </p></div></div></div></div>");
+                        $('#message_user_destino').append("<div id="+value.message_id+" class='other-user uma_sms r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                    }
+                    }else {
+                        if ((value.id_identificador_a == destinatario ) && (value.id_identificador_b == identificador_user)) {
+                            if (response.foto_des == null) {
+                                
+                        $('#message_user_dest').append("<div id="+value.message_id+" class='own-user l-5 uma_sms'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                        $('#message_user_destino').append("<div id="+value.message_id+" class='own-user l-5 uma_sms'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                        }else{
+                            let src = "{{asset('storage/img/users/')}}" + "/" + response.foto_des;
+                            $('#message_user_dest').append("<div id="+value.message_id+" class='own-user l-5 uma_sms'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                            $('#message_user_destino').append("<div  class='own-user l-5 uma_sms'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+value.message+"</p></div></div></div></div>");
+                            }
+                          }  
+                        }
+                      });
+                        $('.sms_nova').show();
+                     }else{ $('#sms_antiga').hide(); }   
+                   }
+                    });
         });
 
         $('.person_message').click(function(e){
@@ -577,7 +635,9 @@
                     }
                     $('#user_chat').append("<h1>"+nome_conta_dest+"</h1>");
                     $('#message_user_dest').empty();
+                    $('#message_user_destino').empty();
                     $('#message_user_dest').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                    $('#message_user_destino').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
                     $.each(response.valor, function(key, value){
                         if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
                             if (response.foto_rem == null) {
