@@ -2964,3 +2964,11 @@ label[for="hugo"]{
 	width: 100%;
 	text-align: center;
 }
+#password_login_id {
+	position: relative;
+}
+#password_login_id #eye {
+	position: absolute;
+	right: 15px;
+	top: 46px;
+}

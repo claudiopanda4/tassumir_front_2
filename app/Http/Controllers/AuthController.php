@@ -6,11 +6,8 @@ use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Hash;
-
 use App\Http\Controllers\PaginaCasalController;
-
 use Illuminate\Support\Facades\Validator;
 
 /* email */

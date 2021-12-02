@@ -458,6 +458,10 @@ $v=1;
                             ];
                     }
                 }
+
+            $dadosSeguindo = $dates['dadosSeguindo'];
+            $dadosPage = $dates['dadosPage'];
+            $dadosSeguida = $dates['dadosSeguida'];
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $seguidores = Self::seguidores($page_content[0]->page_id);
             $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);

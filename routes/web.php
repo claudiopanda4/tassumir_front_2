@@ -89,6 +89,7 @@ Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->nam
 
 /* inicio get e post login*/
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('account.login.form');
+Route::get('/login/redirect', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
 /*end get e post login*/
 
@@ -130,7 +131,13 @@ Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController
 Route::get('/view/', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
 Route::get('/getvideo/', [App\Http\Controllers\PostController::class, 'get_video'])->name('post.video.get');
 Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])->name('post.get');
+Route::get('/getposts/destaques', [App\Http\Controllers\PostController::class, 'destaques'])->name('post.get.destaques');
 //endposts
+
+//
+Route::get('/getfollow/', [App\Http\Controllers\PageController::class, 'index'])->name('following.get');
+//
+
 
 //api
 Route::group(['middleware' => 'auth:api'], function(){
