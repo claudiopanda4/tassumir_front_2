@@ -1256,11 +1256,11 @@ $.ajax({
       $.each(response.valor, function(key, value){
         let src = '{{asset("storage/img/users/")}}';
         if (value.estado_conta_id == 1) {
-          nome += '<ul class="card-flex">'
           if (contador == 1) {
-            nome += '<ul class="card-flex">'
+            nome += '<li class="search-title">'
             nome += '<span style="color:#fff;" class="mt-2">Pessoas</span>'
-            nome += '</ul>'
+            nome += '<ul class="card-flex">'
+            nome += '</li>'
 
           }
           nome += '<li class="change-look search-info">'
@@ -1276,7 +1276,9 @@ $.ajax({
           nome += '<a href='+url_link1+' <span class="profile-name-1">'+value.nome+' '+value.apelido+'</span>'
           nome += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
           nome += '</div></div></li><div class="couple-separator"></div>'
-          nome += '</ul>'
+          if (contador == response.valor.length) {
+            nome += '</ul>'
+          }
 
             $('div[name=pessoa]').empty();
             $('div[name=pessoa]').append(nome);
@@ -1303,13 +1305,10 @@ $.ajax({
 
           if (contador == 1) {
             nome += '<li class="change-look search-info">'
-            nome += '<ul class="card-flex">'
             nome += '<span style="color:#fff;" class="mt-2">Páginas</span>'
-            nome += '</ul>'
+            nome += '<ul class="card-flex">'
             nome += '</li>'
-            nome += '<li class="change-look search-info">'
           }
-          nome += '<ul class="card-flex">'
           nome += '<li class="change-look search-info">'
           if (value.foto != null) {
             nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.foto + '></div>'
@@ -1325,8 +1324,10 @@ $.ajax({
           nome +='</a>'
           nome += '<a href='+url_link10+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
           nome += '</div></div></li><div class="couple-separator"></div>'
-          nome += '</ul>'
-            $('div[name=page]').empty();
+          if (contador == response.valor.length) {
+            nome += '</ul>'
+          }
+           $('div[name=page]').empty();
             $('div[name=page]').append(nome);
             contador++;
           }
@@ -1396,7 +1397,7 @@ $.ajax({
 
 
 });
-  
+
 
 
   const trigger = document.querySelector('#cover-done-post');
