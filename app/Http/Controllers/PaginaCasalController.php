@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthController;
 
 class PaginaCasalController extends Controller
 {
@@ -168,14 +170,14 @@ $v=1;
 
     }
     public function default_(){
-               $account_name = $this->defaultDate();
-               $checkUserStatus = Self::isCasal($account_name[0]->conta_id);
-               $profile_picture = Self::profile_picture(Auth::user()->conta_id);
-               $isUserHost =Self::isUserHost($account_name[0]->conta_id);
-               $hasUserManyPages = Self::hasUserManyPages(Auth::user()->conta_id);
-               $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
-               $page_content = $this->casalPage->page_default_date($account_name);
-               $conta_logada = $this->defaultDate();
+               $account_name = AuthController::defaultDate();
+               $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
+               $profile_picture = AuthController::profile_picture(Auth::user()->conta_id);
+               $isUserHost =AuthController::isUserHost($account_name[0]->conta_id);
+               $hasUserManyPages = AuthController::hasUserManyPages(Auth::user()->conta_id);
+               $allUserPages = AuthController::allUserPages(new AuthController, Auth::user()->conta_id);
+               $page_content = $this->page_default_date($account_name);
+               $conta_logada = AuthController::defaultDate();
                $notificacoes=array();
                $notificacoes_count=0;
                $a=0;
