@@ -312,13 +312,45 @@ class PerfilController extends Controller
               }
             }
           }
-                    $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
-                    $perfil[0]['verificacao_pedido1']=sizeof($verificacao_pedido1);
+
+          $perfil[0]['Pedido_relac_uuid']=0;
+          $perfil[0]['not_id']=0;
+          if (sizeof($verificacao_pedido)>0) {
+            if ($verificacao_pedido[0]->estado_pedido_relac_id!= 2) {
+              $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
+            }else {
+              $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido[0]->uuid;
+              $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+              $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+              $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido[0]->pedido_relacionamento_id, 5 ]);
+            $n4=DB::select('select * from notifications where (identificador_id_causador,identificador_id_destino,identificador_id_receptor, 	id_action_notification) = (?, ?, ?, ?)', [$n1[0]->identificador_id,$n3[0]->identificador_id,$n2[0]->identificador_id, 7]);
+              $perfil[0]['not_id']=$n4[0]->notification_id;
+              $perfil[0]['verificacao_pedido']=2;
+            }
+          }else {
+            $perfil[0]['verificacao_pedido']=0;
+          }
+          if (sizeof($verificacao_pedido1)>0) {
+            if ($verificacao_pedido1[0]->estado_pedido_relac_id== 1) {
+              $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido1[0]->uuid;
+              $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+              $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+              $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido1[0]->pedido_relacionamento_id, 5 ]);
+              $n4=DB::select('select * from notifications where (identificador_id_causador,identificador_id_destino,identificador_id_receptor, 	id_action_notification ) = (?, ?, ?, ?)', [$n1[0]->identificador_id,$n3[0]->identificador_id,$n2[0]->identificador_id, 4]);
+              $perfil[0]['not_id']=$n4[0]->notification_id;
+              $perfil[0]['verificacao_pedido1']=sizeof($verificacao_pedido1);
+            }else {
+              $perfil[0]['verificacao_pedido1']=2;
+            }
+          }else {
+            $perfil[0]['verificacao_pedido1']=0;
+          }
                     $perfil[0]['verificacao_page']=sizeof($verificacao_page);
                     $perfil[0]['verificacao_page1']=sizeof($verificacao_page1);
                     $perfil[0]['verificacao_page2']=sizeof($verificacao_page2);
                     $perfil[0]['verificacao_page3']=sizeof($verificacao_page3);
-                    $perfil[0]['qtd_ps']=sizeof($seguidor);                    $perfil[0]['qtd_like']=sizeof($post_reactions);
+                    $perfil[0]['qtd_ps']=sizeof($seguidor);
+                    $perfil[0]['qtd_like']=sizeof($post_reactions);
                     $perfil[0]['qtd_guardados']=sizeof($guardado);
                foreach ($post_reactions as $key ) {
                  $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
@@ -444,9 +476,38 @@ class PerfilController extends Controller
                   }
                   }
                   }
-
-                    $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
-                    $perfil[0]['verificacao_pedido1']=sizeof($verificacao_pedido1);
+                  $perfil[0]['Pedido_relac_uuid']=0;
+                  $perfil[0]['not_id']=0;
+                    if (sizeof($verificacao_pedido)>0) {
+                      if ($verificacao_pedido[0]->estado_pedido_relac_id!= 2) {
+                        $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
+                      }else {
+                        $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido[0]->uuid;
+                        $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+                        $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+                        $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido[0]->pedido_relacionamento_id, 5 ]);
+                      $n4=DB::select('select * from notifications where (identificador_id_causador,identificador_id_destino,identificador_id_receptor, 	id_action_notification) = (?, ?, ?, ?)', [$n1[0]->identificador_id,$n3[0]->identificador_id,$n2[0]->identificador_id, 7]);
+                        $perfil[0]['not_id']=$n4[0]->notification_id;
+                        $perfil[0]['verificacao_pedido']=2;
+                      }
+                    }else {
+                      $perfil[0]['verificacao_pedido']=0;
+                    }
+                    if (sizeof($verificacao_pedido1)>0) {
+                      if ($verificacao_pedido1[0]->estado_pedido_relac_id== 1) {
+                        $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido1[0]->uuid;
+                        $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+                        $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+                        $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido1[0]->pedido_relacionamento_id, 5 ]);
+                        $n4=DB::select('select * from notifications where (identificador_id_causador,identificador_id_destino,identificador_id_receptor, 	id_action_notification ) = (?, ?, ?, ?)', [$n1[0]->identificador_id,$n3[0]->identificador_id,$n2[0]->identificador_id, 4]);
+                        $perfil[0]['not_id']=$n4[0]->notification_id;
+                        $perfil[0]['verificacao_pedido1']=sizeof($verificacao_pedido1);
+                      }else {
+                        $perfil[0]['verificacao_pedido1']=2;
+                      }
+                    }else {
+                      $perfil[0]['verificacao_pedido1']=0;
+                    }
                     $perfil[0]['verificacao_page']=sizeof($verificacao_page);
                     $perfil[0]['verificacao_page1']=sizeof($verificacao_page1);
                     $perfil[0]['verificacao_page2']=sizeof($verificacao_page2);
