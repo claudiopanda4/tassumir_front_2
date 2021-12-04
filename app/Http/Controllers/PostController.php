@@ -129,8 +129,27 @@ class PostController extends Controller
         return $size;
     }
 
-    public function destaques(){
-        $posts = DB::select('select * from posts');
+    public function tassumirvideos(){
+        $auth = new AuthController();
+        $dates = $auth->default_();
+        $account_name = $dates['account_name'];
+        $checkUserStatus = $dates['checkUserStatus'];
+        $profile_picture = $dates['profile_picture'];
+        $isUserHost = $dates['isUserHost'];
+        $hasUserManyPages = $dates['hasUserManyPages'];
+        $allUserPages = $dates['allUserPages'];
+        $page_content = $dates['page_content'];
+        $conta_logada = $dates['conta_logada'];
+        $notificacoes = $dates['notificacoes'];
+        $dadosSeguindo = $dates['dadosSeguindo'];
+        $dadosPage = $dates['dadosPage'];
+        $dadosSeguida = $dates['dadosSeguida'];
+        $notificacoes_count = $dates['notificacoes_count'];
+        return view('videos.index', compact('account_name','checkUserStatus','notificacoes_count','notificacoes', 'profile_picture', 'conta_logada', 'page_content'));
+    }
+
+    public function destaques($limit){
+        $posts = DB::select('select * from posts limit ?', [$limit]);
         $post_drafted = array();
         $aux;
         $reactions_posts = array();
@@ -145,10 +164,12 @@ class PostController extends Controller
         $i = 0;
         $comparator = array();
         $comparator1 = array();
+        $order = array();
         //dd($destaques);
+        $numb_destaques = 0;
         while ($i < sizeof($destaques)) {
-            $ii = sizeof($destaques) - 1;
-            while ($ii >= 0) {
+            $ii = $i + 1;
+            while ($ii < sizeof($destaques) ) {
                 $comparator[$i][$ii] = $destaques[$i]['reactions'].' '.$destaques[$ii]['reactions'];
                 if ($destaques[$i]['reactions'] < $destaques[$ii]['reactions']) {
                     $aux = $destaques[$ii];
@@ -156,7 +177,7 @@ class PostController extends Controller
                     $destaques[$i] = $aux;
                 }
                 $comparator1[$i][$ii] = $destaques[$i]['reactions'].' '.$destaques[$ii]['reactions'];
-                $ii--;
+                $ii++;
             }
             $i++;
         }
@@ -165,7 +186,7 @@ class PostController extends Controller
             'comparator1' => $comparator1,
             'destaques' => $destaques,
         ];
-        dd($comparator_totat);
+        dd($destaques);
     }
 
     public function view_post(Request $request)

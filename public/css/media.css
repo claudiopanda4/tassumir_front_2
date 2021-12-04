@@ -499,6 +499,54 @@
 		background-color: transparent;
 		border: none;
     }
+    .comment-users-tass {
+		height: auto;
+	}
+	::-webkit-scrollbar {
+		width: 0px;
+	}
+	::-webkit-scrollbar-thumb {
+		width: 0px;
+	}
+	.suggest-slide-page nav::-webkit-scrollbar {
+		height: 0px;
+	}
+	.suggest-slide-page nav::-webkit-scrollbar-thumb {
+		height: 0px;
+	}
+	.suggest-slide nav::-webkit-scrollbar-thumb {
+		height: 0px;
+	}
+	.suggest-slide nav::-webkit-scrollbar {
+		height: 0px;
+	}
+	.stories-about-talking nav::-webkit-scrollbar {
+		height: 0;
+	}
+	.stories-about-talking nav::-webkit-scrollbar-thumb {
+		height: 0;
+	}
+    #mb-video-lg-display .identify-video{
+    	display: none;
+    }
+    #mb-video-lg-display {
+    	border: none;
+    }
+    #mb-video-lg-none {
+    	display: block;
+    }
+    .nav-video-option {
+    	display: block;
+    }
+    .tv-video-cont {
+	    width: 100%;
+	    margin: 0;
+	}
+	.tv-video-cont video {
+	    contain: strict;
+	    height: 417px;
+	    width: 360px;
+	}
     .filter-main-search-mobile {
     	display: block;
     }
@@ -597,7 +645,8 @@
 	    background-color: transparent;
 	}
 	.post {	    
-		border-top: 1px solid #343a40;
+		border: 1px solid #343a40;
+	    border-radius: 10px;
 	}
 	.body-pop-up {
 	    background-color: var(--background-main-dark);
@@ -776,6 +825,12 @@
 	.post-cover {
 	    height: 538px;
 	}
+	.aside-left {
+		left: 90px;
+	}
+	.aside-right {
+		right: 80px;
+	}
 }
 @media screen and (max-width: 570px) {
 	.card-page {
@@ -942,5 +997,32 @@
 @media screen and (max-width: 500px) {
 	.video-post {
 	    height: 100vh;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.aside-left, .aside-right {
+	    width: 267px;
+	}	
+}
+
+@media screen and (max-width: 540px) {
+	.post {	    
+		border: none;
+		border-radius: 0;
+		border-top: 1px solid #343a40;
+	}
+	.tv-video-cont {
+	    height: 417px;
+	}
+	.nav-video-option {
+	    overflow: auto;
+	}
+	.nav-video-option ul {
+	    width: 415px;
+	}
+	.nav-video-option::-webkit-scrollbar {
+	    width: 0;
+	    height: 0;
 	}
 }
