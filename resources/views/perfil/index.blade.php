@@ -52,43 +52,58 @@
             <div>
                 <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $perfil[0]['verificacao_page'] == 0 && $perfil[0]['verificacao_page1'] == 0  && $perfil[0]['verificacao_page2'] == 0 && $perfil[0]['verificacao_page3'] == 0  ): ?>
 
-                    <?php if ($perfil[0]['verificacao_pedido'] == 1 ): ?>
+                    <?php if ($perfil[0]['verificacao_pedido'] == 1 || $perfil[0]['verificacao_pedido1'] == 2): ?>
                     <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
                         <label for="target-invited-relationship" style="width: 100%;">
-                            <div class="follwing-btn follwing-btn-pop-up" >
+                          <!--  <div class="follwing-btn follwing-btn-pop-up" >-->
                                 <h2>Pendente</h2>
-                            </div>
-                        </label>
+                          <!--   </div> -->
+                       </label>
                         <form action="{{route('message.index')}}">
                             <button class="btn-message">
                                 <i class="far fa-comment-dots fa-24 fa-option center"></i>
                             </button>
                         </form>
                     </div>
-                    <?php elseif ($perfil[0]['verificacao_pedido1'] == 1 ): ?>
-                        <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
-                          <div class="hidden-click-any-container options-invited clearfix">
-                              <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
-                                  <div class="hidden-click-any-container label-invited" id="">
-                                      <h2 class="accept_relationship" >Aceitar</h2>
-                                  </div>
-                              </label>
-                              <div class="reject_relationship">
-                              <a href="" class="hidden-click-any-container l-5 denied ">Rejeitar</a>
-                          </div>
-                        </div>
-                            <!-- <label for="target-invited-relationship" style="width: 100%;">
-                                <div class="follwing-btn follwing-btn-pop-up" >
+                  <?php elseif ($perfil[0]['verificacao_pedido1'] == 1 ): ?>
+                    <div class="hidden-click-any-container options-invited clearfix">
+                        <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
+                            <div class="hidden-click-any-container label-invited" id="">
+                                <h2 class="accept_relationship" id="{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}">Aceitar</h2>
+                            </div>
+                        </label>
+                        <div class="reject_relationship" id="R|{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}">
+                        <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}">Rejeitar</a>
+                    </div>
+                  </div>
+                          <!-- <label for="target-invited-relationship" style="width: 100%;">
+                              <div class="follwing-btn follwing-btn-pop-up" >
 
-                                    <h2>Aceitar</h2>
-                                </div>
-                            </label>-->
-                            <form action="{{route('message.index')}}">
-                                <button class="btn-message">
-                                    <i class="far fa-comment-dots fa-24 fa-option center"></i>
-                                </button>
-                            </form>
-                        </div>
+                                  <h2>Aceitar</h2>
+                              </div>
+                          </label>-->
+                          <form action="{{route('message.index')}}">
+                              <button class="btn-message">
+                                  <i class="far fa-comment-dots fa-24 fa-option center"></i>
+                              </button>
+                          </form>
+                      </div>
+                    <?php elseif ($perfil[0]['verificacao_pedido'] == 2 ): ?>
+                      <div class="hidden-click-any-container options-invited clearfix">
+                          <a  href="{{route('relationship.page1', $perfil[0]['Pedido_relac_uuid']) }}" class="ver_mais" id="VR|{{$perfil[0]['not_id']}}">Ver Resposta</a>
+                      </div>
+                              <!-- <label for="target-invited-relationship" style="width: 100%;">
+                                  <div class="follwing-btn follwing-btn-pop-up" >
+
+                                      <h2>Aceitar</h2>
+                                  </div>
+                              </label>-->
+                              <form action="{{route('message.index')}}">
+                                  <button class="btn-message">
+                                      <i class="far fa-comment-dots fa-24 fa-option center"></i>
+                                  </button>
+                              </form>
+                          </div>
                     <?php else: ?>
                     <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
                         <label for="target-invited-relationship" style="width: 100%;">
