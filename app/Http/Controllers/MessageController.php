@@ -17,8 +17,8 @@ class MessageController extends Controller
     public function index()
     {
         try {
-            $controll = new PaginaCasalController();
-        $dates = $controll->default_();
+          $controll = new AuthController();
+           $dates = $controll->default_();
         $account_name = $dates['account_name'];
         $checkUserStatus = $dates['checkUserStatus'];
         $profile_picture = $dates['profile_picture'];
@@ -34,21 +34,21 @@ class MessageController extends Controller
         $dadosSeguida = $dates['dadosSeguida'];
         $page_current = 'relationship_request';
         $user_logado = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-        
+
         $message_contact = DB::table('messages')->where('id_identificador_a', $user_logado[0]->identificador_id)->orwhere('id_identificador_b', $user_logado[0]->identificador_id)->join('identificadors', function ($join) {
             $join->on('messages.id_identificador_a', '=', 'identificadors.identificador_id' )->orOn('messages.id_identificador_b', '=', 'identificadors.identificador_id');
         })->select('messages.*', 'identificadors.id')->get();
 
-           
-        
+
+
 
         $contas = DB::table('contas')->limit(8)->get();
-        
-                
+
+
         //dd($contas);
         return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida', 'user_logado', 'contas', 'message_contact'));
         } catch (Exception $e) {
-            
+
         }
     }
 
@@ -71,7 +71,7 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         try {
-           
+
         if ($request->ajax()) {
             $m_user_logado = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->user_send, 1 ]);
             $m_destinatario = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->conta_send, 1 ]);
@@ -88,9 +88,9 @@ class MessageController extends Controller
             return response()->json($resposta);
         }else{
             return response()->json('Nenhum dado Enviado');
-        } 
+        }
         } catch (Exception $e) {
-            
+
         }
     }
 
@@ -145,22 +145,22 @@ class MessageController extends Controller
             foreach ($message as $value) {
                 $resultado[$key] = $value;
                 $key ++;
-            }   
+            }
             $message_user['valor'] = $resultado;
             return response()->json($message_user);
         }
         } catch (Exception $e) {
-            
+
         }
-         
+
     }
 
         public function mostrar_sms($remetente, $destinatario)
-    {      
+    {
         try {
-            
-           $controll = new PaginaCasalController();
-        $dates = $controll->default_();
+
+          $controll = new AuthController();
+           $dates = $controll->default_();
         $account_name = $dates['account_name'];
         $checkUserStatus = $dates['checkUserStatus'];
         $profile_picture = $dates['profile_picture'];
@@ -178,12 +178,12 @@ class MessageController extends Controller
 
         $conta_logada = DB::table('contas')->where('uuid', $remetente)->get();
         $conta_destino = DB::table('contas')->where('uuid', $destinatario)->get();
-        
+
         $user_logado = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
 
         $identificador_user = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
         $identificador_dest = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_destino[0]->conta_id, 1 ]);
-        
+
          $message_text = DB::table('messages')->where([
                   ['id_identificador_a', '=', $identificador_user[0]->identificador_id],
                   ['id_identificador_b', '=', $identificador_dest[0]->identificador_id],
@@ -191,25 +191,25 @@ class MessageController extends Controller
                   ['id_identificador_a', '=', $identificador_dest[0]->identificador_id],
                   ['id_identificador_b', '=', $identificador_user[0]->identificador_id],
             ])->orderBy('message_id', 'desc')->limit(5)->get()->reverse();
-            
-        
-               
+
+
+
 
           $message_contact = DB::table('messages')->where('id_identificador_a', $identificador_user[0]->identificador_id)->orwhere('id_identificador_b', $identificador_user[0]->identificador_id)->join('identificadors', function ($join) {
             $join->on('messages.id_identificador_a', '=', 'identificadors.identificador_id' )->orOn('messages.id_identificador_b', '=', 'identificadors.identificador_id');
-        })->select('messages.*', 'identificadors.id')->get();  
-        
+        })->select('messages.*', 'identificadors.id')->get();
+
 
         $contas = DB::table('contas')->limit(8)->get();
-        
-                
+
+
         //dd($contas);
         return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida', 'user_logado', 'contas', 'message_contact', 'message_text', 'identificador_user', 'identificador_dest', 'conta_destino'));
-        
+
         } catch (Exception $e) {
-            
+
         }
-         
+
     }
 
     /**
@@ -227,21 +227,21 @@ class MessageController extends Controller
     {
         try {
             if ($request->ajax()) {
-        
+
                 $foto_user =  DB::table('contas')->where('conta_id', $request->user_send)->get();
-                $foto_dest =  DB::table('contas')->where('conta_id', $request->conta_send)->get();                
+                $foto_dest =  DB::table('contas')->where('conta_id', $request->conta_send)->get();
                 $message_user['foto_des'] = $foto_dest[0]->foto;
                 $message_user['foto_rem'] = $foto_user[0]->foto;
                 $message_user['nome_des'] = $foto_dest[0]->nome;
                 $message_user['code'] = 1;
-                
+
                 $identificador_user = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->user_send, 1 ]);
                 $identificador_dest = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->conta_send, 1 ]);
 
                 $message_user['destinatario'] = $identificador_dest[0]->identificador_id;
                 $message = DB::table('messages')->where([
                   ['id_identificador_a', '=', $identificador_user[0]->identificador_id],
-                  ['message_id', '<', $request->id_sms], 
+                  ['message_id', '<', $request->id_sms],
                   ['id_identificador_b', '=', $identificador_dest[0]->identificador_id],
                     ])->orwhere([
                   ['id_identificador_a', '=', $identificador_dest[0]->identificador_id],
@@ -251,18 +251,18 @@ class MessageController extends Controller
             if (sizeof($message) == 0) {
                 $message_user['code'] = 2;
                 $message_user['valor'] = 0;
-            }else {   
+            }else {
                 $key = 0;
             foreach ($message as $value) {
                 $resultado[$key] = $value;
                 $key ++;
-            }   
+            }
             $message_user['valor'] = $resultado;
             }
-            return response()->json($message_user); 
+            return response()->json($message_user);
             }
         } catch (Exception $e) {
-            
+
         }
     }
 
@@ -270,42 +270,42 @@ class MessageController extends Controller
     {
         try {
             if ($request->ajax()) {
-        
+
                 $foto_user =  DB::table('contas')->where('conta_id', $request->user_send)->get();
-                $foto_dest =  DB::table('contas')->where('conta_id', $request->conta_send)->get();                
+                $foto_dest =  DB::table('contas')->where('conta_id', $request->conta_send)->get();
                 $message_user['foto_des'] = $foto_dest[0]->foto;
                 $message_user['foto_rem'] = $foto_user[0]->foto;
                 $message_user['nome_des'] = $foto_dest[0]->nome;
                 $message_user['code'] = 1;
-                
+
                 $identificador_user = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->user_send, 1 ]);
                 $identificador_dest = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->conta_send, 1 ]);
 
                 $message_user['destinatario'] = $identificador_dest[0]->identificador_id;
                 $message_user['valor'] = DB::table('messages')->where([
                   ['id_identificador_a', '=', $identificador_user[0]->identificador_id],
-                  ['message_id', '>', $request->id_sms], 
+                  ['message_id', '>', $request->id_sms],
                   ['id_identificador_b', '=', $identificador_dest[0]->identificador_id],
                     ])->orwhere([
                   ['id_identificador_a', '=', $identificador_dest[0]->identificador_id],
                   ['message_id', '>', $request->id_sms],
                   ['id_identificador_b', '=', $identificador_user[0]->identificador_id],
                     ])->orderBy('message_id', 'asc')->limit(5)->get()->reverse();
-                
+
             if (sizeof($message_user['valor']) == 0) {
                 $message_user['code'] = 2;
             }
-            return response()->json($message_user); 
+            return response()->json($message_user);
             }
         } catch (Exception $e) {
-            
+
         }
     }
 
     public function pesquisar_destinatario(Request $request)
     {
         if($request->ajax()){
-     
+
             $conta = DB::table('contas')->where('nome', 'like', '%'.$request->dados.'%')
             ->orwhere('apelido', 'like', '%'.$request->dados.'%')->limit(5)->get();
 
@@ -320,7 +320,7 @@ class MessageController extends Controller
         }
 
     }
-   
+
 
     /**
      * Update the specified resource in storage.
