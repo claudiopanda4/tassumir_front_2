@@ -219,17 +219,25 @@ body {
 	right: 20px;
 }
 .aside-left ul {
-	width: 210px;
+	width: 240px;
 	padding-left: 0;
 }
 .aside-notification-right{
-
 	right: 10px;
 	width: 280px;
 	height: 70vh;
 	top: 85px;
-
-
+}
+.nav-video-option li {
+	color: #fff;
+}
+.nav-video-option ul {
+	width: 494px;
+    margin: auto;
+    padding: 0;
+}
+.nav-video-option {
+	display: none;
 }
 .aside-notification{
 	position: absolute;
@@ -276,7 +284,7 @@ body {
 ::-webkit-scrollbar-thumb {
 	width: 8px;
 	border-radius: 20px;
-	background-color: #efefef;
+	background-color: #343a40;
 }
 .header-main-component {
 	height: 60px;
@@ -2963,4 +2971,90 @@ label[for="hugo"]{
 	color: #fff;
 	width: 100%;
 	text-align: center;
+}
+#password_login_id {
+	position: relative;
+}
+#password_login_id #eye {
+	position: absolute;
+	right: 15px;
+	top: 46px;
+}
+.header-img-post-video {
+	width: 40px;
+	height: 40px;
+	position: relative;
+}
+.identify-video a h1 {
+	font-size: 12px;
+	color: #fff;
+	margin-top: 20px;
+}
+.header-img-post-video,
+.identify-video a {
+	display: inline-block;
+}
+.nav-video-option li {
+	padding: 10px;
+	font-size: 13px;
+}
+.nav-video-option ul a {
+	display: inline-block;
+}
+.tv-video-cont {
+	position: relative;
+	width: 318px;
+	height: 500px;
+	border: 1px solid #343a40;
+	background-color: #000;
+}
+.tv-video-cont video {
+	max-width: 100%;
+	max-height: 100%;
+}
+#mb-video-lg-display {
+	display: block;
+}
+#mb-video-lg-none {
+    display: none;
+}
+#mb-video-lg-display {
+	width: 318px;
+	margin-left: -5px;
+	border: 1px solid #343a40;
+	border-left: 0;
+}
+#mb-video-lg-display .content-video-tass {
+	background-color: transparent;
+	height: 437px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#mb-video-lg-display .identify-video {
+	border-bottom: 1px solid #343a40;
+	padding: 5px;
+	padding-left: 10px;
+}
+.video-container-component {
+	overflow-y: auto;
+	height: 577px;
+	overflow-x: hidden;
+}
+.text-video-container p {
+	font-size: 13px;
+	color: #fff;
+	padding: 5px;
+}
+.content-video-tass .comment-send-text {
+	width: 82%;
+}
+.content-video-tass .img-user-comment {
+	margin-left: 0;
+}
+.content-video-tass .comment-users {
+    margin-left: 10px;
+}
+.comment-users-tass {
+	height: 318px;
+    overflow-y: auto;
 }

@@ -64,7 +64,7 @@
                         
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="password_login_id">
                         <label for="exampleInputPassword1">Password</label>
                         <input type="password" name="password_login" class="input-text-default input-full input-login" id="exampleInputPassword1" placeholder="password" >
                         <i class="fa fa-eye" id="eye"></i>

@@ -6,11 +6,8 @@ use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Hash;
-
 use App\Http\Controllers\PaginaCasalController;
-
 use Illuminate\Support\Facades\Validator;
 
 /* email */
@@ -1071,6 +1068,17 @@ class AuthController extends Controller
                   'email' => $request->email,
                   'telefone' => $takePhone,
               ]);
+
+              if ($takeEmail != null) {
+                    
+                    $codHugo = random_int(1000,9000);
+                    
+                    dd("entrei no teste email");
+
+                    Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
+
+              }
+
 
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
 
