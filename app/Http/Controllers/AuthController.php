@@ -266,16 +266,15 @@ class AuthController extends Controller
                        $ja_reagiu = array();
                    }
                    //$what_are_talking[$i]['nome_pag'] = $page[$key->page_id - 1]->nome;
-                   $what_are_talking[$i]['post']=$key->descricao;
                    //$what_are_talking[$i]['qtd_likes']= sizeof($likes);
                  //  $what_are_talking[$i]['qtd_comment']=sizeof($comment);
                  //  $what_are_talking[$i]['seguir_S/N']=sizeof($seguidor);
-                   $what_are_talking[$i]['post_id']=$key->post_id;
-                   $what_are_talking[$i]['page_id']= $key->page_id ;
-                   $what_are_talking[$i]['page_uuid']= $page[$key->page_id - 1]->uuid ;
-                   $what_are_talking[$i]['post_uuid']= $key->uuid;
                    //$what_are_talking[$i]['reagir_S/N']=sizeof($ja_reagiu);
                    //$what_are_talking[$i]['guardado?']=sizeof($guardado);
+                   $what_are_talking[$i]['post']=$key->descricao;
+                    $what_are_talking[$i]['page_id']= $key->page_id ;
+                    $what_are_talking[$i]['page_uuid']= $page[$key->page_id - 1]->uuid ;
+                    $what_are_talking[$i]['post_uuid']= $key->uuid;
                    $what_are_talking[$i]['formato']=$key->formato_id;
                    $what_are_talking[$i]['estado_post']=$key->estado_post_id;
                    $what_are_talking[$i]['foto_page']=$page[$key->page_id - 1]->foto;
