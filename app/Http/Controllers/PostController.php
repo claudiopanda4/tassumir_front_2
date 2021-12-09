@@ -17,10 +17,47 @@ class PostController extends Controller
      */
     public function index()
     {
+        $posts = $this->posts();
+        dd($posts);
+        //;
+    }
+    public function posts() {
+        $dados = [];
+        $total_posts = 10;
+        $i = 0;
+        $posts = $this->get_posts();
+        $dados = array();
+        if (sizeof($posts) < 10) {
+            $posts_size = sizeof($posts);
+            //dd($posts);
+            $total_posts = $total_posts - $posts_size;
+            $i = 0;
+            $destaques = $this->destaques($total_posts);
+            $destaques_size = sizeof($destaques);
+            $key = 0;
+            while ($posts_size > 0) {
+                $dados[$i] = $posts[$key];
+                $i++;
+                $posts_size--;
+                $key++;
+            }
+            $key = 0;
+            while ($destaques_size > 0) {
+                if (!in_array($destaques[$key]['post'], $dados)) {
+                    $dados[$i] = $destaques[$key]['post'];
+                    $i++;
+                }
+                $key++;
+                $destaques_size--;
+            }
+        }
+        return $dados;
+    }
+    public function get_posts () {
         DB::beginTransaction();
         try {
             $page_controller = new PageController();
-            $account_id = Auth::id();
+            $account_id = Auth::user()->id;
             $posts_return = array();
             $post_views = array();
             $page_follow = array();
@@ -32,58 +69,55 @@ class PostController extends Controller
             $returns = array();
             $posts_count = DB::select('select post_id from posts');
             $counter = sizeof($posts_count);
-            //dd(sizeof($posts_count));
-            //dd($aux);
+            $check_status_posts = array();
+            $control_posts = 0;
             $post = DB::select('select * from posts limit 1');
             if (sizeof($post) > 0) {
-                $aux1 = $post[0]->post_id - 1;
+                $aux1 = sizeof($post) > 0 ? $post[0]->post_id - 1 : 0;
                 $post_views = DB::select('select * from views limit 1');
-                $aux = $post_views[0]->view_id - 1;
-                while (sizeof($posts_return) < 6 && $counter >= 0) {
-                    $post_views = DB::select('select post_id, conta_id from views where conta_id = ? and view_id > ? limit 4', [$account_id, $aux]);
-                    //dd($post_views);
-                    $posts = DB::select('select * from posts where estado_post_id = ? and post_id > ? limit 4', [1, $aux1]);
-                    $ii = 0;
-                    $key_store;
-                    //dd($posts);
-                    //dd($post_views);
-                    $comparator = array();
-                    foreach ($posts as $key => $value) {
-                        $cont = 0;
-                        $size_post_views = sizeof($post_views);
-                        foreach ($post_views as $key_1 => $value) {
-                            $comparator[$ii] = $posts[$key]->post_id . " != " . $post_views[$key_1]->post_id; 
-                            if ($posts[$key]->post_id != $post_views[$key_1]->post_id) {
-                               $cont++;  
+                $aux = sizeof($post_views) > 0 ? $post_views[0]->view_id - 1 : 0;
+                while ($control_posts < 2 && sizeof($posts_return) < 10) {
+                    while ((sizeof($posts_return) < 10 && $counter >= 0))  {
+                        $post_views = DB::select('select post_id, conta_id from views where conta_id = ? and view_id > ? limit 4', [$account_id, $aux]);
+                        $posts = DB::select('select * from posts where estado_post_id = ? and post_id > ? limit 4', [1, $aux1]);
+                        $ii = 0;
+                        $key_store;
+                        foreach ($posts as $key => $value) {
+                            $cont = 0;
+                            $size_post_views = sizeof($post_views);
+                            $result = $this->view($posts[$key]->post_id, $account_id);
+                            if (!$result) {
+                                if ($control_posts == 0) {
+                                    if (!(in_array($posts[$key], $posts_return)) && $page_controller->following($account_id, $posts[$key]->page_id)) {
+                                        $posts_return[$i] = $posts[$key];
+                                        $i++; 
+                                    }
+                                } elseif ($control_posts == 1) {
+                                    if (!(in_array($posts[$key], $posts_return))) {
+                                        $posts_return[$i] = $posts[$key];
+                                        $i++; 
+                                    }
+                                }
                             }
-                            $comparator[$ii] = $comparator[$ii]." ".$cont; 
-                            $ii++;
+                            $result = !$result;
                         }
-                        //dd($size_post_views." ".$cont);
-                        if ($cont == $size_post_views) {
-                            if (!(in_array($posts[$key], $posts_return)) && $page_controller->following($account_id, $posts[$key]->page_id)) {
-                                //dd();
-                                $posts_return[$i] = $posts[$key];
-                                $i++; 
-                            }
-                        }
+                        $auxs[$iii] = $aux.' '.$aux1.' size off '.sizeof($posts_return).' '.$counter;
+                        $aux = $aux + 4;   
+                        $aux1 = $aux1 + 4;     
+                        $counter--;
+                        $iii++;
                     }
-                    //dd($comparator);
-                    //dd($counter);
-                    $auxs[$iii] = $aux.' '.$aux1.' size off '.sizeof($posts_return).' '.$counter;
-                    $aux = $aux + 4;   
-                    $aux1 = $aux1 + 4;     
-                    $counter--;
-                    $iii++;
+                    if (sizeof($posts_return) < 10 && $control_posts < 2) {
+                        $counter = sizeof($posts_count);
+                        $aux = 0;
+                        $aux1 = 0;
+                    }
+                    $control_posts++;
                 } 
-                //dd($auxs);
-                //dd($returns);
-                dd($posts_return);
-                $post = DB::select('select * from posts where estado_post_id = ?', [1]);
-                //dd($post);
+                //dd($posts_return);
             }
             DB::commit();
-            //return $return_video;
+            return $posts_return;
         } catch (Exception $e) {
             DB::rollback();
         }
@@ -93,6 +127,11 @@ class PostController extends Controller
     }
     public function posts_no(){
         
+    }
+    public function view($post_id, $account_id){
+        $post_views = DB::select('select post_id, conta_id from views where conta_id = ? && post_id = ? limit 1', [$account_id, $post_id]);
+        $return = sizeof($post_views) > 0 ? true : false;
+        return $return;
     }
     /**
      * Show the form for creating a new resource.
@@ -162,31 +201,21 @@ class PostController extends Controller
             $i++;
         }
         $i = 0;
-        $comparator = array();
-        $comparator1 = array();
-        $order = array();
-        //dd($destaques);
         $numb_destaques = 0;
         while ($i < sizeof($destaques)) {
             $ii = $i + 1;
             while ($ii < sizeof($destaques) ) {
-                $comparator[$i][$ii] = $destaques[$i]['reactions'].' '.$destaques[$ii]['reactions'];
                 if ($destaques[$i]['reactions'] < $destaques[$ii]['reactions']) {
                     $aux = $destaques[$ii];
                     $destaques[$ii] = $destaques[$i];
                     $destaques[$i] = $aux;
                 }
-                $comparator1[$i][$ii] = $destaques[$i]['reactions'].' '.$destaques[$ii]['reactions'];
                 $ii++;
             }
             $i++;
         }
-        $comparator_totat = [
-            'comparator' => $comparator,
-            'comparator1' => $comparator1,
-            'destaques' => $destaques,
-        ];
-        dd($destaques);
+        //dd($destaques);
+        return $destaques;
     }
 
     public function view_post(Request $request)

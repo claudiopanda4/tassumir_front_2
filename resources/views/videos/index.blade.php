@@ -61,7 +61,7 @@
                             </ul>
                         </div>
                 </div>
-                <div class="text-video-container">
+                <div class="text-video-container" id="text-video-container-mobile">
                     <p>Olá amigos, tudo bem...</p>
                 </div>
                 <div class="l-5 tv-video-cont">
@@ -101,7 +101,7 @@
                     </div>   
                     <div class="content-video-tass">
                         <div>
-                            <div class="text-video-container">
+                            <div class="text-video-container" id="text-video-container-lg">
                                 <p>Olá amigos, tudo bem...</p>
                             </div>    
                             <div class="comment-users-tass">
@@ -126,6 +126,53 @@
                                 </div>
                             </div>
                         </div>
+                        <nav class="row interaction-numbers">
+                            <ul class="">
+                                <li>
+                                    <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-8d9c28df-cc82-4741-a2ec-cf830b9e3d7c">1 reacções</a>
+                                </li>
+                                <li>
+                                    <?php $uuid = 'f44de45f-332c-40bd-aa1a-ac74b3cf1dbc'; ?>
+                                    <a href="{{route('post_index', $uuid)}}?time_video=1.23" id="comment-qtd-1">0 comentários</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <nav class="row clearfix interaction-user">
+                            <ul class="row clearfix ul-interaction-user">
+                                <li class="l-5">
+                                    <div class="content-button">
+                                        <a href="" class="like-a" id="on|8d9c28df-cc82-4741-a2ec-cf830b9e3d7c">
+                                                                                <i class="far fa-heart center fa-16 unliked" id="off|8d9c28df-cc82-4741-a2ec-cf830b9e3d7c|i"></i>
+                                            <h2 id="off|8d9c28df-cc82-4741-a2ec-cf830b9e3d7c|h2">Like</h2>
+                                                                            </a>
+                                    </div>
+                                </li>
+                                <li class="l-5">
+                                    <div class="content-button comment-send-post" id="comment-1">
+                                        <a href="" id="comment_a-1">
+                                            <i class="far fa-comment-alt center fa-16" id="comment_i-1"></i>
+                                            <h2>Comentar</h2>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="r-5">
+                                    <div class="content-button">
+                                        <a href="">
+                                            <i class="far fa-share-square fa-16"></i>
+                                            <h2>Partilhar</h2>
+                                        </a>
+                                    </div>
+                                </li>
+                                                        <li class="r-5" id="savepost-1">
+                                    <div class="content-button">
+                                        <a href="" class="savepost" id="savepost-1">
+                                            <i class="far fa-bookmark center fa-16" id="savepost-1"></i>
+                                            <h2 id="savepost-1">Guardar</h2>
+                                        </a>
+                                    </div>
+                                </li>
+                                                      </ul>
+                        </nav>
                         <div class="comment-send clearfix" id="comment-send-1">
                             <div class="img-user-comment l-5">
                                 <img class="img-full circle" src="http://127.0.0.1:8000/storage/img/users/1638350961_55d3cdb3eb265700cf0dbd4b1d782125.jpg">

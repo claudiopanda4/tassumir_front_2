@@ -37,6 +37,9 @@
 	#statistics-profile-page-component-container-lg-1 {
 		width: 230px;
 	}
+	.card-post p {
+		margin-left: 0;
+	}
 }
 @media screen and (max-width: 540px) {
 	#title-login {
@@ -501,6 +504,22 @@
     }
     .comment-users-tass {
 		height: auto;
+		display: none;
+	}
+	#text-video-container-mobile {
+		display: block;
+	}
+	#text-video-container-lg {
+		display: none;
+	}
+	#mb-video-lg-display {
+		width: 100%;
+	}
+	#mb-video-lg-display .content-video-tass {
+	    height: auto;
+	}
+	.video-container-component {
+		margin-top: 0px;
 	}
 	::-webkit-scrollbar {
 		width: 0px;
@@ -531,6 +550,7 @@
     }
     #mb-video-lg-display {
     	border: none;
+    	background-color: transparent;
     }
     #mb-video-lg-none {
     	display: block;
@@ -1011,6 +1031,9 @@
 		border: none;
 		border-radius: 0;
 		border-top: 1px solid #343a40;
+	}
+	.video-container {
+	    margin-bottom: 10px;
 	}
 	.tv-video-cont {
 	    height: 417px;

@@ -24,7 +24,7 @@
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
 
-<body class="container-main">
+<body class="container-main" id="container-main-tv">
     <div class="body-pop-up content-full-scroll">
         <header class="header-main header-main-component clearfix">
             <ul class="ul-left clearfix">
@@ -236,11 +236,11 @@
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix">
-                <li class="li-component-aside li-component-aside-active"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('account.home')}}">Mais Assistidos</a></li>
-                <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}?post-container-post=saved">Mais Curtidos</a></li>
-                <li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Mais Recentes</a></li>
-                <li class="li-component-aside"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Mais Comentados</a></li>
-                <li class="li-component-aside"><i class="far fa-play-circle fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Videos Guardados</a></li>
+                <li class="li-component-aside li-component-aside-active"><i class="fas fa-eye fa-20 fa-icon-aside-left"></i><a href="{{route('account.home')}}">Mais Assistidos</a></li>
+                <li class="li-component-aside"><i class="far fa-heart fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}?post-container-post=saved">Mais Curtidos</a></li>
+                <li class="li-component-aside"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Mais Recentes</a></li>
+                <li class="li-component-aside"><i class="far fa-comment fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Mais Comentados</a></li>
+                <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Videos Guardados</a></li>
             </ul>
         </nav>
     </aside>
@@ -250,65 +250,6 @@
     </main>
     </div>
 </body>
-<form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
-@csrf
-<input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
-<input type="checkbox" name="" id="add-post-target" class="invisible">
-<div class="pop-up" id="add-post-container">
-    <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
-        <header class="pop-up-component-header pop-up-component-header-default header-height">
-            <h1>Criar Publicação</h1>
-            <div class="container-pop-up-component-header">
-                <label for="target-profile-cover">
-                    <div class="cancel-box div-img">
-                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
-                    </div>
-                </label>
-            </div>
-        </header>
-       <!-- <form enctype="multipart/form-data">-->
-            <div class="header-height"></div>
-            <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
-                <div class="first-component clearfix l-5">
-                    @if($page_content[0]->foto)
-                        <div class="page-cover circle l-5">
-                            <img class="img-full circle" src="{{asset('storage/img/page/' . $page_content[0]->foto)}}">
-                        </div>
-                    @else
-                        <div class="page-cover circle l-5">
-                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                        </div>
-                    @endif
-                    <div class="page-identify l-5 clearfix">
-                        <h1 class="text-ellips">{{ $page_content[0]->nome }}</h1>
-                    </div>
-                </div>
-                <div class="textarea-container l-5" style="width:100%;">
-                    <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
-                </div>
-                <nav class="add-file l-5 clearfix" style="margin-bottom: 0;">
-                    <ul style="width: 160px;" class="r-5">
-                        <label for="target-profile-cover-post">
-                            <li class="circle add-file-element">
-                                <i class="far fa-images fa-20 center"></i>
-                            </li>
-                        </label>
-                        <label for="target-profile-cover-post">
-                            <li class="circle add-file-element">
-                                <i class="far fa-play-circle fa-20 center"></i>
-                            </li>
-                        </label>
-                    </ul>
-                </nav>
-            </div>
-            <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
-                <div class="" id="cover-done">
-                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Publicar</button>
-                </div>
-            </div>
-        <!-- </form> -->
-    </div>
-</div>
 <script type="text/javascript">
 </script>
 </html>
