@@ -49,19 +49,12 @@
                 </header>
                 <form action="{{ route('account.login.enter') }}" method="POST" >
                     @csrf
-                     
-
                     <div class="form-group">
-
-
                         <label for="exampleInputPassword1">Número ou Email</label>
                         <input class="input-text-default input-full input-login" name="number_email_login" type="text" placeholder="email ou telefone" >
-
                         @error('number_email_login')
-
                             <span style="color: red;">{{$message}}</span>
                         @enderror
-                        
                     </div>
 
                     <div class="form-group" id="password_login_id">

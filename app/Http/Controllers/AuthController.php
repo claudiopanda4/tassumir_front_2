@@ -363,9 +363,12 @@ class AuthController extends Controller
                 //=========================Terminem Aqui----------- Depois põe estas variáveis no compact 'dadosSeguida', 'dadosSeguindo', 'dadosPage'
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
-
+      $post_controller = new PostController();
       $post= DB::table('posts')->limit(7)->get();
-      $page= DB::table('pages')->get();
+      //dd($post);
+      $post = $post_controller->posts();
+      //dd($post);
+      $page = DB::table('pages')->get();
       $a=0;
 
       $dados = array();
@@ -454,7 +457,7 @@ class AuthController extends Controller
       //--------------------------------------------------------------------------------------------o que estão falando --------------------------------------------------------------
       $what_are_talking = $this->Destacados();
 
-
+      //dd($dados);
         return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
     }
