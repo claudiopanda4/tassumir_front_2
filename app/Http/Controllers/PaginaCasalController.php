@@ -57,13 +57,15 @@ class PaginaCasalController extends Controller
          $PS[$a]['nome']=$key->nome;
          $aux3= DB::select('select * from seguidors where identificador_id_seguida = ?', [$aux1[0]->identificador_id]);
          $PS[$a]['qtdseg']=sizeof($aux3);
-         $PS[$a]['id']=$conta[0]->conta_id;
          $a++;
        }
+
+       $v[0]['id']=$conta[0]->conta_id;
+
      }
 
 
-        return view('pagina.couple_page_following', compact('account_name','PS','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
+        return view('pagina.couple_page_following', compact('account_name','v','PS','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
     }
 
     public function index(){
