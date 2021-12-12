@@ -3,37 +3,41 @@
 @section('content')
 <div class="main" id="my-pages">
     <header class="card br-10 stories stories-about-talking">
-                
+
     </header>
     <div class="card br-10">
         <nav>
+          @if($PS[0]['id'] == $conta_logada[0]->conta_id)
             <h1 class="title">Casais que eu sigo</h1>
+            @else
+            <h1 class="title">Casais que sigue</h1>
+            @endif
             <ul>
 
-                @foreach($allUserPages as $key => $page)
+                @foreach($PS as $key => $page)
 
                     <li class="li-component-aside-right clearfix li-my-page">
-                        @if(!($page_content[$key]->foto == null) && ($page['page_uuid'] == $page_content[$key]->uuid) ))
+                        @if(!($page['foto'] == null) )
                             <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $page_content[$key]->foto }}">
+                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $page['foto'] }}">
                             </div>
                         @else
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                             </div>
                         @endif
-                        <a href="{{ route('couple.page1', $page['page_uuid']) }}"><h1 class="l-5 name-page text-ellips"> {{ $page['page_name'] }} </h1></a>
+                        <a href="{{ route('couple.page1', $page['uuid']) }}"><h1 class="l-5 name-page text-ellips"> {{ $page['nome'] }} </h1></a>
 
-                        @if($page['seguidores'] > 1)
-                            <h2 class="l-5 text-ellips"> {{ $page['seguidores'] }} seguidores</h2>
+                        @if($page['qtdseg'] > 1)
+                            <h2 class="l-5 text-ellips"> {{ $page['qtdseg'] }} seguidores</h2>
                         @else
-                            <h2 class="l-5 text-ellips"> {{ $page['seguidores'] }} seguidor</h2>
+                            <h2 class="l-5 text-ellips"> {{ $page['qtdseg'] }} seguidor</h2>
                         @endif
                         <!-- <a href="" class="l-5">seguir</a> -->
                     </li>
                 @endforeach
             </ul>
         </nav>
-    </div>    
+    </div>
 </div>
 @stop

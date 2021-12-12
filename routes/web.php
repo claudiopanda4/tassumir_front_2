@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/reject_relationship', [App\Http\Controllers\PaginaCasalController::class, 'reject_relationship'])->name('reject_relationship');
     Route::get('/tconfirm', [App\Http\Controllers\PaginaCasalController::class, 'tconfirm'])->name('tconfirm');
     Route::get('/seguir', [App\Http\Controllers\AuthController::class, 'seguir'])->name('seguir');
-    Route::get('/oque_estao_falando', [App\Http\Controllers\AuthController::class, 'oque_estao_falando'])->name('oque_estao_falando');
+    Route::get('/oque_estao_falando', [App\Http\Controllouplcers\AuthController::class, 'oque_estao_falando'])->name('oque_estao_falando');
     Route::get('/delete_post', [App\Http\Controllers\AuthController::class, 'delete_post'])->name('delete_post');
     Route::get('/ocultar_post', [App\Http\Controllers\AuthController::class, 'ocultar_post'])->name('ocultar_post');
     Route::get('/post_index/{id}', [App\Http\Controllers\AuthController::class, 'post_index'])->name('post_index');
@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/profileC/{id}', [App\Http\Controllers\PerfilController::class, 'perfil_das_contas'])->name('account1.profile');
     Route::get('/profile/{perfil}', [App\Http\Controllers\PerfilController::class, 'edit'])->name('account.profile.edit');
 
+    Route::get('/paginas_que_sigo/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas_que_sigo'])->name('paginas_que_sigo.page');
 
     Route::get('/couple_page/', [App\Http\Controllers\PaginaCasalController::class, 'index'])->name('couple.page');
     Route::get('/my_pages/', [App\Http\Controllers\PaginaCasalController::class, 'my_pages'])->name('couple.page.mine');
