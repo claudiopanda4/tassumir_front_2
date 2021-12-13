@@ -16,6 +16,7 @@ class PaginaCasalController extends Controller
     private static $uuid = '';
 
     public function index(){
+
       $page_couple = new PerfilController();
       $dates = $page_couple->default_();
       $account_name = $dates['account_name'];
@@ -27,8 +28,8 @@ class PaginaCasalController extends Controller
       $page_content = $dates['page_content'];
       $conta_logada = $dates['conta_logada'];
       $notificacoes = $dates['notificacoes'];
-      $dadosSeguindo = $dates['dadosSeguindo'];
-      $dadosPage = $dates['dadosPage'];
+      $paginasSeguidas = $dates['paginasSeguidas'];
+      $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
       $dadosSeguida = $dates['dadosSeguida'];
       $notificacoes_count = $dates['notificacoes_count'];
 
@@ -44,7 +45,7 @@ class PaginaCasalController extends Controller
       $sugerir = $this->suggest_pages($page_content[0]->page_id);
       $allPosts = $this->get_post_types($page_content[0]->page_id);
 $v=1;
-        return view('pagina.couple_page', compact('account_name','v','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
+        return view('pagina.couple_page', compact('account_name','v','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'paginasSeguidas', 'dadosSeguida', 'paginasNaoSeguidas', 'allPosts', 'sugerir'));
     }
 
     public function conf_PR(Request $request)
@@ -123,8 +124,8 @@ $v=1;
           $conta_logada = $dates['conta_logada'];
           $notificacoes = $dates['notificacoes'];
           $notificacoes_count = $dates['notificacoes_count'];
-          $dadosSeguindo = $dates['dadosSeguindo'];
-          $dadosPage = $dates['dadosPage'];
+          $paginasSeguidas = $dates['paginasSeguidas'];
+          $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
           $dadosSeguida = $dates['dadosSeguida'];
           $page_current = 'relationship_request';
 
@@ -141,7 +142,7 @@ $v=1;
           $notificacoes_aux=DB::select('select * from notifications where (identificador_id_receptor,id_action_notification,identificador_id_destino) = (?,?,?)', [$aux1[0]->identificador_id, 10, $aux2[0]->identificador_id]);
           $pedido[0]['not']=$notificacoes_aux[0]->notification_id ;
         }
-                    return view('relacionamento.index', compact('account_name','notificacoes_count', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
+                    return view('relacionamento.index', compact('account_name','notificacoes_count', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'paginasSeguidas', 'paginasNaoSeguidas', 'dadosSeguida',));
       }
 
     public function request_relationship() {
@@ -156,9 +157,9 @@ $v=1;
         $conta_logada = $dates['conta_logada'];
         $notificacoes = $dates['notificacoes'];
         $notificacoes_count = $dates['notificacoes_count'];
-        $dadosSeguindo = $dates['dadosSeguindo'];
-        $dadosPage = $dates['dadosPage'];
         $dadosSeguida = $dates['dadosSeguida'];
+        $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
+        $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
         $page_current = 'relationship_request';
         //return view('relacionamento.index', compact('account_name', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
 
@@ -166,7 +167,7 @@ $v=1;
         /*siene*/ //$casalPageName = $this->get_casalPage_name($page_content);
         //return view('relacionamento.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida', ));
 
-        return view('relacionamento.index', compact('account_name','notificacoes_count', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
+        return view('relacionamento.index', compact('account_name','notificacoes_count', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'paginasNaoSeguidas', 'paginasNaoSeguidas', 'dadosSeguida',));
 
     }
     public function default_(){
@@ -302,36 +303,15 @@ $v=1;
                  }
                }
                }
-               $dadosPage = DB::table('pages')->limit(5)->get();
 
-                 $dadosSeguindo[0] = [
-                                   'id_seguidor' => 0,
-                                   'identificador_id_seguida' => 0,
-                                   'identificador_id_seguindo' => 0,
-                                   'id' => 0];
-                  $dadosSeguida = DB::table('seguidors')
-                   ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
-                   ->select('seguidors.*', 'identificadors.id')
-                   ->get();
+               $authctrol = new AuthController;
+            $paginasSeguidas = $authctrol->paginasSeguidas();
+            $paginasNaoSeguidas = $authctrol->paginasNaoSeguidas();
+            $dadosSeguida = DB::table('seguidors')
+             ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+             ->select('seguidors.*', 'identificadors.id')
+             ->get();
 
-                   $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-
-                   $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $dadosSgndo[0]->identificador_id)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
-                   ->select('seguidors.*', 'identificadors.id')
-                   ->get();
-
-                   $tt = 0;
-                   foreach ($dadoSeguindo as $valor1) {
-                       if ($valor1->id == $account_name[0]->conta_id) {
-                               $key = 0;
-                               $dadosSeguindo[$key] = [
-                                   'id_seguidor' => $valor1->seguidor_id,
-                                   'identificador_id_seguida' => $valor1->identificador_id_seguida,
-                                   'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
-                                   'id' => $valor1->id,
-                                   ];
-                           }
-                       }
                $dates = [
                    "account_name" => $account_name,
                    "checkUserStatus" => $checkUserStatus,
@@ -342,9 +322,9 @@ $v=1;
                    "page_content" => $page_content,
                    "checkUserStatus" => $checkUserStatus,
                    "conta_logada" => $conta_logada,
-                   "dadosSeguindo" => $dadosSeguindo,
+                   "paginasNaoSeguidas" => $paginasSeguidas,
                    "dadosSeguida" => $dadosSeguida,
-                   "dadosPage" => $dadosPage,
+                   "paginasNaoSeguidas" => $paginasNaoSeguidas,
                    "notificacoes" => $notificacoes,
                    "notificacoes_count" => $notificacoes_count,
                ];
@@ -380,30 +360,12 @@ $v=1;
                   $page_content = $dates['page_content'];
                   $conta_logada = $dates['conta_logada'];
                   $notificacoes = $dates['notificacoes'];
-                  $dadosSeguindo = $dates['dadosSeguindo'];
-                  $dadosPage = $dates['dadosPage'];
+                  $paginasSeguidas = $dates['paginasSeguidas'];
+                  $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
                   $dadosSeguida = $dates['dadosSeguida'];
                   $page_current = 'relationship_request';
                   $notificacoes_count = $dates['notificacoes_count'];
-                  $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-
-                        foreach ($dadosSgndo as $value) {
-                            $valor = $value->identificador_id;
-                        }
-
-
-                        $tt = 0;
-                        foreach ($dadoSeguindo as $valor1) {
-                            if ($valor1->id == $account_name[0]->conta_id) {
-                                    $key = 0;
-                                    $dadosSeguindo[$key] = [
-                                        'id_seguidor' => $valor1->seguidor_id,
-                                        'identificador_id_seguida' => $valor1->identificador_id_seguida,
-                                        'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
-                                        'id' => $valor1->id,
-                                        ];
-                                }
-                            }
+                  
                     $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
 
                     $seguidores = Self::seguidores($page_content[0]->page_id);
@@ -423,7 +385,7 @@ $v=1;
                     //return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir',));
 
 
-                    return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
+                    return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir'));
 
             //        return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
@@ -449,35 +411,10 @@ $v=1;
           $conta_logada = $dates['conta_logada'];
           $notificacoes = $dates['notificacoes'];
           $notificacoes_count = $dates['notificacoes_count'];
-          $dadosSeguindo = $dates['dadosSeguindo'];
-          $dadosPage = $dates['dadosPage'];
+          $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
+          $paginasSeguidas = $dates['paginasSeguidas'];
           $dadosSeguida = $dates['dadosSeguida'];
           $page_current = 'relationship_request';
-            $dadosPage = Page::all();
-
-
-            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-
-            foreach ($dadosSgndo as $value) {
-                $valor = $value->identificador_id;
-            }
-
-            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
-            ->select('seguidors.*', 'identificadors.id')
-            ->get();
-
-            $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {
-                if ($valor1->id == $account_name[0]->conta_id) {
-                        $key = 0;
-                        $dadosSeguindo[$key] = [
-                            'id_seguidor' => $valor1->seguidor_id,
-                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
-                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
-                            'id' => $valor1->id,
-                            ];
-                    }
-                }
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $seguidores = Self::seguidores($page_content[0]->page_id);
             $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
@@ -497,7 +434,7 @@ $v=1;
 
             //return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts',));
 
-            return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes_count','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts'));
+            return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes_count','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'sugerir', 'allPosts'));
 
         } catch (Exception $e) {
             dd($e);
@@ -529,8 +466,8 @@ $v=1;
           $conta_logada = $dates['conta_logada'];
           $notificacoes_count = $dates['notificacoes_count'];
           $notificacoes = $dates['notificacoes'];
-          $dadosSeguindo = $dates['dadosSeguindo'];
-          $dadosPage = $dates['dadosPage'];
+          $paginasSeguidas = $dates['paginasSeguidas'];
+          $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
           $dadosSeguida = $dates['dadosSeguida'];
           $page_current = 'relationship_request';
 
@@ -540,29 +477,7 @@ $v=1;
 
         //***************** fim ********************//
 
-            $dadosPage = Page::all();
-            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
 
-            foreach ($dadosSgndo as $value) {
-                $valor = $value->identificador_id;
-            }
-
-            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
-            ->select('seguidors.*', 'identificadors.id')
-            ->get();
-
-            $tt = 0;
-            foreach ($dadoSeguindo as $valor1) {
-                if ($valor1->id == $account_name[0]->conta_id) {
-                        $key = 0;
-                        $dadosSeguindo[$key] = [
-                            'id_seguidor' => $valor1->seguidor_id,
-                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
-                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
-                            'id' => $valor1->id,
-                            ];
-                    }
-                }
           $page_content = $this->page_default_date($account_name);
           $page_current = 'page';
           $page_content = DB::select('select * from pages where uuid = ?', [
@@ -593,7 +508,7 @@ $v=1;
 
           //return view('pagina.couple_page', compact('account_name','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts', 'casalPageName', 'uuidToCompare'));
 
-          return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts', 'casalPageName'));
+          return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'sugerir', 'allPosts', 'casalPageName'));
 
         } catch (Exception $e) {
             dd($e);

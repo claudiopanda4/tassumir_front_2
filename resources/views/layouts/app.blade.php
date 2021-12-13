@@ -314,9 +314,8 @@
             <header>
                 <h1>Páginas que eu sigo</h1>
             </header>
-            <ul class="">
-                <?php if ($dadosSeguindo[0]['id'] ==  $conta_logada[0]->conta_id): ?>
-                @forelse($dadosPage as $Paginas)
+            <ul class="" id="pageseguida">
+                @forelse($paginasSeguidas as $Paginas)
                 <?php
                 $seguidors = 0;
                 foreach ($dadosSeguida as  $val){
@@ -325,10 +324,7 @@
                         }
                     }
                 ?>
-
-                    @forelse($dadosSeguida as $Seguida)
-                        <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
-                        <li class="li-component-aside-right clearfix" id="seguida-{{$Seguida->identificador_id_seguida}}">
+                        <li class="li-component-aside-right clearfix sigo" id="seguida-{{$Paginas->page_id}}">
                         @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
@@ -341,28 +337,56 @@
                             <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                             <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
-                            <a href="" class="nao_seguir">não seguir</a>
-                            <input type="hidden" id="seguida" value="{{ $Seguida->identificador_id_seguida }}" name="">
+                            <a href="" class="nao_seguir" id="a-{{$Paginas->page_id}}">não seguir</a>
+                            <input type="hidden" id="npage_id" value="{{$Paginas->page_id}}" name="">
 
-                            <input type="hidden" id="seguindo" value="{{ $Seguida->identificador_id_seguindo }}" name="">
-
-                            <input type="hidden" id="npage_id" value="{{ $account_name[0]->conta_id }}" name="">
+                            <input type="hidden" id="seguindo" value="{{ $account_name[0]->conta_id }}" name="">
                            <?php
                            /*echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";*/?>
                         </li>
-                        <?php endif ?>
-                    @empty
-                    @endforelse
+                        
                 @empty
-                <li class="li-component-aside-right clearfix">
-                <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
-                </li>
-                @endforelse
-            <?php else: ?>
                 <li class="li-component-aside-right clearfix">
                 <h1 class="l-5 name-page text-ellips">Nenhuma Página Seguida</h1>
                 </li>
-            <?php endif ?>
+              @endforelse
+              <script type="text/javascript">
+            function naoseguir(e){
+            e.preventDefault();
+            var valor_seguida = e.target.id.split('-')[1];
+             var valor_seguindo = $('#seguindo').val()
+             var id_last_page = $('.sigo').eq(2).attr("id").split('-')[1];
+             alert(id_last_page);
+             alert('User: '+valor_seguindo);
+             alert('Página: '+valor_seguida);
+
+             var npage_id = $('#npage_id').val();
+             $('#seguida-' + valor_seguida).remove();
+
+             $.ajax({
+                url: "{{route('nao.seguir.seguindo')}}",
+                type: 'get',
+                data: {'seguindo': valor_seguindo, 'seguida': valor_seguida, 'last_page': id_last_page},
+                dataType: 'json',
+                success: function(response){
+                  console.log(response.page);
+                  console.log(response.seguidores);
+                  $('.seguir-' + npage_id).show();
+                  if (response.page != 'Vazio') {
+                  $.each(response.page, function(key, value){
+                    if (value.foto == null) {
+                        let src = "{{asset('storage/img/page/unnamed.jpg')}}";
+                  $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''><input type='hidden' id='seguindo' value="+response.id_user+" name=''></li>");
+                    }else{
+                        let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''><input type='hidden' id='seguindo' value="+response.id_user+" name=''></li>");
+                    }
+                    });
+                }
+              }
+          });
+        }
+              </script>
             </ul>
             <footer class="clearfix">
                 <a href="" class="r-5">Ver Todas</a>
@@ -372,9 +396,9 @@
             <header>
                 <h1>Sugestões para Você</h1>
             </header>
-            <ul class="segest">
+            <ul id="pagenaoseguida" class="segest">
 
-             @forelse($dadosPage as $Paginas)
+             @forelse($paginasNaoSeguidas as $Paginas)
                 <?php $conta_page = 0;
                  $verifica1 = 'A';
                  $verifica = 'B';
@@ -389,53 +413,7 @@
                         }
                     }
                 ?>
-                @forelse($dadosSeguida as $Seguida)
-               <?php $tamanho = sizeof($dadosSeguida);?>
-                <?php if ($Paginas->page_id == $Seguida->id) : ?>
-                        <?php if ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo) : ?>
-                                <?php $verifica1 = $Paginas->nome;?>
-                            <?php else: ?>
-                                <?php $verifica = $Paginas->nome;?>
-                            <?php endif ?>
-                 <?php else: ?>
-                      <?php $conta_page += 1;?>
-                <?php endif ?>
-                    @empty
-                    @endforelse
-                    <?php if (($verifica1 != $verifica)  ) : ?>
-                        <?php if (($verifica != 'B')  ) : ?>
-                        <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
-                        @if( !($Paginas->foto == null) )
-                            <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
-                            </div>
-                        @else
-                            <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                            </div>
-                        @endif
-                        <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
-                        <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
-
-                       <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>
-
-                       <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-
-                      <?php /* echo"
-                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
-                                */?>
-
-                            </li>
-
-
-
-                            <?php endif ?>
-
-                    <?php else: ?>
-
-                    <?php endif ?>
-                    <?php if (($conta_page == $tamanho)  ) : ?>
-                        <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
+                <li class="li-component-aside-right clearfix nao_sigo" id="li-component-sugest-{{$Paginas->page_id}}">
                         @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
@@ -456,14 +434,8 @@
                                 */?>
 
                             </li>
-
-                      <?php else: ?>
-
-                    <?php endif ?>
                 @empty
-                <li class="li-component-aside-right clearfix">
-                <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
-                </li>
+
                 @endforelse
             </ul>
             <footer class="clearfix">
@@ -1060,35 +1032,67 @@
         $('.seguir').click(function(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
-             var valor_idconta = $('#conta_id').val();
+            var valor_idconta = $('#conta_id').val();
+            if (($('.nao_sigo').eq(2).attr("id")) == null) {
+                var id_last_page = 0;
+            }else{
+               var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];
+            }
              $('#li-component-sugest-' + valor_pagina_id).remove();
              $('#li-component-suggest-' + valor_pagina_id).remove();
              $('.seguir-' + valor_pagina_id).hide();
+             alert(id_last_page)
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
-                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id},
+                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id, 'last_page': id_last_page},
                 dataType: 'json',
                 success: function(response){
-                  console.log(response);
+                    if (response.page != 'Vazio') {
+                  $.each(response.page, function(key, value){
+                    if (value.foto == null) {
+                        let src = "{{asset('storage/img/page/unnamed.jpg')}}";
+                  $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''><input type='hidden' id='seguindo' value="+response.id_user+" name=''></li>");
+                    }else{
+                        let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''><input type='hidden' id='seguindo' value="+response.id_user+" name=''></li>");
+                    }
+                    });
+                }
                 }
               });
-
         })
+
         $('.nao_seguir').click(function(e){
             e.preventDefault();
-            var valor_seguida = $('#seguida').val();
+            var valor_seguida = e.target.id.split('-')[1];
              var valor_seguindo = $('#seguindo').val()
+             if (($('.sigo').eq(2).attr("id")) == null) {
+                var id_last_page = 0;
+            }else{
+               var id_last_page = $('.sigo').eq(2).attr("id").split('-')[1];
+            }
              var npage_id = $('#npage_id').val();
              $('#seguida-' + valor_seguida).remove();
+             alert(id_last_page)
              $.ajax({
                 url: "{{route('nao.seguir.seguindo')}}",
                 type: 'get',
-                data: {'seguindo': valor_seguindo, 'seguida': valor_seguida},
+                data: {'seguindo': valor_seguindo, 'seguida': valor_seguida, 'last_page': id_last_page},
                 dataType: 'json',
                 success: function(response){
-                  console.log(response);
                   $('.seguir-' + npage_id).show();
+                   if (response.page != 'Vazio') {
+                  $.each(response.page, function(key, value){
+                    if (value.foto == null) {
+                        let src = "{{asset('storage/img/page/unnamed.jpg')}}";
+                  $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''><input type='hidden' id='seguindo' value="+response.id_user+" name=''></li>");
+                    }else{
+                        let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''><input type='hidden' id='seguindo' value="+response.id_user+" name=''></li>");
+                    }
+                    });
+                }
                 }
               });
 

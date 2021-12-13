@@ -162,39 +162,14 @@ class PerfilController extends Controller
            }
          }
          }
-         $dadosPage = DB::table('pages')->limit(5)->get();
-           $dadosSeguindo[0] = [
-                             'id_seguidor' => 0,
-                             'identificador_id_seguida' => 0,
-                             'identificador_id_seguindo' => 0,
-                             'id' => 0];
+            $authctrol = new AuthController;
+            $paginasSeguidas = $authctrol->paginasSeguidas();
+            $paginasNaoSeguidas = $authctrol->paginasNaoSeguidas();
             $dadosSeguida = DB::table('seguidors')
              ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
              ->select('seguidors.*', 'identificadors.id')
              ->get();
 
-             $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-
-             foreach ($dadosSgndo as $value) {
-                 $valor = $value->identificador_id;
-             }
-
-             $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
-             ->select('seguidors.*', 'identificadors.id')
-             ->get();
-
-             $tt = 0;
-             foreach ($dadoSeguindo as $valor1) {
-                 if ($valor1->id == $account_name[0]->conta_id) {
-                         $key = 0;
-                         $dadosSeguindo[$key] = [
-                             'id_seguidor' => $valor1->seguidor_id,
-                             'identificador_id_seguida' => $valor1->identificador_id_seguida,
-                             'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
-                             'id' => $valor1->id,
-                             ];
-                     }
-                 }
          $dates = [
              "account_name" => $account_name,
              "checkUserStatus" => $checkUserStatus,
@@ -205,9 +180,9 @@ class PerfilController extends Controller
              "page_content" => $page_content,
              "checkUserStatus" => $checkUserStatus,
              "conta_logada" => $conta_logada,
-             "dadosSeguindo" => $dadosSeguindo,
+             "paginasSeguidas" => $paginasSeguidas,
              "dadosSeguida" => $dadosSeguida,
-             "dadosPage" => $dadosPage,
+             "paginasNaoSeguidas" => $paginasNaoSeguidas,
              "notificacoes" => $notificacoes,
              "notificacoes_count" => $notificacoes_count,
          ];
@@ -230,24 +205,19 @@ class PerfilController extends Controller
             $conta_logada = $dates['conta_logada'];
             $notificacoes = $dates['notificacoes'];
             $notificacoes_count = $dates['notificacoes_count'];
-            $dadosSeguindo = $dates['dadosSeguindo'];
-            $dadosPage = $dates['dadosPage'];
+            $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
+            $paginasSeguidas = $dates['paginasSeguidas'];
             $dadosSeguida = $dates['dadosSeguida'];
             $this->active_account_id = $account_name[0]->conta_id;
             //---------------------------------------------------------------------
-            $dadosPage = DB::table('pages')->limit(5)->get();
+             $authctrol = new AuthController;
+            $paginasSeguidas = $authctrol->paginasSeguidas();
+            $paginasNaoSeguidas = $authctrol->paginasNaoSeguidas();
+             $dadosSeguida = DB::table('seguidors')
+             ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+             ->select('seguidors.*', 'identificadors.id')
+             ->get();
 
-            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-
-            foreach ($dadosSgndo as $value) {
-                $valor = $value->identificador_id;
-            }
-
-            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
-            ->select('seguidors.*', 'identificadors.id')
-            ->get();
-
-            $tt = 0;
 
 
               $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
@@ -343,7 +313,7 @@ class PerfilController extends Controller
               //dd($account_name);
 
 
-              return view('perfil.index', compact('account_name','notificacoes_count', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+              return view('perfil.index', compact('account_name','notificacoes_count', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
 
 
         } catch (Exception $e) {
@@ -366,21 +336,10 @@ class PerfilController extends Controller
             $conta_logada = $dates['conta_logada'];
             $notificacoes = $dates['notificacoes'];
             $notificacoes_count = $dates['notificacoes_count'];
-            $dadosSeguindo = $dates['dadosSeguindo'];
-            $dadosPage = $dates['dadosPage'];
+            $paginasSeguidas = $dates['paginasSeguidas'];
+            $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
             $dadosSeguida = $dates['dadosSeguida'];
 
-            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
-
-            foreach ($dadosSgndo as $value) {
-                $valor = $value->identificador_id;
-            }
-
-            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
-            ->select('seguidors.*', 'identificadors.id')
-            ->get();
-
-            $tt = 0;
             //-------------------------------------------------------------------------
               $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
               $account_name=DB::select('select * from contas where uuid  = ?', [$id]);
@@ -399,6 +358,11 @@ class PerfilController extends Controller
                   $verificacao_page1= DB::select('select * from pages where conta_id_b = ?', [$account_name[0]->conta_id]);
                   $verificacao_page2= DB::select('select * from pages where conta_id_a = ?', [$conta_logada[0]->conta_id]);
                   $verificacao_page3= DB::select('select * from pages where conta_id_b = ?', [$conta_logada[0]->conta_id]);
+
+                  $authctrol = new AuthController;
+                  $paginasSeguidas = $authctrol->paginasSeguidas();
+                  $paginasNaoSeguidas = $authctrol->paginasNaoSeguidas();
+                  $dadosSeguida = DB::table('seguidors')->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')->select('seguidors.*', 'identificadors.id')->get();
 
                   $perfil[0]['verificacao_relac']=0;
                   if (sizeof($verificacao_page) > 0){
@@ -490,7 +454,7 @@ class PerfilController extends Controller
 
 
 
-              return view('perfil.index', compact('account_name', 'notificacoes_count','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+              return view('perfil.index', compact('account_name', 'notificacoes_count','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
 
         } catch (Exception $e) {
             dd('erro');
@@ -552,23 +516,18 @@ class PerfilController extends Controller
           $conta_logada = $dates['conta_logada'];
           $notificacoes = $dates['notificacoes'];
           $notificacoes_count = $dates['notificacoes_count'];
-          $dadosSeguindo = $dates['dadosSeguindo'];
-          $dadosPage = $dates['dadosPage'];
+          $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
+          $paginasSeguidas = $dates['paginasSeguidas'];
           $dadosSeguida = $dates['dadosSeguida'];
-
-            $dadosPage = Page::all();
-
-            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-
-            foreach ($dadosSgndo as $value) {
-                $valor = $value->identificador_id;
-            }
-
-            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
-            ->select('seguidors.*', 'identificadors.id')
-            ->get();
-
-            $tt = 0;
+          
+          $authctrol = new AuthController;
+            $paginasSeguidas = $authctrol->paginasSeguidas();
+            $paginasNaoSeguidas = $authctrol->paginasNaoSeguidas();
+          $dadosSeguida = DB::table('seguidors')
+             ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+             ->select('seguidors.*', 'identificadors.id')
+             ->get();
+    
             $page_current = 'profile';
 
 
