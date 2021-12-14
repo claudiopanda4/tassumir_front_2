@@ -263,16 +263,15 @@ class AuthController extends Controller
                        $ja_reagiu = array();
                    }
                    //$what_are_talking[$i]['nome_pag'] = $page[$key->page_id - 1]->nome;
-                   $what_are_talking[$i]['post']=$key->descricao;
                    //$what_are_talking[$i]['qtd_likes']= sizeof($likes);
                  //  $what_are_talking[$i]['qtd_comment']=sizeof($comment);
                  //  $what_are_talking[$i]['seguir_S/N']=sizeof($seguidor);
-                   $what_are_talking[$i]['post_id']=$key->post_id;
-                   $what_are_talking[$i]['page_id']= $key->page_id ;
-                   $what_are_talking[$i]['page_uuid']= $page[$key->page_id - 1]->uuid ;
-                   $what_are_talking[$i]['post_uuid']= $key->uuid;
                    //$what_are_talking[$i]['reagir_S/N']=sizeof($ja_reagiu);
                    //$what_are_talking[$i]['guardado?']=sizeof($guardado);
+                   $what_are_talking[$i]['post']=$key->descricao;
+                    $what_are_talking[$i]['page_id']= $key->page_id ;
+                    $what_are_talking[$i]['page_uuid']= $page[$key->page_id - 1]->uuid ;
+                    $what_are_talking[$i]['post_uuid']= $key->uuid;
                    $what_are_talking[$i]['formato']=$key->formato_id;
                    $what_are_talking[$i]['estado_post']=$key->estado_post_id;
                    $what_are_talking[$i]['foto_page']=$page[$key->page_id - 1]->foto;
@@ -364,9 +363,12 @@ class AuthController extends Controller
                 //=========================Terminem Aqui----------- Depois põe estas variáveis no compact 'dadosSeguida', 'dadosSeguindo', 'dadosPage'
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
-
+      $post_controller = new PostController();
       $post= DB::table('posts')->limit(7)->get();
-      $page= DB::table('pages')->get();
+      //dd($post);
+      $post = $post_controller->posts();
+      //dd($post);
+      $page = DB::table('pages')->get();
       $a=0;
 
       $dados = array();
@@ -455,7 +457,7 @@ class AuthController extends Controller
       //--------------------------------------------------------------------------------------------o que estão falando --------------------------------------------------------------
       $what_are_talking = $this->Destacados();
 
-
+      //dd($dados);
         return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
     }
@@ -1070,8 +1072,15 @@ class AuthController extends Controller
                   'telefone' => $takePhone,
               ]);
 
+<<<<<<< HEAD
               /*if ($takeEmail != null) {
                     $codHugo = random_int(1000,9000);
+=======
+              if ($takeEmail != null) {
+
+                    $codHugo = random_int(1000,9000);
+
+>>>>>>> 2c9939a98b623d40b0f266ff2867698e1bd3fd65
                     dd("entrei no teste email");
                     Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
               }*/

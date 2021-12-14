@@ -26,8 +26,8 @@
             </div>
             <ul class="profile-follow profile-item-center">
                 <li class="statistics-profile">
-                    <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_ps']}}</h2>
-                    <h2 style="justify-content: center; font-size: 11.5px;">Seguindo</h2>
+                  <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}">  <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_ps']}}</h2></a>
+                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}"><h2 style="justify-content: center; font-size: 11.5px;">Seguindo</h2></a>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                     <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
                   <?php endif; ?>
@@ -246,6 +246,72 @@
                 </div>
                 <?php endif; ?>
                 <?php if ($_GET['post-container-post'] == 'saved'): ?>
+                  <?php foreach ($guardadosP as $key => $value): ?>
+
+                        <div class="card br-10">
+                            <div class="post">
+                                <header class="clearfix">
+                                    <div class="first-component clearfix l-5">
+                                      @if( !($value['foto_page'] == null) )
+                                          <div class="page-cover circle l-5">
+                                              <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $value['foto_page'] }}">
+                                          </div>
+                                      @else
+                                          <div class="page-cover circle l-5">
+                                              <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                          </div>
+                                      @endif
+                                        <div class="page-identify l-5 clearfix">
+                                            <a href="{{route('couple.page1', $value['page_uuid']) }}"><h1 class="">{{$value['nome_page']}}</h1></a>
+                                            <div class="info-post clearfix">
+                                                <span class="time-posted l-5">50 min</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="last-component clearfix r-5">
+                                        <label for="more-option-1">
+                                            <i class="fas fa-ellipsis-h fa-15 fa-option"></i>
+                                        </label>
+                                        <input type="checkbox" name="" id="more-option-1" class="hidden">
+                                        <ul class="clearfix more-option-post">
+                                            <li>
+                                                <a href="">Denunciar</a>
+                                            </li>
+                                            <li>
+                                                <a href="">Copiar Link</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </header>
+                                <div class="card-post">
+                                    <div class="">
+                                        <p>{{$guardadosP[$key]['post']}}</p>
+                                        <?php if ( $guardadosP[$key]['formato'] == 2 ): ?>
+                                        <div class="post-cover">
+                                            <img class="img-full" src="{{asset('storage/img/page/') . '/' . $guardadosP[$key]['file']}}">
+                                        </div>
+                                      <?php elseif ($guardadosP[$key]['formato'] == 1): ?>
+                                        <div class="video-post" id="video-post-{{$guardadosP[$key]['post_uuid']}}">
+                                            <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$key ?>>
+                                            <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$key ?>>
+                                            <video class="video-post-video" id="video_{{$key}}">
+
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            <input type="hidden" name="" value="post_view_{{$guardadosP[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}" id="watch-video-{{$key}}">
+                                            <input type="hidden" name="" value="{{$guardadosP[$key]['post_uuid']}}" id="vid-{{$key}}">
+                                            <input type="hidden" name="" id="has-video-{{$key}}">
+                                            <input type="hidden" name="" id="video-post-time-{{$key}}">
+                                            <input type="hidden" name="" id="video-post-time-all-{{$key}}">
+                                        </div>
+                                        <?php endif ?>
+                                    </div>
+                          </div>
+                    </div>
+                    <p>-----------------------------------------------------------------------</p>
+
+                  </div>
+                  <?php endforeach ?>
 
                 <?php endif; ?>
             <?php else: ?>
