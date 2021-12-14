@@ -164,7 +164,7 @@ class AuthController extends Controller
               $notificacoes[$a]['tipo']=10;
               $notificacoes[$a]['id']=$tipo[0]->uuid;}}
 
-                                                             break;
+            break;
 
 
                }
@@ -1070,15 +1070,11 @@ class AuthController extends Controller
                   'telefone' => $takePhone,
               ]);
 
-              if ($takeEmail != null) {
-                    
+              /*if ($takeEmail != null) {
                     $codHugo = random_int(1000,9000);
-                    
                     dd("entrei no teste email");
-
                     Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
-
-              }
+              }*/
 
 
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
