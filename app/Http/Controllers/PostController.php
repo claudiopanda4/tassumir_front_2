@@ -21,6 +21,7 @@ class PostController extends Controller
         dd($posts);
         //;
     }
+    
     public function posts() {
         $dados = [];
         $total_posts = 10;
