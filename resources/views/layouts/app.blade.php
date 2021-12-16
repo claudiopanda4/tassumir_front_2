@@ -1096,8 +1096,13 @@
 
         setInterval(function(e){
             let margin_stories = $('.main-container').offset();
-            //console.log('margin_stories ' + margin_stories.top);
+            let margin_s = $('.main').offset();
+            console.log('margin_s ' + margin_s.top);
+            let height_ = parseInt($('.main').height());
+            console.log('height_margin_s ' + height_);
             let height = parseInt($('.main-container').height());
+            console.log('height_margin_stories ' + height);
+            console.log('bottom ' + (height + margin_stories.top));
             let height_stories = $('#stories-card').height();
             //console.log('height ' + height);
             //console.log('height stories ' + height_stories);
@@ -1110,7 +1115,20 @@
 
                 }
             }
+            console.log('janela width ' + window.innerWidth);
+            window_width = window.innerWidth; 
+            console.log('scroll log: ' + $('.main').scrollTop());
+            $(document).scroll(function() {
+               //if($(window).scrollTop() + $(window).height() == $(document).height()) {
+                   //alert("bottom!");
+               //}
+               console.log('oii123iii');
+            });
+            console.log('oii12');
+            
+            if (window.innerWidth < 800) {
 
+            }
             let video_post1 = document.getElementsByClassName('video-post-video');
             //console.log(video_post1);
 

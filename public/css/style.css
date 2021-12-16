@@ -1180,7 +1180,7 @@ label[for="hugo"]{
     margin-bottom: 3px;
     margin-top: 5px;
     margin-right: 5px ;
-    font-weight: bolder;
+    /*font-weight: bolder;*/
 }
 .page-identify {
 	margin-left: 0;

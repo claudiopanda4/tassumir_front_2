@@ -1083,13 +1083,9 @@ class AuthController extends Controller
                   'telefone' => $takePhone,
               ]);
 
-<<<<<<< HEAD
-
               /*
-=======
               /*if ($takeEmail != null) {
                     $codHugo = random_int(1000,9000);
->>>>>>> 3aa5c05b99a5b4a510fd07b15ef51349f426ec15
               if ($takeEmail != null) {
 
                     $codHugo = random_int(1000,9000);
