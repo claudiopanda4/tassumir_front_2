@@ -6,11 +6,8 @@ use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Hash;
-
 use App\Http\Controllers\PaginaCasalController;
-
 use Illuminate\Support\Facades\Validator;
 
 /* email */
@@ -167,7 +164,7 @@ class AuthController extends Controller
               $notificacoes[$a]['tipo']=10;
               $notificacoes[$a]['id']=$tipo[0]->uuid;}}
 
-                                                             break;
+            break;
 
 
                }
@@ -228,6 +225,182 @@ class AuthController extends Controller
            return $dates;
        }
 
+       public function Destacados(){
+         $dates = $this->default_();
+         $account_name = $dates['account_name'];
+         $post= DB::table('posts')->get();
+         $melhores=array();
+         $what_are_talking = array();
+
+         for ($i=0; $i <sizeof($post) ; $i++) {
+           $a=0;
+
+           foreach ($post as $key) {
+             $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
+             $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
+             $soma= sizeof($likes) + sizeof($comment);
+             $b=0;
+
+               for ($j=0; $j <sizeof($melhores); $j++) {
+                 if ($key->post_id == $melhores[$j] ){
+                   $b=1;
+                 }
+               }
+               if ($soma >= $a && $b!=1 && $key->estado_post_id == 1) {
+                 $melhores[$i]= $key->post_id;
+                 $page= DB::table('pages')->get();
+                   $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$page[$key->page_id - 1]->page_id, 2 ]);
+                   $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+                   if (sizeof($aux1) > 0 && sizeof($aux) > 0) {
+                       $seguidor = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux[0]->identificador_id, $aux1[0]->identificador_id]);
+                   } else {
+                       $seguidor = array();
+                   }
+                   $guardado= DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$key->post_id,  $account_name[0]->conta_id]);
+                   if (sizeof($aux1) > 0) {
+                       $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$key->post_id, $aux1[0]->identificador_id]);
+                   } else {
+                       $ja_reagiu = array();
+                   }
+                   //$what_are_talking[$i]['nome_pag'] = $page[$key->page_id - 1]->nome;
+                   //$what_are_talking[$i]['qtd_likes']= sizeof($likes);
+                 //  $what_are_talking[$i]['qtd_comment']=sizeof($comment);
+                 //  $what_are_talking[$i]['seguir_S/N']=sizeof($seguidor);
+                   //$what_are_talking[$i]['reagir_S/N']=sizeof($ja_reagiu);
+                   //$what_are_talking[$i]['guardado?']=sizeof($guardado);
+                   $what_are_talking[$i]['post']=$key->descricao;
+                    $what_are_talking[$i]['page_id']= $key->page_id ;
+                    $what_are_talking[$i]['page_uuid']= $page[$key->page_id - 1]->uuid ;
+                    $what_are_talking[$i]['post_uuid']= $key->uuid;
+                   $what_are_talking[$i]['formato']=$key->formato_id;
+                   $what_are_talking[$i]['estado_post']=$key->estado_post_id;
+                   $what_are_talking[$i]['foto_page']=$page[$key->page_id - 1]->foto;
+                   if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
+                   $what_are_talking[$i]['file']=$key->file;
+                   }
+                   /*if ($account_name[0]->conta_id == $page[$key->page_id - 1]->conta_id_a  || $account_name[0]->conta_id == $page[$key->page_id - 1]->conta_id_b ) {
+                     $what_are_talking[$i]['dono_da_pag?']=1;
+                   }else {
+                     $what_are_talking[$i]['dono_da_pag?']=0;
+                   }*/
+                   //$what_are_talking[$i]['qtd_comment_reaction']=0;
+                   /*for ($k=1; $k <= sizeof($comment) ; $k++) {
+                       $reaction_comment = DB::select('select * from reactions_comments where comment_id = ?', [$k]);
+                   if (sizeof($reaction_comment)>= $dados[$i]['qtd_comment_reaction']) {
+                     $what_are_talking[$i]['qtd_comment_reaction']=sizeof($reaction_comment);
+                     $what_are_talking[$i]['comment']=$comment[$k - 1]->comment;
+                     $what_are_talking[$i]['comment_id']=$comment[$k - 1]->comment_id;
+
+                     $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$k-1]->identificador_id ]);
+                     if ($aux2[0]->tipo_identificador_id == 1) {
+                       $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                       $what_are_talking[$i]['nome_comment']=$conta[0]->nome;
+                       $what_are_talking[$i]['nome_comment'].=" ";
+                       $what_are_talking[$i]['nome_comment'].=$conta[0]->apelido;
+                       $what_are_talking[$i]['foto_conta']=$conta[0]->foto;
+                     }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                       $what_are_talking[$i]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
+                       $what_are_talking[$i]['foto_conta']=$conta[0]->foto;
+                     }
+                   }
+                 }*/
+
+                 $a=$soma;
+               }
+             }
+         }
+
+         return $what_are_talking;
+       }
+
+             public function DadosPost($id){
+               $dates = $this->default_();
+               $conta_logada= $dates['conta_logada'];
+
+               $page = DB::select('select * from pages where (page_id,estado_pagina_id) = (?,?)', [$id->page_id,1]);
+               $a=0;
+
+               $dados = array();
+                 $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$page[0]->page_id, 2 ]);
+
+                 $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+                 if (sizeof($aux1) > 0 && sizeof($aux) > 0) {
+                     $seguidor = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux[0]->identificador_id, $aux1[0]->identificador_id]);
+                 } else {
+                     $seguidor = array();
+                 }
+
+                 $likes = DB::select('select * from post_reactions where post_id = ?', [$id->post_id]);
+                 $like_verify = DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
+                 $liked = sizeof($like_verify) > 0 ? true : false;
+
+                 //dd($likes);
+                 $comment = DB::select('select * from comments where post_id = ?', [$id->post_id]);
+                 $guardado= DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$id->post_id,  $conta_logada[0]->conta_id]);
+
+                 if (sizeof($aux1) > 0) {
+                     $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$id->post_id, $aux1[0]->identificador_id]);
+                 } else {
+                     $ja_reagiu = array();
+                 }
+                 $dados['nome_pag'] = $page[0]->nome;
+                 $dados['post']=$id->descricao;
+                 $dados['qtd_likes']= sizeof($likes);
+                 $dados['qtd_comment']=sizeof($comment);
+                 $dados['seguir_S/N']=sizeof($seguidor);
+                 $dados['post_id']=$id->post_id;
+                 $dados['page_id']= $id->page_id ;
+                 $dados['page_uuid']= $page[0]->uuid ;
+                 $dados['post_uuid']= $id->uuid;
+                 $dados['reagir_S/N']=sizeof($ja_reagiu);
+                 $dados['guardado?']=sizeof($guardado);
+                 $dados['formato']=$id->formato_id;
+                 $dados['estado_post']=$id->estado_post_id;
+                 $dados['foto_page']=$page[0]->foto;
+                 if($dados['formato']==1 || $dados['formato']== 2){
+                 $dados['file']=$id->file;
+                 }
+                 if ($conta_logada[0]->conta_id == $page[0]->conta_id_a  || $conta_logada[0]->conta_id == $page[0]->conta_id_b ) {
+                   $dados['dono_da_pag?']=1;
+                 }else {
+                   $dados['dono_da_pag?']=0;
+                 }
+                 $dados['qtd_comment_reaction']=0;
+                 for ($j=1; $j <= sizeof($comment) ; $j++) {
+                     $reaction_comment = DB::select('select * from reactions_comments where comment_id = ?', [$j]);
+                 if (sizeof($reaction_comment)>= $dados['qtd_comment_reaction']) {
+                   $dados['qtd_comment_reaction']=sizeof($reaction_comment);
+                   $dados['comment']=$comment[$j - 1]->comment;
+                   $dados['comment_id']=$comment[$j - 1]->comment_id;
+                   $dados['comment_uuid']=$comment[$j - 1]->uuid;
+                   $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+                   if (sizeof($aux1) > 0) {
+                     $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$j - 1]->comment_id, $aux1[0]->identificador_id]);
+                   } else {
+                       $ja_reagiu1 = array();
+                   }
+                    $dados['comment_S/N']=sizeof($ja_reagiu1);
+
+                   $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$j-1]->identificador_id ]);
+                   if ($aux2[0]->tipo_identificador_id == 1) {
+                     $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                     $dados['nome_comment']=$conta[0]->nome;
+                     $dados['nome_comment'].=" ";
+                     $dados['nome_comment'].=$conta[0]->apelido;
+                     $dados['foto_conta']=$conta[0]->foto;
+                     $dados['foto_ver']=1;
+                   }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                     $dados['nome_comment']=$page[0]->nome;
+                     $dados['foto_conta']=$page[0]->foto;
+                     $dados['foto_ver']=2;
+                   }
+                 }
+               }
+
+               return $dados;
+                   }
+
+
 
     public function index(){
   
@@ -249,186 +422,30 @@ class AuthController extends Controller
           $notificacoes_count = $dates['notificacoes_count'];
 
 
-        //=================================================================
+        //=========================================================
         $paginasSeguidas = $this->paginasSeguidas();
         $paginasNaoSeguidas = $this->paginasNaoSeguidas();
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
-
+      $post_controller = new PostController();
       $post= DB::table('posts')->limit(7)->get();
-      $page= DB::table('pages')->get();
+      //dd($post);
+      $post = $post_controller->posts();
+      //dd($post);
       $a=0;
 
       $dados = array();
       foreach ($post as $key) {
-
-        $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$page[$key->page_id - 1]->page_id, 2 ]);
-
-        //dd($aux);
-        $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
-        if (sizeof($aux1) > 0 && sizeof($aux) > 0) {
-            $seguidor = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux[0]->identificador_id, $aux1[0]->identificador_id]);
-        } else {
-            $seguidor = array();
-        }
-
-        $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
-        $like_verify = DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
-        $liked = sizeof($like_verify) > 0 ? true : false;
-
-        //dd($likes);
-        $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
-        $guardado= DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$key->post_id,  $account_name[0]->conta_id]);
-
-        if (sizeof($aux1) > 0) {
-            $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$key->post_id, $aux1[0]->identificador_id]);
-//            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$key->post_id-1]->comment_id, $aux1[0]->identificador_id]);
-        } else {
-            $ja_reagiu = array();
-        }
-        $dados[$a]['nome_pag'] = $page[$key->page_id - 1]->nome;
-        $dados[$a]['post']=$key->descricao;
-        $dados[$a]['qtd_likes']= sizeof($likes);
-        $dados[$a]['qtd_comment']=sizeof($comment);
-        $dados[$a]['seguir_S/N']=sizeof($seguidor);
-        $dados[$a]['post_id']=$key->post_id;
-        $dados[$a]['page_id']= $key->page_id ;
-        $dados[$a]['page_uuid']= $page[$key->page_id - 1]->uuid ;
-        $dados[$a]['post_uuid']= $key->uuid;
-        $dados[$a]['reagir_S/N']=sizeof($ja_reagiu);
-//        $dados[$a]['comment_S/N']=sizeof($ja_reagiu1);
-        $dados[$a]['guardado?']=sizeof($guardado);
-        $dados[$a]['formato']=$key->formato_id;
-        $dados[$a]['estado_post']=$key->estado_post_id;
-        $dados[$a]['foto_page']=$page[$key->page_id - 1]->foto;
-        if($dados[$a]['formato']==1 || $dados[$a]['formato']== 2){
-        $dados[$a]['file']=$key->file;
-        }
-        if ($account_name[0]->conta_id == $page[$key->page_id - 1]->conta_id_a  || $account_name[0]->conta_id == $page[$key->page_id - 1]->conta_id_b ) {
-          $dados[$a]['dono_da_pag?']=1;
-        }else {
-          $dados[$a]['dono_da_pag?']=0;
-        }
-        $dados[$a]['qtd_comment_reaction']=0;
-        for ($j=1; $j <= sizeof($comment) ; $j++) {
-            $reaction_comment = DB::select('select * from reactions_comments where comment_id = ?', [$j]);
-        if (sizeof($reaction_comment)>= $dados[$a]['qtd_comment_reaction']) {
-          $dados[$a]['qtd_comment_reaction']=sizeof($reaction_comment);
-          $dados[$a]['comment']=$comment[$j - 1]->comment;
-          $dados[$a]['comment_id']=$comment[$j - 1]->comment_id;
-          $dados[$a]['comment_uuid']=$comment[$j - 1]->uuid;
-          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
-          if (sizeof($aux1) > 0) {
-            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$j - 1]->comment_id, $aux1[0]->identificador_id]);
-          } else {
-              $ja_reagiu1 = array();
-          }
-           $dados[$a]['comment_S/N']=sizeof($ja_reagiu1);
-
-          $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$j-1]->identificador_id ]);
-          if ($aux2[0]->tipo_identificador_id == 1) {
-            $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
-            $dados[$a]['nome_comment']=$conta[0]->nome;
-            $dados[$a]['nome_comment'].=" ";
-            $dados[$a]['nome_comment'].=$conta[0]->apelido;
-            $dados[$a]['foto_conta']=$conta[0]->foto;
-            $dados[$a]['foto_ver']=1;
-          }elseif ($aux2[0]->tipo_identificador_id == 2) {
-            $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
-            $dados[$a]['foto_conta']=$page[$aux2[0]->id - 1]->foto;
-            $dados[$a]['foto_ver']=2;
-          }
-        }
+      $dados[$a] = $this->DadosPost($key);
+      $a++;
       }
-        $a++;
-      }
+
       //--------------------------------------------------------------------------------------------o que estão falando --------------------------------------------------------------
-      $melhores=array();
-      $what_are_talking = array();
+      $what_are_talking = $this->Destacados();
 
-      for ($i=0; $i <sizeof($post) ; $i++) {
-        $a=0;
-
-        foreach ($post as $key) {
-          $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
-          $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
-          $soma= sizeof($likes) + sizeof($comment);
-          $b=0;
-
-            for ($j=0; $j <sizeof($melhores); $j++) {
-              if ($key->post_id == $melhores[$j] ){
-                $b=1;
-              }
-            }
-            if ($soma >= $a && $b!=1 && $key->estado_post_id == 1) {
-              $melhores[$i]= $key->post_id;
-              $page= DB::table('pages')->get();
-                $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$page[$key->page_id - 1]->page_id, 2 ]);
-                $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-                if (sizeof($aux1) > 0 && sizeof($aux) > 0) {
-                    $seguidor = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux[0]->identificador_id, $aux1[0]->identificador_id]);
-                } else {
-                    $seguidor = array();
-                }
-                $guardado= DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$key->post_id,  $account_name[0]->conta_id]);
-                if (sizeof($aux1) > 0) {
-                    $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$key->post_id, $aux1[0]->identificador_id]);
-                } else {
-                    $ja_reagiu = array();
-                }
-                //$what_are_talking[$i]['nome_pag'] = $page[$key->page_id - 1]->nome;
-                $what_are_talking[$i]['post']=$key->descricao;
-                //$what_are_talking[$i]['qtd_likes']= sizeof($likes);
-              //  $what_are_talking[$i]['qtd_comment']=sizeof($comment);
-              //  $what_are_talking[$i]['seguir_S/N']=sizeof($seguidor);
-                $what_are_talking[$i]['post_id']=$key->post_id;
-                $what_are_talking[$i]['page_id']= $key->page_id ;
-                $what_are_talking[$i]['page_uuid']= $page[$key->page_id - 1]->uuid ;
-                $what_are_talking[$i]['post_uuid']= $key->uuid;
-                //$what_are_talking[$i]['reagir_S/N']=sizeof($ja_reagiu);
-                //$what_are_talking[$i]['guardado?']=sizeof($guardado);
-                $what_are_talking[$i]['formato']=$key->formato_id;
-                $what_are_talking[$i]['estado_post']=$key->estado_post_id;
-                $what_are_talking[$i]['foto_page']=$page[$key->page_id - 1]->foto;
-                if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
-                $what_are_talking[$i]['file']=$key->file;
-                }
-                /*if ($account_name[0]->conta_id == $page[$key->page_id - 1]->conta_id_a  || $account_name[0]->conta_id == $page[$key->page_id - 1]->conta_id_b ) {
-                  $what_are_talking[$i]['dono_da_pag?']=1;
-                }else {
-                  $what_are_talking[$i]['dono_da_pag?']=0;
-                }*/
-                //$what_are_talking[$i]['qtd_comment_reaction']=0;
-                /*for ($k=1; $k <= sizeof($comment) ; $k++) {
-                    $reaction_comment = DB::select('select * from reactions_comments where comment_id = ?', [$k]);
-                if (sizeof($reaction_comment)>= $dados[$i]['qtd_comment_reaction']) {
-                  $what_are_talking[$i]['qtd_comment_reaction']=sizeof($reaction_comment);
-                  $what_are_talking[$i]['comment']=$comment[$k - 1]->comment;
-                  $what_are_talking[$i]['comment_id']=$comment[$k - 1]->comment_id;
-
-                  $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$k-1]->identificador_id ]);
-                  if ($aux2[0]->tipo_identificador_id == 1) {
-                    $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
-                    $what_are_talking[$i]['nome_comment']=$conta[0]->nome;
-                    $what_are_talking[$i]['nome_comment'].=" ";
-                    $what_are_talking[$i]['nome_comment'].=$conta[0]->apelido;
-                    $what_are_talking[$i]['foto_conta']=$conta[0]->foto;
-                  }elseif ($aux2[0]->tipo_identificador_id == 2) {
-                    $what_are_talking[$i]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
-                    $what_are_talking[$i]['foto_conta']=$conta[0]->foto;
-                  }
-                }
-              }*/
-
-              $a=$soma;
-            }
-          }
-
-
-
-      }
 
         return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
+
 
     }
     return redirect()->route('account.login.form');
@@ -1215,6 +1232,22 @@ class AuthController extends Controller
                   'email' => $request->email,
                   'telefone' => $takePhone,
               ]);
+
+
+
+              /*
+
+              /*if ($takeEmail != null) {
+                    $codHugo = random_int(1000,9000);
+
+              if ($takeEmail != null) {
+
+                    $codHugo = random_int(1000,9000);
+
+                    dd("entrei no teste email");
+                    Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
+              }*/
+
 
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
 

@@ -27,139 +27,72 @@ class PerfilController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function default_(){
-         $auth = new AuthController();
-         $account_name = $auth->defaultDate();
-         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
-         $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
-         $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
-         $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
-         $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-         $page_content = $this->casalPage->page_default_date($account_name);
-         $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
-         $conta_logada = $auth->defaultDate();
-         $notificacoes=array();
-         $notificacoes_count=0;
-         $a=0;
-         $nome=array();
-         $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
-         $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
-         if (sizeof($notificacoes_aux)>0) {
-           foreach ($notificacoes_aux as $key) {
-             if ($key->id_state_notification == 2) {
-               $notificacoes_count++;
-             }
-             if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
-             if ($aux2[0]->tipo_identificador_id == 1) {
-               $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
-               $nome[0]= $conta[0]->nome ;
-               $nome[0].= " ";
-               $nome[0].= $conta[0]->apelido;
-               $nome[1]= $conta[0]->foto;
-               $nome[2] =1;
-             }elseif ($aux2[0]->tipo_identificador_id == 2) {
-               $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
-                 $nome[0] =$page[0]->nome;
-                 $nome[1] =$page[0]->foto;
-                 $nome[2] =2;
-             }
-             switch ($key->id_action_notification) {
-               case 1:
-                 $notificacoes[$a]['notificacao']=$nome[0] ;
-                 $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
-                 $notificacoes[$a]['tipo']=1;
-                 $notificacoes[$a]['id']=$key->identificador_id_destino;
-                 $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                 $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
-                 $notificacoes[$a]['link']=$post[0]->uuid;
-                 break;
-               case 2:
-                   $notificacoes[$a]['notificacao']=$nome[0];
-                   $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
-                   $notificacoes[$a]['tipo']=2;
-                   $notificacoes[$a]['id']=$key->identificador_id_destino;
-                   $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                   $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
-                   $notificacoes[$a]['link']=$post[0]->uuid;
-                   break;
-                 case 3:
-                   $notificacoes[$a]['notificacao']=$nome[0];
-                   $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
-                   $notificacoes[$a]['tipo']=3;
-                   $notificacoes[$a]['id']=$key->identificador_id_destino;
-                     break;
-                   case 4:
-                   $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                 if (sizeof($aux)){  $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                   if (sizeof($tipo)){  $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
-                   $notificacoes[$a]['notificacao']=$nome[0];
-                   $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
-                   $notificacoes[$a]['notificacao'].=$tipos[0]->tipo_relacionamento;
-                   $notificacoes[$a]['tipo']=4;
-                   $notificacoes[$a]['id']=$tipo[0]->uuid;}
-                 }
-                       break;
-                     case 5:
-                     $notificacoes[$a]['notificacao']=$nome[0];
-                     $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                     $notificacoes[$a]['tipo']=5;
-                     $notificacoes[$a]['id']=$key->identificador_id_destino;
-                     $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                     $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
-                     $notificacoes[$a]['link']=$page[0]->uuid;
-                         break;
-                     case 6:
-                         $notificacoes[$a]['notificacao']=$nome[0];
-                         $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                         $notificacoes[$a]['tipo']=5;
-                         $notificacoes[$a]['id']=$key->identificador_id_destino;
-                         $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                         $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
-                         $notificacoes[$a]['link']=$post[0]->uuid;
-                             break;
-                    case 7:
-                    $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                    if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                    if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
-                    $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
-                    $notificacoes[$a]['tipo']=7;
-                    $notificacoes[$a]['id']=$tipo[0]->uuid;}}
-                             break;
-                 case 8:
-                             $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
-                             $notificacoes[$a]['tipo']=8;
-                             $notificacoes[$a]['id']=$key->identificador_id_destino;
-                             $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                             $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
-                             $notificacoes[$a]['link']=$page[0]->uuid;
-                                 break;
+     public function dadosPerfil($id){
+       $controll = new AuthController();
+        $dates = $controll->default_();
+       $conta_logada = $dates['conta_logada'];
 
-               case 9:
-               $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-               if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-               if (sizeof($tipo)){
-               $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
-               $notificacoes[$a]['tipo']=9;
-               $notificacoes[$a]['id']=$tipo[0]->uuid;}}
-                                     break;
-            case 10:
-            $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-            if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-            if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
-            $notificacoes[$a]['notificacao'].=" Pediu que você page";
-            $notificacoes[$a]['tipo']=10;
-            $notificacoes[$a]['id']=$tipo[0]->uuid;}}
+       $account_name=DB::select('select * from contas where uuid  = ?', [$id]);
+       $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+       $lenght = sizeof($aux1);
+       $gostos=array();
+       $guardadosP=array();
+       $a=0;
+       //dd($lenght);
+       if ($lenght > 0) {
+         $post_reactions= DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
+           $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
+           $guardado= DB::select('select * from saveds where conta_id =  ?', [$account_name[0]->conta_id]);
+           $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$account_name[0]->conta_id, $conta_logada[0]->conta_id]);
+           $verificacao_pedido1= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_logada[0]->conta_id, $account_name[0]->conta_id]);
+           $verificacao_page= DB::select('select * from pages where conta_id_a = ?', [$account_name[0]->conta_id]);
+           $verificacao_page1= DB::select('select * from pages where conta_id_b = ?', [$account_name[0]->conta_id]);
+           $verificacao_page2= DB::select('select * from pages where conta_id_a = ?', [$conta_logada[0]->conta_id]);
+           $verificacao_page3= DB::select('select * from pages where conta_id_b = ?', [$conta_logada[0]->conta_id]);
 
-                                                           break;
+           $perfil[0]['verificacao_relac']=0;
+           if (sizeof($verificacao_page) > 0){
+             foreach ($verificacao_page as $key) {
+               if ($key->tipo_relacionamento_id != 1) {
+                 $perfil[0]['verificacao_relac']=1;
+                 if ($key->tipo_relacionamento_id == 2) {
+                 $perfil[0]['relac']="Noivo de ";
+               }elseif ($key->tipo_relacionamento_id == 3) {
+                 $perfil[0]['relac']="Apresentado(a) ";
+               }elseif ($key->tipo_relacionamento_id == 4) {
+                 $perfil[0]['relac']="Casado(a) com ";
+               }elseif ($key->tipo_relacionamento_id == 5) {
+                 $perfil[0]['relac']="Namorado(a) de ";
+               }
 
+               $conta = DB::select('select * from contas where conta_id = ?', [$key->conta_id_b]);
 
-             }
-             $notificacoes[$a]['foto']=$nome[1];
-             $notificacoes[$a]['v']=$nome[2];
-             $notificacoes[$a]['id1']=$key->notification_id;
-
-             $a++;
+                 $perfil[0]['relac1']=$conta[0]->nome;
+                 $perfil[0]['relac1'].=" ";
+                 $perfil[0]['relac1'].=$conta[0]->apelido;
            }
+           }
+           }elseif (sizeof($verificacao_page1) > 0){
+           foreach ($verificacao_page1 as $key) {
+           if ($key->tipo_relacionamento_id != 1) {
+             $perfil[0]['verificacao_relac']=1;
+             if ($key->tipo_relacionamento_id == 2) {
+             $perfil[0]['relac']="Noivo(a) de ";
+           }elseif ($key->tipo_relacionamento_id == 3) {
+             $perfil[0]['relac']="Apresentado(a) ";
+           }elseif ($key->tipo_relacionamento_id == 4) {
+             $perfil[0]['relac']="Casado(a) com ";
+           }elseif ($key->tipo_relacionamento_id == 5) {
+             $perfil[0]['relac']="Namorado(a) de";
+           }
+
+           $conta = DB::select('select * from contas where conta_id = ?', [$key->conta_id_a]);
+
+             $perfil[0]['relac1']=$conta[0]->nome;
+             $perfil[0]['relac1'].=" ";
+             $perfil[0]['relac1'].=$conta[0]->apelido;
+           }
+
          }
          }
             $authctrol = new AuthController;
@@ -187,15 +120,102 @@ class PerfilController extends Controller
              "notificacoes_count" => $notificacoes_count,
          ];
          return $dates;
+
+           }
+           }
+           $perfil[0]['Pedido_relac_uuid']=0;
+           $perfil[0]['not_id']=0;
+             if (sizeof($verificacao_pedido)>0) {
+               if ($verificacao_pedido[0]->estado_pedido_relac_id!= 2) {
+                 $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
+               }else {
+                 $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido[0]->uuid;
+                 $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+                 $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+                 $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido[0]->pedido_relacionamento_id, 5 ]);
+               $n4=DB::select('select * from notifications where (identificador_id_causador,identificador_id_destino,identificador_id_receptor, 	id_action_notification) = (?, ?, ?, ?)', [$n1[0]->identificador_id,$n3[0]->identificador_id,$n2[0]->identificador_id, 7]);
+                 $perfil[0]['not_id']=$n4[0]->notification_id;
+                 $perfil[0]['verificacao_pedido']=2;
+               }
+             }else {
+               $perfil[0]['verificacao_pedido']=0;
+             }
+             if (sizeof($verificacao_pedido1)>0) {
+               if ($verificacao_pedido1[0]->estado_pedido_relac_id== 1) {
+                 $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido1[0]->uuid;
+                 $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+                 $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+                 $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido1[0]->pedido_relacionamento_id, 5 ]);
+                 $n4=DB::select('select * from notifications where (identificador_id_causador,identificador_id_destino,identificador_id_receptor, 	id_action_notification ) = (?, ?, ?, ?)', [$n1[0]->identificador_id,$n3[0]->identificador_id,$n2[0]->identificador_id, 4]);
+                 $perfil[0]['not_id']=$n4[0]->notification_id;
+                 $perfil[0]['verificacao_pedido1']=sizeof($verificacao_pedido1);
+               }else {
+                 $perfil[0]['verificacao_pedido1']=2;
+               }
+             }else {
+               $perfil[0]['verificacao_pedido1']=0;
+             }
+             $perfil[0]['verificacao_page']=sizeof($verificacao_page);
+             $perfil[0]['verificacao_page1']=sizeof($verificacao_page1);
+             $perfil[0]['verificacao_page2']=sizeof($verificacao_page2);
+             $perfil[0]['verificacao_page3']=sizeof($verificacao_page3);
+             $perfil[0]['qtd_ps']=sizeof($seguidor);
+             $perfil[0]['qtd_like']=sizeof($post_reactions);
+             $perfil[0]['qtd_guardados']=sizeof($guardado);
+             foreach ($post_reactions as $key ) {
+               $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
+               if (sizeof($posts) > 0) {
+              $page= DB::select('select * from pages where page_id = ?', [$posts[0]->page_id]);
+              $gostos[$a]['nome_page']=$page[0]->nome;
+              $gostos[$a]['page_uuid']=$page[0]->uuid;
+              $gostos[$a]['foto_page']=$page[0]->foto;
+              $gostos[$a]['formato']=$posts[0]->formato_id;
+              $gostos[$a]['file']=$posts[0]->file;
+              $gostos[$a]['post']=$posts[0]->descricao;
+              $gostos[$a]['post_id']=$posts[0]->post_id;
+              $gostos[$a]['post_uuid']=$posts[0]->uuid;
+              $a++;
+              }
+             }
+             $a=0;
+             foreach ($guardado as $key ) {
+               $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
+               if (sizeof($posts) > 0) {
+              $page= DB::select('select * from pages where page_id = ?', [$posts[0]->page_id]);
+              $guardadosP[$a]['nome_page']=$page[0]->nome;
+              $guardadosP[$a]['page_uuid']=$page[0]->uuid;
+              $guardadosP[$a]['foto_page']=$page[0]->foto;
+              $guardadosP[$a]['formato']=$posts[0]->formato_id;
+              $guardadosP[$a]['file']=$posts[0]->file;
+              $guardadosP[$a]['post']=$posts[0]->descricao;
+              $guardadosP[$a]['post_id']=$posts[0]->post_id;
+              $guardadosP[$a]['post_uuid']=$posts[0]->uuid;
+              $a++;
+              }
+             }
+
+       } else {
+         $perfil[0]['qtd_ps'] = 0;
+       }
+       $dadosP = [
+           "perfil" => $perfil,
+           "gostos" => $gostos,
+           "account_name" => $account_name,
+           "guardadosP" => $guardadosP,
+       ];
+       return $dadosP;
+
+
      }
+
 
 
     public function index()
     {
         try {
 
-            $dates = $this->default_();
-            $account_name = $dates['account_name'];
+          $controll = new AuthController();
+           $dates = $controll->default_();
             $checkUserStatus = $dates['checkUserStatus'];
             $profile_picture = $dates['profile_picture'];
             $isUserHost = $dates['isUserHost'];
@@ -203,6 +223,12 @@ class PerfilController extends Controller
             $allUserPages = $dates['allUserPages'];
             $page_content = $dates['page_content'];
             $conta_logada = $dates['conta_logada'];
+            $dadosP = $this->dadosPerfil($conta_logada[0]->uuid);
+            $perfil=$dadosP['perfil'];
+            $gostos=$dadosP['gostos'];
+            $account_name=$dadosP['account_name'];
+            $guardadosP=$dadosP['guardadosP'];
+            $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
             $notificacoes = $dates['notificacoes'];
             $notificacoes_count = $dates['notificacoes_count'];
             $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
@@ -220,100 +246,16 @@ class PerfilController extends Controller
 
 
 
-              $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
               $page_current = 'profile';
-              $gostos=array();
-
-          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-          $lenght = sizeof($aux1);
-              $a=0;
-              if ($lenght > 0) {
-                $post_reactions= DB::select('select * from post_reactions where identificador_id = ?', [$aux1[0]->identificador_id]);
-                  $seguidor = DB::select('select * from seguidors where identificador_id_seguindo = ?', [ $aux1[0]->identificador_id]);
-                  $guardado= DB::select('select * from saveds where conta_id =  ?', [$account_name[0]->conta_id]);
-                  $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$account_name[0]->conta_id, $conta_logada[0]->conta_id]);
-                  $verificacao_page= DB::select('select * from pages where conta_id_a = ?', [$account_name[0]->conta_id]);
-                  $verificacao_pedido1= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_logada[0]->conta_id, $account_name[0]->conta_id]);
-                  $verificacao_page1= DB::select('select * from pages where conta_id_b = ?', [$account_name[0]->conta_id]);
-                  $verificacao_page2= DB::select('select * from pages where conta_id_a = ?', [$conta_logada[0]->conta_id]);
-                  $verificacao_page3= DB::select('select * from pages where conta_id_b = ?', [$conta_logada[0]->conta_id]);
-
-                  $perfil[0]['verificacao_relac']=0;
-                  if (sizeof($verificacao_page2) > 0){
-                    foreach ($verificacao_page2 as $key) {
-                      if ($key->tipo_relacionamento_id != 1) {
-                        $perfil[0]['verificacao_relac']=1;
-                        if ($key->tipo_relacionamento_id == 2) {
-                        $perfil[0]['relac']="Noivo de ";
-                      }elseif ($key->tipo_relacionamento_id == 3) {
-                        $perfil[0]['relac']="Apresentado(a) ";
-                      }elseif ($key->tipo_relacionamento_id == 4) {
-                        $perfil[0]['relac']="Casado(a) com ";
-                      }elseif ($key->tipo_relacionamento_id == 5) {
-                        $perfil[0]['relac']="Namorado(a) de ";
-                      }
-
-                      $conta = DB::select('select * from contas where conta_id = ?', [$key->conta_id_b]);
-
-                        $perfil[0]['relac1']=$conta[0]->nome;
-                        $perfil[0]['relac1'].=" ";
-                        $perfil[0]['relac1'].=$conta[0]->apelido;
-                  }
-                }
-              }elseif (sizeof($verificacao_page3) > 0){
-                foreach ($verificacao_page3 as $key) {
-                  if ($key->tipo_relacionamento_id != 1) {
-                    $perfil[0]['verificacao_relac']=1;
-                    if ($key->tipo_relacionamento_id == 2) {
-                    $perfil[0]['relac']="Noivo de ";
-                  }elseif ($key->tipo_relacionamento_id == 3) {
-                    $perfil[0]['relac']="Apresentado(a) ";
-                  }elseif ($key->tipo_relacionamento_id == 4) {
-                    $perfil[0]['relac']="Casado(a) com ";
-                  }elseif ($key->tipo_relacionamento_id == 5) {
-                    $perfil[0]['relac']="Namorado(a) de ";
-                  }
-
-                  $conta = DB::select('select * from contas where conta_id = ?', [$key->conta_id_a]);
-
-                    $perfil[0]['relac1']=$conta[0]->nome;
-                    $perfil[0]['relac1'].=" ";
-                    $perfil[0]['relac1'].=$conta[0]->apelido;
-              }
-            }
-          }
-                    $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
-                    $perfil[0]['verificacao_pedido1']=sizeof($verificacao_pedido1);
-                    $perfil[0]['verificacao_page']=sizeof($verificacao_page);
-                    $perfil[0]['verificacao_page1']=sizeof($verificacao_page1);
-                    $perfil[0]['verificacao_page2']=sizeof($verificacao_page2);
-                    $perfil[0]['verificacao_page3']=sizeof($verificacao_page3);
-                    $perfil[0]['qtd_ps']=sizeof($seguidor);                    $perfil[0]['qtd_like']=sizeof($post_reactions);
-                    $perfil[0]['qtd_guardados']=sizeof($guardado);
-               foreach ($post_reactions as $key ) {
-                 $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
-                 if (sizeof($posts) > 0) {
-                $page= DB::select('select * from pages where page_id = ?', [$posts[0]->page_id]);
-                $gostos[$a]['nome_page']=$page[0]->nome;
-                $gostos[$a]['page_uuid']=$page[0]->uuid;
-                $gostos[$a]['foto_page']=$page[0]->foto;
-                $gostos[$a]['formato']=$posts[0]->formato_id;
-                $gostos[$a]['file']=$posts[0]->file;
-                $gostos[$a]['post']=$posts[0]->descricao;
-                $gostos[$a]['post_id']=$posts[0]->post_id;
-                $gostos[$a]['post_uuid']=$posts[0]->uuid;
-                $a++;
-                }
-               }
-
-              } else {
-                $perfil[0]['qtd_ps'] = 0;
-              }
 
               //dd($account_name);
 
 
+
               return view('perfil.index', compact('account_name','notificacoes_count', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
+
+              return view('perfil.index', compact('account_name','guardadosP','notificacoes_count', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+
 
 
         } catch (Exception $e) {
@@ -326,7 +268,8 @@ class PerfilController extends Controller
         try {
 
           $page_couple = new PaginaCasalController();
-            $dates = $this->default_();
+          $controll = new AuthController();
+           $dates = $controll->default_();
             $checkUserStatus = $dates['checkUserStatus'];
             $profile_picture = $dates['profile_picture'];
             $isUserHost = $dates['isUserHost'];
@@ -339,6 +282,7 @@ class PerfilController extends Controller
             $paginasSeguidas = $dates['paginasSeguidas'];
             $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
             $dadosSeguida = $dates['dadosSeguida'];
+
 
             //-------------------------------------------------------------------------
               $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
@@ -437,6 +381,27 @@ class PerfilController extends Controller
               } else {
                 $perfil[0]['qtd_ps'] = 0;
               }
+
+            $dadosP = $this->dadosPerfil($id);
+            $perfil=$dadosP['perfil'];
+            $gostos=$dadosP['gostos'];
+            $account_name=$dadosP['account_name'];
+            $guardadosP=$dadosP['guardadosP'];
+            $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+
+            foreach ($dadosSgndo as $value) {
+                $valor = $value->identificador_id;
+            }
+
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+
+            $tt = 0;
+            //-------------------------------------------------------------------------
+
+
               $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
               $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
               $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
@@ -454,12 +419,17 @@ class PerfilController extends Controller
 
 
 
+
               return view('perfil.index', compact('account_name', 'notificacoes_count','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
+
+              return view('perfil.index', compact('account_name','guardadosP', 'notificacoes_count','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
+
 
         } catch (Exception $e) {
             dd('erro');
         }
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -505,7 +475,8 @@ class PerfilController extends Controller
           $account_name = DB::select('select * from contas where uuid = ?', [$perfil]);
 
           $page_couple = new PaginaCasalController();
-          $dates = $this->default_();
+          $controll = new AuthController();
+           $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];

@@ -15,10 +15,68 @@ class PaginaCasalController extends Controller
     private $current_page_uuid;
     private static $uuid = '';
 
+    public function paginas_que_sigo($id){
+      $controll = new AuthController();
+       $dates = $controll->default_();
+      $account_name = $dates['account_name'];
+      $checkUserStatus = $dates['checkUserStatus'];
+      $profile_picture = $dates['profile_picture'];
+      $isUserHost = $dates['isUserHost'];
+      $hasUserManyPages = $dates['hasUserManyPages'];
+      $allUserPages = $dates['allUserPages'];
+      $page_content = $dates['page_content'];
+      $conta_logada = $dates['conta_logada'];
+      $notificacoes = $dates['notificacoes'];
+      $dadosSeguindo = $dates['dadosSeguindo'];
+      $dadosPage = $dates['dadosPage'];
+      $dadosSeguida = $dates['dadosSeguida'];
+      $notificacoes_count = $dates['notificacoes_count'];
+
+
+      /*siene*/ //$casalPageName = $this->get_casalPage_name($uuid);
+
+      $page_current = 'page';
+      $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
+      $seguidores = Self::seguidores($page_content[0]->page_id);
+      $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
+      $publicacoes = $this->get_all_post($page_content[0]->page_id);
+      $this->current_page_id = $page_content[0]->page_id;
+      $sugerir = $this->suggest_pages($page_content[0]->page_id);
+      $allPosts = $this->get_post_types($page_content[0]->page_id);
+     $PS=array();
+     $a=0;
+     $page=DB::table('pages')->get();
+     $conta = DB::select('select * from contas where uuid = ?', [$id]);
+     foreach ($page as $key ) {
+       $aux = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+       $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$key->page_id, 2 ]);
+       $aux2= DB::select('select * from seguidors where (identificador_id_seguida,	identificador_id_seguindo) = (?, ?)', [$aux1[0]->identificador_id,$aux[0]->identificador_id]);
+       if (sizeof($aux2)>0) {
+         $PS[$a]['foto']=$key->foto;
+         $PS[$a]['uuid']=$key->uuid;
+         $PS[$a]['nome']=$key->nome;
+         $aux3= DB::select('select * from seguidors where identificador_id_seguida = ?', [$aux1[0]->identificador_id]);
+         $PS[$a]['qtdseg']=sizeof($aux3);
+         $a++;
+       }
+
+       $v[0]['id']=$conta[0]->conta_id;
+
+     }
+
+
+        return view('pagina.couple_page_following', compact('account_name','v','PS','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
+    }
+
     public function index(){
+
 
       $page_couple = new PerfilController();
       $dates = $page_couple->default_();
+
+      $controll = new AuthController();
+       $dates = $controll->default_();
+
       $account_name = $dates['account_name'];
       $checkUserStatus = $dates['checkUserStatus'];
       $profile_picture = $dates['profile_picture'];
@@ -112,8 +170,8 @@ $v=1;
           $pedido[0]['pedido_relacionamento_id']=$tipo[0]->pedido_relacionamento_id;
           $pedido[0]['estado']=$tipo[0]->estado_pedido_relac_id;
 
-      $page_couple = new PerfilController();
-      $dates = $page_couple->default_();
+          $controll = new AuthController();
+           $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -146,7 +204,8 @@ $v=1;
       }
 
     public function request_relationship() {
-        $dates = $this->default_();
+      $controll = new AuthController();
+       $dates = $controll->default_();
         $account_name = $dates['account_name'];
         $checkUserStatus = $dates['checkUserStatus'];
         $profile_picture = $dates['profile_picture'];
@@ -170,6 +229,7 @@ $v=1;
         return view('relacionamento.index', compact('account_name','notificacoes_count', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'paginasNaoSeguidas', 'paginasNaoSeguidas', 'dadosSeguida',));
 
     }
+
     public function default_(){
                $account_name = AuthController::defaultDate();
                $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
@@ -331,6 +391,8 @@ $v=1;
                return $dates;
            }
 
+
+
     public function show_page()
     {
 
@@ -350,7 +412,8 @@ $v=1;
             //dd($page_content);
 
 
-                  $dates = $this->default_();
+            $controll = new AuthController();
+             $dates = $controll->default_();
                   $account_name = $dates['account_name'];
                   $checkUserStatus = $dates['checkUserStatus'];
                   $profile_picture = $dates['profile_picture'];
@@ -399,8 +462,8 @@ $v=1;
 
     public function my_pages(){
         try {
-      $page_couple = new PerfilController();
-      $dates = $page_couple->default_();
+          $controll = new AuthController();
+           $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -415,6 +478,38 @@ $v=1;
           $paginasSeguidas = $dates['paginasSeguidas'];
           $dadosSeguida = $dates['dadosSeguida'];
           $page_current = 'relationship_request';
+
+
+            $dadosPage = Page::all();
+
+
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+            foreach ($dadosSgndo as $value) {
+                $valor = $value->identificador_id;
+            }
+
+            $dadoSeguindo = DB::table('seguidors')->where('identificador_id_seguindo', $valor)->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+            ->select('seguidors.*', 'identificadors.id')
+            ->get();
+
+            $tt = 0;
+            foreach ($dadoSeguindo as $valor1) {
+                if ($valor1->id == $account_name[0]->conta_id) {
+                        $key = 0;
+                        $dadosSeguindo[$key] = [
+                            'id_seguidor' => $valor1->seguidor_id,
+                            'identificador_id_seguida' => $valor1->identificador_id_seguida,
+                            'identificador_id_seguindo' => $valor1->identificador_id_seguindo,
+                            'id' => $valor1->id,
+                            ];
+                    }
+                }
+
+            $dadosSeguindo = $dates['dadosSeguindo'];
+            $dadosPage = $dates['dadosPage'];
+            $dadosSeguida = $dates['dadosSeguida'];
+
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $seguidores = Self::seguidores($page_content[0]->page_id);
             $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
@@ -422,7 +517,7 @@ $v=1;
             $this->current_page_id = $page_content[0]->uuid;
 
 
-            //==============================
+            //======================
               // siene
             //=============================================
 
@@ -454,8 +549,8 @@ $v=1;
 
     public function paginas($uuid){
         try {
-          $page_couple = new PerfilController();
-          $dates = $page_couple->default_();
+          $controll = new AuthController();
+           $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -519,8 +614,8 @@ $v=1;
 
     public function edit_couple(){
         try {
-      $page_couple = new PerfilController();
-      $dates = $page_couple->default_();
+          $controll = new AuthController();
+           $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -552,8 +647,8 @@ $v=1;
 
     public function delete_couple_page(){
         try {
-      $page_couple = new PerfilController();
-      $dates = $page_couple->default_();
+          $controll = new AuthController();
+           $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
           $profile_picture = $dates['profile_picture'];
@@ -729,8 +824,8 @@ $v=1;
 
     //---------------------------------------------------------
 
-    // Pega o nome do casal da pagina 
-    private static function get_casalPage_name($uid) 
+    // Pega o nome do casal da pagina
+    private static function get_casalPage_name($uid)
     {
       //dd($uid);
       $data = DB::table('pages')->where('uuid', $uid)->select('conta_id_a', 'conta_id_b')->get();
