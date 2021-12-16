@@ -324,6 +324,7 @@
                         }
                     }
                 ?>
+                        <input type="hidden" name="" id="id_last_segida" value="0">
                         <li class="li-component-aside-right clearfix sigo" id="seguida-{{$Paginas->page_id}}">
                         @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
@@ -413,6 +414,7 @@
                         }
                     }
                 ?>
+                <input type="hidden" name="" id="id_last_suggest" value="0">
                 <li class="li-component-aside-right clearfix nao_sigo" id="li-component-sugest-{{$Paginas->page_id}}">
                         @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
@@ -1033,8 +1035,13 @@
             e.preventDefault();
             var valor_pagina_id = e.target.id;
             var valor_idconta = $('#conta_id').val();
+            alert($('#id_last_suggest').val());
             if (($('.nao_sigo').eq(2).attr("id")) == null) {
-                var id_last_page = 0;
+                if ($('#id_last_suggest').val() != 0) {
+                    var id_last_page = $('#id_last_suggest').val();
+                }else{
+                    var id_last_page = 0;
+                }
             }else{
                var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];
             }
@@ -1050,12 +1057,13 @@
                 success: function(response){
                     if (response.page != 'Vazio') {
                   $.each(response.page, function(key, value){
+                    $('#id_last_suggest').val(value.page_id);
                     if (value.foto == null) {
                         let src = "{{asset('storage/img/page/unnamed.jpg')}}";
-                  $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''><input type='hidden' id='seguindo' value="+response.id_user+" name=''></li>");
+                  $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''><input type='hidden' id='seguindo' value="+response.id_user+" name=''></li>");
                     }else{
                         let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
-                        $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''><input type='hidden' id='seguindo' value="+response.id_user+" name=''></li>");
+                        $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''><input type='hidden' id='seguindo' value="+response.id_user+" name=''></li>");
                     }
                     });
                 }
@@ -1068,13 +1076,17 @@
             var valor_seguida = e.target.id.split('-')[1];
              var valor_seguindo = $('#seguindo').val()
              if (($('.sigo').eq(2).attr("id")) == null) {
-                var id_last_page = 0;
+                if ($('#id_last_segida').val() != 0) {
+                    var id_last_page = $('#id_last_segida').val();
+                }else{
+                    var id_last_page = 0;
+                }
             }else{
                var id_last_page = $('.sigo').eq(2).attr("id").split('-')[1];
             }
              var npage_id = $('#npage_id').val();
              $('#seguida-' + valor_seguida).remove();
-             alert(id_last_page)
+             alert($('#id_last_segida').val());
              $.ajax({
                 url: "{{route('nao.seguir.seguindo')}}",
                 type: 'get',
@@ -1084,6 +1096,7 @@
                   $('.seguir-' + npage_id).show();
                    if (response.page != 'Vazio') {
                   $.each(response.page, function(key, value){
+                    $('#id_last_segida').val(value.page_id);
                     if (value.foto == null) {
                         let src = "{{asset('storage/img/page/unnamed.jpg')}}";
                   $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''><input type='hidden' id='seguindo' value="+response.id_user+" name=''></li>");
