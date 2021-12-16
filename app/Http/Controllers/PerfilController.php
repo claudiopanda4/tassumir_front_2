@@ -93,34 +93,6 @@ class PerfilController extends Controller
              $perfil[0]['relac1'].=$conta[0]->apelido;
            }
 
-         }
-         }
-            $authctrol = new AuthController;
-            $paginasSeguidas = $authctrol->paginasSeguidas();
-            $paginasNaoSeguidas = $authctrol->paginasNaoSeguidas();
-            $dadosSeguida = DB::table('seguidors')
-             ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
-             ->select('seguidors.*', 'identificadors.id')
-             ->get();
-
-         $dates = [
-             "account_name" => $account_name,
-             "checkUserStatus" => $checkUserStatus,
-             "profile_picture" => $profile_picture,
-             "isUserHost" => $isUserHost,
-             "hasUserManyPages" => $hasUserManyPages,
-             "allUserPages" => $allUserPages,
-             "page_content" => $page_content,
-             "checkUserStatus" => $checkUserStatus,
-             "conta_logada" => $conta_logada,
-             "paginasSeguidas" => $paginasSeguidas,
-             "dadosSeguida" => $dadosSeguida,
-             "paginasNaoSeguidas" => $paginasNaoSeguidas,
-             "notificacoes" => $notificacoes,
-             "notificacoes_count" => $notificacoes_count,
-         ];
-         return $dates;
-
            }
            }
            $perfil[0]['Pedido_relac_uuid']=0;
@@ -253,8 +225,6 @@ class PerfilController extends Controller
 
 
               return view('perfil.index', compact('account_name','notificacoes_count', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
-
-              return view('perfil.index', compact('account_name','guardadosP','notificacoes_count', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
 
 
@@ -421,8 +391,6 @@ class PerfilController extends Controller
 
 
               return view('perfil.index', compact('account_name', 'notificacoes_count','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
-
-              return view('perfil.index', compact('account_name','guardadosP', 'notificacoes_count','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage'));
 
 
         } catch (Exception $e) {

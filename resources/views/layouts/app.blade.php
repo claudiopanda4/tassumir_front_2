@@ -1035,7 +1035,6 @@
             e.preventDefault();
             var valor_pagina_id = e.target.id;
             var valor_idconta = $('#conta_id').val();
-            alert($('#id_last_suggest').val());
             if (($('.nao_sigo').eq(2).attr("id")) == null) {
                 if ($('#id_last_suggest').val() != 0) {
                     var id_last_page = $('#id_last_suggest').val();
@@ -1048,7 +1047,6 @@
              $('#li-component-sugest-' + valor_pagina_id).remove();
              $('#li-component-suggest-' + valor_pagina_id).remove();
              $('.seguir-' + valor_pagina_id).hide();
-             alert(id_last_page)
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
@@ -1086,7 +1084,6 @@
             }
              var npage_id = $('#npage_id').val();
              $('#seguida-' + valor_seguida).remove();
-             alert($('#id_last_segida').val());
              $.ajax({
                 url: "{{route('nao.seguir.seguindo')}}",
                 type: 'get',
