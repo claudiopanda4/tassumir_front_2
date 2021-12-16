@@ -90,20 +90,20 @@ class PostController extends Controller
                                 if ($control_posts == 0) {
                                     if (!(in_array($posts[$key], $posts_return)) && $page_controller->following($account_id, $posts[$key]->page_id)) {
                                         $posts_return[$i] = $posts[$key];
-                                        $i++; 
+                                        $i++;
                                     }
                                 } elseif ($control_posts == 1) {
                                     if (!(in_array($posts[$key], $posts_return))) {
                                         $posts_return[$i] = $posts[$key];
-                                        $i++; 
+                                        $i++;
                                     }
                                 }
                             }
                             $result = !$result;
                         }
                         $auxs[$iii] = $aux.' '.$aux1.' size off '.sizeof($posts_return).' '.$counter;
-                        $aux = $aux + 4;   
-                        $aux1 = $aux1 + 4;     
+                        $aux = $aux + 4;
+                        $aux1 = $aux1 + 4;
                         $counter--;
                         $iii++;
                     }
@@ -113,7 +113,7 @@ class PostController extends Controller
                         $aux1 = 0;
                     }
                     $control_posts++;
-                } 
+                }
                 //dd($posts_return);
             }
             DB::commit();
@@ -123,10 +123,10 @@ class PostController extends Controller
         }
     }
     public function posts_no_follow(){
-        
+
     }
     public function posts_no(){
-        
+
     }
     public function view($post_id, $account_id){
         $post_views = DB::select('select post_id, conta_id from views where conta_id = ? && post_id = ? limit 1', [$account_id, $post_id]);
@@ -161,7 +161,7 @@ class PostController extends Controller
             DB::rollback();
         }
     }
-    
+
     public function reactions_post($post_id){
         $reactions_post = DB::select('select post_id from post_reactions where post_id = ?', [$post_id]);
         $size = sizeof($reactions_post);
@@ -184,7 +184,17 @@ class PostController extends Controller
         $dadosPage = $dates['dadosPage'];
         $dadosSeguida = $dates['dadosSeguida'];
         $notificacoes_count = $dates['notificacoes_count'];
-        return view('videos.index', compact('account_name','checkUserStatus','notificacoes_count','notificacoes', 'profile_picture', 'conta_logada', 'page_content'));
+
+        $post=DB::select('select * from posts where formato_id = ?', [1]);
+        $a=0;
+
+        $dados = array();
+        foreach ($post as $key) {
+        $dados[$a] = $auth->DadosPost($key);
+        $a++;
+        }
+
+        return view('videos.index', compact('account_name','dados','checkUserStatus','notificacoes_count','notificacoes', 'profile_picture', 'conta_logada', 'page_content'));
     }
 
     public function destaques($limit){
@@ -240,8 +250,8 @@ class PostController extends Controller
         } catch (Exception $e) {
             DB::rollback();
         }
-        
-        
+
+
     }
     public function view_video(Request $request)
     {

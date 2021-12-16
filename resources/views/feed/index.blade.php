@@ -124,7 +124,7 @@
                             <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$key ?>>
                             <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$key ?>>
                             <video class="video-post-video" id="video_{{$key}}">
-                                
+
                                 Your browser does not support the video tag.
                             </video>
                             <input type="hidden" name="" value="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}" id="watch-video-{{$key}}">
@@ -292,6 +292,7 @@
                             @else
                                 <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
                             @endif
+                          </a>
                       </div>
                 </div>
               <?php endif ?>

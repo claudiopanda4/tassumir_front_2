@@ -251,5 +251,67 @@
     </div>
 </body>
 <script type="text/javascript">
+$(document).ready(function () {
+  $('.like-a').click(function (e) {
+      e.preventDefault();
+      let id = e.target.id.split('|');
+      if(id[0] == "on"){
+        gostar(id[1]);
+        let new_id = "off|" + id[1] + "|i";
+        document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+        document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+        document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+        document.getElementById("off|" + id[1] + "|i").classList.add('far');
+      } else if(id[0] == "off") {
+        gostar(id[1]);
+        let new_id = "on|" + id[1] + "|i";
+        document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+        document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+        document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+        document.getElementById("on|" + id[1] + "|i").classList.remove('far');
+      }
+  });
+
+  $('.comment-like-a').click(function (e) {
+      e.preventDefault();
+      let id = e.target.id.split('|');
+      if(id[0] == "on"){
+        comment_reac(id[1]);
+        let new_id = "off|" + id[1] + "|i";
+        document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+        document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+        document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+        document.getElementById("off|" + id[1] + "|i").classList.add('far');
+      } else if(id[0] == "off") {
+        comment_reac(id[1]);
+        let new_id = "on|" + id[1] + "|i";
+        document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+        document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+        document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+        document.getElementById("on|" + id[1] + "|i").classList.remove('far');
+      }
+  });
+  $('.savepost').click(function (e) {
+      e.preventDefault();
+      let id = e.target.id.split('-');
+      guardar(id[1]);
+
+  });
+  $('.comentar-a').click(function (e) {
+      e.preventDefault();
+      let id = e.target.id;
+      let coment = $('#comentario-' + id).val();
+      //alert(coment);
+      if(coment != ''){
+        $("#comment-own-" + id).text(coment);
+      $("#comment-users-own-" + id).css({
+        display: "flex",
+      });
+      $("#comment-users-" + id).hide();
+      $("#comentario-" + id).val('');
+      comentar(id, coment);
+    }
+
+});
 </script>
 </html>
