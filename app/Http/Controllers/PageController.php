@@ -26,7 +26,7 @@ class PageController extends Controller
             $identificador = DB::table('identificadors')
                 ->where('tipo_identificador_id', $tipo_identficador)
                 ->where('id', $id)
-                ->first();    
+                ->first();
         } elseif ($tipo_identficador == 1) {
             $identificador = DB::table('identificadors')
                 ->where('tipo_identificador_id', $tipo_identficador)
@@ -42,7 +42,7 @@ class PageController extends Controller
         $return = false;
         if (sizeof($seguidors) > 0) {
             $return = true;
-        } 
+        }
         return $return;
     }
     /**

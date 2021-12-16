@@ -26,8 +26,8 @@
             </div>
             <ul class="profile-follow profile-item-center">
                 <li class="statistics-profile">
-                    <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_ps']}}</h2>
-                    <h2 style="justify-content: center; font-size: 11.5px;">Seguindo</h2>
+                  <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}">  <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_ps']}}</h2></a>
+                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}"><h2 style="justify-content: center; font-size: 11.5px;">Seguindo</h2></a>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                     <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
                   <?php endif; ?>
