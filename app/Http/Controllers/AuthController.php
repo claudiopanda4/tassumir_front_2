@@ -1072,15 +1072,12 @@ class AuthController extends Controller
                   'telefone' => $takePhone,
               ]);
 
-<<<<<<< HEAD
-              /*if ($takeEmail != null) {
-                    $codHugo = random_int(1000,9000);
-=======
+
+              /*
               if ($takeEmail != null) {
 
                     $codHugo = random_int(1000,9000);
 
->>>>>>> 2c9939a98b623d40b0f266ff2867698e1bd3fd65
                     dd("entrei no teste email");
                     Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
               }*/
