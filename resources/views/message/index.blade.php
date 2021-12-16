@@ -280,7 +280,6 @@
                 data: {'user_send': remetente, 'conta_send': conta_destino},
                 dataType: 'json',
                 success:function(response){
-                  
                         let destinatario = response.destinatario;
                         let foto_user_logado = response.foto_rem;
                     $('#message_user_destino').empty();
@@ -463,7 +462,7 @@
                 dataType: 'json',
                 success: function(response){
                   if (response.resultado == "Salvou") {
-                    alert($('.uma_sms').eq(0).attr("id"));
+                    console.log(response.valor);
                     $('.uma_sms').eq(0).remove();
                     $('#message_user_dest:first-child').text('Angola');
                     $('#message_send').val("");
@@ -499,9 +498,7 @@
                         dataType: 'json',
                         success:function(response){
                     if (response.code == 1) {
-                        console.log(response.code);
-                        console.log(response.valor);
-                            let destinatario = response.destinatario;
+                        let destinatario = response.destinatario;
                         let foto_user_logado = response.foto_rem;
                     $('#message_user_destino').empty();
                     $('#user_chat').empty();
@@ -560,7 +557,6 @@
                         dataType: 'json',
                         success:function(response){
                             if (response.code == 1) {
-                                console.log(response.code);
                             let destinatario = response.destinatario;
                         let foto_user_logado = response.foto_rem;
                     $('#message_user_destino').empty();
@@ -621,7 +617,6 @@
                 data: {'user_send': remetente, 'conta_send': conta_destino},
                 dataType: 'json',
                 success:function(response){
-                        console.log(response.valor);
                         let destinatario = response.destinatario;
                         let foto_user_logado = response.foto_rem;
                     $('#message_user_destino').empty();

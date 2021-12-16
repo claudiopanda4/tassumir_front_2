@@ -57,9 +57,15 @@
                         <label for="target-invited-relationship" style="width: 100%;">
                           <!--  <div class="follwing-btn follwing-btn-pop-up" >-->
                                 <h2>Pendente</h2>
+<<<<<<< HEAD
+                            </div>
+                        </label>
+                        <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
+=======
                           <!--   </div> -->
                        </label>
                         <form action="{{route('message.index')}}">
+>>>>>>> f0e1f8ac3850737ee59c01463a7754086e819b43
                             <button class="btn-message">
                                 <i class="far fa-comment-dots fa-24 fa-option center"></i>
                             </button>
@@ -91,19 +97,21 @@
                     <?php elseif ($perfil[0]['verificacao_pedido'] == 2 ): ?>
                       <div class="hidden-click-any-container options-invited clearfix">
                           <a  href="{{route('relationship.page1', $perfil[0]['Pedido_relac_uuid']) }}" class="ver_mais" id="VR|{{$perfil[0]['not_id']}}">Ver Resposta</a>
-                      </div>
-                              <!-- <label for="target-invited-relationship" style="width: 100%;">
-                                  <div class="follwing-btn follwing-btn-pop-up" >
+               
+                        </div>
+                            <!-- <label for="target-invited-relationship" style="width: 100%;">
+                                <div class="follwing-btn follwing-btn-pop-up" >
 
-                                      <h2>Aceitar</h2>
-                                  </div>
-                              </label>-->
-                              <form action="{{route('message.index')}}">
-                                  <button class="btn-message">
-                                      <i class="far fa-comment-dots fa-24 fa-option center"></i>
-                                  </button>
-                              </form>
-                          </div>
+                                    <h2>Aceitar</h2>
+                                </div>
+                            </label>-->
+                            <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
+                                <button class="btn-message">
+                                    <i class="far fa-comment-dots fa-24 fa-option center"></i>
+                                </button>
+                            </form>
+                        </div>
+
                     <?php else: ?>
                     <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
                         <label for="target-invited-relationship" style="width: 100%;">
