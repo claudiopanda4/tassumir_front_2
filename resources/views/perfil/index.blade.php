@@ -57,15 +57,11 @@
                         <label for="target-invited-relationship" style="width: 100%;">
                           <!--  <div class="follwing-btn follwing-btn-pop-up" >-->
                                 <h2>Pendente</h2>
-<<<<<<< HEAD
+
                             </div>
                         </label>
                         <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
-=======
-                          <!--   </div> -->
-                       </label>
-                        <form action="{{route('message.index')}}">
->>>>>>> f0e1f8ac3850737ee59c01463a7754086e819b43
+
                             <button class="btn-message">
                                 <i class="far fa-comment-dots fa-24 fa-option center"></i>
                             </button>
