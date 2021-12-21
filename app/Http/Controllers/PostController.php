@@ -181,8 +181,8 @@ class PostController extends Controller
         $page_content = $dates['page_content'];
         $conta_logada = $dates['conta_logada'];
         $notificacoes = $dates['notificacoes'];
-        $dadosSeguindo = $dates['dadosSeguindo'];
-        $dadosPage = $dates['dadosPage'];
+        $paginasSeguidas = $dates['paginasSeguidas'];
+        $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
         $dadosSeguida = $dates['dadosSeguida'];
         $notificacoes_count = $dates['notificacoes_count'];
 
