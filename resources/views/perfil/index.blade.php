@@ -93,7 +93,7 @@
                     <?php elseif ($perfil[0]['verificacao_pedido'] == 2 ): ?>
                       <div class="hidden-click-any-container options-invited clearfix">
                           <a  href="{{route('relationship.page1', $perfil[0]['Pedido_relac_uuid']) }}" class="ver_mais" id="VR|{{$perfil[0]['not_id']}}">Ver Resposta</a>
-               
+
                         </div>
                             <!-- <label for="target-invited-relationship" style="width: 100%;">
                                 <div class="follwing-btn follwing-btn-pop-up" >
@@ -250,6 +250,7 @@
                 </div>
                 <?php endif; ?>
                 <?php if ($_GET['post-container-post'] == 'saved'): ?>
+                  <?php if (sizeof($guardadosP)>0): ?>
                   <?php foreach ($guardadosP as $key => $value): ?>
 
                         <div class="card br-10">
@@ -316,7 +317,7 @@
 
                   </div>
                   <?php endforeach ?>
-
+                <?php endif; ?>
                 <?php endif; ?>
             <?php else: ?>
             <div class="post-img-container-page post-page-container">

@@ -21,7 +21,7 @@ class PostController extends Controller
         dd($posts);
         //;
     }
-    
+
     public function posts() {
         $dados = [];
         $total_posts = 10;
@@ -169,7 +169,7 @@ class PostController extends Controller
         return $size;
     }
 
-    public function tassumirvideos(){
+    public function tassumirvideos($id){
         $auth = new AuthController();
         $dates = $auth->default_();
         $account_name = $dates['account_name'];
@@ -181,12 +181,118 @@ class PostController extends Controller
         $page_content = $dates['page_content'];
         $conta_logada = $dates['conta_logada'];
         $notificacoes = $dates['notificacoes'];
-        $dadosSeguindo = $dates['dadosSeguindo'];
-        $dadosPage = $dates['dadosPage'];
         $dadosSeguida = $dates['dadosSeguida'];
         $notificacoes_count = $dates['notificacoes_count'];
 
-        $post=DB::select('select * from posts where formato_id = ?', [1]);
+       switch ($id) {
+         case 'ma':
+         $post1=DB::select('select * from posts where formato_id = ?', [1]);
+         $post=array();
+         for ($i=0; $i < 5 ; $i++) {
+           $a=0;
+           foreach ($post1 as $key) {
+             $post_views= DB::select('select * from post_views where post_id = ?', [$key->post_id]);
+             $soma= sizeof($post_views);
+             $b=0;
+
+               for ($j=0; $j <sizeof($post); $j++) {
+                 if ($key->post_id == $post[$j]->post_id ){
+                   $b=1;
+                 }
+               }
+               if ($soma >= $a && $b!=1 && $key->estado_post_id == 1) {
+                 $post[$i]= $key;
+
+                 $a=$soma;
+               }
+             }
+           }
+          break;
+        case 'mg':
+        $post1=DB::select('select * from posts where formato_id = ?', [1]);
+        $post=array();
+        $a=0;
+          foreach ($post1 as $key) {
+            $guardado= DB::select('select * from saveds where post_id = ?', [$key->post_id]);
+            if (sizeof($guardado)>0) {
+              $post[$a]= $key;
+              $a++;
+          }
+
+            }
+
+           break;
+        case 'mc':
+        $post1=DB::select('select * from posts where formato_id = ?', [1]);
+        $post=array();
+        for ($i=0; $i < 5 ; $i++) {
+          $a=0;
+          foreach ($post1 as $key) {
+            $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
+            $soma= sizeof($likes);
+            $b=0;
+
+              for ($j=0; $j <sizeof($post); $j++) {
+                if ($key->post_id == $post[$j]->post_id ){
+                  $b=1;
+                }
+              }
+              if ($soma >= $a && $b!=1 && $key->estado_post_id == 1) {
+                $post[$i]= $key;
+
+                $a=$soma;
+              }
+            }
+          }
+
+            break;
+        case 'mr':
+        $post1=DB::select('select * from posts where formato_id = ?', [1]);
+        $post=array();
+        for ($i=0; $i < 5 ; $i++) {
+          $a=0;
+          foreach ($post1 as $key) {
+            $soma=$key->post_id;
+            $b=0;
+
+              for ($j=0; $j <sizeof($post); $j++) {
+                if ($key->post_id == $post[$j]->post_id ){
+                  $b=1;
+                }
+              }
+              if ($soma >= $a && $b!=1 && $key->estado_post_id == 1) {
+                $post[$i]= $key;
+
+                $a=$soma;
+              }
+            }
+          }
+             break;
+        case 'mco':
+        $post1=DB::select('select * from posts where formato_id = ?', [1]);
+        $post=array();
+        for ($i=0; $i < 5 ; $i++) {
+          $a=0;
+          foreach ($post1 as $key) {
+            $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
+            $soma=sizeof($comment);
+            $b=0;
+
+              for ($j=0; $j <sizeof($post); $j++) {
+                if ($key->post_id == $post[$j]->post_id ){
+                  $b=1;
+                }
+              }
+              if ($soma >= $a && $b!=1 && $key->estado_post_id == 1) {
+                $post[$i]= $key;
+
+                $a=$soma;
+              }
+            }
+          }
+
+              break;
+}
         $a=0;
 
         $dados = array();
@@ -195,7 +301,7 @@ class PostController extends Controller
         $a++;
         }
 
-        return view('videos.index', compact('account_name','dados','checkUserStatus','notificacoes_count','notificacoes', 'profile_picture', 'conta_logada', 'page_content'));
+        return view('videos.index',compact('account_name','dados','checkUserStatus','profile_picture','isUserHost','hasUserManyPages','allUserPages','conta_logada','page_content','notificacoes','notificacoes_count','dadosSeguida'));
     }
 
     public function destaques($limit){
