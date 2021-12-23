@@ -325,7 +325,7 @@
                     }
                 ?>
                        
-                        <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
+                        <li class="li-component-suggest clearfix l-5 sugest_page" id="li-component-suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
@@ -340,6 +340,7 @@
                                     <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
                                     <a href="" class="seguir_index" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
                                     <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+                                   <input type="hidden" name="" value="0" id="last_page"> 
                                 </li>  
                                 @empty
 
@@ -489,12 +490,17 @@ function gostar(id){
             var valor_pagina_id = e.target.id;
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
-            id_last_page = 0;
-            //$('#' + valor_pagina_id).empty();
 
-            $('#li-component-suggest-' + valor_pagina_id).remove();
-
-
+            if (($('.sugest_page').eq(2).attr("id")) == null) {
+                if (($('#last_page').val()) != 0) {
+                    var id_last_page = $('#last_page').val();
+                }else{
+                    var id_last_page = 0;
+                }
+            }else{
+               var id_last_page = $('.sugest_page').eq(2).attr("id").split('-')[3];
+            }            //$('#' + valor_pagina_id).empty();
+            alert('valor_pagina_id: '+valor_pagina_id+'valor_idconta: '+valor_idconta+'last_page: '+id_last_page);
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
@@ -503,16 +509,18 @@ function gostar(id){
                 success: function(response){
                   console.log(response);
                   $('#li-component-suggest-' + valor_pagina_id).remove();
+                  $('#li-component-suggest-' + valor_pagina_id).remove();
                   $('#li-component-sugest-' + valor_pagina_id).remove();
                   $('.seguir-' + valor_pagina_id).hide();
                   if (response.page != 'Vazio') {
                   $.each(response.page, function(key, value){
+                    $('#last_page').val(value.page_id);
                     if (value.foto != null) {
                     let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
-                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=></li>");
+                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }else{
                         let src = "{{asset('storage/img/page/unnamed.jpg')}}";
-                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=></li>");
+                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }
                 });
                 }
