@@ -60,12 +60,6 @@
 
                             </div>
                         </label>
-                        <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
-
-                            <button class="btn-message">
-                                <i class="far fa-comment-dots fa-24 fa-option center"></i>
-                            </button>
-                        </form>
                     </div>
                   <?php elseif ($perfil[0]['verificacao_pedido1'] == 1 ): ?>
                     <div class="hidden-click-any-container options-invited clearfix">
@@ -84,11 +78,6 @@
                                   <h2>Aceitar</h2>
                               </div>
                           </label>-->
-                          <form action="{{route('message.index')}}">
-                              <button class="btn-message">
-                                  <i class="far fa-comment-dots fa-24 fa-option center"></i>
-                              </button>
-                          </form>
                       </div>
                     <?php elseif ($perfil[0]['verificacao_pedido'] == 2 ): ?>
                       <div class="hidden-click-any-container options-invited clearfix">
@@ -101,11 +90,6 @@
                                     <h2>Aceitar</h2>
                                 </div>
                             </label>-->
-                            <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
-                                <button class="btn-message">
-                                    <i class="far fa-comment-dots fa-24 fa-option center"></i>
-                                </button>
-                            </form>
                         </div>
 
                     <?php else: ?>
@@ -115,16 +99,18 @@
                                 <h2>Assumir</h2>
                             </div>
                         </label>
-                        <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
-                            <button class="btn-message">
-                                <i class="far fa-comment-dots fa-24 fa-option center"></i>
-                            </button>
-                        </form>
-
                     </div>
                     <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
+            <div >
+              <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
+
+                  <button class="btn-message">
+                      <i class="far fa-comment-dots fa-24 fa-option center"></i>
+                  </button>
+              </form>
+          </div>
             </div>
             <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                 <div class="options-profile-btn options-profile-btn-center profile-item-center">
