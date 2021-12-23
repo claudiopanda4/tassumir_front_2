@@ -409,16 +409,21 @@ class AuthController extends Controller
       $post_controller = new PostController();
       $post= DB::table('posts')->limit(7)->get();
       //dd($post);
+      //dd($post);
       $post = $post_controller->posts();
       //dd($post);
       $a=0;
 
+      //dd($this->DadosPost());
+
       $dados = array();
       foreach ($post as $key) {
-      $dados[$a] = $this->DadosPost($key);
-      $a++;
+        //dd($key);
+        $dados[$a] = $this->DadosPost($key);
+        $a++;
       }
-
+      //dd($dados);
+     // dd($this->getPostAndFilter($dados, "5aeaec63-91e1-4a2f-a735-81e5580a50de", 'video'));
       //--------------------------------------------------------------------------------------------o que estão falando --------------------------------------------------------------
       $what_are_talking = $this->Destacados();
 
@@ -429,7 +434,6 @@ class AuthController extends Controller
     }
     return redirect()->route('account.login.form');
     }
-
 
   public function paginasSeguidas(){
         try {
