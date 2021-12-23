@@ -299,8 +299,8 @@ class PostController extends Controller
 
         $dados = array();
         foreach ($post as $key) {
-        $dados[$a] = $auth->DadosPost($key);
-        $a++;
+          $dados[$a] = $auth->DadosPost($key);
+          $a++;
         }
 
         return view('videos.index',compact('account_name','dados','checkUserStatus','profile_picture','isUserHost','hasUserManyPages','allUserPages','conta_logada','page_content','notificacoes','notificacoes_count','dadosSeguida'));

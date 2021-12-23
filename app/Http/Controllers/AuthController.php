@@ -409,16 +409,21 @@ class AuthController extends Controller
       $post_controller = new PostController();
       $post= DB::table('posts')->limit(7)->get();
       //dd($post);
+      //dd($post);
       $post = $post_controller->posts();
       //dd($post);
       $a=0;
 
+      //dd($this->DadosPost());
+
       $dados = array();
       foreach ($post as $key) {
-      $dados[$a] = $this->DadosPost($key);
-      $a++;
+        //dd($key);
+        $dados[$a] = $this->DadosPost($key);
+        $a++;
       }
-
+      //dd($dados);
+      dd($this->getPostAndFilter($dados, "5aeaec63-91e1-4a2f-a735-81e5580a50de", 'video'));
       //--------------------------------------------------------------------------------------------o que estão falando --------------------------------------------------------------
       $what_are_talking = $this->Destacados();
 
@@ -429,6 +434,36 @@ class AuthController extends Controller
     }
     return redirect()->route('account.login.form');
     }
+
+
+/* siene coding */
+
+  public function getPostAndFilter(Request $request, $filterBy = '') {
+    $allPost = DB::table('posts')->where('page_id', $request->page_id)->get(); 
+    return ($filterBy != '') ? $this->filterBy($allPost, $filterBy) : $allPost;
+  }
+
+  private function filterBy($allPost = [], $fileType) {
+    $filter = [];
+    foreach ($allPost as $key) {
+      switch ($fileType) {
+        case 'image':
+          //$extension = explode('.', $key->file)[1];
+            if (PaginaCasalController::check_image_extension(explode('.', $key->file)[1])) {
+              $filter[] = $key;
+            }
+            break;
+        case 'video':
+          if (PaginaCasalController::check_video_extension(explode('.', $key->file)[1])) {
+            $filter[] = $key;
+          }
+          break;
+      }
+    }
+  }
+
+
+/* endsiene coding */
 
 
   public function paginasSeguidas(){
