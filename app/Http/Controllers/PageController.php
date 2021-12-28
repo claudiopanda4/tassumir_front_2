@@ -22,6 +22,7 @@ class PageController extends Controller
     }
     public function identificador_id($tipo_identficador, $id){
         $identificador_id = 0;
+        //dd($tipo_identficador);
         if ($tipo_identficador == 2) {
             $identificador = DB::table('identificadors')
                 ->where('tipo_identificador_id', $tipo_identficador)

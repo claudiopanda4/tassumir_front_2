@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+<div class="main" id="main-container-page-definition">
 <div class="couple-head-del">
 	<header class="card-flex">
 		
@@ -86,9 +86,5 @@
      </div>
     
      </div>
-
-	
-
-
-
+</div>
 @stop

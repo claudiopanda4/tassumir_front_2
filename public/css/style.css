@@ -8,54 +8,46 @@ body {
     --background-main-dark: #000;
     --border-gradient: linear-gradient(90%, #800080, #d708d7);
 }
-
 #app {
     background-color: var(--background-dark-main);
 }
-
 #app-log-reg {
     background-color: #3b3b3b;
 }
-
 #app-log-reg,
 #app {
     width: 100vw;
     height: auto;
 }
-
-#body-login {}
-
-#body-reg {}
-
+#body-login {
+}
+#body-reg {
+    
+}
 #body-login,
 #body-reg {
-    background-color: #3b3b3b;
+    background-color: #3b3b3b;  
     overflow-x: hidden;
 }
-
 #main-reg-container {
     width: 570px;
     height: 100%;
     margin: auto;
     display: block;
 }
-
 .input-text-default {
     background-color: var(--background-dark-input);
     border: 1px solid var(--background-dark-input);
     padding: 8px;
 }
-
 .input-full {
     width: 100%;
     border-radius: 5px;
     color: #fff;
 }
-
 .enter-login {
     color: #fff;
 }
-
 #login-enter {
     background-color: #800080;
     border: 1px solid #800080;
@@ -65,6 +57,7 @@ body {
     color: #fff;
     margin-top: 10px;
     font-weight: bolder;
+
     text-align: center;
 }
 
@@ -72,7 +65,6 @@ body {
     width: 45%;
     margin-top: 15px;
 }
-
 #register-enter {
     width: 100%;
     background-color: #3a3b3c;
@@ -87,21 +79,17 @@ body {
     width: 45%;
     margin-top: 15px;
 }
-
 #forget-password a h1 {
     text-decoration: underline;
 }
-
 #forget-password h1 {
     font-size: 14px;
     margin-top: 12px;
     color: #efefef;
 }
-
 #forget-password h1:hover {
     text-decoration: underline;
 }
-
 #main-login-container {
     width: 850px;
     height: 100%;
@@ -109,7 +97,6 @@ body {
     margin-left: 170px;
     display: block;
 }
-
 .risk {
     position: relative;
     margin-top: 20px;
@@ -118,18 +105,15 @@ body {
     height: 1px;
     background-color: #606060;
 }
-
 .input-login {
     background-color: #242526;
 }
-
 .risk h2 {
     padding: 10px;
     font-size: 12px;
     color: #fff;
     background-color: #3b3b3b;
 }
-
 #login-register {
     background-color: #800080;
     border: 1px solid #800080;
@@ -141,7 +125,6 @@ body {
     font-weight: bolder;
     text-align: center;
 }
-
 #title-login h1,
 .title-log-reg h1 {
     width: 150px;
@@ -149,55 +132,47 @@ body {
     color: #fff;
     margin: 5px auto;
 }
-
 #title-login i,
-#title-login h1,
-.title-log-reg i,
+#title-login h1, 
+.title-log-reg i, 
 .title-log-reg h1 {
     display: inline-block;
 }
-
 #title-login i {
     margin-right: 10px;
 }
-
 #title-login .title-final {
     color: #800080;
 }
-
-#title-login div,
+#title-login div, 
 .title-log-reg div {
     width: 200px;
     margin: 5px auto;
 }
-
 .form-group label {
     color: #fff;
 }
-
-.title-with-color {
+.title-with-color{
     color: #800080;
 }
-
 * {
     box-sizing: border-box;
     outline: none;
     font-family: "nunito", sans-serif;
 }
-
-.aside,
-.header-main {
+.aside, .header-main {
     position: fixed;
     z-index: 100;
     border: 1px solid #efefef;
-}
 
-.header-main-n {
+}
+ .header-main-n {
     position: fixed;
     z-index: 100;
     border: 1px solid #efefef;
     top: 0px;
 }
+
 
 .clearfix::after {
     display: block;
@@ -208,11 +183,9 @@ body {
     height: 0;
     overflow: hidden;
 }
-
-.clearfix ul li a {
+.clearfix ul li a{
     background-color: transparent;
 }
-
 .clearfix-n::after {
     display: block;
     content: '.';
@@ -222,11 +195,9 @@ body {
     height: 0;
     overflow: hidden;
 }
-
-.clearfix-n ul li a {
+.clearfix-n ul li a{
     background-color: transparent;
 }
-
 .main {
     position: relative;
     display: flex;
@@ -235,70 +206,54 @@ body {
     border: 1px solid #000;
     margin: 20px auto;
 }
-
-.aside,
-.main,
-.header-main {
+.aside, .main, .header-main {
     border: none;
 }
-
 .header-main-n {
     border: none;
 }
-
 .aside-left {
     left: 20px;
 }
-
 .aside-right {
     right: 20px;
 }
-
 .aside-left ul {
     width: 240px;
     padding-left: 0;
 }
-
-.aside-notification-right {
+.aside-notification-right{
     right: 10px;
     width: 280px;
     height: 70vh;
     top: 85px;
 }
-
 .nav-video-option li {
     color: #fff;
 }
-
 .nav-video-option ul {
     width: 494px;
     margin: auto;
     padding: 0;
 }
-
 .nav-video-option {
     display: none;
 }
-
-.aside-notification {
+.aside-notification{
     position: absolute;
     z-index: 100;
     border: 1px solid #efefef;
 }
-
 .aside nav {
     border-bottom: 1px solid #909090;
 }
-
 .aside-left nav {
     border-bottom: 1px solid #909090;
     width: 240px;
 }
-
 .aside nav footer {
     margin-bottom: 5px;
 }
-
 .aside-right,
 .aside-left {
     width: 287px;
@@ -306,17 +261,15 @@ body {
     top: 85px;
     overflow-y: auto;
 }
-
 .aside-right::-webkit-scrollbar {
     width: 0px;
 }
+.aside-right::-webkit-scrollbar-thumb {
 
-.aside-right::-webkit-scrollbar-thumb {}
-
+}
 .first-aside-right {
     margin-top: 20px;
 }
-
 .container-main {
     background-color: #343a40;
     background-color: #18191a;
@@ -324,139 +277,127 @@ body {
     height: auto;
     overflow: hidden;
 }
-
 ::-webkit-scrollbar {
     width: 8px;
     /*background-color: #efefef;*/
 }
-
 ::-webkit-scrollbar-thumb {
     width: 8px;
     border-radius: 20px;
     background-color: #343a40;
 }
-
 .header-main-component {
     height: 60px;
     width: 100%;
     background-color: #242526;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
 
+}
 .header-main-component-n {
     height: 60px;
     width: 100%;
     background-color: #242526;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
+    
 
+}
 li {
     list-style-type: none;
 }
-
-.li-component-aside,
+.li-component-aside, 
 .li-component-aside a {
     padding: 10px;
 }
+.li-component-aside {
 
-.li-component-aside {}
-
+}
 .li-component-aside a {
     padding: 10px;
     color: #fff;
 }
-
 a {
     text-decoration: none;
 }
-
 a:hover {
     text-decoration: none;
 }
-
-.title {}
-
+.title {
+    
+}
 .ul-left {
     margin: 5px;
     float: left;
 }
-
 .ul-left li {
     position: relative;
     display: inline-block;
     margin: 5px;
     float: left;
 }
-
 .title h1 {
     color: #fff;
     display: inline-block;
     margin-left: 5px;
     font-weight: bolder;
 }
-
 .title h1 .title-final {
     color: #fd09fd;
 }
-
 .aside-left .li-component-aside-active {
     background-color: #800080;
     border-radius: 5px;
 }
-
 .l-5 {
     margin: 5px;
     float: left;
 }
-
 .l-10 {
     margin: 10px;
     float: left;
 }
-
 .menu-header {
     float: right;
     padding: 10px;
 }
-
 .menu-header ul li {
     display: inline-block;
     margin-left: 5px;
-}
-
+} 
 
 /*.menu-header ul ul{
-	position: absolute;
-	visibility: hidden;
+    position: absolute;
+    visibility: hidden;
 
 }
 .menu-header ul li:hover ul{
-	visibility: visible;
+    visibility: visible;
 }
 .menu-header ul ul li{
-	display: block;
-	width: 200px;
-	padding: 20px;
+    display: block;
+    width: 200px;
+    padding: 20px;
 }
 .menu-header ul ul li{
 
-	float: none;
-	border-bottom: solid 1px #ccc;
+    float: none;
+    border-bottom: solid 1px #ccc;
 }
 label[for="hugo"]{
-	padding: 5px;
-	background-color: #222;
-	text-align: center;
-	font-size: 30px;
-	cursor: pointer;
-	height: 50px;
+    padding: 5px;
+    background-color: #222;
+    text-align: center;
+    font-size: 30px;
+    cursor: pointer;
+    height: 50px;
 }
 #hugo{
-	display: none;
+    display: none;
 }
 label[for="hugo"]{
-	display: none;
+    display: none;
 }*/
+
+
 
 .fas,
 .far,
@@ -464,40 +405,31 @@ label[for="hugo"]{
 .fab {
     color: #fff;
 }
-
 .fa-20 {
     font-size: 20px;
 }
-
 .fa-24 {
     font-size: 24px;
 }
-
 .fa-32 {
     font-size: 32px;
 }
-
 .fa-18 {
     font-size: 18px;
 }
-
 .fa-16 {
     font-size: 16px;
 }
-
 .fa-14 {
     font-size: 14px;
 }
-
 .fa-12 {
     font-size: 12px;
 }
-
 .r-5 {
     float: right;
     margin: 5px;
 }
-
 .input-search,
 .input-search .input-text {
     border: none;
@@ -505,63 +437,52 @@ label[for="hugo"]{
     border-radius: 20px;
     margin-top: 2px;
     color: #fff;
-}
 
+}
 .input-search .input-text {
     padding: 8px;
 }
-
 .input-search {
     margin-left: 20px;
 }
-
 .search-mobile .input-search {
     width: 100%;
     margin: auto;
 }
-
 .fa-search-main {
     margin-left: 10px;
     margin-top: 10px;
     color: #efefef;
 }
-
 .user-tassumir {
     margin-top: 0;
     margin-right: 30px;
 }
-
 .user-tassumir a {
     color: #fff;
 }
-
 .fa-icon-aside-left {
     margin-left: 20px;
 }
-
 .page-cover {
     position: relative;
     width: 40px;
     height: 40px;
 }
-
-.page-cover~h2 {
+.page-cover ~ h2 {
     color: #6c757d;
     font-size: 12px;
     width: 140px;
 }
-
-.page-cover~a h1.name-page {
+.page-cover ~ a h1.name-page {
     color: #fff;
     font-size: 14px;
     margin-top: 8px;
     margin-bottom: 2px;
 }
-
 .li-my-page {
     width: 300px;
 }
-
 #my-pages .title {
     color: #efefef;
     font-size: 15px;
@@ -569,14 +490,15 @@ label[for="hugo"]{
     padding-left: 20px;
     padding-top: 20px;
 }
-
 .card-couple {
+    
     padding: 10px;
     background-color: #242526;
     border-radius: 10px;
-}
 
-.card-notifications {
+}
+.card-notifications{
+    
     position: absolute;
     justify-content: flex-end;
     align-content: flex-end;
@@ -587,112 +509,116 @@ label[for="hugo"]{
     margin-left: 100px;
     margin-top: 100px;
     z-index: 100;
-}
 
+}
 .card-couple-del {
     margin-top: 20px;
+    
     padding: 10px;
     background-color: #242526;
     border-radius: 10px;
-}
 
+
+}
 .card-flex-edit {
+    
     flex-direction: row;
 }
-
 .couple-btn-space {
     display: flex;
     margin-top: 10px;
-}
+    }
+.couple-publish-btn  {
 
-.couple-publish-btn {
     background-color: #800080;
     position: relative;
     color: #fff;
     padding: 10px;
-    width: 103px;
-    border-radius: 5px;
-    text-align: center;
-}
+    width: 103px ;
+   border-radius: 5px;
+   text-align: center;
 
-.couple-publish-btn-edit {
+
+   }
+   .couple-publish-btn-edit  {
+
     background-color: #800080;
     position: relative;
     color: #fff;
     padding: 10px;
-    width: 145px;
+    width: 145px ;
     border-radius: 5px;
-}
 
-.couple-pub {
-    justify-content: flex-start;
-    align-content: flex-start;
-    color: #efefef;
-    margin-left: 23px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 12pt;
-}
+   }
+   .couple-pub{
+        justify-content: flex-start;
+        align-content: flex-start;
+        color: #efefef;
+        margin-left: 23px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-size: 12pt;
+   }
+   .checkbox-style{
+        margin-top: 5px;
+        background-color: #800080;
+        color: #fff;
+        padding: 10px;
 
-.checkbox-style {
-    margin-top: 5px;
-    background-color: #800080;
-    color: #fff;
-    padding: 10px;
-}
+   }
+   /*input[type=checkbox]:checked + label{
 
-
-/*input[type=checkbox]:checked + label{
-
-   	    margin-top: 5px;
-   		background-color: #800080;
-   		color: #fff;
-   		padding: 10px;
+        margin-top: 5px;
+        background-color: #800080;
+        color: #fff;
+        padding: 10px;
    }*/
+   .couple-publish-btn-edit a {
 
-.couple-publish-btn-edit a {
-    color: #fff;
+    color: #fff;  
     font-size: 9pt;
     text-align: center;
-}
+    
+   }
+   .couple-publish-btn-edit-2  {
 
-.couple-publish-btn-edit-2 {
-    background-color: #800080;
-    position: relative;
-    padding: 10px;
-    border-radius: 5px;
-}
+        background-color: #800080;
+        position: relative;
+        padding: 10px ;
+        border-radius: 5px;
 
-.couple-publish-btn-edit-2 a {
-    text-align: center;
-    margin-left: 10px;
+     }
+
+   .couple-publish-btn-edit-2 a {
+        text-align: center;
+        margin-left: 10px;
+        color: #fff;
+        font-size: 9pt; 
+   }
+
+   .couple-publish-btn a {
     color: #fff;
-    font-size: 9pt;
-}
-
-.couple-publish-btn a {
-    color: #fff;
     text-align: center;
-}
-
-.icon-img-comment {
+   }
+.icon-img-comment{
     width: 10%;
     padding: 8px;
     border-radius: 20px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border: none;
-    background-color: #606060;
+    background-color:#606060;
     position: absolute;
     display: flex;
     margin-left: 300px;
-}
 
-.couple-free-space {
+}
+   
+.couple-free-space{
+    
     margin-right: 100px;
     margin-left: 100px;
 }
-
 .couple-invite-icon-one {
     display: none;
     background-color: #800080;
@@ -703,8 +629,8 @@ label[for="hugo"]{
     padding: 20px;
     border-radius: 5px;
     margin-left: 10px;
-}
 
+}
 .couple-invite-icon {
     background-color: #800080;
     width: 40px;
@@ -712,21 +638,22 @@ label[for="hugo"]{
     position: relative;
     margin-left: 100px;
     padding: 20px;
-    border-radius: 5px;
-}
+   border-radius: 5px;
 
+
+}
 .couple-history {
+
     display: flex;
     justify-content: flex-start;
     align-content: flex-start;
 }
-
-.couple-history h2 {
+.couple-history h2{
     color: #fff;
     font-size: 13pt;
 }
-
-.couple-history-input {
+.couple-history-input{
+   
     background-color: transparent;
     padding: 10px;
     width: 500px;
@@ -734,93 +661,79 @@ label[for="hugo"]{
     border: none;
     color: #fff;
 }
+.couple-img-check{
 
-.couple-img-check {
-    padding: 7px;
+    padding:7px;
 }
-
-.couple-img-check2 {
-    padding-right: 8px;
+.couple-img-check2{
+    padding-right:8px;
 }
-
-.couple-check {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.couple-check{
+    display:flex;
+    justify-content:space-between;
+    align-items:center ;
 }
-
-.couple-check-i {
-    font-size: 14pt;
+.couple-check-i{
+    font-size:14pt;
 }
-
-.couple-check-delete-btn {
+.couple-check-delete-btn{
     padding-bottom: 10px;
 }
+.couple-check-delete-btn2{
 
-.couple-check-delete-btn2 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display:flex;
+    justify-content:space-between;
+    align-items:center ;
 }
-
-.couple-btn-check {
-    width: 100%;
+.couple-btn-check{
+    width:100%;
 }
-
-.check {
+.check{
     padding: 10px;
 }
-
-.check-width {
-    width: 100%;
+.check-width{
+    width:100%;
 }
-
-.couple-list-search {
+.couple-list-search{
     display: flex;
     justify-content: flex-start;
     align-content: flex-start;
 }
-
-.couple-list-search2 {
+.couple-list-search2{
     display: flex;
     justify-content: flex-start;
     align-content: flex-start;
     width: 300px;
-    padding: 8px;
+    padding:8px;
 }
-
-.couple-list-span {
-    font-size: 12pt;
+.couple-list-span{
+    font-size:12pt;
     color: #fff;
 }
-
-.couple-list-span-head {
+.couple-list-span-head{
     color: #fff;
 }
-
-.couple-search-li-aside-left {
+.couple-search-li-aside-left{
     display: flex;
     justify-content: flex-start;
     align-content: flex-start;
 }
-
-.couple-seach-span {
-    color: #efefef;
+.couple-seach-span{
+    color:#efefef;
 }
 
-.allSearch-li {
-    display: flex;
+.allSearch-li{
+    display:flex;
     justify-content: flex-start;
     align-content: flex-start;
 }
-
-.allSearch-li2 {
-    display: flex;
-    justify-content: space-around;
-    align-content: center;
+.allSearch-li2{
+    display:flex;
+    justify-content:space-around;
+    align-content:center;
 }
 
-.couple-separator {
+.couple-separator{
     padding-top: 5px;
     padding-bottom: 5px;
     border-bottom: 1px solid #717171;
@@ -830,37 +743,35 @@ label[for="hugo"]{
     display: none;
 }
 
-.couple-numbering-text {
+.couple-numbering-text{
+
     background-color: transparent;
     justify-items: flex-end;
     justify-content: flex-end;
     color: #717171;
 }
-
 .couple-head {
     background-color: #242526;
     border-radius: 10px;
-}
 
+}
 .couple-head-del {
     background-color: #242526;
     padding: 20px;
     border-radius: 10px;
+    
 }
-
 .couple-head-edit {
     background-color: #242526;
     padding: 20px;
     border-radius: 10px;
 }
-
 .couple-foto-edit {
     position: relative;
     width: 100px;
     height: 100px;
     margin-top: 9px;
 }
-
 .interaction-user ul.ul-interaction-user {
     justify-content: space-around;
     margin-right: 0;
@@ -869,8 +780,8 @@ label[for="hugo"]{
     border-top: 1px solid #343a40;
     margin: auto;
 }
+.couple-info{
 
-.couple-info {
     flex-direction: row;
     margin-top: 10px;
     border-radius: 10px;
@@ -881,42 +792,39 @@ label[for="hugo"]{
     background-color: #3D3D3D;
     border-radius: 10px;
 }
-
-.couple-info-inputs-2b {
+.couple-info-inputs-2b{
     display: flex;
     justify-content: space-evenly;
 }
-
-.couple-info-inputs-3b {
+.couple-info-inputs-3b{
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items:center;
 }
-
-.couple-info-inputs-3a {
+.couple-info-inputs-3a{
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items:center;
 }
 
-.couple-info-inputs {
+
+
+.couple-info-inputs{
     display: flex;
     justify-content: space-around;
 }
-
-.card-help {
+.card-help{
     background-color: #242526;
     margin-top: 15px;
     border-radius: 10px;
 }
-
-.couple-info-inputs-btn {
+.couple-info-inputs-btn{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+.couple-input-edit{
 
-.couple-input-edit {
     background-color: var(--background-dark-input);
     border: 1px solid var(--background-dark-input);
     border-radius: 20px;
@@ -925,8 +833,8 @@ label[for="hugo"]{
     height: 60%;
     color: #fff;
 }
+.couple-input-edit-select{
 
-.couple-input-edit-select {
     background-color: var(--background-dark-input);
     border: 1px solid var(--background-dark-input);
     border-radius: 20px;
@@ -935,39 +843,40 @@ label[for="hugo"]{
     color: #fff;
     padding: 8px;
     margin-left: 30px;
-}
 
-.send-them {
+}
+.send-them{
     justify-content: flex-end;
     align-content: flex-end;
 }
+.couple-input-edit-select-n{
 
-.couple-input-edit-select-n {
     background-color: var(--background-dark-input);
     border: 1px solid var(--background-dark-input);
     border-radius: 20px;
     width: 300px;
     color: #fff;
     padding: 8px;
+    
 }
 
-.couple-name {
+.couple-name{
     font-weight: bold;
     color: #fff;
-    font-size: 14pt;
+    font-size:14pt;
 }
 
-.couple-name-p {
+
+.couple-name-p{
     color: #fff;
-    font-size: 14pt;
+    font-size:14pt;
 }
-
-.couple-name-pp {
+.couple-name-pp{
     color: #fff;
-    font-size: 12pt;
+    font-size:12pt;
 }
 
-.couple-title-edit {
+.couple-title-edit{
     display: flex;
     justify-content: flex-start;
     align-content: flex-start;
@@ -975,8 +884,7 @@ label[for="hugo"]{
     font-size: 14pt;
     margin-top: 10px;
 }
-
-.couple-title-edit-h {
+.couple-title-edit-h{
     display: flex;
     justify-content: center;
     align-content: center;
@@ -985,8 +893,7 @@ label[for="hugo"]{
     margin-top: 10px;
     margin-bottom: 30px;
 }
-
-.couple-title-edit-h3 {
+.couple-title-edit-h3{
     display: flex;
     justify-content: flex-start;
     align-content: flex-start;
@@ -997,39 +904,44 @@ label[for="hugo"]{
 
 .couple-foto-small {
     position: relative;
+    
     margin-top: 10px;
-}
 
-.couple-publi-follower {
+}
+.couple-publi-follower{
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 20px;
-}
 
+}
 .couple-input-text {
     margin-top: 10px;
     display: flex;
 }
+.couple-input{
 
-.couple-input {
     padding: 10px;
     width: 518px;
+
     color: #fff;
+   
     background-color: var(--background-dark-input);
     border-radius: 20px;
-}
 
-.couple-input-2 {
-    background-color: #fff;
+}
+.couple-input-2{
+
+    background-color:#fff;
     border: 1px solid var(--background-dark-input);
     border-radius: 20px;
     padding: 8px;
     width: 518px;
     color: red;
-}
 
-.left-margin-coupleInfo {
+
+}
+.left-margin-coupleInfo{
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
@@ -1041,178 +953,160 @@ label[for="hugo"]{
     position: relative;
     width: 190px;
 }
-
-.couple-name {
+.couple-name{
+    
     color: #efefef;
     font-size: 13px;
     width: 145px;
-}
+    
 
-.couple-header {
+}
+.couple-header{
     justify-content: space-between;
 }
+.edit-couple a{
 
-.edit-couple a {
     background-color: #800080;
     position: relative;
     color: #fff;
     padding: 10px;
-    border-radius: 5px;
-}
+        border-radius: 5px;
 
+
+
+}
 .couple-status {
+
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 20px;
-}
 
+    
+}
 .couple-actual-status {
-    color: #efefef;
+     color: #efefef;
     font-size: 14px;
+    
     align-items: center;
     justify-content: center;
 }
 
-.br-50,
-.circle {
+
+.br-50, .circle {
     border-radius: 50%;
 }
-
 .br-10 {
     border-radius: 10px;
 }
-
 .aside header {
     margin-bottom: 15px;
     margin-top: 15px;
 }
-
 .aside header h1 {
     color: #fff;
     font-size: 14px;
 }
-
 .aside ul li h1 {
     color: #fff;
     font-size: 14px;
     margin-top: 8px;
     margin-bottom: 2px;
 }
-
 .aside ul li h2 {
     color: #6c757d;
     font-size: 12px;
     width: 140px;
 }
-
 .aside nav footer a {
     color: #efefef;
     margin-top: 0;
     font-size: 12px;
     margin: 10px auto;
 }
-
 .img-full {
     position: absolute;
     width: 100%;
     height: 100%;
 }
-
 .img-20 {
     width: 20px;
     height: 20px;
 }
-
 .img-24 {
     width: 24px;
     height: 24px;
 }
-
 .img-26 {
     width: 26px;
     height: 26px;
 }
-
 .img-28 {
     width: 28px;
     height: 28px;
 }
-
 .img-32 {
     width: 32px;
     height: 32px;
 }
-
-.img-40 {
+.img-40{
     width: 40px;
     height: 40px;
 }
-
 .li-component-aside-right .page-cover,
 .li-component-aside-right h1,
-.li-component-aside-right h2 {}
+.li-component-aside-right  h2 {
 
+}
 .li-component-aside-right a {
     font-size: 13px;
 }
-
 .name-page {
     width: 200px;
 }
-
 .text-ellips {
     word-break: break-all;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
 .aside-right ul {
     margin-left: -34px;
     margin-bottom: 5px;
 }
-
 .aside nav.last-nav {
     border-bottom: none;
     padding-top: 15px;
 }
-
 .user-tassumir h1 {
     font-size: 13.5px;
     margin-top: 6px;
 }
-
 .user-tassumir img {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     border: 1px solid transparent;
 }
-
 .aside nav footer a:hover {
     transition: all ease 0.8s;
     text-decoration: underline;
 }
-
 .post-created img {
     width: 50px;
     height: 50px;
     margin-top: -45px;
     margin-right: 5px;
 }
-
 .fas.fa-icon-roxo {
     color: #fff;
 }
-
 .post-created {
     width: 85%;
     margin: auto;
     border-radius: 10px;
     padding: 10px;
 }
-
 .post-created li {
     position: relative;
     width: 32px;
@@ -1221,18 +1115,15 @@ label[for="hugo"]{
     border-radius: 50%;
     background-color: #800080;
 }
-
 .post-created nav {
     border-top: 1px solid #efefef;
     margin-top: 5px;
     padding-top: 10px;
 }
-
 .post-created textarea {
     resize: none;
     padding: 2px 10px;
 }
-
 .center {
     position: absolute;
     top: 50%;
@@ -1243,19 +1134,15 @@ label[for="hugo"]{
     -moz-transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
 }
-
 .post-created .last-menu {
     float: right;
 }
-
 .post-created ul {
     margin-bottom: 0;
 }
-
 .post-created ul:nth-child(1) {
     float: left;
 }
-
 .post-created textarea {
     width: 86%;
     max-width: 421px;
@@ -1263,7 +1150,6 @@ label[for="hugo"]{
     border-radius: 50px;
     color: #fff;
 }
-
 .post-created .button-post {
     border: none;
     background-color: #800080;
@@ -1273,62 +1159,52 @@ label[for="hugo"]{
     border-radius: 5px;
     margin-left: 20px;
 }
-
 .post {
     width: 100%;
     max-width: 540px;
     margin: 0px auto;
 }
-
 .post header .first-component {
     position: relative;
     width: 268px;
     margin-top: 0;
 }
-
 .post header .first-component .page-cover {
     position: relative;
     width: 50px;
     height: 50px;
 }
-
 .post header .first-component .page-identify h1 {
     font-size: 14px;
     color: #fff;
     margin-bottom: 3px;
     margin-top: 5px;
-    margin-right: 5px;
-    font-weight: bolder;
+    margin-right: 5px ;
+    /*font-weight: bolder;*/
 }
-
 .page-identify {
     margin-left: 0;
     margin-bottom: 0;
     margin-top: 10px;
     width: 190px;
 }
-
 .follow_page_post {
     margin: 0;
 }
-
 .time-posted {
     color: #909090;
     font-size: 12px;
 }
-
 .info-post {
     margin-top: -5px;
     width: 110px;
 }
-
 .card {
     background-color: #242526;
-    margin-top: 20px;
+    margin-top: 20px;    
     width: 500px;
     margin: 10px auto 10px;
 }
-
 #stories-card {
     width: 650px;
     margin-bottom: -10px;
@@ -1336,20 +1212,20 @@ label[for="hugo"]{
     background-color: transparent;
     border: none;
 }
+.card-p{
 
-.card-p {
     background-color: #242526;
     margin-top: 15px;
     border-radius: 10px;
     padding: 10px;
-}
 
-.move-right {
+}
+.move-right{
     margin-left: 100px;
 }
-
-.card-post {}
-
+.card-post {
+    
+}
 .card-post p {
     color: #fff;
     padding: 10px;
@@ -1357,11 +1233,9 @@ label[for="hugo"]{
     font-size: 14px;
     margin-left: 50px;
 }
-
 .fa-option {
     cursor: pointer;
 }
-
 .more-option-post {
     display: none;
     position: absolute;
@@ -1373,7 +1247,6 @@ label[for="hugo"]{
     z-index: 2;
     box-shadow: 0 1px 2px #00000033;
 }
-
 .more-option-post-n {
     display: none;
     position: absolute;
@@ -1385,9 +1258,9 @@ label[for="hugo"]{
     margin-top: 10px;
     border-radius: 10px;
     box-shadow: 0 1px 2px #00000033;
-}
 
-.noti-card-first {
+}
+.noti-card-first{
     display: none;
     position: absolute;
     background-color: #242526;
@@ -1401,29 +1274,27 @@ label[for="hugo"]{
     border-radius: 10px;
     box-shadow: 0 1px 2px #00000033;
 }
-
-.noti-see-all-btn {
+.noti-see-all-btn{
     display: flex;
-    justify-content: center;
+
+    justify-content:center;
     align-items: center;
-    padding: 8px;
+    
+    padding:8px;
 }
 
-.change-look span:hover {
+.change-look span:hover{
     text-decoration: none;
     cursor: pointer;
 }
-
 .more-option-post-n a {
     width: 100%;
     color: #efefef;
     text-align: center;
 }
-
 .more-option-post-n a:hover {
     text-decoration: underline;
 }
-
 .more-option-post-n li {
     text-align: center;
 }
@@ -1433,38 +1304,31 @@ label[for="hugo"]{
     color: #efefef;
     text-align: center;
 }
-
 .more-option-post a:hover {
     text-decoration: underline;
 }
-
 .more-option-post li {
     text-align: center;
 }
-
 .last-component {
     position: relative;
     margin-right: 15px;
     margin-top: 15px;
 }
-
 .last-component-n {
     position: relative;
     margin-right: 5px;
-}
 
+}
 .hidden {
     display: none;
 }
-
 .interaction-numbers {
     padding-top: 5px;
 }
-
 .interaction-numbers ul {
     padding-right: 30px;
 }
-
 .interaction-numbers ul {
     width: 95%;
     display: flex;
@@ -1474,30 +1338,26 @@ label[for="hugo"]{
     padding-left: 10px;
     margin: auto;
 }
-
 .interaction-numbers li {
     /*display: inline-flex;*/
 }
-
 .interaction-numbers li a {
     color: #fff;
     font-size: 13px;
 }
-
 .interaction-numbers li a:hover {
     text-decoration: underline;
 }
+.interaction-numbers li:nth-child(1) {
 
-.interaction-numbers li:nth-child(1) {}
-
-.interaction-numbers li:nth-child(2) {}
-
+}
+.interaction-numbers li:nth-child(2) {
+}
 .interaction-user .content-button {
     width: 120px;
     padding: 5px 10px 0;
 }
-
-.interaction-user .content-button a h2 {
+.interaction-user .content-button a h2{
     display: inline-block;
     text-align: center;
     color: #fff;
@@ -1505,43 +1365,44 @@ label[for="hugo"]{
     margin-left: 5px;
     display: none;
 }
-
-.new-style-btn {
+.new-style-btn{
     text-align: center;
     background-color: #5D5D5D;
     color: #fff;
     padding: 8px;
     border-radius: 5px;
-}
 
-.new-style-btn-2 {
+
+}
+.new-style-btn-2{
     text-align: center;
-    background-color: #800080;
+    background-color: #800080;  
     color: #fff;
     border-radius: 5px;
     padding: 8px;
-}
 
-.new-style-btn-2a {
+
+}
+.new-style-btn-2a{
     text-align: center;
-    background-color: #800080;
+    background-color: #800080;  
     color: #fff;
     border-radius: 5px;
     padding: 8px;
     width: 125px;
-}
 
-.new-style-btn-2b {
+}
+.new-style-btn-2b{
     text-align: center;
-    background-color: #800080;
+    background-color: #800080;  
     color: #fff;
     border-radius: 5px;
     padding: 8px;
     width: 120px;
+
 }
-
-.interaction-user .content-button a {}
-
+.interaction-user .content-button a {
+}
 .interaction-user li div.content-button {
     border-radius: 5px;
     width: 34px;
@@ -1551,7 +1412,6 @@ label[for="hugo"]{
     /*background-color: #3a3b3c;
     border: 1px solid #606060;*/
 }
-
 .interaction-user li:nth-child(1) div.content-button {
     /*background-color: #800080;*/
     width: 90px;
@@ -1561,56 +1421,48 @@ label[for="hugo"]{
     border-radius: 50%;
     position: relative;
 }
-
 .interaction-user li:nth-child(2) div.content-button {
     /*background-color: #606060;*/
 }
-
 .interaction-user li:nth-child(3) div.content-button {
     /*background-color: #606060;*/
 }
-
 .interaction-user {
     padding-top: 5px;
     padding-bottom: 5px;
     justify-items: flex-start;
     justify-content: flex-start;
 }
-
 .interaction-user,
 .interaction-numbers {
     width: 96.5%;
     margin: auto;
     /*border-bottom: 1px solid #606060;*/
 }
-
 .interaction-user ul {
     margin-bottom: 0;
 }
-
 .post-cover {
     position: relative;
     height: 498px;
     margin-top: -10px;
     margin-bottom: 10px;
 }
-
-.post-cover img {}
-
+.post-cover img {
+    
+}
 .video-post {
     width: 100%;
     height: 498px;
     margin-bottom: 10px;
     position: relative;
 }
-
 .video-post video {
     position: absolute;
     width: 100%;
     height: 100%;
     contain: strict;
 }
-
 .img-user-comment {
     position: relative;
     width: 34px;
@@ -1618,25 +1470,21 @@ label[for="hugo"]{
     margin-top: 10px;
     margin-left: 15px;
 }
-
 .comment-send {
     width: 90%;
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
 .comment-send-couple {
     margin-top: 10px;
     flex-direction: row;
 }
-
 .comment-send-text {
     width: 80%;
     background-color: var(--background-dark-input);
     border-radius: 20px;
 }
-
 .comment-send input[type="text"] {
     width: 70%;
     padding: 8px;
@@ -1645,15 +1493,15 @@ label[for="hugo"]{
     border-bottom-right-radius: 0;
     border: none;
     color: #fff;
-    background-color: transparent;
+    background-color:transparent;
 }
 
 .comment-send-text-couple {
     width: 80%;
     background-color: var(--background-dark-input);
     border-radius: 20px;
-}
 
+}
 .comment-send-couple input[type="text"] {
     width: 80%;
     padding: 9px;
@@ -1662,23 +1510,21 @@ label[for="hugo"]{
     border-bottom-right-radius: 0;
     border: none;
     color: #fff;
-    background-color: #606060;
+    background-color:#606060;
 }
-
 .comment-send .fa-img-comment {
     margin-right: 10px;
-    margin-top: 8px;
+    margin-top: 8px;    
 }
-
-.stories-about-talking nav {}
-
+.stories-about-talking nav {
+    
+}
 .stories-about-talking nav ul {
     position: relative;
     margin-left: -20px;
     width: 655px;
     min-height: 80px;
 }
-
 .stories-about-talking nav ul li {
     position: relative;
     height: 180px;
@@ -1688,26 +1534,22 @@ label[for="hugo"]{
     border: 1px solid #ffffff0d;
     margin-bottom: 10px;
 }
-
 .stories-about-talking nav ul li .img-back-stories,
 .stories-about-talking nav ul li {
     border-radius: 10px;
 }
-
 .stories-about-talking nav ul li .img-back-stories {
     width: 200px;
-    height: 200px;
+    height:200px;
 }
-
 .stories-about-talking header h1 {
     color: #fff;
     font-size: 16px;
     padding: 10px 10px 5px;
 }
-
 .identify-cover {
     position: absolute;
-    display: none;
+    display: block;
     width: 35px;
     height: 35px;
     border: 4px solid #800080;
@@ -1715,11 +1557,9 @@ label[for="hugo"]{
     top: 10px;
     left: 10px;
 }
-
 .identify-cover img {
     border: 2px solid #fff;
 }
-
 .headline {
     position: absolute;
     width: 100%;
@@ -1729,7 +1569,6 @@ label[for="hugo"]{
     border-bottom-left-radius: 10px;
     background-color: rgba(0, 0, 0, 0.2);
 }
-
 .headline h2 {
     position: absolute;
     font-size: 11px;
@@ -1738,7 +1577,6 @@ label[for="hugo"]{
     width: 100%;
     color: #fff;
 }
-
 .see-all-stories {
     position: absolute;
     width: 40px;
@@ -1750,11 +1588,9 @@ label[for="hugo"]{
     z-index: 2;
     box-shadow: 0 2px 8px var(--box-shadow-main);
 }
-
 .stories-about-talking {
     overflow: hidden;
 }
-
 .li-component-suggest {
     position: relative;
     width: 118px;
@@ -1762,7 +1598,6 @@ label[for="hugo"]{
     padding: 10px;
     border: 1px solid #2f3134;
 }
-
 .li-component-suggest div.sugest_component {
     position: relative;
     width: 60px;
@@ -1770,22 +1605,18 @@ label[for="hugo"]{
     border: 4px solid #800080;
     margin: 10px auto;
 }
-
-.li-component-suggest img {
+.li-component-suggest img {   
     border: 2px solid #fff;
 }
-
 .suggest-slide {
     display: none;
 }
-
 .suggest-slide header h1 {
     color: #fff;
     font-size: 14px;
     padding: 10px;
     text-align: left;
 }
-
 .suggest-slide .name-suggest {
     font-size: 13px;
     color: #fff;
@@ -1794,45 +1625,36 @@ label[for="hugo"]{
     width: 100%;
     text-align: center;
 }
-
 .suggest-slide a {
     width: 100%;
     text-align: center;
 }
-
 .suggest-slide ul {
     padding-left: 10px;
     width: 1045px;
 }
-
 .suggest-slide nav {
     width: 100%;
     overflow-x: auto;
     margin-bottom: 2px;
 }
-
 #main-login {
     float: left;
 }
-
 #main-login,
 #main-reg {
     width: 320px;
     height: auto;
 }
-
 #main-reg {
     margin: 60px auto 20px;
 }
-
 #logo-login-form-lg {
     margin-top: 80px;
 }
-
 #title-login {
     display: none;
 }
-
 #img-profile-container {
     width: 110px;
     height: 110px;
@@ -1841,56 +1663,48 @@ label[for="hugo"]{
     margin-left: 15px;
     background-color: #fff;
 }
-
 .alert-login {
     font-size: 12px;
     color: #fff;
 }
-
 .politic-privacy {
     font-size: 12px;
 }
-
 .img-profile {
     border: 0px solid #000;
 }
-
 .card-flex {
     justify-content: space-between;
     flex-direction: row;
 }
-
-.card-flex-pub {
+.card-flex-pub{
     justify-content: space-between;
     flex-direction: row;
     background-color: transparent;
 }
+.noti-flex{
 
-.noti-flex {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    
 }
-
-.noti-flex-1 {
+.noti-flex-1{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 0px;
+    padding: 0px;   
 }
-
-.noti-span {
-    font-size: 13px;
+.noti-span{
+    font-size:13px;
     color: #fff;
 }
-
-.noti-div-name {
-    align-self: center;
+.noti-div-name{
+    align-self:center; 
     align-items: center;
     max-width: 220px;
 }
-
-.novi-div-image {
+.novi-div-image{
     position: relative;
     /*align-self:center;*/
     width: 40px;
@@ -1898,7 +1712,6 @@ label[for="hugo"]{
     margin-right: 15px;
     background-color: #343a40;
 }
-
 .cover-login {
     position: relative;
     float: left;
@@ -1907,8 +1720,7 @@ label[for="hugo"]{
     margin-left: 0px;
     margin-right: 40px;
 }
-
-.noti-flex-info {
+.noti-flex-info{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -1916,25 +1728,21 @@ label[for="hugo"]{
     margin-left: 20px;
     margin-bottom: 10px;
 }
-
 .noti-info-aside {
     width: 100%;
     margin-left: 0;
 }
-
-.noti-hour {
+.noti-hour{
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: flex-start; 
     align-items: flex-start;
 }
-
-.noti-hour-1 {
+.noti-hour-1{
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-evenly; 
     align-items: flex-start;
 }
-
-.noti-btn-aceitar {
+.noti-btn-aceitar{
     border: 1px solid transparent;
     border-radius: 5px;
     text-align: center;
@@ -1942,8 +1750,7 @@ label[for="hugo"]{
     padding: 8px 20px;
     background-color: #800080;
 }
-
-.noti-btn-aceitar-1 {
+.noti-btn-aceitar-1{
     border: 1px solid transparent;
     border-radius: 5px;
     text-align: center;
@@ -1952,22 +1759,18 @@ label[for="hugo"]{
     width: 100px;
     background-color: #800080;
 }
-
 .noti-hour-1 {
     width: 270px;
 }
-
 .noti-hour-1 {
     margin-top: 15px;
 }
-
 .noti-btn-aceitar:hover {
     color: white;
     background-color: #800080;
     width: 100px;
 }
-
-.noti-btn-rejeitar {
+.noti-btn-rejeitar{
     width: 100px;
     border: 1px solid transparent;
     border-radius: 5px;
@@ -1975,51 +1778,48 @@ label[for="hugo"]{
     color: white;
     padding: 8px 20px;
     background-color: #5D5D5D;
+    
 }
+.noti-btn-rejeitar:hover{
 
-.noti-btn-rejeitar:hover {
     border: 1px solid transparent;
     border-radius: 5px;
     text-align: center;
     color: white;
     padding: 8px;
     background-color: #5D5D5D;
+    
 }
-
-.noti-hour a span {
+.noti-hour a span{
     font-size: 10pt;
-}
 
-.noti-hour a span:hover {
+}
+.noti-hour a span:hover{
     text-decoration: none;
 }
 
-.novi-div-others-options {
+.novi-div-others-options{
     align-self: center;
 }
-
-.noti-div-elipsis {
-    padding: 5px;
+.noti-div-elipsis{
+    padding:5px;
     margin-right: 1px;
 }
-
-.noti-div-title {
+.noti-div-title{
     margin-left: 10px;
     padding: 5px;
 }
-
-.noti-div-subtitle {
+.noti-div-subtitle{
     margin-left: 13px;
     padding: 5px;
 }
-
-.noti-title {
+.noti-title{
     color: white;
     font-size: 14pt;
 }
-
-.noti-subtitle {
+.noti-subtitle{
     color: white;
+
     font-size: 12pt;
 }
 
@@ -2027,12 +1827,10 @@ label[for="hugo"]{
     flex: 2;
     padding: 10px 5px 0;
 }
-
 #card-ident-1 {
     flex: 2;
     padding: 10px 15px 0;
 }
-
 .profile-name {
     color: #efefef;
     font-size: 19px;
@@ -2040,19 +1838,19 @@ label[for="hugo"]{
     font-weight: bolder;
     margin-top: 15px;
 }
-
 .profile-name-1 {
     color: #efefef;
     font-size: 14px;
     width: 185px;
     margin-top: 10px;
 }
-
 .search-info .mt4 {
     margin-top: 0;
 }
+.profile-name-edit{
+    
+}
 
-.profile-name-edit {}
 
 #ident-profile {
     display: flex;
@@ -2067,12 +1865,11 @@ label[for="hugo"]{
     align-items: center;
     margin-top: 10px;
 }
+#ident-profile-edit{
 
-#ident-profile-edit {
     display: flex;
     margin-top: 20px;
 }
-
 .invite-icon {
     background-color: #800080;
     width: 40px;
@@ -2091,25 +1888,21 @@ label[for="hugo"]{
     padding: 10px;
     width: 30.5%;
 }
-
 .statistics-profile h2 {
     color: #efefef;
     font-size: 14px;
     display: inline-flex;
 }
-
 .inform-profile {
     margin-left: 5px;
     margin-top: 20px;
 }
-
-.inform-profile p,
-.inform-profile h2,
+.inform-profile p, 
+.inform-profile h2, 
 .inform-profile h3 {
     color: #efefef;
     font-size: 14px;
 }
-
 .img-profile-user-married {
     position: relative;
     width: 100px;
@@ -2117,34 +1910,28 @@ label[for="hugo"]{
     height: 100px;
     margin-top: 10px;
 }
-
 .page-married {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
-
 .page-married h1,
 .page-married li,
 .page-married a {
     font-size: 14px;
     color: #fff;
 }
-
 .identify-statist-profile-page {
     width: 250px;
 }
-
 .identify-statist-profile-page ul {
     display: inline-flex;
     padding-left: 20px;
 }
-
 .identify-statist-profile-page ul li {
     padding: 5px;
     font-size: 13px;
 }
-
 .identify-statist-profile-page ul li {
     padding: 5px;
 }
@@ -2152,14 +1939,12 @@ label[for="hugo"]{
 .page-married h1 {
     text-align: center;
 }
-
 .page-married #see-page {
     font-size: 14px;
     display: inline-block;
     padding-left: 10px;
     margin-bottom: 0;
 }
-
 .see-page-container {
     padding: 2px;
     width: 85px;
@@ -2171,22 +1956,18 @@ label[for="hugo"]{
     background-color: #800080;
     margin-bottom: 10px;
 }
-
 .see-page-container .fas {
     margin-left: 10px;
     font-size: 14px;
 }
-
 .img-profile-user-married img {
     width: 90px;
     height: 90px;
 }
-
-.stories-about-talking nav ul li:hover .identify-cover~img {
+.stories-about-talking nav ul li:hover .identify-cover ~ img {
     transition: all 1s;
     width: 200%;
 }
-
 .img-profile-user-married h3 {
     font-size: 12px;
     color: #efefef;
@@ -2194,53 +1975,45 @@ label[for="hugo"]{
     margin-top: 10px;
     text-align: center;
 }
-
-.img-profile-user-married>img {
+.img-profile-user-married > img {
     position: relative;
 }
-
 .menu-option-profile {
     display: inline-flex;
     font-size: 15px;
     padding-left: 10px;
     color: #efefef;
 }
-
 .option-profile-menu ul {
     /*width: 300px;*/
     margin: auto;
     padding-left: 0;
 }
-
 .option-profile-menu li {
     display: inline-flex;
     padding: 10px;
     position: relative;
     width: 30%;
 }
-
 .couple-profile-container {
     width: 100px;
     height: 100px;
     margin-top: 10px;
     margin-left: 10px;
 }
-
 .info-invite-relationship {
     width: 330px;
 }
-
 .info-invite-relationship p {
     color: #fff;
     font-size: 13px;
 }
-
 .edit-profile {
     padding: 8px;
     width: 100px;
     text-align: center;
-    /*display: inline-flex;	
-	background-color: var(--background-dark-input);*/
+    /*display: inline-flex; 
+    background-color: var(--background-dark-input);*/
     color: #fff;
     border-radius: 5px;
     font-size: 13px;
@@ -2250,7 +2023,6 @@ label[for="hugo"]{
     right: 10px;
     top: 15px;
 }
-
 .edit-profile1 {
     padding: 8px;
     width: 80px;
@@ -2258,16 +2030,14 @@ label[for="hugo"]{
     display: inline-flex;
     color: #fff;
     border-radius: 5px;
-    background-color: #606060;
+    background-color:#606060;
     font-size: 12px;
 }
-
 .profile-follow {
     padding-bottom: 0px;
     margin-bottom: 2px;
     padding-left: 0;
 }
-
 .add-edit-profile {
     position: absolute;
     z-index: 2;
@@ -2278,7 +2048,6 @@ label[for="hugo"]{
     background-color: #800080;
     cursor: pointer;
 }
-
 .btn-a-default {
     display: none;
     padding: 10px;
@@ -2288,31 +2057,26 @@ label[for="hugo"]{
     color: #fff;
     text-align: center;
 }
-
 .container-logout {
     width: 140px;
     margin: 20px auto 10px;
     width: 47%;
     width: 239px;
 }
-
 .label-input label,
 .label-input .input-container {
     display: inline-flex;
 }
-
 .label-input .label-dark {
     color: #efefef;
     padding: 5px 10px;
     width: 95px;
     text-align: right;
 }
-
 .input-container {
     width: 300px;
     padding: 10px;
 }
-
 .input-container input[type="text"],
 .input-container input[type="search"],
 .input-container input[type="email"],
@@ -2324,26 +2088,21 @@ label[for="hugo"]{
     color: #efefef;
     border-radius: 5px;
 }
-
 .input-container textarea {
     width: 270px;
     resize: none;
 }
-
 .input-container-radio label {
     color: #efefef;
     padding: 5px 10px;
 }
-
 .input-container-radio input[type="radio"] {
     margin-top: 10px;
 }
-
 .input-container-radio {
     width: 120px;
     display: inline-flex;
 }
-
 .btn-container .btn {
     background-color: #800080;
     padding: 5px 10px;
@@ -2352,24 +2111,20 @@ label[for="hugo"]{
     outline: none;
     border: none;
 }
-
 .card-btn {
     width: 150px;
     margin: 0 auto 10px;
 }
-
 .body-pop-up {
     z-index: 105;
     overflow: hidden;
     overflow-y: auto;
     background-color: var(--background-main);
 }
-
 .content-full-scroll {
     width: 100vw;
     height: 100vh;
 }
-
 .pop-up {
     position: absolute;
     display: block;
@@ -2386,7 +2141,6 @@ label[for="hugo"]{
     -webkit-transition: all .3s;
     -o-transition: all .3s;
 }
-
 .pop-up-component {
     position: relative;
     width: 360px;
@@ -2403,21 +2157,17 @@ label[for="hugo"]{
     -o-box-shadow: 2px 4px 10px 1px rgb(0, 0, 0, .1);
     -webkit-box-shadow: 2px 4px 10px 1px rgb(0 0 0 / 10%);
 }
-
 .header-height {
     height: 50px;
 }
-
 .pop-up-component-header-default {
     width: 358px;
     border-bottom: 1px solid #ffffff0d;
 }
-
-.pop-up-component-header,
+.pop-up-component-header, 
 .pop-up-component {
     background-color: #18191a;
 }
-
 .pop-up-component-header {
     position: fixed;
     height: 49px;
@@ -2426,7 +2176,6 @@ label[for="hugo"]{
     /*background-color: #18191a;*/
     z-index: 2;
 }
-
 .pop-up-component-header h1 {
     text-align: center;
     padding: 10px;
@@ -2434,12 +2183,10 @@ label[for="hugo"]{
     margin-top: 5px;
     color: #fff;
 }
-
 .container-pop-up-component-header {
     width: 95%;
     height: 0px;
 }
-
 .cancel-box {
     position: absolute;
     width: 32px;
@@ -2451,12 +2198,10 @@ label[for="hugo"]{
     z-index: 2;
     cursor: pointer;
 }
-
 .cancel-box {
     background-color: #000;
     border: 1px solid #ffffff0d;
 }
-
 #cover-done {
     width: 60%;
     text-align: center;
@@ -2467,49 +2212,41 @@ label[for="hugo"]{
     cursor: pointer;
     margin: auto;
 }
-
 #card-more-following {
     display: none;
 }
-
 .img-profile-page {
     position: relative;
     width: 130px;
     height: 130px;
 }
-
-.statistics-profile-page {}
-
+.statistics-profile-page {
+    
+}
 .statistics-profile-page-component {
     margin-right: 15px;
 }
-
 .statistics-profile-page-component h1,
 .statistics-profile-page-component h2 {
     color: #fff;
     font-size: 13.5px;
     text-align: center;
 }
-
 .statistics-profile-page-component h1 {
     font-weight: bolder;
     font-size: 16px;
 }
-
 .statistics-profile-page-identify {
     margin-top: 15px;
 }
-
-.statistics-profile-page-identify h1,
+.statistics-profile-page-identify h1, 
 .statistics-profile-page-identify h2 {
     font-size: 13px;
     color: #fff;
 }
-
 .statistics-profile-page-identify h1 {
     font-size: 20px;
 }
-
 .follwing-btn {
     width: 250px;
     border-radius: 5px;
@@ -2518,11 +2255,9 @@ label[for="hugo"]{
     border: none;
     background-color: #800080;
 }
-
 .follwing-btn-container {
     margin: 15px auto 10px;
 }
-
 .card-page {
     margin: auto;
     flex-direction: column;
@@ -2530,14 +2265,12 @@ label[for="hugo"]{
     width: 570px;
     background-color: transparent;
 }
-
 #main-container-profile {
     width: 580px;
     margin-top: 5px;
     /*background-color: #242526;*/
     border-radius: 10px;
 }
-
 #edit-page {
     width: 110px;
     padding: 5px;
@@ -2545,18 +2278,15 @@ label[for="hugo"]{
     background: var(--background-dark-input);
     border: 1px solid #606060;
 }
-
 .edit-page-container {
     position: absolute;
     top: 10px;
     right: 10px;
 }
-
 .description-couple {
     width: 343px;
     margin-left: 145px;
 }
-
 .description-couple p {
     color: #ffff;
     font-size: 13px;
@@ -2565,19 +2295,16 @@ label[for="hugo"]{
     margin-bottom: 0;
 }
 
-.suggest-slide-page {
+    .suggest-slide-page {
     display: block;
 }
-
 .suggest-slide-page nav::-webkit-scrollbar {
     height: 3px;
 }
-
 .suggest-slide-page nav::-webkit-scrollbar-thumb {
     border-radius: 30px;
     background-color: #343a40;
 }
-
 .suggest-slide-page a.follow-suggest div {
     padding: 5px;
     background-color: #3490dc;
@@ -2585,7 +2312,6 @@ label[for="hugo"]{
     margin: 10px auto;
     color: #fff;
 }
-
 .add-post {
     width: 40px;
     height: 40px;
@@ -2595,61 +2321,50 @@ label[for="hugo"]{
     z-index: 3;
     background-color: #800080;
 }
-
 .add-post-label {
     cursor: pointer;
 }
-
 #card-profile-option {
     margin-top: 0px;
 }
-
 #card-profile-option .option-profile-menu li {
     width: 31%;
     position: relative;
 }
-
 #card-profile-option .option-profile-menu #ul-profile li {
     width: 23%;
 }
-
-#card-profile-option .option-profile-menu li:hover>a .icon-hover-option-profile {
+#card-profile-option .option-profile-menu li:hover > a .icon-hover-option-profile{
     color: #800080;
 }
-
 #pop-up-component-create-post {
-    width: 500px;
+    width: 500px; 
     position: absolute;
     height: 500px;
 }
-
 #pop-up-component-create-post,
-#pop-up-component-create-post .pop-up-component-header {}
-
+#pop-up-component-create-post .pop-up-component-header {
+    
+}
 #pop-up-component-create-post .pop-up-component-header {
     width: 498px;
 }
-
 #add-post-container .page-identify {
     margin-top: 20px;
 }
-
 #add-post-container .page-identify h1 {
     font-size: 14px;
     color: #fff;
 }
-
 .content-details-post {
     width: 96%;
     margin: auto;
     margin-top: 15px;
     margin-bottom: 10px;
 }
-
 .textarea-container {
     width: 100%;
 }
-
 .textarea-container textarea {
     width: 95%;
     height: 200px;
@@ -2660,16 +2375,13 @@ label[for="hugo"]{
     border-radius: 10px;
     padding: 10px;
 }
-
 .textarea-container textarea::-webkit-scrollbar {
     width: 3px;
 }
-
 .textarea-container textarea::-webkit-scrollbar-thumb {
     border-radius: 30px;
     background-color: #343a40;
 }
-
 .add-file li {
     display: inline-flex;
     width: 40px;
@@ -2679,41 +2391,33 @@ label[for="hugo"]{
     margin-right: 10px;
     cursor: pointer;
 }
-
 .add-file {
     width: 80%;
     margin: auto;
 }
-
 #main-profile {
     width: 600px;
     /*background-color: #242526;*/
     border-radius: 10px;
 }
-
 .filter-main-search-mobile {
     display: none;
 }
-
 #main-profile .card {
     background-color: transparent;
     border: none;
 }
-
 #main-profile .card-page-maried {
     background-color: #242526;
 }
-
 #statistics-profile-page-component-mobile {
     display: none;
 }
-
 .edit-page-container-mobile {
     display: none;
     width: 80%;
     margin: 10px auto;
 }
-
 .edit-page-container-mobile button {
     width: 100%;
     padding: 10px;
@@ -2721,7 +2425,6 @@ label[for="hugo"]{
     background: transparent;
     border: 1px solid #606060;
 }
-
 .edit-profile-mobile {
     padding: 10px;
     width: 100%;
@@ -2736,42 +2439,34 @@ label[for="hugo"]{
     display: none;
     margin-top: 10px;
 }
-
 .fa-15 {
     font-size: 15px;
 }
-
 .options-profile-btn {
     display: flex;
     margin-left: 5px;
 }
-
 .options-profile-btn-center {
     display: block;
     margin: auto;
     width: 60%;
 }
-
-.options-profile-btn-center .edit-profile-mobile {
+.options-profile-btn-center .edit-profile-mobile{
     background-color: #800080;
     border: none;
 }
-
 .options-profile-btn a {
     width: 100%;
 }
-
 .options-profile-btn .follwing-btn {
     padding: 8px;
 }
-
 .follwing-btn h2 {
     font-size: 14px;
     text-align: center;
     margin-bottom: 0;
     padding: 4px;
 }
-
 .suggest-slide a div {
     padding: 4px;
     color: #fff;
@@ -2779,7 +2474,6 @@ label[for="hugo"]{
     border-radius: 5px;
     margin-top: 9px;
 }
-
 .relationship-type {
     padding: 8px;
     border-radius: 5px;
@@ -2789,7 +2483,6 @@ label[for="hugo"]{
     padding-bottom: 2px;
     width: 200px;
 }
-
 .relationship-type-all {
     background-color: #242526;
     margin-left: 30px;
@@ -2799,11 +2492,9 @@ label[for="hugo"]{
     border-radius: 5px;
     position: absolute;
 }
-
 .relationship-type-all label {
     width: 100%;
 }
-
 .relationship-type-all h2 {
     font-size: 13px;
     padding: 6px;
@@ -2811,18 +2502,15 @@ label[for="hugo"]{
     padding-left: 10px;
     cursor: pointer;
 }
-
 .relationship-type h1,
 .relationship-type i {
     display: inline-flex;
     color: #fff;
 }
-
 .relationship-type h1 {
     font-size: 13px;
     padding-left: 10px;
 }
-
 .relationship-type-container {
     margin-top: 15px;
     margin-bottom: 10px;
@@ -2830,13 +2518,11 @@ label[for="hugo"]{
     overflow-y: auto;
     position: absolute;
 }
-
 .marriage-proposal {
     width: 80%;
     padding-left: 12px;
     text-align: center;
 }
-
 .cover-done {
     width: 60%;
     text-align: center;
@@ -2847,32 +2533,26 @@ label[for="hugo"]{
     cursor: pointer;
     margin: auto;
 }
-
 .label-full {
     width: 100%;
 }
-
 .main-container {
     margin-top: 40px;
 }
-
 .comment-users {
     display: flex;
     justify-content: space-between;
     margin-left: 60px;
 }
-
 .user-identify-comment {
     padding-left: 10px;
     padding-top: 7px;
     width: 220px;
     display: flex;
 }
-
 .user-identify-comment.user-identify-comment-feed {
     width: 130px;
 }
-
 .user-identify-comment .profille-img {
     width: 28px;
     height: 28px;
@@ -2880,7 +2560,6 @@ label[for="hugo"]{
     position: relative;
     background-color: #343a40;
 }
-
 .user-identify-comment h2 {
     padding: 5px;
     font-size: 11px;
@@ -2888,16 +2567,13 @@ label[for="hugo"]{
     padding-top: 10px;
     width: 85px;
 }
-
-.user-identify-comment h2,
+.user-identify-comment h2, 
 .user-identify-comment .profille-img {
     display: inline-flex;
 }
-
 .comment-user-comment {
     margin: 10px 10px 10px;
 }
-
 .comment-user-comment p {
     color: #fff;
     font-size: 12px;
@@ -2910,25 +2586,20 @@ label[for="hugo"]{
     border-radius: 8px;
     padding-top: 5px;
 }
-
 .comment-user-comment.comment-user-comment-feed p {
     max-width: 127px;
     background-color: transparent;
 }
-
 .comment-user-container {
     display: flex;
 }
-
 .comment-user-container-react {
     padding-right: 10px;
 }
-
 .comment-user-container-react i {
     padding-top: 17px;
     cursor: pointer;
 }
-
 .comment-users-own {
     display: none;
     background-color: #3a3b3c;
@@ -2937,88 +2608,74 @@ label[for="hugo"]{
     margin: 10px;
     margin-left: 60px;
 }
-
 .comment-users-own .user-identify-comment {
     width: 40px;
 }
-
 .img-profile-page-container {
     position: relative;
 }
-
 #my-pages .card {
     border: none;
 }
-
-.search-title {
-    display: flex;
+.search-title{
+    display:flex;
     justify-content: flex-start;
     align-content: flex-start;
 }
-
-.search-info {
-    display: flex;
-    justify-content: flex-start;
-    align-content: center;
+.search-info{
+    display:flex;
+    justify-content:flex-start;
+    align-content:center;
     padding: 10px;
 }
-
 .profile-name-ident {
     margin-left: 10px;
     margin-top: 10px;
 }
-
 .post-page-container {
     margin: 15px 20px 20px;
 }
-
 .img-post {
     position: relative;
     width: 32%;
     height: 170px;
     display: inline-block;
     margin-top: -3px;
-}
 
+}
 .img-post video {
     width: 100%;
     height: 100%;
     object-fit: fill;
 }
-
 .liked {
     color: red;
 }
+.unliked {
 
-.unliked {}
-
+}
 .card-post p.untext {
     padding: 0;
 }
-
 .search-mobile {
     display: none;
     margin-top: 10px;
     width: 96%;
 }
-
 .description-couple h1,
 .description-couple h2 {
     font-size: 13.5px;
     color: #fff;
     padding-left: 10px;
 }
-
 .mobile-user-name {
     display: none;
 }
-
 .comment-user-comment .user {
     font-size: 13px;
     color: #fff;
     margin-top: -5px;
 }
-
 .btn-message {
     position: relative;
     width: 60px;
@@ -3029,38 +2686,32 @@ label[for="hugo"]{
     border: 1px solid #343a40;
     background: transparent;
 }
-
 #option-profile-no-own {
     width: 320px;
     margin: auto;
 }
-
-#main-search {}
-
-#main-search .card-p {
+#main-search {
+    
+}
+#main-search .card-p{
     padding: 0;
 }
-
 .user-identify-img {
     position: relative;
     width: 60px;
     height: 60px;
 }
-
 .description-invited {
     font-size: 13px;
     color: #fff;
 }
-
 .description-invited a {
     font-size: 15px;
     color: #fd09fd;
 }
-
 .details-invited {
     width: 240px;
 }
-
 .options-invited a {
     padding: 7px 15px;
     border-radius: 5px;
@@ -3068,13 +2719,11 @@ label[for="hugo"]{
     font-size: 13px;
     border: 1px solid #343a40;
 }
-
 .options-invited .label-invited {
     width: 110px;
     background-color: #800080;
     border-radius: 5px;
 }
-
 .options-invited .label-invited label {
     width: 100%;
     padding: 0px;
@@ -3083,7 +2732,6 @@ label[for="hugo"]{
     color: #fff;
     font-size: 13px;
 }
-
 .label-invited h2 {
     font-size: 14px;
     color: #fff;
@@ -3092,20 +2740,17 @@ label[for="hugo"]{
     padding: 10px;
     margin: 0;
 }
-
 .terms-use-alert {
     color: #fd09fd;
     font-size: 13px;
     width: 100%;
     text-align: center;
 }
-
 .alert-accept {
     color: #fff;
     padding: 5px;
     font-size: 13px;
 }
-
 .options-invited .accept {
     width: 100%;
     background-color: #800080;
@@ -3116,27 +2761,21 @@ label[for="hugo"]{
     border-radius: 5px;
     font-size: 13px;
 }
-
 .options-invited .denied {
     border: 1px solid #343a40;
 }
-
 .options-invited {
     margin: 5px;
 }
-
 .send-invited-relationship {
     padding-left: 15px;
 }
-
 #table_search_mobile {
     width: 290px;
 }
-
 #main-search .card-flex {
     padding-left: 10px;
 }
-
 #cover-done-marriage button {
     padding: 10px;
     font-size: 14px;
@@ -3145,46 +2784,37 @@ label[for="hugo"]{
     border: none;
     width: 100%;
 }
-
 .couple-profile-img {
     position: absolute;
     width: 75px;
     height: 75px;
 }
-
 .couple-2 {
     top: 20px;
     left: 30px;
     border: 2px solid #000;
 }
-
 .couple-2 img {
     border: 2px solid #fff;
 }
-
 #main-container-relationship .options-invited .label-invited {
     width: 160px;
 }
-
 #main-container-relationship .card {
     border-radius: 10px;
 }
-
 .alert-proof {
     font-size: 12px;
     color: #fff;
     padding: 10px;
 }
-
 .couple-container {
     position: relative;
 }
-
 #btn_nao_seguir {
     background: transparent;
     border: 1px solid #343a40;
 }
-
 .container-search-home {
     display: none;
     width: 300px;
@@ -3197,116 +2827,101 @@ label[for="hugo"]{
     left: 20px;
     background-color: #3a3b3c;
 }
-
 .search-id-container {
     height: 210px;
     overflow-y: auto;
 }
-
 .filter-main-search-mobile {
     background-color: #3a3b3c;
     overflow-x: auto;
 }
-
 .filter-main-search-mobile ul {
     width: 820px;
     margin-bottom: 0;
     padding: 0;
 }
-
 .filter-main-search-mobile li a {
     color: #fff;
     padding: 10px;
 }
-
 .filter-main-search-mobile li {
     display: inline-block;
     padding: 10px;
     font-size: 13px;
 }
-
 #main-direct {
     display: block;
     width: 900px;
     width: 100vw;
     padding: 10px;
     /*background-color: #242526;
-	border-radius: 10px;*/
+    border-radius: 10px;*/
     height: 500px;
     margin-top: -15px;
 }
-
 .container-img {
     position: relative;
     width: 36px;
     height: 36px;
 }
-
-.nav-menu-chat-component-user {}
-
+.nav-menu-chat-component-user {
+    
+}
 .nav-menu-chat-component-user h1 {
     color: #fff;
     margin-top: 10px;
     font-size: 13px;
 }
-
 .search-container-chat .input-search {
     width: 98%;
     margin-left: 0;
 }
-
 .search-container-chat .input-search input {
     width: 88%;
 }
-
 .search-container-chat {
     width: 280px;
     margin-left: 10px;
     margin-right: 20px;
 }
-
 .nav-menu-chat {
     margin-top: 10px;
     height: 370px;
     overflow-y: auto;
 }
-
-.nav-menu-chat ul {}
-
+.nav-menu-chat ul {
+    
+}
 .nav-menu-chat ul li {
     padding: 5px;
 }
-
-.chat {
+.chat { 
     width: 300px;
     height: 100%;
     padding-right: 15px;
     border-right: 1px solid #343a40;
 }
-
 .container-message {
     position: relative;
     width: 600px;
     margin-left: 30px;
     padding: 10px;
 }
+.container-message header {
 
-.container-message header {}
-
+}
 .body-message .container-img {
     position: relative;
     width: 25px;
     height: 25px;
     margin-top: 10px;
 }
-
 .message-body {
     width: 235px;
     border-radius: 10px;
     background-color: #242526;
     display: block;
 }
-
 .message-body p {
     color: #fff;
     font-size: 12px;
@@ -3314,7 +2929,6 @@ label[for="hugo"]{
     margin-bottom: 0;
     word-break: break-all;
 }
-
 .body-message {
     display: block;
     width: 100%;
@@ -3322,35 +2936,28 @@ label[for="hugo"]{
     overflow: hidden;
     overflow-y: auto;
 }
-
 .other-user {
     margin-top: 10px;
 }
-
 .other-user,
 .own-user {
     width: 60%;
 }
-
 .other-user .message-body {
     background-color: #3490dc;
 }
-
 .search-info .page-cover {
     background-color: #343a40;
 }
-
 .play_button {
     position: absolute;
     width: 40px;
     height: 40px;
     z-index: 2;
 }
-
 .notify-icon {
     position: relative;
 }
-
 .number-notification {
     position: absolute;
     width: 20px;
@@ -3360,67 +2967,57 @@ label[for="hugo"]{
     background-color: red;
     z-index: 3;
 }
-
 .number-notification span {
     font-size: 12px;
     color: #fff;
     width: 100%;
     text-align: center;
 }
-
 #password_login_id {
     position: relative;
 }
-
 #password_login_id2 {
     position: relative;
 }
 
 #password_login_id2 #eye {
     position: absolute;
-    right: 10px;
+    right: 15px;
     top: 15px;
 }
 
 #password_login_id2 #eye2 {
     position: absolute;
-    right: 10px;
+    right: 15px;
     top: 15px;
 }
-
 #password_login_id #eye {
     position: absolute;
     right: 15px;
     top: 46px;
 }
-
 .header-img-post-video {
     width: 40px;
     height: 40px;
     position: relative;
     margin-left: 10px;
 }
-
 .identify-video a h1 {
     font-size: 12px;
     color: #fff;
     margin-top: 20px;
 }
-
 .header-img-post-video,
 .identify-video a {
     display: inline-block;
 }
-
 .nav-video-option li {
     padding: 10px;
     font-size: 13px;
 }
-
 .nav-video-option ul a {
     display: inline-block;
 }
-
 .tv-video-cont {
     position: relative;
     width: 308px;
@@ -3428,7 +3025,6 @@ label[for="hugo"]{
     /*border: 1px solid #343a40;*/
     background-color: #000;
 }
-
 .tv-video-cont video {
     max-width: 100%;
     max-height: 100%;
@@ -3436,7 +3032,6 @@ label[for="hugo"]{
     width: 100%;
     height: 100%;
 }
-
 .tv-video-cont video.strict {
     max-width: 100%;
     max-height: 100%;
@@ -3444,81 +3039,70 @@ label[for="hugo"]{
     width: 100%;
     height: 100%;
 }
-
 #mb-video-lg-display {
     display: block;
 }
-
 #mb-video-lg-none {
     display: none;
 }
-
 #mb-video-lg-display {
     width: 318px;
     margin-left: 0px;
     border-left: 0;
     background-color: #242526;
 }
-
 #mb-video-lg-display .content-video-tass {
     background-color: transparent;
     height: 437px;
     overflow-x: hidden;
     overflow-y: auto;
 }
-
 #mb-video-lg-display .identify-video {
     border-bottom: 1px solid #343a40;
     padding: 5px;
     padding-left: 10px;
 }
-
 .video-container-component {
     overflow-y: auto;
     height: 500px;
     overflow-x: hidden;
     margin-top: -20px;
 }
-
 .text-video-container p {
     font-size: 13px;
     color: #fff;
     padding: 5px;
 }
-
 .content-video-tass .comment-send-text {
     width: 82%;
 }
-
 .content-video-tass .img-user-comment {
     margin-left: 0;
 }
-
 .content-video-tass .comment-users {
     margin-left: 10px;
 }
-
 .comment-users-tass {
     height: 230px;
     overflow-y: auto;
 }
-
 .text-white {
     font-size: 13px;
 }
-
 #text-video-container-mobile {
     display: none;
 }
-
 .video-container {
     margin-bottom: 30px;
 }
-
 .identify-video .last-component {
     margin-top: 15px;
 }
-
 #container-main-tv .body-pop-up {
     overflow-y: hidden;
+}
+#main-container-page-definition,
+#main-container-help {
+    width: 600px;
+    margin: 30px auto;
 }

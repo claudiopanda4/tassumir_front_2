@@ -251,7 +251,7 @@
                 <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}?post-container-post=saved">Guardados</a></li>
                 <li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="{{route('paginas_que_sigo.page',$conta_logada[0]->uuid)}}">Casais que eu sigo</a></li>
                 <li class="li-component-aside"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Ganhar Dinheiro</a></li>
-                <li class="li-component-aside"><i class="far fa-play-circle fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video')}}">Tassumir Vídeos</a></li>
+                <li class="li-component-aside"><i class="far fa-play-circle fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','ma')}}">Tassumir Vídeos</a></li>
             </ul>
         </nav>
         <nav class="last-nav">
@@ -314,9 +314,8 @@
             <header>
                 <h1>Páginas que eu sigo</h1>
             </header>
-            <ul class="">
-                <?php if ($dadosSeguindo[0]['id'] ==  $conta_logada[0]->conta_id): ?>
-                @forelse($dadosPage as $Paginas)
+            <ul class="" id="pageseguida">
+                @forelse($paginasSeguidas as $Paginas)
                 <?php
                 $seguidors = 0;
                 foreach ($dadosSeguida as  $val){
@@ -325,10 +324,8 @@
                         }
                     }
                 ?>
-
-                    @forelse($dadosSeguida as $Seguida)
-                        <?php if ((($dadosSeguindo[0]['identificador_id_seguindo'] ==  $Seguida->identificador_id_seguindo) && ($Seguida->id == $Paginas->page_id))) : ?>
-                        <li class="li-component-aside-right clearfix" id="seguida-{{$Seguida->identificador_id_seguida}}">
+                        <input type="hidden" name="" id="id_last_segida" value="0">
+                        <li class="li-component-aside-right clearfix sigo" id="seguida-{{$Paginas->page_id}}">
                         @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
@@ -341,28 +338,95 @@
                             <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
                             <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
 
-                            <a href="" class="nao_seguir">não seguir</a>
-                            <input type="hidden" id="seguida" value="{{ $Seguida->identificador_id_seguida }}" name="">
+                            <a href="" class="nao_seguir" id="a-{{$Paginas->page_id}}">não seguir</a>
+                            <input type="hidden" id="npage_id" value="{{$Paginas->page_id}}" name="">
 
-                            <input type="hidden" id="seguindo" value="{{ $Seguida->identificador_id_seguindo }}" name="">
-
-                            <input type="hidden" id="npage_id" value="{{ $account_name[0]->conta_id }}" name="">
+                            <input type="hidden" id="seguindo" value="{{ $account_name[0]->conta_id }}" name="">
                            <?php
                            /*echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";*/?>
                         </li>
-                        <?php endif ?>
-                    @empty
-                    @endforelse
+
                 @empty
-                <li class="li-component-aside-right clearfix">
-                <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
-                </li>
-                @endforelse
-            <?php else: ?>
                 <li class="li-component-aside-right clearfix">
                 <h1 class="l-5 name-page text-ellips">Nenhuma Página Seguida</h1>
                 </li>
-            <?php endif ?>
+              @endforelse
+              <script type="text/javascript">
+                function seguir(e){
+            e.preventDefault();
+            var valor_pagina_id = e.target.id;
+            var valor_idconta = $('#conta_id').val();
+            if (($('.nao_sigo').eq(2).attr("id")) == null) {
+                if ($('#id_last_suggest').val() != 0) {
+                    var id_last_page = $('#id_last_suggest').val();
+                }else{
+                    var id_last_page = 0;
+                }
+            }else{
+               var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];
+            }
+             $('#li-component-sugest-' + valor_pagina_id).remove();
+             $('#li-component-suggest-' + valor_pagina_id).remove();
+             $('.seguir-' + valor_pagina_id).hide();
+             $.ajax({
+                url: "{{route('seguir.seguindo')}}",
+                type: 'get',
+                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id, 'last_page': id_last_page},
+                dataType: 'json',
+                success: function(response){
+                    if (response.page != 'Vazio') {
+                  $.each(response.page, function(key, value){
+                    $('#id_last_suggest').val(value.page_id);
+                    if (value.foto == null) {
+                        let src = "{{asset('storage/img/page/unnamed.jpg')}}";
+                  $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='seguir(event)' id=a-"+value.page_id+">seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
+                    }else{
+                        let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='seguir(event)' id=a-"+value.page_id+">seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
+                    }
+                    });
+                }
+                }
+              });
+        }
+            function naoseguir(e){
+            e.preventDefault();
+            var valor_seguida = e.target.id.split('-')[1];
+             var valor_seguindo = $('#seguindo').val()
+             if (($('.sigo').eq(2).attr("id")) == null) {
+                if ($('#id_last_segida').val() != 0) {
+                    var id_last_page = $('#id_last_segida').val();
+                }else{
+                    var id_last_page = 0;
+                }
+            }else{
+               var id_last_page = $('.sigo').eq(2).attr("id").split('-')[1];
+            }
+             var npage_id = $('#npage_id').val();
+             $('#seguida-' + valor_seguida).remove();
+             $.ajax({
+                url: "{{route('nao.seguir.seguindo')}}",
+                type: 'get',
+                data: {'seguindo': valor_seguindo, 'seguida': valor_seguida, 'last_page': id_last_page},
+                dataType: 'json',
+                success: function(response){
+                  $('.seguir-' + npage_id).show();
+                   if (response.page != 'Vazio') {
+                  $.each(response.page, function(key, value){
+                    $('#id_last_segida').val(value.page_id);
+                    if (value.foto == null) {
+                        let src = "{{asset('storage/img/page/unnamed.jpg')}}";
+                  $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
+                    }else{
+                        let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
+                    }
+                    });
+                }
+                }
+              });
+            }
+              </script>
             </ul>
             <footer class="clearfix">
                 <a href="" class="r-5">Ver Todas</a>
@@ -372,9 +436,9 @@
             <header>
                 <h1>Sugestões para Você</h1>
             </header>
-            <ul class="segest">
+            <ul id="pagenaoseguida" class="segest">
 
-             @forelse($dadosPage as $Paginas)
+             @forelse($paginasNaoSeguidas as $Paginas)
                 <?php $conta_page = 0;
                  $verifica1 = 'A';
                  $verifica = 'B';
@@ -389,53 +453,8 @@
                         }
                     }
                 ?>
-                @forelse($dadosSeguida as $Seguida)
-               <?php $tamanho = sizeof($dadosSeguida);?>
-                <?php if ($Paginas->page_id == $Seguida->id) : ?>
-                        <?php if ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo) : ?>
-                                <?php $verifica1 = $Paginas->nome;?>
-                            <?php else: ?>
-                                <?php $verifica = $Paginas->nome;?>
-                            <?php endif ?>
-                 <?php else: ?>
-                      <?php $conta_page += 1;?>
-                <?php endif ?>
-                    @empty
-                    @endforelse
-                    <?php if (($verifica1 != $verifica)  ) : ?>
-                        <?php if (($verifica != 'B')  ) : ?>
-                        <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
-                        @if( !($Paginas->foto == null) )
-                            <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
-                            </div>
-                        @else
-                            <div class="page-cover circle l-5">
-                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                            </div>
-                        @endif
-                        <h1 class="l-5 name-page text-ellips">{{ $Paginas->nome }}</h1>
-                        <h2 class="l-5 text-ellips">{{ $seguidors }} seguidores</h2>
-
-                       <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>
-
-                       <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-
-                      <?php /* echo"
-                        <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
-                                */?>
-
-                            </li>
-
-
-
-                            <?php endif ?>
-
-                    <?php else: ?>
-
-                    <?php endif ?>
-                    <?php if (($conta_page == $tamanho)  ) : ?>
-                        <li class="li-component-aside-right clearfix" id="li-component-sugest-{{$Paginas->page_id}}">
+                <input type="hidden" name="" id="id_last_suggest" value="0">
+                <li class="li-component-aside-right clearfix nao_sigo" id="li-component-sugest-{{$Paginas->page_id}}">
                         @if( !($Paginas->foto == null) )
                             <div class="page-cover circle l-5">
                                 <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
@@ -450,20 +469,14 @@
 
 
                         <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>
-                        <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+
                       <?php /* echo"
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
-
                             </li>
-
-                      <?php else: ?>
-
-                    <?php endif ?>
+                            <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
                 @empty
-                <li class="li-component-aside-right clearfix">
-                <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
-                </li>
+
                 @endforelse
             </ul>
             <footer class="clearfix">
@@ -480,7 +493,9 @@
 <?php if (true): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
+@if(sizeof($page_content)>0)
 <input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
+@endif
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
@@ -498,6 +513,7 @@
             <div class="header-height"></div>
             <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
                 <div class="first-component clearfix l-5">
+                  @if(sizeof($page_content)>0)
                     @if($page_content[0]->foto)
                         <div class="page-cover circle l-5">
                             <img class="img-full circle" src="{{asset('storage/img/page/' . $page_content[0]->foto)}}">
@@ -506,10 +522,12 @@
                         <div class="page-cover circle l-5">
                             <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                         </div>
-                    @endif
+                        @endif
+
                     <div class="page-identify l-5 clearfix">
                         <h1 class="text-ellips">{{ $page_content[0]->nome }}</h1>
                     </div>
+                    @endif
                 </div>
                 <div class="textarea-container l-5" style="width:100%;">
                     <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
@@ -774,7 +792,14 @@
 <?php endif ?>
 <script type="text/javascript">
     $(document).ready(function () {
-      $('.like-a').click(function (e) {
+        //alert($('main').scrollTop());
+        $(window).scroll(function() {
+           if($(window).scrollTop() + $(window).height() == $(document).height()) {
+               alert("bottom!");
+           }
+           alert("bot");
+        });
+        $('.like-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id.split('|');
           if(id[0] == "on"){
@@ -930,7 +955,21 @@
               }
             });
       });
-
+      $('.comentar-aa').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id;
+          let coment = $('#comentario-' + id).val();
+          //alert(coment);
+          if(coment != ''){
+            $("#comment-own-" + id).text(coment);
+          $("#comment-users-own-" + id).css({
+            display: "flex",
+          });
+          $("#comment-users-" + id).hide();
+          $("#comentario-" + id).val('');
+          comentar(id, coment);
+        }
+      });
 
 
 
@@ -1060,44 +1099,96 @@
         $('.seguir').click(function(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
-             var valor_idconta = $('#conta_id').val();
+            var valor_idconta = $('#conta_id').val();
+            if (($('.nao_sigo').eq(2).attr("id")) == null) {
+                if ($('#id_last_suggest').val() != 0) {
+                    var id_last_page = $('#id_last_suggest').val();
+                }else{
+                    var id_last_page = 0;
+                }
+            }else{
+               var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];
+            }
              $('#li-component-sugest-' + valor_pagina_id).remove();
              $('#li-component-suggest-' + valor_pagina_id).remove();
              $('.seguir-' + valor_pagina_id).hide();
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
-                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id},
+                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id, 'last_page': id_last_page},
                 dataType: 'json',
                 success: function(response){
-                  console.log(response);
+                    if (response.page != 'Vazio') {
+                  $.each(response.page, function(key, value){
+                    $('#id_last_suggest').val(value.page_id);
+                    if (value.foto == null) {
+                        let src = "{{asset('storage/img/page/unnamed.jpg')}}";
+                  $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='seguir(event)' id=a-"+value.page_id+">seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
+                    }else{
+                        let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='seguir(event)' id=a-"+value.page_id+">seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
+                    }
+                    });
+                }
                 }
               });
-
         })
+
         $('.nao_seguir').click(function(e){
             e.preventDefault();
-            var valor_seguida = $('#seguida').val();
+            var valor_seguida = e.target.id.split('-')[1];
              var valor_seguindo = $('#seguindo').val()
+             if (($('.sigo').eq(2).attr("id")) == null) {
+                if ($('#id_last_segida').val() != 0) {
+                    var id_last_page = $('#id_last_segida').val();
+                }else{
+                    var id_last_page = 0;
+                }
+            }else{
+               var id_last_page = $('.sigo').eq(2).attr("id").split('-')[1];
+            }
              var npage_id = $('#npage_id').val();
              $('#seguida-' + valor_seguida).remove();
              $.ajax({
                 url: "{{route('nao.seguir.seguindo')}}",
                 type: 'get',
-                data: {'seguindo': valor_seguindo, 'seguida': valor_seguida},
+                data: {'seguindo': valor_seguindo, 'seguida': valor_seguida, 'last_page': id_last_page},
                 dataType: 'json',
                 success: function(response){
-                  console.log(response);
                   $('.seguir-' + npage_id).show();
+                   if (response.page != 'Vazio') {
+                  $.each(response.page, function(key, value){
+                    $('#id_last_segida').val(value.page_id);
+                    if (value.foto == null) {
+                        let src = "{{asset('storage/img/page/unnamed.jpg')}}";
+                  $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
+                    }else{
+                        let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
+                    }
+                    });
+                }
                 }
               });
 
         });
 
         setInterval(function(e){
+            let control_ = $('#control-1').offset();
+            //control_ = $(document).height() - control_;
+            //$(window).scrollTop() + $(window).height() == $(document).height();
+            //console.log('scrollTop + ' + $(window).scrollTop() + ' heightWindow + ' + $(window).height() + ' = ' + $(document).height() + ' top_control ' + control_.top);
+            if (control_.top <= $(document).height()) {
+                //alert('carregar');
+            }
             let margin_stories = $('.main-container').offset();
-            //console.log('margin_stories ' + margin_stories.top);
+            let margin_s = $('.main').offset();
+            console.log('margin_s ' + margin_s.top);
+            let height_ = parseInt($('.main').height());
+            console.log('height_margin_s ' + height_);
             let height = parseInt($('.main-container').height());
+            console.log('height_margin_stories ' + height);
+            console.log('bottom ' + (height + margin_stories.top));
             let height_stories = $('#stories-card').height();
             //console.log('height ' + height);
             //console.log('height stories ' + height_stories);
@@ -1110,7 +1201,20 @@
 
                 }
             }
+            console.log('janela width ' + window.innerWidth);
+            window_width = window.innerWidth;
+            console.log('scroll log: ' + $('.main').scrollTop());
+            $(document).scroll(function() {
+               //if($(window).scrollTop() + $(window).height() == $(document).height()) {
+                   //alert("bottom!");
+               //}
+               console.log('oii123iii');
+            });
+            console.log('oii12');
 
+            if (window.innerWidth < 800) {
+
+            }
             let video_post1 = document.getElementsByClassName('video-post-video');
             //console.log(video_post1);
 

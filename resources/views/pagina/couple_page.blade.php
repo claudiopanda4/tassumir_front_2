@@ -175,15 +175,10 @@
                 <h1>Sugestões de Páginas pra Você</h1>
             </header>
             <nav class="clearfix">
-                <ul class="clearfix">
-                            @forelse($dadosPage as $Paginas)
+                <ul id="sugest_couple" class="clearfix">
+                            @forelse($paginasNaoSeguidas as $Paginas)
                                 <?php $conta_page = 0;
-                                    $verifica1 = 'A';
-                                    $verifica = 'B';
                                     $seguidors = 0;
-                                    $tamanho = 0;
-                                    ?>
-                                    <?php
                                         foreach ($dadosSeguida as  $val){
                                             if ($val->id == $Paginas->page_id) {
                                                 $seguidors += 1;
@@ -191,23 +186,8 @@
                                             }
                                         }
                                     ?>
-                                @forelse($dadosSeguida as $Seguida)
-                                    <?php $tamanho = sizeof($dadosSeguida);?>
-                                    <?php if ($Paginas->page_id == $Seguida->id) : ?>
-                                        <?php if ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo) : ?>
-                                            <?php $verifica1 = $Paginas->nome;?>
-                                        <?php else: ?>
-                                            <?php $verifica = $Paginas->nome;?>
-                                        <?php endif ?>
-                                    <?php else: ?>
-                                        <?php $conta_page += 1;?>
-                                    <?php endif ?>
-                                @empty
-                                @endforelse
-                                <?php if (($verifica1 != $verifica)  ) : ?>
-                        <?php if (($verifica != 'B')  ) : ?>
-                            <?php if ($page_content[0]->page_id != $Paginas->page_id) : ?>
-                        <li class="li-component-suggest clearfix l-5" id="li-component_suggest-{{$Paginas->page_id}}">
+                                @if( $Paginas->page_id != $page_content[0]->page_id)     
+                                <li class="li-component-suggest clearfix l-5 nao_sigo" id="li-component_suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
@@ -223,35 +203,8 @@
                                     <a href="" class="seguir_couple" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
                                     <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
                                 </li>
-                                <?php endif ?>
-                            <?php endif ?>
-
-                    <?php else: ?>
-
-                    <?php endif ?>
-                    <?php if (($conta_page == $tamanho)  ) : ?>
-                        <?php if ($page_content[0]->page_id != $Paginas->page_id) : ?>
-                        <li class="li-component-suggest clearfix l-5" id="li-component_suggest-{{$Paginas->page_id}}">
-                                    <div class="clearfix sugest_component_div">
-                                        @if( !($Paginas->foto == null) )
-                                            <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto_page }}">
-                                            </div>
-                                        @else
-                                            <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
-                                    <a href="" class="seguir_couple" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
-                                    <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                                </li>
-                            <?php endif ?>
-                    <?php else: ?>
-
-                    <?php endif ?>
-                             @empty
+                                @endif
+                                @empty
                                 <li class="li-component-aside-right clearfix">
                                 <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
                                 </li>
@@ -342,15 +295,13 @@
             var valor_pagina_id = e.target.id;
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
+            var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];;
             //$('#' + valor_pagina_id).empty();
-
             $('#li-component-suggest-' + valor_pagina_id).remove();
-
-
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
-                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id},
+                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id, 'last_page': id_last_page},
                 dataType: 'json',
                 success: function(response){
                   console.log(response);
@@ -358,6 +309,17 @@
                   $('#li-component-suggest-' + valor_pagina_id).remove();
                   $('#li-component-sugest-' + valor_pagina_id).remove();
                   $('.seguir-' + valor_pagina_id).hide();
+                  if (response.page != 'Vazio') {
+                  $.each(response.page, function(key, value){
+                    if (value.foto != null) {
+                    let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        $('#sugest_couple').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=></li>");
+                    }else{
+                        let src = "{{asset('storage/img/page/unnamed.jpg')}}";
+                        $('#sugest_couple').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=></li>");
+                    }
+                });
+                }
                 }
               });
              });
