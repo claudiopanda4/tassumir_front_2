@@ -150,7 +150,7 @@
 
                                     <?php endif ?>
 
-                                    <div class="hidden-click-any-container noti-div-name">
+                                    <div class="hidden-click-any-container noti-div-name">  
                                    @if($notificacoes[$i- 1]['tipo'] == 1)
                                    <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}" class="mudar_estado_not" >
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
@@ -787,7 +787,14 @@
 <?php endif ?>
 <script type="text/javascript">
     $(document).ready(function () {
-      $('.like-a').click(function (e) {
+        //alert($('main').scrollTop());
+        $(window).scroll(function() {
+           if($(window).scrollTop() + $(window).height() == $(document).height()) {
+               alert("bottom!");
+           }
+           alert("bot");
+        });
+        $('.like-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id.split('|');
           if(id[0] == "on"){
@@ -1162,9 +1169,21 @@
         });
 
         setInterval(function(e){
+            let control_ = $('#control-1').offset();
+            //control_ = $(document).height() - control_;
+            //$(window).scrollTop() + $(window).height() == $(document).height();
+            //console.log('scrollTop + ' + $(window).scrollTop() + ' heightWindow + ' + $(window).height() + ' = ' + $(document).height() + ' top_control ' + control_.top);
+            if (control_.top <= $(document).height()) {
+                //alert('carregar');
+            }
             let margin_stories = $('.main-container').offset();
-            //console.log('margin_stories ' + margin_stories.top);
+            let margin_s = $('.main').offset();
+            console.log('margin_s ' + margin_s.top);
+            let height_ = parseInt($('.main').height());
+            console.log('height_margin_s ' + height_);
             let height = parseInt($('.main-container').height());
+            console.log('height_margin_stories ' + height);
+            console.log('bottom ' + (height + margin_stories.top));
             let height_stories = $('#stories-card').height();
             //console.log('height ' + height);
             //console.log('height stories ' + height_stories);
@@ -1177,7 +1196,20 @@
 
                 }
             }
+            console.log('janela width ' + window.innerWidth);
+            window_width = window.innerWidth; 
+            console.log('scroll log: ' + $('.main').scrollTop());
+            $(document).scroll(function() {
+               //if($(window).scrollTop() + $(window).height() == $(document).height()) {
+                   //alert("bottom!");
+               //}
+               console.log('oii123iii');
+            });
+            console.log('oii12');
+            
+            if (window.innerWidth < 800) {
 
+            }
             let video_post1 = document.getElementsByClassName('video-post-video');
             //console.log(video_post1);
 

@@ -48,7 +48,7 @@
                         <span class="text-white">Agora vamos conhecer-te</span>
                     </div>
 
-                <form action="{{route('account.teste.form')}}" method="POST" >
+                <form action="{{route('account.save.next1')}}" method="POST" >
                     @csrf
 
                       <div class="form-group">

@@ -58,7 +58,8 @@ class PostController extends Controller
         DB::beginTransaction();
         try {
             $page_controller = new PageController();
-            $account_id = Auth::user()->id;
+            $account_id = Auth::user()->conta_id;
+            //dd($account_id);
             $posts_return = array();
             $post_views = array();
             $page_follow = array();

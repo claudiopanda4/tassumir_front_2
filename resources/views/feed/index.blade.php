@@ -350,6 +350,9 @@
                 </section>
             <?php endif ?>
         <?php endforeach ?>
+        <div class="control" id="control-1">
+            
+        </div>
 </div>
 <script>
 function gostar(id){
