@@ -45,7 +45,7 @@
 
                     <input type="text" name="theId" class="hidden" value="{{$takeId}}">
 
-                    <div class="form-group">
+                    <div class="form-group" id="password_login_id2">
                         
                         <input type="password" class="input-text-default input-full input-login" name="password" placeholder="Escreva a nova senha" required id="password">
 
@@ -60,7 +60,7 @@
                       <label id="labelAprovado" class="hidden">Password aceitável</label>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="password_login_id2">
                         
                         <input type="password" class="input-text-default input-full input-login" name="confirmarPassword" placeholder="Repita a nova senha" required id="confirmarPassword">
 

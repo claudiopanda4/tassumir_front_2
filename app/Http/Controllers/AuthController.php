@@ -1016,10 +1016,7 @@ class AuthController extends Controller
 
     public function joinAndSave(Request $request){
 
-
           try{
-
-
                 $takePhone = str_replace("-","",$request->telefone);
 
                 /* to play with the code on my mind */
@@ -1032,23 +1029,13 @@ class AuthController extends Controller
 
                 /* end play with the code on my mind */
 
-
             $passwordLength = strlen($request->password);
-
-              if ($passwordLength<9) {
-
-
-                  return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data', 'page_current'));
-
-              }else{
-
-
                   $saveRetriveId = DB::table('contas')->insertGetId([
                   'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                  'nome' => $request->nome1,
-                  'apelido' => $request->apelido1,
-                  'data_nasc' => $request->dataNasc1,
-                  'genero' => $request->sexo1,
+                  'nome' => $request->nome,
+                  'apelido' => $request->apelido,
+                  'data_nasc' => $request->dat,
+                  'genero' => $request->sexo,
                   'estado_civil_id' => 1,
                   'email' => $request->email,
                   'telefone' => $takePhone,
@@ -1061,21 +1048,19 @@ class AuthController extends Controller
                    'id' => $saveRetriveId,
               ]);
                 //$countId = DB::table('contas')->select(count(['conta_id']))->count();
-
               DB::table('logins')->insert([
 
                   'email' => $request->email,
                   'telefone' => $takePhone,
                   'password' => Hash::make($request->password),
                   'conta_id' => $saveRetriveId,
-
               ]);
 
               $code = random_int(1000,9000);
               $takePhone = $takePhone;
               $takeEmail = $request->email;
-              DB::table('codigo_confirmacaos')->insert([
 
+              DB::table('codigo_confirmacaos')->insert([
                   'codigoGerado' => $code,
                   'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
                   'conta_id' => $saveRetriveId,
@@ -1083,30 +1068,33 @@ class AuthController extends Controller
                   'telefone' => $takePhone,
               ]);
 
-<<<<<<< HEAD
-
-              /*
-=======
+              
               /*if ($takeEmail != null) {
-                    $codHugo = random_int(1000,9000);
->>>>>>> 3aa5c05b99a5b4a510fd07b15ef51349f426ec15
-              if ($takeEmail != null) {
 
-                    $codHugo = random_int(1000,9000);
+                    $codHugo = $code;
 
-                    dd("entrei no teste email");
-                    Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
+                    Mail::to($takeEmail)->send(new SendVerificationCode($codHugo));
+
+                    //dd($codHugo);
+                    //Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
+
+             return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
               }*/
 
 
+             //DB::commit();
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
 
-              }
 
 
-          }catch(\Exception $e){
-              return back()->with('error','Erro Hugo Paulo');
-          }
+          }catch(\Exception $e) {
+              DB::rollback();
+              $mensagem = [
+                  'Salvo' => false,
+                  'texto' => 'Dados nao foram salvos, E-mail ou Telefone já existente',
+              ];
+              return $mensagem;
+            }
 
     }
 
@@ -1126,6 +1114,144 @@ class AuthController extends Controller
         //return redirect()->route('account.login.form');
 
     }
+    /* New test */
+
+        public function firstForm(){
+
+            return view('auth.RealRegister');
+        }
+      
+      
+        public function firstFormInsert(Request $request){
+
+            try{
+
+            DB::beginTransaction();
+
+             $takePhone = str_replace("-","",$request->telefone);
+              $takeEmail = $request->email;
+             $page_current = 'auth';
+
+             if($takeEmail != null){
+
+                $saveRetriveId = DB::table('contas')->insertGetId([
+                  'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'nome' => $request->nome,
+                  'apelido' => $request->apelido,
+                  'data_nasc' => $request->dat,
+                  'genero' => $request->sexo,
+                  'estado_civil_id' => 1,
+                  'email' => $takeEmail,
+                  //'telefone' => $takePhone,
+                  'estado_conta_id' => 1,
+                  'nacionalidade' => $request->nacionalidade
+
+              ]);
+
+                DB::table('identificadors')->insertGetId([
+                   'tipo_identificador_id' => 1,
+                   'id' => $saveRetriveId,
+              ]);
+
+
+              DB::table('logins')->insert([
+
+                  'email' => $takeEmail,
+                  //'telefone' => $takePhone,
+                  'password' => Hash::make($request->password),
+                  'conta_id' => $saveRetriveId,
+
+              ]);
+
+              $code = random_int(1000,9000);
+              
+              DB::table('codigo_confirmacaos')->insert([
+
+                  'codigoGerado' => $code,
+                  'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'conta_id' => $saveRetriveId,
+                  'email' => $takeEmail,
+                  //'telefone' => $takePhone,
+              ]);
+
+              $codHugo = $code;
+
+                    Mail::to($takeEmail)->send(new SendVerificationCode($codHugo));
+
+                    //dd($codHugo);
+                    //Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
+
+             DB::commit();
+             return view('auth.codigoRecebidoEmail',compact('saveRetriveId','takePhone','takeEmail'));
+
+             }else{
+
+                  $saveRetriveId = DB::table('contas')->insertGetId([
+                  'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'nome' => $request->nome,
+                  'apelido' => $request->apelido,
+                  'data_nasc' => $request->dat,
+                  'genero' => $request->sexo,
+                  'estado_civil_id' => 1,
+                  //'email' => $takeEmail,
+                  'telefone' => $takePhone,
+                  'estado_conta_id' => 1,
+                  'nacionalidade' => $request->nacionalidade
+
+              ]);
+
+
+                DB::table('identificadors')->insertGetId([
+                   'tipo_identificador_id' => 1,
+                   'id' => $saveRetriveId,
+              ]);
+
+
+              DB::table('logins')->insert([
+
+                  //'email' => $takeEmail,
+                  'telefone' => $takePhone,
+                  'password' => Hash::make($request->password),
+                  'conta_id' => $saveRetriveId,
+
+              ]);
+
+              $code = random_int(1000,9000);
+              
+              DB::table('codigo_confirmacaos')->insert([
+
+                  'codigoGerado' => $code,
+                  'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'conta_id' => $saveRetriveId,
+                  //'email' => $takeEmail,
+                  'telefone' => $takePhone,
+              ]);
+
+
+             DB::commit();
+
+               return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
+             }
+                  
+        
+
+
+
+             //return response($response, 201);
+             
+            }catch(\Exception $e) {
+              DB::rollback();
+
+              $mensagem = [
+                  'Salvo' => false,
+                  'texto' => 'Dados nao foram salvos, E-mail ou Telefone já existente',
+              ];
+              return $e;
+            }
+
+        }
+      
+    /* end new test*/
 
     public function verifyCodeSent(Request $request){
         $codeSent = $request->codeReceived;
@@ -1150,7 +1276,6 @@ class AuthController extends Controller
                     $takeHim = $generateCode->codigoGerado;
                     $phoneAquired = $generateCode->telefone;
                     $emailAquired = $generateCode->email;
-
 
                 }
                 if($takeHim == $codeSent && $phoneAquired == $phoneReceived ){
@@ -1350,7 +1475,6 @@ if ($phone != null) {
 
   public function updatePassword(Request $request){
 
-
       $idToCompare = $request->theId;
 
       $password = $request->password;
@@ -1359,7 +1483,7 @@ if ($phone != null) {
       $passwordLength = strlen($request->password);
       $confirmPassLength = strlen($request->confirmarPassword);
 
-      if($password == $confirmPass && $passwordLength>=9 && $confirmPassLength>=9){
+      if($password == $confirmPass && $passwordLength == $confirmPassLength){
 
         DB::table('logins')
               ->where('conta_id', $idToCompare)
@@ -1389,7 +1513,7 @@ if ($phone != null) {
       $passwordLength = strlen($request->password1);
       $confirmPassLength = strlen($request->confirmarPassword1);
 
-      if($password == $confirmPass && $passwordLength>=9 && $confirmPassLength>=9){
+      if($password == $confirmPass && $passwordLength == $confirmPassLength){
 
         DB::table('logins')
               ->where('conta_id', $idToCompare)
@@ -1397,7 +1521,6 @@ if ($phone != null) {
 
 
         return redirect()->route('account.login.form');
-
 
       }
       else{
@@ -1417,9 +1540,10 @@ if ($phone != null) {
 
         $credentials = $request->validate([
             'number_email_login' => ['required'],
-            'password_login' => ['required','min:9','max:255'],
+            'password_login' => ['required'],
         ]);
 
+        //,'min:9','max:255' tirei prq ultrapassei o meu bug do multi nivel form
         //dd($request);
 
         if (Auth::attempt(['email' => $request->number_email_login, 'password' => $request->password_login])) {

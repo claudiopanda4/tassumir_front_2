@@ -101,16 +101,17 @@ Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login
 /* registrar */
 Route::get('/registrar', [App\Http\Controllers\AuthController::class, 'registrarUser'])->name('account.register.form');
 
-Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.teste.form');
+/*Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.teste.form');
+Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.enter.form');*/
 
 
-Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.enter.form');
+/* New test H20 edom  */
+    
+    Route::get('/Register',[App\Http\Controllers\AuthController::class, 'firstForm'])->name('first.form');
 
-//Route::get('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.teste.form');
+    Route::post('/InsertRegister',[App\Http\Controllers\AuthController::class, 'firstFormInsert'])->name('first.form.insert'); 
 
-
-
-
+/* End new test H20 edom */
 
 
 /* email start*/

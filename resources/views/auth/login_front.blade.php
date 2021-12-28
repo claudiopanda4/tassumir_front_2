@@ -73,7 +73,9 @@
                         <h2 class="center">ou</h2>
                     </div>
                 </form>
-                <form action="{{ route('account.register.form') }}" method="GET">
+                
+                <!--account.register.form-->
+                <form action="{{ route('first.form') }}" method="GET">
                     <button id="login-register" type="submit" class=""><span class="enter-login">Criar uma Nova conta</button>
                 </form>
 
