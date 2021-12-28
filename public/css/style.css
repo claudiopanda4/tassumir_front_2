@@ -3086,3 +3086,8 @@ label[for="hugo"]{
 #container-main-tv .body-pop-up {
 	overflow-y: hidden;
 }
+#main-container-page-definition,
+#main-container-help {
+	width: 600px;
+	margin: 30px auto;
+}

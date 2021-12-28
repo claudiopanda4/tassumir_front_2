@@ -415,15 +415,15 @@ class AuthController extends Controller
           $dadosSeguida = $dates['dadosSeguida'];
           $notificacoes_count = $dates['notificacoes_count'];
 
-
         //=========================================================
         $paginasSeguidas = $this->paginasSeguidas();
         $paginasNaoSeguidas = $this->paginasNaoSeguidas();
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
       $post_controller = new PostController();
-      $post= DB::table('posts')->limit(7)->get();
+      //$post= DB::table('posts')->limit(7)->get();
       //dd($post);
+
       $post = $post_controller->posts();
       //dd($post);
       $a=0;
@@ -755,7 +755,7 @@ class AuthController extends Controller
 
 
 
-      return view('pagina.comment', compact('account_name','notificacoes_count','notificacoes', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'paginasSeguidas', 'paginasNaoSeguidas', 'conta_logada'));
+      return view('pagina.comment', compact('account_name','notificacoes_count','notificacoes', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'paginasSeguidas', 'paginasNaoSeguidas', 'dadosSeguida', 'conta_logada'));
 
     }
 
@@ -1122,7 +1122,7 @@ class AuthController extends Controller
 
     public function joinAndSave(Request $request){
 
-
+        DB::beginTransaction();
           try{
 
 
@@ -1176,7 +1176,7 @@ class AuthController extends Controller
                   'conta_id' => $saveRetriveId,
 
               ]);
-
+              //dd($saveRetriveId);
               $code = random_int(1000,9000);
               $takePhone = $takePhone;
               $takeEmail = $request->email;
@@ -1197,13 +1197,14 @@ class AuthController extends Controller
                     dd("entrei no teste email");
                     Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
               }*/
-
+              DB::commit();
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
 
               }
 
           }catch(\Exception $e){
-              return back()->with('error','Erro Hugo Paulo');
+            DB::rollBack();
+              return back()->with('error','Erro');
           }
 
     }
