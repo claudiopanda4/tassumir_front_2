@@ -41,13 +41,11 @@
                         <span class="text-white">Só mais algumas informações</span>
                     </div>
                 </header>
-
-
                     <div class="row justify-content-start ml-1">
                         <span class="text-white mb-2">Estamos concluindo o seu cadastro...</span>
                     </div>
 
-                <form action="{{route('account.enter.form')}}" method="POST" class="needs-validation" novalidate >
+                <form action="{{route('account.save')}}" method="POST" class="needs-validation" novalidate >
 
                     @csrf
 
@@ -119,7 +117,6 @@
 
     <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     
-
 <script>
 
     const pass = $("#password");

@@ -104,8 +104,10 @@ class MessageController extends Controller
             $key = 0;
             foreach ($message as $value) {
                 $resultado[$key] = $value;
+                $id_sms_last = $value->message_id;
                 $key ++;
             }   
+            $message_user['id_last_sms'] = $id_sms_last;
             $message_user['valor'] = $resultado;
             $message_user['resultado'] = "Salvou";
             return response()->json($message_user);
@@ -163,6 +165,13 @@ class MessageController extends Controller
                   ['id_identificador_a', '=', $m_destinatario[0]->identificador_id],
                   ['id_identificador_b', '=', $m_user_logado[0]->identificador_id],
             ])->orderBy('message_id', 'desc')->limit(5)->get()->reverse();
+        $message_lenth = DB::table('messages')->where([
+                  ['id_identificador_a', '=', $m_user_logado[0]->identificador_id],
+                  ['id_identificador_b', '=', $m_destinatario[0]->identificador_id],
+            ])->orwhere([
+                  ['id_identificador_a', '=', $m_destinatario[0]->identificador_id],
+                  ['id_identificador_b', '=', $m_user_logado[0]->identificador_id],
+            ])->orderBy('message_id', 'desc')->get();    
 
             $tamanho = sizeof($message);
             $key = 0;
@@ -171,6 +180,7 @@ class MessageController extends Controller
                 $key ++;
             }
             $message_user['valor'] = $resultado;
+            $message_user['tamanho_sms'] = sizeof($message_lenth);
             return response()->json($message_user);
         }
         } catch (Exception $e) {
@@ -213,8 +223,13 @@ class MessageController extends Controller
                   ['id_identificador_b', '=', $identificador_user[0]->identificador_id],
             ])->orderBy('message_id', 'desc')->limit(5)->get()->reverse();
 
-
-
+            $message_lenth = DB::table('messages')->where([
+                  ['id_identificador_a', '=', $identificador_user[0]->identificador_id],
+                  ['id_identificador_b', '=', $identificador_dest[0]->identificador_id],
+            ])->orwhere([
+                  ['id_identificador_a', '=', $identificador_dest[0]->identificador_id],
+                  ['id_identificador_b', '=', $identificador_user[0]->identificador_id],
+            ])->orderBy('message_id', 'desc')->get();
 
           $message_contact = DB::table('messages')->where('id_identificador_a', $identificador_user[0]->identificador_id)->orwhere('id_identificador_b', $identificador_user[0]->identificador_id)->join('identificadors', function ($join) {
             $join->on('messages.id_identificador_a', '=', 'identificadors.identificador_id' )->orOn('messages.id_identificador_b', '=', 'identificadors.identificador_id');
@@ -226,7 +241,7 @@ class MessageController extends Controller
 
         //dd($contas);
 
-        return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'user_logado', 'contas', 'message_contact', 'message_text', 'identificador_user', 'identificador_dest', 'conta_destino'));
+        return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'user_logado', 'contas', 'message_contact', 'message_text', 'identificador_user', 'identificador_dest', 'conta_destino', 'message_lenth'));
         
 
         } catch (Exception $e) {
@@ -271,6 +286,17 @@ class MessageController extends Controller
                   ['message_id', '<', $request->id_sms],
                   ['id_identificador_b', '=', $identificador_user[0]->identificador_id],
                     ])->orderBy('message_id', 'desc')->limit(5)->get()->reverse();
+
+                    $message_lenth = DB::table('messages')->where([
+                  ['id_identificador_a', '=', $identificador_user[0]->identificador_id],
+                  ['message_id', '<', $request->id_sms],
+                  ['id_identificador_b', '=', $identificador_dest[0]->identificador_id],
+                    ])->orwhere([
+                  ['id_identificador_a', '=', $identificador_dest[0]->identificador_id],
+                  ['message_id', '<', $request->id_sms],
+                  ['id_identificador_b', '=', $identificador_user[0]->identificador_id],
+                    ])->orderBy('message_id', 'desc')->get();
+
             if (sizeof($message) == 0) {
                 $message_user['code'] = 2;
                 $message_user['valor'] = 0;
@@ -281,6 +307,7 @@ class MessageController extends Controller
                 $key ++;
             }
             $message_user['valor'] = $resultado;
+            $message_user['tamanho_sms'] = sizeof($message_lenth);
             }
             return response()->json($message_user);
             }
@@ -315,8 +342,19 @@ class MessageController extends Controller
                   ['id_identificador_b', '=', $identificador_user[0]->identificador_id],
                     ])->orderBy('message_id', 'asc')->limit(5)->get()->reverse();
 
+                $message_lenth = DB::table('messages')->where([
+                  ['id_identificador_a', '=', $identificador_user[0]->identificador_id],
+                  ['message_id', '>', $request->id_sms],
+                  ['id_identificador_b', '=', $identificador_dest[0]->identificador_id],
+                    ])->orwhere([
+                  ['id_identificador_a', '=', $identificador_dest[0]->identificador_id],
+                  ['message_id', '>', $request->id_sms],
+                  ['id_identificador_b', '=', $identificador_user[0]->identificador_id],
+                    ])->orderBy('message_id', 'asc')->get();    
+
             if (sizeof($message_user['valor']) == 0) {
                 $message_user['code'] = 2;
+                $message_user['tamanho_sms'] = sizeof($message_lenth);
             }
             return response()->json($message_user);
             }

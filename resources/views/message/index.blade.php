@@ -293,7 +293,9 @@
                     }
                     $('#user_chat').append("<h1>"+nome_conta_dest+"</h1>");
                     $('#message_user_dest').empty();
-                    $('#message_user_dest').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                    if (response.tamanho_sms > 5) {
+                     $('#message_user_destino').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                     }
                     $.each(response.valor, function(key, value){
                         if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
                             if (response.foto_rem == null) {
@@ -353,7 +355,9 @@
         </header>
         @if(isset($message_text))            
         <div id="message_user_destino" class="body-message clearfix">
+            @if(sizeof($message_lenth) > 5)
             <div id="sms_antiga"><p style="text-align: center; color: white; cursor: pointer;">Ver Mensagens Anteriores</p></div>
+            @endif
             @forelse($message_text as $mensagem)
                 @if(($mensagem->id_identificador_a == $identificador_user[0]->identificador_id) && ($mensagem->id_identificador_b == $identificador_dest[0]->identificador_id))
                 <div id="{{$mensagem->message_id}}" class="other-user r-5 uma_sms">
@@ -462,19 +466,20 @@
                 dataType: 'json',
                 success: function(response){
                   if (response.resultado == "Salvou") {
-                    console.log(response.valor);
-                    $('.uma_sms').eq(0).remove();
+                    if (($('.uma_sms').eq(4).attr("id")) != null) {
+                        $('.uma_sms').eq(0).remove();
+                    }
                     $('#message_user_dest:first-child').text('Angola');
                     $('#message_send').val("");
-                    if (response.foto_reme == null) {
+                    if (response.foto_rem == null) {
 
-                    $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
-                    $('#message_user_destino').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
+                    $('#message_user_dest').append("<div id="+response.id_last_sms+" class='other-user uma_sms r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
+                    $('#message_user_destino').append("<div id="+response.id_last_sms+" class='other-user uma_sms r-5'><div class='clearfix'><div class='container-img circle l-5'><i class='fas fa-user center' style='font-size: 30px; color: #ccc;'></i></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
                 }else{
                     
-                    let src = "{{asset('storage/img/users/')}}" + "/" + response.foto_reme;
-                    $('#message_user_destino').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='" + src + "' class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
-                    $('#message_user_dest').append("<div class='other-user r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='" + src + "' class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+"</p></div></div></div>");
+                    let src = "{{asset('storage/img/users/')}}" + "/" + response.foto_rem;
+                    $('#message_user_destino').append("<div id="+response.id_last_sms+" class='other-user uma_sms r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+" </p></div></div></div></div>");
+                    $('#message_user_dest').append("<div id="+response.id_last_sms+" class='other-user uma_sms r-5'><div class='clearfix'><div class='container-img circle l-5'><img src='"+src+"'  class='circle img-full'></div><div class='message-body l-5'><div><p class='corpo_mensagem'>"+message+" </p></div></div></div></div>");
                 }
                 
                   }
@@ -487,7 +492,27 @@
         $('.sms_nova').hide();
         $('.sms_nova').click(function (e){
                     e.preventDefault();
-                    let id_first_sms = $('.uma_sms').eq(4).attr("id");
+                    if (($('.uma_sms').eq(4).attr("id")) == null) {
+                        if (($('.uma_sms').eq(3).attr("id")) == null) {
+                            if (($('.uma_sms').eq(2).attr("id")) == null) {
+                                if (($('.uma_sms').eq(1).attr("id")) == null) {
+                                    if (($('.uma_sms').eq(0).attr("id")) == null) {
+                            
+                                    }else{
+                                        var id_first_sms = $('.uma_sms').eq(0).attr("id");
+                                    }
+                                }else{
+                                    var id_first_sms = $('.uma_sms').eq(1).attr("id");
+                                }
+                            }else{
+                                var id_first_sms = $('.uma_sms').eq(2).attr("id");
+                            }    
+                        }else{
+                            var id_first_sms = $('.uma_sms').eq(3).attr("id");
+                        }    
+                    }else{
+                        var id_first_sms = $('.uma_sms').eq(4).attr("id");
+                    }
                     let user_send = $('#user_logado').val();
                     let conta_send = $('#destinatario').val();
                     let identificador_user = $('#remetente').val();
@@ -512,7 +537,7 @@
                     $('#user_chat').append("<h1>"+response.nome_des+"</h1>");
                     $('#message_user_dest').empty();
                     $('#message_user_destino').empty();
-                    $('#message_user_dest').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                    $('#message_user_dest').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");                   
                     $('#message_user_destino').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
                     $.each(response.valor, function(key, value){
                         if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
@@ -538,7 +563,7 @@
                           }  
                         }
                       });
-                        $('.sms_nova').show();
+                        if (response.tamanho_sms > 5) {$('.sms_nova').show();} 
                     }else{ $('.sms_nova').hide(); }
                    }
                     });
@@ -571,7 +596,9 @@
                     $('#user_chat').append("<h1>"+response.nome_des+"</h1>");
                     $('#message_user_dest').empty();
                     $('#message_user_dest').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                    if (response.tamanho_sms > 5) {
                      $('#message_user_destino').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                     }
                     $.each(response.valor, function(key, value){
                         if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
                             if (response.foto_rem == null) {
@@ -632,7 +659,9 @@
                     $('#message_user_dest').empty();
                     $('#message_user_destino').empty();
                     $('#message_user_dest').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
-                    $('#message_user_destino').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                    if (response.tamanho_sms > 5) {
+                     $('#message_user_destino').append("<div onclick='ver_sms_antiga(event)' id='sms_antiga' ><p style='text-align: center; color: white; cursor: pointer'>Ver Mensagens Anteriores</p></div>");
+                     }
                     $.each(response.valor, function(key, value){
                         if ((value.id_identificador_a == identificador_user) && (value.id_identificador_b == destinatario)) {
                             if (response.foto_rem == null) {
