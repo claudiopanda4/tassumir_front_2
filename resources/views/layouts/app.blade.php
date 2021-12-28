@@ -150,7 +150,7 @@
 
                                     <?php endif ?>
 
-                                    <div class="hidden-click-any-container noti-div-name">  
+                                    <div class="hidden-click-any-container noti-div-name">
                                    @if($notificacoes[$i- 1]['tipo'] == 1)
                                    <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}" class="mudar_estado_not" >
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
@@ -493,7 +493,9 @@
 <?php if (true): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
+@if(sizeof($page_content)>0)
 <input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
+@endif
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
@@ -511,6 +513,7 @@
             <div class="header-height"></div>
             <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
                 <div class="first-component clearfix l-5">
+                  @if(sizeof($page_content)>0)
                     @if($page_content[0]->foto)
                         <div class="page-cover circle l-5">
                             <img class="img-full circle" src="{{asset('storage/img/page/' . $page_content[0]->foto)}}">
@@ -519,10 +522,12 @@
                         <div class="page-cover circle l-5">
                             <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                         </div>
-                    @endif
+                        @endif
+
                     <div class="page-identify l-5 clearfix">
                         <h1 class="text-ellips">{{ $page_content[0]->nome }}</h1>
                     </div>
+                    @endif
                 </div>
                 <div class="textarea-container l-5" style="width:100%;">
                     <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
@@ -1197,7 +1202,7 @@
                 }
             }
             console.log('janela width ' + window.innerWidth);
-            window_width = window.innerWidth; 
+            window_width = window.innerWidth;
             console.log('scroll log: ' + $('.main').scrollTop());
             $(document).scroll(function() {
                //if($(window).scrollTop() + $(window).height() == $(document).height()) {
@@ -1206,7 +1211,7 @@
                console.log('oii123iii');
             });
             console.log('oii12');
-            
+
             if (window.innerWidth < 800) {
 
             }
