@@ -142,7 +142,7 @@
                     <div class="input-text comment-send-text l-5 clearfix">
                         <input type="text" class="" name="comentario" id="comentario-{{$dados[0]['post_id']}}" placeholder="O que você tem a dizer?">
                         <div class="r-5 ">
-                            <a href="" class="comentar-a" id="{{$dados[0]['post_id']}}">
+                            <a href="" class="comentar-aa" id="{{$dados[0]['post_id']}}">
                                 <i class="far fa-paper-plane fa-20 fa-img-comment" id="{{$dados[0]['post_id']}}"></i>
                             </a>
                         </div>
@@ -153,7 +153,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[0]['post_id']}}">
+              <!--  <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[0]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment">
                           @if( $dados[0]['dono_da_pag?']==0 )
@@ -186,10 +186,11 @@
                     <div class="comment-user-container comment-user-container-react">
                         <i class="far fa-heart fa-12"></i>
                     </div>
-                </div>
+                </div>-->
+                <div class="" id="div_pai_commnet">
+
                 <?php if ($dados[0]['qtd_comment']>0): ?>
                   <?php foreach ($comment as $key => $value): ?>
-
 
                   <div class="comment-users" id="comment-users-{{$dados[0]['post_id']}}">
                             <div class="comment-user-container" >
@@ -232,6 +233,8 @@
                         </div>
                         <?php endforeach; ?>
                       <?php endif; ?>
+                    </div>
+
                 <div>
 
                 </div>

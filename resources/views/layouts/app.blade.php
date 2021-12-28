@@ -469,7 +469,7 @@
 
 
                         <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>
-                        
+
                       <?php /* echo"
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
@@ -943,7 +943,21 @@
               }
             });
       });
-
+      $('.comentar-aa').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id;
+          let coment = $('#comentario-' + id).val();
+          //alert(coment);
+          if(coment != ''){
+            $("#comment-own-" + id).text(coment);
+          $("#comment-users-own-" + id).css({
+            display: "flex",
+          });
+          $("#comment-users-" + id).hide();
+          $("#comentario-" + id).val('');
+          comentar(id, coment);
+        }
+      });
 
 
 

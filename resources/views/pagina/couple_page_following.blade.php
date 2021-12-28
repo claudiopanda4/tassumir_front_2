@@ -37,7 +37,7 @@
                     </li>
                 @endforeach
                 @endif
-
+ 
             </ul>
         </nav>
     </div>

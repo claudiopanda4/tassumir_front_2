@@ -176,7 +176,7 @@ class AuthController extends Controller
              }
            }
            }
-           
+
               $dadosSeguida = DB::table('seguidors')
                ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
                ->select('seguidors.*', 'identificadors.id')
@@ -382,7 +382,7 @@ class AuthController extends Controller
 
 
     public function index(){
-  
+
         if (Auth::check() == true) {
           $default = new PerfilController();
           $dates = $this->default_();
@@ -445,7 +445,7 @@ class AuthController extends Controller
             $seguidas = DB::table('seguidors')->where('identificador_id_seguindo', $dadosSgndo[0]->identificador_id)->get();
             $valor_id = 0;
             $contador = 0;
-          
+
             $dadosPage = DB::table('pages')->get();
             foreach ($dadosPage as $key => $page) {
               foreach ($identificadorPage as $identificador) {
@@ -453,24 +453,24 @@ class AuthController extends Controller
                   foreach ($seguidas as $pageSeguida) {
                     if ($identificador->identificador_id == $pageSeguida->identificador_id_seguida) {
                       $paginasSeguidas[$key] = $page;
-                    }  
+                    }
                   }
                 }
               }
             }
          foreach ($paginasSeguidas as $key => $valorPage) {
-          
+
           if ($contador > 2) {
               break;
             }
             $pagePage[$key] = $valorPage;
-            
+
             $contador = $contador + 1;
          }
-              return $pagePage;          
+              return $pagePage;
         } catch (Exception $e) {
-          
-        } 
+
+        }
     }
 
     public function paginasNaoSeguidas(){
@@ -485,47 +485,47 @@ class AuthController extends Controller
                ->get();
         $parada = 0;
         $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-      
+
       foreach($dadosPage as $key => $Paginas){
                  $conta_page = 0;
                  $verifica1 = 'A';
                  $verifica = 'B';
                  $seguidors = 0;
                  $tamanho = sizeof($dadosSeguida);
-                
-          foreach ($dadosSeguida as $Seguida){ 
-                 if ($Paginas->page_id == $Seguida->id){         
-                    if ($dadosSgndo[0]->identificador_id == $Seguida->identificador_id_seguindo){     
+
+          foreach ($dadosSeguida as $Seguida){
+                 if ($Paginas->page_id == $Seguida->id){
+                    if ($dadosSgndo[0]->identificador_id == $Seguida->identificador_id_seguindo){
                             $verifica1 = $Paginas->nome;
                     }else{
-                            $verifica = $Paginas->nome; 
-                        }         
+                            $verifica = $Paginas->nome;
+                        }
                 }else{
                       $conta_page += 1;
-                    } 
-          }                           
+                    }
+          }
           if ($verifica1 != $verifica){
-            
+
                if ($verifica != 'B'){
                  $paginasNaoSeguidas[$key] = $Paginas;
                }
           }
-          if ($conta_page == $tamanho){   
+          if ($conta_page == $tamanho){
                   $paginasNaoSeguidas[$key] = $Paginas;
           }
         }
          foreach ($paginasNaoSeguidas as $key => $valuePage) {
-       
+
           if ($parada > 2) {
               break;
             }
             $pagenaoPage[$key] = $valuePage;
-            
+
             $parada = $parada + 1;
          }
               return $pagenaoPage;
         } catch (Exception $e) {
-          
+
         }
     }
 
@@ -541,7 +541,7 @@ class AuthController extends Controller
             $seguidas = DB::table('seguidors')->where('identificador_id_seguindo', $dadosSgndo[0]->identificador_id)->get();
             $valor_id = 0;
             $contador = 0;
-          
+
             $dadosPage = DB::table('pages')->get();
             foreach ($dadosPage as $key => $page) {
               foreach ($identificadorPage as $identificador) {
@@ -549,16 +549,16 @@ class AuthController extends Controller
                   foreach ($seguidas as $pageSeguida) {
                     if ($identificador->identificador_id == $pageSeguida->identificador_id_seguida) {
                       $paginasSeguidas[$key] = $page;
-                    }  
+                    }
                   }
                 }
               }
             }
-         
-              return $paginasSeguidas;          
+
+              return $paginasSeguidas;
         } catch (Exception $e) {
-          
-        } 
+
+        }
     }
 
     public function NaoSeguidas()
@@ -574,41 +574,41 @@ class AuthController extends Controller
                ->get();
         $parada = 0;
         $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
-      
+
       foreach($dadosPage as $key => $Paginas){
                  $conta_page = 0;
                  $verifica1 = 'A';
                  $verifica = 'B';
                  $seguidors = 0;
                  $tamanho = sizeof($dadosSeguida);
-                
-          foreach ($dadosSeguida as $Seguida){ 
-                 if ($Paginas->page_id == $Seguida->id){         
-                    if ($dadosSgndo[0]->identificador_id == $Seguida->identificador_id_seguindo){     
+
+          foreach ($dadosSeguida as $Seguida){
+                 if ($Paginas->page_id == $Seguida->id){
+                    if ($dadosSgndo[0]->identificador_id == $Seguida->identificador_id_seguindo){
                             $verifica1 = $Paginas->nome;
                     }else{
-                            $verifica = $Paginas->nome; 
-                        }         
+                            $verifica = $Paginas->nome;
+                        }
                 }else{
                       $conta_page += 1;
-                    } 
-          }                           
+                    }
+          }
           if ($verifica1 != $verifica){
-            
+
                if ($verifica != 'B'){
                  $paginasNaoSeguidas[$key] = $Paginas;
                }
           }
-          if ($conta_page == $tamanho){   
+          if ($conta_page == $tamanho){
                   $paginasNaoSeguidas[$key] = $Paginas;
           }
         }
             return $paginasNaoSeguidas;
         } catch (Exception $e) {
-          
+
         }
     }
-    /*Fim das Funções a não usar - Cumpra com o pedido para não dar buggs*/    
+    /*Fim das Funções a não usar - Cumpra com o pedido para não dar buggs*/
   public function tipos(){
 
     $tipos=DB::table('tipo_relacionamentos')->get();
@@ -642,11 +642,47 @@ class AuthController extends Controller
                 $valor = $value->identificador_id;
             }
 
-            
+
 
 
 
       $page_current = 'auth';
+        $pass=$this->unic_post($id);
+        $dados=$pass['dados'];
+        $comment=$pass['comment'];
+        /*$dados[$a]['qtd_comment_reaction']=0;
+        for ($j=1; $j <= sizeof($comment) ; $j++) {
+            $reaction_comment = DB::select('select * from reactions_comments where comment_id = ?', [$j]);
+        if (sizeof($reaction_comment)>= $dados[$a]['qtd_comment_reaction']) {
+          $dados[$a]['qtd_comment_reaction']=sizeof($reaction_comment);
+          $dados[$a]['comment']=$comment[$j - 1]->comment;
+          $dados[$a]['comment_id']=$comment[$j - 1]->comment_id;
+
+          $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$j-1]->identificador_id ]);
+          if ($aux2[0]->tipo_identificador_id == 1) {
+            $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+            $dados[$a]['nome_comment']=$conta[0]->nome;
+            $dados[$a]['nome_comment'].=" ";
+            $dados[$a]['nome_comment'].=$conta[0]->apelido;
+          }elseif ($aux2[0]->tipo_identificador_id == 2) {
+            $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
+          }
+        }
+      }*/
+
+
+
+
+
+      return view('pagina.comment', compact('account_name','notificacoes_count','notificacoes', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'paginasSeguidas', 'paginasNaoSeguidas', 'dadosSeguida', 'conta_logada'));
+
+    }
+
+
+    public function unic_post($id){
+      $dates = $this->default_();
+      $account_name = $dates['account_name'];
+      $conta_logada = $dates['conta_logada'];
       $post =  DB::select('select * from posts where uuid = ?', [$id]);
       $page = DB::table('pages')->get();
       $i=0;
@@ -720,32 +756,11 @@ class AuthController extends Controller
           }
           $a++;
         }
-        /*$dados[$a]['qtd_comment_reaction']=0;
-        for ($j=1; $j <= sizeof($comment) ; $j++) {
-            $reaction_comment = DB::select('select * from reactions_comments where comment_id = ?', [$j]);
-        if (sizeof($reaction_comment)>= $dados[$a]['qtd_comment_reaction']) {
-          $dados[$a]['qtd_comment_reaction']=sizeof($reaction_comment);
-          $dados[$a]['comment']=$comment[$j - 1]->comment;
-          $dados[$a]['comment_id']=$comment[$j - 1]->comment_id;
-
-          $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$j-1]->identificador_id ]);
-          if ($aux2[0]->tipo_identificador_id == 1) {
-            $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
-            $dados[$a]['nome_comment']=$conta[0]->nome;
-            $dados[$a]['nome_comment'].=" ";
-            $dados[$a]['nome_comment'].=$conta[0]->apelido;
-          }elseif ($aux2[0]->tipo_identificador_id == 2) {
-            $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
-          }
-        }
-      }*/
-
-
-
-
-
-      return view('pagina.comment', compact('account_name','notificacoes_count','notificacoes', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'paginasSeguidas', 'paginasNaoSeguidas', 'dadosSeguida', 'conta_logada'));
-
+        $variable=[
+          "dados"=>$dados,
+          "comment"=>$comment,
+        ];
+      return $variable;
     }
 
 
@@ -1065,7 +1080,7 @@ class AuthController extends Controller
         $page_current = 'auth';
 
         //----------------------------------------------------------------
-        
+
         //----------------------------------------------------------------
 
 
