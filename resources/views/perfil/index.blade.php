@@ -20,14 +20,14 @@
         <div class="" id="card-ident">
             <div id="ident-profile">
                 <h1 class="profile-name">{{$account_name[0]->nome}} {{$account_name[0]->apelido}}</h1>
-                    <div class="invite-icon circle">
-                        <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
-                    </div>
+                <div class="invite-icon circle">
+                    <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
+                </div>
             </div>
             <ul class="profile-follow profile-item-center">
                 <li class="statistics-profile">
-                  <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}">  <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_ps']}}</h2></a>
-                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}"><h2 style="justify-content: center; font-size: 11.5px;">Seguindo</h2></a>
+                  <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}">  <h2 style="justify-content: center; font-weight: bolder; font-size: 14px; width: 100%; margin-bottom: 0;">{{$perfil[0]['qtd_ps']}}</h2></a>
+                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}" style="margin-top: -5px;"><h2 style="justify-content: center; font-size: 11.5px;">Seguindo</h2></a>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                     <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
                   <?php endif; ?>

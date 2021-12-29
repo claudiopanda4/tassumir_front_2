@@ -22,18 +22,58 @@ class PostController extends Controller
         //;
     }
 
-    public function posts() {
+    public function posts(Request $request) {
+
+        $init = 0;
+        $dest_init = 0;
+        $checked = false;
+        //dd($request->checked);
+        if ($request->checked) {
+            $init = $request->init;
+            //dd('entrou');
+            //$post_id_request = DB::select('select post_id from posts where uuid = ?', [$request->dest_init]);
+            $dest_init = $request->dest_init;
+            if ($request->checked) {
+                $checked = true;
+            }
+        }
+        $user_id = Auth::user()->conta_id;
         $dados = [];
         $total_posts = 10;
         $i = 0;
-        $posts = $this->get_posts();
+        $new_posts = DB::select('select post_id from posts where post_id > ?', [$init]);
+        if (sizeof($new_posts) > 0) {
+            $posts_return = $this->get_posts($init, $checked, $user_id, $dest_init);
+            $posts = $posts_return['posts_return'];
+            $last_post_id = $posts_return['last_post'];
+        } else {
+            $posts = array();
+            $last_post_id = $request->init;
+        }
+        //dd($posts);
+        //$posts = $this->get_posts();
         $dados = array();
         if (sizeof($posts) < 10) {
             $posts_size = sizeof($posts);
             //dd($posts);
             $total_posts = $total_posts - $posts_size;
             $i = 0;
-            $destaques = $this->destaques($total_posts);
+            /*if ($dest_init >) {
+                
+            } else {
+                
+            }*/
+            $new_posts = DB::select('select post_id from posts where post_id > ?', [$dest_init]);
+            //dd($dest_init.' new_posts '.sizeof($new_posts));
+            if (sizeof($new_posts) > 0) {
+                $destaques_return = $this->destaques($total_posts, $dest_init);
+                $destaques = $destaques_return['destaques'];
+                $last_post_dest = $destaques_return['last_post_dest'];
+            } else {
+                $destaques = array();
+                $last_post_dest = $request->dest_init;
+            }
+            //dd($destaques_return);
             $destaques_size = sizeof($destaques);
             $key = 0;
             while ($posts_size > 0) {
@@ -43,6 +83,7 @@ class PostController extends Controller
                 $key++;
             }
             $key = 0;
+            //dd($destaques_size);
             while ($destaques_size > 0) {
                 if (!in_array($destaques[$key]['post'], $dados)) {
                     $dados[$i] = $destaques[$key]['post'];
@@ -52,14 +93,18 @@ class PostController extends Controller
                 $destaques_size--;
             }
         }
-        return $dados;
+        return [
+                'dados' => $dados, 
+                'last_post_dest' => $last_post_dest, 
+                'last_post_id' => $last_post_id
+        ];
     }
-    public function get_posts () {
+    public function get_posts ($init, $checked, $user_id) {
         DB::beginTransaction();
         try {
             $page_controller = new PageController();
-            $account_id = Auth::user()->conta_id;
-            //dd($account_id);
+            //$account_id = 1;
+            $account_id = $user_id;
             $posts_return = array();
             $post_views = array();
             $page_follow = array();
@@ -73,11 +118,19 @@ class PostController extends Controller
             $counter = sizeof($posts_count);
             $check_status_posts = array();
             $control_posts = 0;
-            $post = DB::select('select * from posts limit 1');
+            $last_post = 0;
             if (sizeof($post) > 0) {
-                $aux1 = sizeof($post) > 0 ? $post[0]->post_id - 1 : 0;
-                $post_views = DB::select('select * from views limit 1');
-                $aux = sizeof($post_views) > 0 ? $post_views[0]->view_id - 1 : 0;
+                if ($checked) {
+                    $aux1 = $init;
+                    $aux = $init;
+                    return 'entrou 1';
+                } else {
+                    return 'entrou';
+                    $post = DB::select('select * from posts limit 1');
+                    $aux1 = sizeof($post) > 0 ? $post[0]->post_id - 1 : 0;
+                    $post_views = DB::select('select * from views limit 1');
+                    $aux = sizeof($post_views) > 0 ? $post_views[0]->view_id - 1 : 0;
+                }
                 while ($control_posts < 2 && sizeof($posts_return) < 10) {
                     while ((sizeof($posts_return) < 10 && $counter >= 0))  {
                         $post_views = DB::select('select post_id, conta_id from views where conta_id = ? and view_id > ? limit 4', [$account_id, $aux]);
@@ -92,20 +145,21 @@ class PostController extends Controller
                                 if ($control_posts == 0) {
                                     if (!(in_array($posts[$key], $posts_return)) && $page_controller->following($account_id, $posts[$key]->page_id)) {
                                         $posts_return[$i] = $posts[$key];
-                                        $i++;
+                                        $i++; 
                                     }
                                 } elseif ($control_posts == 1) {
                                     if (!(in_array($posts[$key], $posts_return))) {
                                         $posts_return[$i] = $posts[$key];
-                                        $i++;
+                                        $i++; 
                                     }
                                 }
                             }
                             $result = !$result;
+                            $last_post = $posts[$key]->page_id;
                         }
                         $auxs[$iii] = $aux.' '.$aux1.' size off '.sizeof($posts_return).' '.$counter;
-                        $aux = $aux + 4;
-                        $aux1 = $aux1 + 4;
+                        $aux = $aux + 4;   
+                        $aux1 = $aux1 + 4;     
                         $counter--;
                         $iii++;
                     }
@@ -115,11 +169,11 @@ class PostController extends Controller
                         $aux1 = 0;
                     }
                     $control_posts++;
-                }
+                } 
                 //dd($posts_return);
             }
             DB::commit();
-            return $posts_return;
+            return ['posts_return' => $posts_return, 'last_post' => $last_post];
         } catch (Exception $e) {
             DB::rollback();
         }
@@ -307,17 +361,20 @@ class PostController extends Controller
         return view('videos.index',compact('account_name','dados','checkUserStatus','profile_picture','isUserHost','hasUserManyPages','allUserPages','conta_logada','page_content','notificacoes','notificacoes_count','dadosSeguida'));
     }
 
-    public function destaques($limit){
-        $posts = DB::select('select * from posts limit ?', [$limit]);
+    public function destaques($limit, $init){
+        //dd($init);
+        $posts = DB::select('select * from posts where post_id > ? limit ?', [$init, $limit]);
         $post_drafted = array();
         $aux;
         $reactions_posts = array();
         $destaques = array();
         $i = 0;
+        $last_post_dest;
         while ($i < sizeof($posts)){
             $destaques[$i]['post_id'] = $posts[$i]->post_id;
             $destaques[$i]['reactions'] = $this->reactions_post($posts[$i]->post_id);
             $destaques[$i]['post'] = $posts[$i];
+            $last_post_dest = $posts[$i]->post_id;
             $i++;
         }
         $i = 0;
@@ -335,7 +392,7 @@ class PostController extends Controller
             $i++;
         }
         //dd($destaques);
-        return $destaques;
+        return ['destaques'=> $destaques, 'last_post_dest' => $last_post_dest];
     }
 
     public function view_post(Request $request)

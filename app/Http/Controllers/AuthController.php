@@ -399,7 +399,7 @@ class AuthController extends Controller
 
 
 
-    public function index(){
+    public function index(Request $request){
   
         if (Auth::check() == true) {
           $default = new PerfilController();
@@ -423,10 +423,22 @@ class AuthController extends Controller
         $paginasNaoSeguidas = $this->paginasNaoSeguidas();
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
-      $post_controller = new PostController();
-      //$post= DB::table('posts')->limit(7)->get();
-      //dd($post);
-      $post = $post_controller->posts();
+        $post_controller = new PostController();
+        //$post= DB::table('posts')->limit(7)->get();
+        //dd($post);
+        if ($request->checked) {
+            //return ['state' => 'checked', 'init' => $request->init, 'dest_init' => $request->dest_init];
+            $posts_return = $post_controller->posts($request);
+            $post = $posts_return['dados'];
+            //dd($post);
+            return $post;
+        } else {
+            $posts_return = $post_controller->posts($request);
+            $post = $posts_return['dados'];
+            //dd($post);
+        }
+      $last_post_id = $posts_return['last_post_id'];
+      $last_post_dest = $posts_return['last_post_dest'];
       $a=0;
 
       //dd($this->DadosPost());
@@ -443,7 +455,7 @@ class AuthController extends Controller
       $what_are_talking = $this->Destacados();
 
 
-        return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
+        return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas', 'last_post_id', 'last_post_dest'));
 
 
     }
