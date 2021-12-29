@@ -68,9 +68,9 @@
         <div class="row justify-content-center mb-2">
           <span class="text-white">Agora vamos conhecer-te</span>
         </div>
-        <!---->
+        <!-- first.form.insert-->
 
-        <form action="{{route('first.form.insert')}}" method="POST" class="tassumir-form needs-validation" novalidate>
+        <form action="{{route('account.save')}}" method="POST" class="tassumir-form needs-validation" novalidate>
           @csrf
 
           <div class="form-section">

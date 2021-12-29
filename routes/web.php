@@ -174,9 +174,9 @@ Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updateP
 
 /*====== Panda Idea ===========*/
 
-    /*Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
+    Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
 
-Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.save.next1');*/
+/*Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.save.next1');*/
 
 /*=========== End Panda Idea =========*/
 
