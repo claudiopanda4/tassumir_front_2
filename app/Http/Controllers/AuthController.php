@@ -713,7 +713,7 @@ class AuthController extends Controller
 
         $likes = DB::select('select * from post_reactions where post_id = ?', [$post[0]->post_id]);
         $page_uuid = DB::select('select uuid from pages where page_id = ?', [$post[0]->page_id]);
-        $comment = DB::select('select * from comments where post_id = ?', [$post[0]->post_id]);
+        $comment = DB::table('comments')->where('post_id', '=', $post[0]->post_id)->orderBy('comment_id', 'desc')->get();
         $guardado= DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$post[0]->post_id,  $account_name[0]->conta_id]);
 
         if (sizeof($aux1) > 0) {
@@ -747,29 +747,13 @@ class AuthController extends Controller
         }
         $a=0;
         foreach ($comment as $key) {
-          $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id ]);
-          $dados[$a]['comment_id']=$key->comment_id;
-          $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
-          if (sizeof($aux1) > 0) {
-            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$key->comment_id, $aux1[0]->identificador_id]);
-          } else {
-              $ja_reagiu1 = array();
-          }
-           $dados[$a]['comment_S/N']=sizeof($ja_reagiu1);
+          if ($a==0) {
+           $dados[$a]+=$this->dados_comment($key);
+         }else {
+           $dados[$a]=$this->dados_comment($key);
+         }
 
-          if ($aux2[0]->tipo_identificador_id == 1) {
-            $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
-            $dados[$a]['nome_comment']=$conta[0]->nome;
-            $dados[$a]['nome_comment'].=" ";
-            $dados[$a]['nome_comment'].=$conta[0]->apelido;
-            $dados[$a]['foto_conta']=$conta[0]->foto;
-            $dados[$a]['foto_ver']=1;
-          }elseif ($aux2[0]->tipo_identificador_id == 2) {
-            $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
-            $dados[$a]['foto_conta']=$page[$aux2[0]->id - 1]->foto;
-            $dados[$a]['foto_ver']=2;
-          }
-          $a++;
+           $a++;
         }
         $variable=[
           "dados"=>$dados,
@@ -789,6 +773,40 @@ class AuthController extends Controller
             return response()->json($resposta);
           }
 
+public function dados_comment($key){
+  $dates = $this->default_();
+  $account_name = $dates['account_name'];
+  $conta_logada = $dates['conta_logada'];
+  $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+  $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id ]);
+  $dc['comment_id']=$key->comment_id;
+  $dc['comment']=$key->comment;
+  $dc['post_id']=$key->post_id;
+  $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+  if (sizeof($aux1) > 0) {
+    $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$key->comment_id, $aux1[0]->identificador_id]);
+  } else {
+      $ja_reagiu1 = array();
+  }
+   $dc['comment_S_N']=sizeof($ja_reagiu1);
+
+  if ($aux2[0]->tipo_identificador_id == 1) {
+    $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+    $dc['nome_comment']=$conta[0]->nome;
+    $dc['nome_comment'].=" ";
+    $dc['nome_comment'].=$conta[0]->apelido;
+    $dc['foto_conta']=$conta[0]->foto;
+    $dc['uuid']=$conta[0]->uuid;
+    $dc['foto_ver']=1;
+  }elseif ($aux2[0]->tipo_identificador_id == 2) {
+    $page = DB::table('pages')->get();
+    $dc['nome_comment']=$page[$aux2[0]->id - 1]->nome;
+    $dc['foto_conta']=$page[$aux2[0]->id - 1]->foto;
+    $dc['uuid']=$page[$aux2[0]->id - 1]->uuid;
+    $dc['foto_ver']=2;
+  }
+  return $dc;
+}
 
     public function like(Request $request){
             $post=DB::select('select * from posts where uuid = ?', [$request->id]);
@@ -1643,7 +1661,12 @@ if ($phone != null) {
      *
      * @return
      */
-
+   public function pegar_ultimocomment(Request $request)
+    {
+      $comment=DB::table('comments')->where('post_id', '=', $request->id)->orderBy('comment_id', 'desc')->get();
+      $resposta=$this->dados_comment($comment[0]);
+      return response()->json($resposta);
+    }
     public static function allUserPages($auth, $account_id)
     {
         $page_data = array();

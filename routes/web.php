@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/pesquisa/publications', [App\Http\Controllers\searchController::class, 'publicationsSearch'])->name('publicationsSearch.page');
     Route::get('/pesquisa/publications1/{id}', [App\Http\Controllers\searchController::class, 'publicationsSearch1'])->name('publicationsSearch1.page');
     Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home.feed');
+    Route::get('/pegar_ultimocomment', [App\Http\Controllers\AuthController::class, 'pegar_ultimocomment'])->name('pegar_ultimocomment');
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');
     Route::get('nao/seguir', [App\Http\Controllers\SeguidorController::class, 'destroy'])->name('nao.seguir.seguindo');
 
