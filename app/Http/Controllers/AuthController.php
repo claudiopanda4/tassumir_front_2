@@ -1240,7 +1240,7 @@ public function dados_comment($key){
 
               }
 
-          }catch(Exception $e){
+          }catch(\Exception $e){
             DB::rollBack();
               return back()->with('error','Erro');
           }
@@ -1273,9 +1273,8 @@ public function dados_comment($key){
       
         public function firstFormInsert(Request $request){
 
-            try{
-
             DB::beginTransaction();
+            try{
 
              $takePhone = str_replace("-","",$request->telefone);
               $takeEmail = $request->email;
@@ -1291,7 +1290,7 @@ public function dados_comment($key){
                   'genero' => $request->sexo,
                   'estado_civil_id' => 1,
                   'email' => $takeEmail,
-                  //'telefone' => $takePhone,
+                  'telefone' => NULL,
                   'estado_conta_id' => 1,
                   'nacionalidade' => $request->nacionalidade
 
@@ -1306,7 +1305,7 @@ public function dados_comment($key){
               DB::table('logins')->insert([
 
                   'email' => $takeEmail,
-                  //'telefone' => $takePhone,
+                  'telefone' => NULL,
                   'password' => Hash::make($request->password),
                   'conta_id' => $saveRetriveId,
 
@@ -1320,15 +1319,12 @@ public function dados_comment($key){
                   'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
                   'conta_id' => $saveRetriveId,
                   'email' => $takeEmail,
-                  //'telefone' => $takePhone,
+                  'telefone' => NULL,
               ]);
 
               $codHugo = $code;
 
                     Mail::to($takeEmail)->send(new SendVerificationCode($codHugo));
-
-                    //dd($codHugo);
-                    //Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
 
              DB::commit();
              return view('auth.codigoRecebidoEmail',compact('saveRetriveId','takePhone','takeEmail'));
@@ -1342,7 +1338,7 @@ public function dados_comment($key){
                   'data_nasc' => $request->dat,
                   'genero' => $request->sexo,
                   'estado_civil_id' => 1,
-                  //'email' => $takeEmail,
+                  'email' => NULL,
                   'telefone' => $takePhone,
                   'estado_conta_id' => 1,
                   'nacionalidade' => $request->nacionalidade
@@ -1358,7 +1354,7 @@ public function dados_comment($key){
 
               DB::table('logins')->insert([
 
-                  //'email' => $takeEmail,
+                  'email' => NULL,
                   'telefone' => $takePhone,
                   'password' => Hash::make($request->password),
                   'conta_id' => $saveRetriveId,
@@ -1372,7 +1368,7 @@ public function dados_comment($key){
                   'codigoGerado' => $code,
                   'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
                   'conta_id' => $saveRetriveId,
-                  //'email' => $takeEmail,
+                  'email' => NULL,
                   'telefone' => $takePhone,
               ]);
 
@@ -1382,10 +1378,6 @@ public function dados_comment($key){
                return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
              }
                   
-        
-
-
-
              //return response($response, 201);
              
             }catch(\Exception $e) {
@@ -1407,7 +1399,7 @@ public function dados_comment($key){
         $idSaved = $request->receivedId;
         $phoneReceived = $request->receivedPhone;
         $emailReceived = $request->takeEmail;
-        //dd($request);
+       
         if ($emailReceived) {
             $takeCode2 = DB::table('codigo_confirmacaos')
             ->select('codigoGerado','telefone','email')
@@ -1424,26 +1416,6 @@ public function dados_comment($key){
 
             if(sizeof($takeCode2) >= 1){
 
-                /*foreach($takeCode2 as $generateCode){
-
-                    $takeHim = $generateCode->codigoGerado;
-                    $phoneAquired = $generateCode->telefone;
-                    $emailAquired = $generateCode->email;
-
-<<<<<<< HEAD
-                }
-                if($takeHim == $codeSent && $phoneAquired == $phoneReceived ){
-=======
-                    if($takeHim == $codeSent && $phoneAquired == $phoneReceived ){
->>>>>>> 7361defc4621cd190e4b93a345e981ca7b00ca1b
-
-                        return redirect()->route('account.login.form');
-
-                    } else if($takeHim == $codeSent && $emailAquired == $emailReceived){
-
-                        return redirect()->route('account.login.form');
-                    }
-                }*/
                 return redirect()->route('account.login.form');
             }else{
 
@@ -1475,39 +1447,31 @@ public function dados_comment($key){
         $phoneReceived = $request->phoneConf;
         $emailReceived = $request->emailConf;
 
-        $takeCode2 = [];
+        if($emailReceived){
 
-        $takeCode2 = DB::table('codigo_confirmacaos')
+            $takeCode2 = DB::table('codigo_confirmacaos')
             ->select('codigoGerado','telefone','email')
             ->where('codigoGerado','=',$codeSent)
-            ->where('conta_id','=',$idSaved)
+            ->where('email','=',$emailReceived)
             ->get();
 
-            if(sizeof($takeCode2) >= 1){
+        }else{
 
-                foreach($takeCode2 as $generateCode){
+            $takeCode2 = DB::table('codigo_confirmacaos')
+            ->select('codigoGerado','telefone','email')
+            ->where('codigoGerado','=',$codeSent)
+            ->where('telefone','=',$phoneReceived)
+            ->get();
+        }
+        
+        if(sizeof($takeCode2) >= 1){
 
-                    $takeHim = $generateCode->codigoGerado;
-                    $takePhoneA = $generateCode->telefone;
-                    $takeEmailA = $generateCode->email;
-
-
-                }
-
-                    if($takeHim == $codeSent && $takePhoneA == $phoneReceived){
-
-                        return redirect()->route('account.login.form');
-
-                    }else if($takeHim == $codeSent && $takeEmailA == $emailReceived){
-
-
-                        return redirect()->route('account.login.form');
-
-                    }
+                return redirect()->route('account.login.form')
+               
+    
             }else{
 
               return view('auth.codigoRecebidoActualizar',compact('idSaved','phoneReceived','emailReceived'));
-
             }
 
     }
