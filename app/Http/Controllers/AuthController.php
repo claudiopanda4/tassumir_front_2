@@ -1156,7 +1156,7 @@ public function dados_comment($key){
         return view('auth.registerUserLastInfo');
     }
 
-    public function joinAndSave(Request $request){
+  public function joinAndSave(Request $request){
         DB::beginTransaction();
           try{
                 $takePhone = str_replace("-","",$request->telefone);
@@ -1235,14 +1235,6 @@ public function dados_comment($key){
                   'telefone' => $takePhone,
               ]);
 
-
-              /*if ($takeEmail != null) {
-
-                    $codHugo = random_int(1000,9000);
-
-                    dd("entrei no teste email");
-                    Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
-              }*/
               DB::commit();
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
 
@@ -1271,6 +1263,144 @@ public function dados_comment($key){
         //return redirect()->route('account.login.form');
 
     }
+    /* New test */
+
+        public function firstForm(){
+
+            return view('auth.RealRegister');
+        }
+      
+      
+        public function firstFormInsert(Request $request){
+
+            try{
+
+            DB::beginTransaction();
+
+             $takePhone = str_replace("-","",$request->telefone);
+              $takeEmail = $request->email;
+             $page_current = 'auth';
+
+             if($takeEmail != null){
+
+                $saveRetriveId = DB::table('contas')->insertGetId([
+                  'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'nome' => $request->nome,
+                  'apelido' => $request->apelido,
+                  'data_nasc' => $request->dat,
+                  'genero' => $request->sexo,
+                  'estado_civil_id' => 1,
+                  'email' => $takeEmail,
+                  //'telefone' => $takePhone,
+                  'estado_conta_id' => 1,
+                  'nacionalidade' => $request->nacionalidade
+
+              ]);
+
+                DB::table('identificadors')->insertGetId([
+                   'tipo_identificador_id' => 1,
+                   'id' => $saveRetriveId,
+              ]);
+
+
+              DB::table('logins')->insert([
+
+                  'email' => $takeEmail,
+                  //'telefone' => $takePhone,
+                  'password' => Hash::make($request->password),
+                  'conta_id' => $saveRetriveId,
+
+              ]);
+
+              $code = random_int(1000,9000);
+              
+              DB::table('codigo_confirmacaos')->insert([
+
+                  'codigoGerado' => $code,
+                  'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'conta_id' => $saveRetriveId,
+                  'email' => $takeEmail,
+                  //'telefone' => $takePhone,
+              ]);
+
+              $codHugo = $code;
+
+                    Mail::to($takeEmail)->send(new SendVerificationCode($codHugo));
+
+                    //dd($codHugo);
+                    //Mail::to("hugopaulo95.hp@gmail.com")->send(new SendVerificationCode($codHugo));
+
+             DB::commit();
+             return view('auth.codigoRecebidoEmail',compact('saveRetriveId','takePhone','takeEmail'));
+
+             }else{
+
+                  $saveRetriveId = DB::table('contas')->insertGetId([
+                  'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'nome' => $request->nome,
+                  'apelido' => $request->apelido,
+                  'data_nasc' => $request->dat,
+                  'genero' => $request->sexo,
+                  'estado_civil_id' => 1,
+                  //'email' => $takeEmail,
+                  'telefone' => $takePhone,
+                  'estado_conta_id' => 1,
+                  'nacionalidade' => $request->nacionalidade
+
+              ]);
+
+
+                DB::table('identificadors')->insertGetId([
+                   'tipo_identificador_id' => 1,
+                   'id' => $saveRetriveId,
+              ]);
+
+
+              DB::table('logins')->insert([
+
+                  //'email' => $takeEmail,
+                  'telefone' => $takePhone,
+                  'password' => Hash::make($request->password),
+                  'conta_id' => $saveRetriveId,
+
+              ]);
+
+              $code = random_int(1000,9000);
+              
+              DB::table('codigo_confirmacaos')->insert([
+
+                  'codigoGerado' => $code,
+                  'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'conta_id' => $saveRetriveId,
+                  //'email' => $takeEmail,
+                  'telefone' => $takePhone,
+              ]);
+
+
+             DB::commit();
+
+               return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
+             }
+                  
+        
+
+
+
+             //return response($response, 201);
+             
+            }catch(\Exception $e) {
+              DB::rollback();
+
+              $mensagem = [
+                  'Salvo' => false,
+                  'texto' => 'Dados nao foram salvos, E-mail ou Telefone já existente',
+              ];
+              return $e;
+            }
+
+        }
+      
+    /* end new test*/
 
     public function verifyCodeSent(Request $request){
         $codeSent = $request->codeReceived;
@@ -1300,7 +1430,12 @@ public function dados_comment($key){
                     $phoneAquired = $generateCode->telefone;
                     $emailAquired = $generateCode->email;
 
+<<<<<<< HEAD
+                }
+                if($takeHim == $codeSent && $phoneAquired == $phoneReceived ){
+=======
                     if($takeHim == $codeSent && $phoneAquired == $phoneReceived ){
+>>>>>>> 7361defc4621cd190e4b93a345e981ca7b00ca1b
 
                         return redirect()->route('account.login.form');
 
@@ -1499,7 +1634,6 @@ if ($phone != null) {
 
   public function updatePassword(Request $request){
 
-
       $idToCompare = $request->theId;
 
       $password = $request->password;
@@ -1508,7 +1642,7 @@ if ($phone != null) {
       $passwordLength = strlen($request->password);
       $confirmPassLength = strlen($request->confirmarPassword);
 
-      if($password == $confirmPass && $passwordLength>=9 && $confirmPassLength>=9){
+      if($password == $confirmPass && $passwordLength == $confirmPassLength){
 
         DB::table('logins')
               ->where('conta_id', $idToCompare)
@@ -1538,7 +1672,7 @@ if ($phone != null) {
       $passwordLength = strlen($request->password1);
       $confirmPassLength = strlen($request->confirmarPassword1);
 
-      if($password == $confirmPass && $passwordLength>=9 && $confirmPassLength>=9){
+      if($password == $confirmPass && $passwordLength == $confirmPassLength){
 
         DB::table('logins')
               ->where('conta_id', $idToCompare)
@@ -1546,7 +1680,6 @@ if ($phone != null) {
 
 
         return redirect()->route('account.login.form');
-
 
       }
       else{
@@ -1566,9 +1699,10 @@ if ($phone != null) {
 
         $credentials = $request->validate([
             'number_email_login' => ['required'],
-            'password_login' => ['required','min:9','max:255'],
+            'password_login' => ['required'],
         ]);
 
+        //,'min:9','max:255' tirei prq ultrapassei o meu bug do multi nivel form
         //dd($request);
 
         if (Auth::attempt(['email' => $request->number_email_login, 'password' => $request->password_login])) {

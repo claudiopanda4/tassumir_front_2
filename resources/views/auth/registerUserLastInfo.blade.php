@@ -45,7 +45,9 @@
                         <span class="text-white mb-2">Estamos concluindo o seu cadastro...</span>
                     </div>
 
-                <form action="{{route('account.save')}}" method="POST" class="needs-validation" novalidate >
+                    <!--{{route('account.save')}}-->
+                <form action="" method="POST" class="needs-validation" novalidate >
+
 
                     @csrf
 

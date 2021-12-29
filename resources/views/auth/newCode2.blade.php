@@ -45,7 +45,7 @@
 
                     <input type="text" name="theId1" class="hidden" value="{{$idToCompare}}">
 
-                    <div class="form-group">
+                    <div class="form-group" id="password_login_id2">
                         
                         <input type="password" class="input-text-default input-full input-login" name="password1" placeholder="Escreva a nova senha" required id="password1">
 
@@ -61,7 +61,7 @@
                       
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="password_login_id2">
                         
                         <input type="password" class="input-text-default input-full input-login" name="confirmarPassword1" placeholder="Repita a nova senha" required id="confirmarPassword1">
 
