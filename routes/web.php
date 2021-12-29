@@ -171,5 +171,14 @@ Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updateP
 
 /* end here */
 
+/*====== Panda Idea ===========*/
+
+    /*Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
+
+Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.save.next1');*/
+
+/*=========== End Panda Idea =========*/
+
+
 Route::get('/allNotifications', [App\Http\Controllers\AuthController::class, 'seeAllNotifications'])->name('account.all.notifications');
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');
