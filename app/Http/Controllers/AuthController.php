@@ -397,10 +397,7 @@ class AuthController extends Controller
                return $dados;
                    }
 
-
-
-    public function index(){
-
+    public function index(Request $request){
         if (Auth::check() == true) {
           $default = new PerfilController();
           $dates = $this->default_();
@@ -423,10 +420,22 @@ class AuthController extends Controller
         $paginasNaoSeguidas = $this->paginasNaoSeguidas();
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
-      $post_controller = new PostController();
-      //$post= DB::table('posts')->limit(7)->get();
-      //dd($post);
-      $post = $post_controller->posts();
+        $post_controller = new PostController();
+        //$post= DB::table('posts')->limit(7)->get();
+        //dd($post);
+        if ($request->checked) {
+            //return ['state' => 'checked', 'init' => $request->init, 'dest_init' => $request->dest_init];
+            $posts_return = $post_controller->posts($request);
+            $post = $posts_return['dados'];
+            //dd($post);
+            return $post;
+        } else {
+            $posts_return = $post_controller->posts($request);
+            $post = $posts_return['dados'];
+            //dd($post);
+        }
+      $last_post_id = $posts_return['last_post_id'];
+      $last_post_dest = $posts_return['last_post_dest'];
       $a=0;
 
       //dd($this->DadosPost());
@@ -443,7 +452,7 @@ class AuthController extends Controller
       $what_are_talking = $this->Destacados();
 
 
-        return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
+        return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas', 'last_post_id', 'last_post_dest'));
 
 
     }
@@ -1161,39 +1170,12 @@ public function dados_comment($key){
           try{
                 $takePhone = str_replace("-","",$request->telefone);
 
-                /* to play with the code on my mind */
-
-                  $nome = $request->nome1;
-                  $apelido = $request->apelido1;
-                  $data = $request->dataNasc1;
-                  $sexo = $request->sexo1;
-                  $page_current = 'auth';
-
-                /* end play with the code on my mind */
-                $passwordLength = strlen($request->password);
-              if ($passwordLength < 9) {
-                  return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data', 'page_current'));
-              }else{
-                  //dd($request);
-                  $conta = new Conta;
-                  //$insert = DB::select('select * from contas');
-                  /*$saveRetriveId = DB::table('contas')->insert([
-                    'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                    'nome' => $request->nome1,
-                    'apelido' => $request->apelido1,
-                    'data_nasc' => $request->dataNasc1,
-                    'genero' => $request->sexo1,
-                    'estado_civil_id' => 1,
-                    'email' => $request->email,
-                    'telefone' => $takePhone,
-                    'estado_conta_id' => 1,
-                    'nacionalidade' => $request->nacionalidade
-                  ]);*/
+                $conta = new Conta;
                   $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
-                  $conta->nome = $request->nome1;
-                  $conta->apelido = $request->apelido1;
-                  $conta->data_nasc = $request->dataNasc1;
-                  $conta->genero = $request->sexo1;
+                  $conta->nome = $request->nome;
+                  $conta->apelido = $request->apelido;
+                  $conta->data_nasc = $request->dat;
+                  $conta->genero = $request->sexo;
                   $conta->estado_civil_id = 1;
                   $conta->email = $request->email;
                   $conta->estado_conta_id = 1;
@@ -1203,13 +1185,11 @@ public function dados_comment($key){
                   }
                   $conta->save();
                   $saveRetriveId = $conta->id;
-                  //dd($conta);
-
+                  
               DB::table('identificadors')->insertGetId([
                    'tipo_identificador_id' => 1,
                    'id' => $conta->conta_id,
               ]);
-                //$countId = DB::table('contas')->select(count(['conta_id']))->count();
                 if(!$takePhone){
                     $takePhone = NULL;
                 }
@@ -1237,8 +1217,11 @@ public function dados_comment($key){
 
               DB::commit();
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
-
-              }
+             /*   $passwordLength = strlen($request->password);
+              if ($passwordLength < 9) {
+                  return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data', 'page_current'));
+              }else{
+              }*/
 
           }catch(\Exception $e){
             DB::rollBack();
@@ -1467,8 +1450,13 @@ public function dados_comment($key){
         if(sizeof($takeCode2) >= 1){
 
                 return redirect()->route('account.login.form');
+<<<<<<< HEAD
 
 
+=======
+               
+    
+>>>>>>> fac301b3ee0379967a6f4cc1d56bdafebe459fac
             }else{
 
               return view('auth.codigoRecebidoActualizar',compact('idSaved','phoneReceived','emailReceived'));

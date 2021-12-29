@@ -1,0 +1,9 @@
+
+// use it for mailtrap
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=93e24284e01daf
+MAIL_PASSWORD=64501dcbdca0c9
+MAIL_ENCRYPTION=tls

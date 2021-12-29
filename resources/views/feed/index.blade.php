@@ -52,7 +52,7 @@
             </nav>
         </header>
 <?php foreach ($dados as $key => $value): ?>
-  <?php if ($dados[$key]['estado_post']==1): ?>
+  <?php if ($dados[$key]['estado_post'] == 1): ?>
     <?php //dd($conta_logada[0]->uuid); ?>
         <div class="card br-10" id="m_post-{{$dados[$key]['post_id']}}">
             <div class="post post-view" id="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}">
@@ -301,6 +301,9 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="last_post" value=<?php echo $last_post_id; ?>>
+        <input type="hidden" id="last_post_dest" value=<?php echo $last_post_dest; ?>>
+        <?php //dd($last_post_dest.' '.$last_post_id); ?>
       <?php endif ?>
         <?php if ($key == 3 || $key == 7): ?>
                 <section class="suggest-slide">
