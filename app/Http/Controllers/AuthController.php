@@ -1269,8 +1269,8 @@ public function dados_comment($key){
 
             return view('auth.RealRegister');
         }
-      
-      
+
+
         public function firstFormInsert(Request $request){
 
             DB::beginTransaction();
@@ -1312,7 +1312,7 @@ public function dados_comment($key){
               ]);
 
               $code = random_int(1000,9000);
-              
+
               DB::table('codigo_confirmacaos')->insert([
 
                   'codigoGerado' => $code,
@@ -1362,7 +1362,7 @@ public function dados_comment($key){
               ]);
 
               $code = random_int(1000,9000);
-              
+
               DB::table('codigo_confirmacaos')->insert([
 
                   'codigoGerado' => $code,
@@ -1377,9 +1377,9 @@ public function dados_comment($key){
 
                return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
              }
-                  
+
              //return response($response, 201);
-             
+
             }catch(\Exception $e) {
               DB::rollback();
 
@@ -1391,7 +1391,7 @@ public function dados_comment($key){
             }
 
         }
-      
+
     /* end new test*/
 
     public function verifyCodeSent(Request $request){
@@ -1399,7 +1399,7 @@ public function dados_comment($key){
         $idSaved = $request->receivedId;
         $phoneReceived = $request->receivedPhone;
         $emailReceived = $request->takeEmail;
-       
+
         if ($emailReceived) {
             $takeCode2 = DB::table('codigo_confirmacaos')
             ->select('codigoGerado','telefone','email')
@@ -1463,12 +1463,12 @@ public function dados_comment($key){
             ->where('telefone','=',$phoneReceived)
             ->get();
         }
-        
+
         if(sizeof($takeCode2) >= 1){
 
-                return redirect()->route('account.login.form')
-               
-    
+                return redirect()->route('account.login.form');
+
+
             }else{
 
               return view('auth.codigoRecebidoActualizar',compact('idSaved','phoneReceived','emailReceived'));
