@@ -959,15 +959,81 @@
           e.preventDefault();
           let id = e.target.id;
           let coment = $('#comentario-' + id).val();
-          //alert(coment);
-          if(coment != ''){
-            $("#comment-own-" + id).text(coment);
-          $("#comment-users-own-" + id).css({
-            display: "flex",
-          });
-          $("#comment-users-" + id).hide();
           $("#comentario-" + id).val('');
-          comentar(id, coment);
+          if(coment != ''){
+         comentar(id, coment);
+         $.ajax({
+           url: "{{ route('pegar_ultimocomment')}}",
+           type: 'get',
+           data: {'id': id},
+           dataType: 'json',
+           success:function(response){
+             console.log(response);
+             let src = '{{asset("storage/img/users/") }}';
+             let src1 = '{{ asset("storage/img/page/") }}';
+             var route10 = "{{route('couple.page1', 1) }}"
+             url_array10 = route10.split('/');
+             url_link10 = url_array10[0] + "/" + url_array10[1] + "/" + url_array10[2] + "/"+ url_array10[3] +  "/" + response.uuid;
+             var route1 = "{{route('account1.profile', 1) }}"
+             url_array1 = route1.split('/');
+             url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + response.uuid;
+             var nome = '';
+             nome +='<div class="comment-users" id="comment-users-'+response.post_id+'">'
+             nome +='<div class="comment-user-container" >'
+             nome +='<div class="user-identify-comment">'
+             if( response.foto_ver ==1 ){
+               nome +='<a href='+url_link1+'>'
+               if( !(response.foto_conta == null) ){
+             nome +='<div class="profille-img">'
+             nome +='  <img  class="img-full circle" src=' + src + '/' + response.foto_conta + '>'
+             nome +='</div>'
+                }else{
+                  nome +='<div class="profille-img">'
+                  nome +='<i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>'
+                  nome +='</div>'
+                }
+                nome +='</a>'
+                nome +='<div class="comment-user-comment">'
+                nome +='<a href='+url_link1+'>'
+              } else{
+                nome +='<a href='+url_link10+'>'
+                if( !(response.foto_conta == null) ){
+              nome +='<div class="profille-img">'
+              nome +='  <img  class="img-full circle" src=' + src1 + '/' + response.foto_conta + '>'
+              nome +='</div>'
+                 }else{
+                   nome +='<div class="profille-img">'
+                   nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}">'
+                   nome +='</div>'
+                 }
+                 nome +='</a>'
+                 nome +='<div class="comment-user-comment">'
+                 nome +='<a href='+url_link10+'>'
+               }
+
+             nome +='<h1 class="user">'+response.nome_comment+'</h1>'
+             nome +='</a>'
+             nome +='<p class="">'+response.comment+'</p>'
+             nome +='</div></div></div>'
+             nome +=' <div class="comment-user-container comment-user-container-react">'
+             nome +='<a href="" class="comment-like-a" id="on|'+response.comment_id+'">'
+             if(response.comment_S_N > 0){
+              nome +='<i class="fas fa-heart fa-12 liked" id="on|'+response.comment_id+'|i"></i>'
+            }else {
+              nome +='<i class="fas fa-heart fa-12 unliked" id="off|'+response.comment_id+'|i"></i>'
+            }
+             nome +='</div>'
+             nome +='</div>'
+             /*nome +=''
+'*/
+
+             	$('div[name=div_pai_commnet]').prepend(nome);
+
+
+             }
+           });
+
+
         }
       });
 
