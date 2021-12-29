@@ -142,7 +142,7 @@
                     <div class="input-text comment-send-text l-5 clearfix">
                         <input type="text" class="" name="comentario" id="comentario-{{$dados[0]['post_id']}}" placeholder="O que você tem a dizer?">
                         <div class="r-5 ">
-                            <a href="" class="comentar-a" id="{{$dados[0]['post_id']}}">
+                            <a href="" class="comentar-aa" id="{{$dados[0]['post_id']}}">
                                 <i class="far fa-paper-plane fa-20 fa-img-comment" id="{{$dados[0]['post_id']}}"></i>
                             </a>
                         </div>
@@ -153,7 +153,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[0]['post_id']}}">
+              <!--  <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[0]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment">
                           @if( $dados[0]['dono_da_pag?']==0 )
@@ -186,15 +186,17 @@
                     <div class="comment-user-container comment-user-container-react">
                         <i class="far fa-heart fa-12"></i>
                     </div>
-                </div>
+                </div>-->
+                <div class="" id="div_pai_commnet" name="div_pai_commnet">
+
                 <?php if ($dados[0]['qtd_comment']>0): ?>
                   <?php foreach ($comment as $key => $value): ?>
-
 
                   <div class="comment-users" id="comment-users-{{$dados[0]['post_id']}}">
                             <div class="comment-user-container" >
                               <div class="user-identify-comment">
                                 @if( $dados[$key]['foto_ver']==1 )
+                                <a href="{{route('account1.profile', $dados[$key]['uuid']) }}">
                                   @if( !($dados[$key]['foto_conta'] == null) )
                                   <div class="profille-img">
                                       <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
@@ -204,7 +206,11 @@
                                         <i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>
                                   </div>
                               @endif
+                              </a>
+                              <a href="{{route('account1.profile', $dados[$key]['uuid']) }}">
+
                             @elseif( $dados[$key]['foto_ver']==2 )
+                            <a href="{{route('couple.page1', $dados[$key]['uuid']) }}">
                               @if( !($dados[$key]['foto_conta'] == null) )
                                 <div class="profille-img">
                                   <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_conta'] }}">
@@ -214,24 +220,30 @@
                                   <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                                 </div>
                                 @endif
+                              </a>
+                                <a href="{{route('couple.page1', $dados[$key]['uuid']) }}">
                             @endif
-                                <div class="comment-user-comment">
+                            <div class="comment-user-comment">
                                     <h1 class="user">{{$dados[$key]['nome_comment']}}</h1>
+                                  </a>
                                     <p class="">{{$value->comment}}</p>
                                 </div>
                               </div>
                             </div>
                               <div class="comment-user-container comment-user-container-react">
                                 <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
-                                    @if($dados[$key]['comment_S/N'] > 0)
+                                    @if($dados[$key]['comment_S_N'] > 0)
                                         <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                                     @else
                                         <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
                                     @endif
+                                    </a>
                               </div>
                         </div>
                         <?php endforeach; ?>
                       <?php endif; ?>
+                    </div>
+
                 <div>
 
                 </div>

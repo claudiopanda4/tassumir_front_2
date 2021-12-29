@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/pesquisa/publications', [App\Http\Controllers\searchController::class, 'publicationsSearch'])->name('publicationsSearch.page');
     Route::get('/pesquisa/publications1/{id}', [App\Http\Controllers\searchController::class, 'publicationsSearch1'])->name('publicationsSearch1.page');
     Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home.feed');
+    Route::get('/pegar_ultimocomment', [App\Http\Controllers\AuthController::class, 'pegar_ultimocomment'])->name('pegar_ultimocomment');
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');
     Route::get('nao/seguir', [App\Http\Controllers\SeguidorController::class, 'destroy'])->name('nao.seguir.seguindo');
 
@@ -100,15 +101,18 @@ Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login
 /* registrar */
 Route::get('/registrar', [App\Http\Controllers\AuthController::class, 'registrarUser'])->name('account.register.form');
 
+
 Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.save.next1');
 
 Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
 
-//Route::get('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.teste.form');
+/* New test H20 edom  */
+    
+    Route::get('/Register',[App\Http\Controllers\AuthController::class, 'firstForm'])->name('first.form');
 
+    Route::post('/InsertRegister',[App\Http\Controllers\AuthController::class, 'firstFormInsert'])->name('first.form.insert'); 
 
-
-
+/* End new test H20 edom */
 
 
 /* email start*/
@@ -116,9 +120,6 @@ Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAnd
 Route::get('/email', [App\Http\Controllers\AuthController::class, 'testandoEmail'])->name('email.test');
 
 /* end email */
-
-
-
 
 /* */
 Route::get('/recuperarSenha', [App\Http\Controllers\AuthController::class, 'recuperarSenha'])->name('account.code.form');
@@ -170,6 +171,15 @@ Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updateP
 Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updatePassword2'])->name('account.newPasswordSave2');
 
 /* end here */
+
+/*====== Panda Idea ===========*/
+
+    /*Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
+
+Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.save.next1');*/
+
+/*=========== End Panda Idea =========*/
+
 
 Route::get('/allNotifications', [App\Http\Controllers\AuthController::class, 'seeAllNotifications'])->name('account.all.notifications');
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');

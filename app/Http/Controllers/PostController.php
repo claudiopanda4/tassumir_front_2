@@ -304,26 +304,8 @@ class PostController extends Controller
 
             break;
         case 'mr':
-        $post1=DB::select('select * from posts where formato_id = ?', [1]);
-        $post=array();
-        for ($i=0; $i < 5 ; $i++) {
-          $a=0;
-          foreach ($post1 as $key) {
-            $soma=$key->post_id;
-            $b=0;
+        $post=DB::table('posts')->where('formato_id', '=', 1)->orderBy('post_id', 'desc')->get();
 
-              for ($j=0; $j <sizeof($post); $j++) {
-                if ($key->post_id == $post[$j]->post_id ){
-                  $b=1;
-                }
-              }
-              if ($soma >= $a && $b!=1 && $key->estado_post_id == 1) {
-                $post[$i]= $key;
-
-                $a=$soma;
-              }
-            }
-          }
              break;
         case 'mco':
         $post1=DB::select('select * from posts where formato_id = ?', [1]);
@@ -351,7 +333,6 @@ class PostController extends Controller
               break;
 }
         $a=0;
-
         $dados = array();
         foreach ($post as $key) {
           $dados[$a] = $auth->DadosPost($key);
