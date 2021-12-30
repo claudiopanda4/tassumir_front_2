@@ -1280,28 +1280,19 @@
 
                 }
             }
-<<<<<<< HEAD
             //console.log('janela width ' + window.innerWidth);
             window_width = window.innerWidth; 
             //console.log('scroll log: ' + $('.main').scrollTop());
-=======
             console.log('janela width ' + window.innerWidth);
             window_width = window.innerWidth;
             console.log('scroll log: ' + $('.main').scrollTop());
->>>>>>> 20bd382a293deb7cc12398d19fb70c4c85c154e1
             $(document).scroll(function() {
                //if($(window).scrollTop() + $(window).height() == $(document).height()) {
                    //alert("bottom!");
                //}
                //console.log('oii123iii');
             });
-<<<<<<< HEAD
             //console.log('oii12');
-            
-=======
-            console.log('oii12');
-
->>>>>>> 20bd382a293deb7cc12398d19fb70c4c85c154e1
             if (window.innerWidth < 800) {
 
             }

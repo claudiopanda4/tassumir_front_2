@@ -235,7 +235,7 @@
                                     @if($dados[$key]['comment_S_N'] > 0)
                                         <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                                     @else
-                                        <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
+                                        <i class="far fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
                                     @endif
                                     </a>
                               </div>

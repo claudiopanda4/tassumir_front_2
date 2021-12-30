@@ -19,6 +19,7 @@ body {
     width: 100vw;
     height: auto;
 }
+
 #body-login {
 }
 #body-reg {
@@ -1513,8 +1514,12 @@ label[for="hugo"]{
     background-color:#606060;
 }
 .comment-send .fa-img-comment {
+    display: none;
     margin-right: 10px;
     margin-top: 8px;    
+}
+.comment-send .fa-img-comment.fa-paper-plane {
+    display: block;
 }
 .stories-about-talking nav {
     
