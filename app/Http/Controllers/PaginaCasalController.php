@@ -56,17 +56,23 @@ class PaginaCasalController extends Controller
      $a=0;
      $page=DB::table('pages')->get();
      $conta = DB::select('select * from contas where uuid = ?', [$id]);
+     $aux = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
      foreach ($page as $key ) {
-       $aux = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+       
        $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$key->page_id, 2 ]);
-       $aux2= DB::select('select * from seguidors where (identificador_id_seguida,	identificador_id_seguindo) = (?, ?)', [$aux1[0]->identificador_id,$aux[0]->identificador_id]);
+       //dd($aux1[0]->identificador_id);
+       //dd($aux[0]->identificador_id);
+       if(sizeof($aux1)>0){
+       $aux2 = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux1[0]->identificador_id, $aux[0]->identificador_id]);
+       //$aux2 = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [1, 31]);
        if (sizeof($aux2)>0) {
          $PS[$a]['foto']=$key->foto;
          $PS[$a]['uuid']=$key->uuid;
          $PS[$a]['nome']=$key->nome;
-         $aux3= DB::select('select * from seguidors where identificador_id_seguida = ?', [$aux1[0]->identificador_id]);
+         $aux3 = DB::select('select * from seguidors where identificador_id_seguida = ?', [$aux1[0]->identificador_id]);
          $PS[$a]['qtdseg']=sizeof($aux3);
          $a++;
+        }
        }
 
        $v[0]['id']=$conta[0]->conta_id;
