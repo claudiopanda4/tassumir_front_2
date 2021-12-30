@@ -1185,7 +1185,7 @@ public function dados_comment($key){
                   }
                   $conta->save();
                   $saveRetriveId = $conta->id;
-                  
+
               DB::table('identificadors')->insertGetId([
                    'tipo_identificador_id' => 1,
                    'id' => $conta->conta_id,
@@ -1450,13 +1450,8 @@ public function dados_comment($key){
         if(sizeof($takeCode2) >= 1){
 
                 return redirect()->route('account.login.form');
-<<<<<<< HEAD
 
 
-=======
-               
-    
->>>>>>> fac301b3ee0379967a6f4cc1d56bdafebe459fac
             }else{
 
               return view('auth.codigoRecebidoActualizar',compact('idSaved','phoneReceived','emailReceived'));
