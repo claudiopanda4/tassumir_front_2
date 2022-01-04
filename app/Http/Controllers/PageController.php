@@ -75,7 +75,28 @@ class PageController extends Controller
      */
     public function show($id)
     {
-        //
+        $auth = new AuthController();
+        $dates = $auth->default_();
+        $account_name = $dates['account_name'];
+        $checkUserStatus = $dates['checkUserStatus'];
+        $profile_picture = $dates['profile_picture'];
+        $isUserHost = $dates['isUserHost'];
+        $hasUserManyPages = $dates['hasUserManyPages'];
+        $allUserPages = $dates['allUserPages'];
+        $page_content = $dates['page_content'];
+        $conta_logada = $dates['conta_logada'];
+        $notificacoes = $dates['notificacoes'];
+        $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
+        $paginasSeguidas = $dates['paginasSeguidas'];
+        $dadosSeguida = $dates['dadosSeguida'];
+        $notificacoes_count = $dates['notificacoes_count'];
+
+        //=========================================================
+        $paginasSeguidas = $auth->paginasSeguidas();
+        $paginasNaoSeguidas = $auth->paginasNaoSeguidas();
+        $page_current = 'edit_couple';
+        $conta_logada = $auth->defaultDate();
+        return view('pagina.edit_couple', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
     }
 
     /**
@@ -86,7 +107,8 @@ class PageController extends Controller
      */
     public function edit($id)
     {
-        //
+        //dd($id);
+        
     }
 
     /**

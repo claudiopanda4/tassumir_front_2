@@ -1736,6 +1736,10 @@ label[for="hugo"]{
 .noti-info-aside {
     width: 100%;
     margin-left: 0;
+
+}
+.hidden-click-any-container {
+    margin-bottom: 0px;
 }
 .noti-hour{
     flex-direction: row;

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="main" id="main-container-profile">
 <header class="card-flex">
 			<h2 class="couple-title-edit">Editar pagina</h2>
 </header>
@@ -51,18 +52,12 @@
 
     	<div class="couple-info-inputs-btn mt-3">
     		<p class="couple-name-p mt-2">Eliminar ou desactivar página </p>
-    		
-	    	  <div class=" ">
+	    	  <div class="btn-container-delete-desact col-md-5">
                 <a href="{{route('delete_couple.page')}}">
-                    <h3 class="edit-profile check-width" >Eliminar ou desactivar</h3>
+                    <h3 class="edit-profile check-width" style="width:100%;">Eliminar ou desactivar</h3>
                 </a>
             </div>
     	</div>
-       
-    	
     </div>
-
-
-		
-	
+</div>
 @stop
