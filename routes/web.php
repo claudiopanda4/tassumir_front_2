@@ -78,8 +78,6 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/pegar_ultimocomment', [App\Http\Controllers\AuthController::class, 'pegar_ultimocomment'])->name('pegar_ultimocomment');
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');
     Route::get('nao/seguir', [App\Http\Controllers\SeguidorController::class, 'destroy'])->name('nao.seguir.seguindo');
-
-
     Route::get('/direct/', [App\Http\Controllers\MessageController::class, 'index'])->name('message.index');
     Route::get('/send/', [App\Http\Controllers\MessageController::class, 'store'])->name('message.send');
     Route::get('/show/', [App\Http\Controllers\MessageController::class, 'show'])->name('message.show');
@@ -140,6 +138,7 @@ Route::get('/getposts/destaques/{$limit}', [App\Http\Controllers\PostController:
 
 //
 Route::get('/getfollow/', [App\Http\Controllers\PageController::class, 'index'])->name('following.get');
+Route::get('/editpage/{id}', [App\Http\Controllers\PageController::class, 'show'])->name('page.edit.get');
 //
 
 
