@@ -110,6 +110,9 @@ Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAnd
 
     Route::post('/InsertRegister',[App\Http\Controllers\AuthController::class, 'firstFormInsert'])->name('first.form.insert'); 
 
+
+    Route::get('/notFound',[App\Http\Controllers\AuthController::class, 'NotFound'])->name('first.not.found'); 
+
 /* End new test H20 edom */
 
 

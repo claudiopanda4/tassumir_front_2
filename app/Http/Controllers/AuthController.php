@@ -1225,7 +1225,10 @@ public function dados_comment($key){
 
           }catch(\Exception $e){
             DB::rollBack();
-              return back()->with('error','Erro');
+              //return back()->with('error','Erro');
+
+             return redirect()->route('auth.ErrorStatus');
+
           }
 
     }
@@ -1767,6 +1770,9 @@ if ($phone != null) {
         }
 
         return $page_data;
+    }
+    public function NotFound(){
+        return view('auth.ErrorStatus');
     }
 
 }
