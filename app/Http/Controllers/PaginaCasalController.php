@@ -36,28 +36,43 @@ class PaginaCasalController extends Controller
       /*siene*/ //$casalPageName = $this->get_casalPage_name($uuid);
 
       $page_current = 'page';
-      $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
+      if (sizeof($page_content)>0) {
+
       $seguidores = Self::seguidores($page_content[0]->page_id);
       $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
       $publicacoes = $this->get_all_post($page_content[0]->page_id);
       $this->current_page_id = $page_content[0]->page_id;
       $sugerir = $this->suggest_pages($page_content[0]->page_id);
       $allPosts = $this->get_post_types($page_content[0]->page_id);
+    }else {
+      $seguidores =array();
+      $tipo_relac = array();
+      $publicacoes = array();
+      $this->current_page_id = array();
+      $sugerir = array();
+      $allPosts = array();
+    }
      $PS=array();
      $a=0;
      $page=DB::table('pages')->get();
      $conta = DB::select('select * from contas where uuid = ?', [$id]);
+     $aux = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
      foreach ($page as $key ) {
-       $aux = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+       
        $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$key->page_id, 2 ]);
-       $aux2= DB::select('select * from seguidors where (identificador_id_seguida,	identificador_id_seguindo) = (?, ?)', [$aux1[0]->identificador_id,$aux[0]->identificador_id]);
+       //dd($aux1[0]->identificador_id);
+       //dd($aux[0]->identificador_id);
+       if(sizeof($aux1)>0){
+       $aux2 = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux1[0]->identificador_id, $aux[0]->identificador_id]);
+       //$aux2 = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [1, 31]);
        if (sizeof($aux2)>0) {
          $PS[$a]['foto']=$key->foto;
          $PS[$a]['uuid']=$key->uuid;
          $PS[$a]['nome']=$key->nome;
-         $aux3= DB::select('select * from seguidors where identificador_id_seguida = ?', [$aux1[0]->identificador_id]);
+         $aux3 = DB::select('select * from seguidors where identificador_id_seguida = ?', [$aux1[0]->identificador_id]);
          $PS[$a]['qtdseg']=sizeof($aux3);
          $a++;
+        }
        }
 
        $v[0]['id']=$conta[0]->conta_id;
@@ -230,168 +245,6 @@ $v=1;
 
     }
 
-    public function default_(){
-               $account_name = AuthController::defaultDate();
-               $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
-               $profile_picture = AuthController::profile_picture(Auth::user()->conta_id);
-               $isUserHost =AuthController::isUserHost($account_name[0]->conta_id);
-               $hasUserManyPages = AuthController::hasUserManyPages(Auth::user()->conta_id);
-               $allUserPages = AuthController::allUserPages(new AuthController, Auth::user()->conta_id);
-               $page_content = $this->page_default_date($account_name);
-               $conta_logada = AuthController::defaultDate();
-               $notificacoes=array();
-               $notificacoes_count=0;
-               $a=0;
-               $nome=array();
-               $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
-               $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
-               if (sizeof($notificacoes_aux)>0) {
-                 foreach ($notificacoes_aux as $key) {
-                   if ($key->id_state_notification == 2) {
-                     $notificacoes_count++;
-                   }
-                   if($key->id_state_notification!= 3){$aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
-                   if ($aux2[0]->tipo_identificador_id == 1) {
-                     $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
-                     $nome[0]= $conta[0]->nome ;
-                     $nome[0].= " ";
-                     $nome[0].= $conta[0]->apelido;
-                     $nome[1]= $conta[0]->foto;
-                     $nome[2] =1;
-                   }elseif ($aux2[0]->tipo_identificador_id == 2) {
-                     $page= DB::select('select * from pages where page_id = ?', [$aux2[0]->id]);
-                       $nome[0] =$page[0]->nome;
-                       $nome[1] =$page[0]->foto;
-                       $nome[2] =2;
-                   }
-                   switch ($key->id_action_notification) {
-                     case 1:
-                       $notificacoes[$a]['notificacao']=$nome[0] ;
-                       $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
-                       $notificacoes[$a]['tipo']=1;
-                       $notificacoes[$a]['id']=$key->identificador_id_destino;
-                       $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                       $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
-                       $notificacoes[$a]['link']=$post[0]->uuid;
-                       break;
-                     case 2:
-                         $notificacoes[$a]['notificacao']=$nome[0];
-                         $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
-                         $notificacoes[$a]['tipo']=2;
-                         $notificacoes[$a]['id']=$key->identificador_id_destino;
-                         $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                         $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
-                         $notificacoes[$a]['link']=$post[0]->uuid;
-                         break;
-                       case 3:
-                         $notificacoes[$a]['notificacao']=$nome[0];
-                         $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
-                         $notificacoes[$a]['tipo']=3;
-                         $notificacoes[$a]['id']=$key->identificador_id_destino;
-                           break;
-                         case 4:
-                         $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                       if (sizeof($aux)){  $tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                         if (sizeof($tipo)){  $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
-                         $notificacoes[$a]['notificacao']=$nome[0];
-                         $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
-                         $notificacoes[$a]['notificacao'].=$tipos[0]->tipo_relacionamento;
-                         $notificacoes[$a]['tipo']=4;
-                         $notificacoes[$a]['id']=$tipo[0]->uuid;}
-                       }
-                             break;
-                           case 5:
-                           $notificacoes[$a]['notificacao']=$nome[0];
-                           $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                           $notificacoes[$a]['tipo']=5;
-                           $notificacoes[$a]['id']=$key->identificador_id_destino;
-                           $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                           $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
-                           $notificacoes[$a]['link']=$page[0]->uuid;
-                               break;
-                           case 6:
-                               $notificacoes[$a]['notificacao']=$nome[0];
-                               $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                               $notificacoes[$a]['tipo']=5;
-                               $notificacoes[$a]['id']=$key->identificador_id_destino;
-                               $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                               $post =  DB::select('select * from posts where post_id = ?', [$aux_link[0]->id]);
-                               $notificacoes[$a]['link']=$post[0]->uuid;
-                                   break;
-                          case 7:
-                          $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                          if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                          if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
-                          $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
-                          $notificacoes[$a]['tipo']=7;
-                          $notificacoes[$a]['id']=$tipo[0]->uuid;}}
-                                   break;
-                       case 8:
-                                   $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
-                                   $notificacoes[$a]['tipo']=8;
-                                   $notificacoes[$a]['id']=$key->identificador_id_destino;
-                                   $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                                   $page =  DB::select('select * from pages where page_id = ?',[$aux_link[0]->id]);
-                                   $notificacoes[$a]['link']=$page[0]->uuid;
-                                       break;
-
-                     case 9:
-                     $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                     if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                     if (sizeof($tipo)){
-                     $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
-                     $notificacoes[$a]['tipo']=9;
-                     $notificacoes[$a]['id']=$tipo[0]->uuid;}}
-                                           break;
-                  case 10:
-                  $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
-                  if (sizeof($aux)){$tipo=DB::select('select * from pedido_relacionamentos where pedido_relacionamento_id = ?', [$aux[0]->id]);
-                  if (sizeof($tipo)){$notificacoes[$a]['notificacao']=$nome[0];
-                  $notificacoes[$a]['notificacao'].=" Pediu que você page";
-                  $notificacoes[$a]['tipo']=10;
-                  $notificacoes[$a]['id']=$tipo[0]->uuid;}}
-
-                                                                 break;
-
-
-                   }
-                   $notificacoes[$a]['foto']=$nome[1];
-                   $notificacoes[$a]['v']=$nome[2];
-                   $notificacoes[$a]['id1']=$key->notification_id;
-
-                   $a++;
-                 }
-               }
-               }
-
-               $authctrol = new AuthController;
-            $paginasSeguidas = $authctrol->paginasSeguidas();
-            $paginasNaoSeguidas = $authctrol->paginasNaoSeguidas();
-            $dadosSeguida = DB::table('seguidors')
-             ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
-             ->select('seguidors.*', 'identificadors.id')
-             ->get();
-
-               $dates = [
-                   "account_name" => $account_name,
-                   "checkUserStatus" => $checkUserStatus,
-                   "profile_picture" => $profile_picture,
-                   "isUserHost" => $isUserHost,
-                   "hasUserManyPages" => $hasUserManyPages,
-                   "allUserPages" => $allUserPages,
-                   "page_content" => $page_content,
-                   "checkUserStatus" => $checkUserStatus,
-                   "conta_logada" => $conta_logada,
-                   "paginasNaoSeguidas" => $paginasSeguidas,
-                   "dadosSeguida" => $dadosSeguida,
-                   "paginasNaoSeguidas" => $paginasNaoSeguidas,
-                   "notificacoes" => $notificacoes,
-                   "notificacoes_count" => $notificacoes_count,
-               ];
-               return $dates;
-           }
-
-
 
     public function show_page()
     {
@@ -428,7 +281,7 @@ $v=1;
                   $dadosSeguida = $dates['dadosSeguida'];
                   $page_current = 'relationship_request';
                   $notificacoes_count = $dates['notificacoes_count'];
-                  
+
                     $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
 
                     $seguidores = Self::seguidores($page_content[0]->page_id);

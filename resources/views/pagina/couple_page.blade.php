@@ -109,12 +109,15 @@
                     </div>
                 @endif
             </div>
-            <?php if (false): ?>
-            <div class="edit-page-container">
-                <button type="submit" class="follwing-btn" id="edit-page">
-                    Editar Página
-                </button>
-            </div>
+            <?php if (true): ?>
+                <a href="{{route('page.edit.get', $page_content[0]->page_id)}}">
+                    @csrf
+                    <div class="edit-page-container">
+                        <button type="submit" class="follwing-btn" id="edit-page">
+                            Editar Página
+                        </button>
+                    </div>
+                </a>
             <?php endif ?>
 
         </div>

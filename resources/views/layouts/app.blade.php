@@ -288,7 +288,7 @@
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
                                     @if($notificacoes[$i- 1]['tipo'] == 4)
-                                    $controller++;
+                                    <?php $controller++; ?>
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
@@ -470,7 +470,7 @@
 
 
                         <a href="" class="seguir" id="{{ $Paginas->page_id }}">seguir</a>
-                        
+
                       <?php /* echo"
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
@@ -494,7 +494,9 @@
 <?php if (true): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
+@if(sizeof($page_content)>0)
 <input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
+@endif
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
@@ -512,6 +514,7 @@
             <div class="header-height"></div>
             <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
                 <div class="first-component clearfix l-5">
+                  @if(sizeof($page_content)>0)
                     @if($page_content[0]->foto)
                         <div class="page-cover circle l-5">
                             <img class="img-full circle" src="{{asset('storage/img/page/' . $page_content[0]->foto)}}">
@@ -520,10 +523,12 @@
                         <div class="page-cover circle l-5">
                             <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                         </div>
-                    @endif
+                        @endif
+
                     <div class="page-identify l-5 clearfix">
                         <h1 class="text-ellips">{{ $page_content[0]->nome }}</h1>
                     </div>
+                    @endif
                 </div>
                 <div class="textarea-container l-5" style="width:100%;">
                     <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
@@ -788,7 +793,14 @@
 <?php endif ?>
 <script type="text/javascript">
     $(document).ready(function () {
-      $('.like-a').click(function (e) {
+        //alert($('main').scrollTop());
+        $(window).scroll(function() {
+           if($(window).scrollTop() + $(window).height() == $(document).height()) {
+               //alert("bottom!");
+           }
+           //alert("bot");
+        });
+        $('.like-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id.split('|');
           if(id[0] == "on"){
@@ -857,9 +869,18 @@
 
       }
 
-
-
-
+      function home_index(){
+        $.ajax({
+          url: "{{route('account.home.feed')}}",
+          type: 'get',
+          dataType: 'json',
+          data: { init: $('#last_post').val(), checked: true, dest_init: $('#last_post_dest').val() },
+          success:function(response){
+                console.log('yes');
+                console.log(response)
+            }
+          });
+      }
 
       function tela_confirm(id1, id2){
 
@@ -944,7 +965,87 @@
               }
             });
       });
+      $('.comentar-aa').click(function (e) {
+          e.preventDefault();
+          let id = e.target.id;
+          let coment = $('#comentario-' + id).val();
+          $("#comentario-" + id).val('');
+          if(coment != ''){
+         comentar(id, coment);
+         $.ajax({
+           url: "{{ route('pegar_ultimocomment')}}",
+           type: 'get',
+           data: {'id': id},
+           dataType: 'json',
+           success:function(response){
+             console.log(response);
+             let src = '{{asset("storage/img/users/") }}';
+             let src1 = '{{ asset("storage/img/page/") }}';
+             var route10 = "{{route('couple.page1', 1) }}"
+             url_array10 = route10.split('/');
+             url_link10 = url_array10[0] + "/" + url_array10[1] + "/" + url_array10[2] + "/"+ url_array10[3] +  "/" + response.uuid;
+             var route1 = "{{route('account1.profile', 1) }}"
+             url_array1 = route1.split('/');
+             url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + response.uuid;
+             var nome = '';
+             nome +='<div class="comment-users" id="comment-users-'+response.post_id+'">'
+             nome +='<div class="comment-user-container" >'
+             nome +='<div class="user-identify-comment">'
+             if( response.foto_ver ==1 ){
+               nome +='<a href='+url_link1+'>'
+               if( !(response.foto_conta == null) ){
+             nome +='<div class="profille-img">'
+             nome +='  <img  class="img-full circle" src=' + src + '/' + response.foto_conta + '>'
+             nome +='</div>'
+                }else{
+                  nome +='<div class="profille-img">'
+                  nome +='<i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>'
+                  nome +='</div>'
+                }
+                nome +='</a>'
+                nome +='<div class="comment-user-comment">'
+                nome +='<a href='+url_link1+'>'
+              } else{
+                nome +='<a href='+url_link10+'>'
+                if( !(response.foto_conta == null) ){
+              nome +='<div class="profille-img">'
+              nome +='  <img  class="img-full circle" src=' + src1 + '/' + response.foto_conta + '>'
+              nome +='</div>'
+                 }else{
+                   nome +='<div class="profille-img">'
+                   nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}">'
+                   nome +='</div>'
+                 }
+                 nome +='</a>'
+                 nome +='<div class="comment-user-comment">'
+                 nome +='<a href='+url_link10+'>'
+               }
 
+             nome +='<h1 class="user">'+response.nome_comment+'</h1>'
+             nome +='</a>'
+             nome +='<p class="">'+response.comment+'</p>'
+             nome +='</div></div></div>'
+             nome +=' <div class="comment-user-container comment-user-container-react">'
+             nome +='<a href="" class="comment-like-a" id="on|'+response.comment_id+'">'
+             if(response.comment_S_N > 0){
+              nome +='<i class="fas fa-heart fa-12 liked" id="on|'+response.comment_id+'|i"></i>'
+            }else {
+              nome +='<i class="fas fa-heart fa-12 unliked" id="off|'+response.comment_id+'|i"></i>'
+            }
+             nome +='</div>'
+             nome +='</div>'
+             /*nome +=''
+'*/
+
+             	$('div[name=div_pai_commnet]').prepend(nome);
+
+
+             }
+           });
+
+
+        }
+      });
 
 
 
@@ -1149,9 +1250,25 @@
         });
 
         setInterval(function(e){
+            let control_ = $('#control-1').offset();
+            //control_ = $(document).height() - control_;
+            //$(window).scrollTop() + $(window).height() == $(document).height();
+            //console.log('scrollTop + ' + $(window).scrollTop() + ' heightWindow + ' + $(window).height() + ' = ' + $(document).height() + ' top_control ' + control_.top);
+            console.log(control_.top + " " + $(document).height());
+            if (control_.top <= $(document).height()) {
+                //alert('carregar');
+                //alert('oi');
+                home_index();
+                console.log('last_post_id ' + $('#last_post').val());
+            }
             let margin_stories = $('.main-container').offset();
-            //console.log('margin_stories ' + margin_stories.top);
+            let margin_s = $('.main').offset();
+            //console.log('margin_s ' + margin_s.top);
+            let height_ = parseInt($('.main').height());
+            //console.log('height_margin_s ' + height_);
             let height = parseInt($('.main-container').height());
+            //console.log('height_margin_stories ' + height);
+            //console.log('bottom ' + (height + margin_stories.top));
             let height_stories = $('#stories-card').height();
             //console.log('height ' + height);
             //console.log('height stories ' + height_stories);
@@ -1164,7 +1281,22 @@
 
                 }
             }
+            //console.log('janela width ' + window.innerWidth);
+            window_width = window.innerWidth; 
+            //console.log('scroll log: ' + $('.main').scrollTop());
+            console.log('janela width ' + window.innerWidth);
+            window_width = window.innerWidth;
+            console.log('scroll log: ' + $('.main').scrollTop());
+            $(document).scroll(function() {
+               //if($(window).scrollTop() + $(window).height() == $(document).height()) {
+                   //alert("bottom!");
+               //}
+               //console.log('oii123iii');
+            });
+            //console.log('oii12');
+            if (window.innerWidth < 800) {
 
+            }
             let video_post1 = document.getElementsByClassName('video-post-video');
             //console.log(video_post1);
 
@@ -1189,12 +1321,12 @@
                     //console.log('offset video ' + offset_video.top);
                     video_post_time = $('#video-post-time-' + id);
                     if(offset_video.top < 190 && offset_video.top > -300){
-                        console.log('hasvideo ' + id + ' ' + $('#has-video-' + id).val());
+                        //console.log('hasvideo ' + id + ' ' + $('#has-video-' + id).val());
                         if ($('#has-video-' + id).val() != "ok") {
-                            console.log('entrou');
+                            //console.log('entrou');
                             getVideo($('#vid-' + id).val(), id);
                         }else{
-                            console.log('não entrou');
+                            ////console.log('não entrou');
                             $('#video-post-time-all-' + id).val(document.getElementById('video_' + id).duration / 2);
                             if (!(document.getElementById('video_' + id).paused) && $('#has-video-' + id).val() == 'ok') {
                                 currentTime = document.getElementById('video_' + id).currentTime;
@@ -1230,7 +1362,7 @@
                 //console.log('id post ' + id);
                 offset_post = $('#' + id).offset();
                 if(offset_post.top < 120 && offset_post.top > -100){
-                    console.log($('#format-' + id.split('_')[2]).val());
+                    ////console.log($('#format-' + id.split('_')[2]).val());
                     if ($('#format-' + id.split('_')[2]).val() != 1) {
                         add_view(post_view[i].id);
                     }
@@ -1249,12 +1381,12 @@
                 data: {'data': post},
                 dataType: 'json',
                 success: function(response){
-                    console.log('Respondeu...');
-                    console.log(response);
+                    ////console.log('Respondeu...');
+                    ////console.log(response);
                     video = response.video;
                     type_file = response.type_file;
                     storage_video = "{{asset('storage/video/page/') . '/'}}" + video;
-                    console.log(storage_video);
+                    //console.log(storage_video);
                     source = document.createElement('source');
                     source.setAttribute('src', storage_video);
                     source.setAttribute('type', type_file);
@@ -1274,7 +1406,7 @@
                 data: {'data': data},
                 dataType: 'json',
                 success: function(response){
-                    console.log(response);
+                    //console.log(response);
                 }
             });
         }
@@ -1305,7 +1437,7 @@ $.ajax({
   success:function(response){
     var nome = '';
     var contador = 1;
-    console.log(response.valor);
+    //console.log(response.valor);
     s1 =response.valor.length;
       $.each(response.valor, function(key, value){
         let src = '{{asset("storage/img/users/")}}';
@@ -1352,7 +1484,7 @@ $.ajax({
     let src1 = '{{ asset("storage/img/page/") }}';
     var nome = '';
     var contador = 1;
-    console.log(response.valor);
+    //console.log(response.valor);
     s2 =response.valor.length;
       $.each(response.valor, function(key, value){
         if (value.estado_pagina_id==1) {

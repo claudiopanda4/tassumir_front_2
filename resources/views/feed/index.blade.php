@@ -52,7 +52,7 @@
             </nav>
         </header>
 <?php foreach ($dados as $key => $value): ?>
-  <?php if ($dados[$key]['estado_post']==1): ?>
+  <?php if ($dados[$key]['estado_post'] == 1): ?>
     <?php //dd($conta_logada[0]->uuid); ?>
         <div class="card br-10" id="m_post-{{$dados[$key]['post_id']}}">
             <div class="post post-view" id="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}">
@@ -265,7 +265,7 @@
                             </div>
                             @else
                             <div class="profille-img">
-                                  <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
+                                  <i class="fas fa-user center fa-16" style="color: #ccc;"></i>
                             </div>
                         @endif
                       @elseif( $dados[$key]['foto_ver']==2 )
@@ -290,7 +290,7 @@
                             @if($dados[$key]['comment_S/N'] > 0)
                                 <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                             @else
-                                <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
+                                <i class="far fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
                             @endif
                           </a>
                       </div>
@@ -301,6 +301,9 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="last_post" value=<?php echo $last_post_id; ?>>
+        <input type="hidden" id="last_post_dest" value=<?php echo $last_post_dest; ?>>
+        <?php //dd($last_post_dest.' '.$last_post_id); ?>
       <?php endif ?>
         <?php if ($key == 3 || $key == 7): ?>
                 <section class="suggest-slide">
@@ -350,6 +353,9 @@
                 </section>
             <?php endif ?>
         <?php endforeach ?>
+        <div class="control" id="control-1">
+            
+        </div>
 </div>
 <script>
 function gostar(id){

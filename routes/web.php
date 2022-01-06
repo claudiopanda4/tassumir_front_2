@@ -75,10 +75,9 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/pesquisa/publications', [App\Http\Controllers\searchController::class, 'publicationsSearch'])->name('publicationsSearch.page');
     Route::get('/pesquisa/publications1/{id}', [App\Http\Controllers\searchController::class, 'publicationsSearch1'])->name('publicationsSearch1.page');
     Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home.feed');
+    Route::get('/pegar_ultimocomment', [App\Http\Controllers\AuthController::class, 'pegar_ultimocomment'])->name('pegar_ultimocomment');
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');
     Route::get('nao/seguir', [App\Http\Controllers\SeguidorController::class, 'destroy'])->name('nao.seguir.seguindo');
-
-
     Route::get('/direct/', [App\Http\Controllers\MessageController::class, 'index'])->name('message.index');
     Route::get('/send/', [App\Http\Controllers\MessageController::class, 'store'])->name('message.send');
     Route::get('/show/', [App\Http\Controllers\MessageController::class, 'show'])->name('message.show');
@@ -97,20 +96,24 @@ Route::get('/login/redirect', [App\Http\Controllers\AuthController::class, 'show
 Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
 /*end get e post login*/
 
-
 /* registrar */
 Route::get('/registrar', [App\Http\Controllers\AuthController::class, 'registrarUser'])->name('account.register.form');
 
-Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.teste.form');
+
+Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.save.next1');
+
+Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
+
+/* New test H20 edom  */
+    
+    Route::get('/Register',[App\Http\Controllers\AuthController::class, 'firstForm'])->name('first.form');
+
+    Route::post('/InsertRegister',[App\Http\Controllers\AuthController::class, 'firstFormInsert'])->name('first.form.insert'); 
 
 
-Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.enter.form');
+    Route::get('/notFound',[App\Http\Controllers\AuthController::class, 'NotFound'])->name('first.not.found'); 
 
-//Route::get('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.teste.form');
-
-
-
-
+/* End new test H20 edom */
 
 
 /* email start*/
@@ -118,9 +121,6 @@ Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAnd
 Route::get('/email', [App\Http\Controllers\AuthController::class, 'testandoEmail'])->name('email.test');
 
 /* end email */
-
-
-
 
 /* */
 Route::get('/recuperarSenha', [App\Http\Controllers\AuthController::class, 'recuperarSenha'])->name('account.code.form');
@@ -141,6 +141,7 @@ Route::get('/getposts/destaques/{$limit}', [App\Http\Controllers\PostController:
 
 //
 Route::get('/getfollow/', [App\Http\Controllers\PageController::class, 'index'])->name('following.get');
+Route::get('/editpage/{id}', [App\Http\Controllers\PageController::class, 'show'])->name('page.edit.get');
 //
 
 
@@ -152,17 +153,14 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 Route::get('/confirmarCodigo', [App\Http\Controllers\AuthController::class, 'codigoRecebidoRegisto'])->name('account.codeConfirmation.form');
 
-
-
 Route::post('/verificarCodigo', [App\Http\Controllers\AuthController::class, 'verifyCodeSent'])->name('account.verifyCode.enter');
 
-Route::get('/verificarCodigo', [App\Http\Controllers\AuthController::class, 'verifyCodeSent'])->name('account.verifyCode.enter');
+//Route::get('/verificarCodigo', [App\Http\Controllers\AuthController::class, 'verifyCodeSent'])->name('account.verifyCode.enter');
 
 Route::post('/verificarCodigo/Again', [App\Http\Controllers\AuthController::class, 'verifyAgainCodeSent'])->name('account.verifyAgainCode.enter');
 
 
 Route::post('/gerarNovamente', [App\Http\Controllers\AuthController::class, 'generateAgain'])->name('account.generateAgain.enter');
-
 
 /* here */
 Route::post('/sendTo',[App\Http\Controllers\AuthController::class, 'sendPhoneEmailRecover'])->name('account.sendToPhoneEmail');
@@ -172,10 +170,18 @@ Route::post('/codeVerification',[App\Http\Controllers\AuthController::class, 've
 
 Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updatePassword'])->name('account.newPasswordSave');
 
-
 Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updatePassword2'])->name('account.newPasswordSave2');
 
 /* end here */
+
+/*====== Panda Idea ===========*/
+
+    Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
+
+/*Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.save.next1');*/
+
+/*=========== End Panda Idea =========*/
+
 
 Route::get('/allNotifications', [App\Http\Controllers\AuthController::class, 'seeAllNotifications'])->name('account.all.notifications');
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');

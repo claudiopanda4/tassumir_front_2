@@ -102,7 +102,7 @@
                 <a href=""><span class="">há um dia</span></a>
             </div>
             @if($notificacoes[$i- 1]['tipo'] == 4)
-            $controller++;
+            <?php //$controller++; ?>
             <div class="hidden-click-any-container options-invited clearfix">
                 <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                     <div class="hidden-click-any-container label-invited" id="">
