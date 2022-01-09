@@ -615,7 +615,7 @@ $v=1;
     public function suggest_pages($hostId)
     {
         $all_content = [];
-        $data = DB::select('select * from seguidors where identificador_id_seguindo <> ? && identificador_id_seguida <> ?', [$hostId, $hostId]);
+        $data = DB::select('select * from seguidors where identificador_id_seguindo <> ? AND identificador_id_seguida <> ?', [$hostId, $hostId]);
         foreach ($data as $value) {
             $all_content = DB::table('pages')->where('page_id', $value->identificador_id_seguida)->get();
         }
