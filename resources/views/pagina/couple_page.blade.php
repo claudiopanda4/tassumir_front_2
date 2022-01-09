@@ -47,7 +47,12 @@
                         <?php endif ?>
                         <div class="statistics-profile-page-component l-5">
                             <h1>{{ $seguidores }}</h1>
-                            <h2 class="text-ellips">Seguindo</h2>
+                            @if ($seguidores > 1)
+                                <h2 class="text-ellips">Seguidores</h2>
+                            @else
+                                <h2 class="text-ellips">Seguidor</h2>
+                            @endif
+                            
                         </div>
                         <div class="statistics-profile-page-component l-5">
                             <h1>{{ $seguidores }}</h1>
