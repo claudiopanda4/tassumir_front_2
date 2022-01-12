@@ -2019,13 +2019,13 @@ label[for="hugo"]{
 }
 .edit-profile {
     padding: 8px;
-    width: 100px;
+    width: 78px;
     text-align: center;
     /*display: inline-flex; 
     background-color: var(--background-dark-input);*/
     color: #fff;
     border-radius: 5px;
-    font-size: 13px;
+    font-size: 11.5px;
     text-align: center;
     border: 1px solid #606060;
     position: absolute;
@@ -2281,11 +2281,15 @@ label[for="hugo"]{
     border-radius: 10px;
 }
 #edit-page {
-    width: 110px;
+    width: 80px;
     padding: 5px;
     font-size: 13px;
     background: var(--background-dark-input);
     border: 1px solid #606060;
+}
+.message-for-user h1 {
+    font-size: 13px;
+    color: #fff;
 }
 .edit-page-container {
     position: absolute;
@@ -2415,6 +2419,9 @@ label[for="hugo"]{
 #main-profile .card {
     background-color: transparent;
     border: none;
+}
+#main-profile header.card {
+    background-color: #242526;
 }
 #main-profile .card-page-maried {
     background-color: #242526;
@@ -3114,4 +3121,26 @@ label[for="hugo"]{
 #main-container-help {
     width: 600px;
     margin: 30px auto;
+}
+#edit-pop-up .pop-up-component-header {
+    width: 98%;
+}
+#edit-pop-up .pop-up-component {
+    width: 50%;
+    max-width: 520px;
+    height: auto;
+}
+#edit-pop-up .page-identify h1 {
+    font-size: 12px;
+    color: #fff;
+    margin-top: 10px;
+}
+.message-for-user-component {
+    width: 83%;
+    margin: 5px;
+    margin-left: 10px;
+}
+.message-for-user {
+    margin-top: 10px;
+    margin-left: 10px;
 }

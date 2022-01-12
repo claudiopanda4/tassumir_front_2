@@ -85,7 +85,7 @@
                         <ul class="clearfix more-option-post">
                           <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
                             <li>
-                                <a href="">Editar</a>
+                                <a href="" class="edit-option" id="edit-option-{{$dados[$key]['post_id']}}">Editar</a>
                             </li>
                             <?php endif ?>
                             <?php if ($dados[$key]['dono_da_pag?'] != 1): ?>

@@ -119,7 +119,7 @@
                     @csrf
                     <div class="edit-page-container">
                         <button type="submit" class="follwing-btn" id="edit-page">
-                            Editar Página
+                            Editar
                         </button>
                     </div>
                 </a>
@@ -163,12 +163,14 @@
             </div>
         </div>
         @if($v == 1)
-        <?php if (!$hasUserManyPages): ?>
-        <div class="edit-page-container-mobile">
-            <button type="submit" class="follwing-btn">
-                Editar Página
-            </button>
-        </div>
+        <?php if (true): ?>
+            <form action="{{route('page.edit.get', $page_content[0]->page_id)}}" method="get">
+                <div class="edit-page-container-mobile">
+                    <button type="submit" class="follwing-btn">
+                        Editar
+                    </button>
+                </div>
+            </form>
         <?php endif ?>
         @endif
         @if($v == 1)
