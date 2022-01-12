@@ -250,18 +250,19 @@
                 @endif
                 <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}?post-container-post=saved">Guardados</a></li>
                 <li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="{{route('paginas_que_sigo.page',$conta_logada[0]->uuid)}}">Casais que eu sigo</a></li>
-                <li class="li-component-aside"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Ganhar Dinheiro</a></li>
+                <li class="li-component-aside"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="{{route('error.alert')}}">Ganhar Dinheiro</a></li>
                 <li class="li-component-aside"><i class="far fa-play-circle fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video', 'ma')}}">Tassumir Vídeos</a></li>
             </ul>
         </nav>
         <nav class="last-nav">
             <ul>
-                <li class="li-component-aside"><i class="fas fa-cog fa-20 fa-icon-aside-left"></i><a href="{{route('page_definition.page')}}">Definições</a></li>
-                <li class="li-component-aside"><i class="far fa-question-circle fa-20 fa-icon-aside-left"></i><a href="{{route('help_support.page')}}">Ajuda e Suporte</a></li>
+                <li class="li-component-aside"><i class="fas fa-cog fa-20 fa-icon-aside-left"></i><a href="{{route('error.alert')}}">Definições</a></li>
+                <li class="li-component-aside"><i class="far fa-question-circle fa-20 fa-icon-aside-left"></i><a href="{{route('error.alert')}}">Ajuda e Suporte</a></li>
                 <li class="li-component-aside"><i class="fas fa-sign-out-alt fa-20 fa-icon-aside-left"></i><a href="{{route('account.logout')}}">Sair</a></li>
             </ul>
         </nav>
     </aside>
+    @if($page_current != 'working')
     <aside class="aside aside-right" style="z-index:1;">
         <?php if ($controller > 0): ?>
         <header>
@@ -485,6 +486,7 @@
             </footer>
         </nav>
     </aside>
+    @endif
     <main class="main-container">
         @yield('content');
     </main>
@@ -560,8 +562,8 @@
 <div class="pop-up" id="cover-profile-post">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
         <header class="pop-up-component-header pop-up-component-header-default header-height">
-            <h1 class="">Adicione Imagem</h1>
-            <h1 class="invisible">Adicione Video</h1>
+            <h1 class="">Adicionar Imagem</h1>
+            <h1 class="invisible">Adicionar Video</h1>
             <div class="container-pop-up-component-header">
                 <label for="target-profile-cover-post">
                     <div class="cancel-box div-img" id="cancel-box-add-file-post">
@@ -593,7 +595,7 @@
 <div class="pop-up" id="cover-profile-page">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
         <header class="pop-up-component-header pop-up-component-header-default header-height">
-            <h1>Adicione Foto da Página</h1>
+            <h1>Adicionar Foto da Página</h1>
             <div class="container-pop-up-component-header">
                 <label for="target-profile-cover">
                     <div class="cancel-box div-img">
@@ -629,7 +631,7 @@
 <div class="pop-up" id="cover-profile">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
         <header class="pop-up-component-header pop-up-component-header-default header-height">
-            <h1>Adicione Foto de Perfil</h1>
+            <h1>Adicionar Foto de Perfil</h1>
             <div class="container-pop-up-component-header">
                 <label for="target-profile-cover">
                     <div class="cancel-box div-img">
@@ -787,6 +789,82 @@
                 </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<?php endif ?>
+<?php if (true): ?>
+<input type="checkbox" name="" id="options-edit-pop-up" class="invisible">
+<div class="pop-up" id="edit-pop-up">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Editar Publicação</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-invited-relationship">
+                    <div class="cancel-box div-img" id="target-invited-relationship-id">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div class="clearfix content-details-post" style="margin-top: 5px; margin-bottom: 5px;">
+                <div class="first-component clearfix l-5">
+                  @if(sizeof($page_content)>0)
+                    @if($page_content[0]->foto)
+                        <div class="page-cover circle l-5">
+                            <img class="img-full circle" src="{{asset('storage/img/page/' . $page_content[0]->foto)}}">
+                        </div>
+                    @else
+                        <div class="page-cover circle l-5">
+                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                        </div>
+                        @endif
+
+                    <div class="page-identify l-5 clearfix">
+                        <h1 class="text-ellips">{{ $page_content[0]->nome }}</h1>
+                    </div>
+                    @endif
+                </div>
+                <div class="textarea-container l-5" style="width:100%;">
+                    <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
+                </div>
+            </div>
+            <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
+                <div class="" id="cover-done">
+                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Editar</button>
+                </div>
+            </div>
+    </div>
+</div>
+<div class="pop-up" id="cover-page-post">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1 class="">Adicionar Imagem</h1>
+            <h1 class="invisible">Adicionar Video</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-profile-cover-post">
+                    <div class="cancel-box div-img" id="cancel-box-add-file-post">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px;">
+            <div class="">
+                <input class="file" type="file" name="imgOrVideo" id="testeVid" style="width: 250px; margin-left: 10px; color: #fff;">
+                <video style="display: none;" id="vidAnalyzer">
+                  <source src="" type="">
+                </video>
+            </div>
+        </div>
+        <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+            <label for="target-profile-cover-post" class="label-full">
+                <div class="cover-done checker" id="cover-done-post">
+                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
+                </div>
+            </label>
         </div>
     </div>
 </div>
@@ -1046,9 +1124,22 @@
 
         }
       });
-
-
-
+      
+      $('.edit-option').click(function(evt){
+            evt.preventDefault();
+            $('#edit-pop-up').css({
+                zIndex: 1000,
+                opacity : 1
+            });
+      });
+      
+      $('#edit-page-cover-profile').click(function(evt){
+            evt.preventDefault();
+            $('#cover-page-post').css({
+                zIndex: 1000,
+                opacity : 1
+            });
+      });
       $('.comentar-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id;

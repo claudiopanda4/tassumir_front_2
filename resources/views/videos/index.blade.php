@@ -80,7 +80,7 @@
                       <p>{{$dados[$key]['post']}}</p>
                   @endif                </div>
                 <div class="l-5 tv-video-cont">
-                    <video class="center" controls autoplay src="{{asset('storage/video/page/'). '/' . $dados[$key]['file']}}">
+                    <video class="center" controls src="{{asset('storage/video/page/'). '/' . $dados[$key]['file']}}">
                       <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$key ?>>
                       <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$key ?>>
 

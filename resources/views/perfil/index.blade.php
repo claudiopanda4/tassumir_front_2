@@ -27,23 +27,23 @@
             <ul class="profile-follow profile-item-center">
                 <li class="statistics-profile">
                   <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}">  <h2 style="justify-content: center; font-weight: bolder; font-size: 14px; width: 100%; margin-bottom: 0;">{{$perfil[0]['qtd_ps']}}</h2></a>
-                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}" style="margin-top: -5px;"><h2 style="justify-content: center; font-size: 11.5px;">Seguindo</h2></a>
+                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}" style="margin-top: -5px;  text-align: center;"><h2 style="justify-content: center; font-size: 11.5px; text-align: center;">Seguindo</h2></a>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar</h3></a>
                   <?php endif; ?>
                 </li>
                 <li class="statistics-profile">
                     <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_like']}}</h2>
                     <h2 style="justify-content: center; font-size: 11.5px;">Curtiu</h2>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar</h3></a>
                   <?php endif; ?>
                 </li>
                 <li class="statistics-profile">
                     <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_guardados']}}</h2>
                     <h2 style="justify-content: center; font-size: 11.5px;">Guardados</h2>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar</h3></a>
                   <?php endif; ?>
                 </li>
             </ul>
