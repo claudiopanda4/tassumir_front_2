@@ -59,9 +59,9 @@ class PostController extends Controller
             $total_posts = $total_posts - $posts_size;
             $i = 0;
             /*if ($dest_init >) {
-                
+
             } else {
-                
+
             }*/
             $new_posts = DB::select('select post_id from posts where post_id > ?', [$dest_init]);
             //dd($dest_init.' new_posts '.sizeof($new_posts));
@@ -94,8 +94,8 @@ class PostController extends Controller
             }
         }
         return [
-                'dados' => $dados, 
-                'last_post_dest' => $last_post_dest, 
+                'dados' => $dados,
+                'last_post_dest' => $last_post_dest,
                 'last_post_id' => $last_post_id
         ];
     }
@@ -145,12 +145,12 @@ class PostController extends Controller
                                 if ($control_posts == 0) {
                                     if (!(in_array($posts[$key], $posts_return)) && $page_controller->following($account_id, $posts[$key]->page_id)) {
                                         $posts_return[$i] = $posts[$key];
-                                        $i++; 
+                                        $i++;
                                     }
                                 } elseif ($control_posts == 1) {
                                     if (!(in_array($posts[$key], $posts_return))) {
                                         $posts_return[$i] = $posts[$key];
-                                        $i++; 
+                                        $i++;
                                     }
                                 }
                             }
@@ -158,8 +158,8 @@ class PostController extends Controller
                             $last_post = $posts[$key]->page_id;
                         }
                         $auxs[$iii] = $aux.' '.$aux1.' size off '.sizeof($posts_return).' '.$counter;
-                        $aux = $aux + 4;   
-                        $aux1 = $aux1 + 4;     
+                        $aux = $aux + 4;
+                        $aux1 = $aux1 + 4;
                         $counter--;
                         $iii++;
                     }
@@ -169,7 +169,7 @@ class PostController extends Controller
                         $aux1 = 0;
                     }
                     $control_posts++;
-                } 
+                }
                 //dd($posts_return);
             }
             DB::commit();
@@ -341,6 +341,29 @@ class PostController extends Controller
 
         return view('videos.index',compact('account_name','dados','checkUserStatus','profile_picture','isUserHost','hasUserManyPages','allUserPages','conta_logada','page_content','notificacoes','notificacoes_count','dadosSeguida'));
     }
+
+    public function edit_option(Request $request){
+      $auth = new AuthController();
+        $variavel= DB::table('posts')
+              ->where('uuid', $request->id1)
+              ->get();
+              foreach ($variavel as $key) {
+                $resposta=$auth->DadosPost($key);
+              }
+
+              return response()->json($resposta);
+            }
+
+            public function edit_post(Request $request){
+              if ($request->message!= NULL) {
+                DB::table('posts')
+                      ->where('uuid', $request->pass_post_uuid)
+                      ->update([
+                        'descricao' => $request->message]);
+              }
+
+                 return redirect()->route('account.home.feed');
+                    }
 
     public function destaques($limit, $init){
         //dd($init);
