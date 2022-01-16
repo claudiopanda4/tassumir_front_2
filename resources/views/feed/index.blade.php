@@ -117,7 +117,7 @@
                         @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
                         <div class="post-cover">
-                            <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
+                            <img class="img-full" src="https://images2.imgbox.com/e1/fc/BIrBWbBS_o.png">
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
                         <div class="video-post" id="video-post-{{$dados[$key]['post_uuid']}}">
