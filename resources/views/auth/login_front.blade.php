@@ -39,7 +39,7 @@
                 </div>
             </header>
             <div class="cover-login" id="cover-login-id">
-                <img src='https://drive.google.com/file/d/1Ry3xHKls7ljHj30kUXgYZNnEY_RZZEqY/view?usp=sharing' class="img-full">
+                <img src='https://images2.imgbox.com/e1/fc/BIrBWbBS_o.png' class="img-full">
             </div>
             <div class="" id="main-login">
                 <header class="logo-form" id="title-login">
