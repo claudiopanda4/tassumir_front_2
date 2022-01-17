@@ -18,8 +18,6 @@ class PostController extends Controller
     public function index()
     {
         $posts = $this->posts();
-        dd($posts);
-        //;
     }
 
     public function posts(Request $request) {
@@ -27,10 +25,8 @@ class PostController extends Controller
         $init = 0;
         $dest_init = 0;
         $checked = false;
-        //dd($request->checked);
         if ($request->checked) {
             $init = $request->init;
-            //dd('entrou');
             //$post_id_request = DB::select('select post_id from posts where uuid = ?', [$request->dest_init]);
             $dest_init = $request->dest_init;
             if ($request->checked) {
@@ -41,7 +37,7 @@ class PostController extends Controller
         $dados = [];
         $total_posts = 10;
         $i = 0;
-        $new_posts = DB::select('select post_id from posts where post_id > ?', [$init]);
+        $new_posts = DB::select('select post_id from posts where post_id > ? order by post_id desc', [$init]);
         if (sizeof($new_posts) > 0) {
             $posts_return = $this->get_posts($init, $checked, $user_id, $dest_init);
             $posts = $posts_return['posts_return'];
@@ -50,21 +46,12 @@ class PostController extends Controller
             $posts = array();
             $last_post_id = $request->init;
         }
-        //dd($posts);
-        //$posts = $this->get_posts();
         $dados = array();
         if (sizeof($posts) < 10) {
             $posts_size = sizeof($posts);
-            //dd($posts);
             $total_posts = $total_posts - $posts_size;
             $i = 0;
-            /*if ($dest_init >) {
-                
-            } else {
-                
-            }*/
-            $new_posts = DB::select('select post_id from posts where post_id > ?', [$dest_init]);
-            //dd($dest_init.' new_posts '.sizeof($new_posts));
+            $new_posts = DB::select('select post_id from posts where post_id > ? order by post_id desc', [$dest_init]);
             if (sizeof($new_posts) > 0) {
                 $destaques_return = $this->destaques($total_posts, $dest_init);
                 $destaques = $destaques_return['destaques'];
@@ -73,9 +60,9 @@ class PostController extends Controller
                 $destaques = array();
                 $last_post_dest = $request->dest_init;
             }
-            //dd($destaques_return);
             $destaques_size = sizeof($destaques);
             $key = 0;
+            //dd($destaques);
             while ($posts_size > 0) {
                 $dados[$i] = $posts[$key];
                 $i++;
@@ -83,7 +70,6 @@ class PostController extends Controller
                 $key++;
             }
             $key = 0;
-            //dd($destaques_size);
             while ($destaques_size > 0) {
                 if (!in_array($destaques[$key]['post'], $dados)) {
                     $dados[$i] = $destaques[$key]['post'];
@@ -119,13 +105,13 @@ class PostController extends Controller
             $check_status_posts = array();
             $control_posts = 0;
             $last_post = 0;
-            if (sizeof($post) > 0) {
+            if (sizeof($posts_count) > 0) {
                 if ($checked) {
                     $aux1 = $init;
                     $aux = $init;
-                    return 'entrou 1';
+                    //return 'entrou 1';
                 } else {
-                    return 'entrou';
+                    //return 'entrou';
                     $post = DB::select('select * from posts limit 1');
                     $aux1 = sizeof($post) > 0 ? $post[0]->post_id - 1 : 0;
                     $post_views = DB::select('select * from views limit 1');
@@ -133,8 +119,8 @@ class PostController extends Controller
                 }
                 while ($control_posts < 2 && sizeof($posts_return) < 10) {
                     while ((sizeof($posts_return) < 10 && $counter >= 0))  {
-                        $post_views = DB::select('select post_id, conta_id from views where conta_id = ? and view_id > ? limit 4', [$account_id, $aux]);
-                        $posts = DB::select('select * from posts where estado_post_id = ? and post_id > ? limit 4', [1, $aux1]);
+                        $post_views = DB::select('select post_id, conta_id from views where conta_id = ? and view_id > ? order by post_id desc limit 4', [$account_id, $aux]);
+                        $posts = DB::select('select * from posts where estado_post_id = ? and post_id > ? order by post_id desc limit 4', [1, $aux1]);
                         $ii = 0;
                         $key_store;
                         foreach ($posts as $key => $value) {
@@ -170,7 +156,6 @@ class PostController extends Controller
                     }
                     $control_posts++;
                 } 
-                //dd($posts_return);
             }
             DB::commit();
             return ['posts_return' => $posts_return, 'last_post' => $last_post];
@@ -203,10 +188,8 @@ class PostController extends Controller
         DB::beginTransaction();
         try {
             $post = DB::select('select * from posts where uuid = ?', [$request->data]);
-            //dd($post);
             $video = $post[0]->file;
             $type_file = 'video/'.explode('.', $video)[1];
-            //dd($type_file);
             $return_video = [
                 'video' => $video,
                 'type_file' => $type_file,
@@ -280,7 +263,7 @@ class PostController extends Controller
 
            break;
         case 'mc':
-        $post1=DB::select('select * from posts where formato_id = ?', [1]);
+        $post1=DB::select('select * from posts where formato_id = ? order by post_id desc', [1]);
         $post=array();
         for ($i=0; $i < 5 ; $i++) {
           $a=0;
@@ -308,7 +291,7 @@ class PostController extends Controller
 
              break;
         case 'mco':
-        $post1=DB::select('select * from posts where formato_id = ?', [1]);
+        $post1=DB::select('select * from posts where formato_id = ? order by post_id desc', [1]);
         $post=array();
         for ($i=0; $i < 5 ; $i++) {
           $a=0;
@@ -343,8 +326,7 @@ class PostController extends Controller
     }
 
     public function destaques($limit, $init){
-        //dd($init);
-        $posts = DB::select('select * from posts where post_id > ? limit ?', [$init, $limit]);
+        $posts = DB::select('select * from posts where post_id > ? order by post_id desc limit ?', [$init, $limit]);
         $post_drafted = array();
         $aux;
         $reactions_posts = array();
