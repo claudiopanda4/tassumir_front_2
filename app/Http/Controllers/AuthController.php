@@ -428,12 +428,13 @@ class AuthController extends Controller
             $posts_return = $post_controller->posts($request);
             $post = $posts_return['dados'];
             //dd($post);
-            return $post;
+            //return $post;
         } else {
             $posts_return = $post_controller->posts($request);
             $post = $posts_return['dados'];
             //dd($post);
         }
+
       $last_post_id = $posts_return['last_post_id'];
       $last_post_dest = $posts_return['last_post_dest'];
       $a=0;
@@ -441,10 +442,15 @@ class AuthController extends Controller
       //dd($this->DadosPost());
 
       $dados = array();
+      //dd('post');
       foreach ($post as $key) {
         //dd($key);
         $dados[$a] = $this->DadosPost($key);
         $a++;
+      }
+        //dd('entrou');
+      if (sizeof($dados) < 0) {
+          $dados = ['dados' => []];
       }
       //dd($dados);
      // dd($this->getPostAndFilter($dados, "5aeaec63-91e1-4a2f-a735-81e5580a50de", 'video'));

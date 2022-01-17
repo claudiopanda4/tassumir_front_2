@@ -1070,3 +1070,31 @@
 	    height: 0;
 	}
 }
+@media screen and (min-width: 2000px) {
+	.aside-left {
+	    left: 280px;
+	}
+	.aside-right {
+	    right: 280px;
+	}
+	.menu-header {
+		margin-right: 248px;
+	}
+	.ul-left {
+		margin-left: 240px;
+	}
+}
+@media screen and (min-width: 2400px) {
+	.aside-left {
+	    left: 480px;
+	}
+	.aside-right {
+	    right: 480px;
+	}
+	.ul-left {
+		margin-left: 420px;
+	}
+	.menu-header {
+		margin-right: 450px;
+	}
+}
