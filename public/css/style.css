@@ -3144,3 +3144,23 @@ label[for="hugo"]{
     margin-top: 10px;
     margin-left: 10px;
 }
+#see-more-button {
+    border: none;
+    text-align: center;
+    width: 100%;
+    font-size: 12px;
+    background-color: #3490dc;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+}
+#btn-see-more-id {
+    width: 88%;
+    margin: 10px auto;
+}
+.home-no-post h1 {
+    width: 90%;
+    font-size: 12px;
+    color: #fff;
+    margin: 10px auto;
+}

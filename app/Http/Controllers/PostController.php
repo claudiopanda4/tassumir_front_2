@@ -27,14 +27,13 @@ class PostController extends Controller
         $checked = false;
         if ($request->checked) {
             $init = $request->init;
-            //$post_id_request = DB::select('select post_id from posts where uuid = ?', [$request->dest_init]);
             $dest_init = $request->dest_init;
             if ($request->checked) {
                 $checked = true;
             }
         }
         $user_id = Auth::user()->conta_id;
-        $dados = [];
+        $dados = [89];
         $total_posts = 10;
         $i = 0;
         $new_posts = DB::select('select post_id from posts where post_id > ? order by post_id desc', [$init]);
@@ -79,6 +78,7 @@ class PostController extends Controller
                 $destaques_size--;
             }
         }
+        //dd($dados);
         return [
                 'dados' => $dados, 
                 'last_post_dest' => $last_post_dest, 
@@ -124,6 +124,9 @@ class PostController extends Controller
                         $ii = 0;
                         $key_store;
                         foreach ($posts as $key => $value) {
+                            if ($key == 0) {
+                                 $last_post = $posts[$key]->page_id;
+                            }
                             $cont = 0;
                             $size_post_views = sizeof($post_views);
                             $result = $this->view($posts[$key]->post_id, $account_id);
@@ -141,8 +144,8 @@ class PostController extends Controller
                                 }
                             }
                             $result = !$result;
-                            $last_post = $posts[$key]->page_id;
                         }
+                        //$last_post = $posts[$key]->page_id;
                         $auxs[$iii] = $aux.' '.$aux1.' size off '.sizeof($posts_return).' '.$counter;
                         $aux = $aux + 4;   
                         $aux1 = $aux1 + 4;     
@@ -334,10 +337,12 @@ class PostController extends Controller
         $i = 0;
         $last_post_dest;
         while ($i < sizeof($posts)){
+            if ($i == 0) {
+                $last_post_dest = $posts[$i]->post_id;
+            }
             $destaques[$i]['post_id'] = $posts[$i]->post_id;
             $destaques[$i]['reactions'] = $this->reactions_post($posts[$i]->post_id);
             $destaques[$i]['post'] = $posts[$i];
-            $last_post_dest = $posts[$i]->post_id;
             $i++;
         }
         $i = 0;

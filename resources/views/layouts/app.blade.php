@@ -954,8 +954,9 @@
           dataType: 'json',
           data: { init: $('#last_post').val(), checked: true, dest_init: $('#last_post_dest').val() },
           success:function(response){
+                console.log('last_post ' + $('#last_post').val() + ' last_post_dest ' + $('#last_post_dest').val());
                 console.log('yes');
-                console.log(response)
+                console.log(response);
             }
           });
       }
