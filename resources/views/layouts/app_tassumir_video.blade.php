@@ -236,11 +236,12 @@
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix">
-                <li class="li-component-aside li-component-aside-active"><i class="fas fa-eye fa-20 fa-icon-aside-left"></i><a href="{{route('account.home')}}">Mais Assistidos</a></li>
-                <li class="li-component-aside"><i class="far fa-heart fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}?post-container-post=saved">Mais Curtidos</a></li>
-                <li class="li-component-aside"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Mais Recentes</a></li>
-                <li class="li-component-aside"><i class="far fa-comment fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Mais Comentados</a></li>
-                <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Videos Guardados</a></li>
+                <li class="li-component-aside li-component-aside-active"><i class="fas fa-eye fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','ma')}}">Mais Assistidos</a></li>
+              <!--  <li class="li-component-aside"><i class="far fa-heart fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}?post-container-post=saved">Mais Curtidos</a></li> -->
+                <li class="li-component-aside"><i class="far fa-heart fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mc')}}">Mais Curtidos</a></li>
+                <li class="li-component-aside"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mr')}}">Mais Recentes</a></li>
+                <li class="li-component-aside"><i class="far fa-comment fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mco')}}">Mais Comentados</a></li>
+                <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mg')}}">Videos Guardados</a></li>
             </ul>
         </nav>
     </aside>

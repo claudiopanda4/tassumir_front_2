@@ -29,7 +29,7 @@
         "nesbot/carbon": "^2.53.1",
         "opis/closure": "^3.6",
         "psr/container": "^1.0",
-        "psr/log": "^1.0 || ^2.0",
+        "psr/log": "^1.0|^2.0",
         "psr/simple-cache": "^1.0",
         "ramsey/uuid": "^4.2.2",
         "swiftmailer/swiftmailer": "^6.3",
@@ -155,7 +155,10 @@
         "wildbit/swiftmailer-postmark": "Required to use Postmark mail driver (^3.0)."
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

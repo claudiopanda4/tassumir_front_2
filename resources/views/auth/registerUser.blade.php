@@ -47,8 +47,8 @@
                     <div class="row justify-content-center mb-2">
                         <span class="text-white">Agora vamos conhecer-te</span>
                     </div>
-
-                <form action="{{route('account.teste.form')}}" method="POST" >
+                    <!--{{route('account.save.next1')}}-->
+                <form action="" method="POST" >
                     @csrf
 
                       <div class="form-group">

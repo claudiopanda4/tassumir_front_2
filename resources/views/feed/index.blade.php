@@ -52,7 +52,7 @@
             </nav>
         </header>
 <?php foreach ($dados as $key => $value): ?>
-  <?php if ($dados[$key]['estado_post']==1): ?>
+  <?php if ($dados[$key]['estado_post'] == 1): ?>
     <?php //dd($conta_logada[0]->uuid); ?>
         <div class="card br-10" id="m_post-{{$dados[$key]['post_id']}}">
             <div class="post post-view" id="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}">
@@ -85,7 +85,7 @@
                         <ul class="clearfix more-option-post">
                           <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
                             <li>
-                                <a href="">Editar</a>
+                                <a href="" class="edit-option" id="edit-option|{{$dados[$key]['post_uuid']}}">Editar</a>
                             </li>
                             <?php endif ?>
                             <?php if ($dados[$key]['dono_da_pag?'] != 1): ?>
@@ -116,7 +116,7 @@
                             <p>{{$dados[$key]['post']}}</p>
                         @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
-                        <div class="post-cover">
+                        <div class="post-cover">                            
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
@@ -265,7 +265,7 @@
                             </div>
                             @else
                             <div class="profille-img">
-                                  <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
+                                  <i class="fas fa-user center fa-16" style="color: #ccc;"></i>
                             </div>
                         @endif
                       @elseif( $dados[$key]['foto_ver']==2 )
@@ -290,7 +290,7 @@
                             @if($dados[$key]['comment_S/N'] > 0)
                                 <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                             @else
-                                <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
+                                <i class="far fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
                             @endif
                           </a>
                       </div>
@@ -301,6 +301,7 @@
                 </div>
             </div>
         </div>
+        <?php //dd($last_post_dest.' '.$last_post_id); ?>
       <?php endif ?>
         <?php if ($key == 3 || $key == 7): ?>
                 <section class="suggest-slide">
@@ -324,8 +325,8 @@
                         }
                     }
                 ?>
-                       
-                        <li class="li-component-suggest clearfix l-5" id="li-component-suggest-{{$Paginas->page_id}}">
+
+                        <li class="li-component-suggest clearfix l-5 sugest_page" id="li-component-suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
@@ -340,15 +341,42 @@
                                     <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
                                     <a href="" class="seguir_index" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
                                     <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                                </li>  
+                                   <input type="hidden" name="" value="0" id="last_page">
+                                </li>
                                 @empty
 
-                                @endforelse                          
+                                @endforelse
                         </ul>
                     </nav>
                 </section>
             <?php endif ?>
         <?php endforeach ?>
+        <div class="control" id="control-1">
+
+        </div>
+        <div>
+            <form action="{{route('account.home')}}" method="get">
+                @if(sizeof($dados) > 0)
+                    <div class="btn-see-more" id="btn-see-more-id">
+                        <button type="submit" id="see-more-button" name="">
+                            Ver Mais
+                        </button>
+                    </div>
+                <input type="hidden" id="last_post" name="init" value=<?php echo $last_post_id; ?>>
+                <input type="hidden" id="last_post_dest" name="dest_init" value=<?php echo $last_post_dest; ?>>
+                <input type="hidden" id="" name="checked" value='true'>
+                @else
+                    <div class="home-no-post">
+                        <h1>Sem Publicações novas pra si</h1>
+                    </div>
+                    <div class="btn-see-more" id="btn-see-more-id">
+                        <button type="submit" id="see-more-button" name="">
+                            Voltar
+                        </button>
+                    </div>
+                @endif
+            </form>
+        </div>
 </div>
 <script>
 function gostar(id){
@@ -489,12 +517,17 @@ function gostar(id){
             var valor_pagina_id = e.target.id;
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
-            id_last_page = 0;
-            //$('#' + valor_pagina_id).empty();
 
-            $('#li-component-suggest-' + valor_pagina_id).remove();
-
-
+            if (($('.sugest_page').eq(2).attr("id")) == null) {
+                if (($('#last_page').val()) != 0) {
+                    var id_last_page = $('#last_page').val();
+                }else{
+                    var id_last_page = 0;
+                }
+            }else{
+               var id_last_page = $('.sugest_page').eq(2).attr("id").split('-')[3];
+            }            //$('#' + valor_pagina_id).empty();
+            alert('valor_pagina_id: '+valor_pagina_id+'valor_idconta: '+valor_idconta+'last_page: '+id_last_page);
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
@@ -503,16 +536,18 @@ function gostar(id){
                 success: function(response){
                   console.log(response);
                   $('#li-component-suggest-' + valor_pagina_id).remove();
+                  $('#li-component-suggest-' + valor_pagina_id).remove();
                   $('#li-component-sugest-' + valor_pagina_id).remove();
                   $('.seguir-' + valor_pagina_id).hide();
                   if (response.page != 'Vazio') {
                   $.each(response.page, function(key, value){
+                    $('#last_page').val(value.page_id);
                     if (value.foto != null) {
                     let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
-                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=></li>");
+                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }else{
                         let src = "{{asset('storage/img/page/unnamed.jpg')}}";
-                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=></li>");
+                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }
                 });
                 }

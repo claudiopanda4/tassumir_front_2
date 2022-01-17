@@ -20,30 +20,30 @@
         <div class="" id="card-ident">
             <div id="ident-profile">
                 <h1 class="profile-name">{{$account_name[0]->nome}} {{$account_name[0]->apelido}}</h1>
-                    <div class="invite-icon circle">
-                        <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
-                    </div>
+                <div class="invite-icon circle">
+                    <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
+                </div>
             </div>
             <ul class="profile-follow profile-item-center">
                 <li class="statistics-profile">
-                  <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}">  <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_ps']}}</h2></a>
-                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}"><h2 style="justify-content: center; font-size: 11.5px;">Seguindo</h2></a>
+                  <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}">  <h2 style="justify-content: center; font-weight: bolder; font-size: 14px; width: 100%; margin-bottom: 0;">{{$perfil[0]['qtd_ps']}}</h2></a>
+                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}" style="margin-top: -5px;  text-align: center;"><h2 style="justify-content: center; font-size: 11.5px; text-align: center;">Seguindo</h2></a>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar</h3></a>
                   <?php endif; ?>
                 </li>
                 <li class="statistics-profile">
                     <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_like']}}</h2>
                     <h2 style="justify-content: center; font-size: 11.5px;">Curtiu</h2>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar</h3></a>
                   <?php endif; ?>
                 </li>
                 <li class="statistics-profile">
                     <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_guardados']}}</h2>
                     <h2 style="justify-content: center; font-size: 11.5px;">Guardados</h2>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar Perfil</h3></a>
+                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar</h3></a>
                   <?php endif; ?>
                 </li>
             </ul>
@@ -60,12 +60,6 @@
 
                             </div>
                         </label>
-                        <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
-
-                            <button class="btn-message">
-                                <i class="far fa-comment-dots fa-24 fa-option center"></i>
-                            </button>
-                        </form>
                     </div>
                   <?php elseif ($perfil[0]['verificacao_pedido1'] == 1 ): ?>
                     <div class="hidden-click-any-container options-invited clearfix">
@@ -84,16 +78,11 @@
                                   <h2>Aceitar</h2>
                               </div>
                           </label>-->
-                          <form action="{{route('message.index')}}">
-                              <button class="btn-message">
-                                  <i class="far fa-comment-dots fa-24 fa-option center"></i>
-                              </button>
-                          </form>
                       </div>
                     <?php elseif ($perfil[0]['verificacao_pedido'] == 2 ): ?>
                       <div class="hidden-click-any-container options-invited clearfix">
                           <a  href="{{route('relationship.page1', $perfil[0]['Pedido_relac_uuid']) }}" class="ver_mais" id="VR|{{$perfil[0]['not_id']}}">Ver Resposta</a>
-               
+
                         </div>
                             <!-- <label for="target-invited-relationship" style="width: 100%;">
                                 <div class="follwing-btn follwing-btn-pop-up" >
@@ -101,11 +90,6 @@
                                     <h2>Aceitar</h2>
                                 </div>
                             </label>-->
-                            <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
-                                <button class="btn-message">
-                                    <i class="far fa-comment-dots fa-24 fa-option center"></i>
-                                </button>
-                            </form>
                         </div>
 
                     <?php else: ?>
@@ -115,16 +99,18 @@
                                 <h2>Assumir</h2>
                             </div>
                         </label>
-                        <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
-                            <button class="btn-message">
-                                <i class="far fa-comment-dots fa-24 fa-option center"></i>
-                            </button>
-                        </form>
-
                     </div>
                     <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
+            <div >
+              <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
+
+                  <button class="btn-message">
+                      <i class="far fa-comment-dots fa-24 fa-option center"></i>
+                  </button>
+              </form>
+          </div>
             </div>
             <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                 <div class="options-profile-btn options-profile-btn-center profile-item-center">
@@ -250,6 +236,7 @@
                 </div>
                 <?php endif; ?>
                 <?php if ($_GET['post-container-post'] == 'saved'): ?>
+                  <?php if (sizeof($guardadosP)>0): ?>
                   <?php foreach ($guardadosP as $key => $value): ?>
 
                         <div class="card br-10">
@@ -316,7 +303,7 @@
 
                   </div>
                   <?php endforeach ?>
-
+                <?php endif; ?>
                 <?php endif; ?>
             <?php else: ?>
             <div class="post-img-container-page post-page-container">

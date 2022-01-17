@@ -36,7 +36,6 @@ class PerfilController extends Controller
        $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
        $lenght = sizeof($aux1);
        $gostos=array();
-       $guardadosP=array();
        $a=0;
        //dd($lenght);
        if ($lenght > 0) {
@@ -150,6 +149,7 @@ class PerfilController extends Controller
               }
              }
              $a=0;
+             $guardadosP=array();
              foreach ($guardado as $key ) {
                $posts=DB::select('select * from posts where post_id = ?', [$key->post_id]);
                if (sizeof($posts) > 0) {
@@ -224,7 +224,7 @@ class PerfilController extends Controller
 
 
 
-              return view('perfil.index', compact('account_name','notificacoes_count', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
+              return view('perfil.index', compact('account_name','guardadosP','notificacoes_count', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
 
 
 
@@ -390,7 +390,7 @@ class PerfilController extends Controller
 
 
 
-              return view('perfil.index', compact('account_name', 'notificacoes_count','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
+              return view('perfil.index', compact('account_name','guardadosP', 'notificacoes_count','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
 
 
         } catch (Exception $e) {
@@ -458,7 +458,7 @@ class PerfilController extends Controller
           $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
           $paginasSeguidas = $dates['paginasSeguidas'];
           $dadosSeguida = $dates['dadosSeguida'];
-          
+
           $authctrol = new AuthController;
             $paginasSeguidas = $authctrol->paginasSeguidas();
             $paginasNaoSeguidas = $authctrol->paginasNaoSeguidas();
@@ -466,12 +466,12 @@ class PerfilController extends Controller
              ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
              ->select('seguidors.*', 'identificadors.id')
              ->get();
-    
+
             $page_current = 'profile';
 
 
 
-            return view('perfil.edit', compact('account_name','notificacoes_count', 'notificacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'conta_logada'));
+            return view('perfil.edit', compact('account_name','notificacoes_count', 'notificacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'conta_logada'));
 
         } catch (Exception $e) {
             dd('erro');

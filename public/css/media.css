@@ -35,10 +35,13 @@
 }
 @media screen and (max-width: 540px) {
 	#statistics-profile-page-component-container-lg-1 {
-		width: 230px;
+		width: 254px;
 	}
 	.card-post p {
 		margin-left: 0;
+	}
+	#edit-pop-up .page-identify h1 {
+	    margin-top: 15px;
 	}
 }
 @media screen and (max-width: 540px) {
@@ -49,6 +52,18 @@
 		width: 100%;
 		margin-top: 6px;
 		margin-top: 0;
+	}
+	#img-cover-profile-page {
+	    margin: auto;
+	    float: none;
+	    width: 120px;
+	    height: 120px;
+	}
+	#edit-pop-up .pop-up-component {
+		width: 90%;
+	}
+	#edit-pop-up .pop-up-component-header-default {
+		width: 97%;
 	}
 	.lg-invisible-user-name {
 		display: none;
@@ -91,6 +106,9 @@
 	}
 	.edit-profile {
 		display: none;
+	}
+	.edit-profile.edit-page-btn-alter {
+		display: block;
 	}
 	.edit-profile-mobile {
 		display: block;
@@ -502,6 +520,9 @@
 		background-color: transparent;
 		border: none;
     }
+    #main-profile header.card {
+	    background-color: transparent;
+	}
     .comment-users-tass {
 		height: auto;
 		display: none;
@@ -1047,5 +1068,33 @@
 	.nav-video-option::-webkit-scrollbar {
 	    width: 0;
 	    height: 0;
+	}
+}
+@media screen and (min-width: 2000px) {
+	.aside-left {
+	    left: 280px;
+	}
+	.aside-right {
+	    right: 280px;
+	}
+	.menu-header {
+		margin-right: 248px;
+	}
+	.ul-left {
+		margin-left: 240px;
+	}
+}
+@media screen and (min-width: 2400px) {
+	.aside-left {
+	    left: 480px;
+	}
+	.aside-right {
+	    right: 480px;
+	}
+	.ul-left {
+		margin-left: 420px;
+	}
+	.menu-header {
+		margin-right: 450px;
 	}
 }

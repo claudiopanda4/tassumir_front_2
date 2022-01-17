@@ -39,7 +39,7 @@
                 </div>
             </header>
             <div class="cover-login" id="cover-login-id">
-                <img src='{{asset("storage/others/tassumir_aside.png")}}' class="img-full">
+                <img src='https://images2.imgbox.com/e1/fc/BIrBWbBS_o.png' class="img-full">
             </div>
             <div class="" id="main-login">
                 <header class="logo-form" id="title-login">
@@ -73,7 +73,9 @@
                         <h2 class="center">ou</h2>
                     </div>
                 </form>
-                <form action="{{ route('account.register.form') }}" method="GET">
+                
+                <!--account.register.form-->
+                <form action="{{ route('first.form') }}" method="GET">
                     <button id="login-register" type="submit" class=""><span class="enter-login">Criar uma Nova conta</button>
                 </form>
 

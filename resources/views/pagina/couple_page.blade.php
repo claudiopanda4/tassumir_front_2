@@ -47,7 +47,12 @@
                         <?php endif ?>
                         <div class="statistics-profile-page-component l-5">
                             <h1>{{ $seguidores }}</h1>
-                            <h2 class="text-ellips">Seguindo</h2>
+                            @if ($seguidores > 1)
+                                <h2 class="text-ellips">Seguidores</h2>
+                            @else
+                                <h2 class="text-ellips">Seguidor</h2>
+                            @endif
+                            
                         </div>
                         <div class="statistics-profile-page-component l-5">
                             <h1>{{ $seguidores }}</h1>
@@ -109,12 +114,15 @@
                     </div>
                 @endif
             </div>
-            <?php if (false): ?>
-            <div class="edit-page-container">
-                <button type="submit" class="follwing-btn" id="edit-page">
-                    Editar Página
-                </button>
-            </div>
+            <?php if (true): ?>
+                <a href="{{route('page.edit.get', $page_content[0]->page_id)}}">
+                    @csrf
+                    <div class="edit-page-container">
+                        <button type="submit" class="follwing-btn" id="edit-page">
+                            Editar
+                        </button>
+                    </div>
+                </a>
             <?php endif ?>
 
         </div>
@@ -155,12 +163,14 @@
             </div>
         </div>
         @if($v == 1)
-        <?php if (!$hasUserManyPages): ?>
-        <div class="edit-page-container-mobile">
-            <button type="submit" class="follwing-btn">
-                Editar Página
-            </button>
-        </div>
+        <?php if (true): ?>
+            <form action="{{route('page.edit.get', $page_content[0]->page_id)}}" method="get">
+                <div class="edit-page-container-mobile">
+                    <button type="submit" class="follwing-btn">
+                        Editar
+                    </button>
+                </div>
+            </form>
         <?php endif ?>
         @endif
         @if($v == 1)
