@@ -170,7 +170,7 @@ class PostController extends Controller
 
     }
     public function view($post_id, $account_id){
-        $post_views = DB::select('select post_id, conta_id from views where conta_id = ? && post_id = ? limit 1', [$account_id, $post_id]);
+        $post_views = DB::select('select post_id, conta_id from views where conta_id = ? AND post_id = ? limit 1', [$account_id, $post_id]);
         $return = sizeof($post_views) > 0 ? true : false;
         return $return;
     }
