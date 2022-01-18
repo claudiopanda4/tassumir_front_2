@@ -185,6 +185,14 @@
                                    <a href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 11)
+                                   <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @else
+                                   <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
                                    @endif
                                     <div class="hidden-click-any-container noti-hour ml-2">
                                         <a href=""><span class="">há um dia</span></a>

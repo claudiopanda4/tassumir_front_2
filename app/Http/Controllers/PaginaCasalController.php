@@ -58,7 +58,7 @@ class PaginaCasalController extends Controller
      $conta = DB::select('select * from contas where uuid = ?', [$id]);
      $aux = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
      foreach ($page as $key ) {
-       
+
        $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$key->page_id, 2 ]);
        //dd($aux1[0]->identificador_id);
        //dd($aux[0]->identificador_id);
@@ -417,9 +417,8 @@ $v=1;
           $sugerir = $this->suggest_pages($page_content[0]->page_id);
           $allPosts = $this->get_post_types($page_content[0]->page_id);
 
-          $a=DB::select('select * from pages where uuid = ?', [$uuid]);
 
-          if ($a[0]->conta_id_a == $conta_logada[0]->conta_id || $a[0]->conta_id_b == $conta_logada[0]->conta_id) {
+          if ($page_content[0]->conta_id_a == $conta_logada[0]->conta_id || $page_content[0]->conta_id_b == $conta_logada[0]->conta_id) {
             $v=1;
           }else {
             $v=0;
@@ -469,28 +468,49 @@ $v=1;
     }
 
 
-    public function delete_couple_page(){
+    public function delete_couple_page($id){
         try {
-          $controll = new AuthController();
-           $dates = $controll->default_();
-          $account_name = $dates['account_name'];
-          $checkUserStatus = $dates['checkUserStatus'];
-          $profile_picture = $dates['profile_picture'];
-          $isUserHost = $dates['isUserHost'];
-          $hasUserManyPages = $dates['hasUserManyPages'];
-          $allUserPages = $dates['allUserPages'];
-          $page_content = $dates['page_content'];
+          $auth = new AuthController();
+          $dates = $auth->default_();
+
           $conta_logada = $dates['conta_logada'];
-          $page_current = 'relationship_request';
-            $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
 
-            $sugerir = $this->suggest_pages($page_content[0]->page_id);
-            $allPosts = $this->get_post_types($page_content[0]->page_id);
+          $page= DB::select('select * from pages where uuid = ?', [$id]);
+          if ($conta_logada[0]->conta_id == $page[0]->conta_id_a) {
+            $aux1= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+            $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
 
-            /*siene*/ //$casalPageName = $this->get_casalPage_name($page_content);
+          }else {
+            $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+            $aux1= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
 
-            return view('pagina.delete_couple_page', compact('account_name', 'conta_logada', 'checkUserStatus', 'profile_picture', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir'));
-        } catch (Exception $e) {
+          }
+          $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->page_id, 2 ]);
+
+          DB::table('pages')->where('uuid',$id)
+          ->update(['estado_pagina_id' => 4]);
+
+          DB::table('notifications')->insert([
+                  'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'id_state_notification' => 2,
+                  'id_action_notification' => 11,
+                  'identificador_id_causador'=> $aux1[0]->identificador_id,
+                  'identificador_id_destino'=> $aux3[0]->identificador_id,
+                  'identificador_id_receptor'=> $aux1[0]->identificador_id,
+                  ]);
+
+          DB::table('notifications')->insert([
+                          'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                          'id_state_notification' => 2,
+                          'id_action_notification' => 11,
+                          'identificador_id_causador'=> $aux1[0]->identificador_id,
+                          'identificador_id_destino'=> $aux3[0]->identificador_id,
+                          'identificador_id_receptor'=> $aux2[0]->identificador_id,
+                          ]);
+
+
+                          return redirect()->route('account.home.feed');
+       } catch (Exception $e) {
             dd($e);
         }
     }

@@ -183,6 +183,24 @@ class AuthController extends Controller
                             }
                         }
                         break;
+                        case 11:
+                            $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                            if (sizeof($aux)>0){
+                              $page =  DB::select('select * from pages where page_id = ?',[$aux[0]->id]);
+                                if ($aux2[0]->id == $conta_logada[0]->conta_id){
+                                    $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
+                                    $notificacoes[$a]['notificacao'].=$page[0]->nome;
+                                    $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                }else {
+                                  $notificacoes[$a]['notificacao']=$nome[0];
+                                  $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
+                                  $notificacoes[$a]['notificacao'].=$page[0]->nome;
+                                  $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                }
+                                $notificacoes[$a]['tipo']=11;
+                                $notificacoes[$a]['id']=$aux2[0]->id;
+                            }
+                            break;
                }
 
                $notificacoes[$a]['foto']=$nome[1];

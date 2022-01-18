@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/couple_page_show/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple_page.show');
 
     Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::class, 'edit_couple'])->name('edit_couple.page');
-    Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
+    Route::get('/couple_page/delete_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
     Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');
     Route::get('/help_support', [App\Http\Controllers\HelpSupport::class, 'index'])->name('help_support.page');
 
@@ -145,6 +145,8 @@ Route::get('/getposts/destaques/{limit}', [App\Http\Controllers\PostController::
 //
 Route::get('/getfollow/', [App\Http\Controllers\PageController::class, 'index'])->name('following.get');
 Route::get('/editpage/{id}', [App\Http\Controllers\PageController::class, 'show'])->name('page.edit.get');
+Route::get('/couple_page/delete_page_view/{id}', [App\Http\Controllers\PageController::class, 'view_delete_couple_page'])->name('delete_couple.page_view');
+
 //
 
 
