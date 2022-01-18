@@ -251,7 +251,9 @@ class AuthController extends Controller
            $a=0;
 
            foreach ($post as $key) {
-             $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
+             $pagess= DB::table('pages')->->where('page_id', $key->page_id)->get();
+             if ($pagess[0]->estado_pagina_id == 1){
+            $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
              $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
              $soma= sizeof($likes) + sizeof($comment);
              $b=0;
@@ -321,7 +323,7 @@ class AuthController extends Controller
                  }*/
 
                  $a=$soma;
-               }
+               }}
              }
          }
 
@@ -462,8 +464,10 @@ class AuthController extends Controller
       $dados = array();
       //dd('post');
       foreach ($post as $key) {
-        //dd($key);
-        $dados[$a] = $this->DadosPost($key);
+        $page= DB::table('pages')->->where('page_id', $key->page_id)->get();
+        if ($page[0]->estado_pagina_id == 1){
+          $dados[$a] = $this->DadosPost($key);
+        }
         $a++;
       }
         //dd('entrou');
