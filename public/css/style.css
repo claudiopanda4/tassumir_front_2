@@ -2489,6 +2489,7 @@ label[for="hugo"]{
     background-color: #3490dc;
     border-radius: 5px;
     margin-top: 9px;
+    font-size: 12px;
 }
 .relationship-type {
     padding: 8px;
@@ -3078,10 +3079,11 @@ label[for="hugo"]{
     padding: 5px;
     padding-left: 10px;
 }
-.video-container-component {
+#container-main-tv .main-container {
+    height: 100%;
     overflow-y: auto;
-    height: 500px;
-    overflow-x: hidden;
+}
+.video-container-component {
     margin-top: -20px;
 }
 .text-video-container p {
@@ -3164,4 +3166,15 @@ label[for="hugo"]{
     font-size: 12px;
     color: #fff;
     margin: 10px auto;
+}
+.page-card-header {
+    background-color: #242526;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+.description-couple h2 {
+    padding-top: 10px;
+}
+.comment-user-comment {
+    min-width: 110px;
 }

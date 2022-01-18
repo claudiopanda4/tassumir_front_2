@@ -727,7 +727,7 @@
 		display: none;
 	}
 	.stories-about-talking header h1 {
-	    font-size: 14px;
+	    font-size: 13px;
 	    padding: 0px 12px 5px;
 	}
 	.stories-about-talking nav ul li {
@@ -1034,10 +1034,50 @@
 		width: 100%;
 		border: none;
 	}
+	.page-card-header {
+	    background-color: transparent;
+	}
+	.video-container-component {
+	    height: 80vh;
+	    overflow-y: auto;
+	    overflow-x: hidden;
+	}
 }
 @media screen and (max-width: 500px) {
 	.video-post {
 	    height: 100vh;
+	}
+	.title h1 {
+	    font-size: 24px;
+	}
+	.fa-24 {
+	    font-size: 20px;
+	}
+	.user-tassumir img {
+	    width: 26px;
+	    height: 26px;
+	}
+	.header-main-component {
+	    height: 50px;
+	}
+	.number-notification span {
+	    font-size: 11px;
+	}
+	.post header .first-component .page-identify h1 {
+	    font-size: 13px;
+	}
+	.seguir-a {
+		font-size: 12px;
+	}
+	.description-couple h2 {
+	    font-size: 12px;
+	}
+	.card-post p {
+	    font-size: 12px;
+	}
+	.comment-user-comment.comment-user-comment-feed p {
+	    font-size: 11px;
+	    max-width: 160px;
 	}
 }
 

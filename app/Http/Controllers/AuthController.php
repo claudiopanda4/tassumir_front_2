@@ -251,7 +251,7 @@ class AuthController extends Controller
            $a=0;
 
            foreach ($post as $key) {
-             $pagess= DB::table('pages')->->where('page_id', $key->page_id)->get();
+             $pagess= DB::table('pages')->where('page_id', $key->page_id)->get();
              if ($pagess[0]->estado_pagina_id == 1){
             $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
              $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
@@ -464,7 +464,7 @@ class AuthController extends Controller
       $dados = array();
       //dd('post');
       foreach ($post as $key) {
-        $page= DB::table('pages')->->where('page_id', $key->page_id)->get();
+        $page= DB::table('pages')->where('page_id', $key->page_id)->get();
         if ($page[0]->estado_pagina_id == 1){
           $dados[$a] = $this->DadosPost($key);
         }

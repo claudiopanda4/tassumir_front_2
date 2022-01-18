@@ -3,7 +3,7 @@
 @section('content')
 <div class="main" id="main-container-profile">
     <div class="card br-10 card-flex card-page">
-        <div class="clearfix">
+        <div class="clearfix page-card-header">
             <div class="img-profile-page-container clearfix l-5">
                 @if($page_content[0]->foto)
                     <div class="img-profile-page circle l-5">
@@ -149,7 +149,7 @@
                 </div>
             </div>
         <?php endif ?>
-        <div class="clearfix">
+        <div class="clearfix page-card-header">
 
             <div class="description-couple">
                 <h2 class="mobile-user-name">@<span></span>
