@@ -52,7 +52,7 @@
                             @else
                                 <h2 class="text-ellips">Seguidor</h2>
                             @endif
-                            
+
                         </div>
                         <div class="statistics-profile-page-component l-5">
                             <h1>{{ $seguidores }}</h1>
@@ -115,7 +115,7 @@
                 @endif
             </div>
             <?php if (true): ?>
-                <a href="{{route('page.edit.get', $page_content[0]->page_id)}}">
+                <a href="{{route('page.edit.get', $page_content[0]->uuid)}}">
                     @csrf
                     <div class="edit-page-container">
                         <button type="submit" class="follwing-btn" id="edit-page">
@@ -155,7 +155,7 @@
                 <h2 class="mobile-user-name">@<span></span>
                     <?php echo strtolower($page_content[0]->nome); ?>
                 </h2>
-                
+
                 <h2><span>{{ $casalPageName }}</h2>
             </div>
             <div class="description-couple">
@@ -196,7 +196,7 @@
                                             }
                                         }
                                     ?>
-                                @if( $Paginas->page_id != $page_content[0]->page_id)     
+                                @if( $Paginas->page_id != $page_content[0]->page_id)
                                 <li class="li-component-suggest clearfix l-5 nao_sigo" id="li-component_suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )

@@ -54,7 +54,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/couple_page_show/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple_page.show');
 
     Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::class, 'edit_couple'])->name('edit_couple.page');
-    Route::get('/couple_page/delete_page', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
+    Route::get('/couple_page/delete_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
     Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');
     Route::get('/help_support', [App\Http\Controllers\HelpSupport::class, 'index'])->name('help_support.page');
 
@@ -106,13 +106,13 @@ Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherFo
 Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
 
 /* New test H20 edom  */
-    
+
     Route::get('/Register',[App\Http\Controllers\AuthController::class, 'firstForm'])->name('first.form');
 
-    Route::post('/InsertRegister',[App\Http\Controllers\AuthController::class, 'firstFormInsert'])->name('first.form.insert'); 
+    Route::post('/InsertRegister',[App\Http\Controllers\AuthController::class, 'firstFormInsert'])->name('first.form.insert');
 
 
-    Route::get('/notFound',[App\Http\Controllers\AuthController::class, 'NotFound'])->name('first.not.found'); 
+    Route::get('/notFound',[App\Http\Controllers\AuthController::class, 'NotFound'])->name('first.not.found');
 
 /* End new test H20 edom */
 
@@ -134,6 +134,8 @@ Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController
 
 //posts
 Route::get('/view/', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
+Route::get('/edit_option', [App\Http\Controllers\PostController::class, 'edit_option'])->name('edit_option');
+Route::post('/edit_post', [App\Http\Controllers\PostController::class, 'edit_post'])->name('edit_post');
 Route::get('/getvideo/', [App\Http\Controllers\PostController::class, 'get_video'])->name('post.video.get');
 Route::get('/tassumirvideo/{id}', [App\Http\Controllers\PostController::class, 'tassumirvideos'])->name('post.tassumir.video');
 Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])->name('post.get');
@@ -143,6 +145,8 @@ Route::get('/getposts/destaques/{limit}', [App\Http\Controllers\PostController::
 //
 Route::get('/getfollow/', [App\Http\Controllers\PageController::class, 'index'])->name('following.get');
 Route::get('/editpage/{id}', [App\Http\Controllers\PageController::class, 'show'])->name('page.edit.get');
+Route::get('/couple_page/delete_page_view/{id}', [App\Http\Controllers\PageController::class, 'view_delete_couple_page'])->name('delete_couple.page_view');
+
 //
 
 

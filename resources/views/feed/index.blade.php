@@ -85,7 +85,7 @@
                         <ul class="clearfix more-option-post">
                           <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
                             <li>
-                                <a href="" class="edit-option" id="edit-option-{{$dados[$key]['post_id']}}">Editar</a>
+                                <a href="" class="edit-option" id="edit-option|{{$dados[$key]['post_uuid']}}">Editar</a>
                             </li>
                             <?php endif ?>
                             <?php if ($dados[$key]['dono_da_pag?'] != 1): ?>
@@ -325,7 +325,7 @@
                         }
                     }
                 ?>
-                       
+
                         <li class="li-component-suggest clearfix l-5 sugest_page" id="li-component-suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )
@@ -341,18 +341,18 @@
                                     <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
                                     <a href="" class="seguir_index" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
                                     <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                                   <input type="hidden" name="" value="0" id="last_page"> 
-                                </li>  
+                                   <input type="hidden" name="" value="0" id="last_page">
+                                </li>
                                 @empty
 
-                                @endforelse                          
+                                @endforelse
                         </ul>
                     </nav>
                 </section>
             <?php endif ?>
         <?php endforeach ?>
         <div class="control" id="control-1">
-            
+
         </div>
         <div>
             <form action="{{route('account.home')}}" method="get">

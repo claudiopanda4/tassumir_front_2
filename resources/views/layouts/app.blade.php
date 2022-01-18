@@ -185,6 +185,14 @@
                                    <a href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
+                                   @elseif($notificacoes[$i- 1]['tipo'] == 11)
+                                   <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
+                                   @else
+                                   <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                   </a>
                                    @endif
                                     <div class="hidden-click-any-container noti-hour ml-2">
                                         <a href=""><span class="">há um dia</span></a>
@@ -346,14 +354,14 @@
                            <?php
                            /*echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";*/?>
                         </li>
-                        
+
                 @empty
                 <li class="li-component-aside-right clearfix">
                 <h1 class="l-5 name-page text-ellips">Nenhuma Página Seguida</h1>
                 </li>
               @endforelse
               <script type="text/javascript">
-                
+
                 function seguir(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
@@ -811,29 +819,26 @@
         <div class="clearfix content-details-post" style="margin-top: 5px; margin-bottom: 5px;">
                 <div class="first-component clearfix l-5">
                   @if(sizeof($page_content)>0)
-                    @if($page_content[0]->foto)
-                        <div class="page-cover circle l-5">
-                            <img class="img-full circle" src="{{asset('storage/img/page/' . $page_content[0]->foto)}}">
+                        <div class="page-cover circle l-5" name="foto_edit">
                         </div>
-                    @else
-                        <div class="page-cover circle l-5">
-                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                        </div>
-                        @endif
 
                     <div class="page-identify l-5 clearfix">
-                        <h1 class="text-ellips">{{ $page_content[0]->nome }}</h1>
+                        <h1 class="text-ellips" id="name_page_edit_post" name="name_page_edit_post"></h1>
                     </div>
                     @endif
                 </div>
+                <form action="{{ route('edit_post') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="pass_post_uuid" id="pass_post_uuid" >
                 <div class="textarea-container l-5" style="width:100%;">
-                    <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
+                    <textarea name="message" id="message"></textarea>
                 </div>
             </div>
             <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
                 <div class="" id="cover-done">
                     <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Editar</button>
                 </div>
+                </form>
             </div>
     </div>
 </div>
@@ -1000,6 +1005,8 @@
 
       });
 
+
+
       $('.accept_relationship').click(function (e) {
           let id = e.target.id;
           let id1= id.split('|')[0];
@@ -1125,15 +1132,41 @@
 
         }
       });
-      
+
       $('.edit-option').click(function(evt){
+        let id = evt.target.id;
+        let id1= id.split('|')[1];
+
+        $.ajax({
+          url: "{{ route('edit_option')}}",
+          type: 'get',
+          data: {'id1': id1},
+          dataType: 'json',
+          success:function(response){
+            let src1 = '{{ asset("storage/img/page/") }}';
+            var nome = '';
+            if( !(response.foto_page == null) ){
+             nome +='  <img  class="img-full circle" src=' + src1 + '/' + response.foto_page + '>'
+             }else{
+               nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}">'
+             }
+
+            console.log(response);
+            $('div[name=foto_edit]').append(nome);
+            $("#name_page_edit_post").text(response.nome_pag);
+           $("#message").val(response.post);
+          $("#pass_post_uuid").val(id1);
+            }
+          });
+
+
             evt.preventDefault();
             $('#edit-pop-up').css({
                 zIndex: 1000,
                 opacity : 1
             });
       });
-      
+
       $('#edit-page-cover-profile').click(function(evt){
             evt.preventDefault();
             $('#cover-page-post').css({
@@ -1374,7 +1407,7 @@
                 }
             }
             //console.log('janela width ' + window.innerWidth);
-            window_width = window.innerWidth; 
+            window_width = window.innerWidth;
             //console.log('scroll log: ' + $('.main').scrollTop());
             console.log('janela width ' + window.innerWidth);
             window_width = window.innerWidth;
