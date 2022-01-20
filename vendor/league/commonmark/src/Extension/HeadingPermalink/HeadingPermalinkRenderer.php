@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -11,16 +16,27 @@
 
 namespace League\CommonMark\Extension\HeadingPermalink;
 
+<<<<<<< HEAD
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
 use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\ConfigurationInterface;
+=======
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
 /**
  * Renders the HeadingPermalink elements
  */
+<<<<<<< HEAD
 final class HeadingPermalinkRenderer implements InlineRendererInterface, ConfigurationAwareInterface
 {
     /** @deprecated */
@@ -32,10 +48,21 @@ final class HeadingPermalinkRenderer implements InlineRendererInterface, Configu
     private $config;
 
     public function setConfiguration(ConfigurationInterface $configuration)
+=======
+final class HeadingPermalinkRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
+{
+    public const DEFAULT_SYMBOL = '¶';
+
+    /** @psalm-readonly-allow-private-mutation */
+    private ConfigurationInterface $config;
+
+    public function setConfiguration(ConfigurationInterface $configuration): void
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     {
         $this->config = $configuration;
     }
 
+<<<<<<< HEAD
     public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!$inline instanceof HeadingPermalink) {
@@ -45,10 +72,27 @@ final class HeadingPermalinkRenderer implements InlineRendererInterface, Configu
         $slug = $inline->getSlug();
 
         $idPrefix = (string) $this->config->get('heading_permalink/id_prefix', 'user-content');
+=======
+    /**
+     * @param HeadingPermalink $node
+     *
+     * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
+    {
+        HeadingPermalink::assertInstanceOf($node);
+
+        $slug = $node->getSlug();
+
+        $idPrefix = (string) $this->config->get('heading_permalink/id_prefix');
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
         if ($idPrefix !== '') {
             $idPrefix .= '-';
         }
 
+<<<<<<< HEAD
         $attrs = [
             'id'          => $idPrefix . $slug,
             'href'        => '#' . $slug,
@@ -68,5 +112,49 @@ final class HeadingPermalinkRenderer implements InlineRendererInterface, Configu
         $symbol = $this->config->get('heading_permalink/symbol', self::DEFAULT_SYMBOL);
 
         return new HtmlElement('a', $attrs, \htmlspecialchars($symbol), false);
+=======
+        $fragmentPrefix = (string) $this->config->get('heading_permalink/fragment_prefix');
+        if ($fragmentPrefix !== '') {
+            $fragmentPrefix .= '-';
+        }
+
+        $attrs = $node->data->getData('attributes');
+        $attrs->set('id', $idPrefix . $slug);
+        $attrs->set('href', '#' . $fragmentPrefix . $slug);
+        $attrs->append('class', $this->config->get('heading_permalink/html_class'));
+
+        $hidden = $this->config->get('heading_permalink/aria_hidden');
+        if ($hidden) {
+            $attrs->set('aria-hidden', 'true');
+        }
+
+        $attrs->set('title', $this->config->get('heading_permalink/title'));
+
+        $symbol = $this->config->get('heading_permalink/symbol');
+        \assert(\is_string($symbol));
+
+        return new HtmlElement('a', $attrs->export(), \htmlspecialchars($symbol), false);
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'heading_permalink';
+    }
+
+    /**
+     * @param HeadingPermalink $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        HeadingPermalink::assertInstanceOf($node);
+
+        return [
+            'slug' => $node->getSlug(),
+        ];
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 }

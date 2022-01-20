@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -14,6 +19,7 @@
 
 namespace League\CommonMark;
 
+<<<<<<< HEAD
 /**
  * Converts CommonMark-compatible Markdown to HTML.
  */
@@ -49,4 +55,33 @@ class CommonMarkConverter extends MarkdownConverter
 
         parent::__construct($environment);
     }
+=======
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+
+/**
+ * Converts CommonMark-compatible Markdown to HTML.
+ */
+final class CommonMarkConverter extends MarkdownConverter
+{
+    /**
+     * Create a new Markdown converter pre-configured for CommonMark
+     *
+     * @param array<string, mixed> $config
+     */
+    public function __construct(array $config = [])
+    {
+        $environment = new Environment($config);
+        $environment->addExtension(new CommonMarkCoreExtension());
+
+        parent::__construct($environment);
+    }
+
+    public function getEnvironment(): Environment
+    {
+        \assert($this->environment instanceof Environment);
+
+        return $this->environment;
+    }
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

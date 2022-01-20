@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -11,17 +16,34 @@
 
 namespace League\CommonMark\Extension\TableOfContents\Normalizer;
 
+<<<<<<< HEAD
 use League\CommonMark\Block\Element\ListBlock;
 use League\CommonMark\Block\Element\ListItem;
+=======
+use League\CommonMark\Extension\CommonMark\Node\Block\ListBlock;
+use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 use League\CommonMark\Extension\TableOfContents\Node\TableOfContents;
 
 final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
 {
+<<<<<<< HEAD
     /** @var TableOfContents */
     private $toc;
 
     /** @var array<int, ListItem> */
     private $listItemStack = [];
+=======
+    /** @psalm-readonly */
+    private TableOfContents $toc;
+
+    /**
+     * @var array<int, ListItem>
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
+    private array $listItemStack = [];
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
     public function __construct(TableOfContents $toc)
     {
@@ -30,6 +52,7 @@ final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
 
     public function addItem(int $level, ListItem $listItemToAdd): void
     {
+<<<<<<< HEAD
         \end($this->listItemStack);
         $previousLevel = \key($this->listItemStack);
 
@@ -42,6 +65,17 @@ final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
 
         /** @var ListItem|false $lastListItem */
         $lastListItem = \current($this->listItemStack);
+=======
+        $previousLevel = \array_key_last($this->listItemStack);
+
+        // Pop the stack if we're too deep
+        while ($previousLevel !== null && $level < $previousLevel) {
+            \array_pop($this->listItemStack);
+            $previousLevel = \array_key_last($this->listItemStack);
+        }
+
+        $lastListItem = \end($this->listItemStack);
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
         // Need to go one level deeper? Add that level
         if ($lastListItem !== false && $level > $previousLevel) {
@@ -62,6 +96,9 @@ final class RelativeNormalizerStrategy implements NormalizerStrategyInterface
         $this->listItemStack[$level] = $listItemToAdd;
     }
 }
+<<<<<<< HEAD
 
 // Trigger autoload without causing a deprecated error
 \class_exists(TableOfContents::class);
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7

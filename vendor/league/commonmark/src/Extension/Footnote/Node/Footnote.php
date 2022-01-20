@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Node;
 
+<<<<<<< HEAD
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Cursor;
 use League\CommonMark\Reference\ReferenceInterface;
@@ -51,12 +52,29 @@ final class Footnote extends AbstractBlock
     public function matchesNextLine(Cursor $cursor): bool
     {
         return false;
+=======
+use League\CommonMark\Node\Block\AbstractBlock;
+use League\CommonMark\Reference\ReferenceInterface;
+use League\CommonMark\Reference\ReferenceableInterface;
+
+final class Footnote extends AbstractBlock implements ReferenceableInterface
+{
+    /** @psalm-readonly */
+    private ReferenceInterface $reference;
+
+    public function __construct(ReferenceInterface $reference)
+    {
+        parent::__construct();
+
+        $this->reference = $reference;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 
     public function getReference(): ReferenceInterface
     {
         return $this->reference;
     }
+<<<<<<< HEAD
 
     public function addBackref(FootnoteBackref $backref): self
     {
@@ -72,4 +90,6 @@ final class Footnote extends AbstractBlock
     {
         return $this->backrefs;
     }
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

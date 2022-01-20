@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -14,8 +19,19 @@
 
 namespace League\CommonMark\Util;
 
+<<<<<<< HEAD
 final class Html5EntityDecoder
 {
+=======
+/**
+ * @psalm-immutable
+ */
+final class Html5EntityDecoder
+{
+    /**
+     * @psalm-pure
+     */
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     public static function decode(string $entity): string
     {
         if (\substr($entity, -1) !== ';') {
@@ -36,11 +52,19 @@ final class Html5EntityDecoder
     /**
      * @param mixed $number
      *
+<<<<<<< HEAD
      * @return string
+=======
+     * @psalm-pure
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     private static function fromDecimal($number): string
     {
         // Only convert code points within planes 0-2, excluding NULL
+<<<<<<< HEAD
+=======
+        // phpcs:ignore Generic.PHP.ForbiddenFunctions.Found
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
         if (empty($number) || $number > 0x2FFFF) {
             return self::fromHex('fffd');
         }
@@ -56,6 +80,12 @@ final class Html5EntityDecoder
         return $converted;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @psalm-pure
+     */
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     private static function fromHex(string $hexChars): string
     {
         return self::fromDecimal(\hexdec($hexChars));

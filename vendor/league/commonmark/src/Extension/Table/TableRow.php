@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
+<<<<<<< HEAD
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Cursor;
 use League\CommonMark\Node\Node;
@@ -45,4 +46,10 @@ final class TableRow extends AbstractBlock
             return $child instanceof AbstractBlock;
         });
     }
+=======
+use League\CommonMark\Node\Block\AbstractBlock;
+
+final class TableRow extends AbstractBlock
+{
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

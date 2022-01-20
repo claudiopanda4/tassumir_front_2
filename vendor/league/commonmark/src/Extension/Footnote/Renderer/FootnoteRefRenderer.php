@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Renderer;
 
+<<<<<<< HEAD
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\HtmlElement;
@@ -36,10 +37,43 @@ final class FootnoteRefRenderer implements InlineRendererInterface, Configuratio
         $attrs = $inline->getData('attributes', []);
         $class = $attrs['class'] ?? $this->config->get('footnote/ref_class', 'footnote-ref');
         $idPrefix = $this->config->get('footnote/ref_id_prefix', 'fnref:');
+=======
+use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
+
+final class FootnoteRefRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
+{
+    private ConfigurationInterface $config;
+
+    /**
+     * @param FootnoteRef $node
+     *
+     * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
+    {
+        FootnoteRef::assertInstanceOf($node);
+
+        $attrs = $node->data->getData('attributes');
+        $attrs->append('class', $this->config->get('footnote/ref_class'));
+        $attrs->set('href', \mb_strtolower($node->getReference()->getDestination()));
+        $attrs->set('role', 'doc-noteref');
+
+        $idPrefix = $this->config->get('footnote/ref_id_prefix');
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
         return new HtmlElement(
             'sup',
             [
+<<<<<<< HEAD
                 'id' => $idPrefix . \mb_strtolower($inline->getReference()->getLabel()),
             ],
             new HTMLElement(
@@ -50,13 +84,49 @@ final class FootnoteRefRenderer implements InlineRendererInterface, Configuratio
                     'role'  => 'doc-noteref',
                 ],
                 $inline->getReference()->getTitle()
+=======
+                'id' => $idPrefix . \mb_strtolower($node->getReference()->getLabel()),
+            ],
+            new HtmlElement(
+                'a',
+                $attrs->export(),
+                $node->getReference()->getTitle()
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             ),
             true
         );
     }
 
+<<<<<<< HEAD
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->config = $configuration;
     }
+=======
+    public function setConfiguration(ConfigurationInterface $configuration): void
+    {
+        $this->config = $configuration;
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'footnote_ref';
+    }
+
+    /**
+     * @param FootnoteRef $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        FootnoteRef::assertInstanceOf($node);
+
+        return [
+            'reference' => $node->getReference()->getLabel(),
+        ];
+    }
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

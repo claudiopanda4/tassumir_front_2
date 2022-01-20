@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Renderer;
 
+<<<<<<< HEAD
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
 use League\CommonMark\HtmlElement;
@@ -46,4 +47,70 @@ final class FootnoteBackrefRenderer implements InlineRendererInterface, Configur
     {
         $this->config = $configuration;
     }
+=======
+use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
+use League\Config\ConfigurationAwareInterface;
+use League\Config\ConfigurationInterface;
+
+final class FootnoteBackrefRenderer implements NodeRendererInterface, XmlNodeRendererInterface, ConfigurationAwareInterface
+{
+    public const DEFAULT_SYMBOL = '↩';
+
+    private ConfigurationInterface $config;
+
+    /**
+     * @param FootnoteBackref $node
+     *
+     * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): string
+    {
+        FootnoteBackref::assertInstanceOf($node);
+
+        $attrs = $node->data->getData('attributes');
+
+        $attrs->append('class', $this->config->get('footnote/backref_class'));
+        $attrs->set('rev', 'footnote');
+        $attrs->set('href', \mb_strtolower($node->getReference()->getDestination()));
+        $attrs->set('role', 'doc-backlink');
+
+        $symbol = $this->config->get('footnote/backref_symbol');
+        \assert(\is_string($symbol));
+
+        return '&nbsp;' . new HtmlElement('a', $attrs->export(), \htmlspecialchars($symbol), true);
+    }
+
+    public function setConfiguration(ConfigurationInterface $configuration): void
+    {
+        $this->config = $configuration;
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'footnote_backref';
+    }
+
+    /**
+     * @param FootnoteBackref $node
+     *
+     * @return array<string, scalar>
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        FootnoteBackref::assertInstanceOf($node);
+
+        return [
+            'reference' => $node->getReference()->getLabel(),
+        ];
+    }
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

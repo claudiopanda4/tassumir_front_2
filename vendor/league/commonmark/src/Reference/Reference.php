@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -14,6 +19,7 @@
 
 namespace League\CommonMark\Reference;
 
+<<<<<<< HEAD
 use League\CommonMark\Normalizer\TextNormalizer;
 
 final class Reference implements ReferenceInterface
@@ -38,6 +44,27 @@ final class Reference implements ReferenceInterface
         $this->label = $label;
         $this->destination = $destination;
         $this->title = $title;
+=======
+/**
+ * @psalm-immutable
+ */
+final class Reference implements ReferenceInterface
+{
+    /** @psalm-readonly */
+    private string $label;
+
+    /** @psalm-readonly */
+    private string $destination;
+
+    /** @psalm-readonly */
+    private string $title;
+
+    public function __construct(string $label, string $destination, string $title)
+    {
+        $this->label       = $label;
+        $this->destination = $destination;
+        $this->title       = $title;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 
     public function getLabel(): string
@@ -54,6 +81,7 @@ final class Reference implements ReferenceInterface
     {
         return $this->title;
     }
+<<<<<<< HEAD
 
     /**
      * Normalize reference label
@@ -73,4 +101,6 @@ final class Reference implements ReferenceInterface
 
         return (new TextNormalizer())->normalize($string);
     }
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

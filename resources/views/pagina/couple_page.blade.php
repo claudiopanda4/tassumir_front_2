@@ -3,7 +3,7 @@
 @section('content')
 <div class="main" id="main-container-profile">
     <div class="card br-10 card-flex card-page">
-        <div class="clearfix">
+        <div class="clearfix page-card-header">
             <div class="img-profile-page-container clearfix l-5">
                 @if($page_content[0]->foto)
                     <div class="img-profile-page circle l-5">
@@ -52,7 +52,7 @@
                             @else
                                 <h2 class="text-ellips">Seguidor</h2>
                             @endif
-                            
+
                         </div>
                         <div class="statistics-profile-page-component l-5">
                             <h1>{{ $seguidores }}</h1>
@@ -115,11 +115,11 @@
                 @endif
             </div>
             <?php if (true): ?>
-                <a href="{{route('page.edit.get', $page_content[0]->page_id)}}">
+                <a href="{{route('page.edit.get', $page_content[0]->uuid)}}">
                     @csrf
                     <div class="edit-page-container">
                         <button type="submit" class="follwing-btn" id="edit-page">
-                            Editar Página
+                            Editar
                         </button>
                     </div>
                 </a>
@@ -149,13 +149,13 @@
                 </div>
             </div>
         <?php endif ?>
-        <div class="clearfix">
+        <div class="clearfix page-card-header">
 
             <div class="description-couple">
                 <h2 class="mobile-user-name">@<span></span>
                     <?php echo strtolower($page_content[0]->nome); ?>
                 </h2>
-                
+
                 <h2><span>{{ $casalPageName }}</h2>
             </div>
             <div class="description-couple">
@@ -163,12 +163,14 @@
             </div>
         </div>
         @if($v == 1)
-        <?php if (!$hasUserManyPages): ?>
-        <div class="edit-page-container-mobile">
-            <button type="submit" class="follwing-btn">
-                Editar Página
-            </button>
-        </div>
+        <?php if (true): ?>
+            <form action="{{route('page.edit.get', $page_content[0]->page_id)}}" method="get">
+                <div class="edit-page-container-mobile">
+                    <button type="submit" class="follwing-btn">
+                        Editar
+                    </button>
+                </div>
+            </form>
         <?php endif ?>
         @endif
         @if($v == 1)
@@ -194,7 +196,7 @@
                                             }
                                         }
                                     ?>
-                                @if( $Paginas->page_id != $page_content[0]->page_id)     
+                                @if( $Paginas->page_id != $page_content[0]->page_id)
                                 <li class="li-component-suggest clearfix l-5 nao_sigo" id="li-component_suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )

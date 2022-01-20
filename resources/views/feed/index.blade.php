@@ -85,7 +85,7 @@
                         <ul class="clearfix more-option-post">
                           <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
                             <li>
-                                <a href="">Editar</a>
+                                <a href="" class="edit-option" id="edit-option|{{$dados[$key]['post_uuid']}}">Editar</a>
                             </li>
                             <?php endif ?>
                             <?php if ($dados[$key]['dono_da_pag?'] != 1): ?>
@@ -116,7 +116,7 @@
                             <p>{{$dados[$key]['post']}}</p>
                         @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
-                        <div class="post-cover">
+                        <div class="post-cover">                            
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
@@ -301,8 +301,6 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" id="last_post" value=<?php echo $last_post_id; ?>>
-        <input type="hidden" id="last_post_dest" value=<?php echo $last_post_dest; ?>>
         <?php //dd($last_post_dest.' '.$last_post_id); ?>
       <?php endif ?>
         <?php if ($key == 3 || $key == 7): ?>
@@ -327,7 +325,7 @@
                         }
                     }
                 ?>
-                       
+
                         <li class="li-component-suggest clearfix l-5 sugest_page" id="li-component-suggest-{{$Paginas->page_id}}">
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )
@@ -343,18 +341,41 @@
                                     <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
                                     <a href="" class="seguir_index" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
                                     <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                                   <input type="hidden" name="" value="0" id="last_page"> 
-                                </li>  
+                                   <input type="hidden" name="" value="0" id="last_page">
+                                </li>
                                 @empty
 
-                                @endforelse                          
+                                @endforelse
                         </ul>
                     </nav>
                 </section>
             <?php endif ?>
         <?php endforeach ?>
         <div class="control" id="control-1">
-            
+
+        </div>
+        <div>
+            <form action="{{route('account.home')}}" method="get">
+                @if(sizeof($dados) > 0)
+                    <div class="btn-see-more" id="btn-see-more-id">
+                        <button type="submit" id="see-more-button" name="">
+                            Ver Mais
+                        </button>
+                    </div>
+                <input type="hidden" id="last_post" name="init" value=<?php echo $last_post_id; ?>>
+                <input type="hidden" id="last_post_dest" name="dest_init" value=<?php echo $last_post_dest; ?>>
+                <input type="hidden" id="" name="checked" value='true'>
+                @else
+                    <div class="home-no-post">
+                        <h1>Sem Publicações novas pra si</h1>
+                    </div>
+                    <div class="btn-see-more" id="btn-see-more-id">
+                        <button type="submit" id="see-more-button" name="">
+                            Voltar
+                        </button>
+                    </div>
+                @endif
+            </form>
         </div>
 </div>
 <script>

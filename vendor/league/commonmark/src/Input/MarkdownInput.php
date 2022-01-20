@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -13,6 +18,7 @@ namespace League\CommonMark\Input;
 
 use League\CommonMark\Exception\UnexpectedEncodingException;
 
+<<<<<<< HEAD
 final class MarkdownInput implements MarkdownInputInterface
 {
     /** @var array<int, string>|null */
@@ -31,6 +37,39 @@ final class MarkdownInput implements MarkdownInputInterface
         }
 
         $this->content = $content;
+=======
+class MarkdownInput implements MarkdownInputInterface
+{
+    /**
+     * @var array<int, string>|null
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
+    private ?array $lines = null;
+
+    /** @psalm-readonly-allow-private-mutation */
+    private string $content;
+
+    /** @psalm-readonly-allow-private-mutation */
+    private ?int $lineCount = null;
+
+    /** @psalm-readonly */
+    private int $lineOffset;
+
+    public function __construct(string $content, int $lineOffset = 0)
+    {
+        if (! \mb_check_encoding($content, 'UTF-8')) {
+            throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
+        }
+
+        // Strip any leading UTF-8 BOM
+        if (\substr($content, 0, 3) === "\xEF\xBB\xBF") {
+            $content = \substr($content, 3);
+        }
+
+        $this->content    = $content;
+        $this->lineOffset = $lineOffset;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 
     public function getContent(): string
@@ -39,6 +78,7 @@ final class MarkdownInput implements MarkdownInputInterface
     }
 
     /**
+<<<<<<< HEAD
      * @return \Traversable<int, string>
      */
     public function getLines(): \Traversable
@@ -47,6 +87,19 @@ final class MarkdownInput implements MarkdownInputInterface
 
         foreach ($this->lines as $lineNumber => $line) {
             yield $lineNumber => $line;
+=======
+     * {@inheritDoc}
+     */
+    public function getLines(): iterable
+    {
+        $this->splitLinesIfNeeded();
+
+        \assert($this->lines !== null);
+
+        /** @psalm-suppress PossiblyNullIterator */
+        foreach ($this->lines as $i => $line) {
+            yield $this->lineOffset + $i + 1 => $line;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
         }
     }
 
@@ -54,6 +107,11 @@ final class MarkdownInput implements MarkdownInputInterface
     {
         $this->splitLinesIfNeeded();
 
+<<<<<<< HEAD
+=======
+        \assert($this->lineCount !== null);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
         return $this->lineCount;
     }
 

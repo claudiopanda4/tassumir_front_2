@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,7 +23,11 @@
 namespace League\CommonMark\Delimiter\Processor;
 
 use League\CommonMark\Delimiter\DelimiterInterface;
+<<<<<<< HEAD
 use League\CommonMark\Inline\Element\AbstractStringContainer;
+=======
+use League\CommonMark\Node\Inline\AbstractStringContainer;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
 /**
  * Interface for a delimiter processor
@@ -29,8 +38,11 @@ interface DelimiterProcessorInterface
      * Returns the character that marks the beginning of a delimited node.
      *
      * This must not clash with any other processors being added to the environment.
+<<<<<<< HEAD
      *
      * @return string
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public function getOpeningCharacter(): string;
 
@@ -40,8 +52,11 @@ interface DelimiterProcessorInterface
      * This must not clash with any other processors being added to the environment.
      *
      * Note that for a symmetric delimiter such as "*", this is the same as the opening.
+<<<<<<< HEAD
      *
      * @return string
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public function getClosingCharacter(): string;
 
@@ -49,8 +64,11 @@ interface DelimiterProcessorInterface
      * Minimum number of delimiter characters that are needed to active this.
      *
      * Must be at least 1.
+<<<<<<< HEAD
      *
      * @return int
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public function getMinLength(): int;
 
@@ -64,8 +82,11 @@ interface DelimiterProcessorInterface
      *
      * @param DelimiterInterface $opener The opening delimiter run
      * @param DelimiterInterface $closer The closing delimiter run
+<<<<<<< HEAD
      *
      * @return int
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int;
 
@@ -79,8 +100,13 @@ interface DelimiterProcessorInterface
      * @param AbstractStringContainer $opener       The node that contained the opening delimiter
      * @param AbstractStringContainer $closer       The node that contained the closing delimiter
      * @param int                     $delimiterUse The number of delimiters that were used
+<<<<<<< HEAD
      *
      * @return void
      */
     public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse);
+=======
+     */
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

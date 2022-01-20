@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,6 +23,7 @@ namespace League\CommonMark\Util;
  *
  * @internal
  *
+<<<<<<< HEAD
  * @phpstan-template TKey
  * @phpstan-template TValue
  * @phpstan-implements \IteratorAggregate<TKey, TValue>
@@ -30,27 +36,51 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * @phpstan-var array<TKey, TValue>
      */
     private $elements;
+=======
+ * @phpstan-template T
+ * @phpstan-implements \IteratorAggregate<int, T>
+ * @phpstan-implements \ArrayAccess<int, T>
+ */
+final class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
+{
+    /**
+     * @var array<int, mixed>
+     * @phpstan-var array<int, T>
+     */
+    private array $elements;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
     /**
      * Constructor
      *
      * @param array<int|string, mixed> $elements
      *
+<<<<<<< HEAD
      * @phpstan-param array<TKey, TValue> $elements
+=======
+     * @phpstan-param array<int, T> $elements
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public function __construct(array $elements = [])
     {
         $this->elements = $elements;
+<<<<<<< HEAD
 
         if (self::class !== static::class) {
             @\trigger_error('Extending the ArrayCollection class is deprecated in league/commonmark 1.6 and will not be allowed in 2.0', \E_USER_DEPRECATED);
         }
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 
     /**
      * @return mixed|false
      *
+<<<<<<< HEAD
      * @phpstan-return TValue|false
+=======
+     * @phpstan-return T|false
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public function first()
     {
@@ -60,7 +90,11 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * @return mixed|false
      *
+<<<<<<< HEAD
      * @phpstan-return TValue|false
+=======
+     * @phpstan-return T|false
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public function last()
     {
@@ -70,6 +104,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Retrieve an external iterator
      *
+<<<<<<< HEAD
      * @return \ArrayIterator<int|string, mixed>
      */
     public function getIterator()
@@ -214,6 +249,15 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
         @trigger_error(sprintf('The "%s:%s" method is deprecated since league/commonmark 1.4, use "%s" instead.', self::class, 'containsKey()', 'isset($collection[$key])'), E_USER_DEPRECATED);
 
         return \array_key_exists($key, $this->elements);
+=======
+     * @return \ArrayIterator<int, mixed>
+     *
+     * @phpstan-return \ArrayIterator<int, T>
+     */
+    public function getIterator(): \ArrayIterator
+    {
+        return new \ArrayIterator($this->elements);
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 
     /**
@@ -229,11 +273,17 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Whether an offset exists
      *
+<<<<<<< HEAD
      * @param int|string $offset An offset to check for.
      *
      * @return bool true on success or false on failure.
      *
      * @phpstan-param TKey $offset
+=======
+     * {@inheritDoc}
+     *
+     * @phpstan-param int $offset
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public function offsetExists($offset): bool
     {
@@ -243,6 +293,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Offset to retrieve
      *
+<<<<<<< HEAD
      * @param int|string $offset
      *
      * @return mixed|null
@@ -251,6 +302,15 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @phpstan-return TValue|null
      */
+=======
+     * {@inheritDoc}
+     *
+     * @phpstan-param int $offset
+     *
+     * @phpstan-return T|null
+     */
+    #[\ReturnTypeWillChange]
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     public function offsetGet($offset)
     {
         return $this->elements[$offset] ?? null;
@@ -259,6 +319,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Offset to set
      *
+<<<<<<< HEAD
      * @param int|string|null $offset The offset to assign the value to.
      * @param mixed           $value  The value to set.
      *
@@ -268,6 +329,14 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
      * @phpstan-param TValue    $value
      */
     public function offsetSet($offset, $value)
+=======
+     * {@inheritDoc}
+     *
+     * @phpstan-param int|null $offset
+     * @phpstan-param T        $value
+     */
+    public function offsetSet($offset, $value): void
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     {
         if ($offset === null) {
             $this->elements[] = $value;
@@ -279,6 +348,7 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Offset to unset
      *
+<<<<<<< HEAD
      * @param int|string $offset The offset to unset.
      *
      * @return void
@@ -288,6 +358,15 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     public function offsetUnset($offset)
     {
         if (!\array_key_exists($offset, $this->elements)) {
+=======
+     * {@inheritDoc}
+     *
+     * @phpstan-param int $offset
+     */
+    public function offsetUnset($offset): void
+    {
+        if (! \array_key_exists($offset, $this->elements)) {
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             return;
         }
 
@@ -297,12 +376,18 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * Returns a subset of the array
      *
+<<<<<<< HEAD
      * @param int      $offset
      * @param int|null $length
      *
      * @return array<int|string, mixed>
      *
      * @phpstan-return array<TKey, TValue>
+=======
+     * @return array<int, mixed>
+     *
+     * @phpstan-return array<int, T>
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public function slice(int $offset, ?int $length = null): array
     {
@@ -310,14 +395,21 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
     }
 
     /**
+<<<<<<< HEAD
      * @return array<int|string, mixed>
      *
      * @phpstan-return array<TKey, TValue>
+=======
+     * @return array<int, mixed>
+     *
+     * @phpstan-return array<int, T>
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public function toArray(): array
     {
         return $this->elements;
     }
+<<<<<<< HEAD
 
     /**
      * @param array<int|string, mixed> $elements
@@ -348,4 +440,6 @@ class ArrayCollection implements \IteratorAggregate, \Countable, \ArrayAccess
 
         $this->elements = \array_filter($this->elements);
     }
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

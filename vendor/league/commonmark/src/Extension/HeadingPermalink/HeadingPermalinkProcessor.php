@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -11,6 +16,7 @@
 
 namespace League\CommonMark\Extension\HeadingPermalink;
 
+<<<<<<< HEAD
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\Heading;
 use League\CommonMark\Event\DocumentParsedEvent;
@@ -22,10 +28,22 @@ use League\CommonMark\Normalizer\SlugNormalizer;
 use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\Util\ConfigurationAwareInterface;
 use League\CommonMark\Util\ConfigurationInterface;
+=======
+use League\CommonMark\Environment\EnvironmentAwareInterface;
+use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Extension\CommonMark\Node\Block\Heading;
+use League\CommonMark\Node\NodeIterator;
+use League\CommonMark\Node\RawMarkupContainerInterface;
+use League\CommonMark\Node\StringContainerHelper;
+use League\CommonMark\Normalizer\TextNormalizerInterface;
+use League\Config\ConfigurationInterface;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
 /**
  * Searches the Document for Heading elements and adds HeadingPermalinks to each one
  */
+<<<<<<< HEAD
 final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 {
     const INSERT_BEFORE = 'before';
@@ -52,10 +70,28 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->config = $configuration;
+=======
+final class HeadingPermalinkProcessor implements EnvironmentAwareInterface
+{
+    public const INSERT_BEFORE = 'before';
+    public const INSERT_AFTER  = 'after';
+
+    /** @psalm-readonly-allow-private-mutation */
+    private TextNormalizerInterface $slugNormalizer;
+
+    /** @psalm-readonly-allow-private-mutation */
+    private ConfigurationInterface $config;
+
+    public function setEnvironment(EnvironmentInterface $environment): void
+    {
+        $this->config         = $environment->getConfiguration();
+        $this->slugNormalizer = $environment->getSlugNormalizer();
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 
     public function __invoke(DocumentParsedEvent $e): void
     {
+<<<<<<< HEAD
         $this->useNormalizerFromConfigurationIfProvided();
 
         $walker = $e->getDocument()->walker();
@@ -64,10 +100,21 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
             $node = $event->getNode();
             if ($node instanceof Heading && $event->isEntering()) {
                 $this->addHeadingLink($node, $e->getDocument());
+=======
+        $min = (int) $this->config->get('heading_permalink/min_heading_level');
+        $max = (int) $this->config->get('heading_permalink/max_heading_level');
+
+        $slugLength = (int) $this->config->get('slug_normalizer/max_length');
+
+        foreach ($e->getDocument()->iterator(NodeIterator::FLAG_BLOCKS_ONLY) as $node) {
+            if ($node instanceof Heading && $node->getLevel() >= $min && $node->getLevel() <= $max) {
+                $this->addHeadingLink($node, $slugLength);
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             }
         }
     }
 
+<<<<<<< HEAD
     private function useNormalizerFromConfigurationIfProvided(): void
     {
         $generator = $this->config->get('heading_permalink/slug_normalizer');
@@ -96,6 +143,19 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
         $headingLinkAnchor = new HeadingPermalink($slug);
 
         switch ($this->config->get('heading_permalink/insert', 'before')) {
+=======
+    private function addHeadingLink(Heading $heading, int $slugLength): void
+    {
+        $text = StringContainerHelper::getChildText($heading, [RawMarkupContainerInterface::class]);
+        $slug = $this->slugNormalizer->normalize($text, [
+            'node' => $heading,
+            'length' => $slugLength,
+        ]);
+
+        $headingLinkAnchor = new HeadingPermalink($slug);
+
+        switch ($this->config->get('heading_permalink/insert')) {
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             case self::INSERT_BEFORE:
                 $heading->prependChild($headingLinkAnchor);
 
@@ -108,6 +168,7 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
                 throw new \RuntimeException("Invalid configuration value for heading_permalink/insert; expected 'before' or 'after'");
         }
     }
+<<<<<<< HEAD
 
     /**
      * @deprecated Not needed in 2.0
@@ -144,4 +205,6 @@ final class HeadingPermalinkProcessor implements ConfigurationAwareInterface
 
         return "$proposed-$extension";
     }
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

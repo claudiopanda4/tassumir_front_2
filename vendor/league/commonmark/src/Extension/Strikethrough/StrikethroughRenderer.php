@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -11,6 +16,7 @@
 
 namespace League\CommonMark\Extension\Strikethrough;
 
+<<<<<<< HEAD
 use League\CommonMark\ElementRendererInterface;
 use League\CommonMark\HtmlElement;
 use League\CommonMark\Inline\Element\AbstractInline;
@@ -25,5 +31,40 @@ final class StrikethroughRenderer implements InlineRendererInterface
         }
 
         return new HtmlElement('del', $inline->getData('attributes', []), $htmlRenderer->renderInlines($inline->children()));
+=======
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Util\HtmlElement;
+use League\CommonMark\Xml\XmlNodeRendererInterface;
+
+final class StrikethroughRenderer implements NodeRendererInterface, XmlNodeRendererInterface
+{
+    /**
+     * @param Strikethrough $node
+     *
+     * {@inheritDoc}
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
+    {
+        Strikethrough::assertInstanceOf($node);
+
+        return new HtmlElement('del', $node->data->get('attributes'), $childRenderer->renderNodes($node->children()));
+    }
+
+    public function getXmlTagName(Node $node): string
+    {
+        return 'strikethrough';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getXmlAttributes(Node $node): array
+    {
+        return [];
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 }

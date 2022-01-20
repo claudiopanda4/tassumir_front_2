@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,10 +24,21 @@ namespace League\CommonMark\Delimiter\Processor;
 
 final class DelimiterProcessorCollection implements DelimiterProcessorCollectionInterface
 {
+<<<<<<< HEAD
     /** @var array<string,DelimiterProcessorInterface>|DelimiterProcessorInterface[] */
     private $processorsByChar = [];
 
     public function add(DelimiterProcessorInterface $processor)
+=======
+    /**
+     * @var array<string,DelimiterProcessorInterface>|DelimiterProcessorInterface[]
+     *
+     * @psalm-readonly-allow-private-mutation
+     */
+    private array $processorsByChar = [];
+
+    public function add(DelimiterProcessorInterface $processor): void
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     {
         $opening = $processor->getOpeningCharacter();
         $closing = $processor->getClosingCharacter();
@@ -45,6 +61,12 @@ final class DelimiterProcessorCollection implements DelimiterProcessorCollection
         return $this->processorsByChar[$char] ?? null;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * @return string[]
+     */
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     public function getDelimiterCharacters(): array
     {
         return \array_keys($this->processorsByChar);
@@ -70,4 +92,12 @@ final class DelimiterProcessorCollection implements DelimiterProcessorCollection
         $s->add($new);
         $this->processorsByChar[$opening] = $s;
     }
+<<<<<<< HEAD
+=======
+
+    public function count(): int
+    {
+        return \count($this->processorsByChar);
+    }
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

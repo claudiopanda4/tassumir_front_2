@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
+declare(strict_types=1);
+
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -14,6 +19,7 @@
 
 namespace League\CommonMark\Extension\SmartPunct;
 
+<<<<<<< HEAD
 use League\CommonMark\Inline\Element\AbstractStringContainer;
 
 final class Quote extends AbstractStringContainer
@@ -23,6 +29,17 @@ final class Quote extends AbstractStringContainer
     public const DOUBLE_QUOTE_CLOSER = '”';
 
     public const SINGLE_QUOTE = "'";
+=======
+use League\CommonMark\Node\Inline\AbstractStringContainer;
+
+final class Quote extends AbstractStringContainer
+{
+    public const DOUBLE_QUOTE        = '"';
+    public const DOUBLE_QUOTE_OPENER = '“';
+    public const DOUBLE_QUOTE_CLOSER = '”';
+
+    public const SINGLE_QUOTE        = "'";
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     public const SINGLE_QUOTE_OPENER = '‘';
     public const SINGLE_QUOTE_CLOSER = '’';
 }

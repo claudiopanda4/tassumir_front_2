@@ -13,20 +13,76 @@ declare(strict_types=1);
 
 namespace League\CommonMark;
 
+<<<<<<< HEAD
 class MarkdownConverter extends Converter
 {
     /** @var EnvironmentInterface */
     protected $environment;
+=======
+use League\CommonMark\Environment\EnvironmentInterface;
+use League\CommonMark\Output\RenderedContentInterface;
+use League\CommonMark\Parser\MarkdownParser;
+use League\CommonMark\Parser\MarkdownParserInterface;
+use League\CommonMark\Renderer\HtmlRenderer;
+use League\CommonMark\Renderer\MarkdownRendererInterface;
+
+class MarkdownConverter implements MarkdownConverterInterface
+{
+    /** @psalm-readonly */
+    protected EnvironmentInterface $environment;
+
+    /** @psalm-readonly */
+    protected MarkdownParserInterface $markdownParser;
+
+    /** @psalm-readonly */
+    protected MarkdownRendererInterface $htmlRenderer;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
     public function __construct(EnvironmentInterface $environment)
     {
         $this->environment = $environment;
 
+<<<<<<< HEAD
         parent::__construct(new DocParser($environment), new HtmlRenderer($environment));
+=======
+        $this->markdownParser = new MarkdownParser($environment);
+        $this->htmlRenderer   = new HtmlRenderer($environment);
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 
     public function getEnvironment(): EnvironmentInterface
     {
         return $this->environment;
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Converts Markdown to HTML.
+     *
+     * @param string $markdown The Markdown to convert
+     *
+     * @return RenderedContentInterface Rendered HTML
+     *
+     * @throws \RuntimeException
+     */
+    public function convertToHtml(string $markdown): RenderedContentInterface
+    {
+        $documentAST = $this->markdownParser->parse($markdown);
+
+        return $this->htmlRenderer->renderDocument($documentAST);
+    }
+
+    /**
+     * Converts CommonMark to HTML.
+     *
+     * @see Converter::convertToHtml
+     *
+     * @throws \RuntimeException
+     */
+    public function __invoke(string $markdown): RenderedContentInterface
+    {
+        return $this->convertToHtml($markdown);
+    }
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }
