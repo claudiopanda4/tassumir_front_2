@@ -15,6 +15,55 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
+<<<<<<< HEAD
+use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Element\AbstractStringContainerBlock;
+use League\CommonMark\Block\Element\InlineContainerInterface;
+use League\CommonMark\ContextInterface;
+use League\CommonMark\Cursor;
+
+final class TableCell extends AbstractStringContainerBlock implements InlineContainerInterface
+{
+    const TYPE_HEAD = 'th';
+    const TYPE_BODY = 'td';
+
+    const ALIGN_LEFT = 'left';
+    const ALIGN_RIGHT = 'right';
+    const ALIGN_CENTER = 'center';
+
+    /** @var string */
+    public $type = self::TYPE_BODY;
+
+    /** @var string|null */
+    public $align;
+
+    public function __construct(string $string = '', string $type = self::TYPE_BODY, string $align = null)
+    {
+        parent::__construct();
+        $this->finalStringContents = $string;
+        $this->addLine($string);
+        $this->type = $type;
+        $this->align = $align;
+    }
+
+    public function canContain(AbstractBlock $block): bool
+    {
+        return false;
+    }
+
+    public function isCode(): bool
+    {
+        return false;
+    }
+
+    public function matchesNextLine(Cursor $cursor): bool
+    {
+        return false;
+    }
+
+    public function handleRemainingContents(ContextInterface $context, Cursor $cursor): void
+    {
+=======
 use League\CommonMark\Node\Block\AbstractBlock;
 
 final class TableCell extends AbstractBlock
@@ -95,5 +144,6 @@ final class TableCell extends AbstractBlock
     public function setAlign(?string $align): void
     {
         $this->align = $align;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 }

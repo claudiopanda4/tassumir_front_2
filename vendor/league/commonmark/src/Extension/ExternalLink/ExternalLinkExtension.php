@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
 declare(strict_types=1);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -13,6 +16,17 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\ExternalLink;
 
+<<<<<<< HEAD
+use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Extension\ExtensionInterface;
+
+final class ExternalLinkExtension implements ExtensionInterface
+{
+    public function register(ConfigurableEnvironmentInterface $environment)
+    {
+        $environment->addEventListener(DocumentParsedEvent::class, new ExternalLinkProcessor($environment), -50);
+=======
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
@@ -43,5 +57,6 @@ final class ExternalLinkExtension implements ConfigurableExtensionInterface
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addEventListener(DocumentParsedEvent::class, new ExternalLinkProcessor($environment->getConfiguration()), -50);
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 }

@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
 declare(strict_types=1);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -13,6 +16,30 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\TaskList;
 
+<<<<<<< HEAD
+use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\HtmlElement;
+use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+
+final class TaskListItemMarkerRenderer implements InlineRendererInterface
+{
+    /**
+     * @param TaskListItemMarker       $inline
+     * @param ElementRendererInterface $htmlRenderer
+     *
+     * @return HtmlElement|string|null
+     */
+    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    {
+        if (!($inline instanceof TaskListItemMarker)) {
+            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        }
+
+        $checkbox = new HtmlElement('input', [], '', true);
+
+        if ($inline->isChecked()) {
+=======
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -35,6 +62,7 @@ final class TaskListItemMarkerRenderer implements NodeRendererInterface, XmlNode
         $checkbox = new HtmlElement('input', [], '', true);
 
         if ($node->isChecked()) {
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             $checkbox->setAttribute('checked', '');
         }
 
@@ -43,6 +71,8 @@ final class TaskListItemMarkerRenderer implements NodeRendererInterface, XmlNode
 
         return $checkbox;
     }
+<<<<<<< HEAD
+=======
 
     public function getXmlTagName(Node $node): string
     {
@@ -66,4 +96,5 @@ final class TaskListItemMarkerRenderer implements NodeRendererInterface, XmlNode
 
         return [];
     }
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

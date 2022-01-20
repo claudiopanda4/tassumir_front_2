@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
 declare(strict_types=1);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -13,7 +16,11 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension;
 
+<<<<<<< HEAD
+use League\CommonMark\ConfigurableEnvironmentInterface;
+=======
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\DisallowedRawHtml\DisallowedRawHtmlExtension;
 use League\CommonMark\Extension\Strikethrough\StrikethroughExtension;
@@ -22,7 +29,11 @@ use League\CommonMark\Extension\TaskList\TaskListExtension;
 
 final class GithubFlavoredMarkdownExtension implements ExtensionInterface
 {
+<<<<<<< HEAD
+    public function register(ConfigurableEnvironmentInterface $environment)
+=======
     public function register(EnvironmentBuilderInterface $environment): void
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     {
         $environment->addExtension(new AutolinkExtension());
         $environment->addExtension(new DisallowedRawHtmlExtension());

@@ -229,6 +229,8 @@
             "install-path": "../dasprid/enum"
         },
         {
+<<<<<<< HEAD
+=======
             "name": "dflydev/dot-access-data",
             "version": "v3.0.1",
             "version_normalized": "3.0.1.0",
@@ -307,6 +309,7 @@
             "install-path": "../dflydev/dot-access-data"
         },
         {
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             "name": "doctrine/inflector",
             "version": "2.0.4",
             "version_normalized": "2.0.4.0",
@@ -2142,6 +2145,19 @@
         },
         {
             "name": "league/commonmark",
+<<<<<<< HEAD
+            "version": "1.6.6",
+            "version_normalized": "1.6.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/commonmark.git",
+                "reference": "c4228d11e30d7493c6836d20872f9582d8ba6dcf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/c4228d11e30d7493c6836d20872f9582d8ba6dcf",
+                "reference": "c4228d11e30d7493c6836d20872f9582d8ba6dcf",
+=======
             "version": "2.1.1",
             "version_normalized": "2.1.1.0",
             "source": {
@@ -2153,10 +2169,36 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/17d2b9cb5161a2ea1a8dd30e6991d668e503fb9d",
                 "reference": "17d2b9cb5161a2ea1a8dd30e6991d668e503fb9d",
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
+<<<<<<< HEAD
+                "php": "^7.1 || ^8.0"
+            },
+            "conflict": {
+                "scrutinizer/ocular": "1.7.*"
+            },
+            "require-dev": {
+                "cebe/markdown": "~1.0",
+                "commonmark/commonmark.js": "0.29.2",
+                "erusev/parsedown": "~1.0",
+                "ext-json": "*",
+                "github/gfm": "0.29.0",
+                "michelf/php-markdown": "~1.4",
+                "mikehaertl/php-shellcommand": "^1.4",
+                "phpstan/phpstan": "^0.12.90",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.2",
+                "scrutinizer/ocular": "^1.5",
+                "symfony/finder": "^4.2"
+            },
+            "time": "2021-07-17T17:13:23+00:00",
+            "bin": [
+                "bin/commonmark"
+            ],
+            "type": "library",
+=======
                 "league/config": "^1.1.1",
                 "php": "^7.4 || ^8.0",
                 "psr/event-dispatcher": "^1.0",
@@ -2189,6 +2231,7 @@
                     "dev-main": "2.2-dev"
                 }
             },
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
@@ -2207,7 +2250,11 @@
                     "role": "Lead Developer"
                 }
             ],
+<<<<<<< HEAD
+            "description": "Highly-extensible PHP Markdown parser which fully supports the CommonMark spec and Github-Flavored Markdown (GFM)",
+=======
             "description": "Highly-extensible PHP Markdown parser which fully supports the CommonMark spec and GitHub-Flavored Markdown (GFM)",
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             "homepage": "https://commonmark.thephpleague.com",
             "keywords": [
                 "commonmark",
@@ -2221,13 +2268,23 @@
             ],
             "support": {
                 "docs": "https://commonmark.thephpleague.com/",
+<<<<<<< HEAD
+=======
                 "forum": "https://github.com/thephpleague/commonmark/discussions",
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
                 "issues": "https://github.com/thephpleague/commonmark/issues",
                 "rss": "https://github.com/thephpleague/commonmark/releases.atom",
                 "source": "https://github.com/thephpleague/commonmark"
             },
             "funding": [
                 {
+<<<<<<< HEAD
+                    "url": "https://enjoy.gitstore.app/repositories/thephpleague/commonmark",
+                    "type": "custom"
+                },
+                {
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
                     "url": "https://www.colinodell.com/sponsor",
                     "type": "custom"
                 },
@@ -2240,6 +2297,13 @@
                     "type": "github"
                 },
                 {
+<<<<<<< HEAD
+                    "url": "https://www.patreon.com/colinodell",
+                    "type": "patreon"
+                },
+                {
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
                     "url": "https://tidelift.com/funding/github/packagist/league/commonmark",
                     "type": "tidelift"
                 }
@@ -2247,6 +2311,8 @@
             "install-path": "../league/commonmark"
         },
         {
+<<<<<<< HEAD
+=======
             "name": "league/config",
             "version": "v1.1.1",
             "version_normalized": "1.1.1.0",
@@ -2332,6 +2398,7 @@
             "install-path": "../league/config"
         },
         {
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             "name": "league/flysystem",
             "version": "1.1.9",
             "version_normalized": "1.1.9.0",
@@ -2825,6 +2892,8 @@
             "install-path": "../nesbot/carbon"
         },
         {
+<<<<<<< HEAD
+=======
             "name": "nette/schema",
             "version": "v1.2.2",
             "version_normalized": "1.2.2.0",
@@ -2978,6 +3047,7 @@
             "install-path": "../nette/utils"
         },
         {
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             "name": "nikic/php-parser",
             "version": "v4.13.2",
             "version_normalized": "4.13.2.0",
@@ -3038,6 +3108,19 @@
         },
         {
             "name": "nunomaduro/collision",
+<<<<<<< HEAD
+            "version": "v5.10.0",
+            "version_normalized": "5.10.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nunomaduro/collision.git",
+                "reference": "3004cfa49c022183395eabc6d0e5207dfe498d00"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/3004cfa49c022183395eabc6d0e5207dfe498d00",
+                "reference": "3004cfa49c022183395eabc6d0e5207dfe498d00",
+=======
             "version": "v5.11.0",
             "version_normalized": "5.11.0.0",
             "source": {
@@ -3049,6 +3132,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/nunomaduro/collision/zipball/8b610eef8582ccdc05d8f2ab23305e2d37049461",
                 "reference": "8b610eef8582ccdc05d8f2ab23305e2d37049461",
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
                 "shasum": ""
             },
             "require": {
@@ -3068,7 +3152,11 @@
                 "phpstan/phpstan": "^0.12.64",
                 "phpunit/phpunit": "^9.5.0"
             },
+<<<<<<< HEAD
+            "time": "2021-09-20T15:06:32+00:00",
+=======
             "time": "2022-01-10T16:22:52+00:00",
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             "type": "library",
             "extra": {
                 "laravel": {
@@ -3112,7 +3200,11 @@
             },
             "funding": [
                 {
+<<<<<<< HEAD
+                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=66BYDWAT92N6L",
+=======
                     "url": "https://www.paypal.com/paypalme/enunomaduro",
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
                     "type": "custom"
                 },
                 {
@@ -4190,6 +4282,25 @@
         },
         {
             "name": "psr/container",
+<<<<<<< HEAD
+            "version": "1.1.1",
+            "version_normalized": "1.1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2.0"
+            },
+            "time": "2021-03-05T17:36:06+00:00",
+=======
             "version": "1.1.2",
             "version_normalized": "1.1.2.0",
             "source": {
@@ -4207,6 +4318,7 @@
                 "php": ">=7.4.0"
             },
             "time": "2021-11-05T16:50:12+00:00",
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -4235,7 +4347,11 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
+<<<<<<< HEAD
+                "source": "https://github.com/php-fig/container/tree/1.1.1"
+=======
                 "source": "https://github.com/php-fig/container/tree/1.1.2"
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             },
             "install-path": "../psr/container"
         },

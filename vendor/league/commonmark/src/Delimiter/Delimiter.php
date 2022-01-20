@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
 declare(strict_types=1);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,6 +19,60 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Delimiter;
 
+<<<<<<< HEAD
+use League\CommonMark\Inline\Element\AbstractStringContainer;
+
+final class Delimiter implements DelimiterInterface
+{
+    /** @var string */
+    private $char;
+
+    /** @var int */
+    private $length;
+
+    /** @var int */
+    private $originalLength;
+
+    /** @var AbstractStringContainer */
+    private $inlineNode;
+
+    /** @var DelimiterInterface|null */
+    private $previous;
+
+    /** @var DelimiterInterface|null */
+    private $next;
+
+    /** @var bool */
+    private $canOpen;
+
+    /** @var bool */
+    private $canClose;
+
+    /** @var bool */
+    private $active;
+
+    /** @var int|null */
+    private $index;
+
+    /**
+     * @param string                  $char
+     * @param int                     $numDelims
+     * @param AbstractStringContainer $node
+     * @param bool                    $canOpen
+     * @param bool                    $canClose
+     * @param int|null                $index
+     */
+    public function __construct(string $char, int $numDelims, AbstractStringContainer $node, bool $canOpen, bool $canClose, ?int $index = null)
+    {
+        $this->char = $char;
+        $this->length = $numDelims;
+        $this->originalLength = $numDelims;
+        $this->inlineNode = $node;
+        $this->canOpen = $canOpen;
+        $this->canClose = $canClose;
+        $this->active = true;
+        $this->index = $index;
+=======
 use League\CommonMark\Node\Inline\AbstractStringContainer;
 
 final class Delimiter implements DelimiterInterface
@@ -60,6 +117,7 @@ final class Delimiter implements DelimiterInterface
         $this->canClose       = $canClose;
         $this->active         = true;
         $this->index          = $index;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 
     public function canClose(): bool
@@ -67,6 +125,19 @@ final class Delimiter implements DelimiterInterface
         return $this->canClose;
     }
 
+<<<<<<< HEAD
+    /**
+     * @param bool $canClose
+     *
+     * @return void
+     */
+    public function setCanClose(bool $canClose)
+    {
+        $this->canClose = $canClose;
+    }
+
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     public function canOpen(): bool
     {
         return $this->canOpen;
@@ -77,7 +148,11 @@ final class Delimiter implements DelimiterInterface
         return $this->active;
     }
 
+<<<<<<< HEAD
+    public function setActive(bool $active)
+=======
     public function setActive(bool $active): void
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     {
         $this->active = $active;
     }
@@ -97,7 +172,11 @@ final class Delimiter implements DelimiterInterface
         return $this->next;
     }
 
+<<<<<<< HEAD
+    public function setNext(?DelimiterInterface $next)
+=======
     public function setNext(?DelimiterInterface $next): void
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     {
         $this->next = $next;
     }
@@ -107,7 +186,11 @@ final class Delimiter implements DelimiterInterface
         return $this->length;
     }
 
+<<<<<<< HEAD
+    public function setLength(int $length)
+=======
     public function setLength(int $length): void
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     {
         $this->length = $length;
     }
@@ -127,8 +210,16 @@ final class Delimiter implements DelimiterInterface
         return $this->previous;
     }
 
+<<<<<<< HEAD
+    public function setPrevious(?DelimiterInterface $previous): DelimiterInterface
+    {
+        $this->previous = $previous;
+
+        return $this;
+=======
     public function setPrevious(?DelimiterInterface $previous): void
     {
         $this->previous = $previous;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 }

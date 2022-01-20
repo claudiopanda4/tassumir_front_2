@@ -262,12 +262,15 @@ return array(
     'DeepCopy\\TypeFilter\\Spl\\SplDoublyLinkedListFilter' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/TypeFilter/Spl/SplDoublyLinkedListFilter.php',
     'DeepCopy\\TypeFilter\\TypeFilter' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/TypeFilter/TypeFilter.php',
     'DeepCopy\\TypeMatcher\\TypeMatcher' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/TypeMatcher/TypeMatcher.php',
+<<<<<<< HEAD
+=======
     'Dflydev\\DotAccessData\\Data' => $vendorDir . '/dflydev/dot-access-data/src/Data.php',
     'Dflydev\\DotAccessData\\DataInterface' => $vendorDir . '/dflydev/dot-access-data/src/DataInterface.php',
     'Dflydev\\DotAccessData\\Exception\\DataException' => $vendorDir . '/dflydev/dot-access-data/src/Exception/DataException.php',
     'Dflydev\\DotAccessData\\Exception\\InvalidPathException' => $vendorDir . '/dflydev/dot-access-data/src/Exception/InvalidPathException.php',
     'Dflydev\\DotAccessData\\Exception\\MissingPathException' => $vendorDir . '/dflydev/dot-access-data/src/Exception/MissingPathException.php',
     'Dflydev\\DotAccessData\\Util' => $vendorDir . '/dflydev/dot-access-data/src/Util.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'Doctrine\\Common\\Lexer\\AbstractLexer' => $vendorDir . '/doctrine/lexer/lib/Doctrine/Common/Lexer/AbstractLexer.php',
     'Doctrine\\Inflector\\CachedWordInflector' => $vendorDir . '/doctrine/inflector/lib/Doctrine/Inflector/CachedWordInflector.php',
     'Doctrine\\Inflector\\GenericLanguageInflectorFactory' => $vendorDir . '/doctrine/inflector/lib/Doctrine/Inflector/GenericLanguageInflectorFactory.php',
@@ -673,7 +676,10 @@ return array(
     'Faker\\Provider\\cs_CZ\\Payment' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/cs_CZ/Payment.php',
     'Faker\\Provider\\cs_CZ\\Person' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/cs_CZ/Person.php',
     'Faker\\Provider\\cs_CZ\\PhoneNumber' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/cs_CZ/PhoneNumber.php',
+<<<<<<< HEAD
+=======
     'Faker\\Provider\\cs_CZ\\Text' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/cs_CZ/Text.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'Faker\\Provider\\da_DK\\Address' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/da_DK/Address.php',
     'Faker\\Provider\\da_DK\\Company' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/da_DK/Company.php',
     'Faker\\Provider\\da_DK\\Internet' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/da_DK/Internet.php',
@@ -712,7 +718,10 @@ return array(
     'Faker\\Provider\\el_GR\\Payment' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/el_GR/Payment.php',
     'Faker\\Provider\\el_GR\\Person' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/el_GR/Person.php',
     'Faker\\Provider\\el_GR\\PhoneNumber' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/el_GR/PhoneNumber.php',
+<<<<<<< HEAD
+=======
     'Faker\\Provider\\el_GR\\Text' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/el_GR/Text.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'Faker\\Provider\\en_AU\\Address' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/en_AU/Address.php',
     'Faker\\Provider\\en_AU\\Internet' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/en_AU/Internet.php',
     'Faker\\Provider\\en_AU\\PhoneNumber' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/en_AU/PhoneNumber.php',
@@ -815,7 +824,10 @@ return array(
     'Faker\\Provider\\fr_FR\\Payment' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/fr_FR/Payment.php',
     'Faker\\Provider\\fr_FR\\Person' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/fr_FR/Person.php',
     'Faker\\Provider\\fr_FR\\PhoneNumber' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/fr_FR/PhoneNumber.php',
+<<<<<<< HEAD
+=======
     'Faker\\Provider\\fr_FR\\Text' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/fr_FR/Text.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'Faker\\Provider\\he_IL\\Address' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/he_IL/Address.php',
     'Faker\\Provider\\he_IL\\Company' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/he_IL/Company.php',
     'Faker\\Provider\\he_IL\\Payment' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/he_IL/Payment.php',
@@ -831,7 +843,10 @@ return array(
     'Faker\\Provider\\hu_HU\\Payment' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/hu_HU/Payment.php',
     'Faker\\Provider\\hu_HU\\Person' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/hu_HU/Person.php',
     'Faker\\Provider\\hu_HU\\PhoneNumber' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/hu_HU/PhoneNumber.php',
+<<<<<<< HEAD
+=======
     'Faker\\Provider\\hu_HU\\Text' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/hu_HU/Text.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'Faker\\Provider\\hy_AM\\Address' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/hy_AM/Address.php',
     'Faker\\Provider\\hy_AM\\Color' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/hy_AM/Color.php',
     'Faker\\Provider\\hy_AM\\Company' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/hy_AM/Company.php',
@@ -878,7 +893,10 @@ return array(
     'Faker\\Provider\\ka_GE\\Payment' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/ka_GE/Payment.php',
     'Faker\\Provider\\ka_GE\\Person' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/ka_GE/Person.php',
     'Faker\\Provider\\ka_GE\\PhoneNumber' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/ka_GE/PhoneNumber.php',
+<<<<<<< HEAD
+=======
     'Faker\\Provider\\ka_GE\\Text' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/ka_GE/Text.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'Faker\\Provider\\kk_KZ\\Address' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/kk_KZ/Address.php',
     'Faker\\Provider\\kk_KZ\\Color' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/kk_KZ/Color.php',
     'Faker\\Provider\\kk_KZ\\Company' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/kk_KZ/Company.php',
@@ -980,7 +998,10 @@ return array(
     'Faker\\Provider\\ru_RU\\Payment' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/ru_RU/Payment.php',
     'Faker\\Provider\\ru_RU\\Person' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/ru_RU/Person.php',
     'Faker\\Provider\\ru_RU\\PhoneNumber' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/ru_RU/PhoneNumber.php',
+<<<<<<< HEAD
+=======
     'Faker\\Provider\\ru_RU\\Text' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/ru_RU/Text.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'Faker\\Provider\\sk_SK\\Address' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/sk_SK/Address.php',
     'Faker\\Provider\\sk_SK\\Company' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/sk_SK/Company.php',
     'Faker\\Provider\\sk_SK\\Internet' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/sk_SK/Internet.php',
@@ -1030,7 +1051,10 @@ return array(
     'Faker\\Provider\\uk_UA\\Payment' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/uk_UA/Payment.php',
     'Faker\\Provider\\uk_UA\\Person' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/uk_UA/Person.php',
     'Faker\\Provider\\uk_UA\\PhoneNumber' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/uk_UA/PhoneNumber.php',
+<<<<<<< HEAD
+=======
     'Faker\\Provider\\uk_UA\\Text' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/uk_UA/Text.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'Faker\\Provider\\vi_VN\\Address' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/vi_VN/Address.php',
     'Faker\\Provider\\vi_VN\\Color' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/vi_VN/Color.php',
     'Faker\\Provider\\vi_VN\\Internet' => $vendorDir . '/fakerphp/faker/src/Faker/Provider/vi_VN/Internet.php',
@@ -2386,14 +2410,76 @@ return array(
     'Laravel\\Ui\\Presets\\Vue' => $vendorDir . '/laravel/ui/src/Presets/Vue.php',
     'Laravel\\Ui\\UiCommand' => $vendorDir . '/laravel/ui/src/UiCommand.php',
     'Laravel\\Ui\\UiServiceProvider' => $vendorDir . '/laravel/ui/src/UiServiceProvider.php',
+<<<<<<< HEAD
+    'League\\CommonMark\\Block\\Element\\AbstractBlock' => $vendorDir . '/league/commonmark/src/Block/Element/AbstractBlock.php',
+    'League\\CommonMark\\Block\\Element\\AbstractStringContainerBlock' => $vendorDir . '/league/commonmark/src/Block/Element/AbstractStringContainerBlock.php',
+    'League\\CommonMark\\Block\\Element\\BlockQuote' => $vendorDir . '/league/commonmark/src/Block/Element/BlockQuote.php',
+    'League\\CommonMark\\Block\\Element\\Document' => $vendorDir . '/league/commonmark/src/Block/Element/Document.php',
+    'League\\CommonMark\\Block\\Element\\FencedCode' => $vendorDir . '/league/commonmark/src/Block/Element/FencedCode.php',
+    'League\\CommonMark\\Block\\Element\\Heading' => $vendorDir . '/league/commonmark/src/Block/Element/Heading.php',
+    'League\\CommonMark\\Block\\Element\\HtmlBlock' => $vendorDir . '/league/commonmark/src/Block/Element/HtmlBlock.php',
+    'League\\CommonMark\\Block\\Element\\IndentedCode' => $vendorDir . '/league/commonmark/src/Block/Element/IndentedCode.php',
+    'League\\CommonMark\\Block\\Element\\InlineContainerInterface' => $vendorDir . '/league/commonmark/src/Block/Element/InlineContainerInterface.php',
+    'League\\CommonMark\\Block\\Element\\ListBlock' => $vendorDir . '/league/commonmark/src/Block/Element/ListBlock.php',
+    'League\\CommonMark\\Block\\Element\\ListData' => $vendorDir . '/league/commonmark/src/Block/Element/ListData.php',
+    'League\\CommonMark\\Block\\Element\\ListItem' => $vendorDir . '/league/commonmark/src/Block/Element/ListItem.php',
+    'League\\CommonMark\\Block\\Element\\Paragraph' => $vendorDir . '/league/commonmark/src/Block/Element/Paragraph.php',
+    'League\\CommonMark\\Block\\Element\\StringContainerInterface' => $vendorDir . '/league/commonmark/src/Block/Element/StringContainerInterface.php',
+    'League\\CommonMark\\Block\\Element\\ThematicBreak' => $vendorDir . '/league/commonmark/src/Block/Element/ThematicBreak.php',
+    'League\\CommonMark\\Block\\Parser\\ATXHeadingParser' => $vendorDir . '/league/commonmark/src/Block/Parser/ATXHeadingParser.php',
+    'League\\CommonMark\\Block\\Parser\\BlockParserInterface' => $vendorDir . '/league/commonmark/src/Block/Parser/BlockParserInterface.php',
+    'League\\CommonMark\\Block\\Parser\\BlockQuoteParser' => $vendorDir . '/league/commonmark/src/Block/Parser/BlockQuoteParser.php',
+    'League\\CommonMark\\Block\\Parser\\FencedCodeParser' => $vendorDir . '/league/commonmark/src/Block/Parser/FencedCodeParser.php',
+    'League\\CommonMark\\Block\\Parser\\HtmlBlockParser' => $vendorDir . '/league/commonmark/src/Block/Parser/HtmlBlockParser.php',
+    'League\\CommonMark\\Block\\Parser\\IndentedCodeParser' => $vendorDir . '/league/commonmark/src/Block/Parser/IndentedCodeParser.php',
+    'League\\CommonMark\\Block\\Parser\\LazyParagraphParser' => $vendorDir . '/league/commonmark/src/Block/Parser/LazyParagraphParser.php',
+    'League\\CommonMark\\Block\\Parser\\ListParser' => $vendorDir . '/league/commonmark/src/Block/Parser/ListParser.php',
+    'League\\CommonMark\\Block\\Parser\\SetExtHeadingParser' => $vendorDir . '/league/commonmark/src/Block/Parser/SetExtHeadingParser.php',
+    'League\\CommonMark\\Block\\Parser\\ThematicBreakParser' => $vendorDir . '/league/commonmark/src/Block/Parser/ThematicBreakParser.php',
+    'League\\CommonMark\\Block\\Renderer\\BlockQuoteRenderer' => $vendorDir . '/league/commonmark/src/Block/Renderer/BlockQuoteRenderer.php',
+    'League\\CommonMark\\Block\\Renderer\\BlockRendererInterface' => $vendorDir . '/league/commonmark/src/Block/Renderer/BlockRendererInterface.php',
+    'League\\CommonMark\\Block\\Renderer\\DocumentRenderer' => $vendorDir . '/league/commonmark/src/Block/Renderer/DocumentRenderer.php',
+    'League\\CommonMark\\Block\\Renderer\\FencedCodeRenderer' => $vendorDir . '/league/commonmark/src/Block/Renderer/FencedCodeRenderer.php',
+    'League\\CommonMark\\Block\\Renderer\\HeadingRenderer' => $vendorDir . '/league/commonmark/src/Block/Renderer/HeadingRenderer.php',
+    'League\\CommonMark\\Block\\Renderer\\HtmlBlockRenderer' => $vendorDir . '/league/commonmark/src/Block/Renderer/HtmlBlockRenderer.php',
+    'League\\CommonMark\\Block\\Renderer\\IndentedCodeRenderer' => $vendorDir . '/league/commonmark/src/Block/Renderer/IndentedCodeRenderer.php',
+    'League\\CommonMark\\Block\\Renderer\\ListBlockRenderer' => $vendorDir . '/league/commonmark/src/Block/Renderer/ListBlockRenderer.php',
+    'League\\CommonMark\\Block\\Renderer\\ListItemRenderer' => $vendorDir . '/league/commonmark/src/Block/Renderer/ListItemRenderer.php',
+    'League\\CommonMark\\Block\\Renderer\\ParagraphRenderer' => $vendorDir . '/league/commonmark/src/Block/Renderer/ParagraphRenderer.php',
+    'League\\CommonMark\\Block\\Renderer\\ThematicBreakRenderer' => $vendorDir . '/league/commonmark/src/Block/Renderer/ThematicBreakRenderer.php',
+    'League\\CommonMark\\CommonMarkConverter' => $vendorDir . '/league/commonmark/src/CommonMarkConverter.php',
+    'League\\CommonMark\\ConfigurableEnvironmentInterface' => $vendorDir . '/league/commonmark/src/ConfigurableEnvironmentInterface.php',
+    'League\\CommonMark\\Context' => $vendorDir . '/league/commonmark/src/Context.php',
+    'League\\CommonMark\\ContextInterface' => $vendorDir . '/league/commonmark/src/ContextInterface.php',
+    'League\\CommonMark\\Converter' => $vendorDir . '/league/commonmark/src/Converter.php',
+    'League\\CommonMark\\ConverterInterface' => $vendorDir . '/league/commonmark/src/ConverterInterface.php',
+    'League\\CommonMark\\Cursor' => $vendorDir . '/league/commonmark/src/Cursor.php',
+    'League\\CommonMark\\Delimiter\\Delimiter' => $vendorDir . '/league/commonmark/src/Delimiter/Delimiter.php',
+    'League\\CommonMark\\Delimiter\\DelimiterInterface' => $vendorDir . '/league/commonmark/src/Delimiter/DelimiterInterface.php',
+=======
     'League\\CommonMark\\CommonMarkConverter' => $vendorDir . '/league/commonmark/src/CommonMarkConverter.php',
     'League\\CommonMark\\Delimiter\\Delimiter' => $vendorDir . '/league/commonmark/src/Delimiter/Delimiter.php',
     'League\\CommonMark\\Delimiter\\DelimiterInterface' => $vendorDir . '/league/commonmark/src/Delimiter/DelimiterInterface.php',
     'League\\CommonMark\\Delimiter\\DelimiterParser' => $vendorDir . '/league/commonmark/src/Delimiter/DelimiterParser.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Delimiter\\DelimiterStack' => $vendorDir . '/league/commonmark/src/Delimiter/DelimiterStack.php',
     'League\\CommonMark\\Delimiter\\Processor\\DelimiterProcessorCollection' => $vendorDir . '/league/commonmark/src/Delimiter/Processor/DelimiterProcessorCollection.php',
     'League\\CommonMark\\Delimiter\\Processor\\DelimiterProcessorCollectionInterface' => $vendorDir . '/league/commonmark/src/Delimiter/Processor/DelimiterProcessorCollectionInterface.php',
     'League\\CommonMark\\Delimiter\\Processor\\DelimiterProcessorInterface' => $vendorDir . '/league/commonmark/src/Delimiter/Processor/DelimiterProcessorInterface.php',
+<<<<<<< HEAD
+    'League\\CommonMark\\Delimiter\\Processor\\EmphasisDelimiterProcessor' => $vendorDir . '/league/commonmark/src/Delimiter/Processor/EmphasisDelimiterProcessor.php',
+    'League\\CommonMark\\Delimiter\\Processor\\StaggeredDelimiterProcessor' => $vendorDir . '/league/commonmark/src/Delimiter/Processor/StaggeredDelimiterProcessor.php',
+    'League\\CommonMark\\DocParser' => $vendorDir . '/league/commonmark/src/DocParser.php',
+    'League\\CommonMark\\DocParserInterface' => $vendorDir . '/league/commonmark/src/DocParserInterface.php',
+    'League\\CommonMark\\ElementRendererInterface' => $vendorDir . '/league/commonmark/src/ElementRendererInterface.php',
+    'League\\CommonMark\\Environment' => $vendorDir . '/league/commonmark/src/Environment.php',
+    'League\\CommonMark\\EnvironmentAwareInterface' => $vendorDir . '/league/commonmark/src/EnvironmentAwareInterface.php',
+    'League\\CommonMark\\EnvironmentInterface' => $vendorDir . '/league/commonmark/src/EnvironmentInterface.php',
+    'League\\CommonMark\\Event\\AbstractEvent' => $vendorDir . '/league/commonmark/src/Event/AbstractEvent.php',
+    'League\\CommonMark\\Event\\DocumentParsedEvent' => $vendorDir . '/league/commonmark/src/Event/DocumentParsedEvent.php',
+    'League\\CommonMark\\Event\\DocumentPreParsedEvent' => $vendorDir . '/league/commonmark/src/Event/DocumentPreParsedEvent.php',
+    'League\\CommonMark\\Exception\\InvalidOptionException' => $vendorDir . '/league/commonmark/src/Exception/InvalidOptionException.php',
+=======
     'League\\CommonMark\\Delimiter\\Processor\\StaggeredDelimiterProcessor' => $vendorDir . '/league/commonmark/src/Delimiter/Processor/StaggeredDelimiterProcessor.php',
     'League\\CommonMark\\Environment\\Environment' => $vendorDir . '/league/commonmark/src/Environment/Environment.php',
     'League\\CommonMark\\Environment\\EnvironmentAwareInterface' => $vendorDir . '/league/commonmark/src/Environment/EnvironmentAwareInterface.php',
@@ -2405,11 +2491,25 @@ return array(
     'League\\CommonMark\\Event\\DocumentPreRenderEvent' => $vendorDir . '/league/commonmark/src/Event/DocumentPreRenderEvent.php',
     'League\\CommonMark\\Event\\DocumentRenderedEvent' => $vendorDir . '/league/commonmark/src/Event/DocumentRenderedEvent.php',
     'League\\CommonMark\\Event\\ListenerData' => $vendorDir . '/league/commonmark/src/Event/ListenerData.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Exception\\UnexpectedEncodingException' => $vendorDir . '/league/commonmark/src/Exception/UnexpectedEncodingException.php',
     'League\\CommonMark\\Extension\\Attributes\\AttributesExtension' => $vendorDir . '/league/commonmark/src/Extension/Attributes/AttributesExtension.php',
     'League\\CommonMark\\Extension\\Attributes\\Event\\AttributesListener' => $vendorDir . '/league/commonmark/src/Extension/Attributes/Event/AttributesListener.php',
     'League\\CommonMark\\Extension\\Attributes\\Node\\Attributes' => $vendorDir . '/league/commonmark/src/Extension/Attributes/Node/Attributes.php',
     'League\\CommonMark\\Extension\\Attributes\\Node\\AttributesInline' => $vendorDir . '/league/commonmark/src/Extension/Attributes/Node/AttributesInline.php',
+<<<<<<< HEAD
+    'League\\CommonMark\\Extension\\Attributes\\Parser\\AttributesBlockParser' => $vendorDir . '/league/commonmark/src/Extension/Attributes/Parser/AttributesBlockParser.php',
+    'League\\CommonMark\\Extension\\Attributes\\Parser\\AttributesInlineParser' => $vendorDir . '/league/commonmark/src/Extension/Attributes/Parser/AttributesInlineParser.php',
+    'League\\CommonMark\\Extension\\Attributes\\Util\\AttributesHelper' => $vendorDir . '/league/commonmark/src/Extension/Attributes/Util/AttributesHelper.php',
+    'League\\CommonMark\\Extension\\Autolink\\AutolinkExtension' => $vendorDir . '/league/commonmark/src/Extension/Autolink/AutolinkExtension.php',
+    'League\\CommonMark\\Extension\\Autolink\\EmailAutolinkProcessor' => $vendorDir . '/league/commonmark/src/Extension/Autolink/EmailAutolinkProcessor.php',
+    'League\\CommonMark\\Extension\\Autolink\\InlineMentionParser' => $vendorDir . '/league/commonmark/src/Extension/Autolink/InlineMentionParser.php',
+    'League\\CommonMark\\Extension\\Autolink\\UrlAutolinkProcessor' => $vendorDir . '/league/commonmark/src/Extension/Autolink/UrlAutolinkProcessor.php',
+    'League\\CommonMark\\Extension\\CommonMarkCoreExtension' => $vendorDir . '/league/commonmark/src/Extension/CommonMarkCoreExtension.php',
+    'League\\CommonMark\\Extension\\DisallowedRawHtml\\DisallowedRawHtmlBlockRenderer' => $vendorDir . '/league/commonmark/src/Extension/DisallowedRawHtml/DisallowedRawHtmlBlockRenderer.php',
+    'League\\CommonMark\\Extension\\DisallowedRawHtml\\DisallowedRawHtmlExtension' => $vendorDir . '/league/commonmark/src/Extension/DisallowedRawHtml/DisallowedRawHtmlExtension.php',
+    'League\\CommonMark\\Extension\\DisallowedRawHtml\\DisallowedRawHtmlInlineRenderer' => $vendorDir . '/league/commonmark/src/Extension/DisallowedRawHtml/DisallowedRawHtmlInlineRenderer.php',
+=======
     'League\\CommonMark\\Extension\\Attributes\\Parser\\AttributesBlockContinueParser' => $vendorDir . '/league/commonmark/src/Extension/Attributes/Parser/AttributesBlockContinueParser.php',
     'League\\CommonMark\\Extension\\Attributes\\Parser\\AttributesBlockStartParser' => $vendorDir . '/league/commonmark/src/Extension/Attributes/Parser/AttributesBlockStartParser.php',
     'League\\CommonMark\\Extension\\Attributes\\Parser\\AttributesInlineParser' => $vendorDir . '/league/commonmark/src/Extension/Attributes/Parser/AttributesInlineParser.php',
@@ -2490,11 +2590,15 @@ return array(
     'League\\CommonMark\\Extension\\DescriptionList\\Renderer\\DescriptionTermRenderer' => $vendorDir . '/league/commonmark/src/Extension/DescriptionList/Renderer/DescriptionTermRenderer.php',
     'League\\CommonMark\\Extension\\DisallowedRawHtml\\DisallowedRawHtmlExtension' => $vendorDir . '/league/commonmark/src/Extension/DisallowedRawHtml/DisallowedRawHtmlExtension.php',
     'League\\CommonMark\\Extension\\DisallowedRawHtml\\DisallowedRawHtmlRenderer' => $vendorDir . '/league/commonmark/src/Extension/DisallowedRawHtml/DisallowedRawHtmlRenderer.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Extension\\ExtensionInterface' => $vendorDir . '/league/commonmark/src/Extension/ExtensionInterface.php',
     'League\\CommonMark\\Extension\\ExternalLink\\ExternalLinkExtension' => $vendorDir . '/league/commonmark/src/Extension/ExternalLink/ExternalLinkExtension.php',
     'League\\CommonMark\\Extension\\ExternalLink\\ExternalLinkProcessor' => $vendorDir . '/league/commonmark/src/Extension/ExternalLink/ExternalLinkProcessor.php',
     'League\\CommonMark\\Extension\\Footnote\\Event\\AnonymousFootnotesListener' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Event/AnonymousFootnotesListener.php',
+<<<<<<< HEAD
+=======
     'League\\CommonMark\\Extension\\Footnote\\Event\\FixOrphanedFootnotesAndRefsListener' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Event/FixOrphanedFootnotesAndRefsListener.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Extension\\Footnote\\Event\\GatherFootnotesListener' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Event/GatherFootnotesListener.php',
     'League\\CommonMark\\Extension\\Footnote\\Event\\NumberFootnotesListener' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Event/NumberFootnotesListener.php',
     'League\\CommonMark\\Extension\\Footnote\\FootnoteExtension' => $vendorDir . '/league/commonmark/src/Extension/Footnote/FootnoteExtension.php',
@@ -2505,11 +2609,16 @@ return array(
     'League\\CommonMark\\Extension\\Footnote\\Parser\\AnonymousFootnoteRefParser' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Parser/AnonymousFootnoteRefParser.php',
     'League\\CommonMark\\Extension\\Footnote\\Parser\\FootnoteParser' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Parser/FootnoteParser.php',
     'League\\CommonMark\\Extension\\Footnote\\Parser\\FootnoteRefParser' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Parser/FootnoteRefParser.php',
+<<<<<<< HEAD
+=======
     'League\\CommonMark\\Extension\\Footnote\\Parser\\FootnoteStartParser' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Parser/FootnoteStartParser.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Extension\\Footnote\\Renderer\\FootnoteBackrefRenderer' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Renderer/FootnoteBackrefRenderer.php',
     'League\\CommonMark\\Extension\\Footnote\\Renderer\\FootnoteContainerRenderer' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Renderer/FootnoteContainerRenderer.php',
     'League\\CommonMark\\Extension\\Footnote\\Renderer\\FootnoteRefRenderer' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Renderer/FootnoteRefRenderer.php',
     'League\\CommonMark\\Extension\\Footnote\\Renderer\\FootnoteRenderer' => $vendorDir . '/league/commonmark/src/Extension/Footnote/Renderer/FootnoteRenderer.php',
+<<<<<<< HEAD
+=======
     'League\\CommonMark\\Extension\\FrontMatter\\Data\\FrontMatterDataParserInterface' => $vendorDir . '/league/commonmark/src/Extension/FrontMatter/Data/FrontMatterDataParserInterface.php',
     'League\\CommonMark\\Extension\\FrontMatter\\Data\\LibYamlFrontMatterParser' => $vendorDir . '/league/commonmark/src/Extension/FrontMatter/Data/LibYamlFrontMatterParser.php',
     'League\\CommonMark\\Extension\\FrontMatter\\Data\\SymfonyYamlFrontMatterParser' => $vendorDir . '/league/commonmark/src/Extension/FrontMatter/Data/SymfonyYamlFrontMatterParser.php',
@@ -2522,11 +2631,17 @@ return array(
     'League\\CommonMark\\Extension\\FrontMatter\\Listener\\FrontMatterPostRenderListener' => $vendorDir . '/league/commonmark/src/Extension/FrontMatter/Listener/FrontMatterPostRenderListener.php',
     'League\\CommonMark\\Extension\\FrontMatter\\Listener\\FrontMatterPreParser' => $vendorDir . '/league/commonmark/src/Extension/FrontMatter/Listener/FrontMatterPreParser.php',
     'League\\CommonMark\\Extension\\FrontMatter\\Output\\RenderedContentWithFrontMatter' => $vendorDir . '/league/commonmark/src/Extension/FrontMatter/Output/RenderedContentWithFrontMatter.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Extension\\GithubFlavoredMarkdownExtension' => $vendorDir . '/league/commonmark/src/Extension/GithubFlavoredMarkdownExtension.php',
     'League\\CommonMark\\Extension\\HeadingPermalink\\HeadingPermalink' => $vendorDir . '/league/commonmark/src/Extension/HeadingPermalink/HeadingPermalink.php',
     'League\\CommonMark\\Extension\\HeadingPermalink\\HeadingPermalinkExtension' => $vendorDir . '/league/commonmark/src/Extension/HeadingPermalink/HeadingPermalinkExtension.php',
     'League\\CommonMark\\Extension\\HeadingPermalink\\HeadingPermalinkProcessor' => $vendorDir . '/league/commonmark/src/Extension/HeadingPermalink/HeadingPermalinkProcessor.php',
     'League\\CommonMark\\Extension\\HeadingPermalink\\HeadingPermalinkRenderer' => $vendorDir . '/league/commonmark/src/Extension/HeadingPermalink/HeadingPermalinkRenderer.php',
+<<<<<<< HEAD
+    'League\\CommonMark\\Extension\\HeadingPermalink\\Slug\\DefaultSlugGenerator' => $vendorDir . '/league/commonmark/src/Extension/HeadingPermalink/Slug/DefaultSlugGenerator.php',
+    'League\\CommonMark\\Extension\\HeadingPermalink\\Slug\\SlugGeneratorInterface' => $vendorDir . '/league/commonmark/src/Extension/HeadingPermalink/Slug/SlugGeneratorInterface.php',
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Extension\\InlinesOnly\\ChildRenderer' => $vendorDir . '/league/commonmark/src/Extension/InlinesOnly/ChildRenderer.php',
     'League\\CommonMark\\Extension\\InlinesOnly\\InlinesOnlyExtension' => $vendorDir . '/league/commonmark/src/Extension/InlinesOnly/InlinesOnlyExtension.php',
     'League\\CommonMark\\Extension\\Mention\\Generator\\CallbackGenerator' => $vendorDir . '/league/commonmark/src/Extension/Mention/Generator/CallbackGenerator.php',
@@ -2535,12 +2650,20 @@ return array(
     'League\\CommonMark\\Extension\\Mention\\Mention' => $vendorDir . '/league/commonmark/src/Extension/Mention/Mention.php',
     'League\\CommonMark\\Extension\\Mention\\MentionExtension' => $vendorDir . '/league/commonmark/src/Extension/Mention/MentionExtension.php',
     'League\\CommonMark\\Extension\\Mention\\MentionParser' => $vendorDir . '/league/commonmark/src/Extension/Mention/MentionParser.php',
+<<<<<<< HEAD
+    'League\\CommonMark\\Extension\\SmartPunct\\PunctuationParser' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/PunctuationParser.php',
+    'League\\CommonMark\\Extension\\SmartPunct\\Quote' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/Quote.php',
+    'League\\CommonMark\\Extension\\SmartPunct\\QuoteParser' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/QuoteParser.php',
+    'League\\CommonMark\\Extension\\SmartPunct\\QuoteProcessor' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/QuoteProcessor.php',
+    'League\\CommonMark\\Extension\\SmartPunct\\QuoteRenderer' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/QuoteRenderer.php',
+=======
     'League\\CommonMark\\Extension\\SmartPunct\\DashParser' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/DashParser.php',
     'League\\CommonMark\\Extension\\SmartPunct\\EllipsesParser' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/EllipsesParser.php',
     'League\\CommonMark\\Extension\\SmartPunct\\Quote' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/Quote.php',
     'League\\CommonMark\\Extension\\SmartPunct\\QuoteParser' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/QuoteParser.php',
     'League\\CommonMark\\Extension\\SmartPunct\\QuoteProcessor' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/QuoteProcessor.php',
     'League\\CommonMark\\Extension\\SmartPunct\\ReplaceUnpairedQuotesListener' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/ReplaceUnpairedQuotesListener.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Extension\\SmartPunct\\SmartPunctExtension' => $vendorDir . '/league/commonmark/src/Extension/SmartPunct/SmartPunctExtension.php',
     'League\\CommonMark\\Extension\\Strikethrough\\Strikethrough' => $vendorDir . '/league/commonmark/src/Extension/Strikethrough/Strikethrough.php',
     'League\\CommonMark\\Extension\\Strikethrough\\StrikethroughDelimiterProcessor' => $vendorDir . '/league/commonmark/src/Extension/Strikethrough/StrikethroughDelimiterProcessor.php',
@@ -2552,13 +2675,20 @@ return array(
     'League\\CommonMark\\Extension\\TableOfContents\\Normalizer\\FlatNormalizerStrategy' => $vendorDir . '/league/commonmark/src/Extension/TableOfContents/Normalizer/FlatNormalizerStrategy.php',
     'League\\CommonMark\\Extension\\TableOfContents\\Normalizer\\NormalizerStrategyInterface' => $vendorDir . '/league/commonmark/src/Extension/TableOfContents/Normalizer/NormalizerStrategyInterface.php',
     'League\\CommonMark\\Extension\\TableOfContents\\Normalizer\\RelativeNormalizerStrategy' => $vendorDir . '/league/commonmark/src/Extension/TableOfContents/Normalizer/RelativeNormalizerStrategy.php',
+<<<<<<< HEAD
+    'League\\CommonMark\\Extension\\TableOfContents\\TableOfContents' => $vendorDir . '/league/commonmark/src/Extension/TableOfContents/TableOfContents.php',
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Extension\\TableOfContents\\TableOfContentsBuilder' => $vendorDir . '/league/commonmark/src/Extension/TableOfContents/TableOfContentsBuilder.php',
     'League\\CommonMark\\Extension\\TableOfContents\\TableOfContentsExtension' => $vendorDir . '/league/commonmark/src/Extension/TableOfContents/TableOfContentsExtension.php',
     'League\\CommonMark\\Extension\\TableOfContents\\TableOfContentsGenerator' => $vendorDir . '/league/commonmark/src/Extension/TableOfContents/TableOfContentsGenerator.php',
     'League\\CommonMark\\Extension\\TableOfContents\\TableOfContentsGeneratorInterface' => $vendorDir . '/league/commonmark/src/Extension/TableOfContents/TableOfContentsGeneratorInterface.php',
     'League\\CommonMark\\Extension\\TableOfContents\\TableOfContentsPlaceholderParser' => $vendorDir . '/league/commonmark/src/Extension/TableOfContents/TableOfContentsPlaceholderParser.php',
     'League\\CommonMark\\Extension\\TableOfContents\\TableOfContentsPlaceholderRenderer' => $vendorDir . '/league/commonmark/src/Extension/TableOfContents/TableOfContentsPlaceholderRenderer.php',
+<<<<<<< HEAD
+=======
     'League\\CommonMark\\Extension\\TableOfContents\\TableOfContentsRenderer' => $vendorDir . '/league/commonmark/src/Extension/TableOfContents/TableOfContentsRenderer.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Extension\\Table\\Table' => $vendorDir . '/league/commonmark/src/Extension/Table/Table.php',
     'League\\CommonMark\\Extension\\Table\\TableCell' => $vendorDir . '/league/commonmark/src/Extension/Table/TableCell.php',
     'League\\CommonMark\\Extension\\Table\\TableCellRenderer' => $vendorDir . '/league/commonmark/src/Extension/Table/TableCellRenderer.php',
@@ -2569,16 +2699,65 @@ return array(
     'League\\CommonMark\\Extension\\Table\\TableRowRenderer' => $vendorDir . '/league/commonmark/src/Extension/Table/TableRowRenderer.php',
     'League\\CommonMark\\Extension\\Table\\TableSection' => $vendorDir . '/league/commonmark/src/Extension/Table/TableSection.php',
     'League\\CommonMark\\Extension\\Table\\TableSectionRenderer' => $vendorDir . '/league/commonmark/src/Extension/Table/TableSectionRenderer.php',
+<<<<<<< HEAD
+=======
     'League\\CommonMark\\Extension\\Table\\TableStartParser' => $vendorDir . '/league/commonmark/src/Extension/Table/TableStartParser.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Extension\\TaskList\\TaskListExtension' => $vendorDir . '/league/commonmark/src/Extension/TaskList/TaskListExtension.php',
     'League\\CommonMark\\Extension\\TaskList\\TaskListItemMarker' => $vendorDir . '/league/commonmark/src/Extension/TaskList/TaskListItemMarker.php',
     'League\\CommonMark\\Extension\\TaskList\\TaskListItemMarkerParser' => $vendorDir . '/league/commonmark/src/Extension/TaskList/TaskListItemMarkerParser.php',
     'League\\CommonMark\\Extension\\TaskList\\TaskListItemMarkerRenderer' => $vendorDir . '/league/commonmark/src/Extension/TaskList/TaskListItemMarkerRenderer.php',
     'League\\CommonMark\\GithubFlavoredMarkdownConverter' => $vendorDir . '/league/commonmark/src/GithubFlavoredMarkdownConverter.php',
+<<<<<<< HEAD
+    'League\\CommonMark\\HtmlElement' => $vendorDir . '/league/commonmark/src/HtmlElement.php',
+    'League\\CommonMark\\HtmlRenderer' => $vendorDir . '/league/commonmark/src/HtmlRenderer.php',
+    'League\\CommonMark\\InlineParserContext' => $vendorDir . '/league/commonmark/src/InlineParserContext.php',
+    'League\\CommonMark\\InlineParserEngine' => $vendorDir . '/league/commonmark/src/InlineParserEngine.php',
+    'League\\CommonMark\\Inline\\AdjacentTextMerger' => $vendorDir . '/league/commonmark/src/Inline/AdjacentTextMerger.php',
+    'League\\CommonMark\\Inline\\Element\\AbstractInline' => $vendorDir . '/league/commonmark/src/Inline/Element/AbstractInline.php',
+    'League\\CommonMark\\Inline\\Element\\AbstractStringContainer' => $vendorDir . '/league/commonmark/src/Inline/Element/AbstractStringContainer.php',
+    'League\\CommonMark\\Inline\\Element\\AbstractWebResource' => $vendorDir . '/league/commonmark/src/Inline/Element/AbstractWebResource.php',
+    'League\\CommonMark\\Inline\\Element\\Code' => $vendorDir . '/league/commonmark/src/Inline/Element/Code.php',
+    'League\\CommonMark\\Inline\\Element\\Emphasis' => $vendorDir . '/league/commonmark/src/Inline/Element/Emphasis.php',
+    'League\\CommonMark\\Inline\\Element\\HtmlInline' => $vendorDir . '/league/commonmark/src/Inline/Element/HtmlInline.php',
+    'League\\CommonMark\\Inline\\Element\\Image' => $vendorDir . '/league/commonmark/src/Inline/Element/Image.php',
+    'League\\CommonMark\\Inline\\Element\\Link' => $vendorDir . '/league/commonmark/src/Inline/Element/Link.php',
+    'League\\CommonMark\\Inline\\Element\\Newline' => $vendorDir . '/league/commonmark/src/Inline/Element/Newline.php',
+    'League\\CommonMark\\Inline\\Element\\Strong' => $vendorDir . '/league/commonmark/src/Inline/Element/Strong.php',
+    'League\\CommonMark\\Inline\\Element\\Text' => $vendorDir . '/league/commonmark/src/Inline/Element/Text.php',
+    'League\\CommonMark\\Inline\\Parser\\AutolinkParser' => $vendorDir . '/league/commonmark/src/Inline/Parser/AutolinkParser.php',
+    'League\\CommonMark\\Inline\\Parser\\BacktickParser' => $vendorDir . '/league/commonmark/src/Inline/Parser/BacktickParser.php',
+    'League\\CommonMark\\Inline\\Parser\\BangParser' => $vendorDir . '/league/commonmark/src/Inline/Parser/BangParser.php',
+    'League\\CommonMark\\Inline\\Parser\\CloseBracketParser' => $vendorDir . '/league/commonmark/src/Inline/Parser/CloseBracketParser.php',
+    'League\\CommonMark\\Inline\\Parser\\EntityParser' => $vendorDir . '/league/commonmark/src/Inline/Parser/EntityParser.php',
+    'League\\CommonMark\\Inline\\Parser\\EscapableParser' => $vendorDir . '/league/commonmark/src/Inline/Parser/EscapableParser.php',
+    'League\\CommonMark\\Inline\\Parser\\HtmlInlineParser' => $vendorDir . '/league/commonmark/src/Inline/Parser/HtmlInlineParser.php',
+    'League\\CommonMark\\Inline\\Parser\\InlineParserInterface' => $vendorDir . '/league/commonmark/src/Inline/Parser/InlineParserInterface.php',
+    'League\\CommonMark\\Inline\\Parser\\NewlineParser' => $vendorDir . '/league/commonmark/src/Inline/Parser/NewlineParser.php',
+    'League\\CommonMark\\Inline\\Parser\\OpenBracketParser' => $vendorDir . '/league/commonmark/src/Inline/Parser/OpenBracketParser.php',
+    'League\\CommonMark\\Inline\\Renderer\\CodeRenderer' => $vendorDir . '/league/commonmark/src/Inline/Renderer/CodeRenderer.php',
+    'League\\CommonMark\\Inline\\Renderer\\EmphasisRenderer' => $vendorDir . '/league/commonmark/src/Inline/Renderer/EmphasisRenderer.php',
+    'League\\CommonMark\\Inline\\Renderer\\HtmlInlineRenderer' => $vendorDir . '/league/commonmark/src/Inline/Renderer/HtmlInlineRenderer.php',
+    'League\\CommonMark\\Inline\\Renderer\\ImageRenderer' => $vendorDir . '/league/commonmark/src/Inline/Renderer/ImageRenderer.php',
+    'League\\CommonMark\\Inline\\Renderer\\InlineRendererInterface' => $vendorDir . '/league/commonmark/src/Inline/Renderer/InlineRendererInterface.php',
+    'League\\CommonMark\\Inline\\Renderer\\LinkRenderer' => $vendorDir . '/league/commonmark/src/Inline/Renderer/LinkRenderer.php',
+    'League\\CommonMark\\Inline\\Renderer\\NewlineRenderer' => $vendorDir . '/league/commonmark/src/Inline/Renderer/NewlineRenderer.php',
+    'League\\CommonMark\\Inline\\Renderer\\StrongRenderer' => $vendorDir . '/league/commonmark/src/Inline/Renderer/StrongRenderer.php',
+    'League\\CommonMark\\Inline\\Renderer\\TextRenderer' => $vendorDir . '/league/commonmark/src/Inline/Renderer/TextRenderer.php',
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Input\\MarkdownInput' => $vendorDir . '/league/commonmark/src/Input/MarkdownInput.php',
     'League\\CommonMark\\Input\\MarkdownInputInterface' => $vendorDir . '/league/commonmark/src/Input/MarkdownInputInterface.php',
     'League\\CommonMark\\MarkdownConverter' => $vendorDir . '/league/commonmark/src/MarkdownConverter.php',
     'League\\CommonMark\\MarkdownConverterInterface' => $vendorDir . '/league/commonmark/src/MarkdownConverterInterface.php',
+<<<<<<< HEAD
+    'League\\CommonMark\\Node\\Node' => $vendorDir . '/league/commonmark/src/Node/Node.php',
+    'League\\CommonMark\\Node\\NodeWalker' => $vendorDir . '/league/commonmark/src/Node/NodeWalker.php',
+    'League\\CommonMark\\Node\\NodeWalkerEvent' => $vendorDir . '/league/commonmark/src/Node/NodeWalkerEvent.php',
+    'League\\CommonMark\\Normalizer\\SlugNormalizer' => $vendorDir . '/league/commonmark/src/Normalizer/SlugNormalizer.php',
+    'League\\CommonMark\\Normalizer\\TextNormalizer' => $vendorDir . '/league/commonmark/src/Normalizer/TextNormalizer.php',
+    'League\\CommonMark\\Normalizer\\TextNormalizerInterface' => $vendorDir . '/league/commonmark/src/Normalizer/TextNormalizerInterface.php',
+=======
     'League\\CommonMark\\Node\\Block\\AbstractBlock' => $vendorDir . '/league/commonmark/src/Node/Block/AbstractBlock.php',
     'League\\CommonMark\\Node\\Block\\Document' => $vendorDir . '/league/commonmark/src/Node/Block/Document.php',
     'League\\CommonMark\\Node\\Block\\Paragraph' => $vendorDir . '/league/commonmark/src/Node/Block/Paragraph.php',
@@ -2628,11 +2807,26 @@ return array(
     'League\\CommonMark\\Parser\\MarkdownParserInterface' => $vendorDir . '/league/commonmark/src/Parser/MarkdownParserInterface.php',
     'League\\CommonMark\\Parser\\MarkdownParserState' => $vendorDir . '/league/commonmark/src/Parser/MarkdownParserState.php',
     'League\\CommonMark\\Parser\\MarkdownParserStateInterface' => $vendorDir . '/league/commonmark/src/Parser/MarkdownParserStateInterface.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\CommonMark\\Reference\\Reference' => $vendorDir . '/league/commonmark/src/Reference/Reference.php',
     'League\\CommonMark\\Reference\\ReferenceInterface' => $vendorDir . '/league/commonmark/src/Reference/ReferenceInterface.php',
     'League\\CommonMark\\Reference\\ReferenceMap' => $vendorDir . '/league/commonmark/src/Reference/ReferenceMap.php',
     'League\\CommonMark\\Reference\\ReferenceMapInterface' => $vendorDir . '/league/commonmark/src/Reference/ReferenceMapInterface.php',
     'League\\CommonMark\\Reference\\ReferenceParser' => $vendorDir . '/league/commonmark/src/Reference/ReferenceParser.php',
+<<<<<<< HEAD
+    'League\\CommonMark\\UnmatchedBlockCloser' => $vendorDir . '/league/commonmark/src/UnmatchedBlockCloser.php',
+    'League\\CommonMark\\Util\\ArrayCollection' => $vendorDir . '/league/commonmark/src/Util/ArrayCollection.php',
+    'League\\CommonMark\\Util\\Configuration' => $vendorDir . '/league/commonmark/src/Util/Configuration.php',
+    'League\\CommonMark\\Util\\ConfigurationAwareInterface' => $vendorDir . '/league/commonmark/src/Util/ConfigurationAwareInterface.php',
+    'League\\CommonMark\\Util\\ConfigurationInterface' => $vendorDir . '/league/commonmark/src/Util/ConfigurationInterface.php',
+    'League\\CommonMark\\Util\\Html5Entities' => $vendorDir . '/league/commonmark/src/Util/Html5Entities.php',
+    'League\\CommonMark\\Util\\Html5EntityDecoder' => $vendorDir . '/league/commonmark/src/Util/Html5EntityDecoder.php',
+    'League\\CommonMark\\Util\\LinkParserHelper' => $vendorDir . '/league/commonmark/src/Util/LinkParserHelper.php',
+    'League\\CommonMark\\Util\\PrioritizedList' => $vendorDir . '/league/commonmark/src/Util/PrioritizedList.php',
+    'League\\CommonMark\\Util\\RegexHelper' => $vendorDir . '/league/commonmark/src/Util/RegexHelper.php',
+    'League\\CommonMark\\Util\\UrlEncoder' => $vendorDir . '/league/commonmark/src/Util/UrlEncoder.php',
+    'League\\CommonMark\\Util\\Xml' => $vendorDir . '/league/commonmark/src/Util/Xml.php',
+=======
     'League\\CommonMark\\Reference\\ReferenceableInterface' => $vendorDir . '/league/commonmark/src/Reference/ReferenceableInterface.php',
     'League\\CommonMark\\Renderer\\Block\\DocumentRenderer' => $vendorDir . '/league/commonmark/src/Renderer/Block/DocumentRenderer.php',
     'League\\CommonMark\\Renderer\\Block\\ParagraphRenderer' => $vendorDir . '/league/commonmark/src/Renderer/Block/ParagraphRenderer.php',
@@ -2667,6 +2861,7 @@ return array(
     'League\\Config\\MutableConfigurationInterface' => $vendorDir . '/league/config/src/MutableConfigurationInterface.php',
     'League\\Config\\ReadOnlyConfiguration' => $vendorDir . '/league/config/src/ReadOnlyConfiguration.php',
     'League\\Config\\SchemaBuilderInterface' => $vendorDir . '/league/config/src/SchemaBuilderInterface.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'League\\Flysystem\\AdapterInterface' => $vendorDir . '/league/flysystem/src/AdapterInterface.php',
     'League\\Flysystem\\Adapter\\AbstractAdapter' => $vendorDir . '/league/flysystem/src/Adapter/AbstractAdapter.php',
     'League\\Flysystem\\Adapter\\AbstractFtpAdapter' => $vendorDir . '/league/flysystem/src/Adapter/AbstractFtpAdapter.php',
@@ -2924,6 +3119,8 @@ return array(
     'Monolog\\SignalHandler' => $vendorDir . '/monolog/monolog/src/Monolog/SignalHandler.php',
     'Monolog\\Test\\TestCase' => $vendorDir . '/monolog/monolog/src/Monolog/Test/TestCase.php',
     'Monolog\\Utils' => $vendorDir . '/monolog/monolog/src/Monolog/Utils.php',
+<<<<<<< HEAD
+=======
     'Nette\\ArgumentOutOfRangeException' => $vendorDir . '/nette/utils/src/exceptions.php',
     'Nette\\DeprecatedException' => $vendorDir . '/nette/utils/src/exceptions.php',
     'Nette\\DirectoryNotFoundException' => $vendorDir . '/nette/utils/src/exceptions.php',
@@ -2980,6 +3177,7 @@ return array(
     'Nette\\Utils\\Type' => $vendorDir . '/nette/utils/src/Utils/Type.php',
     'Nette\\Utils\\UnknownImageFileException' => $vendorDir . '/nette/utils/src/Utils/exceptions.php',
     'Nette\\Utils\\Validators' => $vendorDir . '/nette/utils/src/Utils/Validators.php',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     'Normalizer' => $vendorDir . '/symfony/polyfill-intl-normalizer/Resources/stubs/Normalizer.php',
     'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider' => $vendorDir . '/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php',
     'NunoMaduro\\Collision\\Adapters\\Laravel\\Commands\\TestCommand' => $vendorDir . '/nunomaduro/collision/src/Adapters/Laravel/Commands/TestCommand.php',

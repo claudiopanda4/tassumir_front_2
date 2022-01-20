@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
 declare(strict_types=1);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -13,6 +16,18 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\TableOfContents;
 
+<<<<<<< HEAD
+use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\ElementRendererInterface;
+
+final class TableOfContentsPlaceholderRenderer implements BlockRendererInterface
+{
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    {
+        return '<!-- table of contents -->';
+    }
+=======
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -37,4 +52,5 @@ final class TableOfContentsPlaceholderRenderer implements NodeRendererInterface,
     {
         return [];
     }
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

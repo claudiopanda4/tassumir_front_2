@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
 declare(strict_types=1);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -17,7 +20,11 @@ declare(strict_types=1);
 namespace League\CommonMark\Delimiter\Processor;
 
 use League\CommonMark\Delimiter\DelimiterInterface;
+<<<<<<< HEAD
+use League\CommonMark\Inline\Element\AbstractStringContainer;
+=======
 use League\CommonMark\Node\Inline\AbstractStringContainer;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
 /**
  * An implementation of DelimiterProcessorInterface that dispatches all calls to two or more other DelimiterProcessors
@@ -29,6 +36,16 @@ use League\CommonMark\Node\Inline\AbstractStringContainer;
  */
 final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
 {
+<<<<<<< HEAD
+    /** @var string */
+    private $delimiterChar;
+
+    /** @var int */
+    private $minLength = 0;
+
+    /** @var array<int, DelimiterProcessorInterface>|DelimiterProcessorInterface[] */
+    private $processors = []; // keyed by minLength in reverse order
+=======
     /** @psalm-readonly */
     private string $delimiterChar;
 
@@ -41,6 +58,7 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
      * @psalm-readonly-allow-private-mutation
      */
     private array $processors = []; // keyed by minLength in reverse order
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
     public function __construct(string $char, DelimiterProcessorInterface $processor)
     {
@@ -65,8 +83,17 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
 
     /**
      * Adds the given processor to this staggered delimiter processor
+<<<<<<< HEAD
+     *
+     * @param DelimiterProcessorInterface $processor
+     *
+     * @return void
+     */
+    public function add(DelimiterProcessorInterface $processor)
+=======
      */
     public function add(DelimiterProcessorInterface $processor): void
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     {
         $len = $processor->getMinLength();
 
@@ -85,7 +112,11 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
         return $this->findProcessor($opener->getLength())->getDelimiterUse($opener, $closer);
     }
 
+<<<<<<< HEAD
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+=======
     public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse): void
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     {
         $this->findProcessor($delimiterUse)->process($opener, $closer, $delimiterUse);
     }
@@ -100,8 +131,13 @@ final class StaggeredDelimiterProcessor implements DelimiterProcessorInterface
         }
 
         // Just use the first one in our list
+<<<<<<< HEAD
+        /** @var DelimiterProcessorInterface $first */
+        $first = \reset($this->processors);
+=======
         $first = \reset($this->processors);
         \assert($first instanceof DelimiterProcessorInterface);
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
         return $first;
     }

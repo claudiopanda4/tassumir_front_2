@@ -14,11 +14,18 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote;
 
+<<<<<<< HEAD
+use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Extension\Footnote\Event\AnonymousFootnotesListener;
+=======
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\Footnote\Event\AnonymousFootnotesListener;
 use League\CommonMark\Extension\Footnote\Event\FixOrphanedFootnotesAndRefsListener;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 use League\CommonMark\Extension\Footnote\Event\GatherFootnotesListener;
 use League\CommonMark\Extension\Footnote\Event\NumberFootnotesListener;
 use League\CommonMark\Extension\Footnote\Node\Footnote;
@@ -26,12 +33,37 @@ use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
 use League\CommonMark\Extension\Footnote\Node\FootnoteContainer;
 use League\CommonMark\Extension\Footnote\Node\FootnoteRef;
 use League\CommonMark\Extension\Footnote\Parser\AnonymousFootnoteRefParser;
+<<<<<<< HEAD
+use League\CommonMark\Extension\Footnote\Parser\FootnoteParser;
+use League\CommonMark\Extension\Footnote\Parser\FootnoteRefParser;
+=======
 use League\CommonMark\Extension\Footnote\Parser\FootnoteRefParser;
 use League\CommonMark\Extension\Footnote\Parser\FootnoteStartParser;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteBackrefRenderer;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteContainerRenderer;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteRefRenderer;
 use League\CommonMark\Extension\Footnote\Renderer\FootnoteRenderer;
+<<<<<<< HEAD
+
+final class FootnoteExtension implements ExtensionInterface
+{
+    public function register(ConfigurableEnvironmentInterface $environment)
+    {
+        $environment->addBlockParser(new FootnoteParser(), 51);
+        $environment->addInlineParser(new AnonymousFootnoteRefParser(), 35);
+        $environment->addInlineParser(new FootnoteRefParser(), 51);
+
+        $environment->addBlockRenderer(FootnoteContainer::class, new FootnoteContainerRenderer());
+        $environment->addBlockRenderer(Footnote::class, new FootnoteRenderer());
+
+        $environment->addInlineRenderer(FootnoteRef::class, new FootnoteRefRenderer());
+        $environment->addInlineRenderer(FootnoteBackref::class, new FootnoteBackrefRenderer());
+
+        $environment->addEventListener(DocumentParsedEvent::class, [new AnonymousFootnotesListener(), 'onDocumentParsed']);
+        $environment->addEventListener(DocumentParsedEvent::class, [new NumberFootnotesListener(), 'onDocumentParsed']);
+        $environment->addEventListener(DocumentParsedEvent::class, [new GatherFootnotesListener(), 'onDocumentParsed']);
+=======
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
@@ -66,5 +98,6 @@ final class FootnoteExtension implements ConfigurableExtensionInterface
         $environment->addEventListener(DocumentParsedEvent::class, [new FixOrphanedFootnotesAndRefsListener(), 'onDocumentParsed'], 30);
         $environment->addEventListener(DocumentParsedEvent::class, [new NumberFootnotesListener(), 'onDocumentParsed'], 20);
         $environment->addEventListener(DocumentParsedEvent::class, [new GatherFootnotesListener(), 'onDocumentParsed'], 10);
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 }

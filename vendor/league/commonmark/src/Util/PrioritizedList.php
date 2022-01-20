@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
 declare(strict_types=1);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -18,7 +21,10 @@ namespace League\CommonMark\Util;
 
 /**
  * @internal
+<<<<<<< HEAD
+=======
  *
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
  * @phpstan-template T
  * @phpstan-implements \IteratorAggregate<T>
  */
@@ -28,6 +34,19 @@ final class PrioritizedList implements \IteratorAggregate
      * @var array<int, array<mixed>>
      * @phpstan-var array<int, array<T>>
      */
+<<<<<<< HEAD
+    private $list = [];
+
+    /**
+     * @var iterable<mixed>|null
+     * @phpstan-var iterable<T>|null
+     */
+    private $optimized;
+
+    /**
+     * @param mixed $item
+     * @param int   $priority
+=======
     private array $list = [];
 
     /**
@@ -38,12 +57,24 @@ final class PrioritizedList implements \IteratorAggregate
 
     /**
      * @param mixed $item
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      *
      * @phpstan-param T $item
      */
     public function add($item, int $priority): void
     {
         $this->list[$priority][] = $item;
+<<<<<<< HEAD
+        $this->optimized = null;
+    }
+
+    /**
+     * @return iterable<int, mixed>
+     *
+     * @phpstan-return iterable<int, T>
+     */
+    public function getIterator(): iterable
+=======
         $this->optimized         = null;
     }
 
@@ -53,6 +84,7 @@ final class PrioritizedList implements \IteratorAggregate
      * @phpstan-return \Traversable<int, T>
      */
     public function getIterator(): \Traversable
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     {
         if ($this->optimized === null) {
             \krsort($this->list);

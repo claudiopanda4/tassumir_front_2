@@ -187,9 +187,12 @@ final class Style
             '/vendor\/laravel\/framework\/src\/Illuminate\/Foundation\/Testing/',
             '/vendor\/symfony\/framework-bundle\/Test/',
             '/vendor\/symfony\/phpunit-bridge/',
+<<<<<<< HEAD
+=======
             '/vendor\/symfony\/dom-crawler/',
             '/vendor\/symfony\/browser-kit/',
             '/vendor\/symfony\/css-selector/',
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             '/vendor\/bin\/.phpunit/',
             '/bin\/.phpunit/',
             '/vendor\/bin\/simple-phpunit/',

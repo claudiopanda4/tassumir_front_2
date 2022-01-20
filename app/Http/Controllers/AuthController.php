@@ -1250,7 +1250,7 @@ public function dados_comment($key){
                   'conta_id' => $conta->conta_id,
 
               ]);
-              //dd($saveRetriveId);
+              
               $code = random_int(1000,9000);
               $takePhone = $takePhone;
               $takeEmail = $request->email;
@@ -1266,12 +1266,7 @@ public function dados_comment($key){
 
               DB::commit();
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
-             /*   $passwordLength = strlen($request->password);
-              if ($passwordLength < 9) {
-                  return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data', 'page_current'));
-              }else{
-              }*/
-
+           
           }catch(\Exception $e){
             DB::rollBack();
               //return back()->with('error','Erro');

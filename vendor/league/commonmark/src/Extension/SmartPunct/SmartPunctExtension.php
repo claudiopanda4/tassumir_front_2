@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
 declare(strict_types=1);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,6 +19,39 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\SmartPunct;
 
+<<<<<<< HEAD
+use League\CommonMark\Block\Element\Document;
+use League\CommonMark\Block\Element\Paragraph;
+use League\CommonMark\Block\Renderer as CoreBlockRenderer;
+use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Inline\Element\Text;
+use League\CommonMark\Inline\Renderer as CoreInlineRenderer;
+
+final class SmartPunctExtension implements ExtensionInterface
+{
+    public function register(ConfigurableEnvironmentInterface $environment)
+    {
+        $environment
+            ->addInlineParser(new QuoteParser(), 10)
+            ->addInlineParser(new PunctuationParser(), 0)
+
+            ->addDelimiterProcessor(QuoteProcessor::createDoubleQuoteProcessor(
+                $environment->getConfig('smartpunct/double_quote_opener', Quote::DOUBLE_QUOTE_OPENER),
+                $environment->getConfig('smartpunct/double_quote_closer', Quote::DOUBLE_QUOTE_CLOSER)
+            ))
+            ->addDelimiterProcessor(QuoteProcessor::createSingleQuoteProcessor(
+                $environment->getConfig('smartpunct/single_quote_opener', Quote::SINGLE_QUOTE_OPENER),
+                $environment->getConfig('smartpunct/single_quote_closer', Quote::SINGLE_QUOTE_CLOSER)
+            ))
+
+            ->addBlockRenderer(Document::class, new CoreBlockRenderer\DocumentRenderer(), 0)
+            ->addBlockRenderer(Paragraph::class, new CoreBlockRenderer\ParagraphRenderer(), 0)
+
+            ->addInlineRenderer(Quote::class, new QuoteRenderer(), 100)
+            ->addInlineRenderer(Text::class, new CoreInlineRenderer\TextRenderer(), 0)
+        ;
+=======
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
@@ -60,5 +96,6 @@ final class SmartPunctExtension implements ConfigurableExtensionInterface
             ->addRenderer(Document::class, new CoreBlockRenderer\DocumentRenderer(), 0)
             ->addRenderer(Paragraph::class, new CoreBlockRenderer\ParagraphRenderer(), 0)
             ->addRenderer(Text::class, new CoreInlineRenderer\TextRenderer(), 0);
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 }

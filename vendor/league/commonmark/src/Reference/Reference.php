@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
 declare(strict_types=1);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,6 +19,32 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Reference;
 
+<<<<<<< HEAD
+use League\CommonMark\Normalizer\TextNormalizer;
+
+final class Reference implements ReferenceInterface
+{
+    /**
+     * @var string
+     */
+    protected $label;
+
+    /**
+     * @var string
+     */
+    protected $destination;
+
+    /**
+     * @var string
+     */
+    protected $title;
+
+    public function __construct(string $label, string $destination, string $title)
+    {
+        $this->label = $label;
+        $this->destination = $destination;
+        $this->title = $title;
+=======
 /**
  * @psalm-immutable
  */
@@ -35,6 +64,7 @@ final class Reference implements ReferenceInterface
         $this->label       = $label;
         $this->destination = $destination;
         $this->title       = $title;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 
     public function getLabel(): string
@@ -51,4 +81,26 @@ final class Reference implements ReferenceInterface
     {
         return $this->title;
     }
+<<<<<<< HEAD
+
+    /**
+     * Normalize reference label
+     *
+     * This enables case-insensitive label matching
+     *
+     * @param string $string
+     *
+     * @return string
+     *
+     * @deprecated Use TextNormalizer::normalize() instead
+     * @group legacy
+     */
+    public static function normalizeReference(string $string): string
+    {
+        @trigger_error(sprintf('%s::normlizeReference() is deprecated; use %s::normalize() instead', self::class, TextNormalizer::class), E_USER_DEPRECATED);
+
+        return (new TextNormalizer())->normalize($string);
+    }
+=======
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

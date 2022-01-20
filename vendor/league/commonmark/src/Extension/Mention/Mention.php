@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
 declare(strict_types=1);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,6 +19,35 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Mention;
 
+<<<<<<< HEAD
+use League\CommonMark\Inline\Element\Link;
+use League\CommonMark\Inline\Element\Text;
+
+class Mention extends Link
+{
+    /** @var string */
+    private $symbol;
+
+    /** @var string */
+    private $identifier;
+
+    /**
+     * @param string $symbol
+     * @param string $identifier
+     * @param string $label
+     */
+    public function __construct(string $symbol, string $identifier, string $label = null)
+    {
+        $this->symbol = $symbol;
+        $this->identifier = $identifier;
+
+        parent::__construct('', $label ?? \sprintf('%s%s', $symbol, $identifier));
+    }
+
+    /**
+     * @return string|null
+     */
+=======
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
 use League\CommonMark\Node\Inline\Text;
 
@@ -36,20 +68,51 @@ class Mention extends Link
         parent::__construct('', $label ?? \sprintf('%s%s', $prefix, $identifier));
     }
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     public function getLabel(): ?string
     {
         if (($labelNode = $this->findLabelNode()) === null) {
             return null;
         }
 
+<<<<<<< HEAD
+        return $labelNode->getContent();
+    }
+
+    /**
+     * @return string
+     */
+=======
         return $labelNode->getLiteral();
     }
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
+<<<<<<< HEAD
+    /**
+     * @return string
+     */
+    public function getSymbol(): string
+    {
+        return $this->symbol;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasUrl(): bool
+    {
+        return !empty($this->url);
+    }
+
+    /**
+     * @param string $label
+     *
+=======
     public function getName(): ?string
     {
         return $this->name;
@@ -66,6 +129,7 @@ class Mention extends Link
     }
 
     /**
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      * @return $this
      */
     public function setLabel(string $label): self
@@ -75,7 +139,11 @@ class Mention extends Link
             $this->prependChild($labelNode);
         }
 
+<<<<<<< HEAD
+        $labelNode->setContent($label);
+=======
         $labelNode->setLiteral($label);
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
         return $this;
     }

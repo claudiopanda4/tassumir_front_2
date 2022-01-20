@@ -19,6 +19,12 @@ namespace League\CommonMark\Normalizer;
 interface TextNormalizerInterface
 {
     /**
+<<<<<<< HEAD
+     * @param string $text    The text to normalize
+     * @param mixed  $context Additional context about the text being normalized (optional)
+     */
+    public function normalize(string $text, $context = null): string;
+=======
      * @param string               $text    The text to normalize
      * @param array<string, mixed> $context Additional context about the text being normalized (optional)
      *
@@ -30,4 +36,5 @@ interface TextNormalizerInterface
      * Implementations do not have to use or respect any information within that $context
      */
     public function normalize(string $text, array $context = []): string;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

@@ -14,6 +14,40 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Renderer;
 
+<<<<<<< HEAD
+use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
+use League\CommonMark\HtmlElement;
+use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\ConfigurationInterface;
+
+final class FootnoteBackrefRenderer implements InlineRendererInterface, ConfigurationAwareInterface
+{
+    /** @var ConfigurationInterface */
+    private $config;
+
+    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    {
+        if (!($inline instanceof FootnoteBackref)) {
+            throw new \InvalidArgumentException('Incompatible inline type: ' . \get_class($inline));
+        }
+
+        $attrs = $inline->getData('attributes', []);
+        $attrs['class'] = $attrs['class'] ?? $this->config->get('footnote/backref_class', 'footnote-backref');
+        $attrs['rev'] = 'footnote';
+        $attrs['href'] = \mb_strtolower($inline->getReference()->getDestination());
+        $attrs['role'] = 'doc-backlink';
+
+        return '&nbsp;' . new HtmlElement('a', $attrs, '&#8617;', true);
+    }
+
+    public function setConfiguration(ConfigurationInterface $configuration)
+    {
+        $this->config = $configuration;
+    }
+=======
 use League\CommonMark\Extension\Footnote\Node\FootnoteBackref;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
@@ -78,4 +112,5 @@ final class FootnoteBackrefRenderer implements NodeRendererInterface, XmlNodeRen
             'reference' => $node->getReference()->getLabel(),
         ];
     }
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

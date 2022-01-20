@@ -15,6 +15,30 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
+<<<<<<< HEAD
+use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\HtmlElement;
+
+final class TableSectionRenderer implements BlockRendererInterface
+{
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    {
+        if (!$block instanceof TableSection) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        }
+
+        if (!$block->hasChildren()) {
+            return '';
+        }
+
+        $attrs = $block->getData('attributes', []);
+
+        $separator = $htmlRenderer->getOption('inner_separator', "\n");
+
+        return new HtmlElement($block->type, $attrs, $separator . $htmlRenderer->renderBlocks($block->children()) . $separator);
+=======
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -66,5 +90,6 @@ final class TableSectionRenderer implements NodeRendererInterface, XmlNodeRender
         return [
             'type' => $node->getType(),
         ];
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 }

@@ -14,6 +14,47 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Footnote\Renderer;
 
+<<<<<<< HEAD
+use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\Extension\Footnote\Node\Footnote;
+use League\CommonMark\HtmlElement;
+use League\CommonMark\Util\ConfigurationAwareInterface;
+use League\CommonMark\Util\ConfigurationInterface;
+
+final class FootnoteRenderer implements BlockRendererInterface, ConfigurationAwareInterface
+{
+    /** @var ConfigurationInterface */
+    private $config;
+
+    /**
+     * @param Footnote                 $block
+     * @param ElementRendererInterface $htmlRenderer
+     * @param bool                     $inTightList
+     *
+     * @return HtmlElement
+     */
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    {
+        if (!($block instanceof Footnote)) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . \get_class($block));
+        }
+
+        $attrs = $block->getData('attributes', []);
+        $attrs['class'] = $attrs['class'] ?? $this->config->get('footnote/footnote_class', 'footnote');
+        $attrs['id'] = $this->config->get('footnote/footnote_id_prefix', 'fn:') . \mb_strtolower($block->getReference()->getLabel());
+        $attrs['role'] = 'doc-endnote';
+
+        foreach ($block->getBackrefs() as $backref) {
+            $block->lastChild()->appendChild($backref);
+        }
+
+        return new HtmlElement(
+            'li',
+            $attrs,
+            $htmlRenderer->renderBlocks($block->children()),
+=======
 use League\CommonMark\Extension\Footnote\Node\Footnote;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
@@ -48,10 +89,17 @@ final class FootnoteRenderer implements NodeRendererInterface, XmlNodeRendererIn
             'li',
             $attrs->export(),
             $childRenderer->renderNodes($node->children()),
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             true
         );
     }
 
+<<<<<<< HEAD
+    public function setConfiguration(ConfigurationInterface $configuration)
+    {
+        $this->config = $configuration;
+    }
+=======
     public function setConfiguration(ConfigurationInterface $configuration): void
     {
         $this->config = $configuration;
@@ -77,4 +125,5 @@ final class FootnoteRenderer implements NodeRendererInterface, XmlNodeRendererIn
             'reference' => $node->getReference()->getLabel(),
         ];
     }
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

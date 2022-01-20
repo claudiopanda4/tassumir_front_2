@@ -15,6 +15,28 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
+<<<<<<< HEAD
+use League\CommonMark\Block\Element\AbstractBlock;
+use League\CommonMark\Block\Renderer\BlockRendererInterface;
+use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\HtmlElement;
+
+final class TableCellRenderer implements BlockRendererInterface
+{
+    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    {
+        if (!$block instanceof TableCell) {
+            throw new \InvalidArgumentException('Incompatible block type: ' . get_class($block));
+        }
+
+        $attrs = $block->getData('attributes', []);
+
+        if ($block->align !== null) {
+            $attrs['align'] = $block->align;
+        }
+
+        return new HtmlElement($block->type, $attrs, $htmlRenderer->renderInlines($block->children()));
+=======
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -68,5 +90,6 @@ final class TableCellRenderer implements NodeRendererInterface, XmlNodeRendererI
         }
 
         return $ret;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 }

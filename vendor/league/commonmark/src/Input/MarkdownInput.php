@@ -1,7 +1,10 @@
 <?php
 
+<<<<<<< HEAD
+=======
 declare(strict_types=1);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -15,6 +18,26 @@ namespace League\CommonMark\Input;
 
 use League\CommonMark\Exception\UnexpectedEncodingException;
 
+<<<<<<< HEAD
+final class MarkdownInput implements MarkdownInputInterface
+{
+    /** @var array<int, string>|null */
+    private $lines;
+
+    /** @var string */
+    private $content;
+
+    /** @var int|null */
+    private $lineCount;
+
+    public function __construct(string $content)
+    {
+        if (!\mb_check_encoding($content, 'UTF-8')) {
+            throw new UnexpectedEncodingException('Unexpected encoding - UTF-8 or ASCII was expected');
+        }
+
+        $this->content = $content;
+=======
 class MarkdownInput implements MarkdownInputInterface
 {
     /**
@@ -46,6 +69,7 @@ class MarkdownInput implements MarkdownInputInterface
 
         $this->content    = $content;
         $this->lineOffset = $lineOffset;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 
     public function getContent(): string
@@ -54,6 +78,16 @@ class MarkdownInput implements MarkdownInputInterface
     }
 
     /**
+<<<<<<< HEAD
+     * @return \Traversable<int, string>
+     */
+    public function getLines(): \Traversable
+    {
+        $this->splitLinesIfNeeded();
+
+        foreach ($this->lines as $lineNumber => $line) {
+            yield $lineNumber => $line;
+=======
      * {@inheritDoc}
      */
     public function getLines(): iterable
@@ -65,6 +99,7 @@ class MarkdownInput implements MarkdownInputInterface
         /** @psalm-suppress PossiblyNullIterator */
         foreach ($this->lines as $i => $line) {
             yield $this->lineOffset + $i + 1 => $line;
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
         }
     }
 
@@ -72,8 +107,11 @@ class MarkdownInput implements MarkdownInputInterface
     {
         $this->splitLinesIfNeeded();
 
+<<<<<<< HEAD
+=======
         \assert($this->lineCount !== null);
 
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
         return $this->lineCount;
     }
 

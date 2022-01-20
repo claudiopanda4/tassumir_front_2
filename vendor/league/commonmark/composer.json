@@ -1,7 +1,11 @@
 {
     "name": "league/commonmark",
     "type": "library",
+<<<<<<< HEAD
+    "description": "Highly-extensible PHP Markdown parser which fully supports the CommonMark spec and Github-Flavored Markdown (GFM)",
+=======
     "description": "Highly-extensible PHP Markdown parser which fully supports the CommonMark spec and GitHub-Flavored Markdown (GFM)",
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     "keywords": ["markdown","parser","commonmark","gfm","github","flavored","github-flavored","md"],
     "homepage": "https://commonmark.thephpleague.com",
     "license": "BSD-3-Clause",
@@ -15,12 +19,37 @@
     ],
     "support": {
         "docs": "https://commonmark.thephpleague.com/",
+<<<<<<< HEAD
+=======
         "forum": "https://github.com/thephpleague/commonmark/discussions",
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
         "issues": "https://github.com/thephpleague/commonmark/issues",
         "rss": "https://github.com/thephpleague/commonmark/releases.atom",
         "source": "https://github.com/thephpleague/commonmark"
     },
     "require": {
+<<<<<<< HEAD
+        "php": "^7.1 || ^8.0",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "ext-json": "*",
+        "cebe/markdown": "~1.0",
+        "commonmark/commonmark.js": "0.29.2",
+        "erusev/parsedown": "~1.0",
+        "github/gfm": "0.29.0",
+        "michelf/php-markdown": "~1.4",
+        "mikehaertl/php-shellcommand": "^1.4",
+        "phpstan/phpstan": "^0.12.90",
+        "phpunit/phpunit": "^7.5 || ^8.5 || ^9.2",
+        "scrutinizer/ocular": "^1.5",
+        "symfony/finder": "^4.2"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "conflict": {
+        "scrutinizer/ocular": "1.7.*"
+=======
         "php": "^7.4 || ^8.0",
         "ext-mbstring": "*",
         "league/config": "^1.1.1",
@@ -47,12 +76,18 @@
     "minimum-stability": "beta",
     "suggest": {
         "symfony/yaml": "v2.3+ required if using the Front Matter extension"
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     },
     "repositories": [
         {
             "type": "package",
             "package": {
                 "name": "commonmark/commonmark.js",
+<<<<<<< HEAD
+                "version": "0.29.2",
+                "dist": {
+                    "url": "https://github.com/commonmark/commonmark.js/archive/0.29.2.zip",
+=======
                 "version": "0.30.0",
                 "dist": {
                     "url": "https://github.com/commonmark/commonmark.js/archive/0.30.0.zip",
@@ -67,6 +102,7 @@
                 "version": "0.30.0",
                 "dist": {
                     "url": "https://github.com/commonmark/cmark/archive/0.30.0.zip",
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
                     "type": "zip"
                 }
             }
@@ -94,6 +130,18 @@
             "League\\CommonMark\\Tests\\Functional\\": "tests/functional"
         }
     },
+<<<<<<< HEAD
+    "bin": ["bin/commonmark"],
+    "scripts": {
+        "phpstan": "phpstan analyse",
+        "phpunit": "phpunit --no-coverage",
+        "test": [
+            "@phpstan",
+            "@phpunit"
+        ]
+    },
+    "config": {
+=======
     "scripts": {
         "phpcs": "phpcs",
         "phpstan": "phpstan analyse",
@@ -116,6 +164,7 @@
             "composer/package-versions-deprecated": true,
             "dealerdirect/phpcodesniffer-composer-installer": true
         },
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
         "sort-packages": true
     }
 }

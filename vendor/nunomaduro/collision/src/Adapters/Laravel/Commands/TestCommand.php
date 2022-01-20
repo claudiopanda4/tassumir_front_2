@@ -90,7 +90,14 @@ class TestCommand extends Command
             ),
             null,
             // Envs ...
+<<<<<<< HEAD
+            $parallel ? [
+                'LARAVEL_PARALLEL_TESTING'                    => 1,
+                'LARAVEL_PARALLEL_TESTING_RECREATE_DATABASES' => $this->option('recreate-databases'),
+            ] : [],
+=======
             $parallel ? $this->paratestEnvironmentVariables() : $this->phpunitEnvironmentVariables(),
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
         ))->setTimeout(null);
 
         try {
@@ -179,6 +186,8 @@ class TestCommand extends Command
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Get the array of environment variables for running PHPUnit.
      *
      * @return array
@@ -202,6 +211,7 @@ class TestCommand extends Command
     }
 
     /**
+>>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      * Clears any set Environment variables set by Laravel if the --env option is empty.
      *
      * @return void
