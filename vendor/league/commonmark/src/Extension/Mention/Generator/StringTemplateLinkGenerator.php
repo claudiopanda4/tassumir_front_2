@@ -1,10 +1,7 @@
 <?php
 
-<<<<<<< HEAD
-=======
 declare(strict_types=1);
 
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -17,20 +14,11 @@ declare(strict_types=1);
 namespace League\CommonMark\Extension\Mention\Generator;
 
 use League\CommonMark\Extension\Mention\Mention;
-<<<<<<< HEAD
-use League\CommonMark\Inline\Element\AbstractInline;
-
-final class StringTemplateLinkGenerator implements MentionGeneratorInterface
-{
-    /** @var string */
-    private $urlTemplate;
-=======
 use League\CommonMark\Node\Inline\AbstractInline;
 
 final class StringTemplateLinkGenerator implements MentionGeneratorInterface
 {
     private string $urlTemplate;
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
     public function __construct(string $urlTemplate)
     {
@@ -39,12 +27,8 @@ final class StringTemplateLinkGenerator implements MentionGeneratorInterface
 
     public function generateMention(Mention $mention): ?AbstractInline
     {
-<<<<<<< HEAD
-        return $mention->setUrl(\sprintf($this->urlTemplate, $mention->getIdentifier()));
-=======
         $mention->setUrl(\sprintf($this->urlTemplate, $mention->getIdentifier()));
 
         return $mention;
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 }

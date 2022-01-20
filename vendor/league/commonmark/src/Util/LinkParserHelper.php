@@ -1,10 +1,7 @@
 <?php
 
-<<<<<<< HEAD
-=======
 declare(strict_types=1);
 
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,28 +16,17 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Util;
 
-<<<<<<< HEAD
-use League\CommonMark\Cursor;
-
-=======
 use League\CommonMark\Parser\Cursor;
 
 /**
  * @psalm-immutable
  */
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 final class LinkParserHelper
 {
     /**
      * Attempt to parse link destination
      *
-<<<<<<< HEAD
-     * @param Cursor $cursor
-     *
-     * @return null|string The string, or null if no match
-=======
      * @return string|null The string, or null if no match
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public static function parseLinkDestination(Cursor $cursor): ?string
     {
@@ -51,11 +37,7 @@ final class LinkParserHelper
             );
         }
 
-<<<<<<< HEAD
-        if ($cursor->getCharacter() === '<') {
-=======
         if ($cursor->getCurrentCharacter() === '<') {
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             return null;
         }
 
@@ -85,14 +67,6 @@ final class LinkParserHelper
         return $length;
     }
 
-<<<<<<< HEAD
-    /**
-     * Attempt to parse link title (sans quotes)
-     *
-     * @param Cursor $cursor
-     *
-     * @return null|string The string, or null if no match
-=======
     public static function parsePartialLinkLabel(Cursor $cursor): ?string
     {
         return $cursor->match('/^(?:[^\\\\\[\]]+|\\\\.?)*/');
@@ -102,7 +76,6 @@ final class LinkParserHelper
      * Attempt to parse link title (sans quotes)
      *
      * @return string|null The string, or null if no match
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
      */
     public static function parseLinkTitle(Cursor $cursor): ?string
     {
@@ -114,16 +87,6 @@ final class LinkParserHelper
         return null;
     }
 
-<<<<<<< HEAD
-    private static function manuallyParseLinkDestination(Cursor $cursor): ?string
-    {
-        $oldPosition = $cursor->getPosition();
-        $oldState = $cursor->saveState();
-
-        $openParens = 0;
-        while (($c = $cursor->getCharacter()) !== null) {
-            if ($c === '\\' && $cursor->peek() !== null && RegexHelper::isEscapable($cursor->peek())) {
-=======
     public static function parsePartialLinkTitle(Cursor $cursor, string $endDelimiter): ?string
     {
         $endDelimiter = \preg_quote($endDelimiter, '/');
@@ -143,7 +106,6 @@ final class LinkParserHelper
         $openParens = 0;
         while (($c = $cursor->getCurrentCharacter()) !== null) {
             if ($c === '\\' && ($peek = $cursor->peek()) !== null && RegexHelper::isEscapable($peek)) {
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
                 $cursor->advanceBy(2);
             } elseif ($c === '(') {
                 $cursor->advanceBy(1);
@@ -166,11 +128,7 @@ final class LinkParserHelper
             return null;
         }
 
-<<<<<<< HEAD
-        if ($cursor->getPosition() === $oldPosition && $c !== ')') {
-=======
         if ($cursor->getPosition() === $oldPosition && (! isset($c) || $c !== ')')) {
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             return null;
         }
 

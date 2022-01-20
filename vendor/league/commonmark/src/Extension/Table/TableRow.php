@@ -15,41 +15,8 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
-<<<<<<< HEAD
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Cursor;
-use League\CommonMark\Node\Node;
-
-final class TableRow extends AbstractBlock
-{
-    public function canContain(AbstractBlock $block): bool
-    {
-        return $block instanceof TableCell;
-    }
-
-    public function isCode(): bool
-    {
-        return false;
-    }
-
-    public function matchesNextLine(Cursor $cursor): bool
-    {
-        return false;
-    }
-
-    /**
-     * @return AbstractBlock[]
-     */
-    public function children(): iterable
-    {
-        return array_filter((array) parent::children(), static function (Node $child): bool {
-            return $child instanceof AbstractBlock;
-        });
-    }
-=======
 use League\CommonMark\Node\Block\AbstractBlock;
 
 final class TableRow extends AbstractBlock
 {
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

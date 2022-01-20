@@ -691,7 +691,7 @@
 
                 <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                     <label for="target-profile-cover-post" class="label-full">
-                        <div class="cover-done" id="cover-done-post">
+                        <div class="cover-done" id="">
                           <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
                         </div>
                     </label>
@@ -742,7 +742,7 @@
                     </div>
 
                     <div class="justify-content-start marriage-proposal" style="margin-bottom: 10px;">
-                        <span class="text-white">Caso seja aceite, qual nome da Página de casal, gostaria de usar? (Pode ser editado...).</span>
+                        <span class="text-white">Qual o nome da Página de casal gostaria de usar? (Pode ser editado...).</span>
                     </div>
                     <div class="form-group marriage-proposal">
                         <input type="text" class="input-text-default input-full" name="name_page" type="text" placeholder="Nome da Página do Casal">
@@ -1379,12 +1379,14 @@
             //control_ = $(document).height() - control_;
             //$(window).scrollTop() + $(window).height() == $(document).height();
             //console.log('scrollTop + ' + $(window).scrollTop() + ' heightWindow + ' + $(window).height() + ' = ' + $(document).height() + ' top_control ' + control_.top);
-            console.log(control_.top + " " + $(document).height());
-            if (control_.top <= $(document).height()) {
-                //alert('carregar');
-                //alert('oi');
-                home_index();
-                console.log('last_post_id ' + $('#last_post').val());
+            if(control_){
+                console.log(control_.top + " " + $(document).height());
+                if (control_.top <= $(document).height()) {
+                    //alert('carregar');
+                    //alert('oi');
+                    home_index();
+                    console.log('last_post_id ' + $('#last_post').val());
+                }    
             }
             let margin_stories = $('.main-container').offset();
             let margin_s = $('.main').offset();

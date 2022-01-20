@@ -1,10 +1,7 @@
 <?php
 
-<<<<<<< HEAD
-=======
 declare(strict_types=1);
 
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -16,32 +13,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark;
 
-<<<<<<< HEAD
-/**
- * Converts Github Flavored Markdown to HTML.
- */
-class GithubFlavoredMarkdownConverter extends CommonMarkConverter
-{
-    /**
-     * Create a new commonmark converter instance.
-     *
-     * @param array<string, mixed>      $config
-     * @param EnvironmentInterface|null $environment
-     */
-    public function __construct(array $config = [], EnvironmentInterface $environment = null)
-    {
-        if ($environment === null) {
-            $environment = Environment::createGFMEnvironment();
-        } else {
-            @\trigger_error(\sprintf('Passing an $environment into the "%s" constructor is deprecated in 1.6 and will not be supported in 2.0; use MarkdownConverter instead. See https://commonmark.thephpleague.com/2.0/upgrading/consumers/#commonmarkconverter-and-githubflavoredmarkdownconverter-constructors for more details.', self::class), \E_USER_DEPRECATED);
-        }
-
-        if ($environment instanceof ConfigurableEnvironmentInterface) {
-            $environment->mergeConfig($config);
-        }
-
-        MarkdownConverter::__construct($environment);
-=======
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
@@ -70,6 +41,5 @@ final class GithubFlavoredMarkdownConverter extends MarkdownConverter
         \assert($this->environment instanceof Environment);
 
         return $this->environment;
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     }
 }
