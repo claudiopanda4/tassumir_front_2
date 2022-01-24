@@ -217,7 +217,11 @@
                                     </div>
                                     @endif
                                    </div>
-
+                                   <?php if (true): ?>
+                                       <div class="not-new">
+                                           
+                                       </div>    
+                                   <?php endif ?>
                                 </li>
                               @endfor
 
