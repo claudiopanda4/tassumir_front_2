@@ -693,6 +693,7 @@
                     <label for="target-profile-cover-post" class="label-full">
                         <div class="cover-done" id="cover-done-post">
                           <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                          <button type="button" name="button">aaaaa</button>
                         </div>
                     </label>
                 </div>

@@ -57,7 +57,7 @@
                         <label for="target-invited-relationship" style="width: 100%;">
                           <!--  <div class="follwing-btn follwing-btn-pop-up" >-->
                                 <h2>Pendente</h2>
-
+ 
                             </div>
                         </label>
                     </div>
