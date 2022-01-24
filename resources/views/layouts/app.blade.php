@@ -221,7 +221,7 @@
                                        <div class="not-new">
 
                                        </div>
-                                   @endif 
+                                   @endif
                                 </li>
                               @endfor
 
