@@ -3191,3 +3191,29 @@ label[for="hugo"]{
     top: 10px;
     right: 5px;
 }
+.cancel-delete {
+    border: none;
+    color: #fff;
+    background-color: red;
+    border-radius: 4px;
+    font-size: 12px;
+    width: 130px;
+    padding: 8px 10px;
+    margin: 10px;
+}
+.icon-container-alert {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: #343a40;
+    margin-left: 20px;
+    margin-top: 10px;
+    border-radius: 50%;
+}
+.p-description {
+    width: 70%;
+    margin-top: 10px;
+}
+.p-description p {
+    color: #efefef;
+}

@@ -665,7 +665,31 @@ $v=1;
         return $posts;
     }
 
+    public function delete_page(){
+      try {
+          $controll = new AuthController();
+           $dates = $controll->default_();
+          $account_name = $dates['account_name'];
+          $checkUserStatus = $dates['checkUserStatus'];
+          $profile_picture = $dates['profile_picture'];
+          $isUserHost = $dates['isUserHost'];
+          $hasUserManyPages = $dates['hasUserManyPages'];
+          $allUserPages = $dates['allUserPages'];
+          $page_content = $dates['page_content'];
+          $conta_logada = $dates['conta_logada'];
+          $notificacoes = $dates['notificacoes'];
+          $notificacoes_count = $dates['notificacoes_count'];
+          $page_current = 'delete_page';
+          $page_content = $dates['page_content'];
+            $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
+            $sugerir = $this->suggest_pages($page_content[0]->page_id);
+            $allPosts = $this->get_post_types($page_content[0]->page_id);
 
+            return view('notificacoes.delete_page', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir', 'page_content'));
+        } catch (Exception $e) {
+            dd($e);
+        }
+    }
     //---------------------------------------------------------
 
     // Pega o nome do casal da pagina
