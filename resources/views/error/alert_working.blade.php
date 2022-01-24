@@ -4,7 +4,9 @@
 <div class="main" id="main-container-profile">
     <div class="card br-10 card-flex">
         <div class="message-for-user">
-            <i class="hidden-click-any-container fas fa-exclamation-triangle fa-24 notify-icon l-5" id="message-for-user-icon"></i>
+            <div class="icon-container-alert l-5">
+                <i class="hidden-click-any-container fas fa-exclamation-triangle fa-20 notify-icon center" id="message-for-user-icon"></i>
+            </div>
             <div class="message-for-user-component l-5">
                 <h1>O Tassumir está a trabalhar para trazer essa funcionalidade até você...</h1>
                 <h1>{{ $conta_logada[0]->nome }}, esperamos que entenda e por favor aguarde...</h1>
