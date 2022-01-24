@@ -274,7 +274,7 @@
             </ul>
         </nav>
     </aside>
-    @if($page_current != 'working')
+    @if($page_current != 'working' && $page_current != 'delete_page')
     <aside class="aside aside-right" style="z-index:1;">
         <?php if ($controller > 0): ?>
         <header>

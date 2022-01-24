@@ -189,4 +189,5 @@ Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updateP
 
 
 Route::get('/allNotifications', [App\Http\Controllers\AuthController::class, 'seeAllNotifications'])->name('account.all.notifications');
+Route::get('/delete/page', [App\Http\Controllers\PaginaCasalController::class, 'delete_page'])->name('account.delete.page');
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');
