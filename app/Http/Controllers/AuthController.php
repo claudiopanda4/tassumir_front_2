@@ -66,6 +66,9 @@ class AuthController extends Controller
              foreach ($notificacoes_aux as $key) {
                if ($key->id_state_notification == 2) {
                  $notificacoes_count++;
+                 $notificacoes[$a]['state_notification']=2;
+               }else {
+                 $notificacoes[$a]['state_notification']=1;
                }
                if($key->id_state_notification!= 3){
                     $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
@@ -1250,7 +1253,7 @@ public function dados_comment($key){
                   'conta_id' => $conta->conta_id,
 
               ]);
-              
+
               $code = random_int(1000,9000);
               $takePhone = $takePhone;
               $takeEmail = $request->email;
@@ -1266,7 +1269,7 @@ public function dados_comment($key){
 
               DB::commit();
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
-           
+
           }catch(\Exception $e){
             DB::rollBack();
               //return back()->with('error','Erro');

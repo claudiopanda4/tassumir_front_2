@@ -217,11 +217,11 @@
                                     </div>
                                     @endif
                                    </div>
-                                   <?php if (true): ?>
+                                   @if($notificacoes[$i- 1]['state_notification']== 2)
                                        <div class="not-new">
-                                           
-                                       </div>    
-                                   <?php endif ?>
+
+                                       </div>
+                                   @endif 
                                 </li>
                               @endfor
 
@@ -1391,7 +1391,7 @@
                     //alert('oi');
                     home_index();
                     console.log('last_post_id ' + $('#last_post').val());
-                }    
+                }
             }
             let margin_stories = $('.main-container').offset();
             let margin_s = $('.main').offset();
