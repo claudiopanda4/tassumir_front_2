@@ -520,6 +520,9 @@
 		background-color: transparent;
 		border: none;
     }
+	#app-log-reg {
+	    margin-top: 10px;
+	}
     #main-profile header.card {
 	    background-color: transparent;
 	}

@@ -13,6 +13,7 @@ body {
 }
 #app-log-reg {
     background-color: #3b3b3b;
+    margin-top: 100px;
 }
 #app-log-reg,
 #app {
@@ -108,6 +109,7 @@ body {
 }
 .input-login {
     background-color: #242526;
+    margin-top: 10px;
 }
 .risk h2 {
     padding: 10px;
@@ -361,6 +363,7 @@ a:hover {
     padding: 10px;
 }
 .menu-header ul li {
+    position: relative;
     display: inline-block;
     margin-left: 5px;
 } 
@@ -1707,7 +1710,7 @@ label[for="hugo"]{
 .noti-div-name{
     align-self:center; 
     align-items: center;
-    max-width: 220px;
+    max-width: 260px;
 }
 .novi-div-image{
     position: relative;
@@ -3178,4 +3181,13 @@ label[for="hugo"]{
 }
 .comment-user-comment {
     min-width: 110px;
+}
+.not-new {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #fd09fd;
+    border-radius: 50%;
+    top: 10px;
+    right: 5px;
 }

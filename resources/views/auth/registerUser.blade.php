@@ -144,14 +144,6 @@
             return false;
           }
         });
-        $('#nome').on('keyup', function(e){
-            let nome = $('#nome').text();
-            let campos = nome.split(' ');
-            alert(campos.length);
-            if (campos.length >= 2) {
-                alert('não pode');
-            }
-        });
 
     });
   (function() {
