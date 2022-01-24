@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit216a1d306894106f8c2cf2858750c405
+class ComposerStaticInitf9fa46bdf7b52b67f3947b9281fdbb13
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -2149,6 +2149,7 @@ class ComposerStaticInit216a1d306894106f8c2cf2858750c405
         'Illuminate\\Database\\Events\\MigrationEvent' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Events/MigrationEvent.php',
         'Illuminate\\Database\\Events\\MigrationStarted' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Events/MigrationStarted.php',
         'Illuminate\\Database\\Events\\MigrationsEnded' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Events/MigrationsEnded.php',
+        'Illuminate\\Database\\Events\\MigrationsEvent' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Events/MigrationsEvent.php',
         'Illuminate\\Database\\Events\\MigrationsStarted' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Events/MigrationsStarted.php',
         'Illuminate\\Database\\Events\\ModelsPruned' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Events/ModelsPruned.php',
         'Illuminate\\Database\\Events\\NoPendingMigrations' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Database/Events/NoPendingMigrations.php',
@@ -2544,6 +2545,7 @@ class ComposerStaticInit216a1d306894106f8c2cf2858750c405
         'Illuminate\\Queue\\Worker' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/Worker.php',
         'Illuminate\\Queue\\WorkerOptions' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/WorkerOptions.php',
         'Illuminate\\Redis\\Connections\\Connection' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Redis/Connections/Connection.php',
+        'Illuminate\\Redis\\Connections\\PacksPhpRedisValues' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Redis/Connections/PacksPhpRedisValues.php',
         'Illuminate\\Redis\\Connections\\PhpRedisClusterConnection' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Redis/Connections/PhpRedisClusterConnection.php',
         'Illuminate\\Redis\\Connections\\PhpRedisConnection' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Redis/Connections/PhpRedisConnection.php',
         'Illuminate\\Redis\\Connections\\PredisClusterConnection' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Redis/Connections/PredisClusterConnection.php',
@@ -2844,6 +2846,11 @@ class ComposerStaticInit216a1d306894106f8c2cf2858750c405
         'Laravel\\Fortify\\Contracts\\UpdatesUserProfileInformation' => __DIR__ . '/..' . '/laravel/fortify/src/Contracts/UpdatesUserProfileInformation.php',
         'Laravel\\Fortify\\Contracts\\VerifyEmailViewResponse' => __DIR__ . '/..' . '/laravel/fortify/src/Contracts/VerifyEmailViewResponse.php',
         'Laravel\\Fortify\\Events\\RecoveryCodeReplaced' => __DIR__ . '/..' . '/laravel/fortify/src/Events/RecoveryCodeReplaced.php',
+        'Laravel\\Fortify\\Events\\RecoveryCodesGenerated' => __DIR__ . '/..' . '/laravel/fortify/src/Events/RecoveryCodesGenerated.php',
+        'Laravel\\Fortify\\Events\\TwoFactorAuthenticationChallenged' => __DIR__ . '/..' . '/laravel/fortify/src/Events/TwoFactorAuthenticationChallenged.php',
+        'Laravel\\Fortify\\Events\\TwoFactorAuthenticationDisabled' => __DIR__ . '/..' . '/laravel/fortify/src/Events/TwoFactorAuthenticationDisabled.php',
+        'Laravel\\Fortify\\Events\\TwoFactorAuthenticationEnabled' => __DIR__ . '/..' . '/laravel/fortify/src/Events/TwoFactorAuthenticationEnabled.php',
+        'Laravel\\Fortify\\Events\\TwoFactorAuthenticationEvent' => __DIR__ . '/..' . '/laravel/fortify/src/Events/TwoFactorAuthenticationEvent.php',
         'Laravel\\Fortify\\Features' => __DIR__ . '/..' . '/laravel/fortify/src/Features.php',
         'Laravel\\Fortify\\Fortify' => __DIR__ . '/..' . '/laravel/fortify/src/Fortify.php',
         'Laravel\\Fortify\\FortifyServiceProvider' => __DIR__ . '/..' . '/laravel/fortify/src/FortifyServiceProvider.php',
@@ -4420,7 +4427,6 @@ class ComposerStaticInit216a1d306894106f8c2cf2858750c405
         'Psy\\CodeCleaner\\StrictTypesPass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/StrictTypesPass.php',
         'Psy\\CodeCleaner\\UseStatementPass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/UseStatementPass.php',
         'Psy\\CodeCleaner\\ValidClassNamePass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/ValidClassNamePass.php',
-        'Psy\\CodeCleaner\\ValidConstantPass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/ValidConstantPass.php',
         'Psy\\CodeCleaner\\ValidConstructorPass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/ValidConstructorPass.php',
         'Psy\\CodeCleaner\\ValidFunctionNamePass' => __DIR__ . '/..' . '/psy/psysh/src/CodeCleaner/ValidFunctionNamePass.php',
         'Psy\\Command\\BufferCommand' => __DIR__ . '/..' . '/psy/psysh/src/Command/BufferCommand.php',
@@ -5796,10 +5802,10 @@ class ComposerStaticInit216a1d306894106f8c2cf2858750c405
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit216a1d306894106f8c2cf2858750c405::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit216a1d306894106f8c2cf2858750c405::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit216a1d306894106f8c2cf2858750c405::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit216a1d306894106f8c2cf2858750c405::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf9fa46bdf7b52b67f3947b9281fdbb13::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf9fa46bdf7b52b67f3947b9281fdbb13::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitf9fa46bdf7b52b67f3947b9281fdbb13::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitf9fa46bdf7b52b67f3947b9281fdbb13::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -397,7 +397,7 @@ class Collection implements ArrayAccess, CanBeEscapedWhenCastToString, Enumerabl
     /**
      * Remove an item from the collection by key.
      *
-     * @param  string|array  $keys
+     * @param  string|int|array  $keys
      * @return $this
      */
     public function forget($keys)
@@ -1382,6 +1382,21 @@ class Collection implements ArrayAccess, CanBeEscapedWhenCastToString, Enumerabl
     }
 
     /**
+     * Sort the collection keys using a callback.
+     *
+     * @param  callable  $callback
+     * @return static
+     */
+    public function sortKeysUsing(callable $callback)
+    {
+        $items = $this->items;
+
+        uksort($items, $callback);
+
+        return new static($items);
+    }
+
+    /**
      * Splice a portion of the underlying collection array.
      *
      * @param  int  $offset
@@ -1628,7 +1643,7 @@ class Collection implements ArrayAccess, CanBeEscapedWhenCastToString, Enumerabl
     /**
      * Unset the item at a given offset.
      *
-     * @param  string  $key
+     * @param  mixed  $key
      * @return void
      */
     #[\ReturnTypeWillChange]

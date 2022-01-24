@@ -128,7 +128,7 @@
             <div class="row mt-2">
               <div class="col-md-6">
                 <select id="inputState" class="input-text-default input-full input-login" required>
-                  <option selected value="">Choose...</option>
+                  <option selected value="">Opções de Contacto</option>
                   <option value="emailSele">Email</option>
                   <option value="telefSele">Telefone</option>
                 </select>
@@ -141,8 +141,7 @@
               <div class="col-md-6">
 
                 <input type="email" class="input-text-default input-full input-login hidden input-emai-log" placeholder="Email" id="email" name="email">
-
-
+                <span id="emailMsg"></span>
                 <input type="text" class="input-text-default input-full input-login hidden input-emai-log" name="telefone" placeholder="Telefone" id="telefone" data-mask="000-000-000">
 
               </div>
@@ -161,7 +160,7 @@
 
           <div class="hugo-btn">
             <button type="button" id="login-enter" class="next">Seguinte</button>
-            <button type="button" id="login-enter" class="recuar">Recuar</button>
+            <button type="button" id="login-enter" class="recuar">Voltar</button>
             <button type="submit" id="login-enter">Criar Conta</button>
           </div>
 
@@ -234,6 +233,32 @@
       return false;
     }
   });
+
+  $("#email").keyup(function(){
+    if(validateEmail()){
+     // $("#email").css("border","2px solid green");
+
+      $("#emailMsg").html("<p class='text-success'>Email Válido</p>");
+
+    }else{
+          //$("#email").css("border","2px solid red");
+           $("#emailMsg").html("<p class='text-danger'>Email Inválido</p>");
+    }
+
+  });
+
+  function validateEmail(){
+
+    var email = $("#email").val();
+
+    var reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    if(reg.test(email)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 
   $(function() {
 
@@ -309,6 +334,7 @@
         $("#telefone").fadeIn();
 
         $("#email").hide();
+        $("#emailMsg").hide();
 
       } else {
 

@@ -176,7 +176,7 @@
         @if($v == 1)
         <label for="add-post-target" class="add-post-label">
             <div class="add-post circle">
-                <i class="fas fa-plus fas-16 center"></i>
+                <i class="far fa-edit fas-20 center" style="font-size: 20px;"></i>
             </div>
         </label>
         @endif
