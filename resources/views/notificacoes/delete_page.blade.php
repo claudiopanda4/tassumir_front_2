@@ -11,14 +11,14 @@
             <i class="fas fa-ellipsis-h fa-18 fa-option "></i>
             </div>
     </header>
-    <?php if (false): ?>
+    @if($dados['verf']==1)
         <div>
             <div class="clearfix">
                 <div class="icon-container-alert l-5">
                     <i class="fas fa-exclamation-triangle fa-20 center"></i>
                 </div>
                 <div class="p-description l-5">
-                    <p>A sua página (sua relação com o <span class="name-partner" id="partner">Domingos</span>) será eliminada dentro de 2 meses. Caso queira que isso não aconteça, clique no botão "Anular".</p>
+                    <p>A sua página ( <span class="name-partner" id="partner">{{$dados['nome_pag']}}</span>) será eliminada dentro de 2 meses. Caso queira que isso não aconteça, clique no botão "Anular".</p>
                 </div>
             </div>
             <div class="nav-button clearfix">
@@ -27,14 +27,14 @@
                 </div>
             </div>
         </div>
-    <?php else: ?>
+    @else
         <div>
             <div class="clearfix">
                 <div class="icon-container-alert l-5">
                     <i class="fas fa-exclamation-triangle fa-20 center"></i>
                 </div>
                 <div class="p-description l-5">
-                    <p>A sua página (sua relação com o <span class="name-partner" id="partner">Domingos</span>) será eliminada dentro de 2 meses. Caso queira que isso não aconteça, peça para que a sua parceira elimine ou anule essa acção. Só <span class="name-partner" id="partner">Domingos</span> pode fazer isso porque foi ele quem quis eliminar o vosso relacionamento</p>
+                    <p>A sua página ( <span class="name-partner" id="partner">{{$dados['nome_pag']}}</span>) será eliminada dentro de 2 meses. Caso queira que isso não aconteça, peça para que a sua parceira elimine ou anule essa acção. Só <span class="name-partner" id="partner">{{$dados['quem_eliminou']}}</span> pode fazer isso porque foi ele quem quis eliminar o vosso relacionamento</p>
                 </div>
             </div>
             <div class="nav-button clearfix">
@@ -43,6 +43,6 @@
                 </div>
             </div>
         </div>
-    <?php endif ?>
+    @endif
 </div>
 @stop
