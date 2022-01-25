@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '389c93a6beb5c43b90c93430340642b081279394',
+    'reference' => 'efa75a75ab835d38fa07ef391d04f32d23b51014',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -158,12 +158,12 @@ private static $installed = array (
     ),
     'fakerphp/faker' => 
     array (
-      'pretty_version' => 'v1.17.0',
-      'version' => '1.17.0.0',
+      'pretty_version' => 'v1.18.0',
+      'version' => '1.18.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'b85e9d44eae8c52cca7aa0939483611f7232b669',
+      'reference' => '2e77a868f6540695cf5ebf21e5ab472c65f47567',
     ),
     'filp/whoops' => 
     array (
@@ -477,16 +477,16 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '389c93a6beb5c43b90c93430340642b081279394',
+      'reference' => 'efa75a75ab835d38fa07ef391d04f32d23b51014',
     ),
     'laravel/sail' => 
     array (
-      'pretty_version' => 'v1.13.0',
-      'version' => '1.13.0.0',
+      'pretty_version' => 'v1.13.1',
+      'version' => '1.13.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'a14125e71779c99e27979431a66ea2793aa6ae50',
+      'reference' => 'b9749028732eca8080c26d01cd88a2f3549c2e3e',
     ),
     'laravel/sanctum' => 
     array (
@@ -553,12 +553,12 @@ private static $installed = array (
     ),
     'mockery/mockery' => 
     array (
-      'pretty_version' => '1.4.4',
-      'version' => '1.4.4.0',
+      'pretty_version' => '1.5.0',
+      'version' => '1.5.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'e01123a0e847d52d186c5eb4b9bf58b0c6d00346',
+      'reference' => 'c10a5f6e06fc2470ab1822fa13fa2a7380f8fbac',
     ),
     'monolog/monolog' => 
     array (
@@ -591,12 +591,12 @@ private static $installed = array (
     ),
     'nesbot/carbon' => 
     array (
-      'pretty_version' => '2.55.2',
-      'version' => '2.55.2.0',
+      'pretty_version' => '2.56.0',
+      'version' => '2.56.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8c2a18ce3e67c34efc1b29f64fe61304368259a2',
+      'reference' => '626ec8cbb724cd3c3400c3ed8f730545b744e3f4',
     ),
     'nikic/php-parser' => 
     array (
@@ -744,12 +744,12 @@ private static $installed = array (
     ),
     'phpunit/phpunit' => 
     array (
-      'pretty_version' => '9.5.11',
-      'version' => '9.5.11.0',
+      'pretty_version' => '9.5.13',
+      'version' => '9.5.13.0',
       'aliases' => 
       array (
       ),
-      'reference' => '2406855036db1102126125537adb1406f7242fdd',
+      'reference' => '597cb647654ede35e43b137926dfdfef0fb11743',
     ),
     'pragmarx/google2fa' => 
     array (
@@ -1355,12 +1355,12 @@ private static $installed = array (
     ),
     'voku/portable-ascii' => 
     array (
-      'pretty_version' => '1.5.6',
-      'version' => '1.5.6.0',
+      'pretty_version' => '1.6.1',
+      'version' => '1.6.1.0',
       'aliases' => 
       array (
       ),
-      'reference' => '80953678b19901e5165c56752d087fc11526017c',
+      'reference' => '87337c91b9dfacee02452244ee14ab3c43bc485a',
     ),
     'webmozart/assert' => 
     array (

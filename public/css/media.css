@@ -520,6 +520,9 @@
 		background-color: transparent;
 		border: none;
     }
+	#app-log-reg {
+	    margin-top: 10px;
+	}
     #main-profile header.card {
 	    background-color: transparent;
 	}
@@ -728,7 +731,8 @@
 	}
 	.stories-about-talking header h1 {
 	    font-size: 13px;
-	    padding: 0px 12px 5px;
+	    padding: 0px 12px 5px;    
+	    margin-top: 10px;
 	}
 	.stories-about-talking nav ul li {
 	    width: 66px;
@@ -770,7 +774,7 @@
 	    height: 75px;
 	}
 	.statistics-profile-page-component h1 {
-	    font-size: 14px;
+	    font-size: 13px;
 	}
 	.info-invite-relationship {
 	    width: 250px;
@@ -1078,6 +1082,23 @@
 	.comment-user-comment.comment-user-comment-feed p {
 	    font-size: 11px;
 	    max-width: 160px;
+	}
+	.interaction-numbers li a {
+	    font-size: 12px;
+	}
+}
+@media screen and (max-width: 470px) {
+	.post header .first-component .page-identify h1 {
+	    font-size: 12px;
+	}
+	.edit-profile-mobile {
+		font-size: 12px;
+	}
+	.btn-a-default {
+		font-size: 12px;
+	}
+	.statistics-profile-page-identify {
+	    margin-top: 8px;
 	}
 }
 

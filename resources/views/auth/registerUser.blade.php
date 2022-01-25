@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Tassumir') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -122,30 +122,30 @@
 </body>
 </html>
 <script>
-    
-    $("#nome").bind('keydown', function(e) {
+    $(document).ready(function(){
+        $("#nome").bind('keydown', function(e) {
+          var codTecla = e.which;
+          var teclas = (codTecla > 64 && codTecla <= 90);
+          var teclasAlter = (",8,32,46,37,38,39,40".indexOf("," + codTecla + ",") > -1);
+          if (teclas || teclasAlter) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        $("#apelido").bind('keydown', function(e) {
 
-      var codTecla = e.which;
-      var teclas = (codTecla > 64 && codTecla <= 90);
-      var teclasAlter = (",8,32,46,37,38,39,40".indexOf("," + codTecla + ",") > -1);
-      if (teclas || teclasAlter) {
-        return true;
-      } else {
-        return false;
-      }
+          var codTecla = e.which;
+          var teclas = (codTecla > 64 && codTecla <= 90);
+          var teclasAlter = (",8,32,46,37,38,39,40".indexOf("," + codTecla + ",") > -1);
+          if (teclas || teclasAlter) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+
     });
-    $("#apelido").bind('keydown', function(e) {
-
-      var codTecla = e.which;
-      var teclas = (codTecla > 64 && codTecla <= 90);
-      var teclasAlter = (",8,32,46,37,38,39,40".indexOf("," + codTecla + ",") > -1);
-      if (teclas || teclasAlter) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-
   (function() {
     'use strict';
     window.addEventListener('load', function() {

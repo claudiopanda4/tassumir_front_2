@@ -186,7 +186,7 @@
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @elseif($notificacoes[$i- 1]['tipo'] == 11)
-                                   <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                   <a href="{{route('account.delete.page', $notificacoes[$i- 1]['id1']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
                                     <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
                                    </a>
                                    @else
@@ -217,7 +217,11 @@
                                     </div>
                                     @endif
                                    </div>
+                                   @if($notificacoes[$i- 1]['state_notification']== 2)
+                                       <div class="not-new">
 
+                                       </div>
+                                   @endif
                                 </li>
                               @endfor
 
@@ -270,7 +274,7 @@
             </ul>
         </nav>
     </aside>
-    @if($page_current != 'working')
+    @if($page_current != 'working' && $page_current != 'delete_page')
     <aside class="aside aside-right" style="z-index:1;">
         <?php if ($controller > 0): ?>
         <header>
@@ -691,8 +695,9 @@
 
                 <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                     <label for="target-profile-cover-post" class="label-full">
-                        <div class="cover-done" id="cover-done-post">
+                        <div class="cover-done" id="">
                           <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                          <button type="button" name="button">aaaaa</button>
                         </div>
                     </label>
                 </div>
@@ -742,7 +747,7 @@
                     </div>
 
                     <div class="justify-content-start marriage-proposal" style="margin-bottom: 10px;">
-                        <span class="text-white">Caso seja aceite, qual nome da Página de casal, gostaria de usar? (Pode ser editado...).</span>
+                        <span class="text-white">Qual o nome da Página de casal gostaria de usar? (Pode ser editado...).</span>
                     </div>
                     <div class="form-group marriage-proposal">
                         <input type="text" class="input-text-default input-full" name="name_page" type="text" placeholder="Nome da Página do Casal">
@@ -1379,12 +1384,14 @@
             //control_ = $(document).height() - control_;
             //$(window).scrollTop() + $(window).height() == $(document).height();
             //console.log('scrollTop + ' + $(window).scrollTop() + ' heightWindow + ' + $(window).height() + ' = ' + $(document).height() + ' top_control ' + control_.top);
-            console.log(control_.top + " " + $(document).height());
-            if (control_.top <= $(document).height()) {
-                //alert('carregar');
-                //alert('oi');
-                home_index();
-                console.log('last_post_id ' + $('#last_post').val());
+            if(control_){
+                console.log(control_.top + " " + $(document).height());
+                if (control_.top <= $(document).height()) {
+                    //alert('carregar');
+                    //alert('oi');
+                    home_index();
+                    console.log('last_post_id ' + $('#last_post').val());
+                }
             }
             let margin_stories = $('.main-container').offset();
             let margin_s = $('.main').offset();

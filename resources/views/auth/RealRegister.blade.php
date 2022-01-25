@@ -8,7 +8,7 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>{{ config('app.name', 'Laravel') }}</title>
+  <title>{{ config('app.name', 'Tassumir') }}</title>
 
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}" defer></script>
@@ -30,7 +30,7 @@
   <meta http-equiv="UA-X-Compatible" content="ie=edge">
   <style>
     .form-section {
-      padding-top: 100px;
+      padding-top: 10px;
       display: none;
     }
 
@@ -74,16 +74,20 @@
           @csrf
 
           <div class="form-section">
-            <input type="text" class="input-text-default input-full input-login" name="nome" placeholder="Nome" id="nome" required />
-
+            <input type="text" class="input-text-default input-full input-login" name="nome" placeholder="Nome" id="nome-id" required />
             <span class="hidden" style="color:red;" id="erroNome"> Insira um Nome</span>
+            <input type="text" name="apelido" class="input-text-default input-full input-login" placeholder="Apelido" id="apelido-id" required />
 
-
-            <input type="text" name="apelido" class="input-text-default input-full input-login" placeholder="Apelido" id="apelido" required />
-
+            <div id=verify-dados>
+              
+            </div>
             <span class="hidden" style="color:red;" id="erroApelido"> Insira o Email</span>
 
-            <div class="row">
+            <input type="date" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="12/09/2002">
+
+            <span class="hidden" style="color:red;" id="erroData"> Insira a Data</span>
+
+            <div class="row" style="margin-top: 10px;">
 
               <div class="col-md-8">
 
@@ -109,10 +113,6 @@
 
 
             </div>
-            <input type="date" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="12/09/2002">
-
-            <span class="hidden" style="color:red;" id="erroData"> Insira a Data</span>
-
           </div>
 
 
@@ -186,7 +186,34 @@
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script>
   const pass = $("#password");
-
+  $('#nome-id').on('keyup', function(e){
+    let control = 0;
+    let nome = $('#nome-id').val();
+    let campos = nome.split(' ');
+    if (campos.length >= 2) {
+      nome = nome.replace(' ', '');
+      control++;
+      $('#nome-id').val(nome);
+    }else{
+      $('#v-f-d').remove();
+    }
+    if (control > 0 && $('#nome-id').focus()) {
+      $("#verify-dados").html("<p class='text-danger' id='v-f-d'>Não se permite espaços</p>");
+    }
+  });
+  $('#apelido-id').on('keyup', function(e){
+    let apelido = $('#apelido-id').val();
+    let campos = apelido.split(' ');
+    if (campos.length >= 2) {
+      apelido = apelido.replace(' ', '');
+      $('#apelido-id').val(apelido);
+    }else{
+      $('#v-f-d').remove();
+    }
+    if (control > 0 && $('#apelido-id').focus()) {
+       $("#verify-dados").html("<p class='text-danger' id='v-f-d'>Não se permite espaços</p>");
+    }
+  });
   $("#eye").on('click', function() {
 
     if (pass.prop('type') == 'password') {

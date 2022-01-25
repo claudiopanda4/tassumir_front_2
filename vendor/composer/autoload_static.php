@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit398fabb006cb4621615e9bca77e21029
+class ComposerStaticInit89d473604ad580d84b98dce08830d2c0
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -26,8 +26,8 @@ class ComposerStaticInit398fabb006cb4621615e9bca77e21029
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
-        '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
+        '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '265b4faa2b3a9766332744949e83bf97' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections/helpers.php',
         'c7a3c339e7e14b60e06a2d7fcce9476b' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Events/functions.php',
@@ -722,6 +722,7 @@ class ComposerStaticInit398fabb006cb4621615e9bca77e21029
         'Carbon\\FactoryImmutable' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/FactoryImmutable.php',
         'Carbon\\Language' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Language.php',
         'Carbon\\Laravel\\ServiceProvider' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Laravel/ServiceProvider.php',
+        'Carbon\\PHPStan\\AbstractMacro' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/PHPStan/AbstractMacro.php',
         'Carbon\\PHPStan\\Macro' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/PHPStan/Macro.php',
         'Carbon\\PHPStan\\MacroExtension' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/PHPStan/MacroExtension.php',
         'Carbon\\PHPStan\\MacroScanner' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/PHPStan/MacroScanner.php',
@@ -1098,11 +1099,13 @@ class ComposerStaticInit398fabb006cb4621615e9bca77e21029
         'Faker\\Calculator\\Isbn' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Calculator/Isbn.php',
         'Faker\\Calculator\\Luhn' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Calculator/Luhn.php',
         'Faker\\Calculator\\TCNo' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Calculator/TCNo.php',
+        'Faker\\ChanceGenerator' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/ChanceGenerator.php',
         'Faker\\Core\\Barcode' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Core/Barcode.php',
         'Faker\\Core\\Blood' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Core/Blood.php',
         'Faker\\Core\\Coordinates' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Core/Coordinates.php',
         'Faker\\Core\\File' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Core/File.php',
         'Faker\\Core\\Number' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Core/Number.php',
+        'Faker\\Core\\Uuid' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Core/Uuid.php',
         'Faker\\Core\\Version' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Core/Version.php',
         'Faker\\DefaultGenerator' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/DefaultGenerator.php',
         'Faker\\Documentor' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Documentor.php',
@@ -1124,6 +1127,7 @@ class ComposerStaticInit398fabb006cb4621615e9bca77e21029
         'Faker\\Extension\\NumberExtension' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Extension/NumberExtension.php',
         'Faker\\Extension\\PersonExtension' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Extension/PersonExtension.php',
         'Faker\\Extension\\PhoneNumberExtension' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Extension/PhoneNumberExtension.php',
+        'Faker\\Extension\\UuidExtension' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Extension/UuidExtension.php',
         'Faker\\Extension\\VersionExtension' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Extension/VersionExtension.php',
         'Faker\\Factory' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Factory.php',
         'Faker\\Generator' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Generator.php',
@@ -3258,7 +3262,6 @@ class ComposerStaticInit398fabb006cb4621615e9bca77e21029
         'Mockery\\Matcher\\NoArgs' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Matcher/NoArgs.php',
         'Mockery\\Matcher\\Not' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Matcher/Not.php',
         'Mockery\\Matcher\\NotAnyOf' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Matcher/NotAnyOf.php',
-        'Mockery\\Matcher\\PHPUnitConstraint' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Matcher/PHPUnitConstraint.php',
         'Mockery\\Matcher\\Pattern' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Matcher/Pattern.php',
         'Mockery\\Matcher\\Subset' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Matcher/Subset.php',
         'Mockery\\Matcher\\Type' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Matcher/Type.php',
@@ -5652,10 +5655,10 @@ class ComposerStaticInit398fabb006cb4621615e9bca77e21029
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit398fabb006cb4621615e9bca77e21029::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit398fabb006cb4621615e9bca77e21029::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit398fabb006cb4621615e9bca77e21029::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit398fabb006cb4621615e9bca77e21029::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit89d473604ad580d84b98dce08830d2c0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit89d473604ad580d84b98dce08830d2c0::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit89d473604ad580d84b98dce08830d2c0::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit89d473604ad580d84b98dce08830d2c0::$classMap;
 
         }, null, ClassLoader::class);
     }
