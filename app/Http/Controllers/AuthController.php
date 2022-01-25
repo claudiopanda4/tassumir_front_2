@@ -64,13 +64,9 @@ class AuthController extends Controller
            //dd($notificacoes_aux);
            if (sizeof($notificacoes_aux)>0) {
              foreach ($notificacoes_aux as $key) {
-               if ($key->id_state_notification == 2) {
-                 $notificacoes_count++;
-                 $notificacoes[$a]['state_notification']=2;
-               }else {
-                 $notificacoes[$a]['state_notification']=1;
-               }
                if($key->id_state_notification!= 3){
+                 $notificacoes[$a]['id1']=$key->notification_id;
+
                     $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
                     if ($aux2[0]->tipo_identificador_id == 1) {
                         $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
@@ -208,8 +204,12 @@ class AuthController extends Controller
 
                $notificacoes[$a]['foto']=$nome[1];
                $notificacoes[$a]['v']=$nome[2];
-               $notificacoes[$a]['id1']=$key->notification_id;
-
+               if ($key->id_state_notification == 2) {
+                 $notificacoes_count++;
+                 $notificacoes[$a]['state_notification']=2;
+               }else {
+                 $notificacoes[$a]['state_notification']=1;
+               }
                $a++;
              }
            }
