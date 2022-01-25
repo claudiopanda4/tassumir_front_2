@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
-<<<<<<< HEAD
 use League\CommonMark\Block\Element\AbstractBlock;
 use League\CommonMark\Block\Renderer\BlockRendererInterface;
 use League\CommonMark\ElementRendererInterface;
@@ -37,46 +36,4 @@ final class TableRenderer implements BlockRendererInterface
 
         return new HtmlElement('table', $attrs, $separator . \trim($children) . $separator);
     }
-=======
-use League\CommonMark\Node\Node;
-use League\CommonMark\Renderer\ChildNodeRendererInterface;
-use League\CommonMark\Renderer\NodeRendererInterface;
-use League\CommonMark\Util\HtmlElement;
-use League\CommonMark\Xml\XmlNodeRendererInterface;
-
-final class TableRenderer implements NodeRendererInterface, XmlNodeRendererInterface
-{
-    /**
-     * @param Table $node
-     *
-     * {@inheritDoc}
-     *
-     * @psalm-suppress MoreSpecificImplementedParamType
-     */
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer): \Stringable
-    {
-        Table::assertInstanceOf($node);
-
-        $attrs = $node->data->get('attributes');
-
-        $separator = $childRenderer->getInnerSeparator();
-
-        $children = $childRenderer->renderNodes($node->children());
-
-        return new HtmlElement('table', $attrs, $separator . \trim($children) . $separator);
-    }
-
-    public function getXmlTagName(Node $node): string
-    {
-        return 'table';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getXmlAttributes(Node $node): array
-    {
-        return [];
-    }
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

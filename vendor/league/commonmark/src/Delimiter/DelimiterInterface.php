@@ -1,10 +1,5 @@
 <?php
 
-<<<<<<< HEAD
-=======
-declare(strict_types=1);
-
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 /*
  * This file is part of the league/commonmark package.
  *
@@ -19,11 +14,7 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Delimiter;
 
-<<<<<<< HEAD
 use League\CommonMark\Inline\Element\AbstractStringContainer;
-=======
-use League\CommonMark\Node\Inline\AbstractStringContainer;
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
 interface DelimiterInterface
 {
@@ -33,7 +24,6 @@ interface DelimiterInterface
 
     public function isActive(): bool;
 
-<<<<<<< HEAD
     /**
      * @param bool $active
      *
@@ -44,17 +34,12 @@ interface DelimiterInterface
     /**
      * @return string
      */
-=======
-    public function setActive(bool $active): void;
-
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
     public function getChar(): string;
 
     public function getIndex(): ?int;
 
     public function getNext(): ?DelimiterInterface;
 
-<<<<<<< HEAD
     /**
      * @param DelimiterInterface|null $next
      *
@@ -70,13 +55,6 @@ interface DelimiterInterface
      * @return void
      */
     public function setLength(int $length);
-=======
-    public function setNext(?DelimiterInterface $next): void;
-
-    public function getLength(): int;
-
-    public function setLength(int $length): void;
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
     public function getOriginalLength(): int;
 
@@ -84,14 +62,10 @@ interface DelimiterInterface
 
     public function getPrevious(): ?DelimiterInterface;
 
-<<<<<<< HEAD
     /**
      * @param DelimiterInterface|null $previous
      *
      * @return mixed|void
      */
     public function setPrevious(?DelimiterInterface $previous);
-=======
-    public function setPrevious(?DelimiterInterface $previous): void;
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

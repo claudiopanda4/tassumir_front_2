@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace League\CommonMark\Extension\Table;
 
-<<<<<<< HEAD
 use League\CommonMark\Block\Element\Document;
 use League\CommonMark\Block\Element\Paragraph;
 use League\CommonMark\Block\Parser\BlockParserInterface;
@@ -146,167 +145,14 @@ final class TableParser implements BlockParserInterface, EnvironmentAwareInterfa
     private function split(Cursor $cursor): array
     {
         if ($cursor->getCharacter() === '|') {
-=======
-use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
-use League\CommonMark\Parser\Block\BlockContinue;
-use League\CommonMark\Parser\Block\BlockContinueParserInterface;
-use League\CommonMark\Parser\Block\BlockContinueParserWithInlinesInterface;
-use League\CommonMark\Parser\Cursor;
-use League\CommonMark\Parser\InlineParserEngineInterface;
-use League\CommonMark\Util\ArrayCollection;
-
-final class TableParser extends AbstractBlockContinueParser implements BlockContinueParserWithInlinesInterface
-{
-    /** @psalm-readonly */
-    private Table $block;
-
-    /**
-     * @var ArrayCollection<string>
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private ArrayCollection $bodyLines;
-
-    /**
-     * @var array<int, string|null>
-     * @psalm-var array<int, TableCell::ALIGN_*|null>
-     * @phpstan-var array<int, TableCell::ALIGN_*|null>
-     *
-     * @psalm-readonly
-     */
-    private array $columns;
-
-    /**
-     * @var array<int, string>
-     *
-     * @psalm-readonly-allow-private-mutation
-     */
-    private array $headerCells;
-
-    /** @psalm-readonly-allow-private-mutation */
-    private bool $nextIsSeparatorLine = true;
-
-    /**
-     * @param array<int, string|null> $columns
-     * @param array<int, string>      $headerCells
-     *
-     * @psalm-param array<int, TableCell::ALIGN_*|null> $columns
-     *
-     * @phpstan-param array<int, TableCell::ALIGN_*|null> $columns
-     */
-    public function __construct(array $columns, array $headerCells)
-    {
-        $this->block       = new Table();
-        $this->bodyLines   = new ArrayCollection();
-        $this->columns     = $columns;
-        $this->headerCells = $headerCells;
-    }
-
-    public function canHaveLazyContinuationLines(): bool
-    {
-        return true;
-    }
-
-    public function getBlock(): Table
-    {
-        return $this->block;
-    }
-
-    public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
-    {
-        if (\strpos($cursor->getLine(), '|') === false) {
-            return BlockContinue::none();
-        }
-
-        return BlockContinue::at($cursor);
-    }
-
-    public function addLine(string $line): void
-    {
-        if ($this->nextIsSeparatorLine) {
-            $this->nextIsSeparatorLine = false;
-        } else {
-            $this->bodyLines[] = $line;
-        }
-    }
-
-    public function parseInlines(InlineParserEngineInterface $inlineParser): void
-    {
-        $headerColumns = \count($this->headerCells);
-
-        $head = new TableSection(TableSection::TYPE_HEAD);
-        $this->block->appendChild($head);
-
-        $headerRow = new TableRow();
-        $head->appendChild($headerRow);
-        for ($i = 0; $i < $headerColumns; $i++) {
-            $cell      = $this->headerCells[$i];
-            $tableCell = $this->parseCell($cell, $i, $inlineParser);
-            $tableCell->setType(TableCell::TYPE_HEADER);
-            $headerRow->appendChild($tableCell);
-        }
-
-        $body = null;
-        foreach ($this->bodyLines as $rowLine) {
-            $cells = self::split($rowLine);
-            $row   = new TableRow();
-
-            // Body can not have more columns than head
-            for ($i = 0; $i < $headerColumns; $i++) {
-                $cell      = $cells[$i] ?? '';
-                $tableCell = $this->parseCell($cell, $i, $inlineParser);
-                $row->appendChild($tableCell);
-            }
-
-            if ($body === null) {
-                // It's valid to have a table without body. In that case, don't add an empty TableBody node.
-                $body = new TableSection();
-                $this->block->appendChild($body);
-            }
-
-            $body->appendChild($row);
-        }
-    }
-
-    private function parseCell(string $cell, int $column, InlineParserEngineInterface $inlineParser): TableCell
-    {
-        $tableCell = new TableCell();
-
-        if ($column < \count($this->columns)) {
-            $tableCell->setAlign($this->columns[$column]);
-        }
-
-        $inlineParser->parse(\trim($cell), $tableCell);
-
-        return $tableCell;
-    }
-
-    /**
-     * @internal
-     *
-     * @return array<int, string>
-     */
-    public static function split(string $line): array
-    {
-        $cursor = new Cursor(\trim($line));
-
-        if ($cursor->getCurrentCharacter() === '|') {
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             $cursor->advanceBy(1);
         }
 
         $cells = [];
-<<<<<<< HEAD
         $sb = '';
 
         while (!$cursor->isAtEnd()) {
             switch ($c = $cursor->getCharacter()) {
-=======
-        $sb    = '';
-
-        while (! $cursor->isAtEnd()) {
-            switch ($c = $cursor->getCurrentCharacter()) {
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
                 case '\\':
                     if ($cursor->peek() === '|') {
                         // Pipe is special for table parsing. An escaped pipe doesn't result in a new cell, but is
@@ -318,26 +164,14 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
                         // Preserve backslash before other characters or at end of line.
                         $sb .= '\\';
                     }
-<<<<<<< HEAD
                     break;
                 case '|':
                     $cells[] = $sb;
                     $sb = '';
-=======
-
-                    break;
-                case '|':
-                    $cells[] = $sb;
-                    $sb      = '';
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
                     break;
                 default:
                     $sb .= $c;
             }
-<<<<<<< HEAD
-=======
-
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
             $cursor->advanceBy(1);
         }
 
@@ -347,7 +181,6 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
 
         return $cells;
     }
-<<<<<<< HEAD
 
     /**
      * @param Cursor $cursor
@@ -448,6 +281,4 @@ final class TableParser extends AbstractBlockContinueParser implements BlockCont
 
         return false;
     }
-=======
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 }

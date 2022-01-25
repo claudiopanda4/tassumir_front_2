@@ -17,16 +17,10 @@ namespace League\CommonMark\Normalizer;
  * Normalize text input using the steps given by the CommonMark spec to normalize labels
  *
  * @see https://spec.commonmark.org/0.29/#matches
-<<<<<<< HEAD
-=======
- *
- * @psalm-immutable
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
  */
 final class TextNormalizer implements TextNormalizerInterface
 {
     /**
-<<<<<<< HEAD
      * @var array<int, array<int, string>>
      *
      * Source: https://github.com/symfony/polyfill-mbstring/blob/master/Mbstring.php
@@ -51,18 +45,6 @@ final class TextNormalizer implements TextNormalizerInterface
 
             return \mb_strtolower($text, 'UTF-8');
         }
-=======
-     * {@inheritDoc}
-     *
-     * @psalm-pure
-     */
-    public function normalize(string $text, array $context = []): string
-    {
-        // Collapse internal whitespace to single space and remove
-        // leading/trailing whitespace
-        $text = \preg_replace('/[ \t\r\n]+/', ' ', \trim($text));
-        \assert(\is_string($text));
->>>>>>> c238f31813060ef49682ad19f809d8d0d25aaaf7
 
         return \mb_convert_case($text, \MB_CASE_FOLD, 'UTF-8');
     }
