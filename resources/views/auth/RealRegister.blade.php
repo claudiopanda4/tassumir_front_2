@@ -316,11 +316,11 @@
 
     $('.hugo-btn .next').click(function() {
 
-      let nome = $('#nome').val();
-      let apelido = $('#apelido').val();
-      let data_nas = $('#dataNas').val()
-
-      if (nome && apelido && data_nas != null) {
+      let nome = $('#nome-id').val();
+      let apelido = $('#apelido-id').val();
+      let data_nas = $('#dataNas').val();
+      if (data_nas && nome && apelido) {alert(data_nas);}
+      if (nome && apelido && data_nas) {
 
         navigateTo(curIndex() + 1);
 

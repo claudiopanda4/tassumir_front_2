@@ -154,6 +154,7 @@ body {
 }
 .form-group label {
     color: #fff;
+    margin-bottom: 0;
 }
 .title-with-color{
     color: #800080;
@@ -175,8 +176,6 @@ body {
     border: 1px solid #efefef;
     top: 0px;
 }
-
-
 .clearfix::after {
     display: block;
     content: '.';
