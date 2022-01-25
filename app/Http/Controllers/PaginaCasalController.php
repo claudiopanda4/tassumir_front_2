@@ -665,7 +665,7 @@ $v=1;
         return $posts;
     }
 
-    public function delete_page(){
+    public function delete_page($id){
       try {
           $controll = new AuthController();
            $dates = $controll->default_();
@@ -684,8 +684,30 @@ $v=1;
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $sugerir = $this->suggest_pages($page_content[0]->page_id);
             $allPosts = $this->get_post_types($page_content[0]->page_id);
+            $dados=array();
+            $key=DB::table('notifications')->where('notification_id',$id)
+            ->get();
+            $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+            $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key[0]->identificador_id_causador ]);
+            $aux= DB::select('select * from identificadors where identificador_id = ?', [$key[0]->identificador_id_destino]);
+            if (sizeof($aux)>0){
+              $page =  DB::select('select * from pages where page_id = ?',[$aux[0]->id]);
+              $dados['nome_pag']=$page[0]->nome;
+              if ($aux2[0]->id == $conta_logada[0]->conta_id){
+                $dados['quem_eliminou']="você";
+                $dados['verf']=1;
 
-            return view('notificacoes.delete_page', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir', 'page_content'));
+
+                  }else {
+                    $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                    $dados['quem_eliminou']=$conta[0]->nome;
+                    $dados['verf']=2;
+
+
+                   }
+                }
+
+            return view('notificacoes.delete_page', compact('dados','account_name','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir', 'page_content'));
         } catch (Exception $e) {
             dd($e);
         }
