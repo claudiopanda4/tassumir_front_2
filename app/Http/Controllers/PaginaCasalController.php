@@ -128,10 +128,50 @@ $v=1;
         DB::table('notifications')->where('notification_id',$request->id_notification)
         ->update(['id_state_notification' => 3]);
 
- $aux= DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->accept_relacd]);;
- $aux1=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->pedido_relacionamento_id, 5 ]);;
- $aux2=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedida, 1 ]);;
- $aux3=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedinte, 1]);;
+ $aux= DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->accept_relacd]);
+ $aux1=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->pedido_relacionamento_id, 5 ]);
+ $aux2=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedida, 1 ]);
+ $aux3=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedinte, 1]);
+
+   $contaPDD = DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedida)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedida)
+         ->get();
+
+   $contaPDT = DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedinte)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedinte)
+               ->get();
+
+              if(sizeof($contaPDD)>1) {
+                      for ($i=sizeof($contaPDD); $i > 0 ; $i--) {
+                        if ($contaPDD[$i - 1]->pedido_relacionamento_id != $aux[0]->pedido_relacionamento_id) {
+                          DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$contaPDD[$i - 1]->pedido_relacionamento_id)
+                          ->delete();
+                        }
+                      }
+                    }
+              if(sizeof($contaPDT)>1) {
+                      for ($i=sizeof($contaPDT); $i > 0 ; $i--) {
+                        if ($contaPDT[$i - 1]->pedido_relacionamento_id != $aux[0]->pedido_relacionamento_id) {
+                          DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$contaPDT[$i - 1]->pedido_relacionamento_id)
+                          ->delete();
+                        }
+                      }
+             }
+
+             $notContaPDD = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux2[0]->identificador_id]);
+             $notContaPDT = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux3[0]->identificador_id]);
+
+             if(sizeof($notContaPDD)>0) {
+                     for ($i=sizeof($notContaPDD); $i > 0 ; $i--) {
+                       DB::table('notifications')->where('notification_id',$notContaPDD[$i - 1]->notification_id)
+                       ->delete();
+                     }
+                   }
+             if(sizeof($notContaPDT)>0) {
+                     for ($i=sizeof($notContaPDT); $i > 0 ; $i--) {
+                       DB::table('notifications')->where('notification_id',$notContaPDT[$i - 1]->notification_id)
+                       ->delete();
+                     }
+            }
+
         DB::table('notifications')->insert([
                 'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                 'id_state_notification' => 2,
@@ -167,7 +207,7 @@ $v=1;
         ->delete();
         DB::table('notifications')->where('notification_id',$request->id2)
         ->delete();
-        $resposta.= 1;
+        $resposta= 1;
 
         return response()->json($resposta);
       }

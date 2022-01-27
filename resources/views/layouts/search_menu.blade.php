@@ -152,7 +152,6 @@
                                             <a href=""><span class="">há um dia</span></a>
                                         </div>
                                         @if($notificacoes[$i- 1]['tipo'] == 4)
-                                        <?php $controller++; ?>
                                         <div class="hidden-click-any-container options-invited clearfix">
                                             <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                                 <div class="hidden-click-any-container label-invited" id="">
@@ -164,7 +163,6 @@
                                         </div>
                                       </div>
                                         @elseif($notificacoes[$i- 1]['tipo'] == 7)
-                                        <?php $controller++; ?>
                                         <div class="hidden-click-any-container options-invited clearfix">
                                             <!--<a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>-->
                                             <a  href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="ver_mais" id="VR|{{$notificacoes[$i- 1]['id1']}}">Ver Resposta</a>

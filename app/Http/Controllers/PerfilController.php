@@ -44,10 +44,10 @@ class PerfilController extends Controller
            $guardado= DB::select('select * from saveds where conta_id =  ?', [$account_name[0]->conta_id]);
            $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$account_name[0]->conta_id, $conta_logada[0]->conta_id]);
            $verificacao_pedido1= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_logada[0]->conta_id, $account_name[0]->conta_id]);
-           $verificacao_page= DB::select('select * from pages where conta_id_a = ?', [$account_name[0]->conta_id]);
-           $verificacao_page1= DB::select('select * from pages where conta_id_b = ?', [$account_name[0]->conta_id]);
-           $verificacao_page2= DB::select('select * from pages where conta_id_a = ?', [$conta_logada[0]->conta_id]);
-           $verificacao_page3= DB::select('select * from pages where conta_id_b = ?', [$conta_logada[0]->conta_id]);
+           $verificacao_page= DB::select('select * from pages where (conta_id_a,tipo_page_id) = (?, ?)', [$account_name[0]->conta_id, 1]);
+           $verificacao_page1= DB::select('select * from pages where (conta_id_b,tipo_page_id) = (?, ?)', [$account_name[0]->conta_id, 1]);
+           $verificacao_page2= DB::select('select * from pages where (conta_id_a,tipo_page_id) = (?, ?)', [$conta_logada[0]->conta_id, 1]);
+           $verificacao_page3= DB::select('select * from pages where (conta_id_b,tipo_page_id) = (?, ?)', [$conta_logada[0]->conta_id, 1]);
 
            $perfil[0]['verificacao_relac']=0;
            if (sizeof($verificacao_page) > 0){
@@ -97,16 +97,25 @@ class PerfilController extends Controller
            $perfil[0]['Pedido_relac_uuid']=0;
            $perfil[0]['not_id']=0;
              if (sizeof($verificacao_pedido)>0) {
-               if ($verificacao_pedido[0]->estado_pedido_relac_id!= 2) {
-                 $perfil[0]['verificacao_pedido']=sizeof($verificacao_pedido);
-               }else {
+               if ($verificacao_pedido[0]->estado_pedido_relac_id == 1) {
                  $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido[0]->uuid;
                  $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
                  $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
                  $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido[0]->pedido_relacionamento_id, 5 ]);
-               $n4=DB::select('select * from notifications where (identificador_id_causador,identificador_id_destino,identificador_id_receptor, 	id_action_notification) = (?, ?, ?, ?)', [$n1[0]->identificador_id,$n3[0]->identificador_id,$n2[0]->identificador_id, 7]);
+                 $n4=DB::select('select * from notifications where (identificador_id_causador,identificador_id_destino,identificador_id_receptor, 	id_action_notification) = (?, ?, ?, ?)', [$n2[0]->identificador_id,$n3[0]->identificador_id,$n1[0]->identificador_id, 4]);
+                 $perfil[0]['not_id']=$n4[0]->notification_id;
+                 $perfil[0]['verificacao_pedido']=1;
+               }elseif ($verificacao_pedido[0]->estado_pedido_relac_id == 2) {
+                 $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido[0]->uuid;
+                 $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+                 $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
+                 $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido[0]->pedido_relacionamento_id, 5 ]);
+                 $n4=DB::select('select * from notifications where (identificador_id_causador,identificador_id_destino,identificador_id_receptor, 	id_action_notification) = (?, ?, ?, ?)', [$n1[0]->identificador_id,$n3[0]->identificador_id,$n2[0]->identificador_id, 7]);
                  $perfil[0]['not_id']=$n4[0]->notification_id;
                  $perfil[0]['verificacao_pedido']=2;
+               }
+               else {
+                 $perfil[0]['verificacao_pedido']=3;
                }
              }else {
                $perfil[0]['verificacao_pedido']=0;
@@ -528,16 +537,16 @@ class PerfilController extends Controller
           $verificacao_pedido=array();
           $conta_pedinte = Auth::user()->conta_id;
           $conta_pedida = DB::select('select * from contas where uuid = ?', [$request->conta_pedida]);
-          $verificacao_page_conta_pedinte_a=DB::select('select * from pages where conta_id_a = ?', [$conta_pedinte]);
-          $verificacao_page_conta_pedinte_b=DB::select('select * from pages where conta_id_b = ?', [$conta_pedinte]);
+          $verificacao_page_conta_pedinte_a=DB::select('select * from pages where (conta_id_a,tipo_page_id) = (?, ?)', [$conta_pedinte, 1]);
+          $verificacao_page_conta_pedinte_b=DB::select('select * from pages where (conta_id_b,tipo_page_id) = (?, ?)', [$conta_pedinte, 1]);
           if (sizeof($conta_pedida) == 0  ) {
               $verificacao_pedido[0]=1;
               $verificacao_page_conta_pedida_b[0]=1;
               $verificacao_page_conta_pedida_a[0]=1;
           }else {
           $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_pedida[0]->conta_id, $conta_pedinte]);
-          $verificacao_page_conta_pedida_b=DB::select('select * from pages where conta_id_b  = ?', [$conta_pedida[0]->conta_id]);
-          $verificacao_page_conta_pedida_a=DB::select('select * from pages where conta_id_a  = ?', [$conta_pedida[0]->conta_id]);
+          $verificacao_page_conta_pedida_b=DB::select('select * from pages where (conta_id_b,tipo_page_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1]);
+          $verificacao_page_conta_pedida_a=DB::select('select * from pages where (conta_id_a,tipo_page_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1]);
           }
           $conta= DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
           if ( sizeof($verificacao_pedido) == 0 && sizeof($verificacao_page_conta_pedinte_a) == 0 && sizeof($verificacao_page_conta_pedinte_b) == 0 && sizeof($verificacao_page_conta_pedida_b) == 0 && sizeof($verificacao_page_conta_pedida_a) == 0 && $conta_pedida[0]->genero != $conta[0]->genero ) {

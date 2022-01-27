@@ -52,12 +52,12 @@
             <div>
                 <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $perfil[0]['verificacao_page'] == 0 && $perfil[0]['verificacao_page1'] == 0  && $perfil[0]['verificacao_page2'] == 0 && $perfil[0]['verificacao_page3'] == 0  ): ?>
 
-                    <?php if ($perfil[0]['verificacao_pedido'] == 1 || $perfil[0]['verificacao_pedido1'] == 2): ?>
+                    <?php if ($perfil[0]['verificacao_pedido'] == 3 || $perfil[0]['verificacao_pedido1'] == 2): ?>
                     <div class="follwing-btn-container options-profile-btn" style="margin: 5px auto 10px;">
                         <label for="target-invited-relationship" style="width: 100%;">
                           <!--  <div class="follwing-btn follwing-btn-pop-up" >-->
                                 <h2>Pendente</h2>
- 
+
                             </div>
                         </label>
                     </div>
@@ -79,6 +79,21 @@
                               </div>
                           </label>-->
                       </div>
+
+                    <?php elseif ($perfil[0]['verificacao_pedido'] == 1 ): ?>
+                      <div class="hidden-click-any-container options-invited clearfix">
+                          <div class="reject_relationship" id="R|{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}">
+                          <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}">Cancelar Pedido De Relacionamento</a>
+                      </div>
+                    </div>
+                            <!-- <label for="target-invited-relationship" style="width: 100%;">
+                                <div class="follwing-btn follwing-btn-pop-up" >
+
+                                    <h2>Aceitar</h2>
+                                </div>
+                            </label>-->
+                        </div>
+
                     <?php elseif ($perfil[0]['verificacao_pedido'] == 2 ): ?>
                       <div class="hidden-click-any-container options-invited clearfix">
                           <a  href="{{route('relationship.page1', $perfil[0]['Pedido_relac_uuid']) }}" class="ver_mais" id="VR|{{$perfil[0]['not_id']}}">Ver Resposta</a>
