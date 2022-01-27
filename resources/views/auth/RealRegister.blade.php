@@ -44,6 +44,15 @@
       list-style-type: none;
       color: red;
     }
+    #nationality {
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      background: #242526;
+      border: none;
+      margin: 10px auto;
+      color: #efefef;
+    }
   </style>
 </head>
 
@@ -118,7 +127,11 @@
 
           <div class="form-section">
 
-            <input type="text" class="input-text-default input-full input-login" name="nacionalidade" id="nacionalidade" placeholder="Nacionalidade" value="" required>
+            <input type="text" class="input-text-default input-full input-login" name="nacionalidade" id="nacionalidade" placeholder="Nacionalidade1" value="">
+            <select id="nationality" required>
+                <option value="" class="option-nationality" disabled selected>Nacionalidade</option>
+                <option value="" class="option-nationality">Angola</option>
+            </select>
 
             <div class="invalid-feedback">
               Insira a Nacionalidade
