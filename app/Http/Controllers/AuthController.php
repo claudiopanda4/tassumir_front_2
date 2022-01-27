@@ -200,6 +200,44 @@ class AuthController extends Controller
                                 $notificacoes[$a]['id']=$aux2[0]->id;
                             }
                             break;
+
+                            case 12:
+                                $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                                if (sizeof($aux)>0){
+                                  $page =  DB::select('select * from pages where page_id = ?',[$aux[0]->id]);
+
+                                    $notificacoes[$a]['notificacao']=$nome[0];
+                                    $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
+                                    $notificacoes[$a]['notificacao'].=$page[0]->nome;
+                                    $notificacoes[$a]['notificacao'].=" '.";
+                                    $notificacoes[$a]['tipo']=12;
+                                    $notificacoes[$a]['id']=$aux2[0]->id;
+                                    $aux12 = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_destino,identificador_id_receptor) = (?, ?, ?)', [11, $key->identificador_id_destino, $key->identificador_id_receptor]);
+                                    $notificacoes[$a]['id1']=$aux12[0]->notification_id;
+
+                                }
+                                break;
+
+                                case 13:
+                                    $aux= DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);
+                                    if (sizeof($aux)>0){
+                                      $page =  DB::select('select * from pages where page_id = ?',[$aux[0]->id]);
+                                        if ($aux2[0]->id == $conta_logada[0]->conta_id){
+                                            $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
+                                            $notificacoes[$a]['notificacao'].=$page[0]->nome;
+                                            $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                        }else {
+                                          $notificacoes[$a]['notificacao']=$nome[0];
+                                          $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
+                                          $notificacoes[$a]['notificacao'].=$page[0]->nome;
+                                          $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                        }
+                                        $notificacoes[$a]['tipo']=13;
+                                        $notificacoes[$a]['id']=$aux2[0]->id;
+                                        $notificacoes[$a]['link']=$page[0]->uuid;
+
+                                    }
+                                    break;
                }
 
                $notificacoes[$a]['foto']=$nome[1];

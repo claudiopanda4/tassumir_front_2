@@ -598,6 +598,74 @@ $v=1;
             dd($e);
         }
     }
+
+
+    public function ask_for_annulment(Request $request)
+    {
+        try
+        {
+
+          DB::table('notifications')->insert([
+                  'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'id_state_notification' => 2,
+                  'id_action_notification' => 12,
+                  'identificador_id_causador'=>$request->identifyOutraC,
+                  'identificador_id_destino'=>$request->identifyPage,
+                  'identificador_id_receptor'=>$request->identifyCausador,
+                  ]);
+                      return redirect()->route('account.home.feed');
+
+        } catch (Exception $e) {
+            dd($e);
+        }
+    }
+
+    public function undo_page_deletion(Request $request)
+    {
+        try
+        {
+          DB::table('pages')->where('uuid',$request->uuidPage)
+        ->update(['estado_pagina_id' => 1]);
+
+        $aux = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador,identificador_id_destino) = (?, ?, ?)', [11, $request->identifyCausador, $request->identifyPage]);
+        $aux12 = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador,identificador_id_destino) = (?, ?, ?)', [12, $request->identifyOutraC, $request->identifyPage]);
+         for ($i=sizeof($aux12); $i > 0; $i--) {
+           DB::table('notifications')->where(
+             'notification_id', $aux12[$i-1]->notification_id)->delete();
+         }
+        DB::table('notifications')->where(
+          'notification_id', $aux[1]->notification_id)->delete();
+
+          DB::table('notifications')->where(
+            'notification_id', $aux[0]->notification_id)->delete();
+
+            DB::table('notifications')->insert([
+                    'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'id_state_notification' => 2,
+                    'id_action_notification' => 13,
+                    'identificador_id_causador'=>$request->identifyCausador,
+                    'identificador_id_destino'=>$request->identifyPage,
+                    'identificador_id_receptor'=>$request->identifyOutraC,
+                    ]);
+
+                    DB::table('notifications')->insert([
+                            'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                            'id_state_notification' => 2,
+                            'id_action_notification' => 13,
+                            'identificador_id_causador'=>$request->identifyCausador,
+                            'identificador_id_destino'=>$request->identifyPage,
+                            'identificador_id_receptor'=>$request->identifyCausador,
+                            ]);
+
+                            return redirect()->route('account.home.feed');
+
+        } catch (Exception $e) {
+            dd($e);
+        }
+    }
+
+
+
     private function store($description, $file_name = null, $id, $format)
     {
         try {
@@ -687,12 +755,22 @@ $v=1;
             $dados=array();
             $key=DB::table('notifications')->where('notification_id',$id)
             ->get();
-            $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
             $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key[0]->identificador_id_causador ]);
             $aux= DB::select('select * from identificadors where identificador_id = ?', [$key[0]->identificador_id_destino]);
             if (sizeof($aux)>0){
               $page =  DB::select('select * from pages where page_id = ?',[$aux[0]->id]);
+              $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+              if ($page[0]->conta_id_a == $conta[0]->conta_id) {
+                $aux1 = DB::select('select identificador_id from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
+              }else {
+                $aux1 = DB::select('select identificador_id from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+              }
+              $aux4 = DB::select('select identificador_id from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->page_id, 2]);
               $dados['nome_pag']=$page[0]->nome;
+              $dados['uuid_pag']=$page[0]->uuid;
+              $dados['identificador_pag']=$aux4[0]->identificador_id;
+              $dados['identificador_causador']=$key[0]->identificador_id_causador;
+              $dados['identificador_receptor']=$aux1[0]->identificador_id;
               if ($aux2[0]->id == $conta_logada[0]->conta_id){
                 $dados['quem_eliminou']="você";
                 $dados['verf']=1;
@@ -706,7 +784,6 @@ $v=1;
 
                    }
                 }
-
             return view('notificacoes.delete_page', compact('dados','account_name','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir', 'page_content'));
         } catch (Exception $e) {
             dd($e);

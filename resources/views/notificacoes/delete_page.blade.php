@@ -22,9 +22,16 @@
                 </div>
             </div>
             <div class="nav-button clearfix">
+              <form action="{{ route('undo_page_deletion.page') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  <input type="hidden" name="uuidPage" value="{{$dados['uuid_pag']}}">
+                  <input type="hidden" name="identifyPage" value="{{$dados['identificador_pag']}}">
+                  <input type="hidden" name="identifyCausador" value="{{$dados['identificador_causador']}}">
+                  <input type="hidden" name="identifyOutraC" value="{{$dados['identificador_receptor']}}">
                 <div class="button-container r-5">
                     <button class="cancel-delete">Anular</button>
                 </div>
+                </form>
             </div>
         </div>
     @else
@@ -38,9 +45,17 @@
                 </div>
             </div>
             <div class="nav-button clearfix">
+              <form action="{{ route('ask_for_annulment.page') }}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  <input type="hidden" name="uuidPage" value="{{$dados['uuid_pag']}}">
+                  <input type="hidden" name="identifyPage" value="{{$dados['identificador_pag']}}">
+                  <input type="hidden" name="identifyCausador" value="{{$dados['identificador_causador']}}">
+                  <input type="hidden" name="identifyOutraC" value="{{$dados['identificador_receptor']}}">
+
                 <div class="button-container r-5">
                     <button class="cancel-delete" style="background-color: #3490dc;">Pedir Anulação</button>
                 </div>
+                </form>
             </div>
         </div>
     @endif

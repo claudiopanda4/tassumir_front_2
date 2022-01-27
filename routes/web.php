@@ -45,6 +45,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/my_pages/', [App\Http\Controllers\PaginaCasalController::class, 'my_pages'])->name('couple.page.mine');
     Route::get('/posts/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'post'])->name('couple.page.post');
     Route::post('/couple_post/', [App\Http\Controllers\PaginaCasalController::class, 'store_post'])->name('post_couple.page');
+    Route::post('/undo_page_deletion/', [App\Http\Controllers\PaginaCasalController::class, 'undo_page_deletion'])->name('undo_page_deletion.page');
+    Route::post('/ask_for_annulment/', [App\Http\Controllers\PaginaCasalController::class, 'ask_for_annulment'])->name('ask_for_annulment.page');
     Route::get('/request_relationship/', [App\Http\Controllers\PaginaCasalController::class, 'request_relationship'])->name('relationship.page');
     Route::get('/request_relationship1/{id}', [App\Http\Controllers\PaginaCasalController::class, 'request_relationship1'])->name('relationship.page1');
     Route::post('/conf_PR/', [App\Http\Controllers\PaginaCasalController::class, 'conf_PR'])->name('conf_PR');
