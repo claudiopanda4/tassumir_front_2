@@ -1709,7 +1709,8 @@ label[for="hugo"]{
 .noti-div-name{
     align-self:center; 
     align-items: center;
-    max-width: 260px;
+    max-width: 240px;
+    float: left;
 }
 .novi-div-image{
     position: relative;
@@ -1731,7 +1732,7 @@ label[for="hugo"]{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    width: 90%;
+    width: 96%;
     margin-left: 20px;
     margin-bottom: 10px;
 }

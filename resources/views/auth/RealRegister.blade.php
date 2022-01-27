@@ -319,17 +319,13 @@
       let nome = $('#nome-id').val();
       let apelido = $('#apelido-id').val();
       let data_nas = $('#dataNas').val();
-      if (data_nas && nome && apelido) {alert(data_nas);}
+
       if (nome && apelido && data_nas) {
-
         navigateTo(curIndex() + 1);
-
         $('#erroNome').fadeOut();
         $('#erroApelido').fadeOut();
         $('#erroData').fadeOut();
-
       } else {
-
         $('#erroNome').show();
         $('#erroApelido').show();
         $('#erroData').show();
