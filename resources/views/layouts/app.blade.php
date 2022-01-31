@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
-                            <a href="{{route('allSearch.page')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
+                            <a href="{{route('allSearch1.page')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
                         </div>
                     </div>
                 </li>
@@ -58,7 +58,7 @@
                 <?php $controller = 0; ?>
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
-                        <a href="{{route('allSearch.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
+                        <a href="{{route('allSearch1.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " >

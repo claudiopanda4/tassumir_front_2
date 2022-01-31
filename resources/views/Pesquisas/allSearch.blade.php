@@ -34,6 +34,7 @@
 			</div>
 		</div>
 	</div>
+	<input type="hidden" name="passa" id="passa" value="{{$val}}">
 	<div name="pessoa">
 	</div>
 	<div name="page">
@@ -67,6 +68,32 @@
     </div>
 </div>
 <script>
+$(document).ready(function() {
+
+	document.getElementById("route_all_select").classList.add('li-component-aside-active');
+
+
+		let web= $('#passa').val();
+		let mobile= $('#passa').val();
+		$('#table_search').val(web);
+		$('#table_search_mobile').val(mobile);
+		let v= 1;
+		if (web!='') {
+			search(web, v);
+
+	}else if (mobile!='') {
+		search(mobile, v);
+
+	} else {
+		$('div[name=pessoa]').empty();
+		$('div[name=page]').empty();
+		$('div[name=post]').empty();
+	}
+	});
+
+
+
+
 
 	function search(variavel, v){
 	//----------------------------------------------------------------------
@@ -109,7 +136,7 @@
 						nome += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
 						nome += '</div></div></li><div class="couple-separator"></div>'
 						if (contador == 4) {
-							var route = "{{route('peoplesSearch1.page', 1) }}"
+							var route = "{{route('peoplesSearch.page', 1) }}"
 							url_array = route.split('/');
 							url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
 							nome += '<a href='+url_link+' class="mr-4"> ver mais</a>'
@@ -169,7 +196,7 @@
 						nome += '<a href='+url_link10+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
 						nome += '</div></div></li><div class="couple-separator"></div>'
 						if (contador == 4) {
-							var route = "{{route('pagesSearch1.page', 1) }}"
+							var route = "{{route('pagesSearch.page', 1) }}"
 							url_array = route.split('/');
 							url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
 							nome += '<a href='+url_link+' class="mr-4"> ver mais</a>'
@@ -239,7 +266,7 @@
 				nome+='</div>'
 				nome+='</div>'
 				if (contador == 4) {
-					var route = "{{route('publicationsSearch1.page', 1) }}"
+					var route = "{{route('publicationsSearch.page', 1) }}"
 					url_array = route.split('/');
 					url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
 					nome += '<a href='+url_link+' class="mr-4"> ver mais</a>'
@@ -333,7 +360,7 @@ function expe(ccc, v){
 						content += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
 						content += '</div></div></li><div class="couple-separator"></div>'
 						if (count == 4) {
-							var route = "{{route('peoplesSearch1.page', 1) }}"
+							var route = "{{route('peoplesSearch.page', 1) }}"
 							url_array = route.split('/');
 							url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + variavel;
 							content += '<a href='+url_link+' class="mr-4"> ver mais</a>'
@@ -418,7 +445,7 @@ function expePg(ccc, v) {
 						content += '</div></div></li><div class="couple-separator"></div>'
 
 						if (count == 4) {
-							var route = "{{route('pagesSearch1.page', 1) }}"
+							var route = "{{route('pagesSearch.page', 1) }}"
 							url_array = route.split('/');
 							url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/"+ url_array[3] + "/"+ url_array[4] + "/" + ccc;
 							content += '<a href='+url_link+' class="mr-4"> ver mais</a>'
