@@ -157,7 +157,9 @@ $v=1;
              }
 
              $notContaPDD = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux2[0]->identificador_id]);
+             $notContaPDD1 = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux2[0]->identificador_id]);
              $notContaPDT = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux3[0]->identificador_id]);
+             $notContaPDT1 = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux3[0]->identificador_id]);
 
              if(sizeof($notContaPDD)>0) {
                      for ($i=sizeof($notContaPDD); $i > 0 ; $i--) {
@@ -171,6 +173,19 @@ $v=1;
                        ->delete();
                      }
             }
+            if(sizeof($notContaPDD1)>0) {
+                    for ($i=sizeof($notContaPDD1); $i > 0 ; $i--) {
+                      DB::table('notifications')->where('notification_id',$notContaPDD[$i - 1]->notification_id)
+                      ->delete();
+                    }
+                  }
+            if(sizeof($notContaPDT1)>0) {
+                    for ($i=sizeof($notContaPDT1); $i > 0 ; $i--) {
+                      DB::table('notifications')->where('notification_id',$notContaPDT[$i - 1]->notification_id)
+                      ->delete();
+                    }
+           }
+
 
         DB::table('notifications')->insert([
                 'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),

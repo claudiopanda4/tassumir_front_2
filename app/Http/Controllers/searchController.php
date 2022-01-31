@@ -8,20 +8,8 @@ use Illuminate\Support\Facades\DB;
 class searchController extends Controller
 {
 
-public function index(){
-  $val='';
-  $controll = new AuthController();
-   $dates = $controll->default_();
-  $profile_picture = $dates['profile_picture'];
-  $conta_logada = $dates['conta_logada'];
-  $notificacoes = $dates['notificacoes'];
-  $notificacoes_count = $dates['notificacoes_count'];
 
-
-    return view('Pesquisas.allSearch',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
-}
-
-public function index1($val){
+public function index($val){
   $controll = new AuthController();
    $dates = $controll->default_();  $profile_picture = $dates['profile_picture'];
   $conta_logada = $dates['conta_logada'];
@@ -32,63 +20,83 @@ public function index1($val){
     return view('Pesquisas.allSearch',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
 }
 
-  public function peoplesSearch(){
-       $val='';
-       $controll = new AuthController();
-        $dates = $controll->default_();       $profile_picture = $dates['profile_picture'];
-       $conta_logada = $dates['conta_logada'];
-       $notificacoes = $dates['notificacoes'];
-       $notificacoes_count = $dates['notificacoes_count'];
 
-        return view('Pesquisas.peoples',compact('val','notificacoes_count', 'notificacoes','conta_logada','profile_picture'));
-    }
+public function index1(){
+  $val='';
+  $controll = new AuthController();
+   $dates = $controll->default_();  $profile_picture = $dates['profile_picture'];
+  $conta_logada = $dates['conta_logada'];
+  $notificacoes = $dates['notificacoes'];
+  $notificacoes_count = $dates['notificacoes_count'];
 
-  public function pagesSearch(){
-         $val='';
-         $controll = new AuthController();
-          $dates = $controll->default_();         $profile_picture = $dates['profile_picture'];
-         $conta_logada = $dates['conta_logada'];
-         $notificacoes = $dates['notificacoes'];
-         $notificacoes_count = $dates['notificacoes_count'];
-        return view('Pesquisas.pages',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
-    }
 
-  public function publicationsSearch(){
-         $val='';
-         $controll = new AuthController();
-          $dates = $controll->default_();         $profile_picture = $dates['profile_picture'];
-         $conta_logada = $dates['conta_logada'];
-         $notificacoes = $dates['notificacoes'];
-         $notificacoes_count = $dates['notificacoes_count'];
-        return view('Pesquisas.publications',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
-    }
+    return view('Pesquisas.allSearch',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+}
 
-  public function peoplesSearch1($val){
+
+
+  public function peoplesSearch($val){
     $controll = new AuthController();
      $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
     $conta_logada = $dates['conta_logada'];
     $notificacoes = $dates['notificacoes'];
     $notificacoes_count = $dates['notificacoes_count'];
         return view('Pesquisas.peoples', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+
     }
 
-  public function pagesSearch1($val){
+    public function peoplesSearch1(){
+      $val='';
+      $controll = new AuthController();
+       $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
+      $conta_logada = $dates['conta_logada'];
+      $notificacoes = $dates['notificacoes'];
+      $notificacoes_count = $dates['notificacoes_count'];
+          return view('Pesquisas.peoples', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+
+      }
+
+  public function pagesSearch($val){
     $controll = new AuthController();
      $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
     $conta_logada = $dates['conta_logada'];
     $notificacoes = $dates['notificacoes'];
     $notificacoes_count = $dates['notificacoes_count'];
         return view('Pesquisas.pages', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+
     }
 
-  public function publicationsSearch1($val){
+  public function publicationsSearch($val){
     $controll = new AuthController();
      $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
     $conta_logada = $dates['conta_logada'];
     $notificacoes = $dates['notificacoes'];
     $notificacoes_count = $dates['notificacoes_count'];
         return view('Pesquisas.publications', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+
     }
+
+    public function pagesSearch1(){
+      $val='';
+      $controll = new AuthController();
+       $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
+      $conta_logada = $dates['conta_logada'];
+      $notificacoes = $dates['notificacoes'];
+      $notificacoes_count = $dates['notificacoes_count'];
+          return view('Pesquisas.pages', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+
+      }
+
+    public function publicationsSearch1(){
+      $val='';
+      $controll = new AuthController();
+       $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
+      $conta_logada = $dates['conta_logada'];
+      $notificacoes = $dates['notificacoes'];
+      $notificacoes_count = $dates['notificacoes_count'];
+          return view('Pesquisas.publications', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+
+      }
 
 
 

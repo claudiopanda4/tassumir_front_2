@@ -39,7 +39,7 @@
             <nav class="menu-header ">
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
-                        <a href="{{route('allSearch.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
+                        <a href="{{route('allSearch1.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="last-component-n clearfix-n " >
@@ -214,12 +214,12 @@
 
                     <span class="couple-seach-span">Filtros</span>
                 </li>
-                <li class="li-component-aside li-component-aside-active"><a href="{{route('allSearch.page')}}">Tudo</a></li>
-                <li class="li-component-aside"><a href="{{route('peoplesSearch.page')}}">Pessoas</a></li>
+                <li class="li-component-aside" id="route_all_select"><a id="route_all" href="">Tudo</a></li>
+                <li class="li-component-aside" id="route_people_select"><a id="route_people" href="">Pessoas</a></li>
 
-                <li class="li-component-aside"><a href="{{route('pagesSearch.page')}}">Páginas</a></li>
+                <li class="li-component-aside" id="route_page_select"><a id="route_page" href="">Páginas</a></li>
 
-                <li class="li-component-aside"><a href="{{route('publicationsSearch.page')}}">Publicações</a></li>
+                <li class="li-component-aside" id="route_post_select"><a id="route_post" href="">Publicações</a></li>
             </ul>
         </nav>
 
@@ -231,5 +231,46 @@
         @yield('content');
     </main>
 </div>
+ <script type="text/javascript">
+ $(document).ready(function() {
+ 	  $('#route_people').click(function(e){
+ 			e.preventDefault();
+ 			let route_temp = "{{route('peoplesSearch.page', 0)}}";
+ 			let route_temp1 = route_temp.split('/');
+ 			let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + $('#table_search').val();
+      //let route =  route_temp.substring('0','') + "/" + $('#table_search').val();
+      window.location.href = route;
+
+   	});
+
+ 		$('#route_all').click(function(e){
+ 			e.preventDefault();
+ 			let route_temp = "{{route('allSearch.page', 0)}}";
+ 			let route_temp1 = route_temp.split('/');
+ 			let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/" + $('#table_search').val();
+ 			//let route =  route_temp.substring('0','') + "/" + $('#table_search').val();
+ 			window.location.href = route;
+   	});
+
+ 		$('#route_page').click(function(e){
+ 			e.preventDefault();
+ 			let route_temp = "{{route('pagesSearch.page', 0)}}";
+ 			let route_temp1 = route_temp.split('/');
+ 			let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + $('#table_search').val();
+ 			//let route =  route_temp.substring('0','') + "/" + $('#table_search').val();
+ 			window.location.href = route;
+   	});
+ 		$('#route_post').click(function(e){
+ 			e.preventDefault();
+ 			let route_temp = "{{route('publicationsSearch.page', 0)}}";
+ 			let route_temp1 = route_temp.split('/');
+ 			let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + $('#table_search').val();
+ 			//let route =  route_temp.substring('0','') + "/" + $('#table_search').val();
+ 			window.location.href = route;
+   	});
+
+
+   });
+ </script>
 </body>
 </html>
