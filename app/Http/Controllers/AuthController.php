@@ -1366,6 +1366,7 @@ public function dados_comment($key){
                   'email' => $takeEmail,
                   'telefone' => NULL,
                   'estado_conta_id' => 1,
+                  'tipo_contas_id' => 2,
                   'nacionalidade' => $request->nacionalidade
 
               ]);
@@ -1415,6 +1416,7 @@ public function dados_comment($key){
                   'email' => NULL,
                   'telefone' => $takePhone,
                   'estado_conta_id' => 1,
+                  'tipo_contas_id' => 2,
                   'nacionalidade' => $request->nacionalidade
 
               ]);
