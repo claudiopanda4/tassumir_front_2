@@ -293,6 +293,9 @@
                                     <div class="">
                                         <p>{{$guardadosP[$key]['post']}}</p>
                                         <?php if ( $guardadosP[$key]['formato'] == 2 ): ?>
+                                          <script type="text/javascript">
+                                            document.getElementById("route_save").classList.add('li-component-aside-active');
+                                          </script>
                                         <div class="post-cover">
                                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $guardadosP[$key]['file']}}">
                                         </div>
@@ -333,4 +336,9 @@
             <?php endif; ?>
 </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function () {
+  document.getElementById("route_account").classList.add('li-component-aside-active');
+});
+</script>
 @stop
