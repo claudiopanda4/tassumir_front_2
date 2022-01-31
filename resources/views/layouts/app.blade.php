@@ -512,6 +512,37 @@
     </main>
     </div>
 </body>
+<input type="checkbox" name="" id="delete-page-target" class="invisible">
+<div class="pop-up" id="delete-page-container">
+    <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Confirmação</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-profile-cover">
+                    <div class="cancel-box div-img">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+       <!-- <form enctype="multipart/form-data">-->
+            <div class="header-height"></div>
+            <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
+                <h1 class="alert-accept" style="text-align: center;">Tem certeza que deseja eliminar a sua página?</h1>
+            </div>
+            <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
+                <div class="" id="cover-done" style=" background-color: red;">
+                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Eliminar</button>
+                </div>
+            </div>
+            <!--<div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
+                <div class="btn-alert" id="" style=" background-color: #3490dc;">
+                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Cancelar</button>
+                </div>
+            </div>-->
+        <!-- </form> -->
+    </div>
+</div>
 @if($page_current == "page")
 <?php if (true): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">

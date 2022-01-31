@@ -57,8 +57,10 @@
     	<div class="couple-info-inputs-btn" style="position: relative; height: 45px;">
     		<p class="couple-name-p" style="font-size: 12px; width: 50%;">Eliminar ou desactivar página </p>
 	    	  <div class="btn-container-delete-desact" style="width: 40%; height: 100%; position: relative;">
-						<a href="{{route('delete_couple.page_view', $page[0]->uuid)}}">
-                    <h3 class="edit-profile check-width edit-page-btn-alter" style="width:100%;">Eliminar</h3>
+		    	  	<label for="delete-page-target">
+		    	  		<h3 class="edit-profile check-width edit-page-btn-alter" style="width:100%;">Eliminar</h3>
+		    	  	</label>
+				<!--<a href="{{route('delete_couple.page_view', $page[0]->uuid)}}">-->
                 </a>
             </div>
     	</div>

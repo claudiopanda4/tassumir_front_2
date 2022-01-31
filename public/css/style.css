@@ -2224,6 +2224,16 @@ label[for="hugo"]{
     cursor: pointer;
     margin: auto;
 }
+.btn-alert {
+    width: 60%;
+    text-align: center;
+    color: #fff;
+    background-color: #800080;
+    padding: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: auto;   
+}
 #card-more-following {
     display: none;
 }
