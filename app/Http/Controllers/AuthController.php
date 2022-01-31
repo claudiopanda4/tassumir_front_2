@@ -65,6 +65,7 @@ class AuthController extends Controller
            if (sizeof($notificacoes_aux)>0) {
              foreach ($notificacoes_aux as $key) {
                if($key->id_state_notification!= 3){
+                 
                  $notificacoes[$a]['id1']=$key->notification_id;
 
                     $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
