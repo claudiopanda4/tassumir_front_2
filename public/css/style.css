@@ -11,16 +11,17 @@ body {
 #app {
     background-color: var(--background-dark-main);
 }
-#app-log-reg {
-    background-color: #3b3b3b;
-    margin-top: 100px;
-}
 #app-log-reg,
 #app {
     width: 100vw;
     height: auto;
 }
-
+#app-log-reg {
+    background-color: #3b3b3b;
+    margin: auto;
+    margin-top: 20px;
+    width: 1050px;
+}
 #body-login {
 }
 #body-reg {
