@@ -3,7 +3,7 @@
 @section('content')
 <div class="main" id="my-pages">
     <header class="card br-10 stories stories-about-talking">
-                
+
     </header>
     <div class="card br-10">
         <nav>
@@ -34,6 +34,11 @@
                 @endforeach
             </ul>
         </nav>
-    </div>    
+    </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function () {
+  document.getElementById("route_page").classList.add('li-component-aside-active');
+});
+</script>
 @stop

@@ -37,9 +37,14 @@
                     </li>
                 @endforeach
                 @endif
- 
+
             </ul>
         </nav>
     </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function () {
+  document.getElementById("route_couples_i_follow").classList.add('li-component-aside-active');
+});
+</script>
 @stop

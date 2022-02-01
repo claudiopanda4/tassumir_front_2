@@ -79,4 +79,11 @@
 </div>
   </form>
 </div>
+<script type="text/javascript">
+
+$(document).ready(function () {
+  document.getElementById("route_account").classList.add('li-component-aside-active');
+});
+
+</script>
 @stop

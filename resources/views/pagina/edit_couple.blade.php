@@ -66,4 +66,9 @@
     	</div>
     </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function () {
+  document.getElementById("route_page").classList.add('li-component-aside-active');
+});
+</script>
 @stop

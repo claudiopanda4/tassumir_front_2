@@ -300,6 +300,7 @@
 </div>
 <script>
     $(document).ready(function () {
+        document.getElementById("route_page").classList.add('li-component-aside-active');
             $('.seguir_couple').click(function(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
