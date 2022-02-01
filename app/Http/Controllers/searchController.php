@@ -109,7 +109,7 @@ public function index1(){
         $default = [];
         $index = 0;
        if ($r->v == 'pag') {
-         $pages = DB::table('pages')->where('nome','like','%'.$r->data.'%')->limit(4)->get();
+         $pages = DB::table('pages')->where('nome','like','%'.$r->data.'%')->where('estado_pagina_id', 1)->limit(4)->get();
 
          foreach ($pages as $valor) {
              $default[$index] = $valor;
@@ -134,8 +134,8 @@ public function index1(){
 
             if ($r->val == 'sol') {
 
-                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')
-                ->orwhere('apelido', 'like', '%'.$r->data.'%')->limit(4)->get();
+                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')->where('tipo_contas_id','<>', 1)->where('estado_conta_id', 1)
+                ->orwhere('apelido', 'like', '%'.$r->data.'%')->where('tipo_contas_id','<>', 1)->where('estado_conta_id', 1)->limit(4)->get();
 
                 foreach ($conta as $valor) {
                   if ($valor->estado_civil_id == 1) { // 1 : por ser o id do est_civil solteiro na tabela conta
@@ -146,8 +146,8 @@ public function index1(){
 
             } else if ($r->val == 'nam') {
 
-                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')
-                ->orwhere('apelido', 'like', '%'.$r->data.'%')->limit(4)->get();
+                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')->where('tipo_contas_id','<>', 1)->where('estado_conta_id', 1)
+                ->orwhere('apelido', 'like', '%'.$r->data.'%')->where('tipo_contas_id','<>', 1)->where('estado_conta_id', 1)->limit(4)->get();
 
                 foreach ($conta as $valor) {
                   if ($valor->estado_civil_id == 2) { // 1 : por ser o id do est_civil namorando na tabela conta
@@ -158,8 +158,8 @@ public function index1(){
 
             } else if ($r->val == 'cas') {
 
-                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')
-                ->orwhere('apelido', 'like', '%'.$r->data.'%')->limit(4)->get();
+                $conta = DB::table('contas')->where('nome', 'like', '%'.$r->data.'%')->where('tipo_contas_id','<>', 1)->where('estado_conta_id', 1)
+                ->orwhere('apelido', 'like', '%'.$r->data.'%')->where('tipo_contas_id','<>', 1)->where('estado_conta_id', 1)->limit(4)->get();
 
                 foreach ($conta as $valor) {
                   if ($valor->estado_civil_id == 3) { // 1 : por ser o id do est_civil casal na tabela conta
@@ -199,11 +199,11 @@ public function index1(){
 
 
             if($request->v==1){
-              $conta = DB::table('contas')->where('nome', 'like', '%'.$request->dados.'%')
-              ->orwhere('apelido', 'like', '%'.$request->dados.'%')->limit(4)->get();
+              $conta = DB::table('contas')->where('nome', 'like', '%'.$request->dados.'%')->where('tipo_contas_id','<>', 1)->where('estado_conta_id', 1)
+              ->orwhere('apelido', 'like', '%'.$request->dados.'%')->where('tipo_contas_id','<>', 1)->where('estado_conta_id', 1)->limit(4)->get();
             }else {
-              $conta = DB::table('contas')->where('nome', 'like', '%'.$request->dados.'%')
-              ->orwhere('apelido', 'like', '%'.$request->dados.'%')->limit(10)->get();
+              $conta = DB::table('contas')->where('nome', 'like', '%'.$request->dados.'%')->where('tipo_contas_id','<>', 1)->where('estado_conta_id', 1)
+              ->orwhere('apelido', 'like', '%'.$request->dados.'%')->where('tipo_contas_id','<>', 1)->where('estado_conta_id', 1)->limit(10)->get();
             }
 
 
@@ -234,9 +234,9 @@ public function index1(){
         if($request->ajax()){
 
           if($request->v==1){
-              $data= DB::table('pages')->where('nome','like','%'.$request->dados.'%')->limit(4)->get();
+              $data= DB::table('pages')->where('nome','like','%'.$request->dados.'%')->where('estado_pagina_id', 1)->limit(4)->get();
             }else {
-              $data= DB::table('pages')->where('nome','like','%'.$request->dados.'%')->limit(10)->get();
+              $data= DB::table('pages')->where('nome','like','%'.$request->dados.'%')->where('estado_pagina_id', 1)->limit(10)->get();
             }
 
             if(count($data)>0){
@@ -255,10 +255,10 @@ public function index1(){
 
       if($request->ajax()){
         if($request->v==1){
-          $data1= DB::table('posts')->where('descricao','like','%'.$request->dados.'%')->limit(4)
+          $data1= DB::table('posts')->where('descricao','like','%'.$request->dados.'%')->where('estado_post_id', 1)->limit(4)
           ->get();
         }else {
-          $data1= DB::table('posts')->where('descricao','like','%'.$request->dados.'%')->limit(10)
+          $data1= DB::table('posts')->where('descricao','like','%'.$request->dados.'%')->where('estado_post_id', 1)->limit(10)
           ->get();
           }
 

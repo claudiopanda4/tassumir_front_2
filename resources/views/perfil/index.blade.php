@@ -48,7 +48,7 @@
                 </li>
             </ul>
             <div id="option-profile-no-own">
-            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid ): ?>
+            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $account_name[0]->tipo_contas != 1 ): ?>
             <div>
                 <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $perfil[0]['verificacao_page'] == 0 && $perfil[0]['verificacao_page1'] == 0  && $perfil[0]['verificacao_page2'] == 0 && $perfil[0]['verificacao_page3'] == 0  ): ?>
 
