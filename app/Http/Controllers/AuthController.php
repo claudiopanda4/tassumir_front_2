@@ -65,6 +65,7 @@ class AuthController extends Controller
            if (sizeof($notificacoes_aux)>0) {
              foreach ($notificacoes_aux as $key) {
                if($key->id_state_notification!= 3){
+
                  $notificacoes[$a]['id1']=$key->notification_id;
 
                     $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
@@ -82,7 +83,8 @@ class AuthController extends Controller
                        $nome[2] =2;
                    }
                    //dd($key);
-               switch ($key->id_action_notification) {
+
+                   switch ($key->id_action_notification) {
                     case 1:
                        $notificacoes[$a]['notificacao']=$nome[0];
                        $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
@@ -238,18 +240,19 @@ class AuthController extends Controller
 
                                     }
                                     break;
-               }
 
-               $notificacoes[$a]['foto']=$nome[1];
-               $notificacoes[$a]['v']=$nome[2];
-               if ($key->id_state_notification == 2) {
-                 $notificacoes_count++;
-                 $notificacoes[$a]['state_notification']=2;
-               }else {
-                 $notificacoes[$a]['state_notification']=1;
-               }
-               $a++;
-             }
+                                  }
+
+                  $notificacoes[$a]['foto']=$nome[1];
+                  $notificacoes[$a]['v']=$nome[2];
+                   if ($key->id_state_notification == 2) {
+                     $notificacoes_count++;
+                     $notificacoes[$a]['state_notification']=2;
+                   }else {
+                     $notificacoes[$a]['state_notification']=1;
+                   }
+                   $a++;
+                 }
            }
            }
 
@@ -1364,6 +1367,7 @@ public function dados_comment($key){
                   'email' => $takeEmail,
                   'telefone' => NULL,
                   'estado_conta_id' => 1,
+                  'tipo_contas_id' => 2,
                   'nacionalidade' => $request->nacionalidade
 
               ]);
@@ -1413,6 +1417,7 @@ public function dados_comment($key){
                   'email' => NULL,
                   'telefone' => $takePhone,
                   'estado_conta_id' => 1,
+                  'tipo_contas_id' => 2,
                   'nacionalidade' => $request->nacionalidade
 
               ]);

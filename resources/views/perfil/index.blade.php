@@ -48,7 +48,7 @@
                 </li>
             </ul>
             <div id="option-profile-no-own">
-            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid ): ?>
+            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $account_name[0]->tipo_contas != 1 ): ?>
             <div>
                 <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $perfil[0]['verificacao_page'] == 0 && $perfil[0]['verificacao_page1'] == 0  && $perfil[0]['verificacao_page2'] == 0 && $perfil[0]['verificacao_page3'] == 0  ): ?>
 
@@ -293,6 +293,9 @@
                                     <div class="">
                                         <p>{{$guardadosP[$key]['post']}}</p>
                                         <?php if ( $guardadosP[$key]['formato'] == 2 ): ?>
+                                          <script type="text/javascript">
+                                            document.getElementById("route_save").classList.add('li-component-aside-active');
+                                          </script>
                                         <div class="post-cover">
                                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $guardadosP[$key]['file']}}">
                                         </div>
@@ -333,4 +336,9 @@
             <?php endif; ?>
 </div>
 </div>
+<script type="text/javascript">
+$(document).ready(function () {
+  document.getElementById("route_account").classList.add('li-component-aside-active');
+});
+</script>
 @stop

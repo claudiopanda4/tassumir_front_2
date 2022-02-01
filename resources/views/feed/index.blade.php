@@ -116,7 +116,7 @@
                             <p>{{$dados[$key]['post']}}</p>
                         @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
-                        <div class="post-cover">                            
+                        <div class="post-cover">
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
@@ -379,6 +379,7 @@
         </div>
 </div>
 <script>
+
 function gostar(id){
 
     $.ajax({
@@ -512,6 +513,8 @@ function gostar(id){
             }
 
     $(document).ready(function () {
+      document.getElementById("route_feed").classList.add('li-component-aside-active');
+
             $('.seguir_index').click(function(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
