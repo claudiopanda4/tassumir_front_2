@@ -1092,6 +1092,7 @@ public function dados_comment($key){
       $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
       $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
       $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+      dd($aux);
       $resposta=array();
 
             if ($page[0]->conta_id_a == $conta[0]->conta_id || $page[0]->conta_id_b == $conta[0]->conta_id) {
