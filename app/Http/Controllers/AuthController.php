@@ -295,7 +295,7 @@ class AuthController extends Controller
          $date_create_update.=":";
          $date_create_update.=date("i");
          $date_create_update.=":";
-         $date_create_update.=date("s");         
+         $date_create_update.=date("s");
          return $date_create_update;
        }
        public function Destacados(){
@@ -427,6 +427,10 @@ class AuthController extends Controller
                  $dados['page_id']= $id->page_id ;
                  $dados['page_uuid']= $page[0]->uuid ;
                  $dados['post_uuid']= $id->uuid;
+                 $aux_divisão_data = explode(' ', $id->created_at);
+                 $dados['post_data']= $aux_divisão_data[0] ;
+                 $aux_divisão_data =str_split(explode(' ', $id->created_at)[1], 5);
+                 $dados['post_hora']= $aux_divisão_data[0];
                  $dados['reagir_S/N']=sizeof($ja_reagiu);
                  $dados['guardado?']=sizeof($guardado);
                  $dados['formato']=$id->formato_id;
@@ -532,7 +536,7 @@ class AuthController extends Controller
       if (sizeof($dados) < 0) {
           $dados = ['dados' => []];
       }
-      //dd($dados);
+     //dd($dados);
      // dd($this->getPostAndFilter($dados, "5aeaec63-91e1-4a2f-a735-81e5580a50de", 'video'));
       //--------------------------------------------------------------------------------------------o que estão falando --------------------------------------------------------------
       $what_are_talking = $this->Destacados();
