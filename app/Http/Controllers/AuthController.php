@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\PaginaCasalController;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Pais;
 
 /* email */
 
@@ -1259,7 +1260,7 @@ public function dados_comment($key){
         DB::beginTransaction();
           try{
                 $takePhone = str_replace("-","",$request->telefone);
-
+                   
                 $conta = new Conta;
                   $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
                   $conta->nome = $request->nome;
@@ -1269,7 +1270,8 @@ public function dados_comment($key){
                   $conta->estado_civil_id = 1;
                   $conta->email = $request->email;
                   $conta->estado_conta_id = 1;
-                  $conta->nacionalidade = $request->nacionalidade;
+                  $nacionalida = intval($request->nacionalidade);
+                  $conta->nacionalidade_id = $nacionalida;
                   if($takePhone){
                       $conta->telefone = $takePhone;
                   }
@@ -1337,8 +1339,8 @@ public function dados_comment($key){
     /* New test */
 
         public function firstForm(){
-
-            return view('auth.RealRegister');
+            $dadosPais = Pais::all();
+            return view('auth.RealRegister', compact('dadosPais'));
         }
 
 

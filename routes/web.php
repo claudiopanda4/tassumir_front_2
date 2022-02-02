@@ -89,6 +89,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/mostrar/{uuid_remetente}/{uuid_destino}', [App\Http\Controllers\MessageController::class, 'mostrar_sms'])->name('message.mostrar');
     Route::get('/pesquisar/destinatario', [App\Http\Controllers\MessageController::class, 'pesquisar_destinatario'])->name('people.send.message');
 
+
     //Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('home');
 });
 Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->name('account.logout');
@@ -102,6 +103,7 @@ Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login
 /* registrar */
 Route::get('/registrar', [App\Http\Controllers\AuthController::class, 'registrarUser'])->name('account.register.form');
 
+Route::get('/buscar/pais', [App\Http\Controllers\PaisController::class, 'index'])->name('buscar.pais');
 
 Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.save.next1');
 
