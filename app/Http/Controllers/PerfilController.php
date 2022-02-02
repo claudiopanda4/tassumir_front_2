@@ -500,6 +500,17 @@ class PerfilController extends Controller
           $auth = new AuthController();
           $account_name = $auth->defaultDate();
           //dd($request->genre);
+          $date_create_update=date("Y");
+          $date_create_update.="-";
+          $date_create_update.=date("m");
+          $date_create_update.="-";
+          $date_create_update.=date("d");
+          $date_create_update.=" ";
+          $date_create_update.=date("H");
+          $date_create_update.=":";
+          $date_create_update.=date("i");
+          $date_create_update.=":";
+          $date_create_update.=date("s");
           DB::table('contas')
                 ->where('conta_id', $account_name[0]->conta_id)
                 ->update([
@@ -508,7 +519,8 @@ class PerfilController extends Controller
                   'genero' => $request->genre,
                   'descricao' => $request->bio,
                   'email' => $request->email,
-                  'telefone' => $request->telefone
+                  'telefone' => $request->telefone,
+                  'updated_at' => $request->$date_create_update
 
               ]);
               return redirect()->route('account.profile');

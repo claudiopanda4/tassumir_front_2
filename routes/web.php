@@ -60,10 +60,14 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');
     Route::get('/help_support', [App\Http\Controllers\HelpSupport::class, 'index'])->name('help_support.page');
 
-    Route::get('/pesquisa/{id}', [App\Http\Controllers\searchController::class, 'index1'])->name('allSearch1.page');
-    Route::get('/pesquisa', [App\Http\Controllers\searchController::class, 'index'])->name('allSearch.page');
-    Route::get('/pesquisa/peoples', [App\Http\Controllers\searchController::class, 'peoplesSearch'])->name('peoplesSearch.page');
-    Route::get('/pesquisa/peoples1/{id}', [App\Http\Controllers\searchController::class, 'peoplesSearch1'])->name('peoplesSearch1.page');
+    Route::get('/pesquisa/', [App\Http\Controllers\searchController::class, 'index1'])->name('allSearch1.page');
+    Route::get('/pesquisa/pages/', [App\Http\Controllers\searchController::class, 'pagesSearch1']);
+    Route::get('/pesquisa/publications/', [App\Http\Controllers\searchController::class, 'publicationsSearch1']);
+    Route::get('/pesquisa/peoples/', [App\Http\Controllers\searchController::class, 'peoplesSearch1']);
+    Route::get('/pesquisa/{id}', [App\Http\Controllers\searchController::class, 'index'])->name('allSearch.page');
+    Route::get('/pesquisa/pages/{id}', [App\Http\Controllers\searchController::class, 'pagesSearch'])->name('pagesSearch.page');
+    Route::get('/pesquisa/publications/{id}', [App\Http\Controllers\searchController::class, 'publicationsSearch'])->name('publicationsSearch.page');
+    Route::get('/pesquisa/peoples/{id}', [App\Http\Controllers\searchController::class, 'peoplesSearch'])->name('peoplesSearch.page');
 
     Route::get('/pessoapesquisa', [\App\Http\Controllers\searchController::class, 'pessoapesquisa'])->name('pessoa.pesquisa');
 
@@ -73,10 +77,6 @@ Route::group(['middleware' => 'auth:web1'], function () {
 
     Route::get('/paginapesquisa', [App\Http\Controllers\searchController::class, 'paginapesquisa'])->name('pagina.pesquisa');
     Route::get('/postpesquisa', [App\Http\Controllers\searchController::class, 'postpesquisa'])->name('post.pesquisa');
-    Route::get('/pesquisa/pages', [App\Http\Controllers\searchController::class, 'pagesSearch'])->name('pagesSearch.page');
-    Route::get('/pesquisa/pages1/{id}', [App\Http\Controllers\searchController::class, 'pagesSearch1'])->name('pagesSearch1.page');
-    Route::get('/pesquisa/publications', [App\Http\Controllers\searchController::class, 'publicationsSearch'])->name('publicationsSearch.page');
-    Route::get('/pesquisa/publications1/{id}', [App\Http\Controllers\searchController::class, 'publicationsSearch1'])->name('publicationsSearch1.page');
     Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home.feed');
     Route::get('/pegar_ultimocomment', [App\Http\Controllers\AuthController::class, 'pegar_ultimocomment'])->name('pegar_ultimocomment');
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');

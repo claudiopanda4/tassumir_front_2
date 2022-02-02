@@ -71,7 +71,7 @@
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
-                                <span class="time-posted l-5">50 min</span><div id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
+                                <span class="time-posted l-5">{{$dados[$key]['post_data']}}  as {{$dados[$key]['post_hora']}}</span><div id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
                                   <span class="seguir-{{$dados[$key]['page_id']}}"><a href="" class="seguir-a r-5"  id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}">seguir</a></span>
                                 <?php endif ?></div>
                             </div>
@@ -116,7 +116,7 @@
                             <p>{{$dados[$key]['post']}}</p>
                         @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
-                        <div class="post-cover">                            
+                        <div class="post-cover">
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
@@ -379,6 +379,7 @@
         </div>
 </div>
 <script>
+
 function gostar(id){
 
     $.ajax({
@@ -512,6 +513,8 @@ function gostar(id){
             }
 
     $(document).ready(function () {
+      document.getElementById("route_feed").classList.add('li-component-aside-active');
+
             $('.seguir_index').click(function(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;

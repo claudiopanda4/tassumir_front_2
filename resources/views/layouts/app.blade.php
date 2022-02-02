@@ -48,8 +48,7 @@
                         	<div name="page">
                             </div>
                         </div>
-                        <div class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
-                            <a href="{{route('allSearch.page')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
+                        <div class="change-look mb-5" name="ver_td" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
                         </div>
                     </div>
                 </li>
@@ -58,7 +57,7 @@
                 <?php $controller = 0; ?>
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
-                        <a href="{{route('allSearch.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
+                        <a href="{{route('allSearch1.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " >
@@ -257,27 +256,27 @@
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix">
-                <li class="li-component-aside li-component-aside-active"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('account.home')}}">Feed de Notícias</a></li>
-                <li class="li-component-aside text-ellips"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a class="text-ellips" href="{{route('account.profile')}}">{{$conta_logada[0]->nome}} {{$conta_logada[0]->apelido}}</a></li>
+                <li class="li-component-aside " id="route_feed"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('account.home')}}">Feed de Notícias</a></li>
+                <li class="li-component-aside text-ellips" id="route_account"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a class="text-ellips" href="{{route('account.profile')}}">{{$conta_logada[0]->nome}} {{$conta_logada[0]->apelido}}</a></li>
                 <!--<li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Criar Relacionamento</a></li>
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
                 @if($checkUserStatus)
                     @if(!$hasUserManyPages)
-                        <li class="li-component-aside"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Página de Casal</a></li>
+                        <li class="li-component-aside" id="route_page"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page')}}">Página de Casal</a></li>
                     @else
-                        <li class="li-component-aside"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page.mine')}}">Minhas Páginas</a></li>
+                        <li class="li-component-aside" id="route_page"><i class= "fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="{{route('couple.page.mine')}}">Minhas Páginas</a></li>
                     @endif
                 @endif
-                <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}?post-container-post=saved">Guardados</a></li>
-                <li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="{{route('paginas_que_sigo.page',$conta_logada[0]->uuid)}}">Casais que eu sigo</a></li>
-                <li class="li-component-aside"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="{{route('error.alert')}}">Ganhar Dinheiro</a></li>
-                <li class="li-component-aside"><i class="far fa-play-circle fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video', 'ma')}}">Tassumir Vídeos</a></li>
+                <li class="li-component-aside" id="route_save"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}?post-container-post=saved">Guardados</a></li>
+                <li class="li-component-aside" id="route_couples_i_follow"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="{{route('paginas_que_sigo.page',$conta_logada[0]->uuid)}}">Casais que eu sigo</a></li>
+                <li class="li-component-aside" id="route_Earn_money"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="{{route('error.alert')}}">Ganhar Dinheiro</a></li>
+                <li class="li-component-aside" id="route_Videos"><i class="far fa-play-circle fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video', 'ma')}}">Tassumir Vídeos</a></li>
             </ul>
         </nav>
         <nav class="last-nav">
             <ul>
-                <li class="li-component-aside"><i class="fas fa-cog fa-20 fa-icon-aside-left"></i><a href="{{route('error.alert')}}">Definições</a></li>
-                <li class="li-component-aside"><i class="far fa-question-circle fa-20 fa-icon-aside-left"></i><a href="{{route('error.alert')}}">Ajuda e Suporte</a></li>
+                <li class="li-component-aside" id="route_definitions"><i class="fas fa-cog fa-20 fa-icon-aside-left"></i><a href="{{route('error.alert')}}">Definições</a></li>
+                <li class="li-component-aside" id="route_help"><i class="far fa-question-circle fa-20 fa-icon-aside-left"></i><a href="{{route('error.alert')}}">Ajuda e Suporte</a></li>
                 <li class="li-component-aside"><i class="fas fa-sign-out-alt fa-20 fa-icon-aside-left"></i><a href="{{route('account.logout')}}">Sair</a></li>
             </ul>
         </nav>
@@ -512,6 +511,39 @@
     </main>
     </div>
 </body>
+<input type="checkbox" name="" id="delete-page-target" class="invisible">
+<div class="pop-up" id="delete-page-container">
+    <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Confirmação</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-profile-cover">
+                    <div class="cancel-box div-img">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+       <!-- <form enctype="multipart/form-data">-->
+            <div class="header-height"></div>
+            <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
+                <h1 class="alert-accept" style="text-align: center;">Tem certeza que deseja eliminar a sua página?</h1>
+            </div>
+            <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
+                <div class="" id="cover-done" style=" background-color: red;">
+                  <a href="{{route('delete_couple.page', 0)}}" class="mr-2">
+                    <button type="button" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Eliminar</button>
+                 </a>
+                </div>
+            </div>
+            <!--<div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
+                <div class="btn-alert" id="" style=" background-color: #3490dc;">
+                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Cancelar</button>
+                </div>
+            </div>-->
+        <!-- </form> -->
+    </div>
+</div>
 @if($page_current == "page")
 <?php if (true): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
@@ -1554,16 +1586,18 @@
             let id = e.target.id.split('_')[2];
         });
         $('#search-lg-home-id').on('keyup',function(){
-  let variavel= $('#search-lg-home-id').val();
-  $('#table_search').val(variavel);
-  let v= 1;
-  if (variavel!='') {
-    searchP(variavel, v);
-  }else {
-    $('div[name=pessoa]').empty();
-    $('div[name=page]').empty();
-  }
-});
+            let variavel= $('#search-lg-home-id').val();
+            $('#table_search').val(variavel);
+            let v= 1;
+            if (variavel!='') {
+              searchP(variavel, v);
+            }else {
+              $('div[name=pessoa]').empty();
+              $('div[name=page]').empty();
+              $('div[name=ver_td]').empty();
+
+            }
+          });
 
 function searchP(variavel, v){
   var s1=0;
@@ -1611,10 +1645,15 @@ $.ajax({
             contador++;
           }
         })
+        let route_temp = "{{route('peoplesSearch.page', 0)}}";
+        let route_temp1 = route_temp.split('/');
+        let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + variavel;
+        var vertd = '<a href='+route+'><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>';
+        $('div[name=ver_td]').append(vertd);
     }
-
-
 });
+
+
 $.ajax({
   url: "{{ route('pagina.pesquisa')}}",
   type: 'get',
@@ -1658,7 +1697,11 @@ $.ajax({
             contador++;
           }
         })
-
+        let route_temp = "{{route('peoplesSearch.page', 0)}}";
+        let route_temp1 = route_temp.split('/');
+        let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + variavel;
+        var vertd = '<a href='+route+'><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>';
+        $('div[name=ver_td]').append(vertd);
     }
 });
 

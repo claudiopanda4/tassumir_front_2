@@ -341,12 +341,14 @@ class PostController extends Controller
             }
 
             public function edit_post(Request $request){
+              $controll = new AuthController();
               if ($request->message!= NULL) {
                 DB::table('posts')
                       ->where('uuid', $request->pass_post_uuid)
                       ->update([
-                        'descricao' => $request->message]);
-              }
+                        'descricao' => $request->message,
+                        'updated_at' => $controll->dat_create_update()
+              ]);}
 
                  return redirect()->route('account.home.feed');
                     }
@@ -390,6 +392,9 @@ class PostController extends Controller
     {
         DB::beginTransaction();
         try {
+          $controll = new AuthController();
+
+
             $line = $request->data."";
             $data = explode('_', $line);
             $post_uuid = $data[2];
@@ -400,8 +405,8 @@ class PostController extends Controller
             $conta = DB::select('select * from contas where uuid = ?', [$account_uuid]);
             $view = DB::select('select * from views where post_id = ? AND conta_id = ?', [$post[0]->post_id, $conta[0]->conta_id]);
             if (sizeof($view) <= 0) {
-                $result = DB::insert('insert into views(uuid, post_id, ip_view, conta_id) values(?, ?, ?, ?)',
-                [$uuid, $post[0]->post_id, "", $conta[0]->conta_id]);
+                $result = DB::insert('insert into views(uuid, post_id, ip_view, conta_id, created_at) values(?, ?, ?, ?, ?)',
+                [$uuid, $post[0]->post_id, "", $conta[0]->conta_id, $controll->dat_create_update()]);
             }
             DB::commit();
             return response()->json('salvou');

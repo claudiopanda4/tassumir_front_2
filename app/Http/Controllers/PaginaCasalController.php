@@ -123,10 +123,11 @@ $v=1;
 
     public function conf_PR(Request $request)
       {
+        $controll = new AuthController();
         DB::table('pedido_relacionamentos')->where('uuid',$request->accept_relacd)
-        ->update(['estado_pedido_relac_id' => 2]);
+        ->update(['estado_pedido_relac_id' => 2, 'updated_at' => $controll->dat_create_update()]);
         DB::table('notifications')->where('notification_id',$request->id_notification)
-        ->update(['id_state_notification' => 3]);
+        ->update(['id_state_notification' => 3, 'updated_at' => $controll->dat_create_update()]);
 
  $aux= DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->accept_relacd]);
  $aux1=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->pedido_relacionamento_id, 5 ]);
@@ -157,7 +158,9 @@ $v=1;
              }
 
              $notContaPDD = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux2[0]->identificador_id]);
+             $notContaPDD1 = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux2[0]->identificador_id]);
              $notContaPDT = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux3[0]->identificador_id]);
+             $notContaPDT1 = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux3[0]->identificador_id]);
 
              if(sizeof($notContaPDD)>0) {
                      for ($i=sizeof($notContaPDD); $i > 0 ; $i--) {
@@ -171,6 +174,19 @@ $v=1;
                        ->delete();
                      }
             }
+            if(sizeof($notContaPDD1)>0) {
+                    for ($i=sizeof($notContaPDD1); $i > 0 ; $i--) {
+                      DB::table('notifications')->where('notification_id',$notContaPDD[$i - 1]->notification_id)
+                      ->delete();
+                    }
+                  }
+            if(sizeof($notContaPDT1)>0) {
+                    for ($i=sizeof($notContaPDT1); $i > 0 ; $i--) {
+                      DB::table('notifications')->where('notification_id',$notContaPDT[$i - 1]->notification_id)
+                      ->delete();
+                    }
+           }
+
 
         DB::table('notifications')->insert([
                 'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -179,6 +195,8 @@ $v=1;
                 'identificador_id_causador'=> $aux2[0]->identificador_id,
                 'identificador_id_destino'=> $aux1[0]->identificador_id,
                 'identificador_id_receptor'=> $aux3[0]->identificador_id,
+                'created_at'=> $controll->dat_create_update(),
+
                 ]);
         return redirect()->route('account.home.feed');
       }
@@ -528,7 +546,7 @@ $v=1;
           $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->page_id, 2 ]);
 
           DB::table('pages')->where('uuid',$id)
-          ->update(['estado_pagina_id' => 4]);
+          ->update(['estado_pagina_id' => 4, 'updated_at' => $controll->dat_create_update()]);
 
           DB::table('notifications')->insert([
                   'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -537,7 +555,7 @@ $v=1;
                   'identificador_id_causador'=> $aux1[0]->identificador_id,
                   'identificador_id_destino'=> $aux3[0]->identificador_id,
                   'identificador_id_receptor'=> $aux1[0]->identificador_id,
-                  ]);
+                  'created_at'=> $auth->dat_create_update(),                  ]);
 
           DB::table('notifications')->insert([
                           'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -546,6 +564,7 @@ $v=1;
                           'identificador_id_causador'=> $aux1[0]->identificador_id,
                           'identificador_id_destino'=> $aux3[0]->identificador_id,
                           'identificador_id_receptor'=> $aux2[0]->identificador_id,
+                          'created_at'=> $auth->dat_create_update(),
                           ]);
 
 
@@ -587,15 +606,18 @@ $v=1;
      {
          try
          {
+           $controll = new AuthController();
+
+
            DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$request->p_id)
-           ->update(['estado_pedido_relac_id' => 6]);
+           ->update(['estado_pedido_relac_id' => 6, 'updated_at' =>$controll->dat_create_update()]);
            $not= DB::select('select * from notifications where notification_id = ?',[$request->n_id]);
            DB::table('notifications')->where('notification_id',$request->n_id)
            ->update(['identificador_id_causador' => $not[0]->identificador_id_receptor]);
            DB::table('notifications')->where('notification_id',$request->n_id)
            ->update(['identificador_id_receptor' => $not[0]->identificador_id_causador]);
            DB::table('notifications')->where('notification_id',$request->n_id)
-           ->update(['id_action_notification' => 10]);
+           ->update(['id_action_notification' => 10, 'updated_at' =>$controll->dat_create_update()]);
 
            return redirect()->route('account.home.feed');
 
@@ -644,6 +666,8 @@ $v=1;
     {
         try
         {
+          $controll = new AuthController();
+
 
           DB::table('notifications')->insert([
                   'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -652,6 +676,7 @@ $v=1;
                   'identificador_id_causador'=>$request->identifyOutraC,
                   'identificador_id_destino'=>$request->identifyPage,
                   'identificador_id_receptor'=>$request->identifyCausador,
+                  'created_at'=> $controll->dat_create_update(),
                   ]);
                       return redirect()->route('account.home.feed');
 
@@ -664,8 +689,11 @@ $v=1;
     {
         try
         {
+          $controll = new AuthController();
+
+
           DB::table('pages')->where('uuid',$request->uuidPage)
-        ->update(['estado_pagina_id' => 1]);
+        ->update(['estado_pagina_id' => 1, 'updated_at' =>$controll->dat_create_update()]);
 
         $aux = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador,identificador_id_destino) = (?, ?, ?)', [11, $request->identifyCausador, $request->identifyPage]);
         $aux12 = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador,identificador_id_destino) = (?, ?, ?)', [12, $request->identifyOutraC, $request->identifyPage]);
@@ -686,6 +714,7 @@ $v=1;
                     'identificador_id_causador'=>$request->identifyCausador,
                     'identificador_id_destino'=>$request->identifyPage,
                     'identificador_id_receptor'=>$request->identifyOutraC,
+                    'created_at'=> $controll->dat_create_update(),
                     ]);
 
                     DB::table('notifications')->insert([
@@ -695,6 +724,7 @@ $v=1;
                             'identificador_id_causador'=>$request->identifyCausador,
                             'identificador_id_destino'=>$request->identifyPage,
                             'identificador_id_receptor'=>$request->identifyCausador,
+                            'created_at'=> $controll->dat_create_update(),
                             ]);
 
                             return redirect()->route('account.home.feed');
@@ -709,17 +739,21 @@ $v=1;
     private function store($description, $file_name = null, $id, $format)
     {
         try {
+          $controll = new AuthController();
+
+
             $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
             //dd($uuid);
             if($description == null || $description == ""){
                 $description = "";
             }
-            DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id, estado_post_id) values(?, ?, ?, ?, ?, ?)',
-                [$uuid, $description, $file_name, $id, $format, 1]);
+            DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?)',
+                [$uuid, $description, $file_name, $id, $format, 1, $controll->dat_create_update()]);
 
                 DB::table('identificadors')->insert([
               'tipo_identificador_id' => 3,
               'id' => DB::select('select * from posts where uuid = ?', [$uuid])[0]->post_id,
+              'created_at'=> $controll->dat_create_update(),
          ]);
         } catch (Exception $e) {
             dd($e);

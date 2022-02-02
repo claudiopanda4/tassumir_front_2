@@ -11,6 +11,8 @@
 
 
 $(document).ready(function() {
+  document.getElementById("route_people_select").classList.add('li-component-aside-active');
+
 			let passa= $('#passa').val();
   		$('#table_search').val(passa);
 			let v= 2;

@@ -39,17 +39,20 @@ class SeguidorController extends Controller
      public function store(Request $request)
     {
         try {
+          $controll = new AuthController();
+
+
           if ($request->ajax()) {
             $identificador_seguida = DB::table('identificadors')->where([
-                ['tipo_identificador_id', '=', 2], 
+                ['tipo_identificador_id', '=', 2],
                 ['id', '=', $request->seguida],
                 ])->get();
             $identificador_seguindo = DB::table('identificadors')->where([
-                ['tipo_identificador_id', '=', 1], 
+                ['tipo_identificador_id', '=', 1],
                 ['id', '=', $request->seguindo],
                 ])->get();
-            
-            
+
+
             $incremento = 0;
             $cont = 0;
             $total = 0;
@@ -76,6 +79,8 @@ class SeguidorController extends Controller
                   'identificador_id_causador'=> $identificador_seguindo[0]->identificador_id,
                   'identificador_id_destino'=> $identificador_seguida[0]->identificador_id,
                   'identificador_id_receptor'=> $destino_a[0]->identificador_id,
+                  'created_at'=> $controll->dat_create_update(),
+
                   ]);
 
                 }
@@ -88,6 +93,8 @@ class SeguidorController extends Controller
                         'identificador_id_causador'=> $identificador_seguindo[0]->identificador_id,
                         'identificador_id_destino'=> $identificador_seguida[0]->identificador_id,
                         'identificador_id_receptor'=> $destino_b[0]->identificador_id,
+                        'created_at'=> $controll->dat_create_update(),
+
                         ]);
                       }
                 }
@@ -102,7 +109,7 @@ class SeguidorController extends Controller
                 }
                 if ($cont = 1 && $request->last_page != 0) {
                     $page_identfy = DB::table('identificadors')->where([
-                    ['tipo_identificador_id', 2], 
+                    ['tipo_identificador_id', 2],
                     ['id', '=', $pagePage[0]->page_id],
                     ])->get();
                     $newpage['page'] = $pagePage;
@@ -119,17 +126,17 @@ class SeguidorController extends Controller
                     $newpage['seguidores'] = 0;
                 }
 
-        
+
             return response()->json($newpage);
-        }  
+        }
         } catch (Exception $e) {
-            
+
         }
 
     }
 
-    
- 
+
+
 
     /**
      * Display the specified resource.
@@ -176,13 +183,13 @@ class SeguidorController extends Controller
     {
         if ($request->ajax()) {
              $identificador_seguida = DB::table('identificadors')->where([
-                ['tipo_identificador_id', 2], 
+                ['tipo_identificador_id', 2],
                 ['id', '=', $request->seguida],
             ])->get();
             $identificador_seguindo = DB::table('identificadors')->where([
-                ['tipo_identificador_id', 1], 
+                ['tipo_identificador_id', 1],
                 ['id', '=', $request->seguindo],
-            ])->get();    
+            ])->get();
           DB::table('seguidors')->where([
                   ['identificador_id_seguida', '=', $identificador_seguida[0]->identificador_id],
                   ['identificador_id_seguindo', '=', $identificador_seguindo[0]->identificador_id],
@@ -201,7 +208,7 @@ class SeguidorController extends Controller
                 }
                 if ($cont = 1 && $request->last_page != 0) {
                     $page_identfy = DB::table('identificadors')->where([
-                    ['tipo_identificador_id', 2], 
+                    ['tipo_identificador_id', 2],
                     ['id', '=', $pagePage[0]->page_id],
                     ])->get();
                     $newpage['page'] = $pagePage;
@@ -221,5 +228,5 @@ class SeguidorController extends Controller
             }
         }
 
-    
+
 }

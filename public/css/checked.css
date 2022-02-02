@@ -568,7 +568,8 @@
 	opacity: 1;
     z-index: 1001;
 }
-#target-proof:checked ~ #cover-proof {
+#target-proof:checked ~ #cover-proof,
+#delete-page-target:checked ~ #delete-page-container {
 	opacity: 1;
     z-index: 1001;
 }
