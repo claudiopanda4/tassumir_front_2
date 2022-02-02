@@ -48,8 +48,7 @@
                         	<div name="page">
                             </div>
                         </div>
-                        <div class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
-                            <a href="{{route('allSearch1.page')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
+                        <div class="change-look mb-5" name="ver_td" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
                         </div>
                     </div>
                 </li>
@@ -1593,6 +1592,8 @@
   }else {
     $('div[name=pessoa]').empty();
     $('div[name=page]').empty();
+    $('div[name=ver_td]').empty();
+
   }
 });
 
@@ -1642,10 +1643,15 @@ $.ajax({
             contador++;
           }
         })
+        let route_temp = "{{route('peoplesSearch.page', 0)}}";
+        let route_temp1 = route_temp.split('/');
+        let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + variavel;
+        var vertd = '<a href='+route+'><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>';
+        $('div[name=ver_td]').append(vertd);
     }
-
-
 });
+
+
 $.ajax({
   url: "{{ route('pagina.pesquisa')}}",
   type: 'get',
@@ -1689,7 +1695,11 @@ $.ajax({
             contador++;
           }
         })
-
+        let route_temp = "{{route('peoplesSearch.page', 0)}}";
+        let route_temp1 = route_temp.split('/');
+        let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + variavel;
+        var vertd = '<a href='+route+'><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>';
+        $('div[name=ver_td]').append(vertd);
     }
 });
 
