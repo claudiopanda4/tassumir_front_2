@@ -531,7 +531,9 @@
             </div>
             <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
                 <div class="" id="cover-done" style=" background-color: red;">
-                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Eliminar</button>
+                  <a href="{{route('delete_couple.page', 0)}}" class="mr-2">
+                    <button type="button" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Eliminar</button>
+                 </a>
                 </div>
             </div>
             <!--<div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
@@ -1584,18 +1586,18 @@
             let id = e.target.id.split('_')[2];
         });
         $('#search-lg-home-id').on('keyup',function(){
-  let variavel= $('#search-lg-home-id').val();
-  $('#table_search').val(variavel);
-  let v= 1;
-  if (variavel!='') {
-    searchP(variavel, v);
-  }else {
-    $('div[name=pessoa]').empty();
-    $('div[name=page]').empty();
-    $('div[name=ver_td]').empty();
+            let variavel= $('#search-lg-home-id').val();
+            $('#table_search').val(variavel);
+            let v= 1;
+            if (variavel!='') {
+              searchP(variavel, v);
+            }else {
+              $('div[name=pessoa]').empty();
+              $('div[name=page]').empty();
+              $('div[name=ver_td]').empty();
 
-  }
-});
+            }
+          });
 
 function searchP(variavel, v){
   var s1=0;

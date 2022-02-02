@@ -284,6 +284,20 @@ class AuthController extends Controller
            return $dates;
        }
 
+       public function dat_create_update(){
+         $date_create_update=date("Y");
+         $date_create_update.="-";
+         $date_create_update.=date("m");
+         $date_create_update.="-";
+         $date_create_update.=date("d");
+         $date_create_update.=" ";
+         $date_create_update.=date("H");
+         $date_create_update.=":";
+         $date_create_update.=date("i");
+         $date_create_update.=":";
+         $date_create_update.=date("s");         
+         return $date_create_update;
+       }
        public function Destacados(){
          $dates = $this->default_();
          $account_name = $dates['account_name'];
@@ -870,6 +884,7 @@ class AuthController extends Controller
             ->where('notification_id', $request->id1)
             ->update([
               'id_state_notification' => 1,
+              'updated_at' => $this->dat_create_update()
           ]);
        $resposta=1;
             return response()->json($resposta);
@@ -925,6 +940,7 @@ public function dados_comment($key){
                 'reaction_id' => 1,
                 'identificador_id' => $aux[0]->identificador_id,
                 'post_id' => $post[0]->post_id,
+                'created_at'=> $this->dat_create_update(),
               ]);
               if ($page[0]->conta_id_a != $conta[0]->conta_id) {
               DB::table('notifications')->insert([
@@ -934,6 +950,7 @@ public function dados_comment($key){
                     'identificador_id_causador'=> $aux[0]->identificador_id,
                     'identificador_id_destino'=> $aux4[0]->identificador_id,
                     'identificador_id_receptor'=> $aux2[0]->identificador_id,
+                    'created_at'=> $this->dat_create_update(),
                     ]);
                     }
                     if ($page[0]->conta_id_b != $conta[0]->conta_id) {
@@ -944,6 +961,8 @@ public function dados_comment($key){
                           'identificador_id_causador'=> $aux[0]->identificador_id,
                           'identificador_id_destino'=> $aux4[0]->identificador_id,
                           'identificador_id_receptor'=> $aux3[0]->identificador_id,
+                          'created_at'=> $this->dat_create_update(),
+
                           ]);
                         }
 
@@ -971,6 +990,8 @@ public function dados_comment($key){
                       'comment_id' => $request->id,
                       'reaction_id' => 1,
                       'identificador_id' => $aux[0]->identificador_id,
+                      'created_at'=> $this->dat_create_update(),
+
                     ]);
                   /*  DB::table('notifications')->insert([
                           'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -1012,6 +1033,7 @@ public function dados_comment($key){
               'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
               'identificador_id_seguida' => $aux[0]->identificador_id,
               'identificador_id_seguindo' => $aux1[0]->identificador_id,
+              'created_at'=> $this->dat_create_update(),
               ]);
               if ($page[0]->conta_id_a != $conta[0]->conta_id) {
             DB::table('notifications')->insert([
@@ -1021,6 +1043,7 @@ public function dados_comment($key){
                   'identificador_id_causador'=> $aux1[0]->identificador_id,
                   'identificador_id_destino'=> $aux[0]->identificador_id,
                   'identificador_id_receptor'=> $aux2[0]->identificador_id,
+                  'created_at'=> $this->dat_create_update(),
 
                   ]);
                 }
@@ -1032,6 +1055,7 @@ public function dados_comment($key){
                         'identificador_id_causador'=> $aux1[0]->identificador_id,
                         'identificador_id_destino'=> $aux[0]->identificador_id,
                         'identificador_id_receptor'=> $aux3[0]->identificador_id,
+                        'created_at'=> $this->dat_create_update(),
                         ]);
                       }
 
@@ -1051,6 +1075,7 @@ public function dados_comment($key){
                'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                'conta_id' => $conta,
                'post_id' => $request->id,
+               'created_at'=> $this->dat_create_update(),
                ]);
          }
 
@@ -1066,6 +1091,7 @@ public function dados_comment($key){
                         ->where('post_id', $request->id)
                         ->update([
                           'estado_post_id' => 4,
+                          'updated_at' => $this->dat_create_update()
                       ]);
 
                       $resposta=1;
@@ -1080,6 +1106,7 @@ public function dados_comment($key){
                             ->where('post_id', $request->id)
                             ->update([
                               'estado_post_id' => 2,
+                              'updated_at' => $this->dat_create_update()
                           ]);
 
                           $resposta=1;
@@ -1105,10 +1132,13 @@ public function dados_comment($key){
                 'identificador_id' => $aux[0]->identificador_id,
                 'tipo_estado_comment_id'=>1,
                 'comment'=>$request->comment,
+                'created_at'=> $this->dat_create_update(),
+
                 ]);
                 DB::table('identificadors')->insert([
               'tipo_identificador_id' => 4,
               'id' => $resposta[0]['comment_id'],
+              'created_at'=> $this->dat_create_update(),
          ]);
 
                 $variable=  DB::table('comments')->get();
@@ -1138,10 +1168,13 @@ public function dados_comment($key){
                 'identificador_id' => $aux[0]->identificador_id,
                 'tipo_estado_comment_id'=>1,
                 'comment'=>$request->comment,
+                'created_at'=> $this->dat_create_update(),
                 ]);
                 DB::table('identificadors')->insert([
               'tipo_identificador_id' => 4,
               'id' => $resposta[0]['comment_id'],
+              'created_at'=> $this->dat_create_update(),
+
          ]);
          $a=   DB::table('identificadors')->get();
          foreach ($a as $key ) {
@@ -1154,6 +1187,8 @@ public function dados_comment($key){
                       'identificador_id_causador'=> $aux[0]->identificador_id,
                       'identificador_id_destino'=> $b,
                       'identificador_id_receptor'=> $aux2[0]->identificador_id,
+                      'created_at'=> $this->dat_create_update(),
+
                       ]);
                     DB::table('notifications')->insert([
                             'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -1162,6 +1197,8 @@ public function dados_comment($key){
                             'identificador_id_causador'=> $aux[0]->identificador_id,
                             'identificador_id_destino'=> $b,
                             'identificador_id_receptor'=> $aux3[0]->identificador_id,
+                            'created_at'=> $this->dat_create_update(),
+
                             ]);
 
                 $variable=  DB::table('comments')->get();
@@ -1283,6 +1320,7 @@ public function dados_comment($key){
               DB::table('identificadors')->insertGetId([
                    'tipo_identificador_id' => 1,
                    'id' => $conta->conta_id,
+                   'created_at'=> $this->dat_create_update(),
               ]);
                 if(!$takePhone){
                     $takePhone = NULL;
@@ -1293,6 +1331,7 @@ public function dados_comment($key){
                   'telefone' => $takePhone,
                   'password' => Hash::make($request->password),
                   'conta_id' => $conta->conta_id,
+                  'created_at'=> $this->dat_create_update(),
 
               ]);
 
@@ -1368,13 +1407,17 @@ public function dados_comment($key){
                   'telefone' => NULL,
                   'estado_conta_id' => 1,
                   'tipo_contas_id' => 2,
-                  'nacionalidade' => $request->nacionalidade
+                  'nacionalidade' => $request->nacionalidade,
+                  'created_at'=> $this->dat_create_update(),
+
 
               ]);
 
                 DB::table('identificadors')->insertGetId([
                    'tipo_identificador_id' => 1,
                    'id' => $saveRetriveId,
+                   'created_at'=> $this->dat_create_update(),
+
               ]);
 
 
@@ -1384,6 +1427,8 @@ public function dados_comment($key){
                   'telefone' => NULL,
                   'password' => Hash::make($request->password),
                   'conta_id' => $saveRetriveId,
+                  'created_at'=> $this->dat_create_update(),
+
 
               ]);
 
@@ -1418,7 +1463,9 @@ public function dados_comment($key){
                   'telefone' => $takePhone,
                   'estado_conta_id' => 1,
                   'tipo_contas_id' => 2,
-                  'nacionalidade' => $request->nacionalidade
+                  'nacionalidade' => $request->nacionalidade,
+                  'created_at'=> $this->dat_create_update(),
+
 
               ]);
 
@@ -1426,6 +1473,8 @@ public function dados_comment($key){
                 DB::table('identificadors')->insertGetId([
                    'tipo_identificador_id' => 1,
                    'id' => $saveRetriveId,
+                   'created_at'=> $this->dat_create_update(),
+
               ]);
 
 
@@ -1435,6 +1484,8 @@ public function dados_comment($key){
                   'telefone' => $takePhone,
                   'password' => Hash::make($request->password),
                   'conta_id' => $saveRetriveId,
+                  'created_at'=> $this->dat_create_update(),
+
 
               ]);
 
@@ -1687,7 +1738,7 @@ if ($phone != null) {
 
         DB::table('logins')
               ->where('conta_id', $idToCompare)
-              ->update(['password' =>Hash::make($password)]);
+              ->update(['password' =>Hash::make($password), 'updated_at' => $this->dat_create_update()]);
 
 
         return redirect()->route('account.login.form');
@@ -1717,7 +1768,7 @@ if ($phone != null) {
 
         DB::table('logins')
               ->where('conta_id', $idToCompare)
-              ->update(['password' =>Hash::make($password)]);
+              ->update(['password' =>Hash::make($password),'updated_at' => $this->dat_create_update()]);
 
 
         return redirect()->route('account.login.form');
@@ -1800,13 +1851,13 @@ if ($phone != null) {
 
     public static function updateUserProfilePicture($picture, $account_id)
     {
-        DB::table('contas')->where('conta_id', $account_id)->update(['foto' => $picture]);
+        DB::table('contas')->where('conta_id', $account_id)->update(['foto' => $picture,'updated_at' => $this->dat_create_update()]);
         return redirect()->route('account.profile');
     }
 
     public static function updatePageProfilePicture($picture, $uuid)
     {
-        DB::table('pages')->where('uuid', $uuid)->update(['foto' => $picture]);
+        DB::table('pages')->where('uuid', $uuid)->update(['foto' => $picture, 'updated_at' => $this->dat_create_update()]);
         return back();
     }
 

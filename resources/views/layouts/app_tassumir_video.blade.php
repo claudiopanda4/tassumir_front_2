@@ -44,12 +44,11 @@
                         </div>
                         <div class="search-id-container">
                           <div name="pessoa">
-                            </div>
-                            <div name="page">
+                        	</div>
+                        	<div name="page">
                             </div>
                         </div>
-                        <div class="change-look mb-5" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
-                            <a href="{{route('allSearch.page')}}"><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>
+                        <div class="change-look mb-5" name="ver_td" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
                         </div>
                     </div>
                 </li>
@@ -58,7 +57,7 @@
                 <?php $controller = 0; ?>
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
-                        <a href="{{route('allSearch.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
+                        <a href="{{route('allSearch1.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " >
@@ -151,41 +150,57 @@
                                     <?php endif ?>
 
                                     <div class="hidden-click-any-container noti-div-name">
-                                   @if($notificacoes[$i- 1]['tipo'] == 1)
-                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}" class="mudar_estado_not" >
-                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
-                                   </a>
-                                   @elseif($notificacoes[$i- 1]['tipo'] == 2)
-                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
-                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
-                                   </a>
-                                   @elseif($notificacoes[$i- 1]['tipo'] == 3)
-                                   <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
-                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
-                                   </a>
-                                   @elseif($notificacoes[$i- 1]['tipo'] == 4 || $notificacoes[$i- 1]['tipo'] == 7)
-                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
-                                   @elseif($notificacoes[$i- 1]['tipo'] == 5)
-                                   <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
-                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
-                                   </a>
-                                   @elseif($notificacoes[$i- 1]['tipo'] == 6)
-                                   <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
-                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
-                                   </a>
-                                   @elseif($notificacoes[$i- 1]['tipo'] == 8)
-                                   <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
-                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
-                                   </a>
-                                   @elseif($notificacoes[$i- 1]['tipo'] == 9)
-                                   <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
-                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
-                                   </a>
-                                   @elseif($notificacoes[$i- 1]['tipo'] == 10)
-                                   <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
-                                    <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
-                                   </a>
-                                   @endif
+                                      @if($notificacoes[$i- 1]['tipo'] == 1)
+                                      <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}" class="mudar_estado_not" >
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @elseif($notificacoes[$i- 1]['tipo'] == 2)
+                                      <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @elseif($notificacoes[$i- 1]['tipo'] == 3)
+                                      <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @elseif($notificacoes[$i- 1]['tipo'] == 4 || $notificacoes[$i- 1]['tipo'] == 7)
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      @elseif($notificacoes[$i- 1]['tipo'] == 5)
+                                      <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @elseif($notificacoes[$i- 1]['tipo'] == 6)
+                                      <a href="{{route('post_index', $notificacoes[$i- 1]['link'])}}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @elseif($notificacoes[$i- 1]['tipo'] == 8)
+                                      <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @elseif($notificacoes[$i- 1]['tipo'] == 9)
+                                      <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @elseif($notificacoes[$i- 1]['tipo'] == 10)
+                                      <a href="{{route('relationship.page1', $notificacoes[$i- 1]['id']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @elseif($notificacoes[$i- 1]['tipo'] == 11)
+                                      <a href="{{route('account.delete.page', $notificacoes[$i- 1]['id1']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @elseif($notificacoes[$i- 1]['tipo'] == 12)
+                                      <a href="{{route('account.delete.page', $notificacoes[$i- 1]['id1']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @elseif($notificacoes[$i- 1]['tipo'] == 13)
+                                      <a href="{{route('couple.page1', $notificacoes[$i- 1]['link']) }}" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @else
+                                      <a href="" class="mudar_estado_not" id="Notificacao|{{$notificacoes[$i- 1]['id1']}}">
+                                       <span class="hidden-click-any-container noti-span">{{$notificacoes[$i- 1]['notificacao']}}</span>
+                                      </a>
+                                      @endif
                                     <div class="hidden-click-any-container noti-hour ml-2">
                                         <a href=""><span class="">há um dia</span></a>
                                     </div>
@@ -251,6 +266,7 @@
     </main>
     </div>
 </body>
+
 <script type="text/javascript">
 $(document).ready(function () {
   $('.like-a').click(function (e) {
@@ -312,7 +328,141 @@ $(document).ready(function () {
       $("#comentario-" + id).val('');
       comentar(id, coment);
     }
+      $('#search-lg-home-id').on('keyup',function(){
+          let variavel= $('#search-lg-home-id').val();
+          $('#table_search').val(variavel);
+          let v= 1;
+          if (variavel!='') {
+            searchP(variavel, v);
+          }else {
+            $('div[name=pessoa]').empty();
+            $('div[name=page]').empty();
+            $('div[name=ver_td]').empty();
 
+          }
+        });
+
+      function searchP(variavel, v){
+      var s1=0;
+      var s2=1;
+      var s3;
+      $.ajax({
+      url: "{{ route('pessoa.pesquisa')}}",
+      type: 'get',
+      data: {'dados': variavel, 'v':v},
+      dataType: 'json',
+      success:function(response){
+      var nome = '';
+      var contador = 1;
+      //console.log(response.valor);
+      s1 =response.valor.length;
+      $.each(response.valor, function(key, value){
+      let src = '{{asset("storage/img/users/")}}';
+      if (value.estado_conta_id == 1) {
+        if (contador == 1) {
+          nome += '<li class="search-title">'
+          nome += '<span style="color:#fff;" class="mt-2">Pessoas</span>'
+          nome += '<ul class="card-flex">'
+          nome += '</li>'
+
+        }
+        nome += '<li class="change-look search-info">'
+        if (value.foto != null) {
+          nome += '<div class="page-cover circle "><img class=" circle img-40" src= ' + src + '/' + value.foto + '></div>'
+        }else {
+          nome += '<div class=" page-cover circle "><i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i></div>'
+        }
+        nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
+        var route1 = "{{route('account1.profile', 1) }}"
+        url_array1 = route1.split('/');
+        url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
+        nome += '<a href='+url_link1+' <span class="profile-name-1">'+value.nome+' '+value.apelido+'</span>'
+        nome += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
+        nome += '</div></div></li><div class="couple-separator"></div>'
+        if (contador == response.valor.length) {
+          nome += '</ul>'
+        }
+
+          $('div[name=pessoa]').empty();
+          $('div[name=pessoa]').append(nome);
+          contador++;
+        }
+      })
+      let route_temp = "{{route('peoplesSearch.page', 0)}}";
+      let route_temp1 = route_temp.split('/');
+      let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + variavel;
+      var vertd = '<a href='+route+'><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>';
+      $('div[name=ver_td]').append(vertd);
+      }
+      });
+
+
+      $.ajax({
+      url: "{{ route('pagina.pesquisa')}}",
+      type: 'get',
+      data: {'dados': variavel , 'v':v},
+      dataType: 'json',
+      success:function(response){
+      let src1 = '{{ asset("storage/img/page/") }}';
+      var nome = '';
+      var contador = 1;
+      //console.log(response.valor);
+      s2 =response.valor.length;
+      $.each(response.valor, function(key, value){
+      if (value.estado_pagina_id==1) {
+
+        if (contador == 1) {
+          nome += '<li class="change-look search-info">'
+          nome += '<span style="color:#fff;" class="mt-2">Páginas</span>'
+          nome += '<ul class="card-flex">'
+          nome += '</li>'
+        }
+        nome += '<li class="change-look search-info">'
+        if (value.foto != null) {
+          nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src=' + src1 + '/' + value.foto + '></div>'
+        }else {
+          nome += '<div class=" page-cover circle l-5"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
+        }
+        nome += '<div class="mb-1 mr-2 profile-name-ident" id=""><div id="" class="" >'
+        var route10 = "{{route('couple.page1', 1) }}"
+        url_array10 = route10.split('/');
+        url_link10 = url_array10[0] + "/" + url_array10[1] + "/" + url_array10[2] + "/"+ url_array10[3] +  "/" + value.uuid;
+        nome +='<a href='+url_link10+'>'
+        nome += '<span class="profile-name-1">'+value.nome+'</span>'
+        nome +='</a>'
+        nome += '<a href='+url_link10+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
+        nome += '</div></div></li><div class="couple-separator"></div>'
+        if (contador == response.valor.length) {
+          nome += '</ul>'
+        }
+         $('div[name=page]').empty();
+          $('div[name=page]').append(nome);
+          contador++;
+        }
+      })
+      let route_temp = "{{route('peoplesSearch.page', 0)}}";
+      let route_temp1 = route_temp.split('/');
+      let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + variavel;
+      var vertd = '<a href='+route+'><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>';
+      $('div[name=ver_td]').append(vertd);
+      }
+      });
+
+      s3=s1+s2;
+      if (s3 == 0) {
+      nome = '<div style="color: white;" class="ml-2 mt-2">Sem resultados</div>';
+      $('div[name=page]').empty();
+      $('div[name=page]').append(nome);
+      }
+      }
+
+      $('#search-lg-home-id').focus(function(){
+          $('.container-search-home').css({
+              display: 'block',
+          });
+          $('#search-lg-home-id-container').focus();
+      });
+});
 });
 </script>
 </html>
