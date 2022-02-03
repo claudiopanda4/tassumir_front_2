@@ -1122,13 +1122,13 @@ public function dados_comment($key){
                     }
 
     public function comentar(Request $request){
-      $post= DB::select('select * from posts where post_id = ?', [$request->id]);
+      $post= DB::select('select page_id from posts where post_id = ?', [$request->id]);
       $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
       $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
       $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
       $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
       $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
-      dd($aux);
+  //    dd($aux);
       $resposta=array();
 
             if ($page[0]->conta_id_a == $conta[0]->conta_id || $page[0]->conta_id_b == $conta[0]->conta_id) {
@@ -1230,7 +1230,7 @@ public function dados_comment($key){
 
               }
 
-
+            dd($resposta);
        return response()->json($resposta);
           }
 
@@ -1306,7 +1306,7 @@ public function dados_comment($key){
         DB::beginTransaction();
           try{
                 $takePhone = str_replace("-","",$request->telefone);
-                   
+
                 $conta = new Conta;
                   $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
                   $conta->nome = $request->nome;
@@ -1322,7 +1322,7 @@ public function dados_comment($key){
                   if($takePhone){
                       $conta->telefone = $takePhone;
                   }
-                  
+
                   $conta->save();
                   $saveRetriveId = $conta->id;
 

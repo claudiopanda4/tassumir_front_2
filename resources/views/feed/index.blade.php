@@ -247,7 +247,7 @@
                       @endif
                         </div>
                         <div class="comment-user-comment comment-user-comment-feed">
-                            <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}">Amo muito esse casal</p>
+                            <p class="text-ellips" id="comment-own-{{$dados[$key]['post_id']}}"></p>
                         </div>
                     </div>
                     <div class="comment-user-container comment-user-container-react" name="novo-comment">
