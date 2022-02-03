@@ -127,7 +127,6 @@
 
           <div class="form-section">
 
-            <input type="text" class="input-text-default input-full input-login"  id="nacionalidade" placeholder="Nacionalidade1" value="">
             <select name="nacionalidade" id="nationality" required>
               <option value="" class="option-nationality" disabled selected>Nacionalidade</option>
               @forelse($dadosPais as $pais)
