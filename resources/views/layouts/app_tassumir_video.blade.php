@@ -251,12 +251,12 @@
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix">
-                <li class="li-component-aside li-component-aside-active"><i class="fas fa-eye fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','ma')}}">Mais Assistidos</a></li>
+                <li class="li-component-aside" id="ma"><i class="fas fa-eye fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','ma')}}">Mais Assistidos</a></li>
               <!--  <li class="li-component-aside"><i class="far fa-heart fa-20 fa-icon-aside-left"></i><a href="{{route('account.profile')}}?post-container-post=saved">Mais Curtidos</a></li> -->
-                <li class="li-component-aside"><i class="far fa-heart fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mc')}}">Mais Curtidos</a></li>
-                <li class="li-component-aside"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mr')}}">Mais Recentes</a></li>
-                <li class="li-component-aside"><i class="far fa-comment fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mco')}}">Mais Comentados</a></li>
-                <li class="li-component-aside"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mg')}}">Videos Guardados</a></li>
+                <li class="li-component-aside" id="mc"><i class="far fa-heart fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mc')}}">Mais Curtidos</a></li>
+                <li class="li-component-aside" id="mr"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mr')}}">Mais Recentes</a></li>
+                <li class="li-component-aside" id="mco"><i class="far fa-comment fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mco')}}">Mais Comentados</a></li>
+                <li class="li-component-aside" id="mg"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','mg')}}">Videos Guardados</a></li>
             </ul>
         </nav>
     </aside>
@@ -269,6 +269,10 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
+  var select_li =window.location.href.split('/');
+  document.getElementById(select_li[select_li.length - 1]).classList.add('li-component-aside-active');
+
+
   $('.like-a').click(function (e) {
       e.preventDefault();
       let id = e.target.id.split('|');
@@ -388,9 +392,9 @@ $(document).ready(function () {
           contador++;
         }
       })
-      let route_temp = "{{route('peoplesSearch.page', 0)}}";
+      let route_temp = "{{route('allSearch.page', 0)}}";
       let route_temp1 = route_temp.split('/');
-      let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + variavel;
+      let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ variavel;
       var vertd = '<a href='+route+'><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>';
       $('div[name=ver_td]').empty();
       $('div[name=ver_td]').append(vertd);
@@ -441,9 +445,9 @@ $(document).ready(function () {
           contador++;
         }
       })
-      let route_temp = "{{route('peoplesSearch.page', 0)}}";
+      let route_temp = "{{route('allSearch.page', 0)}}";
       let route_temp1 = route_temp.split('/');
-      let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + variavel;
+      let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ variavel;
       var vertd = '<a href='+route+'><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>';
       $('div[name=ver_td]').empty();
       $('div[name=ver_td]').append(vertd);
