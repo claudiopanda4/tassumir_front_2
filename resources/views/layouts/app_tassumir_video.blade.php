@@ -392,6 +392,7 @@ $(document).ready(function () {
       let route_temp1 = route_temp.split('/');
       let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + variavel;
       var vertd = '<a href='+route+'><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>';
+      $('div[name=ver_td]').empty();
       $('div[name=ver_td]').append(vertd);
       }
       });
@@ -444,6 +445,7 @@ $(document).ready(function () {
       let route_temp1 = route_temp.split('/');
       let route = route_temp1[0] + "/" + route_temp1[1] + "/" + route_temp1[2] + "/"+ route_temp1[3] + "/"+ route_temp1[4] + "/" + variavel;
       var vertd = '<a href='+route+'><span class="mt-2" style="font-size:13px;color: #fff;" > Ver todos </span></a>';
+      $('div[name=ver_td]').empty();
       $('div[name=ver_td]').append(vertd);
       }
       });
