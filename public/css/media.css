@@ -617,6 +617,7 @@
 	    float: none;
 	}
 	#app-log-reg {
+		width: 100%;
 	    background-color: #000;
 	}
 	#body-login {
@@ -1143,6 +1144,16 @@
 	}
 	.ul-left {
 		margin-left: 240px;
+	}
+}
+@media screen and (max-width: 1050px) {
+	#app-log-reg {
+	    width: 100%;
+	}
+}
+@media screen and (max-width: 330px) {
+	.post header .first-component {
+	    width: 268px;
 	}
 }
 @media screen and (min-width: 2400px) {
