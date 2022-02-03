@@ -127,10 +127,17 @@
 
           <div class="form-section">
 
-            <input type="text" class="input-text-default input-full input-login" name="nacionalidade" id="nacionalidade" placeholder="Nacionalidade1" value="">
-            <select id="nationality" required>
-                <option value="" class="option-nationality" disabled selected>Nacionalidade</option>
-                <option value="" class="option-nationality">Angola</option>
+            <input type="text" class="input-text-default input-full input-login"  id="nacionalidade" placeholder="Nacionalidade1" value="">
+            <select name="nacionalidade" id="nationality" required>
+              <option value="" class="option-nationality" disabled selected>Nacionalidade</option>
+              @forelse($dadosPais as $pais)
+              <option value="{{$pais->pais_id}}" class="option-nationality">{{$pais->nome}}</option>
+              @empty
+              <option>...</option>
+              @endforelse
+              
+             
+               
             </select>
 
             <div class="invalid-feedback">
@@ -215,10 +222,12 @@
     }
   });
   $('#apelido-id').on('keyup', function(e){
+    let control = 0;
     let apelido = $('#apelido-id').val();
     let campos = apelido.split(' ');
     if (campos.length >= 2) {
       apelido = apelido.replace(' ', '');
+      control++;
       $('#apelido-id').val(apelido);
     }else{
       $('#v-f-d').remove();
@@ -400,4 +409,22 @@
     })();
 
   });
+
+  /*
+    $(document).ready(function(){
+    var buscar_pais = 'Buscar';
+
+    $.ajax({
+        url: "{{route('buscar.pais')}}",
+        type: 'get',
+        data: {'bucar': buscar_pais},
+        dataType: 'json',
+          success: function(response){
+            $.each(response.pais, function(key, value){
+                  $('#nationality').append('<option value="'+value.pais_id+'" class="option-nationality" >'+value.nome+'</option>')
+                })
+                }
+              });
+    })*/
+  
 </script>

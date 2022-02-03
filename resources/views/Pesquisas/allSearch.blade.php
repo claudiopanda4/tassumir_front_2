@@ -132,7 +132,7 @@ $(document).ready(function() {
 						url_array1 = route1.split('/');
 						url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.uuid;
 
-						nome += '<a href='+url_link1+' <span class="profile-name-1">'+value.nome+' '+value.apelido+'</span>'
+						nome += '<a href='+url_link1+'> <span class="profile-name-1">'+value.nome+' '+value.apelido+'</span>'
 						nome += '<a href='+url_link1+' class="couple-invite-icon-one circle mr-4"><i class="fas fa-user-plus fa-16 center" style="font-size: 14pt;"></i></a>'
 						nome += '</div></div></li><div class="couple-separator"></div>'
 						if (contador == 4) {
