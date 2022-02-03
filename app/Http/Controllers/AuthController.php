@@ -1316,11 +1316,13 @@ public function dados_comment($key){
                   $conta->estado_civil_id = 1;
                   $conta->email = $request->email;
                   $conta->estado_conta_id = 1;
+                  $conta->tipo_contas_id = 2;
                   $nacionalida = intval($request->nacionalidade);
                   $conta->nacionalidade_id = $nacionalida;
                   if($takePhone){
                       $conta->telefone = $takePhone;
                   }
+                  
                   $conta->save();
                   $saveRetriveId = $conta->id;
 
@@ -1361,8 +1363,8 @@ public function dados_comment($key){
           }catch(\Exception $e){
             DB::rollBack();
               //return back()->with('error','Erro');
-
-             return redirect()->route('auth.ErrorStatus');
+            echo "O Erro é: " .$e;
+            // return redirect()->route('auth.ErrorStatus');
 
           }
 
