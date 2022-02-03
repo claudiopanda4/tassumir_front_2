@@ -286,17 +286,18 @@ class AuthController extends Controller
        }
 
        public function dat_create_update(){
+         $get_date = getdate();
          $date_create_update=date("Y");
          $date_create_update.="-";
          $date_create_update.=date("m");
          $date_create_update.="-";
          $date_create_update.=date("d");
          $date_create_update.=" ";
-         $date_create_update.=date("H");
+         $date_create_update.=$get_date['hours'];
          $date_create_update.=":";
-         $date_create_update.=date("i");
+         $date_create_update.=$get_date['minutes'];
          $date_create_update.=":";
-         $date_create_update.=date("s");
+         $date_create_update.=$get_date['seconds'];
          return $date_create_update;
        }
        public function Destacados(){
