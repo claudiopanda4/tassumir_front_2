@@ -1356,6 +1356,8 @@ public function dados_comment($key){
                   'email' => $request->email,
                   'telefone' => $takePhone,
               ]);
+              $get_verification_code = $code;
+              Mail::to($takeEmail)->send(new SendVerificationCode($get_verification_code));
 
               DB::commit();
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));
