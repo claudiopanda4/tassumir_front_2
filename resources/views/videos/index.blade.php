@@ -138,6 +138,7 @@
                               @endif
                                                         </div>
                   <?php if ($dados[$key]['qtd_comment']>0): ?>
+                    <div class="" name="div_pai_commnet">
                             <div class="comment-users-tass">
                                 <div class="comment-users" id="comment-users-2">
                                     <div class="comment-user-container">
@@ -179,8 +180,10 @@
                                         </a>
                                     </div>
                                 </div>
+                              </div>
                             </div>
                           <?php else: ?>
+                          <div class="" name="div_pai_commnet">
                             <div class="comment-users-tass">
                                 <div class="comment-users" id="comment-users-2">
                                     <div class="comment-user-container">
@@ -193,6 +196,7 @@
                                     </div>
                                 </div>
                             </div>
+                          </div>
                             <?php endif ?>
                         </div>
                         <nav class="row interaction-numbers">
