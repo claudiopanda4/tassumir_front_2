@@ -114,7 +114,7 @@
                     </div>
                 @endif
             </div>
-            <?php if (true): ?>
+            <?php if ($v==1): ?>
                 <a href="{{route('page.edit.get', $page_content[0]->uuid)}}">
                     @csrf
                     <div class="edit-page-container">
