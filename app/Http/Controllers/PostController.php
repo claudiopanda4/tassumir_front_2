@@ -33,7 +33,7 @@ class PostController extends Controller
             }
         }
         $user_id = Auth::user()->conta_id;
-        $dados = [89];
+        $dados = [];
         $total_posts = 10;
         $i = 0;
         $new_posts = DB::select('select post_id from posts where post_id > ? order by post_id desc', [$init]);
@@ -85,7 +85,7 @@ class PostController extends Controller
                 'last_post_id' => $last_post_id
         ];
     }
-    public function get_posts ($init, $checked, $user_id) {
+    public function get_posts ($init, $checked, $user_id, $dest_init) {
         DB::beginTransaction();
         try {
             $page_controller = new PageController();
@@ -143,7 +143,6 @@ class PostController extends Controller
                                     }
                                 }
                             }
-                            $result = !$result;
                         }
                         //$last_post = $posts[$key]->page_id;
                         $auxs[$iii] = $aux.' '.$aux1.' size off '.sizeof($posts_return).' '.$counter;

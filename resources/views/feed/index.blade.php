@@ -21,9 +21,9 @@
                             <a href="{{route('post_index', $what_are_talking[$i]['post_uuid'])}}">
                                 <div class="identify-cover circle">
                                 @if( !($what_are_talking[$i]['foto_page'] == null) )
-                                        <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
+                                    <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
                                 @else
-                                        <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                    <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                                 @endif
                                 </div>
                                 <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
