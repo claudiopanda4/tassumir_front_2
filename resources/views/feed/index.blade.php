@@ -461,6 +461,8 @@ function gostar(id){
                 }else{
                   nome +=             '<i class="fas fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
                 }
+                nome +=     '</a>'
+
                 	$('div[name=novo-comment]').append(nome);
 
           }
