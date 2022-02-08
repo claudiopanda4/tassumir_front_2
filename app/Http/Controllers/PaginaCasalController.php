@@ -78,9 +78,26 @@ class PaginaCasalController extends Controller
        $v[0]['id']=$conta[0]->conta_id;
 
      }
-
-
+     
         return view('pagina.couple_page_following', compact('account_name','v','PS','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir'));
+    }
+    public function conta_seguinte()
+    {
+       $dadosSeguida = DB::table('seguidors')
+               ->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
+               ->select('seguidors.*', 'identificadors.id')
+               ->get();
+
+          $controll = new AuthController();
+          $dates = $controll->default_();
+          $conta_logada = $dates['conta_logada'];
+          foreach ($dadosSeguida as $key => $value) {
+            if ($value->id ==  $conta_logada[0]->conta_id) {
+              $conta_seguinte[$key] = $value->identificador_id_seguida;
+            }
+          }
+          
+        return $conta_seguinte; 
     }
 
     public function index(){
@@ -91,6 +108,8 @@ class PaginaCasalController extends Controller
 
       $controll = new AuthController();
        $dates = $controll->default_();
+
+      
 
       $account_name = $dates['account_name'];
       $checkUserStatus = $dates['checkUserStatus'];
@@ -117,8 +136,9 @@ class PaginaCasalController extends Controller
       $this->current_page_id = $page_content[0]->page_id;
       $sugerir = $this->suggest_pages($page_content[0]->page_id);
       $allPosts = $this->get_post_types($page_content[0]->page_id);
-$v=1;
-        return view('pagina.couple_page', compact('account_name','v','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'paginasSeguidas', 'dadosSeguida', 'paginasNaoSeguidas', 'allPosts', 'sugerir'));
+      $v=1;
+
+      return view('pagina.couple_page', compact('account_name','v','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'paginasSeguidas', 'dadosSeguida', 'paginasNaoSeguidas', 'allPosts', 'sugerir', 'conta_seguinte'));
     }
 
     public function conf_PR(Request $request)
@@ -483,8 +503,9 @@ $v=1;
           }
 
           //return view('pagina.couple_page', compact('account_name','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts', 'casalPageName', 'uuidToCompare'));
-
-          return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'sugerir', 'allPosts', 'casalPageName'));
+          $conta_seguinte = $this->conta_seguinte();
+          
+          return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'sugerir', 'allPosts', 'casalPageName', 'conta_seguinte'));
 
         } catch (Exception $e) {
             dd($e);
