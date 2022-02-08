@@ -1122,13 +1122,13 @@ public function dados_comment($key){
                     }
 
     public function comentar(Request $request){
-      $post= DB::select('select * from posts where post_id = ?', [$request->id]);
+      $post= DB::select('select page_id from posts where post_id = ?', [$request->id]);
       $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
       $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
       $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
       $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
       $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
-      dd($aux);
+  //    dd($aux);
       $resposta=array();
 
             if ($page[0]->conta_id_a == $conta[0]->conta_id || $page[0]->conta_id_b == $conta[0]->conta_id) {
@@ -1141,11 +1141,35 @@ public function dados_comment($key){
                 'created_at'=> $this->dat_create_update(),
 
                 ]);
+
+                $variable=  DB::table('comments')->get();
+                foreach ($variable as $key) {
+                  $resposta[0]['post_id']=$key->post_id;
+                    $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$key->comment_id, $aux[0]->identificador_id]);
+                   $resposta[0]['comment_S/N']=sizeof($ja_reagiu1);
+                   $resposta[0]['comment_id']=$key->comment_id;
+                   if ($aux[0]->tipo_identificador_id == 1) {
+                    $resposta[0]['nome_comment']=$conta[0]->nome;
+                     $resposta[0]['nome_comment'].=" ";
+                     $resposta[0]['nome_comment'].=$conta[0]->apelido;
+                     $resposta[0]['foto_conta']=$conta[0]->foto;
+                     $resposta[0]['foto_ver']=1;
+                   }elseif ($aux[0]->tipo_identificador_id == 2) {
+                     $page= DB::table('pages')->get();
+                    $resposta[0]['nome_comment']=$page[$aux[0]->id - 1]->nome;
+                     $resposta[0]['foto_conta']=$page[$aux[0]->id - 1]->foto;
+                     $resposta[0]['foto_ver']=2;
+                   }
+                   $resposta[0]['comment']=$key->comment;
+                }
                 DB::table('identificadors')->insert([
               'tipo_identificador_id' => 4,
               'id' => $resposta[0]['comment_id'],
               'created_at'=> $this->dat_create_update(),
          ]);
+
+              } else {
+
 
                 $variable=  DB::table('comments')->get();
                 foreach ($variable as $key) {
@@ -1168,7 +1192,6 @@ public function dados_comment($key){
                    $resposta[0]['comment']=$key->comment;
                 }
 
-              } else {
                 DB::table('comments')->insert([
                 'post_id' => $request->id,
                 'identificador_id' => $aux[0]->identificador_id,
@@ -1182,16 +1205,13 @@ public function dados_comment($key){
               'created_at'=> $this->dat_create_update(),
 
          ]);
-         $a=   DB::table('identificadors')->get();
-         foreach ($a as $key ) {
-          $b= $key->identificador_id;
-         }
+         $a= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$request->id, 3 ]);
                   DB::table('notifications')->insert([
                       'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                       'id_state_notification' => 2,
                       'id_action_notification' => 2,
                       'identificador_id_causador'=> $aux[0]->identificador_id,
-                      'identificador_id_destino'=> $b,
+                      'identificador_id_destino'=> $a[0]->identificador_id,
                       'identificador_id_receptor'=> $aux2[0]->identificador_id,
                       'created_at'=> $this->dat_create_update(),
 
@@ -1201,35 +1221,13 @@ public function dados_comment($key){
                             'id_state_notification' => 2,
                             'id_action_notification' => 2,
                             'identificador_id_causador'=> $aux[0]->identificador_id,
-                            'identificador_id_destino'=> $b,
+                            'identificador_id_destino'=> $a[0]->identificador_id,
                             'identificador_id_receptor'=> $aux3[0]->identificador_id,
                             'created_at'=> $this->dat_create_update(),
 
                             ]);
 
-                $variable=  DB::table('comments')->get();
-                foreach ($variable as $key) {
-                  $resposta[0]['post_id']=$key->post_id;
-                    $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$key->comment_id, $aux[0]->identificador_id]);
-                   $resposta[0]['comment_S/N']=sizeof($ja_reagiu1);
-                   $resposta[0]['comment_id']=$key->comment_id;
-                   if ($aux[0]->tipo_identificador_id == 1) {
-                    $resposta[0]['nome_comment']=$conta[0]->nome;
-                     $resposta[0]['nome_comment'].=" ";
-                     $resposta[0]['nome_comment'].=$conta[0]->apelido;
-                     $resposta[0]['foto_conta']=$conta[0]->foto;
-                     $resposta[0]['foto_ver']=1;
-                   }elseif ($aux[0]->tipo_identificador_id == 2) {
-                     $page= DB::table('pages')->get();
-                    $resposta[0]['nome_comment']=$page[$aux[0]->id - 1]->nome;
-                     $resposta[0]['foto_conta']=$page[$aux[0]->id - 1]->foto;
-                     $resposta[0]['foto_ver']=2;
-                   }
-                   $resposta[0]['comment']=$key->comment;
-                }
-
               }
-
 
        return response()->json($resposta);
           }
@@ -1306,7 +1304,7 @@ public function dados_comment($key){
         DB::beginTransaction();
           try{
                 $takePhone = str_replace("-","",$request->telefone);
-                   
+
                 $conta = new Conta;
                   $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
                   $conta->nome = $request->nome;
@@ -1322,7 +1320,7 @@ public function dados_comment($key){
                   if($takePhone){
                       $conta->telefone = $takePhone;
                   }
-                  
+
                   $conta->save();
                   $saveRetriveId = $conta->id;
 
@@ -1356,6 +1354,8 @@ public function dados_comment($key){
                   'email' => $request->email,
                   'telefone' => $takePhone,
               ]);
+              $get_verification_code = $code;
+              Mail::to($takeEmail)->send(new SendVerificationCode($get_verification_code));
 
               DB::commit();
              return view('auth.codigoRecebidoRegister',compact('saveRetriveId','code','takePhone','takeEmail'));

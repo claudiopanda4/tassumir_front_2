@@ -48,7 +48,7 @@
                 </li>
             </ul>
             <div id="option-profile-no-own">
-            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $account_name[0]->tipo_contas != 1 ): ?>
+            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $account_name[0]->tipo_contas_id != 1 ): ?>
             <div>
                 <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $perfil[0]['verificacao_page'] == 0 && $perfil[0]['verificacao_page1'] == 0  && $perfil[0]['verificacao_page2'] == 0 && $perfil[0]['verificacao_page3'] == 0  ): ?>
 
@@ -338,7 +338,10 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function () {
+  <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
   document.getElementById("route_account").classList.add('li-component-aside-active');
+  <?php endif; ?>
+
 });
 </script>
 @stop
