@@ -1799,19 +1799,19 @@ if ($phone != null) {
     public function login(Request $request){
 
         $credentials = $request->validate([
-            'number_email_login' => ['required'],
-            'password_login' => ['required'],
+            'numero_ou_email' => ['required'],
+            'palavra_passe' => ['required'],
         ]);
 
         //,'min:9','max:255' tirei prq ultrapassei o meu bug do multi nivel form
         //dd($request);
 
-        if (Auth::attempt(['email' => $request->number_email_login, 'password' => $request->password_login])) {
+        if (Auth::attempt(['email' => $request->numero_ou_email, 'password' => $request->palavra_passe])) {
 
             $request->session()->regenerate();
             return redirect()->route('account.home');
 
-        }else if(Auth::attempt(['telefone' => $request->number_email_login, 'password' => $request->password_login])){
+        }else if(Auth::attempt(['telefone' => $request->numero_ou_email, 'password' => $request->palavra_passe])){
 
 
             $request->session()->regenerate();
