@@ -48,7 +48,7 @@
                 </li>
             </ul>
             <div id="option-profile-no-own">
-            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $account_name[0]->tipo_contas_id != 1 ): ?>
+            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $account_name[0]->tipo_contas_id != 1 && $conta_logada[0]->tipo_contas_id != 1 ): ?>
             <div>
                 <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $perfil[0]['verificacao_page'] == 0 && $perfil[0]['verificacao_page1'] == 0  && $perfil[0]['verificacao_page2'] == 0 && $perfil[0]['verificacao_page3'] == 0  ): ?>
 
@@ -139,7 +139,7 @@
                             </div>
                         </a>
                     </div>
-                <?php endif; ?>    
+                <?php endif; ?>
             </div>
                     <!--<?php //if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                     <div class="options-profile-btn options-profile-btn-center profile-item-center">
