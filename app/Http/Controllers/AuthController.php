@@ -56,6 +56,7 @@ class AuthController extends Controller
            $allUserPages = Self::allUserPages(new AuthController, Auth::user()->conta_id);
            $page_content = $this->casalPage->page_default_date($account_name);
            $conta_logada = $this->defaultDate();
+           $conta_logada_identify = DB::select('select identificador_id from identificadors where (id, tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
            $notificacoes=array();
            $notificacoes_count=0;
            $a=0;
@@ -281,6 +282,7 @@ class AuthController extends Controller
                "paginasSeguidas" => $paginasSeguidas,
                "notificacoes" => $notificacoes,
                "notificacoes_count" => $notificacoes_count,
+               "conta_logada_identify"=> $conta_logada_identify,
            ];
            return $dates;
        }
@@ -300,6 +302,8 @@ class AuthController extends Controller
          $date_create_update.=$get_date['seconds'];
          return $date_create_update;
        }
+
+
        public function Destacados(){
          $dates = $this->default_();
          $account_name = $dates['account_name'];
@@ -349,6 +353,7 @@ class AuthController extends Controller
                     $what_are_talking[$i]['page_id']= $key->page_id ;
                     $what_are_talking[$i]['page_uuid']= $page[$key->page_id - 1]->uuid ;
                     $what_are_talking[$i]['post_uuid']= $key->uuid;
+                    $what_are_talking[$i]['post_id']= $key->post_id;
                    $what_are_talking[$i]['formato']=$key->formato_id;
                    $what_are_talking[$i]['estado_post']=$key->estado_post_id;
                    $what_are_talking[$i]['foto_page']=$page[$key->page_id - 1]->foto;
@@ -504,7 +509,8 @@ class AuthController extends Controller
         $paginasNaoSeguidas = $this->paginasNaoSeguidas();
         $page_current = 'auth';
         $conta_logada = $this->defaultDate();
-        $post_controller = new PostController();
+
+      /*  $post_controller = new PostController();
         //$post= DB::table('posts')->limit(7)->get();
         //dd($post);
         if ($request->checked) {
@@ -540,11 +546,29 @@ class AuthController extends Controller
       }
      //dd($dados);
      // dd($this->getPostAndFilter($dados, "5aeaec63-91e1-4a2f-a735-81e5580a50de", 'video'));
+     return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas', 'last_post_id', 'last_post_dest'));
+
+     <input type="hidden" id="last_post" name="init" value=<?php echo $last_post_id; ?>>
+     <input type="hidden" id="last_post_dest" name="dest_init" value=<?php echo $last_post_dest; ?>>
+
+
+     */
+     $post_controller = new PageController();
+     $array_aux=array();
+     $post = $post_controller->get_posts(0, 0, $array_aux);
+     $a=0;
+     foreach ($post as $key) {
+       $page= DB::table('pages')->where('page_id', $key->page_id)->get();
+       if ($page[0]->estado_pagina_id == 1){
+         $dados[$a] = $this->DadosPost($key);
+       }
+       $a++;
+     }
       //--------------------------------------------------------------------------------------------o que estão falando --------------------------------------------------------------
       $what_are_talking = $this->Destacados();
 
 
-        return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas', 'last_post_id', 'last_post_dest'));
+        return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
 
 
     }
@@ -1799,19 +1823,19 @@ if ($phone != null) {
     public function login(Request $request){
 
         $credentials = $request->validate([
-            'number_email_login' => ['required'],
-            'password_login' => ['required'],
+            'numero_ou_email' => ['required'],
+            'palavra_passe' => ['required'],
         ]);
 
         //,'min:9','max:255' tirei prq ultrapassei o meu bug do multi nivel form
         //dd($request);
 
-        if (Auth::attempt(['email' => $request->number_email_login, 'password' => $request->password_login])) {
+        if (Auth::attempt(['email' => $request->numero_ou_email, 'password' => $request->palavra_passe])) {
 
             $request->session()->regenerate();
             return redirect()->route('account.home');
 
-        }else if(Auth::attempt(['telefone' => $request->number_email_login, 'password' => $request->password_login])){
+        }else if(Auth::attempt(['telefone' => $request->numero_ou_email, 'password' => $request->palavra_passe])){
 
 
             $request->session()->regenerate();

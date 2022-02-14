@@ -90,10 +90,10 @@
                               $sgda = 0;
                               $sgdo = 0;
                          ?>
-                        @forelse($dadosSeguida as $Seguida)
-                        <?php if (($page_content[0]->page_id == $Seguida->id) && ($dadosSeguindo[0]['identificador_id_seguindo'] == $Seguida->identificador_id_seguindo)) : ?>
-                         <?php $sgda = $Seguida->identificador_id_seguida;?>
-                         <?php $sgdo = $dadosSeguindo[0]['identificador_id_seguindo'];?>
+                        @forelse($conta_seguinte as $Seguida)
+                        <?php  if (($page_content[0]->page_id == $Seguida)) : ?>
+                         <?php $sgda = $page_content[0]->page_id;?>
+                         <?php $sgdo = $account_name[0]->conta_id;?>
                         <?php $contador = 1;?>
                         <?php endif ?>
                         @empty
@@ -114,7 +114,7 @@
                     </div>
                 @endif
             </div>
-            <?php if (true): ?>
+            <?php if ($v==1): ?>
                 <a href="{{route('page.edit.get', $page_content[0]->uuid)}}">
                     @csrf
                     <div class="edit-page-container">
@@ -300,12 +300,13 @@
 </div>
 <script>
     $(document).ready(function () {
-        document.getElementById("route_page").classList.add('li-component-aside-active');
             $('.seguir_couple').click(function(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
+            alert(valor_pagina_id);
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
+            
             var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];;
             //$('#' + valor_pagina_id).empty();
             $('#li-component-suggest-' + valor_pagina_id).remove();
@@ -357,6 +358,7 @@
              });
 
             $('#btn_nao_seguir').click(function(){
+                alert('Clicaste aqui');
             var seguida = $('#sgda').val();
             var seguindo = $('#sgdo').val();
              $.ajax({
@@ -371,6 +373,10 @@
                 }
               });
              });
+        document.getElementById("route_page").classList.add('li-component-aside-active');
+                alert('Abriu o Documento');
+
+        
             });
 </script>
 @stop
