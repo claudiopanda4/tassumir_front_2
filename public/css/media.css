@@ -619,7 +619,7 @@
 	#main-login {
 	    width: 320px;
 	    height: auto;
-	    margin: 55px auto;
+	    margin: 20px auto 10px;
 	    float: none;
 	}
 	#app-log-reg {
