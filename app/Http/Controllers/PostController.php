@@ -38,7 +38,7 @@ class PostController extends Controller
         $i = 0;
         $new_posts = DB::select('select post_id from posts where post_id > ? order by post_id desc', [$init]);
         if (sizeof($new_posts) > 0) {
-            $posts_return = $this->get_posts($init, $checked, $user_id, $dest_init);
+            $posts_return = $this->get_posts($init, $checked, $user_id);
             $posts = $posts_return['posts_return'];
             $last_post_id = $posts_return['last_post'];
         } else {
@@ -324,7 +324,7 @@ class PostController extends Controller
           $dados[$a] = $auth->DadosPost($key);
           $a++;
         }
-        
+
         return view('videos.index',compact('account_name','dados','checkUserStatus','profile_picture','isUserHost','hasUserManyPages','allUserPages','conta_logada','page_content','notificacoes','notificacoes_count','dadosSeguida'));
     }
 

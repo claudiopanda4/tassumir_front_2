@@ -355,15 +355,13 @@
 
         </div>
         <div>
-            <form action="{{route('account.home')}}" method="get">
+            <!--<form action="{{route('account.home')}}" method="get">
                 @if(sizeof($dados) > 0)
                     <div class="btn-see-more" id="btn-see-more-id">
                         <button type="submit" id="see-more-button" name="">
                             Ver Mais
                         </button>
                     </div>
-                <input type="hidden" id="last_post" name="init" value=<?php echo $last_post_id; ?>>
-                <input type="hidden" id="last_post_dest" name="dest_init" value=<?php echo $last_post_dest; ?>>
                 <input type="hidden" id="" name="checked" value='true'>
                 @else
                     <div class="home-no-post">
@@ -375,7 +373,28 @@
                         </button>
                     </div>
                 @endif
-            </form>
+            </form> -->
+
+            @if(sizeof($dados) > 0)
+                <div class="btn-see-more" id="btn-see-more-id">
+                  <a href="{{route('account.home.feed')}}">
+                    <button type="submit" id="see-more-button" name="">
+                        Ver Mais
+                    </button>
+                    </a>
+                </div>
+            @else
+                <div class="home-no-post">
+                    <h1>Sem Publicações novas pra si</h1>
+                </div>
+                <div class="btn-see-more" id="btn-see-more-id">
+                  <a href="{{route('account.home.feed')}}">
+                    <button type="button" id="see-more-button" name="">
+                        Voltar
+                    </button>
+                    </a>
+                </div>
+            @endif
         </div>
 </div>
 <script>

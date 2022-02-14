@@ -46,6 +46,163 @@ class PageController extends Controller
         }
         return $return;
     }
+
+
+
+    public function get_posts($init, $aux_post, $pegar_posts){
+      $auth = new AuthController();
+      $dates = $auth->default_();
+      $conta_logada_identify = $dates['conta_logada_identify'];
+
+
+      if ($init == 0) {
+        $verificar_post= DB::select('select * from posts where estado_post_id = ? and post_id > ? order by post_id desc limit 1000', [1, $init]);
+        if (sizeof($verificar_post)>0) {
+          $init=$verificar_post[sizeof($verificar_post) - 1]->post_id;
+          shuffle($verificar_post);
+        }
+      }else {
+        $verificar_post= DB::select('select * from posts where estado_post_id = ? and post_id < ? order by post_id desc limit 1000', [1, $init]);;
+        if (sizeof($verificar_post)>0) {
+          $init=$verificar_post[sizeof($verificar_post) - 1]->post_id;
+          shuffle($verificar_post);
+        }
+          }
+
+
+      if (sizeof($verificar_post)>0) {
+      //--------------------------------------------------------------------------------
+      $pegar_posts= $this->verificar_post($verificar_post, $aux_post, $pegar_posts);
+      $aux_post=sizeof($pegar_posts);
+
+      if (sizeof($pegar_posts)<10 && $init !=1) {
+        $pegar_posts=$this->get_posts($init, $aux_post, $pegar_posts);
+      }
+       elseif (sizeof($pegar_posts)<10 && $init ==1) {
+         $pegar_posts=$this->preencher_com_destacados($aux_post, $pegar_posts);
+         return $pegar_posts;
+      }
+      elseif (sizeof($pegar_posts) == 10) {
+        return $pegar_posts;
+      }
+
+
+      //--------------------------------------------------------------------------------
+    }elseif (sizeof($verificar_post)==0 && sizeof($pegar_posts)==0){
+      return $pegar_posts;
+    }
+
+    }
+
+    public function verificar_post($verificar_post, $aux_post, $pegar_posts)
+    {
+      $auth = new AuthController();
+      $dates = $auth->default_();
+      $conta_logada = $dates['conta_logada'];
+      $conta_logada_identify = $dates['conta_logada_identify'];
+      $v_pagina_seguida= DB::table('seguidors')->where('identificador_id_seguindo', $conta_logada_identify[0]->identificador_id)->limit(4)->get();
+
+
+                       if (sizeof($verificar_post) > 0){
+
+                         foreach ($verificar_post as $key) {
+
+                           $aux_post_views= $this->verificar_post_views($key->post_id, $conta_logada[0]->conta_id);
+
+                           if (sizeof($v_pagina_seguida)>0) {
+                           $aux_pagina_seguida= $this->verificar_post_pertence_pagina_seguida($key->post_id, $conta_logada_identify[0]->identificador_id);
+
+                           if ($aux_post_views == 0 && $aux_pagina_seguida == 0 && $aux_post < 10) {
+                             $pegar_posts[$aux_post]= $key;
+                             $aux_post++;
+                           }
+                         }else {
+
+                           if ($aux_post_views == 0 && $aux_post < 10) {
+                             $pegar_posts[$aux_post]= $key;
+                             $aux_post++;
+                           }
+                         }
+                         }
+                       }
+
+                       return $pegar_posts;
+    }
+
+
+    public function preencher_com_destacados($aux_post, $pegar_posts)
+    {
+      $auth = new AuthController();
+      $destacados = $auth->Destacados();
+
+      if (sizeof($pegar_posts)>0) {
+      for ($j=0; $j < sizeof($destacados); $j++) {
+          for ($i=0; $i < sizeof($pegar_posts); $i++) {
+              if ($pegar_posts[$i]->post_id != $destacados[$j]['post_id']) {
+                $verificar_post= DB::select('select * from posts where post_id = ? ',[$destacados[$j]['post_id']]);
+                $pegar_posts[$aux_post]= $verificar_post[0];
+                $aux_post++;
+                if (sizeof($pegar_posts)==10) {
+                  $i = sizeof($pegar_posts);
+                  $j = sizeof($destacados);
+                }else {
+                  $i = sizeof($pegar_posts);
+                }
+              }
+            }
+         }
+       }else {
+         for ($i=0; $i < sizeof($destacados); $i++) {
+               $verificar_post= DB::select('select * from posts where post_id = ? ',[$destacados[$i]['post_id']]);
+               $pegar_posts[$aux_post]= $verificar_post[0];
+               $aux_post++;
+               if (sizeof($pegar_posts)==10) {
+                 $i = sizeof($destacados);
+               }
+             }
+       }
+
+
+                       return $pegar_posts;
+    }
+
+
+    public function verificar_post_views($id, $conta_logada)
+    {
+      $verificar_post_views=DB::select('select post_id from views where conta_id = ?', [$conta_logada]);
+              $aux_post_views=0;
+                       if (sizeof($verificar_post_views) > 0){
+                         for ($i=sizeof($verificar_post_views) - 1; $i>=0; $i--) {
+                           if ($id == $verificar_post_views[$i]->post_id) {
+                             $aux_post_views=1;
+                             $i=0;
+                           }
+                         }
+                       }
+
+                       return $aux_post_views;
+
+    }
+
+    public function verificar_post_pertence_pagina_seguida($id, $conta_logada_identify)
+    {
+      $verificar_post_pertence_pagina_seguida=DB::select('select identificador_id_seguida from seguidors where identificador_id_seguindo = ?', [$conta_logada_identify]);
+      $aux_pagina_seguida=0;
+
+                      if (sizeof($verificar_post_pertence_pagina_seguida)>0) {
+                        for ($i=sizeof($verificar_post_pertence_pagina_seguida) - 1; $i>=0; $i--) {
+                          $page_id = DB::select('select id from identificadors where identificador_id = ?', [$verificar_post_pertence_pagina_seguida[$i]->identificador_id_seguida]);
+                          if ($id == $page_id[0]->id) {
+                            $aux_pagina_seguida=0;
+                            $i=0;
+                          }
+                        }
+                      }
+
+                      return $aux_pagina_seguida;
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
