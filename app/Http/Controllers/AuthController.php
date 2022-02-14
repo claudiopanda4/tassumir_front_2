@@ -60,15 +60,34 @@ class AuthController extends Controller
            $notificacoes=array();
            $notificacoes_count=0;
            $a=0;
+           $control_data=0;
            $nome=array();
            $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
-           $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ?', [$aux1[0]->identificador_id]);
+           $notificacoes_aux=DB::select('select * from notifications where identificador_id_receptor = ? order by notification_id desc', [$aux1[0]->identificador_id]);
            //dd($notificacoes_aux);
            if (sizeof($notificacoes_aux)>0) {
              foreach ($notificacoes_aux as $key) {
                if($key->id_state_notification!= 3){
 
                  $notificacoes[$a]['id1']=$key->notification_id;
+                 $aux_divisão_data = explode(' ', $key->created_at);
+                 $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
+                 $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
+                 $notificacoes[$a]['barra_data']=0;
+
+                 $date_create_update=date("Y");
+                 $date_create_update.="-";
+                 $date_create_update.=date("m");
+                 $date_create_update.="-";
+                 $date_create_update.=date("d");
+
+                 if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
+                   $control_data=1;
+                   $notificacoes[$a]['barra_data']=1;
+                 }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1) {
+                   $control_data=2;
+                   $notificacoes[$a]['barra_data']=2;                 }
+
 
                     $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
                     if ($aux2[0]->tipo_identificador_id == 1) {
@@ -258,7 +277,7 @@ class AuthController extends Controller
            }
            }
 
-            //dd($notificacoes);
+          //  dd($notificacoes);
               $dadosSeguida = DB::table('seguidors')
                ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
                ->select('seguidors.*', 'identificadors.id')
@@ -436,8 +455,7 @@ class AuthController extends Controller
                  $dados['post_uuid']= $id->uuid;
                  $aux_divisão_data = explode(' ', $id->created_at);
                  $dados['post_data']= $aux_divisão_data[0] ;
-                 $aux_divisão_data =str_split(explode(' ', $id->created_at)[1], 5);
-                 $dados['post_hora']= $aux_divisão_data[0];
+                 $dados['post_hora']= str_split($aux_divisão_data[1], 5)[0];
                  $dados['reagir_S/N']=sizeof($ja_reagiu);
                  $dados['guardado?']=sizeof($guardado);
                  $dados['formato']=$id->formato_id;
@@ -963,7 +981,7 @@ public function dados_comment($key){
             $aux4= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$post[0]->post_id, 3 ]);
             $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
             $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
-            $likes_verificacao = DB::select('select * from post_reactions where (post_id,identificador_id) = (?, ?)', [$post[0]->post_id, $aux[0]->identificador_id]);
+            $likes_verificacao = DB::select('select post_reaction_id from post_reactions where (post_id,identificador_id) = (?, ?)', [$post[0]->post_id, $aux[0]->identificador_id]);
             $resposta = 0;
             if (sizeof($likes_verificacao) == 0) {
               DB::table('post_reactions')->insert([
@@ -999,7 +1017,7 @@ public function dados_comment($key){
               $resposta= 1;
 
             } elseif (sizeof($likes_verificacao) == 1){
-              DB::table('post_reactions')->where(['post_id'=>$post[0]->post_id])->delete();
+              DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
               $resposta= 2;
             }
             return response()->json($resposta);
@@ -1013,7 +1031,7 @@ public function dados_comment($key){
       //                  $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
                   $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
                   $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
-                  $comment_reac_v = DB::select('select * from reactions_comments where (comment_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
+                  $comment_reac_v = DB::select('select reaction_comment_id from reactions_comments where (comment_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
                   $resposta = 0;
                   if (sizeof($comment_reac_v) == 0) {
                     DB::table('reactions_comments')->insert([
@@ -1041,7 +1059,7 @@ public function dados_comment($key){
                     $resposta= 1;
 
                   } elseif (sizeof($comment_reac_v) == 1){
-                    DB::table('reactions_comments')->where(['comment_id'=>$request->id])->delete();
+                    DB::table('reactions_comments')->where(['reaction_comment_id'=>$comment_reac_v[0]->reaction_comment_id])->delete();
                     $resposta= 2;
                   }
                   return response()->json($resposta);
