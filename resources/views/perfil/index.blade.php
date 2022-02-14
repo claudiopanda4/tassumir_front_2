@@ -127,18 +127,20 @@
               </form>
           </div>
             </div>
-            <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                <div class="options-profile-btn options-profile-btn-center profile-item-center">
-                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
-                </div>
-                <div>
-                    <a href="">
-                        <div class="container-logout">
-                            <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Sessão</h1></a>
-                        </div>
-                    </a>
-                </div>
-            <?php endif; ?>
+            <div class="clearfix" id="options-profile-mobile-user-log">
+                <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+                    <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5">
+                        <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
+                    </div>
+                    <div class="l-5 options-profile-btn">
+                        <a href="">
+                            <div class="container-logout">
+                                <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Sessão</h1></a>
+                            </div>
+                        </a>
+                    </div>
+                <?php endif; ?>    
+            </div>
                     <!--<?php //if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                     <div class="options-profile-btn options-profile-btn-center profile-item-center">
                         <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>

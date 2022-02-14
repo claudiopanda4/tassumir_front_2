@@ -113,7 +113,7 @@
 	.edit-profile-mobile {
 		display: block;
 		margin-top: 10px;
-		padding: 13px;
+		padding: 10px;
 	}
 	.edit-page-container {
 		display: none;
@@ -305,7 +305,7 @@
 	    width: 100%;
 	    background: transparent;
     	border: 1px solid #343a40;
-    	padding: 13px;
+    	padding: 10px;
 	}
 	#img-profile-container {
 	    width: 80px;
@@ -365,6 +365,9 @@
 		width: 240px;
 		margin: auto;
 	}
+	.options-profile-btn {
+		width: 48%;
+	}
 	.card, .pop-up-component {
 	    width: 100%;
 	}
@@ -372,6 +375,9 @@
 	    position: fixed;
 	    top: inherit;
 	    bottom: 20px;
+	}
+	.pop-up-component {
+	    width: 97%;
 	}
 	/**/
 }
@@ -1114,6 +1120,9 @@
 		border: none;
 		border-radius: 0;
 		border-top: 1px solid #343a40;
+	}
+	#refresh-profile-photo-id {
+	    display: block;
 	}
 	.video-container {
 	    margin-bottom: 10px;

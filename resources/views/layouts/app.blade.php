@@ -586,19 +586,43 @@
                 </div>
                 <div class="textarea-container l-5" style="width:100%;">
                     <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
+                </div>    
+                <div class="l-5" style="width: 100%;">
+                    <div class="preview-image" id="preview-image-id">
+
+                    </div>
                 </div>
+                <script type="text/javascript">
+                    document.addEventListener('DOMContentLoaded', function(){
+                        let input = document.getElementById('testeVid');
+                        input.addEventListener('change', function () {
+                            const reader = new FileReader();
+                            reader.onload = function () {
+                                const img = new Image();
+                                img.src = reader.result;
+                                img.classList.add('img-full');
+                                document.getElementById('preview-image-id').append(img);
+                            }
+                            document.getElementById('preview-image-id').style.display = 'block';
+                            reader.readAsDataURL(input.files[0]);    
+                        });
+                        $('.add-file-element').click(function(){
+                            input.click();
+                        });
+                    });
+                </script>
                 <nav class="add-file l-5 clearfix" style="margin-bottom: 0;">
                     <ul style="width: 160px;" class="r-5">
-                        <label for="target-profile-cover-post">
-                            <li class="circle add-file-element">
+                        <!--<label for="target-profile-cover-post">-->
+                            <li class="circle add-file-element" id="target-profile-cover-post-id">
                                 <i class="far fa-images fa-20 center"></i>
                             </li>
-                        </label>
-                        <label for="target-profile-cover-post">
+                        <!--</label>-->
+                        <!--<label for="target-profile-cover-post">-->
                             <li class="circle add-file-element">
                                 <i class="far fa-play-circle fa-20 center"></i>
                             </li>
-                        </label>
+                        <!--</label>-->
                     </ul>
                 </nav>
             </div>
@@ -1283,10 +1307,10 @@
             });
         });
         $('.add-file-element').click(function(){
-            $('#cover-profile-post').css({
+            /*$('#cover-profile-post').css({
                 opacity: 1,
                 zIndex: 1001
-            });
+            });*/
         });
         $('#cancel-box-add-file-post').click(function(){
             $('#cover-profile-post').css({

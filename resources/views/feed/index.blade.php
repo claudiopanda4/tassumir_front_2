@@ -21,9 +21,9 @@
                             <a href="{{route('post_index', $what_are_talking[$i]['post_uuid'])}}">
                                 <div class="identify-cover circle">
                                 @if( !($what_are_talking[$i]['foto_page'] == null) )
-                                        <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
+                                    <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
                                 @else
-                                        <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                    <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                                 @endif
                                 </div>
                                 <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
@@ -51,6 +51,19 @@
                 </ul>
             </nav>
         </header>
+        <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
+            <div class="profile-photo-container l-5">
+                <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
+            </div>
+            <div class="content-profile-photo l-5">
+                <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
+            </div>
+            <label for="target-profile-cover">
+                <div class="options-profile-btn options-profile-btn-center profile-item-center">
+                    <h3 class="edit-profile-mobile" style="margin-top: 0;">Actualizar foto de Perfil</h3>
+                </div>    
+            </label>
+        </div>
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post'] == 1): ?>
     <?php //dd($conta_logada[0]->uuid); ?>
