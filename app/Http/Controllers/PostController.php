@@ -36,15 +36,18 @@ class PostController extends Controller
         $dados = [];
         $total_posts = 10;
         $i = 0;
+        //dd($init);
         $new_posts = DB::select('select post_id from posts where post_id > ? order by post_id desc', [$init]);
+        //dd($new_posts);
         if (sizeof($new_posts) > 0) {
-            $posts_return = $this->get_posts($init, $checked, $user_id, $dest_init);
+            $posts_return = $this->get_posts($init, $checked, $user_id);
             $posts = $posts_return['posts_return'];
             $last_post_id = $posts_return['last_post'];
         } else {
             $posts = array();
             $last_post_id = $request->init;
         }
+
         $dados = array();
         if (sizeof($posts) < 10) {
             $posts_size = sizeof($posts);
@@ -77,6 +80,8 @@ class PostController extends Controller
                 $key++;
                 $destaques_size--;
             }
+        } else {
+            $last_post_dest = 1;
         }
         //dd($dados);
         return [
@@ -85,7 +90,7 @@ class PostController extends Controller
                 'last_post_id' => $last_post_id
         ];
     }
-    public function get_posts ($init, $checked, $user_id, $dest_init) {
+    public function get_posts ($init, $checked, $user_id) {
         DB::beginTransaction();
         try {
             $page_controller = new PageController();
@@ -109,9 +114,7 @@ class PostController extends Controller
                 if ($checked) {
                     $aux1 = $init;
                     $aux = $init;
-                    //return 'entrou 1';
                 } else {
-                    //return 'entrou';
                     $post = DB::select('select * from posts limit 1');
                     $aux1 = sizeof($post) > 0 ? $post[0]->post_id - 1 : 0;
                     $post_views = DB::select('select * from views limit 1');
@@ -157,6 +160,7 @@ class PostController extends Controller
                         $aux1 = 0;
                     }
                     $control_posts++;
+                    //dd($posts_return);
                 }
             }
             DB::commit();

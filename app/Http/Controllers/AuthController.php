@@ -1860,13 +1860,17 @@ if ($phone != null) {
 
     public static function updateUserProfilePicture($picture, $account_id)
     {
-        DB::table('contas')->where('conta_id', $account_id)->update(['foto' => $picture,'updated_at' => $this->dat_create_update()]);
+        $auth = new AuthController();
+        $data = $auth->dat_create_update();
+        DB::table('contas')->where('conta_id', $account_id)->update(['foto' => $picture,'updated_at' => $data]);
         return redirect()->route('account.profile');
     }
 
     public static function updatePageProfilePicture($picture, $uuid)
     {
-        DB::table('pages')->where('uuid', $uuid)->update(['foto' => $picture, 'updated_at' => $this->dat_create_update()]);
+        $auth = new AuthController();
+        $data = $auth->dat_create_update();
+        DB::table('pages')->where('uuid', $uuid)->update(['foto' => $picture, 'updated_at' => $data]);
         return back();
     }
 
