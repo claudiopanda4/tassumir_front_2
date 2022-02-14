@@ -575,6 +575,7 @@ class AuthController extends Controller
      $array_aux=array();
      $post = $post_controller->get_posts(0, 0, $array_aux);
      $a=0;
+     //dd($post);
      foreach ($post as $key) {
        $page= DB::table('pages')->where('page_id', $key->page_id)->get();
        if ($page[0]->estado_pagina_id == 1){
