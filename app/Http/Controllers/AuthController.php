@@ -963,7 +963,7 @@ public function dados_comment($key){
             $aux4= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$post[0]->post_id, 3 ]);
             $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
             $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
-            $likes_verificacao = DB::select('select * from post_reactions where (post_id,identificador_id) = (?, ?)', [$post[0]->post_id, $aux[0]->identificador_id]);
+            $likes_verificacao = DB::select('select post_reaction_id from post_reactions where (post_id,identificador_id) = (?, ?)', [$post[0]->post_id, $aux[0]->identificador_id]);
             $resposta = 0;
             if (sizeof($likes_verificacao) == 0) {
               DB::table('post_reactions')->insert([
@@ -999,7 +999,7 @@ public function dados_comment($key){
               $resposta= 1;
 
             } elseif (sizeof($likes_verificacao) == 1){
-              DB::table('post_reactions')->where(['post_id'=>$post[0]->post_id])->delete();
+              DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
               $resposta= 2;
             }
             return response()->json($resposta);
@@ -1013,7 +1013,7 @@ public function dados_comment($key){
       //                  $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
                   $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
                   $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
-                  $comment_reac_v = DB::select('select * from reactions_comments where (comment_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
+                  $comment_reac_v = DB::select('select reaction_comment_id from reactions_comments where (comment_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
                   $resposta = 0;
                   if (sizeof($comment_reac_v) == 0) {
                     DB::table('reactions_comments')->insert([
@@ -1041,7 +1041,7 @@ public function dados_comment($key){
                     $resposta= 1;
 
                   } elseif (sizeof($comment_reac_v) == 1){
-                    DB::table('reactions_comments')->where(['comment_id'=>$request->id])->delete();
+                    DB::table('reactions_comments')->where(['reaction_comment_id'=>$comment_reac_v[0]->reaction_comment_id])->delete();
                     $resposta= 2;
                   }
                   return response()->json($resposta);
