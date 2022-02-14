@@ -77,22 +77,22 @@
         <div class="row justify-content-center mb-2">
           <span class="text-white">Agora vamos conhecer-te</span>
         </div>
-        <form action="{{route('account.save')}}" method="POST" class="tassumir-form needs-validation" novalidate>
+        <form action="{{route('account.save')}}" method="POST" class="tassumir-form needs-validation" novalidate id="my-form">
           @csrf
 
           <div class="form-section">
             <input type="text" class="input-text-default input-full input-login" name="nome" placeholder="Nome" id="nome-id" required />
-            <span class="hidden" style="color:red;" id="erroNome"> Insira um Nome</span>
+            <span class="hidden" style="color:red;" id="erroNome"> Insira o teu  Nome</span>
             <input type="text" name="apelido" class="input-text-default input-full input-login" placeholder="Apelido" id="apelido-id" required />
 
             <div id=verify-dados>
               
             </div>
-            <span class="hidden" style="color:red;" id="erroApelido"> Insira o Email</span>
+            <span class="hidden" style="color:red;" id="erroApelido"> Insira o teu Apelido</span>
 
-            <input type="date" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="12/09/2002">
+            <input type="text" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="Data de Nascimento" onfocus="(this.type='date')">
 
-            <span class="hidden" style="color:red;" id="erroData"> Insira a Data</span>
+            <span class="hidden" style="color:red;" id="erroData"> Insira a Data de Nascimento</span>
 
             <div class="row" style="margin-top: 10px;">
 
@@ -138,7 +138,7 @@
             </select>
 
             <div class="invalid-feedback">
-              Insira a Nacionalidade
+              Insira a tua Nacionalidade
             </div>
 
 
@@ -170,7 +170,7 @@
 
               <i class="fa fa-eye" id="eye"></i>
               <div class="invalid-feedback">
-                Insira a Password
+                Insira uma Palavra Passe
               </div>
             </div>
           </div>
@@ -202,6 +202,14 @@
 </html>
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script>
+
+  var myForm = $("#my-form");
+  myForm.submit(function(){
+    myForm.submit(function(){
+        return false;
+    });
+  });
+
   const pass = $("#password");
   $('#nome-id').on('keyup', function(e){
     let control = 0;

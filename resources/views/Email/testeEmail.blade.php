@@ -3,17 +3,15 @@
 
 @slot('header')
 @component('mail::header', ['url' => config('app.url')])
-{{ config('Tassumir') }}
+{{ config('Confirme a tua Conta Tassumir') }}
 @endcomponent
 @endslot
 
 	Ao criar uma conta no Tassumir, aceitas os nossos termos!
 
-	Este é o código gerado: {{$codHugo}}
-
-	@component('mail::button',['url'=>''])
+	@component('mail::panel')
 	
-			Validar o codigo
+	Este é o código gerado: {{$codHugo}}
 
 	@endcomponent
 

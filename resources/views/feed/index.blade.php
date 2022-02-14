@@ -482,7 +482,7 @@ function gostar(id){
                 }
                 nome +=     '</a>'
 
-                	$('div[name=novo-comment]').append(nome);
+                    $('div[name=novo-comment]').append(nome);
 
           }
         });
