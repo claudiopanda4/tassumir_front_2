@@ -75,7 +75,7 @@ class PageController extends Controller
       //--------------------------------------------------------------------------------
       $pegar_posts= $this->verificar_post($verificar_post, $aux_post, $pegar_posts);
       $aux_post=sizeof($pegar_posts);
-      //dd($pegar_posts);
+    //  dd($pegar_posts);
       $init_post = DB::select('select * from posts limit 1');
       $init_post = $init_post[0]->post_id;
       //dd($init_post);
@@ -95,8 +95,7 @@ class PageController extends Controller
 
       //--------------------------------------------------------------------------------
     }elseif (sizeof($verificar_post)==0 && sizeof($pegar_posts)==0){
-                        dd($pegar_posts);
-
+                        //dd($pegar_posts);
       return $pegar_posts;
 
     }
@@ -110,7 +109,7 @@ class PageController extends Controller
       $conta_logada = $dates['conta_logada'];
       $conta_logada_identify = $dates['conta_logada_identify'];
       $v_pagina_seguida= DB::table('seguidors')->where('identificador_id_seguindo', $conta_logada_identify[0]->identificador_id)->limit(4)->get();
-
+      $count=0;
 
                        if (sizeof($verificar_post) > 0){
 
@@ -119,11 +118,14 @@ class PageController extends Controller
                            $aux_post_views= $this->verificar_post_views($key->post_id, $conta_logada[0]->conta_id);
 
                            if (sizeof($v_pagina_seguida)>0) {
-                           $aux_pagina_seguida= $this->verificar_post_pertence_pagina_seguida($key->post_id, $conta_logada_identify[0]->identificador_id);
-
+                           $aux_pagina_seguida= $this->verificar_post_pertence_pagina_seguida($key->page_id, $conta_logada_identify[0]->identificador_id);
                            if ($aux_post_views == 0 && $aux_pagina_seguida == 0 && $aux_post < 10) {
                              $pegar_posts[$aux_post]= $key;
                              $aux_post++;
+                           }elseif ($aux_post_views == 0 && $aux_pagina_seguida == 1 && $aux_post >= 10 && $count<2) {
+                               $pegar_posts[$aux_post]= $key;
+                               $aux_post++;
+                               $count++;
                            }
                          }else {
 
@@ -143,6 +145,7 @@ class PageController extends Controller
     {
       $auth = new AuthController();
       $destacados = $auth->Destacados();
+      shuffle($destacado);
 
       if (sizeof($pegar_posts)>0) {
       for ($j=0; $j < sizeof($destacados); $j++) {
@@ -196,7 +199,7 @@ class PageController extends Controller
     public function verificar_post_pertence_pagina_seguida($id, $conta_logada_identify)
     {
       $verificar_post_pertence_pagina_seguida=DB::select('select identificador_id_seguida from seguidors where identificador_id_seguindo = ?', [$conta_logada_identify]);
-      $aux_pagina_seguida=0;
+      $aux_pagina_seguida=1;
 
                       if (sizeof($verificar_post_pertence_pagina_seguida)>0) {
                         for ($i=sizeof($verificar_post_pertence_pagina_seguida) - 1; $i>=0; $i--) {
