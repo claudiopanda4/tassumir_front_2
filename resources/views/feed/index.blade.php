@@ -11,7 +11,7 @@
 </header>
 <header class="card br-10 stories stories-about-talking" id="stories-card">
             <header>
-                <h1>O que estão bombando...</h1>
+                <h1>O que está a pipocar...</h1>
             </header>
             <nav>
                 <ul class="clearfix">
@@ -58,8 +58,8 @@
             <div class="content-profile-photo l-5">
                 <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
             </div>
-            <label for="target-profile-cover">
-                <div class="options-profile-btn options-profile-btn-center profile-item-center">
+            <label for="target-profile-cover" id="profile-cover-alert-no-img">
+                <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
                     <h3 class="edit-profile-mobile" style="margin-top: 0;">Actualizar foto de Perfil</h3>
                 </div>    
             </label>
@@ -129,7 +129,7 @@
                             <p>{{$dados[$key]['post']}}</p>
                         @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
-                        <div class="post-cover">
+                        <div class="post-cover post-cover-home">
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
