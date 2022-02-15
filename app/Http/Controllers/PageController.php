@@ -109,7 +109,7 @@ class PageController extends Controller
       $conta_logada = $dates['conta_logada'];
       $conta_logada_identify = $dates['conta_logada_identify'];
       $v_pagina_seguida= DB::table('seguidors')->where('identificador_id_seguindo', $conta_logada_identify[0]->identificador_id)->limit(4)->get();
-
+      $count=0;
 
                        if (sizeof($verificar_post) > 0){
 
@@ -122,6 +122,10 @@ class PageController extends Controller
                            if ($aux_post_views == 0 && $aux_pagina_seguida == 0 && $aux_post < 10) {
                              $pegar_posts[$aux_post]= $key;
                              $aux_post++;
+                           }elseif ($aux_post_views == 0 && $aux_pagina_seguida == 1 && $aux_post >= 10 && $count<2) {
+                               $pegar_posts[$aux_post]= $key;
+                               $aux_post++;
+                               $count++;
                            }
                          }else {
 
@@ -141,6 +145,7 @@ class PageController extends Controller
     {
       $auth = new AuthController();
       $destacados = $auth->Destacados();
+      shuffle($destacado);
 
       if (sizeof($pegar_posts)>0) {
       for ($j=0; $j < sizeof($destacados); $j++) {
