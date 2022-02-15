@@ -1448,12 +1448,29 @@ label[for="hugo"]{
 }
 .post-cover {
     position: relative;
-    height: 498px;
     margin-top: -10px;
     margin-bottom: 10px;
+    height: auto;
 }
 .post-cover img {
-    
+    height: auto;
+}
+.post-cover.post-cover-home.post-cover img {
+    height: auto;
+    min-height: 100%;
+}
+/*.post-cover.post-cover-home {
+    overflow: hidden; 
+    height: 498px;
+}*/
+.post-cover.post-cover-home {
+    overflow: hidden; 
+}
+.post-cover-post-index {
+    height: auto;
+}
+.post-cover-post-index img {
+    height: auto;
 }
 .video-post {
     width: 100%;
@@ -2072,12 +2089,27 @@ label[for="hugo"]{
 }
 .container-logout {
     width: 140px;
-    margin: 5px auto 10px;
+    margin: -1px auto 0px;
     width: 100%;
 }
 #options-profile-mobile-user-log {
-    width: 90%;
+    width: 95%;
     margin: auto;
+}
+#options-profile-mobile-user-log-pages  {
+    width: 100%;
+    float: inherit;
+    margin: auto;
+}
+#profile-cover-alert-no-img {
+    display: block;
+    float: left;
+    width: 60%;
+}
+#options-profile-mobile-user-log-pages .options-profile-btn {
+    width: 95%;
+    margin: auto;
+    float: inherit;
 }
 .label-input label,
 .label-input .input-container {

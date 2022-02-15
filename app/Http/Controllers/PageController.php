@@ -63,31 +63,29 @@ class PageController extends Controller
           $init=$verificar_post[sizeof($verificar_post) - 1]->post_id;
           shuffle($verificar_post);
         }
-          }
+      }
 
 
+        //dd($verificar_post);
 
       if (sizeof($verificar_post)>0) {
       //--------------------------------------------------------------------------------
       $pegar_posts= $this->verificar_post($verificar_post, $aux_post, $pegar_posts);
       $aux_post=sizeof($pegar_posts);
-    //  dd($pegar_posts);
+    // dd($pegar_posts);
       $init_post = DB::select('select * from posts limit 1');
       $init_post = $init_post[0]->post_id;
       //dd($init_post);
       if (sizeof($pegar_posts) < 10 && $init != $init_post) {
         $pegar_posts=$this->get_posts($init, $aux_post, $pegar_posts);
       }
-       elseif (sizeof($pegar_posts)<10 && $init == $init_post) {
+       elseif (sizeof($pegar_posts) < 10 && $init == $init_post) {
          $pegar_posts=$this->preencher_com_destacados($aux_post, $pegar_posts);
          return $pegar_posts;
       }
       elseif (sizeof($pegar_posts) == 10) {
         return $pegar_posts;
-      }else{
-        return [];
       }
-
 
       //--------------------------------------------------------------------------------
     }elseif (sizeof($verificar_post)==0 && sizeof($pegar_posts)==0){
@@ -96,6 +94,7 @@ class PageController extends Controller
 
     }
 
+  return $pegar_posts;
     }
 
     public function verificar_post($verificar_post, $aux_post, $pegar_posts)
@@ -141,7 +140,7 @@ class PageController extends Controller
     {
       $auth = new AuthController();
       $destacados = $auth->Destacados();
-      shuffle($destacado);
+      shuffle($destacados);
 
       if (sizeof($pegar_posts)>0) {
       for ($j=0; $j < sizeof($destacados); $j++) {
