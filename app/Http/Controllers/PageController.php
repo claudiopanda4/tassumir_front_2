@@ -145,7 +145,7 @@ class PageController extends Controller
     {
       $auth = new AuthController();
       $destacados = $auth->Destacados();
-      shuffle($destacado);
+      shuffle($destacados);
 
       if (sizeof($pegar_posts)>0) {
       for ($j=0; $j < sizeof($destacados); $j++) {
