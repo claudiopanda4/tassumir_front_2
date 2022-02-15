@@ -126,9 +126,9 @@
                           <i class="far fa-comment-dots fa-24 fa-option center"></i>
                       </button>
                   </form>
-                </div>    
+                </div>
             <?php endif ?>
-            
+
             </div>
             <div class="clearfix" id="options-profile-mobile-user-log">
                 <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
@@ -358,9 +358,15 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function () {
-  <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-  document.getElementById("route_account").classList.add('li-component-aside-active');
-  <?php endif; ?>
+  var select_li =window.location.href.split('=');
+  if (select_li[select_li.length - 1] == 'saved') {
+    document.getElementById("route_save").classList.add('li-component-aside-active');
+  }else {
+    <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+    document.getElementById("route_account").classList.add('li-component-aside-active');
+    <?php endif; ?>
+  }
+
 
 });
 </script>
