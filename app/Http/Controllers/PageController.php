@@ -50,10 +50,6 @@ class PageController extends Controller
 
 
     public function get_posts($init, $aux_post, $pegar_posts){
-      $auth = new AuthController();
-      $dates = $auth->default_();
-      $conta_logada_identify = $dates['conta_logada_identify'];
-
 
       if ($init == 0) {
         $verificar_post= DB::select('select * from posts where estado_post_id = ? and post_id > ? order by post_id desc limit 1000', [1, $init]);
