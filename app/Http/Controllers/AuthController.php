@@ -573,16 +573,20 @@ class AuthController extends Controller
      */
      $post_controller = new PageController();
      $array_aux=array();
+     $dados=array();
      $post = $post_controller->get_posts(0, 0, $array_aux);
      $a=0;
      //dd($post);
-     foreach ($post as $key) {
-       $page= DB::table('pages')->where('page_id', $key->page_id)->get();
-       if ($page[0]->estado_pagina_id == 1){
-         $dados[$a] = $this->DadosPost($key);
+     if (sizeof($post)>0) {
+       foreach ($post as $key) {
+         $page= DB::table('pages')->where('page_id', $key->page_id)->get();
+         if ($page[0]->estado_pagina_id == 1){
+           $dados[$a] = $this->DadosPost($key);
+         }
+         $a++;
        }
-       $a++;
      }
+
       //--------------------------------------------------------------------------------------------o que estão falando --------------------------------------------------------------
       $what_are_talking = $this->Destacados();
 
