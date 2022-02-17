@@ -1485,9 +1485,10 @@
             let control = 0;
             if ((height - 400) + margin_stories.top  <= 450) {
                 control++;
-                if(control == 3){
+                alert("aqui quase ao final... Copie e Pesquise por essa frase");
+                /*if(control == 3){
 
-                }
+                }*/
             }
             //console.log('janela width ' + window.innerWidth);
             window_width = window.innerWidth;
@@ -1496,9 +1497,9 @@
             window_width = window.innerWidth;
             console.log('scroll log: ' + $('.main').scrollTop());
             $(document).scroll(function() {
-               //if($(window).scrollTop() + $(window).height() == $(document).height()) {
-                   //alert("bottom!");
-               //}
+               if($(window).scrollTop() + $(window).height() == $(document).height()) {
+                   alert("bottom!");
+               }
                //console.log('oii123iii');
             });
             //console.log('oii12');
