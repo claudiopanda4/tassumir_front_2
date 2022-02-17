@@ -1485,7 +1485,8 @@
             let control = 0;
             if ((height - 400) + margin_stories.top  <= 450) {
                 control++;
-                alert("aqui quase ao final... Copie e Pesquise por essa frase");
+                //$('#main-home').append();
+                //alert("aqui quase ao final... Copie e Pesquise por essa frase");
                 /*if(control == 3){
 
                 }*/
