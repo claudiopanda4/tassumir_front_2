@@ -1320,7 +1320,7 @@ public function dados_comment($key){
 
         return view('auth.registerUser');
     }
- 
+
     public function firstForm(){
             $dadosPais = Pais::all();
             return view('auth.RealRegister', compact('dadosPais'));
@@ -1350,7 +1350,7 @@ public function dados_comment($key){
                      ->get();
 
                  if (sizeof($result_email) > 0 ) {
-                               
+
                     return back()->with('error',"Já existe uma conta com o emai: ".$takeEmail." ". "na plataforma Tassumir");
 
                  }else{
@@ -1358,7 +1358,7 @@ public function dados_comment($key){
                       $code = random_int(100000,900000);
                       $takePhone = $takePhone;
                       $takeEmail = $request->email;
-                     
+
                       $get_verification_code = $code;
                       Mail::to($takeEmail)->send(new SendVerificationCode($get_verification_code));
 
@@ -1379,7 +1379,7 @@ public function dados_comment($key){
                       $code = random_int(100000,900000);
                       $takePhone = $takePhone;
                       $takeEmail = $request->email;
-                     
+
                       //$get_verification_code = $code;
                       /*Mail::to($takeEmail)->send(new SendVerificationCode($get_verification_code));*/
 
@@ -1391,14 +1391,14 @@ public function dados_comment($key){
 
                 return redirect()->route('auth.ErrorStatus');
             }
-              
+
           }catch(\Exception $e){
-         
+
             //echo "O Erro é: " .$e;
             return redirect()->route('auth.ErrorStatus');
           }
     }
-        
+
     public function verifyCodeSent(Request $request){
 
         DB::beginTransaction();
@@ -1417,7 +1417,7 @@ public function dados_comment($key){
 
 
         if($codigo_criado === $codeSent){
-            
+
             $conta = new Conta();
             $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
             $conta->nome = $nome;
@@ -1445,7 +1445,7 @@ public function dados_comment($key){
               if(!$phoneReceived){
                     $phoneReceived = NULL;
                 }
-                
+
               DB::table('logins')->insert([
 
                   'email' => $emailReceived,
@@ -1465,9 +1465,9 @@ public function dados_comment($key){
               ]);
 
                DB::commit();
-                    
+
                 return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
-                
+
         }else{
 
 
@@ -1482,7 +1482,7 @@ public function dados_comment($key){
             return redirect()->route('auth.ErrorStatus');
 
         }
-      
+
     }
     public function generateAgain(Request $request){
 
@@ -1509,7 +1509,7 @@ public function dados_comment($key){
 
     }
     public function verifyAgainCodeSent(Request $request){
-        
+
         try{
 
         $codeSent = $request->codeReceived;
@@ -1555,7 +1555,7 @@ public function dados_comment($key){
               if(!$phoneReceived){
                     $phoneReceived = NULL;
                 }
-                
+
               DB::table('logins')->insert([
 
                   'email' => $emailReceived,
@@ -1573,11 +1573,11 @@ public function dados_comment($key){
                   'email' => $emailReceived,
                   'telefone' => $phoneReceived,
               ]);
-     
+
                 return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
 
       }else{
-           
+
             return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived ','nome','apelido','data_nascimento','nacional','sexo','password'));
       }
 
@@ -1585,7 +1585,7 @@ public function dados_comment($key){
 
             return redirect()->route('auth.ErrorStatus');
         }
-        
+
     }
 
     public function recuperarSenha(){
@@ -1697,7 +1697,7 @@ public function dados_comment($key){
 
             return redirect()->route('auth.ErrorStatus');
     }
-     
+
   }
 
   public function updatePassword(Request $request){
@@ -1771,12 +1771,12 @@ public function dados_comment($key){
         ]);
 
         if (Auth::attempt(['email' => $request->numero_ou_email, 'password' =>$request->palavra_passe])) {
-            dd("entrei");
+            //dd("entrei");
             $request->session()->regenerate();
             return redirect()->route('account.home');
 
         }else if(Auth::attempt(['telefone' => $request->numero_ou_email, 'password' => $request->palavra_passe])){
-        
+
             $request->session()->regenerate();
             return redirect()->route('account.home');
         }
