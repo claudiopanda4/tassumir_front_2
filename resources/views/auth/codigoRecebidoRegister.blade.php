@@ -29,6 +29,7 @@
 </head>
 <body id="body-reg">
     <div id="app-log-reg">
+
         <main class="main" id="main-register-container">
             <div class="" id="main-reg">
                 <header class="logo-form" id="title-login">
@@ -40,22 +41,41 @@
                     </div>
                 </header>
 
+                @if($takeEmail!=null)
 
+                <div class="row text-white justify-content-center">Enviamos um email para {{$takeEmail}} com o código de confirmação </div>
+
+                @else
+
+                <div class="row text-white justify-content-center">Enviamos uma msg para o número {{$takePhone}} com o código de confirmação </div>
+
+                 @endif
 
                 <form action="{{route('account.verifyCode.enter')}}" method="POST" class="needs-validation" novalidate>
 
                     @csrf
+                    <!-- inicio dados de cadastro-->
 
-                    <input type="text" name="receivedId" class="hidden" value="{{$saveRetriveId}}">
+                    <input type="text" name="telefone" class="hidden" value="{{$takePhone}}">
 
-                    <input type="text" name="receivedPhone" class="hidden" value="{{$takePhone}}">
+                    <input type="text" name="password" class="hidden" value="{{$password}}">
 
-                    <input type="text" name="receivedEmail" class="hidden" value="{{$takeEmail}}">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <span class="text-white">{{$code}}</span>
-                        </div>
-                    </div>
+                    <input type="text" name="email" class="hidden" value="{{$takeEmail}}">
+
+
+                    <input type="text" name="receivedNome" class="hidden" value="{{$nome}}">
+
+                    <input type="text" name="receivedApelido" class="hidden" value="{{$apelido}}">
+
+
+                    <input type="text" name="receivedData_Nascimento" class="hidden" value="{{$data_nascimento}}">
+
+                    <input type="text" name="receivedGenero" class="hidden" value="{{$genero}}">
+
+                    <input type="text" name="receivedNacio" class="hidden" value="{{$nacionalidade}}">
+
+                    <input type="text" name="receivedCode" class="hidden" value="{{$code}}">
+                    <!-- fim dados de cadastro -->
                     <div class="form-group">
                         
                         <input type="text" class="input-text-default input-full input-login" name="codeReceived" placeholder="Escreva o código que recebeu" id="codeReceived" required>

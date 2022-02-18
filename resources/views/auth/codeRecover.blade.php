@@ -40,7 +40,8 @@
                     </div>
 
                 </header>
-
+                
+                @include('flash')
                     <div class="row justify-content-start ml-2">
                         <span class="text-white">Insira o email ou número de telefone que usou na abertura da conta</span>
                         
@@ -56,7 +57,7 @@
                      <div class="form-group">
 
                         <select id="inputState" class="input-text-default input-full input-login">
-                                <option selected>Choose...</option>
+                                <option selected value="">Opções de Contacto</option>
                                 <option value="emailSele">Email</option>
                                 <option value="telefSele">Telefone</option>
                         </select>

@@ -40,28 +40,22 @@
                     </div>
                 </header>
 
-
-                <!--{{ route('account.verifyAgainCode.enter') }}-->
-
                 <form action="{{ route('account.verifyAgainCode.enter') }}" method="POST" class="needs-validation" novalidate>
-
-
                     @csrf
+                    <input type="text" name="receivedNome" class="hidden" value="{{$nome}}">
+                    <input type="text" name="password" class="hidden" value="{{$password}}">
+                    <input type="text" name="telefone" class="hidden" value="{{$phoneReceived}}">
+                    <input type="text" name="email" class="hidden" value="{{$emailReceived}}">
+                    <input type="text" name="receivedData_Nascimento" class="hidden" value="{{$data_nascimento}}">
 
-                    <input type="text" name="receivedId1" class="hidden" value="{{$idReceived}}">
+                <input type="text" name="receivedGenero" class="hidden" value="{{$sexo}}">
 
-                    <input type="text" name="phoneConf" class="hidden" value="{{$phoneAgain}}">
-
-                    <input type="text" name="emailConf" class="hidden" value="{{$emailAgain}}">
-
-                    <div class="row">
-                        <div class="col-md-8">
-                            <span class="text-white">{{$code2}}</span>
-                        </div>
-                    </div>
+                <input type="text" name="receivedNacio" class="hidden" value="{{$nacional}}">
+                <input type="text" name="receivedApelido" class="hidden" value="{{$apelido}}">
+                
+                <input type="text" name="codeReceived" class="hidden" value="{{$code2}}">
+                 
                     <div class="form-group">
-                        
-            
                         <input type="text" class="input-text-default input-full input-login" name="codeReceived1" placeholder="Escreva o código que recebeu" id="codeReceived" required>
                         <div class="invalid-feedback">
                             Insira o Código

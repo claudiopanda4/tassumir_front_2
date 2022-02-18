@@ -98,6 +98,8 @@ Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->nam
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('account.login.form');
 Route::get('/login/redirect', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
+
+
 /*end get e post login*/
 
 /* registrar */
@@ -105,7 +107,6 @@ Route::get('/registrar', [App\Http\Controllers\AuthController::class, 'registrar
 
 Route::get('/buscar/pais', [App\Http\Controllers\PaisController::class, 'index'])->name('buscar.pais');
 
-Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.save.next1');
 
 Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
 
@@ -134,7 +135,6 @@ Route::get('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController:
 
 Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'updatePassword'])->name('account.newPasswordSave');
 
-//Route::get('/completRegister', [App\Http\Controllers\AuthController::class, 'registrarUserComplete'])->name('account.registerComplete.form');
 
 //posts
 Route::get('/view/', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
@@ -183,13 +183,10 @@ Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updateP
 
 /* end here */
 
-/*====== Panda Idea ===========*/
+
 
     Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
 
-/*Route::post('/Info', [App\Http\Controllers\AuthController::class, 'sendtoOtherForm'])->name('account.save.next1');*/
-
-/*=========== End Panda Idea =========*/
 
 
 Route::get('/allNotifications', [App\Http\Controllers\AuthController::class, 'seeAllNotifications'])->name('account.all.notifications');
