@@ -1322,24 +1322,7 @@ public function dados_comment($key){
 
         return view('auth.registerUser');
     }
- public function sendtoOtherForm(Request $request){
-        $credentials = $request->validate([
-            'nome' => ['required'],
-            'apelido' =>['required'],
-            'dat' =>['required'],
-            'sexo'=>['required'],
-        ]);
-        $nome = $request->nome;
-        $apelido = $request->apelido;
-        $sexo = $request->sexo;
-        $data = $request->dat;
-        $page_current = 'auth';
-        return view('auth.registerUserLastInfo',compact('nome','apelido','sexo','data', 'page_current'));
-    }
-    public function registrarUserComplete(Request $request){
-
-        return view('auth.registerUserLastInfo');
-    }
+ 
     public function firstForm(){
             $dadosPais = Pais::all();
             return view('auth.RealRegister', compact('dadosPais'));
@@ -1378,8 +1361,8 @@ public function dados_comment($key){
                       $takePhone = $takePhone;
                       $takeEmail = $request->email;
                      
-                      //$get_verification_code = $code;
-                      /*Mail::to($takeEmail)->send(new SendVerificationCode($get_verification_code));*/
+                      $get_verification_code = $code;
+                      Mail::to($takeEmail)->send(new SendVerificationCode($get_verification_code));
 
                      return view('auth.codigoRecebidoRegister',compact('nome','apelido','data_nascimento','genero','nacionalidade','code','takePhone','takeEmail','password'));
                 }
@@ -1408,14 +1391,13 @@ public function dados_comment($key){
 
             }else{
 
-                dd("Informa email ou telefone");
+                return redirect()->route('auth.ErrorStatus');
             }
               
           }catch(\Exception $e){
          
-              //return back()->with('error','Erro');
-            echo "O Erro é: " .$e;
-            // return redirect()->route('auth.ErrorStatus');
+            //echo "O Erro é: " .$e;
+            return redirect()->route('auth.ErrorStatus');
           }
     }
         
@@ -1497,12 +1479,16 @@ public function dados_comment($key){
         }catch(\Exception $error){
 
                DB::rollBack();
-            echo "O erro e: ".$error;
+            //echo "O erro e: ".$error;
+
+            return redirect()->route('auth.ErrorStatus');
 
         }
       
     }
     public function generateAgain(Request $request){
+
+        try{
 
         $phoneReceived = $request->telefone;
         $emailReceived = $request->email;
@@ -1517,9 +1503,15 @@ public function dados_comment($key){
 
         return view('auth.codigoRecebidoNovaConfirmation',compact('phoneReceived','code2','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
 
+        }catch(\Exception $error){
+
+            return redirect()->route('auth.ErrorStatus');
+
+        }
+
     }
     public function verifyAgainCodeSent(Request $request){
-
+        try{
         $codeSent = $request->codeReceived;
         $code_digitado = $request->codeReceived1;
 
@@ -1588,9 +1580,14 @@ public function dados_comment($key){
            
             return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived ','nome','apelido','data_nascimento','nacional','sexo','password'));
       }
+
+        }catch(\Exception $error){
+
+            return redirect()->route('auth.ErrorStatus');
+        }
+        
     }
 
-/* here */
     public function recuperarSenha(){
 
         return view('auth.codeRecover');
@@ -1609,37 +1606,38 @@ public function dados_comment($key){
 
   public function sendPhoneEmailRecover(Request $request){
 
-      $email = $request->emailName;
+      try{
+            $email = $request->emailName;
 
       $phone = str_replace("-","",$request->phoneNumber);
 
-if ($phone != null) {
+        if ($phone != null) {
 
-        $takePhone = DB::table('contas')
-          ->select('telefone','conta_id')
-          ->where('telefone','=',$phone)
-          ->get();
+                $takePhone = DB::table('contas')
+                  ->select('telefone','conta_id')
+                  ->where('telefone','=',$phone)
+                  ->get();
 
-          if (isset($takePhone)) {
+                  if (isset($takePhone)) {
 
-              foreach($takePhone as $info){
+                      foreach($takePhone as $info){
 
-                $foundedId = $info->conta_id;
+                            $foundedId = $info->conta_id;
 
-                $foundedPhone = $info->telefone;
+                            $foundedPhone = $info->telefone;
 
-                  $codeToSend = random_int(100000,900000);
+                            $codeToSend = random_int(100000,900000);
 
-                   DB::table('codigo_confirmacaos')
-                              ->where('conta_id', $foundedId)
-                              ->update(['codigoGerado' => $codeToSend]);
+                            DB::table('codigo_confirmacaos')
+                                          ->where('conta_id', $foundedId)
+                                          ->update(['codigoGerado' => $codeToSend]);
 
-                    return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
-            }
-      }
+                            return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
+                    }
+              }
 
-         return back()->with('error',"telefone invalido");
-}else if ($email != null) {
+                 return back()->with('error',"telefone invalido");
+        }else if ($email != null) {
 
         $takeEmail = DB::table('contas')
           ->select('email','conta_id')
@@ -1666,17 +1664,18 @@ if ($phone != null) {
                     return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
             }
       }
-
          return back()->with('error',"Email  invalido");
-}
-
-         return back()->with('error',"Email ou Telefone invalidos");
+   }
+     return back()->with('error',"Email ou Telefone invalidos");
+      }catch(\Exception $error){
+          return redirect()->route('auth.ErrorStatus');
+      }
   }
 
   public function verifyToRecoverPass(Request $request){
 
-
-      $id = $request->Id;
+    try{
+        $id = $request->Id;
       $codeSent = $request->codeSend;
 
 
@@ -1704,11 +1703,18 @@ if ($phone != null) {
         }
             return view('auth.codeRecover')->with('error','Código de confirmação invalido');
 
+    }catch(\Exception $error){
+
+            return redirect()->route('auth.ErrorStatus');
+    }
+     
+
   }
 
   public function updatePassword(Request $request){
 
-      $idToCompare = $request->theId;
+     try{
+         $idToCompare = $request->theId;
 
       $password = $request->password;
       $confirmPass = $request->confirmarPassword;
@@ -1729,11 +1735,16 @@ if ($phone != null) {
 
           return view('auth.newCode2',compact('idToCompare'));
       }
+     }catch(\Exception $error){
+
+            return redirect()->route('auth.ErrorStatus');
+     }
   }
   public function updatePassword2(Request $request){
 
 
-      $idToCompare = $request->theId1;
+   try{
+       $idToCompare = $request->theId1;
 
       $password = $request->password1;
       $confirmPass = $request->confirmarPassword1;
@@ -1756,6 +1767,9 @@ if ($phone != null) {
           return view('auth.newCode2',compact('idToCompare'));
 
       }
+  }catch(\Exception $error){
+          return redirect()->route('auth.ErrorStatus');
+  }
 
   }
 /* final here */
@@ -1782,7 +1796,7 @@ if ($phone != null) {
             return redirect()->route('account.home');
         }
 
-         return back()->with('error',"Email ou senha invalidos");
+         return back()->with('error',"Email ou senha invalido");
 
 
     }
