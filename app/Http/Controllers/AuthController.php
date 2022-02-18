@@ -1509,7 +1509,9 @@ public function dados_comment($key){
 
     }
     public function verifyAgainCodeSent(Request $request){
+        
         try{
+
         $codeSent = $request->codeReceived;
         $code_digitado = $request->codeReceived1;
 
@@ -1606,10 +1608,9 @@ public function dados_comment($key){
 
       try{
             $email = $request->emailName;
+            $phone = str_replace("-","",$request->phoneNumber);
 
-      $phone = str_replace("-","",$request->phoneNumber);
-
-        if ($phone != null) {
+             if ($phone != null) {
 
                 $takePhone = DB::table('contas')
                   ->select('telefone','conta_id')
@@ -1619,53 +1620,49 @@ public function dados_comment($key){
                   if (isset($takePhone)) {
 
                       foreach($takePhone as $info){
-
                             $foundedId = $info->conta_id;
-
                             $foundedPhone = $info->telefone;
-
                             $codeToSend = random_int(100000,900000);
-
                             DB::table('codigo_confirmacaos')
                                           ->where('conta_id', $foundedId)
                                           ->update(['codigoGerado' => $codeToSend]);
-
                             return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
                     }
               }
 
                  return back()->with('error',"telefone invalido");
-        }else if ($email != null) {
 
-        $takeEmail = DB::table('contas')
-          ->select('email','conta_id')
-          ->where('email','=',$email)
-          ->get();
+             }else if ($email != null) {
 
-          if (isset($takeEmail)) {
+                 $takeEmail = DB::table('contas')
+                     ->select('email','conta_id')
+                     ->where('email','=',$email)
+                     ->get();
 
-              foreach($takeEmail as $info){
+              if (isset($takeEmail)) {
 
-                $foundedId = $info->conta_id;
+                  foreach($takeEmail as $info){
 
-                $foundedEmail = $info->email;
+                    $foundedId = $info->conta_id;
 
-                  $codeToSend = random_int(100000,900000);
+                    $foundedEmail = $info->email;
+                    $codeToSend = random_int(100000,900000);
+                     $get_verification_code = $codeToSend;
+                     Mail::to($email)->send(new SendVerificationCode($get_verification_code));
+                       DB::table('codigo_confirmacaos')
+                                  ->where('conta_id', $foundedId)
+                                  ->update(['codigoGerado' => $codeToSend]);
+                        return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
+                }
+          }
 
-                      $get_verification_code = $codeToSend;
-                      Mail::to($email)->send(new SendVerificationCode($get_verification_code));
-
-                   DB::table('codigo_confirmacaos')
-                              ->where('conta_id', $foundedId)
-                              ->update(['codigoGerado' => $codeToSend]);
-
-                    return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
-            }
-      }
          return back()->with('error',"Email  invalido");
    }
+
      return back()->with('error',"Email ou Telefone invalidos");
+
       }catch(\Exception $error){
+
           return redirect()->route('auth.ErrorStatus');
       }
   }
@@ -1674,9 +1671,7 @@ public function dados_comment($key){
 
     try{
         $id = $request->Id;
-      $codeSent = $request->codeSend;
-
-
+        $codeSent = $request->codeSend;
         $takeThem = DB::table('codigo_confirmacaos')
             ->select('codigoGerado','conta_id')
             ->where('codigoGerado','=',$codeSent)
@@ -1684,7 +1679,6 @@ public function dados_comment($key){
             ->get();
 
         if(isset($takeThem)){
-
             foreach($takeThem as $newInfo){
 
                 $takeCode = $newInfo->codigoGerado;
@@ -1694,9 +1688,7 @@ public function dados_comment($key){
 
                 if($takeCode == $codeSent && $takeId == $id){
 
-
                      return view('auth.newCode',compact('takeId'));
-
                 }
         }
             return view('auth.codeRecover')->with('error','Código de confirmação invalido');
@@ -1706,25 +1698,23 @@ public function dados_comment($key){
             return redirect()->route('auth.ErrorStatus');
     }
      
-
   }
 
   public function updatePassword(Request $request){
 
      try{
          $idToCompare = $request->theId;
+          $password = $request->password;
+          $confirmPass = $request->confirmarPassword;
 
-      $password = $request->password;
-      $confirmPass = $request->confirmarPassword;
-
-      $passwordLength = strlen($request->password);
-      $confirmPassLength = strlen($request->confirmarPassword);
+          $passwordLength = strlen($request->password);
+          $confirmPassLength = strlen($request->confirmarPassword);
 
       if($password == $confirmPass && $passwordLength == $confirmPassLength){
 
-        DB::table('logins')
-              ->where('conta_id', $idToCompare)
-              ->update(['password' =>Hash::make($password), 'updated_at' => $this->dat_create_update()]);
+            DB::table('logins')
+                  ->where('conta_id', $idToCompare)
+                  ->update(['password' =>Hash::make($password), 'updated_at' => $this->dat_create_update()]);
 
         return redirect()->route('account.login.form')->with("success","Palavra Passe alterada com Sucesso");
 
@@ -1740,16 +1730,14 @@ public function dados_comment($key){
   }
   public function updatePassword2(Request $request){
 
-
    try{
-       $idToCompare = $request->theId1;
 
-      $password = $request->password1;
-      $confirmPass = $request->confirmarPassword1;
+         $idToCompare = $request->theId1;
+          $password = $request->password1;
+          $confirmPass = $request->confirmarPassword1;
 
-      $passwordLength = strlen($request->password1);
-      $confirmPassLength = strlen($request->confirmarPassword1);
-
+          $passwordLength = strlen($request->password1);
+          $confirmPassLength = strlen($request->confirmarPassword1);
       if($password == $confirmPass && $passwordLength == $confirmPassLength){
 
         DB::table('logins')
@@ -1758,7 +1746,6 @@ public function dados_comment($key){
 
 
         return redirect()->route('account.login.form')->with("success","Palavra Passe alterada com Sucesso");
-
       }
       else{
 
