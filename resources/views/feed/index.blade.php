@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="main">
+<div class="main" id="main-home">
 <header class="card more-following" id="card-more-following">
     <ul>
         <li>
@@ -123,11 +123,8 @@
                 </header>
                 <div class="card-post">
                     <div class="">
-                        @if($dados[$key]['post'] == "" || $dados[$key]['post'] == null
-                        || $dados[$key]['post'] == " " || $dados[$key]['post'] == "null")
-                            <p class="untext"></p>
-                        @else
-                            <p>{{$dados[$key]['post']}}</p>
+                        @if(strlen($dados[$key]['post']) > 0)
+                            <p>{{$dados[0]['post']}}</p>
                         @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
                         <div class="post-cover post-cover-home">

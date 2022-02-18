@@ -29,6 +29,7 @@
 </head>
 <body id="body-reg">
     <div id="app-log-reg">
+        
         <main class="main" id="main-register-container">
             <div class="" id="main-reg">
                 <header class="logo-form" id="title-login">
@@ -39,14 +40,28 @@
                         <h3 class="text-white">Olá</h3>
                     </div>
                 </header>
+
                 <form action="{{route('account.generateAgain.enter')}}" method="POST">
                     @csrf
 
-                    <input type="text" name="receivedId" class="hidden" value="{{$idSaved}}">
+                    <input type="text" name="telefone" class="hidden" value="{{$phoneReceived}}">
+                    
+                    <input type="text" name="password" class="hidden" value="{{$password}}">
 
-                    <input type="text" name="receivedPhoneAgain" class="hidden" value="{{$phoneReceived}}">
+                    <input type="text" name="email" class="hidden" value="{{$emailReceived}}">
 
-                    <input type="text" name="receivedEmailAgain" class="hidden" value="{{$emailReceived}}">
+
+                    <input type="text" name="receivedNome" class="hidden" value="{{$nome}}">
+
+                    <input type="text" name="receivedApelido" class="hidden" value="{{$apelido}}">
+
+
+                    <input type="text" name="receivedData_Nascimento" class="hidden" value="{{$data_nascimento}}">
+
+
+                    <input type="text" name="receivedNacio" class="hidden" value="{{$nacional}}">
+
+                    <input type="text" name="sexo" class="hidden" value="{{$sexo}}">
                     
                     <div class="form-group">
                         

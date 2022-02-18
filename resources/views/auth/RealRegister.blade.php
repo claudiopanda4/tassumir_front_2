@@ -58,6 +58,7 @@
 
 <body id="body-reg">
   <div id="app-log-reg">
+   
     <main class="main" id="main-register-container" style="">
       <div class="" id="main-reg">
         <header class="logo-form" id="title-login">
@@ -70,6 +71,7 @@
             <h3 class="text-white">Olá</h3>
           </div>
         </header>
+        @include('flash')
         <div class="row justify-content-center" style="text-align: center; margin-bottom: 5px;">
           <span class="text-white">Seja Bem Vindo(a) a maior plataforma de relacionamento.</span>
         </div>
@@ -158,6 +160,7 @@
               <div class="col-md-6">
 
                 <input type="email" class="input-text-default input-full input-login hidden input-emai-log" placeholder="Email" id="email" name="email">
+               
                 <span id="emailMsg"></span>
                 <input type="text" class="input-text-default input-full input-login hidden input-emai-log" name="telefone" placeholder="Telefone" id="telefone" data-mask="000-000-000">
 

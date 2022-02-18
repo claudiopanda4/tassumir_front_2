@@ -43,11 +43,7 @@
                 <form action="{{route('account.verifyToRecoverPass')}}" method="POST" class="needs-validation" novalidate>
                     @csrf
                     <input type="text" name="Id" value="{{$foundedId}}" class="hidden">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <span class="text-white">{{$codeToSend}}</span>
-                        </div>
-                    </div>
+                  
                     <div class="form-group">
                         
                         <input type="text" class="input-text-default input-full input-login" name="codeSend" placeholder="Escreva o código que recebeu" id="codeReceived" required> 

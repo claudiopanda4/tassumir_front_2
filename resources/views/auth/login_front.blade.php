@@ -30,7 +30,6 @@
 </head>
 <body id="body-login">
     <div id="app-log-reg" style="" class="clearfix">
-
         <main class="main" id="main-login-container">
             <div style="height: 1px;"></div>
             <header class="logo-form" id="logo-login-form-lg" style="margin-left: 10px;">
@@ -47,7 +46,9 @@
                         <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                     </div>
                 </header>
-                <form action="{{ route('account.login.enter') }}" method="POST" >
+                
+         @include('flash')
+                <form action="{{ route('account.login.enter') }}" method="POST" id="my-form">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputPassword1">Número ou Email</label>
@@ -98,7 +99,12 @@
 </html>
 
 <script>
-
+ var myForm = $("#my-form");
+  myForm.submit(function(){
+    myForm.submit(function(){
+        return false;
+    });
+  });
     const password = $("#exampleInputPassword1");
 
     $("#eye").on('click',function(){
