@@ -407,9 +407,15 @@ class PostController extends Controller
             $post = DB::select('select * from posts where uuid = ?', [$post_uuid]);
             $conta = DB::select('select * from contas where uuid = ?', [$account_uuid]);
             $view = DB::select('select * from views where post_id = ? AND conta_id = ?', [$post[0]->post_id, $conta[0]->conta_id]);
-            if (sizeof($view) <= 0) {
-                $result = DB::insert('insert into views(uuid, post_id, ip_view, conta_id, created_at) values(?, ?, ?, ?, ?)',
-                [$uuid, $post[0]->post_id, "", $conta[0]->conta_id, $controll->dat_create_update()]);
+            if (sizeof($view) == 1) {
+              DB::table('views')
+                    ->where('view_id', $view[0]->view_id)
+                    ->update([
+                      'state_views_id' => 1,
+                      'updated_at' => $controll->dat_create_update()
+                  ]);
+                /*$result = DB::insert('insert into views(uuid, post_id, ip_view, conta_id, created_at) values(?, ?, ?, ?, ?)',
+                [$uuid, $post[0]->post_id, "", $conta[0]->conta_id, $controll->dat_create_update()]);*/
             }
             DB::commit();
             return response()->json('salvou');
