@@ -326,30 +326,23 @@ class AuthController extends Controller
 
        public function Destacados(){
 
-         $post= DB::table('posts')->limit(10)->get();
+         $post= DB::table('posts')->where('estado_post_id', 1)->get();
          $melhores=array();
          $what_are_talking = array();
 
-
+        if (sizeof($post)>0) {
          for ($i=0; $i <10 ; $i++) {
            $a=0;
 
            foreach ($post as $key) {
-             $pages= DB::table('pages')->where('page_id', $key->page_id)->get();
+
+             $pages= DB::table('pages')->where('page_id', $key->page_id)->limit(1000)->get();
              if ($pages[0]->estado_pagina_id == 1){
-            $likes = DB::select('select * from post_reactions where post_id = ?', [$key->post_id]);
-             $comment = DB::select('select * from comments where post_id = ?', [$key->post_id]);
-             $soma= sizeof($likes) + sizeof($comment);
-             $b=0;
+                $soma=$this->qtd_total($key->post_id);
+                $b=$this->verificar_melhores($melhores, $key->post_id);
 
-               for ($j=0; $j <sizeof($melhores); $j++) {
-                 if ($key->post_id == $melhores[$j] ){
-                   $b=1;
-                 }
-               }
-               if ($soma >= $a && $b!=1 && $key->estado_post_id == 1) {
-                 $melhores[$i]= $key->post_id;
-
+               if ($soma >= $a && $b!=1) {
+                     $melhores[$i]= $key->post_id;
                      $what_are_talking[$i]['post']=$key->descricao;
                      $what_are_talking[$i]['page_id']= $key->page_id ;
                      $what_are_talking[$i]['page_uuid']= $pages[0]->uuid ;
@@ -367,9 +360,30 @@ class AuthController extends Controller
                }}
              }
          }
+       }
         //  dd($what_are_talking);
          return $what_are_talking;
        }
+
+       public function qtd_total($post_id)
+       {
+         $likes = DB::select('select * from post_reactions where post_id = ?', [$post_id]);
+          $comment = DB::select('select * from comments where post_id = ?', [$post_id]);
+          $soma= sizeof($likes) + sizeof($comment);
+          return $soma;
+       }
+
+        public function verificar_melhores($melhores, $post_id)
+        {
+          $b=0;
+         for ($j=0; $j <sizeof($melhores); $j++) {
+           if ($post_id == $melhores[$j]){
+             $b=1;
+             $j=sizeof($melhores);
+           }
+         }
+         return $b;
+        }
 
              public function DadosPost($id){
                $dates = $this->default_();
@@ -995,7 +1009,7 @@ public function dados_comment($key){
                 'post_id' => $post[0]->post_id,
                 'created_at'=> $this->dat_create_update(),
               ]);
-              if ($page[0]->conta_id_a != $conta[0]->conta_id) {
+              if ($page[0]->conta_id_a != $conta[0]->conta_id && $page[0]->conta_id_b != $conta[0]->conta_id) {
               DB::table('notifications')->insert([
                     'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                     'id_state_notification' => 2,
@@ -1005,8 +1019,6 @@ public function dados_comment($key){
                     'identificador_id_receptor'=> $aux2[0]->identificador_id,
                     'created_at'=> $this->dat_create_update(),
                     ]);
-                    }
-                    if ($page[0]->conta_id_b != $conta[0]->conta_id) {
                   DB::table('notifications')->insert([
                           'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                           'id_state_notification' => 2,

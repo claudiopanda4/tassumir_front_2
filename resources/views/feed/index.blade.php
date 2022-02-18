@@ -608,8 +608,8 @@ function gostar(id){
                             if (control_.top <= $(document).height()) {
                                 //alert('carregar');
                                 //alert('oi');
-                                home_index();
-                                console.log('last_post_id ' + $('#last_post').val());
+                          //---DS      home_index();
+                                //---DS console.log('last_post_id ' + $('#last_post').val());
                             }
                         }
                         let margin_stories = $('.main-container').offset();
