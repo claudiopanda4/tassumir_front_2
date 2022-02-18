@@ -48,17 +48,17 @@
                             </label>
                             <input type="checkbox" name="" id=<?php echo "more-option-"; ?> class="hidden">
                             <ul class="clearfix more-option-post">
-                              <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
+                              <?php if ($dados[$key]['dono_da_pag'] == 1): ?>
                                 <li>
                                     <a href="">Editar</a>
                                 </li>
                                 <?php endif ?>
-                                <?php if ($dados[$key]['dono_da_pag?'] != 1): ?>
+                                <?php if ($dados[$key]['dono_da_pag'] != 1): ?>
                                 <li>
                                     <a href="" class="ocultar_post" id="ocultar_post-{{$dados[$key]['post_id']}}">Ocultar Publicação</a>
                                 </li>
                                 <?php endif ?>
-                                <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
+                                <?php if ($dados[$key]['dono_da_pag'] == 1): ?>
                                 <li>
                                     <a href="" class="delete_post" id="delete_post-{{$dados[$key]['post_id']}}">Apagar Publicação</a>
                                 </li>
@@ -103,17 +103,17 @@
                             </label>
                             <input type="checkbox" name="" id=<?php echo "more-option-"; ?> class="hidden">
                             <ul class="clearfix more-option-post">
-                              <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
+                              <?php if ($dados[$key]['dono_da_pag'] == 1): ?>
                                 <li>
                                     <a href="">Editar</a>
                                 </li>
                                 <?php endif ?>
-                                <?php if ($dados[$key]['dono_da_pag?'] != 1): ?>
+                                <?php if ($dados[$key]['dono_da_pag'] != 1): ?>
                                 <li>
                                     <a href="" class="ocultar_post" id="ocultar_post-{{$dados[$key]['post_id']}}">Ocultar Publicação</a>
                                 </li>
                                 <?php endif ?>
-                                <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
+                                <?php if ($dados[$key]['dono_da_pag'] == 1): ?>
                                 <li>
                                     <a href="" class="delete_post" id="delete_post-{{$dados[$key]['post_id']}}">Apagar Publicação</a>
                                 </li>
@@ -172,7 +172,7 @@
                                     </div>
                                     <div class="comment-user-container comment-user-container-react">
                                       <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
-                                          @if($dados[$key]['comment_S/N'] > 0)
+                                          @if($dados[$key]['comment_S_N'] > 0)
                                               <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                                           @else
                                               <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
@@ -214,7 +214,7 @@
                                 <li class="l-5">
                                     <div class="content-button">
                                       <a href="" class="like-a" id="on|{{$dados[$key]['post_uuid']}}">
-                                          @if($dados[$key]['reagir_S/N'] > 0)
+                                          @if($dados[$key]['reagir_S_N'] > 0)
                                           <i class="fas fa-heart center fa-16 liked" id="on|{{$dados[$key]['post_uuid']}}|i"></i>
                                           <h2 id="on|{{$dados[$key]['post_uuid']}}|h2">Like</h2>
                                           @else
@@ -240,7 +240,7 @@
                                         </a>
                                     </div>
                                 </li>
-                                <?php if ($dados[$key]['guardado?']==0): ?>
+                                <?php if ($dados[$key]['guardado']==0): ?>
                                 <li class="r-5" id="savepost-{{$dados[$key]['post_id']}}">
                                     <div class="content-button">
                                         <a href="" class="savepost" id="savepost-{{$dados[$key]['post_id']}}">
@@ -341,7 +341,7 @@ function gostar(id){
 
 
                 nome +=     '<a href="" class="comment-like-a" id="on|'+response[0]['comment_id']+'">'
-                if(response[0]['comment_S/N'] > 0){
+                if(response[0]['comment_S_N'] > 0){
                   nome +=            ' <i class="fas fa-heart fa-12 liked" id="on|'+response[0]['comment_id']+'|i"></i>'
                 }else{
                   nome +=             '<i class="fas fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'

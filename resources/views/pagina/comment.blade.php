@@ -18,7 +18,7 @@
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[0]['page_uuid']) }}"><h1 class="">{{$dados[0]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
-                                <span class="time-posted l-5">50 min</span><div id="seguir"><?php if ($dados[0]['seguir_S/N'] == 0): ?>
+                                <span class="time-posted l-5">50 min</span><div id="seguir"><?php if ($dados[0]['seguir_S_N'] == 0): ?>
                                   <a href="" class="seguir-a r-5" id="{{$dados[0]['page_id']}}">seguir</a>
                                 <?php endif; ?></div>
                             </div>
@@ -30,17 +30,17 @@
                         </label>
                         <input type="checkbox" name="" id="more-option-1" class="hidden">
                         <ul class="clearfix more-option-post">
-                          <?php if ($dados[0]['dono_da_pag?'] == 1): ?>
+                          <?php if ($dados[0]['dono_da_pag'] == 1): ?>
                             <li>
                                 <a href="">Editar</a>
                             </li>
                             <?php endif; ?>
-                            <?php if ($dados[0]['dono_da_pag?'] != 1): ?>
+                            <?php if ($dados[0]['dono_da_pag'] != 1): ?>
                             <li>
                                 <a href="" class="ocultar_post" id="ocultar_post-{{$dados[0]['post_id']}}">Ocultar Publicação</a>
                             </li>
                             <?php endif; ?>
-                            <?php if ($dados[0]['dono_da_pag?'] == 1): ?>
+                            <?php if ($dados[0]['dono_da_pag'] == 1): ?>
                             <li>
                                 <a href="" class="delete_post" id="delete_post-{{$dados[0]['post_id']}}">Apagar Publicação</a>
                             </li>
@@ -91,7 +91,7 @@
                         <li class="l-5">
                             <div class="content-button">
                               <a href="" class="like-a" id="on|{{$dados[0]['post_uuid']}}">
-                                  @if($dados[0]['reagir_S/N'] > 0)
+                                  @if($dados[0]['reagir_S_N'] > 0)
                                   <i class="fas fa-heart center fa-16 liked" id="on|{{$dados[0]['post_uuid']}}|i"></i>
                                   <h2 id="on|{{$dados[0]['post_uuid']}}|h2">Like</h2>
                                   @else
@@ -117,7 +117,7 @@
                                 </a>
                             </div>
                         </li>
-                        <?php if ($dados[0]['guardado?']==0): ?>
+                        <?php if ($dados[0]['guardado']==0): ?>
                         <li class="r-5" id="savepost-{{$dados[0]['post_id']}}">
                             <div class="content-button">
                                 <a href="" class="savepost" id="savepost-{{$dados[0]['post_id']}}">
@@ -156,7 +156,7 @@
               <!--  <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[0]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment">
-                          @if( $dados[0]['dono_da_pag?']==0 )
+                          @if( $dados[0]['dono_da_pag']==0 )
                             @if( !($conta_logada[0]->foto == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
@@ -166,7 +166,7 @@
                                   <i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>
                             </div>
                         @endif
-                      @elseif( $dados[0]['dono_da_pag?']==1 )
+                      @elseif( $dados[0]['dono_da_pag']==1 )
                         @if( !($dados[0]['foto_page'] == null) )
                           <div class="profille-img">
                             <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[0]['foto_page'] }}">

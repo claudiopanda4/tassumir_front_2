@@ -1455,6 +1455,8 @@
 
         });
 
+        let contar = 0;
+
         setInterval(function(e){
             let control_ = $('#control-1').offset();
             //control_ = $(document).height() - control_;
@@ -1483,12 +1485,164 @@
             //console.log(margin_stories.top);
             //console.log('subt. ' + ((height - 400) + margin_stories.top));
             let control = 0;
+            if (contar==0) {
+
+
             if ((height - 400) + margin_stories.top  <= 450) {
                 control++;
-                alert("aqui quase ao final... Copie e Pesquise por essa frase");
-                /*if(control == 3){
+                alert(contar);
 
-                }*/
+                $.ajax({
+                   url: "{{route('pegar_mais_post')}}",
+                   type: 'get',
+                   dataType: 'json',
+                   success: function(response){
+                     console.log(response);
+                     if (response.length > 0) {
+                     $.each(response, function(key, value){
+                       let src = '{{asset("storage/img/users/") }}';
+                       let src1 = '{{ asset("storage/img/page/") }}';
+                       var route10 = "{{route('couple.page1', 1) }}"
+                       url_array10 = route10.split('/');
+                       url_link10 = url_array10[0] + "/" + url_array10[1] + "/" + url_array10[2] + "/"+ url_array10[3] +  "/" + value.post_uuid;
+
+                       var route1 = "{{route('post_index', 1) }}"
+                       url_array1 = route1.split('/');
+                       url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.post_uuid;
+
+                       var nome = '';
+
+                       nome +='<div class="card br-10" id="m_post-'+value.post_id+'">'
+                       nome +='<div class="post post-view" id="post_view_'+value.post_uuid+'_'+value.conta_logada_uuid+'">'
+                       nome +='<input type="hidden" name="" value="'+value.formato+'" id="format-'+value.post_uuid+'">'
+                       nome +='<header class="clearfix">'
+                       nome +='<div class="first-component clearfix l-5">'
+                       if( !(value.foto_page == null) ){
+                           nome += '<div class="page-cover circle l-5">'
+                           nome += '<img  class="img-full circle" src=' + src1 + '/' + value.foto_page + '> </div>'
+
+                       }else{
+                           nome += '<div class="page-cover circle l-5">'
+                           nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"> </div>'
+                       }
+                       nome +='<div class="page-identify l-5 clearfix">'
+                       nome +='<a href='+url_link10+'><h1 class="text-ellips">'+value.nome_pag+'</h1></a>'
+                       nome +='<div class="info-post clearfix">'
+                       nome +='<span class="time-posted l-5">'+value.post_data+'  as '+value.post_hora+'</span><div id="seguir-'+value.page_id+'-'+value.post_id+'">'
+                       if (value.seguir_S_N == 0) {
+                         nome +='<span class="seguir-'+value.page_id+'"><a href="" class="seguir-a r-5"  id="seguir-'+value.page_id+'-'+value.post_id+'">seguir</a></span>'
+                       }
+                       nome +='</div></div></div></div>'
+                       nome +='<div class="last-component clearfix r-5">'
+                       nome +='<label for= "more-option-'+key+'";>'
+                       nome +='<i class="fas fa-ellipsis-h fa-14 fa-option"></i></label>'
+                       nome +='<input type="checkbox" name="" id="more-option-'+key+'" class="hidden">'
+                       nome +=' <ul class="clearfix more-option-post">'
+                       if (value.dono_da_pag == 1) {
+                         nome +='<li><a href="" class="edit-option" id="edit-option|'+value.post_uuid+'">Editar</a></li>'
+                       }
+                       if (value.dono_da_pag != 1) {
+                         nome +='<li><a href="" class="ocultar_post" id="ocultar_post-'+value.post_id+'">Ocultar Publicação</a></li>'
+                       }
+                       if (value.dono_da_pag == 1) {
+                         nome +='<li><a href="" class="delete_post" id="delete_post-'+value.post_id+'">Apagar Publicação</a></li>'
+                       }
+                       nome +='<li><a href="">Denunciar</a></li><li><a href="">Copiar Link</a></li></ul></div></header>'
+                       nome +='<div class="card-post"><div class="">'
+                       if (value.post == "" || value.post == null
+                       || value.post == " " || value.post == "null") {
+                         nome +='<p class="untext"></p>'
+                       }else {
+                         nome +='<p>'+value.post+'</p>'
+                       }
+                       if (value.formato == 2) {
+                         nome +='<div class="post-cover post-cover-home"> <img  class="img-full circle" src=' + src1 + '/' + value.file + '> </div>'
+                       }else if (value.formato == 1) {
+                         nome +='<div class="video-post" id="video-post-'+value.post_uuid+'}"> <img class="play_button center" src="{{asset("storage/icons/play_button.png")}}" id="play_button_'+key+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+key+'"> <video class="video-post-video" id="video_'+key+'"> Your browser does not support the video tag.</video>'
+                         nome +='<input type="hidden" name="" value="post_view_'+value.post_uuid+'_'+value.conta_logada_uuid+'" id="watch-video-'+key+'"> <input type="hidden" name="" value="'+value.post_uuid+'" id="vid-'+key+'"> <input type="hidden" name="" id="has-video-'+key+'"> <input type="hidden" name="" id="video-post-time-'+key+'}"> <input type="hidden" name="" id="video-post-time-all-'+key+'"></div></div></div>'
+                       }
+                       nome +=' <nav class="row interaction-numbers"><ul class=""><li> <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-'+value.post_uuid+'">'+value.qtd_likes+' reacções</a></li>'
+                       nome +='<li><a href='+url_link1+' id="comment-qtd-'+value.post_id+'">'+value.qtd_comment+' comentários</a></li>'
+                       if (false) {
+                         nome +='<li><a href="">0 partilhas</a></li>'
+                       }
+                       nome +=' </ul></nav><nav class="row clearfix interaction-user"><ul class="row clearfix ul-interaction-user"><li class="l-5"><div class="content-button">'
+                       nome +='<a href="" class="like-a" id="on|'+value.post_uuid+'">'
+                       if (value.reagir_S_N  > 0) {
+                         nome +='<i class="fas fa-heart center fa-16 liked" id="on|'+value.post_uuid+'|i"></i> <h2 id="on|'+value.post_uuid+'|h2">Like</h2>'
+                       }else {
+                         nome +='<i class="far fa-heart center fa-16 unliked" id="off|'+value.post_uuid+'|i"></i> <h2 id="off|'+value.post_uuid+'|h2">Like</h2>'
+                       }
+                       nome +=' </a></div></li><li class="l-5"><div class="content-button comment-send-post" id="comment-'+value.post_id+'"><a href="" id="comment_a-'+value.post_id+'"><i class="far fa-comment-alt center fa-16" id="comment_i-'+value.post_id+'"></i><h2>Comentar</h2></a></div></li>'
+                       nome +='<li class="r-5"><div class="content-button"><a href=""><i class="far fa-share-square fa-16"></i><h2>Partilhar</h2></a></div></li>'
+                       if (value.guardado ==0) {
+                         nome +=' <li class="r-5" id="savepost-'+value.post_id+'"><div class="content-button"><a href="" class="savepost" id="savepost-'+value.post_id+'"><i class="far fa-bookmark center fa-16" id="savepost-'+value.post_id+'"></i><h2 id="savepost-'+value.post_id+'">Guardar</h2></a></div></li>'
+                       }
+                       nome +='</ul></nav><div class="comment-send clearfix"  id="comment-send-'+value.post_id+'">'
+                       if (value.conta_logada_foto != null) {
+                         nome +='<div class="img-user-comment l-5"><img  class="img-full circle" src=' + src + '/' + value.conta_logada_foto + '></div>'
+                       }else {
+                         nome +='<div class="img-user-comment l-5"><i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i></div>'
+                       }
+                       nome +='<div class="input-text comment-send-text l-5 clearfix"><input type="text" class="" name="comentario" id="comentario-'+value.post_id+'" placeholder="O que você tem a dizer?">'
+                       nome +='<div class="r-5 "><a href="" class="comentar-a" id="'+value.post_id+'"><i class="far fa-paper-plane fa-20 fa-img-comment" id="'+value.post_id+'"></i></a></div>'
+                       if (false) {
+                         nome +='<div class="r-5 " id=""><a href=""><i class="far fa-images fa-20 fa-img-comment"></i></a></div'
+                       }
+                       nome +='</div></div><div class="comment-users comment-users-own" id="comment-users-own-'+value.post_id+'"><div class="comment-user-container"><div class="user-identify-comment user-identify-comment-feed">'
+                       if (value.dono_da_pag == 0) {
+                         if (value.conta_logada_foto != null) {
+                           nome +='<div class="img-user-comment l-5"><img  class="img-full circle" src=' + src + '/' + value.conta_logada_foto + '></div>'
+                         }else {
+                           nome +='<div class="img-user-comment l-5"><i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i></div>'
+
+                         }
+                       }else {
+                         if( !(value.foto_page == null) ){
+                             nome += '<div class="page-cover circle l-5">'
+                             nome += '<img  class="img-full circle" src=' + src1 + '/' + value.foto_page + '> </div>'
+
+                         }else{
+                             nome += '<div class="page-cover circle l-5">'
+                             nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"> </div>'
+                         }
+                       }
+                       nome +='</div><div class="comment-user-comment comment-user-comment-feed"><p class="text-ellips" id="comment-own-'+value.post_id+'"></p></div></div><div class="comment-user-container comment-user-container-react" name="novo-comment"></div></div>'
+                       if (value.qtd_comment>0) {
+                         nome +='<div class="comment-users" id="comment-users-'+value.post_id+'"><div class="comment-user-container" ><div class="user-identify-comment user-identify-comment-feed">'
+                         if (value.foto_ver==1) {
+                           if (value.foto_conta != null) {
+                             nome +='<div class="profille-img"><img  class="img-full circle" src=' + src + '/' + value.foto_conta + '></div>'
+                           }else {
+                             nome +='<div class="profille-img"><i class="fas fa-user center fa-16" style="color: #ccc;"></i></div>'
+                           }
+                         }else if (value.foto_ver==2) {
+                           if (value.foto_conta != null) {
+                             nome +='<div class="profille-img"><img  class="img-full circle" src=' + src1 + '/' + value.foto_conta + '></div>'
+                           }else {
+                             nome +='<div class="profille-img"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
+                           }
+                         }
+                         nome +='<h2 class="text-ellips">'+value.nome_comment+'</h2></div><div class="comment-user-comment comment-user-comment-feed"><p class="text-ellips">'+value.comment+'</p></div> </div><div class="comment-user-container comment-user-container-react"><a href="" class="comment-like-a" id="on|'+value.comment_id+'">'
+                         nome +=''
+                         if (value.comment_S_N>0) {
+                           nome +='<i class="fas fa-heart fa-12 liked" id="on|'+value.comment_id+'|i"></i>'
+                         }else {
+                           nome +=' <i class="far fa-heart fa-12 unliked" id="off|'+value.comment_id+'|i"></i>'
+                         }
+                         nome +='</a></div></div>'
+                       }
+
+                       nome +='<di></di></di></div>'
+
+                       $('div[name=div_father_post]').append(nome);
+                   })
+                   }}
+                 });
+
+                 contar++;
+
+            }
             }
             //console.log('janela width ' + window.innerWidth);
             window_width = window.innerWidth;

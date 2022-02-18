@@ -61,9 +61,10 @@
             <label for="target-profile-cover" id="profile-cover-alert-no-img">
                 <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
                     <h3 class="edit-profile-mobile" style="margin-top: 0;">Actualizar foto de Perfil</h3>
-                </div>    
+                </div>
             </label>
         </div>
+        <div class="" id="div_father_post" name="div_father_post">
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post'] == 1): ?>
     <?php //dd($conta_logada[0]->uuid); ?>
@@ -84,7 +85,7 @@
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
-                                <span class="time-posted l-5">{{$dados[$key]['post_data']}}  as {{$dados[$key]['post_hora']}}</span><div id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}"><?php if ($dados[$key]['seguir_S/N'] == 0): ?>
+                                <span class="time-posted l-5">{{$dados[$key]['post_data']}}  as {{$dados[$key]['post_hora']}}</span><div id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}"><?php if ($dados[$key]['seguir_S_N'] == 0): ?>
                                   <span class="seguir-{{$dados[$key]['page_id']}}"><a href="" class="seguir-a r-5"  id="seguir-{{$dados[$key]['page_id']}}-{{$dados[$key]['post_id']}}">seguir</a></span>
                                 <?php endif ?></div>
                             </div>
@@ -96,17 +97,17 @@
                         </label>
                         <input type="checkbox" name="" id=<?php echo "more-option-".$key; ?> class="hidden">
                         <ul class="clearfix more-option-post">
-                          <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
+                          <?php if ($dados[$key]['dono_da_pag'] == 1): ?>
                             <li>
                                 <a href="" class="edit-option" id="edit-option|{{$dados[$key]['post_uuid']}}">Editar</a>
                             </li>
                             <?php endif ?>
-                            <?php if ($dados[$key]['dono_da_pag?'] != 1): ?>
+                            <?php if ($dados[$key]['dono_da_pag'] != 1): ?>
                             <li>
                                 <a href="" class="ocultar_post" id="ocultar_post-{{$dados[$key]['post_id']}}">Ocultar Publicação</a>
                             </li>
                             <?php endif ?>
-                            <?php if ($dados[$key]['dono_da_pag?'] == 1): ?>
+                            <?php if ($dados[$key]['dono_da_pag'] == 1): ?>
                             <li>
                                 <a href="" class="delete_post" id="delete_post-{{$dados[$key]['post_id']}}">Apagar Publicação</a>
                             </li>
@@ -169,7 +170,7 @@
                         <li class="l-5">
                             <div class="content-button">
                                 <a href="" class="like-a" id="on|{{$dados[$key]['post_uuid']}}">
-                                    @if($dados[$key]['reagir_S/N'] > 0)
+                                    @if($dados[$key]['reagir_S_N'] > 0)
                                     <i class="fas fa-heart center fa-16 liked" id="on|{{$dados[$key]['post_uuid']}}|i"></i>
                                     <h2 id="on|{{$dados[$key]['post_uuid']}}|h2">Like</h2>
                                     @else
@@ -195,7 +196,7 @@
                                 </a>
                             </div>
                         </li>
-                        <?php if ($dados[$key]['guardado?']==0): ?>
+                        <?php if ($dados[$key]['guardado']==0): ?>
                         <li class="r-5" id="savepost-{{$dados[$key]['post_id']}}">
                             <div class="content-button">
                                 <a href="" class="savepost" id="savepost-{{$dados[$key]['post_id']}}">
@@ -237,7 +238,7 @@
                 <div class="comment-users comment-users-own" id="comment-users-own-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment user-identify-comment-feed">
-                          @if( $dados[$key]['dono_da_pag?']==0 )
+                          @if( $dados[$key]['dono_da_pag']==0 )
                             @if( !($conta_logada[0]->foto == null) )
                             <div class="profille-img">
                                 <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
@@ -247,7 +248,7 @@
                                   <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
                             </div>
                         @endif
-                      @elseif( $dados[$key]['dono_da_pag?']==1 )
+                      @elseif( $dados[$key]['dono_da_pag']==1 )
                         @if( !($dados[$key]['foto_page'] == null) )
                           <div class="profille-img">
                             <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_page'] }}">
@@ -300,7 +301,7 @@
                     </div>
                       <div class="comment-user-container comment-user-container-react">
                         <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
-                            @if($dados[$key]['comment_S/N'] > 0)
+                            @if($dados[$key]['comment_S_N'] > 0)
                                 <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                             @else
                                 <i class="far fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
@@ -364,6 +365,8 @@
                 </section>
             <?php endif ?>
         <?php endforeach ?>
+      </div>
+
         <div class="control" id="control-1">
 
         </div>
@@ -386,7 +389,7 @@
                         </button>
                     </div>
                 @endif
-            </form> -->
+            </form>
 
             @if(sizeof($dados) > 0)
                 <div class="btn-see-more" id="btn-see-more-id">
@@ -407,7 +410,7 @@
                     </button>
                     </a>
                 </div>
-            @endif
+            @endif-->
         </div>
 </div>
 <script>
@@ -488,7 +491,7 @@ function gostar(id){
 
 
                 nome +=     '<a href="" class="comment-like-a" id="on|'+response[0]['comment_id']+'">'
-                if(response[0]['comment_S/N'] > 0){
+                if(response[0]['comment_S_N'] > 0){
                   nome +=            ' <i class="fas fa-heart fa-12 liked" id="on|'+response[0]['comment_id']+'|i"></i>'
                 }else{
                   nome +=             '<i class="fas fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'

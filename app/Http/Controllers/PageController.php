@@ -49,7 +49,7 @@ class PageController extends Controller
 
 
 
-    public function get_posts($init, $aux_post, $pegar_posts){
+    public function get_posts($init, $aux_post, $pegar_posts, $verificacao){
 
       if ($init == 0) {
         $verificar_post= DB::select('select * from posts where estado_post_id = ? and post_id > ? order by post_id desc limit 1000', [1, $init]);
@@ -77,9 +77,9 @@ class PageController extends Controller
       $init_post = $init_post[0]->post_id;
       //dd($init_post);
       if (sizeof($pegar_posts) < 10 && $init != $init_post) {
-        $pegar_posts=$this->get_posts($init, $aux_post, $pegar_posts);
+        $pegar_posts=$this->get_posts($init, $aux_post, $pegar_posts, $verificacao);
       }
-       elseif (sizeof($pegar_posts) < 10 && $init == $init_post) {
+       elseif (sizeof($pegar_posts) < 10 && $init == $init_post && $verificacao == 0) {
          $pegar_posts=$this->preencher_com_destacados($aux_post, $pegar_posts);
          return $pegar_posts;
       }

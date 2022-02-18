@@ -325,11 +325,12 @@ class AuthController extends Controller
 
        public function Destacados(){
 
-         $post= DB::table('posts')->get();
+         $post= DB::table('posts')->limit(10)->get();
          $melhores=array();
          $what_are_talking = array();
 
-         for ($i=0; $i <sizeof($post) ; $i++) {
+
+         for ($i=0; $i <10 ; $i++) {
            $a=0;
 
            foreach ($post as $key) {
@@ -347,55 +348,25 @@ class AuthController extends Controller
                }
                if ($soma >= $a && $b!=1 && $key->estado_post_id == 1) {
                  $melhores[$i]= $key->post_id;
-                   //$what_are_talking[$i]['nome_pag'] = $page[$key->page_id - 1]->nome;
-                   //$what_are_talking[$i]['qtd_likes']= sizeof($likes);
-                 //  $what_are_talking[$i]['qtd_comment']=sizeof($comment);
-                 //  $what_are_talking[$i]['seguir_S/N']=sizeof($seguidor);
-                   //$what_are_talking[$i]['reagir_S/N']=sizeof($ja_reagiu);
-                   //$what_are_talking[$i]['guardado?']=sizeof($guardado);
-                   $what_are_talking[$i]['post']=$key->descricao;
-                    $what_are_talking[$i]['page_id']= $key->page_id ;
-                    $what_are_talking[$i]['page_uuid']= $pages[0]->uuid ;
-                    $what_are_talking[$i]['post_uuid']= $key->uuid;
-                    $what_are_talking[$i]['post_id']= $key->post_id;
-                   $what_are_talking[$i]['formato']=$key->formato_id;
-                   $what_are_talking[$i]['estado_post']=$key->estado_post_id;
-                   $what_are_talking[$i]['foto_page']=$pages[0]->foto;
-                   if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
-                   $what_are_talking[$i]['file']=$key->file;
-                   }
-                   /*if ($account_name[0]->conta_id == $pages[$key->page_id - 1]->conta_id_a  || $account_name[0]->conta_id == $page[$key->page_id - 1]->conta_id_b ) {
-                     $what_are_talking[$i]['dono_da_pag?']=1;
-                   }else {
-                     $what_are_talking[$i]['dono_da_pag?']=0;
-                   }*/
-                   //$what_are_talking[$i]['qtd_comment_reaction']=0;
-                   /*for ($k=1; $k <= sizeof($comment) ; $k++) {
-                       $reaction_comment = DB::select('select * from reactions_comments where comment_id = ?', [$k]);
-                   if (sizeof($reaction_comment)>= $dados[$i]['qtd_comment_reaction']) {
-                     $what_are_talking[$i]['qtd_comment_reaction']=sizeof($reaction_comment);
-                     $what_are_talking[$i]['comment']=$comment[$k - 1]->comment;
-                     $what_are_talking[$i]['comment_id']=$comment[$k - 1]->comment_id;
 
-                     $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$k-1]->identificador_id ]);
-                     if ($aux2[0]->tipo_identificador_id == 1) {
-                       $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
-                       $what_are_talking[$i]['nome_comment']=$conta[0]->nome;
-                       $what_are_talking[$i]['nome_comment'].=" ";
-                       $what_are_talking[$i]['nome_comment'].=$conta[0]->apelido;
-                       $what_are_talking[$i]['foto_conta']=$conta[0]->foto;
-                     }elseif ($aux2[0]->tipo_identificador_id == 2) {
-                       $what_are_talking[$i]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
-                       $what_are_talking[$i]['foto_conta']=$conta[0]->foto;
+                     $what_are_talking[$i]['post']=$key->descricao;
+                     $what_are_talking[$i]['page_id']= $key->page_id ;
+                     $what_are_talking[$i]['page_uuid']= $pages[0]->uuid ;
+                     $what_are_talking[$i]['post_uuid']= $key->uuid;
+                     $what_are_talking[$i]['post_id']= $key->post_id;
+                     $what_are_talking[$i]['formato']=$key->formato_id;
+                     $what_are_talking[$i]['estado_post']=$key->estado_post_id;
+                     $what_are_talking[$i]['foto_page']=$pages[0]->foto;
+                     if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
+                     $what_are_talking[$i]['file']=$key->file;
                      }
-                   }
-                 }*/
+
 
                  $a=$soma;
                }}
              }
          }
-
+        //  dd($what_are_talking);
          return $what_are_talking;
        }
 
@@ -430,19 +401,21 @@ class AuthController extends Controller
                      $ja_reagiu = array();
                  }
                  $dados['nome_pag'] = $page[0]->nome;
+                 $dados['conta_logada_foto']= $conta_logada[0]->foto;
+                 $dados['conta_logada_uuid']= $conta_logada[0]->uuid;
                  $dados['post']=$id->descricao;
                  $dados['qtd_likes']= sizeof($likes);
                  $dados['qtd_comment']=sizeof($comment);
-                 $dados['seguir_S/N']=sizeof($seguidor);
+                 $dados['seguir_S_N']=sizeof($seguidor);
                  $dados['post_id']=$id->post_id;
-                 $dados['page_id']= $id->page_id ;
+                 $dados['page_id']= $id->page_id;
                  $dados['page_uuid']= $page[0]->uuid ;
                  $dados['post_uuid']= $id->uuid;
                  $aux_divisão_data = explode(' ', $id->created_at);
                  $dados['post_data']= $aux_divisão_data[0] ;
                  $dados['post_hora']= str_split($aux_divisão_data[1], 5)[0];
-                 $dados['reagir_S/N']=sizeof($ja_reagiu);
-                 $dados['guardado?']=sizeof($guardado);
+                 $dados['reagir_S_N']=sizeof($ja_reagiu);
+                 $dados['guardado']=sizeof($guardado);
                  $dados['formato']=$id->formato_id;
                  $dados['estado_post']=$id->estado_post_id;
                  $dados['foto_page']=$page[0]->foto;
@@ -450,9 +423,9 @@ class AuthController extends Controller
                  $dados['file']=$id->file;
                  }
                  if ($conta_logada[0]->conta_id == $page[0]->conta_id_a  || $conta_logada[0]->conta_id == $page[0]->conta_id_b ) {
-                   $dados['dono_da_pag?']=1;
+                   $dados['dono_da_pag']=1;
                  }else {
-                   $dados['dono_da_pag?']=0;
+                   $dados['dono_da_pag']=0;
                  }
                  $dados['qtd_comment_reaction']=0;
                  for ($j=1; $j <= sizeof($comment) ; $j++) {
@@ -468,7 +441,7 @@ class AuthController extends Controller
                    } else {
                        $ja_reagiu1 = array();
                    }
-                    $dados['comment_S/N']=sizeof($ja_reagiu1);
+                    $dados['comment_S_N']=sizeof($ja_reagiu1);
 
                    $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$j-1]->identificador_id ]);
                    if ($aux2[0]->tipo_identificador_id == 1) {
@@ -485,6 +458,19 @@ class AuthController extends Controller
                    }
                  }
                }
+
+               $aux_view= DB::table('views')->where('post_id', $id->post_id)->get();
+               if (sizeof($aux_view)<=0) {
+                 DB::table('views')->insert([
+                   'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                   'post_id' => $id->post_id,
+                   'ip_view'=>'',
+                   'conta_id'=>$conta_logada[0]->conta_id,
+                   'state_views_id'=>2,
+                   'created_at'=> $this->dat_create_update(),
+                   ]);
+               }
+
 
                return $dados;
                    }
@@ -556,10 +542,21 @@ class AuthController extends Controller
 
 
      */
+
+     $what_are_talking = $this->Destacados();
+
+
+
+     $mudar_estado_view= DB::table('views')->where('state_views_id', 2)->limit(1)->get();
+    if (sizeof($mudar_estado_view)>0) {
+      DB::table('views')
+            ->where('state_views_id', 2)
+            ->delete();
+    }
      $post_controller = new PageController();
      $array_aux=array();
      $dados=array();
-     $post = $post_controller->get_posts(0, 0, $array_aux);
+     $post = $post_controller->get_posts(0, 0, $array_aux, 0);
      $a=0;
      //dd($post);
      if (sizeof($post)>0) {
@@ -573,7 +570,6 @@ class AuthController extends Controller
      }
 
       //--------------------------------------------------------------------------------------------o que estão falando --------------------------------------------------------------
-      $what_are_talking = $this->Destacados();
 
 
         return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
@@ -784,7 +780,25 @@ class AuthController extends Controller
     return response()->json($tipos);
   }
 
-
+  public function pegar_mais_post(){
+    $post_controller = new PageController();
+    $array_aux=array();
+    $dados=array();
+    $post = $post_controller->get_posts(0, 0, $array_aux, 1);
+    $a=0;
+    //dd($post);
+    if (sizeof($post)>0) {
+      foreach ($post as $key) {
+        $page= DB::table('pages')->where('page_id', $key->page_id)->get();
+        if ($page[0]->estado_pagina_id == 1){
+          $dados[$a] = $this->DadosPost($key);
+        }
+        $a++;
+      }
+    }
+    //dd($dados);
+    return response()->json($dados);
+  }
 
   public function post_index($id){
 
@@ -881,23 +895,23 @@ class AuthController extends Controller
         $dados[0]['post']=$post[0]->descricao;
         $dados[0]['qtd_likes']= sizeof($likes);
         $dados[0]['qtd_comment']=sizeof($comment);
-        $dados[0]['seguir_S/N']=sizeof($seguidor);
+        $dados[0]['seguir_S_N']=sizeof($seguidor);
         $dados[0]['post_id']=$post[0]->post_id;
         $dados[0]['post_uuid']= $post[0]->uuid;
         $dados[0]['page_id']= $post[0]->page_id ;
         $dados[0]['page_uuid']= $page[$post[0]->page_id - 1]->uuid ;
-        $dados[0]['reagir_S/N']=sizeof($ja_reagiu);
-       //        $dados[0]['comment_S/N']=sizeof($ja_reagiu1);
-        $dados[0]['guardado?']=sizeof($guardado);
+        $dados[0]['reagir_S_N']=sizeof($ja_reagiu);
+       //        $dados[0]['comment_S_N']=sizeof($ja_reagiu1);
+        $dados[0]['guardado']=sizeof($guardado);
         $dados[0]['formato']=$post[0]->formato_id;
         $dados[0]['estado_post']=$post[0]->estado_post_id;
         if($dados[0]['formato']==1 || $dados[0]['formato']== 2){
         $dados[0]['file']=$post[0]->file;
         }
         if ($account_name[0]->conta_id == $page[$post[0]->page_id - 1]->conta_id_a  || $account_name[0]->conta_id == $page[$post[0]->page_id - 1]->conta_id_b ) {
-          $dados[0]['dono_da_pag?']=1;
+          $dados[0]['dono_da_pag']=1;
         }else {
-          $dados[0]['dono_da_pag?']=0;
+          $dados[0]['dono_da_pag']=0;
         }
         $a=0;
         foreach ($comment as $key) {
@@ -1171,14 +1185,13 @@ public function dados_comment($key){
                 'tipo_estado_comment_id'=>1,
                 'comment'=>$request->comment,
                 'created_at'=> $this->dat_create_update(),
-
                 ]);
 
                 $variable=  DB::table('comments')->get();
                 foreach ($variable as $key) {
                   $resposta[0]['post_id']=$key->post_id;
                     $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$key->comment_id, $aux[0]->identificador_id]);
-                   $resposta[0]['comment_S/N']=sizeof($ja_reagiu1);
+                   $resposta[0]['comment_S_N']=sizeof($ja_reagiu1);
                    $resposta[0]['comment_id']=$key->comment_id;
                    if ($aux[0]->tipo_identificador_id == 1) {
                     $resposta[0]['nome_comment']=$conta[0]->nome;
@@ -1207,7 +1220,7 @@ public function dados_comment($key){
                 foreach ($variable as $key) {
                   $resposta[0]['post_id']=$key->post_id;
                     $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$key->comment_id, $aux[0]->identificador_id]);
-                   $resposta[0]['comment_S/N']=sizeof($ja_reagiu1);
+                   $resposta[0]['comment_S_N']=sizeof($ja_reagiu1);
                    $resposta[0]['comment_id']=$key->comment_id;
                    if ($aux[0]->tipo_identificador_id == 1) {
                     $resposta[0]['nome_comment']=$conta[0]->nome;
