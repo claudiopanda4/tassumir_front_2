@@ -56,9 +56,11 @@
                 </header>
                 <div class="card-post">
                     <div class="">
-                        <p>{{$dados[0]['post']}}</p>
+                        @if(strlen($dados[0]['post']) > 0)
+                            <p>{{$dados[0]['post']}}</p>
+                        @endif
                         <?php if ( $dados[0]['formato'] == 2 ): ?>
-                        <div class="post-cover">
+                        <div class="post-cover post-cover-post-index">
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[0]['file']}}">
                         </div>
                       <?php elseif ($dados[0]['formato'] == 1): ?>

@@ -306,7 +306,7 @@
             alert(valor_pagina_id);
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
-            
+
             var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];;
             //$('#' + valor_pagina_id).empty();
             $('#li-component-suggest-' + valor_pagina_id).remove();
@@ -374,9 +374,9 @@
               });
              });
         document.getElementById("route_page").classList.add('li-component-aside-active');
-                alert('Abriu o Documento');
+                //alert('Abriu o Documento');
 
-        
+
             });
 </script>
 @stop

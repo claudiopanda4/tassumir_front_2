@@ -366,7 +366,12 @@
 		margin: auto;
 	}
 	.options-profile-btn {
-		width: 48%;
+		width: 47.5%;
+		margin-right: 5px;
+		margin-top: 0;
+	}
+	#options-profile-btn-profile {
+		width: 100%;
 	}
 	.card, .pop-up-component {
 	    width: 100%;
@@ -1100,6 +1105,7 @@
 	}
 	.edit-profile-mobile {
 		font-size: 12px;
+		margin: auto;
 	}
 	.btn-a-default {
 		font-size: 12px;
@@ -1163,6 +1169,15 @@
 @media screen and (max-width: 330px) {
 	.post header .first-component {
 	    width: 268px;
+	}
+}
+@media screen and (max-width: 520px) {
+	.post-cover.post-cover-post-index {
+	    height: auto;
+	}
+	.post-cover.post-cover-post-index img {
+	    height: auto;
+    	position: relative;
 	}
 }
 @media screen and (min-width: 2400px) {

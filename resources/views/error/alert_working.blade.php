@@ -13,12 +13,15 @@
                 <h1>Enquanto isso, aproveite as funcionalidades já disponíveis no Tassumir</h1>
                 <a href="{{route('account.home')}}">Voltar</a>
             </div>
-            
+
         </div>
     </div>
 </div>
 <script>
     $(document).ready(function(){
+      var select_li =window.location.href.split('/');
+        document.getElementById(select_li[select_li.length - 1]).classList.add('li-component-aside-active');
+
 
     });
 </script>

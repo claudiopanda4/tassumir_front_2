@@ -118,14 +118,17 @@
                     <?php endif; ?>
                 <?php endif; ?>
             <?php endif; ?>
-            <div >
-              <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
+            <?php if (false): ?>
+                <div >
+                  <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
 
-                  <button class="btn-message">
-                      <i class="far fa-comment-dots fa-24 fa-option center"></i>
-                  </button>
-              </form>
-          </div>
+                      <button class="btn-message">
+                          <i class="far fa-comment-dots fa-24 fa-option center"></i>
+                      </button>
+                  </form>
+                </div>
+            <?php endif ?>
+
             </div>
             <div class="clearfix" id="options-profile-mobile-user-log">
                 <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
@@ -140,6 +143,21 @@
                         </a>
                     </div>
                 <?php endif; ?>
+            </div>
+            <div class="clearfix" id="options-profile-mobile-user-log-pages">
+                @if($checkUserStatus)
+                    <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+                        @if(!$hasUserManyPages)
+                            <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5">
+                                <a href="{{route('couple.page')}}"><h3 class="edit-profile-mobile">Página de Casal</h3></a>
+                            </div>
+                        @else
+                            <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5">
+                                <a href="{{route('couple.page.mine')}}"><h3 class="edit-profile-mobile">Minhas Páginas</h3></a>
+                            </div>
+                        @endif
+                    <?php endif ?>
+                @endif
             </div>
                     <!--<?php //if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                     <div class="options-profile-btn options-profile-btn-center profile-item-center">
@@ -340,9 +358,15 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function () {
-  <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-  document.getElementById("route_account").classList.add('li-component-aside-active');
-  <?php endif; ?>
+  var select_li =window.location.href.split('=');
+  if (select_li[select_li.length - 1] == 'saved') {
+    document.getElementById("route_save").classList.add('li-component-aside-active');
+  }else {
+    <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
+    document.getElementById("route_account").classList.add('li-component-aside-active');
+    <?php endif; ?>
+  }
+
 
 });
 </script>
