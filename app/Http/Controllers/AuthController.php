@@ -324,46 +324,90 @@ class AuthController extends Controller
        }
 
 
-       public function Destacados(){
+       public function Pegar_destacados($init,$melhores){
 
-         $post= DB::table('posts')->where('estado_post_id', 1)->get();
-         $melhores=array();
-         $what_are_talking = array();
-
+         $post= DB::select('select * from posts where estado_post_id = ? and post_id > ? limit 1000', [1, $init]);
+         if (sizeof($post)>0) {
+           $init=$post[sizeof($post) - 1]->post_id;
+         }
+         $count=sizeof($melhores);
         if (sizeof($post)>0) {
          for ($i=0; $i <10 ; $i++) {
            $a=0;
 
            foreach ($post as $key) {
 
-             $pages= DB::table('pages')->where('page_id', $key->page_id)->limit(1000)->get();
+             $pages= DB::table('pages')->where('page_id', $key->page_id)->get();
              if ($pages[0]->estado_pagina_id == 1){
+
                 $soma=$this->qtd_total($key->post_id);
                 $b=$this->verificar_melhores($melhores, $key->post_id);
 
                if ($soma >= $a && $b!=1) {
-                     $melhores[$i]= $key->post_id;
-                     $what_are_talking[$i]['post']=$key->descricao;
-                     $what_are_talking[$i]['page_id']= $key->page_id ;
-                     $what_are_talking[$i]['page_uuid']= $pages[0]->uuid ;
-                     $what_are_talking[$i]['post_uuid']= $key->uuid;
-                     $what_are_talking[$i]['post_id']= $key->post_id;
-                     $what_are_talking[$i]['formato']=$key->formato_id;
-                     $what_are_talking[$i]['estado_post']=$key->estado_post_id;
-                     $what_are_talking[$i]['foto_page']=$pages[0]->foto;
-                     if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
-                     $what_are_talking[$i]['file']=$key->file;
+                     $melhores[$count]['id']= $key->post_id;
+                     $melhores[$count]['soma']= $soma;
+                     $a=$soma;
                      }
 
+               }
+             }
+                    $count++;
+             }
 
-                 $a=$soma;
-               }}
+             $init_post = DB::select('select * from posts order by post_id desc limit 1');
+             $init_post = $init_post[0]->post_id;
+             if ($init != $init_post) {
+               $melhores=$this->Pegar_destacados($init,$melhores);
              }
          }
+
+         return $melhores;
        }
-        //  dd($what_are_talking);
-         return $what_are_talking;
-       }
+
+        public function Destacados(){
+
+          $array=array();
+          $melhores=$this->Pegar_destacados(0,$array);
+          $p_post=$this->peneira($melhores);
+          $what_are_talking = array();
+         if (sizeof($p_post)>0) {
+            for ($i=0; $i < sizeof($p_post); $i++) {
+              $post=DB::table('posts')->where('post_id', $p_post[$i]['id'])->get();
+              $pages= DB::table('pages')->where('page_id', $post[0]->page_id)->get();
+
+                      $what_are_talking[$i]['post']=$post[0]->descricao;
+                      $what_are_talking[$i]['page_id']= $post[0]->page_id ;
+                      $what_are_talking[$i]['page_uuid']= $pages[0]->uuid ;
+                      $what_are_talking[$i]['post_uuid']= $post[0]->uuid;
+                      $what_are_talking[$i]['post_id']= $post[0]->post_id;
+                      $what_are_talking[$i]['formato']=$post[0]->formato_id;
+                      $what_are_talking[$i]['estado_post']=$post[0]->estado_post_id;
+                      $what_are_talking[$i]['foto_page']=$pages[0]->foto;
+                      if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
+                      $what_are_talking[$i]['file']=$post[0]->file;
+                      }
+
+        }}
+         //  dd($what_are_talking);
+          return $what_are_talking;
+        }
+
+        public function peneira($melhores)
+        {
+          $c=array();
+          for ($i=0; $i <10 ; $i++) {
+            $a=0;
+            for ($j=0; $j <sizeof($melhores) ; $j++) {
+              $b=$this->verificar_melhores($c, $melhores[$j]['id']);
+              if ($melhores[$j]['soma']>=$a && $b!=1 ) {
+                $a=$melhores[$j]['soma'];
+                $c[$i]['id']=$melhores[$j]['id'];
+              }
+            }
+          }
+
+          return $c;
+        }
 
        public function qtd_total($post_id)
        {
@@ -377,7 +421,7 @@ class AuthController extends Controller
         {
           $b=0;
          for ($j=0; $j <sizeof($melhores); $j++) {
-           if ($post_id == $melhores[$j]){
+           if ($post_id == $melhores[$j]['id']){
              $b=1;
              $j=sizeof($melhores);
            }
@@ -537,7 +581,7 @@ class AuthController extends Controller
 
       $dados = array();
       //dd('post');
-      foreach ($post as $key) {
+      foreach ($post as $post[0]) {
         $page= DB::table('pages')->where('page_id', $key->page_id)->get();
         if ($page[0]->estado_pagina_id == 1){
           $dados[$a] = $this->DadosPost($key);
