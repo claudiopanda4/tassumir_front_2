@@ -362,8 +362,8 @@
                 </section>
             <?php endif ?>
         <?php endforeach ?>
-        <div class="reload-component">
-            <img class="center" src="{{asset('storage/icons/loader_sites.gif')}}">
+        <div class="reload-component" id="reload-component-1">
+            <img class="center" src="{{asset('storage/icons/aguarde1.gif')}}">
         </div>
       </div>
 
