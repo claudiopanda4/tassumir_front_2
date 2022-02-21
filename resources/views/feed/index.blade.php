@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="main" id="main-home">
+<div class="main" id="main-home" name="main-home">
 <header class="card more-following" id="card-more-following">
     <ul>
         <li>
@@ -124,7 +124,7 @@
                 <div class="card-post">
                     <div class="">
                         @if(strlen($dados[$key]['post']) > 0)
-                            <p>{{$dados[0]['post']}}</p>
+                            <p>{{$dados[$key]['post']}}</p>
                         @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
                         <div class="post-cover post-cover-home">
@@ -362,11 +362,8 @@
                 </section>
             <?php endif ?>
         <?php endforeach ?>
-        <div class="reload-component" id="reload-component-1">
-            <img class="center" src="{{asset('storage/icons/aguarde1.gif')}}">
-        </div>
       </div>
-
+       <div class="reload-component" id="reload-component" name="reload-component"><img class="center" src="{{asset('storage/icons/aguarde1.gif')}}"></div>
         <div class="control" id="control-1">
 
         </div>
@@ -660,15 +657,20 @@ function gostar(id){
 
                             alert(contar);
                               contar++;
+                                  /*                                 var load = '';
+                                                                   load += '<div class="reload-component" id="reload-component-1"><img class="center" src="{{asset("storage/icons/aguarde1.gif")}}"></div>'
+                                                                   $('div[name=load]').append(load);*/
 
                             $.ajax({
                                url: "{{route('pegar_mais_post')}}",
                                type: 'get',
                                dataType: 'json',
                                success: function(response){
+                                 $('div[name=reload-component]').remove();
                                  console.log(response);
                                  if (response.length > 0) {
                                  $.each(response, function(key, value){
+
                                    let src = '{{asset("storage/img/users/") }}';
                                    let src1 = '{{ asset("storage/img/page/") }}';
                                    var route10 = "{{route('couple.page1', 1) }}"
@@ -720,7 +722,6 @@ function gostar(id){
                                    nome +='<div class="card-post"><div class="">'
                                    if (value.post == "" || value.post == null
                                    || value.post == " " || value.post == "null") {
-                                     nome +='<p class="untext"></p>'
                                    }else {
                                      nome +='<p>'+value.post+'</p>'
                                    }
