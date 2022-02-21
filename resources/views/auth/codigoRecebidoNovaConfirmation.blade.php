@@ -53,7 +53,7 @@
                 <input type="text" name="receivedNacio" class="hidden" value="{{$nacional}}">
                 <input type="text" name="receivedApelido" class="hidden" value="{{$apelido}}">
                 
-                <input type="text" name="codeReceived" class="hidden" value="{{$code2}}">
+                <input type="text" name="codeReceived" class="hidden" value="{{$encryp_conf_cod}}">
                  
                     <div class="form-group">
                         <input type="text" class="input-text-default input-full input-login" name="codeReceived1" placeholder="Escreva o código que recebeu" id="codeReceived" required>

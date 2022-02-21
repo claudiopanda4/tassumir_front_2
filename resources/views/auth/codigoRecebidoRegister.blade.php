@@ -68,18 +68,17 @@
 
                     <input type="text" name="receivedApelido" class="hidden" value="{{$apelido}}">
 
-
                     <input type="text" name="receivedData_Nascimento" class="hidden" value="{{$data_nascimento}}">
 
                     <input type="text" name="receivedGenero" class="hidden" value="{{$genero}}">
 
                     <input type="text" name="receivedNacio" class="hidden" value="{{$nacionalidade}}">
 
-                    <input type="password" name="receivedCode" class="hidden" value="{{$code}}">
+                    <input type="password" name="receivedCode" class="hidden" value="{{$encryp_conf_cod}}">
                     <!-- fim dados de cadastro -->
                     <div class="form-group">
                         
-                        <input type="text" class="input-text-default input-full input-login" name="codeReceived" placeholder="Escreva o código que recebeu" id="codeReceived" required>
+                        <input type="text" class="input-text-default input-full input-login" name="codeSent" placeholder="Escreva o código que recebeu" id="codeReceived" required>
                         <div class="invalid-feedback">
                             Insira o Código
                       </div>
