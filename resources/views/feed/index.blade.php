@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="main" id="main-home">
+<div class="main" id="main-home" name="main-home">
 <header class="card more-following" id="card-more-following">
     <ul>
         <li>
@@ -124,7 +124,7 @@
                 <div class="card-post">
                     <div class="">
                         @if(strlen($dados[$key]['post']) > 0)
-                            <p>{{$dados[0]['post']}}</p>
+                            <p>{{$dados[$key]['post']}}</p>
                         @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
                         <div class="post-cover post-cover-home">
@@ -363,7 +363,7 @@
             <?php endif ?>
         <?php endforeach ?>
       </div>
-
+       <div class="reload-component" id="reload-component" name="reload-component"><img class="center" src="{{asset('storage/icons/aguarde1.gif')}}"></div>
         <div class="control" id="control-1">
 
         </div>
@@ -593,8 +593,31 @@ function gostar(id){
              });
             });
 
+            function home_index(){
+              $.ajax({
+                url: "{{route('account.home.feed')}}",
+                type: 'get',
+                dataType: 'json',
+                data: { init: $('#last_post').val(), checked: true, dest_init: $('#last_post_dest').val() },
+                success:function(response){
+                      console.log('last_post ' + $('#last_post').val() + ' last_post_dest ' + $('#last_post_dest').val());
+                      console.log('yes');
+                      console.log(response);
+                  }
+                });
+            }
 
-
+            function add_view(data) {
+                $.ajax({
+                    url: "{{route('post.view.save')}}",
+                    type: 'get',
+                    data: {'data': data},
+                    dataType: 'json',
+                    success: function(response){
+                        //console.log(response);
+                    }
+                });
+            }
 
                     let contar = 0;
 
@@ -608,8 +631,8 @@ function gostar(id){
                             if (control_.top <= $(document).height()) {
                                 //alert('carregar');
                                 //alert('oi');
-                                home_index();
-                                console.log('last_post_id ' + $('#last_post').val());
+                          home_index();
+                                //---DS console.log('last_post_id ' + $('#last_post').val());
                             }
                         }
                         let margin_stories = $('.main-container').offset();
@@ -631,16 +654,23 @@ function gostar(id){
 
                         if ((height - 400) + margin_stories.top  <= 450) {
                             control++;
+
                             alert(contar);
+                              contar++;
+                                  /*                                 var load = '';
+                                                                   load += '<div class="reload-component" id="reload-component-1"><img class="center" src="{{asset("storage/icons/aguarde1.gif")}}"></div>'
+                                                                   $('div[name=load]').append(load);*/
 
                             $.ajax({
                                url: "{{route('pegar_mais_post')}}",
                                type: 'get',
                                dataType: 'json',
                                success: function(response){
+                                 $('div[name=reload-component]').remove();
                                  console.log(response);
                                  if (response.length > 0) {
                                  $.each(response, function(key, value){
+
                                    let src = '{{asset("storage/img/users/") }}';
                                    let src1 = '{{ asset("storage/img/page/") }}';
                                    var route10 = "{{route('couple.page1', 1) }}"
@@ -692,7 +722,6 @@ function gostar(id){
                                    nome +='<div class="card-post"><div class="">'
                                    if (value.post == "" || value.post == null
                                    || value.post == " " || value.post == "null") {
-                                     nome +='<p class="untext"></p>'
                                    }else {
                                      nome +='<p>'+value.post+'</p>'
                                    }
@@ -777,11 +806,11 @@ function gostar(id){
                                    nome +='<di></di></di></div>'
 
                                    $('div[name=div_father_post]').append(nome);
+                                   contar = 0;
                                })
                                }}
                              });
 
-                             contar++;
 
                         }
                         }

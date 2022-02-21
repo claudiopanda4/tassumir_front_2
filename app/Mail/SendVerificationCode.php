@@ -10,10 +10,7 @@ use Illuminate\Queue\SerializesModels;
 class SendVerificationCode extends Mailable
 {
     use Queueable, SerializesModels;
-
-
         public $codHugo;
-
     /**
      * Create a new message instance.
      *
@@ -21,10 +18,7 @@ class SendVerificationCode extends Mailable
      */
     public function __construct($codHugo)
     {
-
         $this->codHugo=$codHugo;
-        //$hp = $this->dadosEmail;
-        //dd($dadosEmail);
     }
 
     /**
@@ -35,7 +29,7 @@ class SendVerificationCode extends Mailable
     public function build()
     {
         return $this->subject('Tassumir S.A')
-                    ->markdown('Email.testeEmail');
+                    ->markdown('Email.Email');
                     
     }
 }
