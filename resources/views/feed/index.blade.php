@@ -596,8 +596,31 @@ function gostar(id){
              });
             });
 
+            function home_index(){
+              $.ajax({
+                url: "{{route('account.home.feed')}}",
+                type: 'get',
+                dataType: 'json',
+                data: { init: $('#last_post').val(), checked: true, dest_init: $('#last_post_dest').val() },
+                success:function(response){
+                      console.log('last_post ' + $('#last_post').val() + ' last_post_dest ' + $('#last_post_dest').val());
+                      console.log('yes');
+                      console.log(response);
+                  }
+                });
+            }
 
-
+            function add_view(data) {
+                $.ajax({
+                    url: "{{route('post.view.save')}}",
+                    type: 'get',
+                    data: {'data': data},
+                    dataType: 'json',
+                    success: function(response){
+                        //console.log(response);
+                    }
+                });
+            }
 
                     let contar = 0;
 
@@ -611,7 +634,7 @@ function gostar(id){
                             if (control_.top <= $(document).height()) {
                                 //alert('carregar');
                                 //alert('oi');
-                          //---DS      home_index();
+                          home_index();
                                 //---DS console.log('last_post_id ' + $('#last_post').val());
                             }
                         }
@@ -634,7 +657,9 @@ function gostar(id){
 
                         if ((height - 400) + margin_stories.top  <= 450) {
                             control++;
+
                             alert(contar);
+                              contar++;
 
                             $.ajax({
                                url: "{{route('pegar_mais_post')}}",
@@ -780,11 +805,11 @@ function gostar(id){
                                    nome +='<di></di></di></div>'
 
                                    $('div[name=div_father_post]').append(nome);
+                                   contar = 0;
                                })
                                }}
                              });
 
-                             contar++;
 
                         }
                         }

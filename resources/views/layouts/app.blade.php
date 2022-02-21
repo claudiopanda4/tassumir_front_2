@@ -1033,6 +1033,18 @@
 
       }
 
+      function add_view(data) {
+          $.ajax({
+              url: "{{route('post.view.save')}}",
+              type: 'get',
+              data: {'data': data},
+              dataType: 'json',
+              success: function(response){
+                  //console.log(response);
+              }
+          });
+      }
+
       function home_index(){
         $.ajax({
           url: "{{route('account.home.feed')}}",
@@ -1482,17 +1494,7 @@
             });
         }
 
-        function add_view(data) {
-            $.ajax({
-                url: "{{route('post.view.save')}}",
-                type: 'get',
-                data: {'data': data},
-                dataType: 'json',
-                success: function(response){
-                    //console.log(response);
-                }
-            });
-        }
+
         $('.play_button').click(function(e){
             let id = e.target.id.split('_')[2];
         });
