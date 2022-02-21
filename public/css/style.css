@@ -3299,3 +3299,12 @@ label[for="hugo"]{
 #refresh-profile-photo-id {
     display: none;
 }
+.reload-component {
+    position: relative;
+    width: 100%;
+    height: 100px;
+}
+.reload-component img {
+    width: 70px;
+    height: 70px;
+}

@@ -362,6 +362,9 @@
                 </section>
             <?php endif ?>
         <?php endforeach ?>
+        <div class="reload-component">
+            <img class="center" src="{{asset('storage/icons/loader_sites.gif')}}">
+        </div>
       </div>
 
         <div class="control" id="control-1">

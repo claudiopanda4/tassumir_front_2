@@ -1445,13 +1445,13 @@ public function dados_comment($key){
 
             }else{
 
-                return redirect()->route('auth.ErrorStatus');
+               // return redirect()->route('auth.ErrorStatus');
             }
 
           }catch(\Exception $e){
 
             //echo "O Erro é: " .$e;
-            return redirect()->route('auth.ErrorStatus');
+            //return redirect()->route('auth.ErrorStatus');
           }
     }
 
@@ -1533,9 +1533,9 @@ public function dados_comment($key){
         }catch(\Exception $error){
 
                DB::rollBack();
-            //echo "O erro e: ".$error;
+                dd($error);
 
-            return redirect()->route('auth.ErrorStatus');
+            //return redirect()->route('auth.ErrorStatus');
 
         }
 
