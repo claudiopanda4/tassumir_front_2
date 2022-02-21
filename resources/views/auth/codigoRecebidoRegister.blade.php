@@ -54,11 +54,12 @@
                 <form action="{{route('account.verifyCode.enter')}}" method="POST" class="needs-validation" novalidate>
 
                     @csrf
+                        
                     <!-- inicio dados de cadastro-->
 
                     <input type="text" name="telefone" class="hidden" value="{{$takePhone}}">
 
-                    <input type="text" name="password" class="hidden" value="{{$password}}">
+                    <input type="password" name="password" class="hidden" value="{{$password}}">
 
                     <input type="text" name="email" class="hidden" value="{{$takeEmail}}">
 
@@ -74,7 +75,7 @@
 
                     <input type="text" name="receivedNacio" class="hidden" value="{{$nacionalidade}}">
 
-                    <input type="text" name="receivedCode" class="hidden" value="{{$code}}">
+                    <input type="password" name="receivedCode" class="hidden" value="{{$code}}">
                     <!-- fim dados de cadastro -->
                     <div class="form-group">
                         
