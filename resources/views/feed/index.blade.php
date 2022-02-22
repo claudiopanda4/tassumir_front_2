@@ -593,7 +593,7 @@ function gostar(id){
              });
             });
 
-            function home_index(){
+          /*  function home_index(){
               $.ajax({
                 url: "{{route('account.home.feed')}}",
                 type: 'get',
@@ -605,7 +605,7 @@ function gostar(id){
                       console.log(response);
                   }
                 });
-            }
+            }*/
 
             function add_view(data) {
                 $.ajax({
@@ -631,7 +631,7 @@ function gostar(id){
                             if (control_.top <= $(document).height()) {
                                 //alert('carregar');
                                 //alert('oi');
-                          home_index();
+                          //--DShome_index();
                                 //---DS console.log('last_post_id ' + $('#last_post').val());
                             }
                         }
@@ -655,7 +655,7 @@ function gostar(id){
                         if ((height - 400) + margin_stories.top  <= 450) {
                             control++;
 
-                            alert(contar);
+                            //alert(contar);
                               contar++;
                                   /*                                 var load = '';
                                                                    load += '<div class="reload-component" id="reload-component-1"><img class="center" src="{{asset("storage/icons/aguarde1.gif")}}"></div>'

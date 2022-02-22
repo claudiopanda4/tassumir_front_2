@@ -602,7 +602,7 @@ class AuthController extends Controller
 
      */
 
-     $what_are_talking = $this->Destacados();
+     $what_are_talking = array();
 
 
 
