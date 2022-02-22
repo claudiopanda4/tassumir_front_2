@@ -567,7 +567,7 @@ class PerfilController extends Controller
           if ( sizeof($verificacao_pedido) == 0 && sizeof($verificacao_page_conta_pedinte_a) == 0 && sizeof($verificacao_page_conta_pedinte_b) == 0 && sizeof($verificacao_page_conta_pedida_b) == 0 && sizeof($verificacao_page_conta_pedida_a) == 0 && $conta_pedida[0]->genero != $conta[0]->genero ) {
 
           DB::table('pedido_relacionamentos')->insert([
-
+            
               'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
               'conta_id_pedida' => $conta_pedida[0]->conta_id,
               'conta_id_pedinte' =>  $conta_pedinte,
