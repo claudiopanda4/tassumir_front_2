@@ -51,19 +51,21 @@
                 </ul>
             </nav>
         </header>
-        <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
-            <div class="profile-photo-container l-5">
-                <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
-            </div>
-            <div class="content-profile-photo l-5">
-                <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
-            </div>
-            <label for="target-profile-cover" id="profile-cover-alert-no-img">
-                <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
-                    <h3 class="edit-profile-mobile" style="margin-top: 0;">Actualizar foto de Perfil</h3>
+        @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")  
+            <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
+                <div class="profile-photo-container l-5">
+                    <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
                 </div>
-            </label>
-        </div>
+                <div class="content-profile-photo l-5">
+                    <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
+                </div>
+                <label for="target-profile-cover" id="profile-cover-alert-no-img">
+                    <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
+                        <h3 class="edit-profile-mobile" style="margin-top: 0;">Actualizar foto de Perfil</h3>
+                    </div>
+                </label>
+            </div>              
+        @endif
         <div class="" id="div_father_post" name="div_father_post">
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post'] == 1): ?>
@@ -308,13 +310,64 @@
                       </div>
                 </div>
               <?php endif ?>
+                <input type="hidden" id="id_click" value="none;0" name="">
                 <script type="text/javascript">
-                    document.addEventListener('DOMContentLoaded', function(e){
-                        let likes_a = document.getElementsByClassName('like-a');
-                        let length = likes_a.length;
-                        document.addEventListener('click', function() {
-                            alert('oi');
-                        });
+                    $(document).click('.like-a', function(e){
+                        let id = e.target.id.split('|');
+                        if ($('#id_click').val().split(';')[1] == 0 && $('#id_click').val().split(';')[0] != id[1]) {
+                            $('#id_click').val(id[1] + ';' + 0);
+                            //alert('oi');
+                            e.preventDefault();
+                            if(id[0] == "on"){
+                                gostar(id[1]);
+                                let new_id = "off|" + id[1] + "|i";
+                                document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+                                document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+                                document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+                                document.getElementById("off|" + id[1] + "|i").classList.add('far');
+                                $('#id_click').val(id[1] + '-;' + 0);
+                            } else if(id[0] == "off") {
+                                gostar(id[1]);
+                                let new_id = "on|" + id[1] + "|i";
+                                document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+                                document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+                                document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+                                document.getElementById("on|" + id[1] + "|i").classList.remove('far');
+                                $('#id_click').val(id[1] + ';' + 0);
+                            }
+                        }
+                            
+                    });
+                </script>
+                <script type="text/javascript">
+                    document.addEventListener('DOMContentLoaded', function(){
+                        /*document.addEventListener('click', function(e) {
+                            let id = e.target.id;
+                            let className = e.target.className;
+                            console.log(className);
+                            if (className.indexOf('like-a-more') > 0) {
+                                e.preventDefault();
+                                let id_final = id.split('|')[1];
+                                if(id.split('|')[0] == "on"){
+                                    gostar(id_final);
+                                    let new_id = "off|" + id_final + "|i";
+                                    document.getElementById("on|" + id_final + "|i").setAttribute('id', new_id);
+                                    document.getElementById("off|" + id_final + "|i").classList.remove('fas');
+                                    document.getElementById("off|" + id_final + "|i").classList.remove('liked');
+                                    document.getElementById("off|" + id_final + "|i").classList.add('far');
+                                } else if(id.split('|')[0] == "off") {
+                                    gostar(id_final);
+                                    alert('off ' + id);
+                                    let new_id = "on|" + id_final + "|i";
+                                    document.getElementById("off|" + id_final + "|i").setAttribute('id', new_id);
+                                    document.getElementById("on|" + id_final + "|i").classList.add('fas');
+                                    document.getElementById("on|" + id_final + "|i").classList.add('liked');
+                                    document.getElementById("on|" + id_final + "|i").classList.remove('far');
+                                }
+                                console.log('id final = ' + id_final);
+                                console.log('id[0] = ' + id.split('|')[0]);
+                            }
+                        });*/
                     });
                 </script>
                 <div>
@@ -373,10 +426,7 @@
             <?php endif ?>
         <?php endforeach ?>
       </div>
-<<<<<<< HEAD
-=======
        <div class="reload-component" id="reload-component" name="reload-component"><img class="center" src="{{asset('storage/icons/aguarde1.gif')}}"></div>
->>>>>>> cc9b7f5b83252a17d6b352188c43583bfc10d43f
         <div class="control" id="control-1">
 
         </div>
@@ -426,26 +476,17 @@
 
         <script type="text/javascript">
         $(document).ready(function(){
-            $('.like-a').click(function (e) {
-                e.preventDefault();
-                let id = e.target.id.split('|');
-                  if(id[0] == "on"){
-                    gostar(id[1]);
-                    let new_id = "off|" + id[1] + "|i";
-                    document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
-                    document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
-                    document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
-                    document.getElementById("off|" + id[1] + "|i").classList.add('far');
-                  } else if(id[0] == "off") {
-                    gostar(id[1]);
-                    let new_id = "on|" + id[1] + "|i";
-                    document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
-                    document.getElementById("on|" + id[1] + "|i").classList.add('fas');
-                    document.getElementById("on|" + id[1] + "|i").classList.add('liked');
-                    document.getElementById("on|" + id[1] + "|i").classList.remove('far');
-                  }
+            $('.reload-component').css({
+                'display' : 'block',
+                'width' : '100%',
+                'height' : '100px',
             });
+            document.getElementById('refresh-profile-photo-id').style.display = 'block';
+            document.getElementById('refresh-profile-photo-id').style.width = 100 + '%';
+            document.getElementById('refresh-profile-photo-id').style.height = 100 + 'px';
+            
             function gostar(id){
+            alert('id_final ' + id);
             $.ajax({
               url: "{{ route('like')}}",
               type: 'get',
@@ -714,9 +755,9 @@ function gostar(id){
 
                             //alert(contar);
                               contar++;
-                                  /*                                 var load = '';
-                                                                   load += '<div class="reload-component" id="reload-component-1"><img class="center" src="{{asset("storage/icons/aguarde1.gif")}}"></div>'
-                                                                   $('div[name=load]').append(load);*/
+                                let load = '';
+                                load += '<div class="reload-component" id="reload-component-1"><img class="center" src="{{asset("storage/icons/aguarde1.gif")}}"></div>'
+                                $('div[name=load]').append(load);
 
                             $.ajax({
                                url: "{{route('pegar_mais_post')}}",
@@ -794,11 +835,11 @@ function gostar(id){
                                      nome +='<li><a href="">0 partilhas</a></li>'
                                    }
                                    nome +=' </ul></nav><nav class="row clearfix interaction-user"><ul class="row clearfix ul-interaction-user"><li class="l-5"><div class="content-button">'
-                                   nome +='<a href="" class="like-a" id="on|'+value.post_uuid+'">'
+                                   nome +='<a href="" class="like-a like-a-more" id="on|'+value.post_uuid+'">'
                                    if (value.reagir_S_N  > 0) {
-                                     nome +='<i class="fas fa-heart center fa-16 liked" id="on|'+value.post_uuid+'|i"></i> <h2 id="on|'+value.post_uuid+'|h2">Like</h2>'
+                                     nome +='<i class="fas fa-heart center fa-16 liked like-a-more" id="on|'+value.post_uuid+'|i"></i> <h2 id="on|'+value.post_uuid+'|h2">Like</h2>'
                                    }else {
-                                     nome +='<i class="far fa-heart center fa-16 unliked" id="off|'+value.post_uuid+'|i"></i> <h2 id="off|'+value.post_uuid+'|h2">Like</h2>'
+                                     nome +='<i class="far fa-heart center fa-16 unliked like-a-more" id="off|'+value.post_uuid+'|i"></i> <h2 id="off|'+value.post_uuid+'|h2">Like</h2>'
                                    }
                                    nome +=' </a></div></li><li class="l-5"><div class="content-button comment-send-post" id="comment-'+value.post_id+'"><a href="" id="comment_a-'+value.post_id+'"><i class="far fa-comment-alt center fa-16" id="comment_i-'+value.post_id+'"></i><h2>Comentar</h2></a></div></li>'
                                    nome +='<li class="r-5"><div class="content-button"><a href=""><i class="far fa-share-square fa-16"></i><h2>Partilhar</h2></a></div></li>'
@@ -864,7 +905,9 @@ function gostar(id){
 
                                    $('div[name=div_father_post]').append(nome);
                                    contar = 0;
-                               })
+
+                               });
+                                $('div[name=div_father_post]').append(load);
                                }}
                              });
 

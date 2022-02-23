@@ -1786,13 +1786,7 @@ public function dados_comment($key){
                     $foundedEmail = $info->email;
                     $codeToSend = random_int(100000,900000);
                      $get_verification_code = $codeToSend;
-<<<<<<< HEAD
                      Mail::to($email)->send(new SendVerificationCode($get_verification_code));
-
-=======
-                    Mail::to($email)->send(new SendVerificationCode($get_verification_code));
-                     
->>>>>>> cc9b7f5b83252a17d6b352188c43583bfc10d43f
                        DB::table('codigo_confirmacaos')
                                   ->where('conta_id', $foundedId)
                                   ->update(['codigoGerado' => $codeToSend]);
