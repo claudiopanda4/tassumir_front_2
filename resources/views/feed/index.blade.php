@@ -764,7 +764,7 @@ function gostar(id){
                                type: 'get',
                                dataType: 'json',
                                success: function(response){
-                                 $('div[name=reload-component]').remove();
+                                 $('.reload-component').remove();
                                  //console.log(response);
                                  if (response.length > 0) {
                                  $.each(response, function(key, value){
