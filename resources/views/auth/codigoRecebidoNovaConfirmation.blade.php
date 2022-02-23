@@ -40,6 +40,16 @@
                     </div>
                 </header>
 
+                 @if($emailReceived!=null)
+
+                <div class="row text-white justify-content-center">Enviamos um email para {{$emailReceived}} com o código de confirmação </div>
+
+                @else
+
+                <div class="row text-white justify-content-center">Enviamos uma msg para o número {{$phoneReceived}} com o código de confirmação </div>
+
+                 @endif
+
                 <form action="{{ route('account.verifyAgainCode.enter') }}" method="POST" class="needs-validation" novalidate>
                     @csrf
                     <input type="text" name="receivedNome" class="hidden" value="{{$nome}}">
@@ -65,8 +75,30 @@
                     <button type="submit" id="login-enter" class="alerta">Validar código</button>
                     
                 </form>
+<form action="{{ route('account.again.sendCode') }}" method="POST">
+                                        @csrf
+                        
+                    <!-- inicio dados de cadastro-->
 
-                <div class="couple-separator mt-3"></div>
+                    <input type="text" name="telefone" class="hidden" value="{{$phoneReceived}}">
+
+                    <input type="password" name="password" class="hidden" value="{{$password}}">
+
+                    <input type="text" name="email" class="hidden" value="{{$emailReceived}}">
+
+                    <input type="text" name="receivedNome" class="hidden" value="{{$nome}}">
+
+                    <input type="text" name="receivedApelido" class="hidden" value="{{$apelido}}">
+
+                    <input type="text" name="receivedData_Nascimento" class="hidden" value="{{$data_nascimento}}">
+
+                    <input type="text" name="sexo" class="hidden" value="{{$sexo}}">
+
+                    <input type="text" name="receivedNacio" class="hidden" value="{{$nacional}}">
+
+                    <!-- fim dados de cadastro -->
+                    <button id="login-register" type="submit" class=""><span class="enter-login">Não Recebeste o código?</button>
+                </form>
             </div>
         </main>
     </div>
