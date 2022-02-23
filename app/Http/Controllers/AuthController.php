@@ -602,7 +602,7 @@ class AuthController extends Controller
 
      */
 
-     $what_are_talking = array();
+     $what_are_talking = $this->Destacados();
 
 
 
@@ -1764,7 +1764,7 @@ public function dados_comment($key){
                     $codeToSend = random_int(100000,900000);
                      $get_verification_code = $codeToSend;
                      Mail::to($email)->send(new SendVerificationCode($get_verification_code));
-                     
+
                        DB::table('codigo_confirmacaos')
                                   ->where('conta_id', $foundedId)
                                   ->update(['codigoGerado' => $codeToSend]);
