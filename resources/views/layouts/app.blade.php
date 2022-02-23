@@ -1045,7 +1045,7 @@
           });
       }
 
-      function home_index(){
+      /*function home_index(){
         $.ajax({
           url: "{{route('account.home.feed')}}",
           type: 'get',
@@ -1057,7 +1057,7 @@
                 //console.log(response);
             }
           });
-      }
+      }*/
 
       function tela_confirm(id1, id2){
 

@@ -543,6 +543,9 @@ class PerfilController extends Controller
     public function Pedido_relac(Request $request)
     {
         try {
+          $controll = new AuthController();
+
+
           $conta_pedida=array();
           $verificacao_page_conta_pedida_b=array();
           $verificacao_page_conta_pedida_a=array();
@@ -564,13 +567,15 @@ class PerfilController extends Controller
           if ( sizeof($verificacao_pedido) == 0 && sizeof($verificacao_page_conta_pedinte_a) == 0 && sizeof($verificacao_page_conta_pedinte_b) == 0 && sizeof($verificacao_page_conta_pedida_b) == 0 && sizeof($verificacao_page_conta_pedida_a) == 0 && $conta_pedida[0]->genero != $conta[0]->genero ) {
 
           DB::table('pedido_relacionamentos')->insert([
-
+            
               'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
               'conta_id_pedida' => $conta_pedida[0]->conta_id,
               'conta_id_pedinte' =>  $conta_pedinte,
               'estado_pedido_relac_id' => 1,
               'name_page' => $request->name_page,
               'tipo_relacionamento_id' =>$request->tipo_relac,
+              'created_at'=> $controll->dat_create_update(),
+
 
           ]);
 
@@ -582,6 +587,8 @@ class PerfilController extends Controller
           DB::table('identificadors')->insert([
         'tipo_identificador_id' => 5,
         'id' => $c,
+        'created_at'=> $controll->dat_create_update(),
+
    ]);
           $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1 ]);
           $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedinte, 1 ]);
@@ -597,6 +604,7 @@ class PerfilController extends Controller
                   'identificador_id_causador'=> $aux[0]->identificador_id,
                   'identificador_id_destino'=> $b,
                   'identificador_id_receptor'=> $aux2[0]->identificador_id,
+                  'created_at'=> $controll->dat_create_update(),
                   ]);
 
         }

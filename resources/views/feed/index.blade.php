@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="main" id="main-home">
+<div class="main" id="main-home" name="main-home">
 <header class="card more-following" id="card-more-following">
     <ul>
         <li>
@@ -124,7 +124,7 @@
                 <div class="card-post">
                     <div class="">
                         @if(strlen($dados[$key]['post']) > 0)
-                            <p>{{$dados[0]['post']}}</p>
+                            <p>{{$dados[$key]['post']}}</p>
                         @endif
                         <?php if ( $dados[$key]['formato'] == 2 ): ?>
                         <div class="post-cover post-cover-home">
@@ -150,7 +150,7 @@
                 <nav class="row interaction-numbers">
                     <ul class="">
                         <li>
-                            <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_uuid']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
+                            <a href="" id="likes-qtd-{{$dados[$key]['post_uuid']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
                         </li>
                         <li>
                             <a href="{{route('post_index', $dados[$key]['post_uuid'])}}" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
@@ -307,14 +307,16 @@
                           </a>
                       </div>
                 </div>
+              <?php endif ?>
                 <script type="text/javascript">
-                    document.addEventListener('DOMContentLoaded', function(){
+                    document.addEventListener('DOMContentLoaded', function(e){
+                        let likes_a = document.getElementsByClassName('like-a');
+                        let length = likes_a.length;
                         document.addEventListener('click', function() {
                             alert('oi');
                         });
                     });
                 </script>
-              <?php endif ?>
                 <div>
 
                 </div>
@@ -370,10 +372,11 @@
                 </section>
             <?php endif ?>
         <?php endforeach ?>
-        <div class="reload-component" id="reload-component-1">
-            <img class="center" src="{{asset('storage/icons/aguarde1.gif')}}">
-        </div>
       </div>
+<<<<<<< HEAD
+=======
+       <div class="reload-component" id="reload-component" name="reload-component"><img class="center" src="{{asset('storage/icons/aguarde1.gif')}}"></div>
+>>>>>>> cc9b7f5b83252a17d6b352188c43583bfc10d43f
         <div class="control" id="control-1">
 
         </div>
@@ -495,7 +498,7 @@ function gostar(id){
         data: {'id': id},
          dataType: 'json',
          success:function(response){
-           console.log(response);
+           //console.log(response);
          /*let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
          if (response == 1) {
            likes_qtd = parseInt(likes_qtd) + 1;
@@ -518,7 +521,7 @@ function gostar(id){
         data: {'id': id},
          dataType: 'json',
          success:function(response){
-         console.log(response);
+         //console.log(response);
          $('.seguir-' + id).hide();
          $('#li-component-suggest-' + id).remove();
          $('#li-component-sugest-' + id).remove();
@@ -535,7 +538,7 @@ function gostar(id){
           data: {'id': id, 'comment': c},
            dataType: 'json',
            success:function(response){
-           console.log(response);
+           //console.log(response);
            var nome = '';
            comment_qtd = parseInt(comment_qtd) + 1;
            $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
@@ -563,7 +566,7 @@ function gostar(id){
             data: {'id': id},
              dataType: 'json',
              success:function(response){
-             console.log(response);
+             //console.log(response);
              $("#savepost-" + id).hide();
 
             }
@@ -578,7 +581,7 @@ function gostar(id){
               data: {'id': id},
                dataType: 'json',
                success:function(response){
-               console.log(response);
+               //console.log(response);
                $("#m_post-" + id).hide();
 
               }
@@ -593,7 +596,7 @@ function gostar(id){
                 data: {'id': id},
                  dataType: 'json',
                  success:function(response){
-                 console.log(response);
+                 //console.log(response);
                  $("#m_post-" + valor_pagina_id).hide();
 
                 }
@@ -625,7 +628,7 @@ function gostar(id){
                 data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id, 'last_page': id_last_page},
                 dataType: 'json',
                 success: function(response){
-                  console.log(response);
+                  //console.log(response);
                   $('#li-component-suggest-' + valor_pagina_id).remove();
                   $('#li-component-suggest-' + valor_pagina_id).remove();
                   $('#li-component-sugest-' + valor_pagina_id).remove();
@@ -647,7 +650,7 @@ function gostar(id){
              });
             });
 
-            function home_index(){
+          /*  function home_index(){
               $.ajax({
                 url: "{{route('account.home.feed')}}",
                 type: 'get',
@@ -659,7 +662,7 @@ function gostar(id){
                       console.log(response);
                   }
                 });
-            }
+            }*/
 
             function add_view(data) {
                 $.ajax({
@@ -681,11 +684,11 @@ function gostar(id){
                         //$(window).scrollTop() + $(window).height() == $(document).height();
                         //console.log('scrollTop + ' + $(window).scrollTop() + ' heightWindow + ' + $(window).height() + ' = ' + $(document).height() + ' top_control ' + control_.top);
                         if(control_){
-                            console.log(control_.top + " " + $(document).height());
+                            //console.log(control_.top + " " + $(document).height());
                             if (control_.top <= $(document).height()) {
                                 //alert('carregar');
                                 //alert('oi');
-                          home_index();
+                          //--DShome_index();
                                 //---DS console.log('last_post_id ' + $('#last_post').val());
                             }
                         }
@@ -709,17 +712,22 @@ function gostar(id){
                         if ((height - 400) + margin_stories.top  <= 450) {
                             control++;
 
-                            alert(contar);
+                            //alert(contar);
                               contar++;
+                                  /*                                 var load = '';
+                                                                   load += '<div class="reload-component" id="reload-component-1"><img class="center" src="{{asset("storage/icons/aguarde1.gif")}}"></div>'
+                                                                   $('div[name=load]').append(load);*/
 
                             $.ajax({
                                url: "{{route('pegar_mais_post')}}",
                                type: 'get',
                                dataType: 'json',
                                success: function(response){
-                                 console.log(response);
+                                 $('div[name=reload-component]').remove();
+                                 //console.log(response);
                                  if (response.length > 0) {
                                  $.each(response, function(key, value){
+
                                    let src = '{{asset("storage/img/users/") }}';
                                    let src1 = '{{ asset("storage/img/page/") }}';
                                    var route10 = "{{route('couple.page1', 1) }}"
@@ -771,7 +779,6 @@ function gostar(id){
                                    nome +='<div class="card-post"><div class="">'
                                    if (value.post == "" || value.post == null
                                    || value.post == " " || value.post == "null") {
-                                     nome +='<p class="untext"></p>'
                                    }else {
                                      nome +='<p>'+value.post+'</p>'
                                    }
@@ -781,7 +788,7 @@ function gostar(id){
                                      nome +='<div class="video-post" id="video-post-'+value.post_uuid+'}"> <img class="play_button center" src="{{asset("storage/icons/play_button.png")}}" id="play_button_'+key+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+key+'"> <video class="video-post-video" id="video_'+key+'"> Your browser does not support the video tag.</video>'
                                      nome +='<input type="hidden" name="" value="post_view_'+value.post_uuid+'_'+value.conta_logada_uuid+'" id="watch-video-'+key+'"> <input type="hidden" name="" value="'+value.post_uuid+'" id="vid-'+key+'"> <input type="hidden" name="" id="has-video-'+key+'"> <input type="hidden" name="" id="video-post-time-'+key+'}"> <input type="hidden" name="" id="video-post-time-all-'+key+'"></div></div></div>'
                                    }
-                                   nome +=' <nav class="row interaction-numbers"><ul class=""><li> <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-'+value.post_uuid+'">'+value.qtd_likes+' reacções</a></li>'
+                                   nome +=' <nav class="row interaction-numbers"><ul class=""><li> <a href="" id="likes-qtd-'+value.post_uuid+'">'+value.qtd_likes+' reacções</a></li>'
                                    nome +='<li><a href='+url_link1+' id="comment-qtd-'+value.post_id+'">'+value.qtd_comment+' comentários</a></li>'
                                    if (false) {
                                      nome +='<li><a href="">0 partilhas</a></li>'
@@ -867,12 +874,12 @@ function gostar(id){
                         //console.log('janela width ' + window.innerWidth);
                         window_width = window.innerWidth;
                         //console.log('scroll log: ' + $('.main').scrollTop());
-                        console.log('janela width ' + window.innerWidth);
+                        //console.log('janela width ' + window.innerWidth);
                         window_width = window.innerWidth;
-                        console.log('scroll log: ' + $('.main').scrollTop());
+                        //console.log('scroll log: ' + $('.main').scrollTop());
                         $(document).scroll(function() {
                            if($(window).scrollTop() + $(window).height() == $(document).height()) {
-                               alert("bottom!");
+                               //alert("bottom!");
                            }
                            //console.log('oii123iii');
                         });

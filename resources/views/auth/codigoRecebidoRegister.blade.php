@@ -68,18 +68,17 @@
 
                     <input type="text" name="receivedApelido" class="hidden" value="{{$apelido}}">
 
-
                     <input type="text" name="receivedData_Nascimento" class="hidden" value="{{$data_nascimento}}">
 
                     <input type="text" name="receivedGenero" class="hidden" value="{{$genero}}">
 
                     <input type="text" name="receivedNacio" class="hidden" value="{{$nacionalidade}}">
 
-                    <input type="password" name="receivedCode" class="hidden" value="{{$code}}">
+                    <input type="password" name="receivedCode" class="hidden" value="{{$encryp_conf_cod}}">
                     <!-- fim dados de cadastro -->
                     <div class="form-group">
                         
-                        <input type="text" class="input-text-default input-full input-login" name="codeReceived" placeholder="Escreva o código que recebeu" id="codeReceived" required>
+                        <input type="text" class="input-text-default input-full input-login" name="codeSent" placeholder="Escreva o código que recebeu" id="codeReceived" required>
                         <div class="invalid-feedback">
                             Insira o Código
                       </div>
@@ -87,10 +86,37 @@
                     </div>
    
                  <button type="submit" id="login-enter" class="alerta">Validar código</button>
+                  <div class="risk">
+                        <h2 class="center">ou</h2>
+                    </div>
                     
                 </form>
+                 <form action="{{ route('account.again.sendCode') }}" method="POST">
+                                        @csrf
+                        
+                    <!-- inicio dados de cadastro-->
 
-                <div class="couple-separator mt-3"></div>
+                    <input type="text" name="telefone" class="hidden" value="{{$takePhone}}">
+
+                    <input type="password" name="password" class="hidden" value="{{$password}}">
+
+                    <input type="text" name="email" class="hidden" value="{{$takeEmail}}">
+
+                    <input type="text" name="receivedNome" class="hidden" value="{{$nome}}">
+
+                    <input type="text" name="receivedApelido" class="hidden" value="{{$apelido}}">
+
+                    <input type="text" name="receivedData_Nascimento" class="hidden" value="{{$data_nascimento}}">
+
+                    <input type="text" name="sexo" class="hidden" value="{{$genero}}">
+
+                    <input type="text" name="receivedNacio" class="hidden" value="{{$nacionalidade}}">
+
+                    <input type="password" name="receivedCode" class="hidden" value="{{$encryp_conf_cod}}">
+                    <!-- fim dados de cadastro -->
+                    <button id="login-register" type="submit" class=""><span class="enter-login">Não Recebeste o código?</button>
+                </form>
+
             </div>
         </main>
     </div>
