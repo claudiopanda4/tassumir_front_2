@@ -2105,6 +2105,7 @@ label[for="hugo"]{
     display: block;
     float: left;
     width: 60%;
+    margin-left: 80px;
 }
 #options-profile-mobile-user-log-pages .options-profile-btn {
     width: 95%;
