@@ -1589,7 +1589,7 @@ public function dados_comment($key){
             dd($e);
 
         }
-        
+
 
     }
     //fim nao recebi o codigo
@@ -1786,7 +1786,7 @@ public function dados_comment($key){
                     $foundedEmail = $info->email;
                     $codeToSend = random_int(100000,900000);
                      $get_verification_code = $codeToSend;
-                     Mail::to($email)->send(new SendVerificationCode($get_verification_code));
+                    Mail::to($email)->send(new SendVerificationCode($get_verification_code));
                        DB::table('codigo_confirmacaos')
                                   ->where('conta_id', $foundedId)
                                   ->update(['codigoGerado' => $codeToSend]);
