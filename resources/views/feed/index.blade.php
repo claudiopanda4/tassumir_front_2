@@ -317,8 +317,8 @@
                         if ($('#id_click').val().split(';')[1] == 0 && $('#id_click').val().split(';')[0] != id[1]) {
                             $('#id_click').val(id[1] + ';' + 0);
                             //alert('oi');
-                            e.preventDefault();
                             if(id[0] == "on"){
+                                e.preventDefault();
                                 gostar(id[1]);
                                 let new_id = "off|" + id[1] + "|i";
                                 document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
@@ -327,6 +327,7 @@
                                 document.getElementById("off|" + id[1] + "|i").classList.add('far');
                                 $('#id_click').val(id[1] + '-;' + 0);
                             } else if(id[0] == "off") {
+                                e.preventDefault();
                                 gostar(id[1]);
                                 let new_id = "on|" + id[1] + "|i";
                                 document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
