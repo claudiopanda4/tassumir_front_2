@@ -51,7 +51,6 @@
                 </ul>
             </nav>
         </header>
-<<<<<<< HEAD
         <?php if ($conta_logada[0]->foto == null): ?>
         <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
             <div class="profile-photo-container l-5">
@@ -68,8 +67,7 @@
         </div>
 
     <?php endif; ?>
-
-=======
+    <?php if (false): ?>
         @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")  
             <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
                 <div class="profile-photo-container l-5">
@@ -84,8 +82,8 @@
                     </div>
                 </label>
             </div>              
-        @endif
->>>>>>> edffaae3261b690350dec87bc7876f0a34143874
+        @endif        
+    <?php endif ?>
         <div class="" id="div_father_post" name="div_father_post">
 
 <?php foreach ($dados as $key => $value): ?>
@@ -335,111 +333,75 @@
                 <script type="text/javascript">
                     $(document).click(function(e){
                         let id = e.target.id.split('|');
-                        //if ($('#id_click').val().split(';')[1] == 0 && $('#id_click').val().split(';')[0] != id[1]) {
-                            //$('#id_click').val(id[1] + ';' + 0);
-                            
-                            let className = e.target.className;
-                            if (className.indexOf('savepost-more')) {
-                                e.preventDefault();
-                            }
-                            if (className.indexOf('comment-post-more') > 0) {
-                                e.preventDefault();
-                                let id_final = e.target.id.split('-')[1];
-                                //alert(id_final);
-                                $('#comment-send-' + id_final).css({
-                                    'display' : 'block',
-                                });
-                            }
-                            if (className.indexOf('comment-send-done-icon')) {
-                                e.preventDefault();
-                            }
-                            if (className.indexOf('like-a-more') > 0) {
-                                let id = e.target.id.split('|');
-                                alert($('#id_click').val().split(';')[1] == 0);
-                                if ($('#id_click').val().split(';')[0] != id[1] && $('#id_click').val().split(';')[1] == 0) {
-                                    alert(id[0]);
-                                    let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
-                                    if(id[0] == "on"){
-                                        e.preventDefault();
-                                        gostar(id[1]);
-                                        let new_id = "off|" + id[1] + "|i";
-                                        document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
-                                        document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
-                                        document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
-                                        document.getElementById("off|" + id[1] + "|i").classList.add('far');
-                                    } else if(id[0] == "off") {
-                                        e.preventDefault();
-                                        gostar(id[1]);
-                                        let new_id = "on|" + id[1] + "|i";
-                                        document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
-                                        document.getElementById("on|" + id[1] + "|i").classList.add('fas');
-                                        document.getElementById("on|" + id[1] + "|i").classList.add('liked');
-                                        document.getElementById("on|" + id[1] + "|i").classList.remove('far');
-                                    }
-                                    $('#id_click').val(id[1] + ';' + verif);
-                                } else if ($('#id_click').val().split(';')[0] == id[1] && $('#id_click').val().split(';')[1] == 1) {
-                                    let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
-                                    $('#id_click').val(id[1] + ';' + verif);
-                                    if(id[0] == "on"){
-                                        e.preventDefault();
-                                        gostar(id[1]);
-                                        let new_id = "off|" + id[1] + "|i";
-                                        document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
-                                        document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
-                                        document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
-                                        document.getElementById("off|" + id[1] + "|i").classList.add('far');
-                                        $('#id_click').val(id[1] + ';' + 0);
-                                    } else if(id[0] == "off") {
-                                        e.preventDefault();
-                                        gostar(id[1]);
-                                        let new_id = "on|" + id[1] + "|i";
-                                        document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
-                                        document.getElementById("on|" + id[1] + "|i").classList.add('fas');
-                                        document.getElementById("on|" + id[1] + "|i").classList.add('liked');
-                                        document.getElementById("on|" + id[1] + "|i").classList.remove('far');
-                                        $('#id_click').val(id[1] + ';' + 0);
-                                    }
-                                }
-                                e.preventDefault();
-                            }
-                            $('.like-a-more').click(function (e) {
-                                e.preventDefault();
-                                
+                        let className = e.target.className;
+                        //alert(className);
+                        if (className.indexOf('savepost-more') > 0) {
+                            e.preventDefault();
+                        }
+                        if (className.indexOf('comment-post-more') > 0) {
+                            e.preventDefault();
+                            let id_final = e.target.id.split('-')[1];
+                            //alert(id_final);
+                            $('#comment-send-' + id_final).css({
+                                'display' : 'block',
                             });
-                            
-                        //}
-                            
-                    });
-                </script>
-                <script type="text/javascript">
-                    document.addEventListener('DOMContentLoaded', function(){
-                        /*document.addEventListener('click', function(e) {
-                            let id = e.target.id;
-                            let className = e.target.className;
-                            console.log(className);
-                            if (className.indexOf('like-a-more') > 0) {
-                                e.preventDefault();
-                                let id_final = id.split('|')[1];
-                                if(id.split('|')[0] == "on"){
-                                    gostar(id_final);
-                                    let new_id = "off|" + id_final + "|i";
-                                    document.getElementById("on|" + id_final + "|i").setAttribute('id', new_id);
-                                    document.getElementById("off|" + id_final + "|i").classList.remove('fas');
-                                    document.getElementById("off|" + id_final + "|i").classList.remove('liked');
-                                    document.getElementById("off|" + id_final + "|i").classList.add('far');
-                                } else if(id.split('|')[0] == "off") {
-                                    gostar(id_final);
-                                    alert('off ' + id);
-                                    let new_id = "on|" + id_final + "|i";
-                                    document.getElementById("off|" + id_final + "|i").setAttribute('id', new_id);
-                                    document.getElementById("on|" + id_final + "|i").classList.add('fas');
-                                    document.getElementById("on|" + id_final + "|i").classList.add('liked');
-                                    document.getElementById("on|" + id_final + "|i").classList.remove('far');
+                        }
+                        if (className.indexOf('comment-send-done-icon') > 0) {
+                            e.preventDefault();
+                        }
+                        if (className.indexOf('like-a-more') > 0) {
+                            let id = e.target.id.split('|');
+                            //alert($('#id_click').val().split(';')[1] == 0);
+                            if ($('#id_click').val().split(';')[0] != id[1] && $('#id_click').val().split(';')[1] == 0) {
+                                alert(id[0]);
+                                let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
+                                alert(verif);
+                                if(id[0] == "on"){
+                                    e.preventDefault();
+                                    gostar(id[1]);
+                                    let new_id = "off|" + id[1] + "|i";
+                                    document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+                                    document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+                                    document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+                                        document.getElementById("off|" + id[1] + "|i").classList.add('far');
+                                } else if(id[0] == "off") {
+                                    e.preventDefault();
+                                    gostar(id[1]);
+                                    let new_id = "on|" + id[1] + "|i";
+                                    document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+                                    document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+                                    document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+                                    document.getElementById("on|" + id[1] + "|i").classList.remove('far');
                                 }
-                                console.log('id final = ' + id_final);
-                                console.log('id[0] = ' + id.split('|')[0]);
+                                $('#id_click').val(id[1] + ';' + verif);
+                            } else if ($('#id_click').val().split(';')[0] == id[1] && $('#id_click').val().split(';')[1] == 1) {
+                                //alert('verif ' + verif);
+                                let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
+                                $('#id_click').val(id[1] + ';' + verif);
+                                if (verif == 1) {}else{
+                                    if(id[0] == "on"){
+                                        e.preventDefault();
+                                        gostar(id[1]);
+                                        let new_id = "off|" + id[1] + "|i";
+                                        document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+                                        document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+                                        document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+                                        document.getElementById("off|" + id[1] + "|i").classList.add('far');
+                                        $('#id_click').val(id[1] + ';' + 0);
+                                    } else if(id[0] == "off") {
+                                        e.preventDefault();
+                                        gostar(id[1]);
+                                        let new_id = "on|" + id[1] + "|i";
+                                        document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+                                        document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+                                            document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+                                        document.getElementById("on|" + id[1] + "|i").classList.remove('far');
+                                        $('#id_click').val(id[1] + ';' + 0);
+                                    }    
+                                }
+                                    
                             }
-                        });*/
+                        }
                     });
                 </script>
                 <div>
