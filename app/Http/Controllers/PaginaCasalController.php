@@ -397,6 +397,7 @@ class PaginaCasalController extends Controller
     public function my_pages(){
         try {
           $controll = new AuthController;
+          $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
            $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
