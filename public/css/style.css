@@ -1747,6 +1747,7 @@ label[for="hugo"]{
     margin-right: 40px;
 }
 .noti-flex-info{
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -3242,7 +3243,7 @@ label[for="hugo"]{
     background-color: #fd09fd;
     border-radius: 50%;
     top: 10px;
-    right: 5px;
+    right: 10px;
 }
 .cancel-delete {
     border: none;

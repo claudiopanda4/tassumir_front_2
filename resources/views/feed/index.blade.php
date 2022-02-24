@@ -312,31 +312,81 @@
               <?php endif ?>
                 <input type="hidden" id="id_click" value="none;0" name="">
                 <script type="text/javascript">
-                    $(document).click('.like-a', function(e){
+                    $(document).click(function(e){
                         let id = e.target.id.split('|');
-                        if ($('#id_click').val().split(';')[1] == 0 && $('#id_click').val().split(';')[0] != id[1]) {
-                            $('#id_click').val(id[1] + ';' + 0);
-                            //alert('oi');
-                            if(id[0] == "on"){
+                        //if ($('#id_click').val().split(';')[1] == 0 && $('#id_click').val().split(';')[0] != id[1]) {
+                            //$('#id_click').val(id[1] + ';' + 0);
+                            
+                            let className = e.target.className;
+                            if (className.indexOf('savepost-more')) {
                                 e.preventDefault();
-                                gostar(id[1]);
-                                let new_id = "off|" + id[1] + "|i";
-                                document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
-                                document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
-                                document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
-                                document.getElementById("off|" + id[1] + "|i").classList.add('far');
-                                $('#id_click').val(id[1] + '-;' + 0);
-                            } else if(id[0] == "off") {
-                                e.preventDefault();
-                                gostar(id[1]);
-                                let new_id = "on|" + id[1] + "|i";
-                                document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
-                                document.getElementById("on|" + id[1] + "|i").classList.add('fas');
-                                document.getElementById("on|" + id[1] + "|i").classList.add('liked');
-                                document.getElementById("on|" + id[1] + "|i").classList.remove('far');
-                                $('#id_click').val(id[1] + ';' + 0);
                             }
-                        }
+                            if (className.indexOf('comment-post-more') > 0) {
+                                e.preventDefault();
+                                let id_final = e.target.id.split('-')[1];
+                                //alert(id_final);
+                                $('#comment-send-' + id_final).css({
+                                    'display' : 'block',
+                                });
+                            }
+                            if (className.indexOf('comment-send-done-icon')) {
+                                e.preventDefault();
+                            }
+                            if (className.indexOf('like-a-more') > 0) {
+                                let id = e.target.id.split('|');
+                                alert($('#id_click').val().split(';')[1] == 0);
+                                if ($('#id_click').val().split(';')[0] != id[1] && $('#id_click').val().split(';')[1] == 0) {
+                                    alert(id[0]);
+                                    let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
+                                    if(id[0] == "on"){
+                                        e.preventDefault();
+                                        gostar(id[1]);
+                                        let new_id = "off|" + id[1] + "|i";
+                                        document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+                                        document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+                                        document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+                                        document.getElementById("off|" + id[1] + "|i").classList.add('far');
+                                    } else if(id[0] == "off") {
+                                        e.preventDefault();
+                                        gostar(id[1]);
+                                        let new_id = "on|" + id[1] + "|i";
+                                        document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+                                        document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+                                        document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+                                        document.getElementById("on|" + id[1] + "|i").classList.remove('far');
+                                    }
+                                    $('#id_click').val(id[1] + ';' + verif);
+                                } else if ($('#id_click').val().split(';')[0] == id[1] && $('#id_click').val().split(';')[1] == 1) {
+                                    let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
+                                    $('#id_click').val(id[1] + ';' + verif);
+                                    if(id[0] == "on"){
+                                        e.preventDefault();
+                                        gostar(id[1]);
+                                        let new_id = "off|" + id[1] + "|i";
+                                        document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+                                        document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+                                        document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+                                        document.getElementById("off|" + id[1] + "|i").classList.add('far');
+                                        $('#id_click').val(id[1] + ';' + 0);
+                                    } else if(id[0] == "off") {
+                                        e.preventDefault();
+                                        gostar(id[1]);
+                                        let new_id = "on|" + id[1] + "|i";
+                                        document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+                                        document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+                                        document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+                                        document.getElementById("on|" + id[1] + "|i").classList.remove('far');
+                                        $('#id_click').val(id[1] + ';' + 0);
+                                    }
+                                }
+                                e.preventDefault();
+                            }
+                            $('.like-a-more').click(function (e) {
+                                e.preventDefault();
+                                
+                            });
+                            
+                        //}
                             
                     });
                 </script>
@@ -482,12 +532,31 @@
                 'width' : '100%',
                 'height' : '100px',
             });
-            document.getElementById('refresh-profile-photo-id').style.display = 'block';
+            $('.like-a').click(function (e) {
+                e.preventDefault();
+                let id = e.target.id.split('|');
+                //alert(id);
+                if(id[0] == "on"){
+                    gostar(id[1]);
+                    let new_id = "off|" + id[1] + "|i";
+                    document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
+                    document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
+                    document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
+                    document.getElementById("off|" + id[1] + "|i").classList.add('far');
+                } else if(id[0] == "off") {
+                    gostar(id[1]);
+                    let new_id = "on|" + id[1] + "|i";
+                    document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
+                    document.getElementById("on|" + id[1] + "|i").classList.add('fas');
+                    document.getElementById("on|" + id[1] + "|i").classList.add('liked');
+                    document.getElementById("on|" + id[1] + "|i").classList.remove('far');
+                }
+            });
+            /*document.getElementById('refresh-profile-photo-id').style.display = 'block';
             document.getElementById('refresh-profile-photo-id').style.width = 100 + '%';
-            document.getElementById('refresh-profile-photo-id').style.height = 100 + 'px';
+            document.getElementById('refresh-profile-photo-id').style.height = 100 + 'px';*/
             
             function gostar(id){
-            alert('id_final ' + id);
             $.ajax({
               url: "{{ route('like')}}",
               type: 'get',
@@ -842,10 +911,10 @@ function gostar(id){
                                    }else {
                                      nome +='<i class="far fa-heart center fa-16 unliked like-a-more" id="off|'+value.post_uuid+'|i"></i> <h2 id="off|'+value.post_uuid+'|h2">Like</h2>'
                                    }
-                                   nome +=' </a></div></li><li class="l-5"><div class="content-button comment-send-post" id="comment-'+value.post_id+'"><a href="" id="comment_a-'+value.post_id+'"><i class="far fa-comment-alt center fa-16" id="comment_i-'+value.post_id+'"></i><h2>Comentar</h2></a></div></li>'
+                                   nome +=' </a></div></li><li class="l-5"><div class="content-button comment-send-post" id="comment-'+value.post_id+'"><a href="" id="comment_a-'+value.post_id+'"><i class="far fa-comment-alt center fa-16 comment-post-more" id="comment_i-'+value.post_id+'"></i><h2>Comentar</h2></a></div></li>'
                                    nome +='<li class="r-5"><div class="content-button"><a href=""><i class="far fa-share-square fa-16"></i><h2>Partilhar</h2></a></div></li>'
                                    if (value.guardado ==0) {
-                                     nome +=' <li class="r-5" id="savepost-'+value.post_id+'"><div class="content-button"><a href="" class="savepost" id="savepost-'+value.post_id+'"><i class="far fa-bookmark center fa-16" id="savepost-'+value.post_id+'"></i><h2 id="savepost-'+value.post_id+'">Guardar</h2></a></div></li>'
+                                     nome +=' <li class="r-5" id="savepost-'+value.post_id+'"><div class="content-button"><a href="" class="savepost" id="savepost-'+value.post_id+'"><i class="far fa-bookmark center fa-16 savepost-more" id="savepost-'+value.post_id+'"></i><h2 id="savepost-'+value.post_id+'">Guardar</h2></a></div></li>'
                                    }
                                    nome +='</ul></nav><div class="comment-send clearfix"  id="comment-send-'+value.post_id+'">'
                                    if (value.conta_logada_foto != null) {
@@ -854,7 +923,7 @@ function gostar(id){
                                      nome +='<div class="img-user-comment l-5"><i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i></div>'
                                    }
                                    nome +='<div class="input-text comment-send-text l-5 clearfix"><input type="text" class="" name="comentario" id="comentario-'+value.post_id+'" placeholder="O que você tem a dizer?">'
-                                   nome +='<div class="r-5 "><a href="" class="comentar-a" id="'+value.post_id+'"><i class="far fa-paper-plane fa-20 fa-img-comment" id="'+value.post_id+'"></i></a></div>'
+                                   nome +='<div class="r-5 "><a href="" class="comentar-a" id="'+value.post_id+'"><i class="far fa-paper-plane fa-20 fa-img-comment comment-send-done-icon" id="'+value.post_id+'"></i></a></div>'
                                    if (false) {
                                      nome +='<div class="r-5 " id=""><a href=""><i class="far fa-images fa-20 fa-img-comment"></i></a></div'
                                    }
