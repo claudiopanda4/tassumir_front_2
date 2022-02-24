@@ -51,6 +51,25 @@
                 </ul>
             </nav>
         </header>
+<<<<<<< HEAD
+        <?php if ($conta_logada[0]->foto == null): ?>
+        <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
+            <div class="profile-photo-container l-5">
+                <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
+            </div>
+            <div class="content-profile-photo l-5">
+                <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
+            </div>
+            <label for="target-profile-cover" id="profile-cover-alert-no-img">
+                <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
+                    <h3 class="edit-profile-mobile" style="margin-top: 0;">Actualizar foto de Perfil</h3>
+                </div>
+            </label>
+        </div>
+
+    <?php endif; ?>
+
+=======
         @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")  
             <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
                 <div class="profile-photo-container l-5">
@@ -66,7 +85,9 @@
                 </label>
             </div>              
         @endif
+>>>>>>> edffaae3261b690350dec87bc7876f0a34143874
         <div class="" id="div_father_post" name="div_father_post">
+
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post'] == 1): ?>
     <?php //dd($conta_logada[0]->uuid); ?>
@@ -435,7 +456,7 @@
                     </header>
                     <nav class="clearfix">
                         <ul id="sugest_index" class="clearfix">
-                @forelse($paginasNaoSeguidas as $Paginas)
+                @forelse($pagenaoseguidas as $Paginas)
                 <?php $conta_page = 0;
                  $verifica1 = 'A';
                  $verifica = 'B';

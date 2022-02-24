@@ -556,7 +556,9 @@ class AuthController extends Controller
         $paginasSeguidas = $this->paginasSeguidas();
         $paginasNaoSeguidas = $this->paginasNaoSeguidas();
         $page_current = 'auth';
-        $conta_logada = $this->defaultDate();
+        $conta_logada = $this->defaultDate();        
+        $pagenaoseguidas = $this->paginasNaoSeguidasIndex();
+        $pageseguidas = $this->paginasSeguidasIndex();
 
       /*  $post_controller = new PostController();
         //$post= DB::table('posts')->limit(7)->get();
@@ -631,7 +633,7 @@ class AuthController extends Controller
       //--------------------------------------------------------------------------------------------o que estão falando --------------------------------------------------------------
 
 
-        return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
+        return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas', 'pagenaoseguidas', 'pagenaoseguidas'));
 
 
     }
@@ -658,6 +660,103 @@ class AuthController extends Controller
           //dd($conta_logada);
             return view('error.alert_working', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida'));
     }
+
+  /*Páginas Seguidas e Não seguidas para index e perfil*/
+    public function paginasSeguidasIndex(){
+        try {
+            $paginasSeguidas = array();
+            $pagePage = array();
+            $account_name = $this->defaultDate();
+            $identificadorPage = DB::table('identificadors')->where('tipo_identificador_id', 2)->get();
+            $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+            $seguidas = DB::table('seguidors')->where('identificador_id_seguindo', $dadosSgndo[0]->identificador_id)->get();
+            $valor_id = 0;
+            $contador = 0;
+
+            $dadosPage = DB::table('pages')->get();
+            foreach ($dadosPage as $key => $page) {
+              foreach ($identificadorPage as $identificador) {
+                if ($page->page_id == $identificador->id) {
+                  foreach ($seguidas as $pageSeguida) {
+                    if ($identificador->identificador_id == $pageSeguida->identificador_id_seguida) {
+                      $paginasSeguidas[$key] = $page;
+                    }
+                  }
+                }
+              }
+            }
+         foreach ($paginasSeguidas as $key => $valorPage) {
+
+          if ($contador > 9) {
+              break;
+            }
+            $pagePage[$key] = $valorPage;
+
+            $contador = $contador + 1;
+         }
+              return $pagePage;
+        } catch (Exception $e) {
+
+        }
+    }
+
+    public function paginasNaoSeguidasIndex(){
+        try {
+          $paginasNaoSeguidas = array();
+          $pagenaoPage = array();
+          $account_name = $this->defaultDate();
+        $dadosPage = DB::table('pages')->get();
+        $dadosSeguida = DB::table('seguidors')
+               ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+               ->select('seguidors.*', 'identificadors.id')
+               ->get();
+        $parada = 0;
+        $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+      foreach($dadosPage as $key => $Paginas){
+                 $conta_page = 0;
+                 $verifica1 = 'A';
+                 $verifica = 'B';
+                 $seguidors = 0;
+                 $tamanho = sizeof($dadosSeguida);
+
+          foreach ($dadosSeguida as $Seguida){
+                 if ($Paginas->page_id == $Seguida->id){
+                    if ($dadosSgndo[0]->identificador_id == $Seguida->identificador_id_seguindo){
+                            $verifica1 = $Paginas->nome;
+                    }else{
+                            $verifica = $Paginas->nome;
+                        }
+                }else{
+                      $conta_page += 1;
+                    }
+          }
+          if ($verifica1 != $verifica){
+
+               if ($verifica != 'B'){
+                 $paginasNaoSeguidas[$key] = $Paginas;
+               }
+          }
+          if ($conta_page == $tamanho){
+                  $paginasNaoSeguidas[$key] = $Paginas;
+          }
+        }
+         foreach ($paginasNaoSeguidas as $key => $valuePage) {
+
+          if ($parada > 7) {
+              break;
+            }
+            $pagenaoPage[$key] = $valuePage;
+
+            $parada = $parada + 1;
+         }
+              return $pagenaoPage;
+        } catch (Exception $e) {
+
+        }
+    }  
+/*Fim*/
+  
 
   public function paginasSeguidas(){
         try {

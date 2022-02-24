@@ -128,7 +128,7 @@
           <div class="form-section">
 
             <select name="nacionalidade" id="nationality" required>
-              <option value="" class="option-nationality" disabled selected>Nacionalidade</option>
+              <option value="" class="option-nationality" disabled selected>País de Origem</option>
               @forelse($dadosPais as $pais)
               <option value="{{$pais->pais_id}}" class="option-nationality">{{$pais->nome}}</option>
               @empty
