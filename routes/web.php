@@ -92,9 +92,6 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/message/novas', [App\Http\Controllers\MessageController::class, 'first_sms'])->name('message.novas');
     Route::get('/mostrar/{uuid_remetente}/{uuid_destino}', [App\Http\Controllers\MessageController::class, 'mostrar_sms'])->name('message.mostrar');
     Route::get('/pesquisar/destinatario', [App\Http\Controllers\MessageController::class, 'pesquisar_destinatario'])->name('people.send.message');
-
-
-    //Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('home');
 });
 Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->name('account.logout');
 
@@ -110,29 +107,15 @@ Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login
 Route::get('/registrar', [App\Http\Controllers\AuthController::class, 'registrarUser'])->name('account.register.form');
 
 Route::get('/buscar/pais', [App\Http\Controllers\PaisController::class, 'index'])->name('buscar.pais');
-
-
 Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
-
-/* New test H20 edom  */
+Route::post('/dontReceived', [App\Http\Controllers\AuthController::class, 'didnotReceived'])->name('account.again.sendCode');
 
     Route::get('/Register',[App\Http\Controllers\AuthController::class, 'firstForm'])->name('first.form');
 
     Route::post('/InsertRegister',[App\Http\Controllers\AuthController::class, 'firstFormInsert'])->name('first.form.insert');
-
-
     Route::get('/notFound',[App\Http\Controllers\AuthController::class, 'NotFound'])->name('first.not.found');
 
-/* End new test H20 edom */
-
-
-/* email start*/
-
 Route::get('/email', [App\Http\Controllers\AuthController::class, 'testandoEmail'])->name('email.test');
-
-/* end email */
-
-/* */
 Route::get('/recuperarSenha', [App\Http\Controllers\AuthController::class, 'recuperarSenha'])->name('account.code.form');
 Route::get('/recuperarSenha/code', [App\Http\Controllers\AuthController::class, 'codigoRecebido'])->name('code.received.form');
 Route::get('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'newCode'])->name('validate.newCode.form');

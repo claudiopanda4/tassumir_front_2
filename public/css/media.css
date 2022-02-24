@@ -851,6 +851,11 @@
 @media screen and (max-width: 967px) {
 	
 }
+@media screen and (min-width: 800px) {
+	.identify-cover {
+		display: block;
+	}
+}
 @media screen and (max-width: 330px) {
 	#pop-up-component-create-post .pop-up-component-header {
 		width: 300px;

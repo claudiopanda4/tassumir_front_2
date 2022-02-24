@@ -39,10 +39,19 @@
 
                 </header>
 
+                 @if($email!=null)
 
+                <div class="row text-white justify-content-center">Enviamos um email para {{$email}} com o código de confirmação </div>
+
+                @else
+
+                <div class="row text-white justify-content-center">Enviamos uma msg para o número {{$phone}} com o código de confirmação </div>
+
+                 @endif
                 <form action="{{route('account.verifyToRecoverPass')}}" method="POST" class="needs-validation" novalidate>
                     @csrf
                     <input type="text" name="Id" value="{{$foundedId}}" class="hidden">
+
                   
                     <div class="form-group">
                         

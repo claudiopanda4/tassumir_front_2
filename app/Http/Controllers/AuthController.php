@@ -604,7 +604,7 @@ class AuthController extends Controller
 
      */
 
-     $what_are_talking = array();
+     $what_are_talking = $this->Destacados();
 
 
 
@@ -1565,7 +1565,6 @@ public function dados_comment($key){
           }catch(\Exception $e){
 
             //echo "O Erro é: " .$e;
-            //return redirect()->route('auth.ErrorStatus');
           }
     }
 
@@ -1663,11 +1662,37 @@ public function dados_comment($key){
                DB::rollBack();
                 dd($error);
 
-            //return redirect()->route('auth.ErrorStatus');
 
         }
 
     }
+
+    //nao recebi o codigo
+
+    public function didnotReceived(Request $request){
+
+        try{
+
+        $phoneReceived = $request->telefone;
+        $emailReceived = $request->email;
+        $nome = $request->receivedNome;
+        $apelido = $request->receivedApelido;
+        $data_nascimento = $request->receivedData_Nascimento;
+        $nacional=$request->receivedNacio;
+        $sexo = $request->sexo;
+        $password = $request->password;
+            return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
+
+        }catch(\Exception $e){
+
+            dd($e);
+
+        }
+
+
+    }
+    //fim nao recebi o codigo
+
     public function generateAgain(Request $request){
 
         try{
@@ -1705,8 +1730,7 @@ public function dados_comment($key){
        }
 
         }catch(\Exception $error){
-
-            return redirect()->route('auth.ErrorStatus');
+                dd($error);
 
         }
 
@@ -1796,8 +1820,7 @@ public function dados_comment($key){
       }
 
         }catch(\Exception $error){
-
-            return redirect()->route('auth.ErrorStatus');
+            dd($error);
         }
 
     }
@@ -1840,7 +1863,7 @@ public function dados_comment($key){
                             DB::table('codigo_confirmacaos')
                                           ->where('conta_id', $foundedId)
                                           ->update(['codigoGerado' => $codeToSend]);
-                            return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
+                            return view('auth.codigoRecebido',compact('foundedId','codeToSend','phone','email'));
                     }
               }
 
@@ -1862,12 +1885,11 @@ public function dados_comment($key){
                     $foundedEmail = $info->email;
                     $codeToSend = random_int(100000,900000);
                      $get_verification_code = $codeToSend;
-                     Mail::to($email)->send(new SendVerificationCode($get_verification_code));
-                     
+                    Mail::to($email)->send(new SendVerificationCode($get_verification_code));
                        DB::table('codigo_confirmacaos')
                                   ->where('conta_id', $foundedId)
                                   ->update(['codigoGerado' => $codeToSend]);
-                        return view('auth.codigoRecebido',compact('foundedId','codeToSend'));
+                        return view('auth.codigoRecebido',compact('foundedId','codeToSend','phone','email'));
                 }
           }
 
@@ -1877,8 +1899,8 @@ public function dados_comment($key){
      return back()->with('error',"Email ou Telefone invalidos");
 
       }catch(\Exception $error){
-
-          return redirect()->route('auth.ErrorStatus');
+            dd($error);
+            //return view('auth.ErrorStatus');
       }
   }
 
@@ -1910,7 +1932,8 @@ public function dados_comment($key){
 
     }catch(\Exception $error){
 
-            return redirect()->route('auth.ErrorStatus');
+            //return view('auth.ErrorStatus');
+            dd($error);
     }
 
   }
@@ -1939,8 +1962,7 @@ public function dados_comment($key){
           return view('auth.newCode2',compact('idToCompare'));
       }
      }catch(\Exception $error){
-
-            return redirect()->route('auth.ErrorStatus');
+        dd($error);
      }
   }
   public function updatePassword2(Request $request){
@@ -1968,7 +1990,7 @@ public function dados_comment($key){
 
       }
   }catch(\Exception $error){
-          return redirect()->route('auth.ErrorStatus');
+    dd($error);
   }
 
   }

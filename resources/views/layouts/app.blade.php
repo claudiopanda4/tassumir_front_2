@@ -964,7 +964,7 @@
            }
            //alert("bot");
         });
-        $('.like-a').click(function (e) {
+        /*$('.like-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id.split('|');
           if(id[0] == "on"){
@@ -982,7 +982,7 @@
             document.getElementById("on|" + id[1] + "|i").classList.add('liked');
             document.getElementById("on|" + id[1] + "|i").classList.remove('far');
           }
-      });
+      });*/
 
       $('.comment-like-a').click(function (e) {
           e.preventDefault();
@@ -1014,7 +1014,7 @@
           success:function(response){
             var tipo = '';
             var a = 0;
-            console.log(response);
+            //console.log(response);
             $('.relationship-type-all').empty();
             $.each(response, function(key, value){
               if(a == 0){
@@ -1052,9 +1052,9 @@
           dataType: 'json',
           data: { init: $('#last_post').val(), checked: true, dest_init: $('#last_post_dest').val() },
           success:function(response){
-                console.log('last_post ' + $('#last_post').val() + ' last_post_dest ' + $('#last_post_dest').val());
-                console.log('yes');
-                console.log(response);
+                //console.log('last_post ' + $('#last_post').val() + ' last_post_dest ' + $('#last_post_dest').val());
+                //console.log('yes');
+                //console.log(response);
             }
           });
       }*/
@@ -1067,7 +1067,7 @@
           data: {'id1': id1},
           dataType: 'json',
           success:function(response){
-            console.log(response);
+            //console.log(response);
             $("#textr").text(response);
             $("#accept_relacd").val(id1);
             $("#id_notification").val(id2);
@@ -1119,7 +1119,7 @@
             data: {'id1': id1},
             dataType: 'json',
             success:function(response){
-              console.log(response);
+              //console.log(response);
               }
             });
       });
@@ -1135,7 +1135,7 @@
             data: {'id1': id1, 'id2': id2},
             dataType: 'json',
             success:function(response){
-              console.log(response);
+              //console.log(response);
         //     $('li[name='id']').empty();
             //  $('div[name='+id2+']').empty();
               $('#not-'+id2).remove();
@@ -1157,7 +1157,7 @@
            data: {'id': id},
            dataType: 'json',
            success:function(response){
-             console.log(response);
+             //console.log(response);
              let src = '{{asset("storage/img/users/") }}';
              let src1 = '{{ asset("storage/img/page/") }}';
              var route10 = "{{route('couple.page1', 1) }}"
@@ -1244,7 +1244,7 @@
                nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}">'
              }
 
-            console.log(response);
+            //console.log(response);
             $('div[name=foto_edit]').append(nome);
             $("#name_page_edit_post").text(response.nome_pag);
            $("#message").val(response.post);
@@ -1385,7 +1385,7 @@
         $('.checker').click(function(e) {
 
           var video = $('#testeVid').val();
-          console.log(video.duration);
+          ////console.log(video.duration);
 
         });
 
@@ -1476,12 +1476,12 @@
                 data: {'data': post},
                 dataType: 'json',
                 success: function(response){
-                    ////console.log('Respondeu...');
-                    ////console.log(response);
+                    //////console.log('Respondeu...');
+                    //////console.log(response);
                     video = response.video;
                     type_file = response.type_file;
                     storage_video = "{{asset('storage/video/page/') . '/'}}" + video;
-                    //console.log(storage_video);
+                    ////console.log(storage_video);
                     source = document.createElement('source');
                     source.setAttribute('src', storage_video);
                     source.setAttribute('type', type_file);
@@ -1524,7 +1524,7 @@ $.ajax({
   success:function(response){
     var nome = '';
     var contador = 1;
-    //console.log(response.valor);
+    ////console.log(response.valor);
     s1 =response.valor.length;
       $.each(response.valor, function(key, value){
         let src = '{{asset("storage/img/users/")}}';
@@ -1577,7 +1577,7 @@ $.ajax({
     let src1 = '{{ asset("storage/img/page/") }}';
     var nome = '';
     var contador = 1;
-    //console.log(response.valor);
+    ////console.log(response.valor);
     s2 =response.valor.length;
       $.each(response.valor, function(key, value){
         if (value.estado_pagina_id==1) {
@@ -1652,7 +1652,7 @@ $.ajax({
                     display: 'none',
                 });
             }
-            console.log(className[0]);
+            //console.log(className[0]);
             if (className[0] != "noti-card-first" ||
                 className[0] != "hidden-click-any-container" ||
                 className[0] != "fa-option-mobile-hide" ||
@@ -1671,7 +1671,7 @@ $.ajax({
         $('.play_button').click(function(e){
             let id = e.target.id.split('_')[2];
             let video = $('#video_' + id).offset();
-            console.log('margem top ' + video.top)
+            //console.log('margem top ' + video.top)
             if (true) {
                 $('#video_' + id).get(0).play();
             } else {
@@ -1689,14 +1689,14 @@ $.ajax({
     const vid = document.querySelector('#testeVid');
     const vid_container = document.querySelector('#vidAnalyzer > source');
     for (var i = 0; i < vid.files.length; i++) {
-      console.log(vid.files[i].type);
+      //console.log(vid.files[i].type);
       vid_container.src = "video.mp4";
       //vid_container
-      console.log(vid_container.src);
+      //console.log(vid_container.src);
     }
     e.preventDefault();
   });
-  //console.log(vid);
+  ////console.log(vid);
 
 
 

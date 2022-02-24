@@ -1574,7 +1574,7 @@ label[for="hugo"]{
 }
 .identify-cover {
     position: absolute;
-    display: block;
+    display: none;
     width: 35px;
     height: 35px;
     border: 4px solid #800080;
@@ -2105,6 +2105,7 @@ label[for="hugo"]{
     display: block;
     float: left;
     width: 60%;
+    margin-left: 80px;
 }
 #options-profile-mobile-user-log-pages .options-profile-btn {
     width: 95%;
