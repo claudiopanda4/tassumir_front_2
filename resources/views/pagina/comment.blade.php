@@ -75,8 +75,7 @@
                 </div>
                 <nav class="row interaction-numbers">
                     <ul class="">
-                      <li>
-                        <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[0]['post_uuid']}}">{{$dados[0]['qtd_likes']}} reacções</a>
+                      <li><a href="" id="likes-qtd-{{$dados[0]['post_uuid']}}">{{$dados[0]['qtd_likes']}} reacções</a>
                       </li>
                       <li>
                           <a href="" id="comment-qtd-{{$dados[0]['post_id']}}">{{$dados[0]['qtd_comment']}} comentários</a>

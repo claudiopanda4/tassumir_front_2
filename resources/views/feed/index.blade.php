@@ -352,10 +352,11 @@
                         if (className.indexOf('like-a-more') > 0) {
                             let id = e.target.id.split('|');
                             //alert($('#id_click').val().split(';')[1] == 0);
+                            //alert($('#id_click').val().split(';')[0] != id[1]);
                             if ($('#id_click').val().split(';')[0] != id[1] && $('#id_click').val().split(';')[1] == 0) {
-                                alert(id[0]);
+                                //alert(id[0]);
                                 let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
-                                alert(verif);
+                                //alert(verif);
                                 if(id[0] == "on"){
                                     e.preventDefault();
                                     gostar(id[1]);
@@ -379,25 +380,7 @@
                                 let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
                                 $('#id_click').val(id[1] + ';' + verif);
                                 if (verif == 1) {}else{
-                                    if(id[0] == "on"){
-                                        e.preventDefault();
-                                        gostar(id[1]);
-                                        let new_id = "off|" + id[1] + "|i";
-                                        document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
-                                        document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
-                                        document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
-                                        document.getElementById("off|" + id[1] + "|i").classList.add('far');
-                                        $('#id_click').val(id[1] + ';' + 0);
-                                    } else if(id[0] == "off") {
-                                        e.preventDefault();
-                                        gostar(id[1]);
-                                        let new_id = "on|" + id[1] + "|i";
-                                        document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
-                                        document.getElementById("on|" + id[1] + "|i").classList.add('fas');
-                                            document.getElementById("on|" + id[1] + "|i").classList.add('liked');
-                                        document.getElementById("on|" + id[1] + "|i").classList.remove('far');
-                                        $('#id_click').val(id[1] + ';' + 0);
-                                    }    
+                                       
                                 }
                                     
                             }
