@@ -16,7 +16,8 @@ class PaginaCasalController extends Controller
     private static $uuid = '';
 
     public function paginas_que_sigo($id){
-      $controll = new AuthController();
+      $controll = new AuthController;
+      $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
        $dates = $controll->default_();
       $account_name = $dates['account_name'];
       $checkUserStatus = $dates['checkUserStatus'];
@@ -79,7 +80,7 @@ class PaginaCasalController extends Controller
 
      }
 
-        return view('pagina.couple_page_following', compact('account_name','v','PS','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir'));
+        return view('pagina.couple_page_following', compact('account_name','v','PS','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir', 'pagenaoseguidas'));
     }
     public function conta_seguinte()
     {
@@ -88,7 +89,7 @@ class PaginaCasalController extends Controller
                ->select('seguidors.*', 'identificadors.id')
                ->get();
         $conta_seguinte=array();
-          $controll = new AuthController();
+          $controll = new AuthController;
           $dates = $controll->default_();
           $conta_logada = $dates['conta_logada'];
           foreach ($dadosSeguida as $key => $value) {
@@ -103,10 +104,11 @@ class PaginaCasalController extends Controller
     public function index(){
 
 
-      $page_couple = new PerfilController();
+      $page_couple = new PerfilController();    
       $dates = $page_couple->default_();
 
-      $controll = new AuthController();
+      $controll = new AuthController;
+      $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
        $dates = $controll->default_();
 
 
@@ -138,12 +140,12 @@ class PaginaCasalController extends Controller
       $allPosts = $this->get_post_types($page_content[0]->page_id);
       $v=1;
 
-      return view('pagina.couple_page', compact('account_name','v','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'paginasSeguidas', 'dadosSeguida', 'paginasNaoSeguidas', 'allPosts', 'sugerir', 'conta_seguinte'));
+      return view('pagina.couple_page', compact('account_name','v','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'paginasSeguidas', 'dadosSeguida', 'paginasNaoSeguidas', 'allPosts', 'sugerir', 'conta_seguinte', 'pagenaoseguidas'));
     }
 
     public function conf_PR(Request $request)
       {
-        $controll = new AuthController();
+        $controll = new AuthController;
         DB::table('pedido_relacionamentos')->where('uuid',$request->accept_relacd)
         ->update(['estado_pedido_relac_id' => 2, 'updated_at' => $controll->dat_create_update()]);
         DB::table('notifications')->where('notification_id',$request->id_notification)
@@ -263,7 +265,7 @@ class PaginaCasalController extends Controller
           $pedido[0]['pedido_relacionamento_id']=$tipo[0]->pedido_relacionamento_id;
           $pedido[0]['estado']=$tipo[0]->estado_pedido_relac_id;
 
-          $controll = new AuthController();
+          $controll = new AuthController;
            $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
@@ -297,7 +299,7 @@ class PaginaCasalController extends Controller
       }
 
     public function request_relationship() {
-      $controll = new AuthController();
+      $controll = new AuthController;
        $dates = $controll->default_();
         $account_name = $dates['account_name'];
         $checkUserStatus = $dates['checkUserStatus'];
@@ -328,7 +330,7 @@ class PaginaCasalController extends Controller
     {
 
         try {
-            /*$auth = new AuthController();
+            /*$auth = new AuthController;
             $account_name = $auth->defaultDate();
             $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
             $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
@@ -343,7 +345,8 @@ class PaginaCasalController extends Controller
             //dd($page_content);
 
 
-            $controll = new AuthController();
+            $controll = new AuthController;
+            $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
              $dates = $controll->default_();
                   $account_name = $dates['account_name'];
                   $checkUserStatus = $dates['checkUserStatus'];
@@ -379,7 +382,7 @@ class PaginaCasalController extends Controller
                     //return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir',));
 
 
-                    return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir'));
+                    return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir' , 'pagenaoseguidas'));
 
             //        return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
         } catch (Exception $e) {
@@ -393,7 +396,7 @@ class PaginaCasalController extends Controller
 
     public function my_pages(){
         try {
-          $controll = new AuthController();
+          $controll = new AuthController;
            $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
@@ -431,7 +434,7 @@ class PaginaCasalController extends Controller
 
             //return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts',));
 
-            return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes_count','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'sugerir', 'allPosts'));
+            return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes_count','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'sugerir', 'allPosts', 'pagenaoseguidas'));
 
         } catch (Exception $e) {
             dd($e);
@@ -451,7 +454,8 @@ class PaginaCasalController extends Controller
 
     public function paginas($uuid){
         try {
-          $controll = new AuthController();
+          $controll = new AuthController;
+          $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
            $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
@@ -505,7 +509,7 @@ class PaginaCasalController extends Controller
           //return view('pagina.couple_page', compact('account_name','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts', 'casalPageName', 'uuidToCompare'));
           $conta_seguinte = $this->conta_seguinte();
 
-          return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'sugerir', 'allPosts', 'casalPageName', 'conta_seguinte'));
+          return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'sugerir', 'allPosts', 'casalPageName', 'conta_seguinte', 'pagenaoseguidas'));
 
         } catch (Exception $e) {
             dd($e);
@@ -516,7 +520,8 @@ class PaginaCasalController extends Controller
 
     public function edit_couple(){
         try {
-          $controll = new AuthController();
+          $controll = new AuthController;
+          $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
            $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];
@@ -549,7 +554,7 @@ class PaginaCasalController extends Controller
 
     public function delete_couple_page($id){
         try {
-          $auth = new AuthController();
+          $auth = new AuthController;
           $dates = $auth->default_();
 
           $conta_logada = $dates['conta_logada'];
@@ -627,7 +632,7 @@ class PaginaCasalController extends Controller
      {
          try
          {
-           $controll = new AuthController();
+           $controll = new AuthController;
 
 
            DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$request->p_id)
@@ -687,7 +692,7 @@ class PaginaCasalController extends Controller
     {
         try
         {
-          $controll = new AuthController();
+          $controll = new AuthController;
 
 
           DB::table('notifications')->insert([
@@ -710,7 +715,7 @@ class PaginaCasalController extends Controller
     {
         try
         {
-          $controll = new AuthController();
+          $controll = new AuthController;
 
 
           DB::table('pages')->where('uuid',$request->uuidPage)
@@ -760,7 +765,7 @@ class PaginaCasalController extends Controller
     private function store($description, $file_name = null, $id, $format)
     {
         try {
-          $controll = new AuthController();
+          $controll = new AuthController;
 
 
             $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
@@ -830,7 +835,7 @@ class PaginaCasalController extends Controller
 
     public function delete_page($id){
       try {
-          $controll = new AuthController();
+          $controll = new AuthController;
            $dates = $controll->default_();
           $account_name = $dates['account_name'];
           $checkUserStatus = $dates['checkUserStatus'];

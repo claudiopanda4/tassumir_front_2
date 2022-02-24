@@ -77,15 +77,15 @@
                         </div>
                         <?php endif ?>
                         <div class="statistics-profile-page-component l-5">
-                            <h1>{{ $seguidores }}</h1>
-                            <h2 class="text-ellips">Seguindo</h2>
+                            <h1 id="qtd_seguidores">{{ $seguidores }}</h1>
+                            <h2 class="text-ellips">Seguidor</h2>
                         </div>
                         <div class="statistics-profile-page-component l-5">
                             <h1>{{ $seguidores }}</h1>
                             <h2 class="text-ellips">Curtidas</h2>
                         </div>
                     </div>
-                    <div class="follwing-btn-container">
+                    <div id="btn_follwing" class="follwing-btn-container">
                         <?php $contador = 0;
                               $sgda = 0;
                               $sgdo = 0;
@@ -186,7 +186,7 @@
             </header>
             <nav class="clearfix">
                 <ul id="sugest_couple" class="clearfix">
-                            @forelse($paginasNaoSeguidas as $Paginas)
+                            @forelse($pagenaoseguidas as $Paginas)
                                 <?php $conta_page = 0;
                                     $seguidors = 0;
                                         foreach ($dadosSeguida as  $val){
@@ -303,12 +303,24 @@
             $('.seguir_couple').click(function(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
-            alert(valor_pagina_id);
+            
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
 
+            if ($('.nao_sigo').eq(2).attr("id").split('-')[3] != null) {
+                var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];
+            }else{
+                if ($('.nao_sigo').eq(1).attr("id").split('-')[3] == null) {
+                    var id_last_page = $('.nao_sigo').eq(1).attr("id").split('-')[3];
+                }else{
+                    var id_last_page = 0;
+                }
+            }            //$('#' + valor_pagina_id).empty();
+
+
             var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];;
             //$('#' + valor_pagina_id).empty();
+
             $('#li-component-suggest-' + valor_pagina_id).remove();
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
@@ -353,12 +365,16 @@
                   $('#li-component-sugest-' + valor_pagina_id).remove();
                   $('.seguir-' + valor_pagina_id).hide();
                   $('#btn_seguir').remove();
+                  var sgd = $('#qtd_seguidores').text();
+                  var qtdsgd = Number(sgd);
+                  var novo_qtdsgd = qtdsgd + 1;
+                  $('#qtd_seguidores').text(novo_qtdsgd);
                 }
               });
              });
 
             $('#btn_nao_seguir').click(function(){
-                alert('Clicaste aqui');
+                
             var seguida = $('#sgda').val();
             var seguindo = $('#sgdo').val();
              $.ajax({
@@ -370,11 +386,19 @@
                   console.log(response);
                   $('#seguida-' + seguida).remove();
                   $('#btn_nao_seguir').remove();
-                }
+                  var sgd = $('#qtd_seguidores').text();
+                  var qtdsgd = Number(sgd);
+                  var novo_qtdsgd = qtdsgd - 1;
+                  $('#qtd_seguidores').text(novo_qtdsgd);
+                  }
               });
              });
         document.getElementById("route_page").classList.add('li-component-aside-active');
+
+                
+
                 //alert('Abriu o Documento');
+
 
 
             });
