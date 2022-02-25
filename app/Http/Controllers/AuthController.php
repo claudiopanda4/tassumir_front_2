@@ -556,7 +556,7 @@ class AuthController extends Controller
         $paginasSeguidas = $this->paginasSeguidas();
         $paginasNaoSeguidas = $this->paginasNaoSeguidas();
         $page_current = 'auth';
-        $conta_logada = $this->defaultDate();        
+        $conta_logada = $this->defaultDate();
         $pagenaoseguidas = $this->paginasNaoSeguidasIndex();
         $pageseguidas = $this->paginasSeguidasIndex();
 
@@ -604,7 +604,7 @@ class AuthController extends Controller
 
      */
 
-     $what_are_talking = $this->Destacados();
+     $what_are_talking = array();
 
 
 
@@ -754,9 +754,9 @@ class AuthController extends Controller
         } catch (Exception $e) {
 
         }
-    }  
+    }
 /*Fim*/
-  
+
 
   public function paginasSeguidas(){
         try {
