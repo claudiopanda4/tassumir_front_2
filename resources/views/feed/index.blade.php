@@ -156,7 +156,7 @@
                             <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$key ?>>
                             <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$key ?>>
                             <video class="video-post-video" id="video_{{$key}}">
-
+                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                             <input type="hidden" name="" value="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}" id="watch-video-{{$key}}">
@@ -423,7 +423,6 @@
                           }
                         });
                       }
-                  }
                 </script>
                 <div>
 
@@ -530,7 +529,7 @@
 </div>
         <script type="text/javascript">
             window.onload = function (argument) {
-                alert('ttt');
+                
             }
             document.addEventListener('load', function(){
                 
@@ -543,7 +542,7 @@
                     }
                 }
                 let like_a = document.getElementsByClassName('like-a');
-                let i = 0;
+                i = 0;
                 for (let i = like_a.length - 1; i >= 0; i--) {
                     like_a[i].onclick = function (e) {
                         let id = e.target.id;
@@ -864,7 +863,7 @@ function gostar(id){
                                dataType: 'json',
                                success: function(response){
                                  $('.reload-component').remove();
-                                 //console.log(response);
+                                 console.log(response);
                                  if (response.length > 0) {
                                  $.each(response, function(key, value){
 
@@ -925,7 +924,7 @@ function gostar(id){
                                    if (value.formato == 2) {
                                      nome +='<div class="post-cover post-cover-home"> <img  class="img-full circle" src=' + src1 + '/' + value.file + '> </div>'
                                    }else if (value.formato == 1) {
-                                     nome +='<div class="video-post" id="video-post-'+value.post_uuid+'}"> <img class="play_button center" src="{{asset("storage/icons/play_button.png")}}" id="play_button_'+key+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+key+'"> <video class="video-post-video" id="video_'+key+'"> Your browser does not support the video tag.</video>'
+                                     nome +='<div class="video-post" id="video-post-'+value.post_uuid+'}"> <img class="play_button center" src="{{asset("storage/icons/play_button.png")}}" id="play_button_'+key+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+key+'"> <video class="video-post-video" id="video_'+key+'"><source src="{{asset("storage/video/page/'+value.file+'")}} type="video/mp4">Your browser does not support the video tag.</video>'
                                      nome +='<input type="hidden" name="" value="post_view_'+value.post_uuid+'_'+value.conta_logada_uuid+'" id="watch-video-'+key+'"> <input type="hidden" name="" value="'+value.post_uuid+'" id="vid-'+key+'"> <input type="hidden" name="" id="has-video-'+key+'"> <input type="hidden" name="" id="video-post-time-'+key+'}"> <input type="hidden" name="" id="video-post-time-all-'+key+'"></div></div></div>'
                                    }
                                    nome +=' <nav class="row interaction-numbers"><ul class=""><li> <a href="" id="likes-qtd-'+value.post_uuid+'">'+value.qtd_likes+' reacções</a></li>'
