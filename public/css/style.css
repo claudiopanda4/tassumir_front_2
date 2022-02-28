@@ -1465,6 +1465,7 @@ label[for="hugo"]{
 }*/
 .post-cover.post-cover-home {
     overflow: hidden; 
+    width: 100%;
 }
 .post-cover-post-index {
     height: auto;

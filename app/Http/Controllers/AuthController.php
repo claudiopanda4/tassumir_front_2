@@ -610,9 +610,9 @@ class AuthController extends Controller
 
      */
 
-     $what_are_talking = $this->Destacados();
+    //$what_are_talking = $this->Destacados();
 
-
+     $what_are_talking = [];
 
      $mudar_estado_view= DB::table('views')->where('state_views_id', 2)->limit(1)->get();
     if (sizeof($mudar_estado_view)>0) {
@@ -1185,6 +1185,91 @@ public function dados_comment($key){
             } elseif (sizeof($likes_verificacao) == 1){
               DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
               $resposta= 2;
+            }
+            return response()->json($resposta);
+          }
+
+          public function like_unlike(Request $request){
+            $post=DB::select('select * from posts where uuid = ?', [$request->id]);
+            $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
+            $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+            $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
+            $aux4= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$post[0]->post_id, 3 ]);
+            $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
+            $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+            $likes_verificacao = DB::select('select post_reaction_id from post_reactions where (post_id,identificador_id) = (?, ?)', [$post[0]->post_id, $aux[0]->identificador_id]);
+            $resposta = 0;
+            $id_full = $request->id_full;
+            $reactions_number = sizeof($likes_verificacao);
+            if (sizeof($likes_verificacao) == 0) {
+              DB::table('post_reactions')->insert([
+                'reaction_id' => 1,
+                'identificador_id' => $aux[0]->identificador_id,
+                'post_id' => $post[0]->post_id,
+                'created_at'=> $this->dat_create_update(),
+              ]);
+              if ($page[0]->conta_id_a != $conta[0]->conta_id && $page[0]->conta_id_b != $conta[0]->conta_id) {
+              DB::table('notifications')->insert([
+                    'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'id_state_notification' => 2,
+                    'id_action_notification' => 1,
+                    'identificador_id_causador'=> $aux[0]->identificador_id,
+                    'identificador_id_destino'=> $aux4[0]->identificador_id,
+                    'identificador_id_receptor'=> $aux2[0]->identificador_id,
+                    'created_at'=> $this->dat_create_update(),
+                    ]);
+                  DB::table('notifications')->insert([
+                          'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                          'id_state_notification' => 2,
+                          'id_action_notification' => 1,
+                          'identificador_id_causador'=> $aux[0]->identificador_id,
+                          'identificador_id_destino'=> $aux4[0]->identificador_id,
+                          'identificador_id_receptor'=> $aux3[0]->identificador_id,
+                          'created_at'=> $this->dat_create_update(),
+
+                          ]);
+                        }
+            $reactions_number++;
+              $resposta = [
+                'id' => $id_full,
+                'reactions' => $reactions_number,
+                'state' => 'like',
+                'add' => [
+                    1 => 'far'   
+                ],
+                'remove' => [
+                    1 => 'fas',
+                    2 => 'liked',   
+                ],
+              ];
+
+            } elseif (sizeof($likes_verificacao) == 1){
+              DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
+              $reactions_number++;
+              $resposta = [
+                'id' => $id_full,
+                'reactions' => $reactions_number,
+                'state' => 'unlike',
+                'add' => [
+                    1 => 'fas',
+                    2 => 'liked',   
+                ],
+                'remove' => [
+                    1 => 'far',   
+                ],
+              ];
+              $resposta = [
+                'id' => $id_full,
+                'reactions' => $reactions_number,
+                'state' => 'like',
+                'add' => [
+                    1 => 'fas',
+                    2=> 'liked'   
+                ],
+                'remove' => [
+                    1 => 'far',  
+                ],
+              ];
             }
             return response()->json($resposta);
           }

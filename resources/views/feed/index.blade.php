@@ -84,7 +84,7 @@
             </div>              
         @endif        
     <?php endif ?>
-        <div class="" id="div_father_post" name="div_father_post">
+    <div class="" id="div_father_post" name="div_father_post">
 
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post'] == 1): ?>
@@ -156,7 +156,7 @@
                             <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$key ?>>
                             <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$key ?>>
                             <video class="video-post-video" id="video_{{$key}}">
-
+                                <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                             <input type="hidden" name="" value="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}" id="watch-video-{{$key}}">
@@ -332,7 +332,8 @@
                 <input type="hidden" id="id_click" value="none;0" name="">
                 <script type="text/javascript">
                     $(document).click(function(e){
-                        let id = e.target.id.split('|');
+                        let id_full = e.target.id;
+                        let id = id_full.split('|');
                         let className = e.target.className;
                         //alert(className);
                         if (className.indexOf('savepost-more') > 0) {
@@ -351,22 +352,21 @@
                         }
                         if (className.indexOf('like-a-more') > 0) {
                             let id = e.target.id.split('|');
+                            e.preventDefault();
+                            like(id[1], id_full);
                             //alert($('#id_click').val().split(';')[1] == 0);
                             //alert($('#id_click').val().split(';')[0] != id[1]);
-                            if ($('#id_click').val().split(';')[0] != id[1] && $('#id_click').val().split(';')[1] == 0) {
+                            let verif;
+                            /*if ($('#id_click').val().split(';')[0] != id[1] && $('#id_click').val().split(';')[1] == 0) {
                                 //alert(id[0]);
-                                let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
-                                //alert(verif);
                                 if(id[0] == "on"){
-                                    e.preventDefault();
                                     gostar(id[1]);
                                     let new_id = "off|" + id[1] + "|i";
                                     document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
                                     document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
                                     document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
-                                        document.getElementById("off|" + id[1] + "|i").classList.add('far');
+                                    document.getElementById("off|" + id[1] + "|i").classList.add('far');
                                 } else if(id[0] == "off") {
-                                    e.preventDefault();
                                     gostar(id[1]);
                                     let new_id = "on|" + id[1] + "|i";
                                     document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
@@ -374,18 +374,55 @@
                                     document.getElementById("on|" + id[1] + "|i").classList.add('liked');
                                     document.getElementById("on|" + id[1] + "|i").classList.remove('far');
                                 }
+                                verif = parseInt($('#id_click').val().split(';')[1]) + 1;
+                                alert(verif);
                                 $('#id_click').val(id[1] + ';' + verif);
                             } else if ($('#id_click').val().split(';')[0] == id[1] && $('#id_click').val().split(';')[1] == 1) {
                                 //alert('verif ' + verif);
-                                let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
+                                verif = parseInt($('#id_click').val().split(';')[1]);
+                                alert(verif); 
+                                if (verif == 1) {
+                                }   
+                                verif = parseInt($('#id_click').val().split(';')[1]) + 1;
                                 $('#id_click').val(id[1] + ';' + verif);
-                                if (verif == 1) {}else{
-                                       
-                                }
-                                    
-                            }
+                            }*/
                         }
                     });
+                    function like(id, id_full){
+                        $.ajax({
+                          url: "{{ route('like_unlike')}}",
+                          type: 'get',
+                          data: {'id': id, 'id_full' : id_full},
+                           dataType: 'json',
+                           success:function(response){
+                           /*let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
+                           if (response == 1) {
+                             likes_qtd = parseInt(likes_qtd) + 1;
+                             $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+                           } else if (response == 2) {
+                             likes_qtd = parseInt(likes_qtd) - 1;
+                             if (likes_qtd >= 0) {
+                               $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+                             }
+                           }*/
+                           console.log(response);
+                            $.each(response.remove, function(key, value){
+                                console.log(response.id + 'remove ' + value);
+                                document.getElementById(response.id).classList.remove(value);
+                            });
+                            $.each(response.add, function(key, value){
+                                console.log(response.id + ' add ' + value);
+                               document.getElementById(response.id).classList.add(value); 
+                            });
+                            let react = 'reacções';
+                            if (response.reactions < 2) {
+                                react = 'reacção';
+                            }
+                            console.log('likes-qtd-' + id);
+                            document.getElementById('likes-qtd-' + id).innerText = response.reactions + ' ' + react;
+                          }
+                        });
+                      }
                 </script>
                 <div>
 
@@ -490,7 +527,30 @@
             @endif-->
         </div>
 </div>
-
+        <script type="text/javascript">
+            window.onload = function (argument) {
+                
+            }
+            document.addEventListener('load', function(){
+                
+                let more = document.getElementsByClassName('like-a-more');
+                let i = 0;
+                for (let i = more.length - 1; i >= 0; i--) {
+                    more[i].onclick = function (e) {
+                        let id = e.target.id;
+                        alert(id);
+                    }
+                }
+                let like_a = document.getElementsByClassName('like-a');
+                i = 0;
+                for (let i = like_a.length - 1; i >= 0; i--) {
+                    like_a[i].onclick = function (e) {
+                        let id = e.target.id;
+                        alert(id);
+                    }
+                }
+            });
+        </script>
         <script type="text/javascript">
         $(document).ready(function(){
             $('.reload-component').css({
@@ -498,7 +558,7 @@
                 'width' : '100%',
                 'height' : '100px',
             });
-            $('.like-a').click(function (e) {
+            $('.like-a').on('click', function (e) {
                 e.preventDefault();
                 let id = e.target.id.split('|');
                 //alert(id);
@@ -542,6 +602,7 @@
               }
             });
           }
+
         });
       </script>
 <script>
@@ -586,6 +647,7 @@ function gostar(id){
              $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
            }
          }*/
+         if (true) {}
         }
       });
     }
@@ -801,7 +863,7 @@ function gostar(id){
                                dataType: 'json',
                                success: function(response){
                                  $('.reload-component').remove();
-                                 //console.log(response);
+                                 console.log(response);
                                  if (response.length > 0) {
                                  $.each(response, function(key, value){
 
@@ -862,7 +924,7 @@ function gostar(id){
                                    if (value.formato == 2) {
                                      nome +='<div class="post-cover post-cover-home"> <img  class="img-full circle" src=' + src1 + '/' + value.file + '> </div>'
                                    }else if (value.formato == 1) {
-                                     nome +='<div class="video-post" id="video-post-'+value.post_uuid+'}"> <img class="play_button center" src="{{asset("storage/icons/play_button.png")}}" id="play_button_'+key+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+key+'"> <video class="video-post-video" id="video_'+key+'"> Your browser does not support the video tag.</video>'
+                                     nome +='<div class="video-post" id="video-post-'+value.post_uuid+'}"> <img class="play_button center" src="{{asset("storage/icons/play_button.png")}}" id="play_button_'+key+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+key+'"> <video class="video-post-video" id="video_'+key+'"><source src="{{asset("storage/video/page/'+value.file+'")}} type="video/mp4">Your browser does not support the video tag.</video>'
                                      nome +='<input type="hidden" name="" value="post_view_'+value.post_uuid+'_'+value.conta_logada_uuid+'" id="watch-video-'+key+'"> <input type="hidden" name="" value="'+value.post_uuid+'" id="vid-'+key+'"> <input type="hidden" name="" id="has-video-'+key+'"> <input type="hidden" name="" id="video-post-time-'+key+'}"> <input type="hidden" name="" id="video-post-time-all-'+key+'"></div></div></div>'
                                    }
                                    nome +=' <nav class="row interaction-numbers"><ul class=""><li> <a href="" id="likes-qtd-'+value.post_uuid+'">'+value.qtd_likes+' reacções</a></li>'
@@ -1040,7 +1102,7 @@ function gostar(id){
                             }
                         }
                         document.get
-                    }, 100);
+                    }, 2000);
 
 </script>
 @stop
