@@ -84,7 +84,7 @@
             </div>              
         @endif        
     <?php endif ?>
-        <div class="" id="div_father_post" name="div_father_post">
+    <div class="" id="div_father_post" name="div_father_post">
 
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post'] == 1): ?>
@@ -332,7 +332,8 @@
                 <input type="hidden" id="id_click" value="none;0" name="">
                 <script type="text/javascript">
                     $(document).click(function(e){
-                        let id = e.target.id.split('|');
+                        let id_full = e.target.id;
+                        let id = id_full.split('|');
                         let className = e.target.className;
                         //alert(className);
                         if (className.indexOf('savepost-more') > 0) {
@@ -351,22 +352,21 @@
                         }
                         if (className.indexOf('like-a-more') > 0) {
                             let id = e.target.id.split('|');
+                            e.preventDefault();
+                            like(id[1], id_full);
                             //alert($('#id_click').val().split(';')[1] == 0);
                             //alert($('#id_click').val().split(';')[0] != id[1]);
-                            if ($('#id_click').val().split(';')[0] != id[1] && $('#id_click').val().split(';')[1] == 0) {
+                            let verif;
+                            /*if ($('#id_click').val().split(';')[0] != id[1] && $('#id_click').val().split(';')[1] == 0) {
                                 //alert(id[0]);
-                                let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
-                                //alert(verif);
                                 if(id[0] == "on"){
-                                    e.preventDefault();
                                     gostar(id[1]);
                                     let new_id = "off|" + id[1] + "|i";
                                     document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
                                     document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
                                     document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
-                                        document.getElementById("off|" + id[1] + "|i").classList.add('far');
+                                    document.getElementById("off|" + id[1] + "|i").classList.add('far');
                                 } else if(id[0] == "off") {
-                                    e.preventDefault();
                                     gostar(id[1]);
                                     let new_id = "on|" + id[1] + "|i";
                                     document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
@@ -374,18 +374,56 @@
                                     document.getElementById("on|" + id[1] + "|i").classList.add('liked');
                                     document.getElementById("on|" + id[1] + "|i").classList.remove('far');
                                 }
+                                verif = parseInt($('#id_click').val().split(';')[1]) + 1;
+                                alert(verif);
                                 $('#id_click').val(id[1] + ';' + verif);
                             } else if ($('#id_click').val().split(';')[0] == id[1] && $('#id_click').val().split(';')[1] == 1) {
                                 //alert('verif ' + verif);
-                                let verif = parseInt($('#id_click').val().split(';')[1]) + 1;
+                                verif = parseInt($('#id_click').val().split(';')[1]);
+                                alert(verif); 
+                                if (verif == 1) {
+                                }   
+                                verif = parseInt($('#id_click').val().split(';')[1]) + 1;
                                 $('#id_click').val(id[1] + ';' + verif);
-                                if (verif == 1) {}else{
-                                       
-                                }
-                                    
-                            }
+                            }*/
                         }
                     });
+                    function like(id, id_full){
+                        $.ajax({
+                          url: "{{ route('like_unlike')}}",
+                          type: 'get',
+                          data: {'id': id, 'id_full' : id_full},
+                           dataType: 'json',
+                           success:function(response){
+                           /*let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
+                           if (response == 1) {
+                             likes_qtd = parseInt(likes_qtd) + 1;
+                             $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+                           } else if (response == 2) {
+                             likes_qtd = parseInt(likes_qtd) - 1;
+                             if (likes_qtd >= 0) {
+                               $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+                             }
+                           }*/
+                           console.log(response);
+                            $.each(response.remove, function(key, value){
+                                console.log(response.id + 'remove ' + value);
+                                document.getElementById(response.id).classList.remove(value);
+                            });
+                            $.each(response.add, function(key, value){
+                                console.log(response.id + ' add ' + value);
+                               document.getElementById(response.id).classList.add(value); 
+                            });
+                            let react = 'reacções';
+                            if (response.reactions < 2) {
+                                react = 'reacção';
+                            }
+                            console.log('likes-qtd-' + id);
+                            document.getElementById('likes-qtd-' + id).innerText = response.reactions + ' ' + react;
+                          }
+                        });
+                      }
+                  }
                 </script>
                 <div>
 
@@ -490,7 +528,30 @@
             @endif-->
         </div>
 </div>
-
+        <script type="text/javascript">
+            window.onload = function (argument) {
+                alert('ttt');
+            }
+            document.addEventListener('load', function(){
+                
+                let more = document.getElementsByClassName('like-a-more');
+                let i = 0;
+                for (let i = more.length - 1; i >= 0; i--) {
+                    more[i].onclick = function (e) {
+                        let id = e.target.id;
+                        alert(id);
+                    }
+                }
+                let like_a = document.getElementsByClassName('like-a');
+                let i = 0;
+                for (let i = like_a.length - 1; i >= 0; i--) {
+                    like_a[i].onclick = function (e) {
+                        let id = e.target.id;
+                        alert(id);
+                    }
+                }
+            });
+        </script>
         <script type="text/javascript">
         $(document).ready(function(){
             $('.reload-component').css({
@@ -498,7 +559,7 @@
                 'width' : '100%',
                 'height' : '100px',
             });
-            $('.like-a').click(function (e) {
+            $('.like-a').on('click', function (e) {
                 e.preventDefault();
                 let id = e.target.id.split('|');
                 //alert(id);
@@ -542,6 +603,7 @@
               }
             });
           }
+
         });
       </script>
 <script>
@@ -586,6 +648,7 @@ function gostar(id){
              $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
            }
          }*/
+         if (true) {}
         }
       });
     }
@@ -1040,7 +1103,7 @@ function gostar(id){
                             }
                         }
                         document.get
-                    }, 100);
+                    }, 2000);
 
 </script>
 @stop

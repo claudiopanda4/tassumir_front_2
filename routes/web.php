@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
         return view('feed.index');
     })->middleware('auth:web1');
     Route::get('/like', [App\Http\Controllers\AuthController::class, 'like'])->name('like');
+    Route::get('/like_unlike', [App\Http\Controllers\AuthController::class, 'like_unlike'])->name('like_unlike');
     Route::get('/alert', [App\Http\Controllers\AuthController::class, 'alert'])->name('error.alert');
     Route::get('/definitions', [App\Http\Controllers\AuthController::class, 'alert'])->name('error.definitions');
     Route::get('/help', [App\Http\Controllers\AuthController::class, 'alert'])->name('error.help');
