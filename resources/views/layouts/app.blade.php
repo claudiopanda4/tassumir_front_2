@@ -964,7 +964,7 @@
            }
            //alert("bot");
         });
-        /*$('.like-a').click(function (e) {
+        $('.like-a').click(function (e) {
           e.preventDefault();
           let id = e.target.id.split('|');
           if(id[0] == "on"){
@@ -982,7 +982,7 @@
             document.getElementById("on|" + id[1] + "|i").classList.add('liked');
             document.getElementById("on|" + id[1] + "|i").classList.remove('far');
           }
-      });*/
+      });
 
       $('.comment-like-a').click(function (e) {
           e.preventDefault();

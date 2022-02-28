@@ -323,91 +323,97 @@ class AuthController extends Controller
          return $date_create_update;
        }
 
+       public function Destacados(){
+//         $conta = DB::select('select post_id, formato_id, description, conta_id, file, nome, foto, uuid from (select post_id, formato_id, page_id, descricao as description, conta_id, file from (select post_id as post_id_post, formato_id, page_id, descricao, file from posts) posts join views as v on v.post_id = posts.post_id_post WHERE formato_id = ?) posts join pages as p on p.page_id = posts.page_id', [1]);
+         $conta = DB::select('select post_id, page_id from posts join page_id from pages as p on p.page_id = posts.page_id');
 
-       public function Pegar_destacados($init,$melhores){
 
-         $post= DB::select('select * from posts where estado_post_id = ? and post_id > ? limit 1000', [1, $init]);
-         if (sizeof($post)>0) {
-           $init=$post[sizeof($post) - 1]->post_id;
-         }
-         $count=sizeof($melhores);
-        if (sizeof($post)>0) {
-         for ($i=0; $i <10 ; $i++) {
-           $a=0;
+           dd($conta);
+           dd(sizeof($conta));
+           $users = DB::table('users')
+            ->join('contacts', 'users.id', '=', 'contacts.user_id')
+            ->join('orders', 'users.id', '=', 'orders.user_id')
+            ->select('users.*', 'contacts.phone', 'orders.price')
+            ->get();
 
-           foreach ($post as $key) {
+                     $post= DB::table('posts')->where('estado_post_id', 1)->get();
+                     $melhores=array();
+                     $what_are_talking=array();
 
-             $pages= DB::table('pages')->where('page_id', $key->page_id)->get();
-             if ($pages[0]->estado_pagina_id == 1){
+                       $array = $this->F2(0, 3, $melhores, $what_are_talking, $post);
+                       $melhores= $array['melhores'];
+                       $what_are_talking= $array['what_are_talking'];
 
-                $soma=$this->qtd_total($key->post_id);
-                $b=$this->verificar_melhores($melhores, $key->post_id);
 
-               if ($soma >= $a && $b!=1) {
-                     $melhores[$count]['id']= $key->post_id;
-                     $melhores[$count]['soma']= $soma;
-                     $a=$soma;
-                     }
-
-               }
-             }
-                    $count++;
-             }
-
-             $init_post = DB::select('select * from posts order by post_id desc limit 1');
-             $init_post = $init_post[0]->post_id;
-             if ($init != $init_post) {
-               $melhores=$this->Pegar_destacados($init,$melhores);
-             }
+                     dd($what_are_talking);
+                     return $what_are_talking;
          }
 
-         return $melhores;
-       }
+         public function FunctionName($a, $post, $melhores)
+         {
+           $melhore=array();
+           $what_are_talking=array();
 
-        public function Destacados(){
+           for ($j=0; $j <sizeof($post); $j++) {
 
-          $array=array();
-          $melhores=$this->Pegar_destacados(0,$array);
-          $p_post=$this->peneira($melhores);
-          $what_are_talking = array();
-         if (sizeof($p_post)>0) {
-            for ($i=0; $i < sizeof($p_post); $i++) {
-              $post=DB::table('posts')->where('post_id', $p_post[$i]['id'])->get();
-              $pages= DB::table('pages')->where('page_id', $post[0]->page_id)->get();
+             $page_name= DB::table('pages')->where('page_id', $post[$j]->page_id)->get();
+             if ($page_name[0]->estado_pagina_id == 1){
+               $soma=$this->qtd_total($post[$j]->post_id);
+               $b=$this->verificar_melhores($melhores, $post[$j]->post_id);
 
-                      $what_are_talking[$i]['post']=$post[0]->descricao;
-                      $what_are_talking[$i]['page_id']= $post[0]->page_id ;
-                      $what_are_talking[$i]['page_uuid']= $pages[0]->uuid ;
-                      $what_are_talking[$i]['post_uuid']= $post[0]->uuid;
-                      $what_are_talking[$i]['post_id']= $post[0]->post_id;
-                      $what_are_talking[$i]['formato']=$post[0]->formato_id;
-                      $what_are_talking[$i]['estado_post']=$post[0]->estado_post_id;
-                      $what_are_talking[$i]['foto_page']=$pages[0]->foto;
-                      if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
-                      $what_are_talking[$i]['file']=$post[0]->file;
-                      }
+               if ($soma >= $a && $b!=1 && $post[$j]->estado_post_id == 1) {
+                 $melhore= $post[$j]->post_id;
+                 $what_are_talking['post']=$post[$j]->descricao;
+                 $what_are_talking['page_id']= $post[$j]->page_id ;
+                 $what_are_talking['page_uuid']= $page_name[0]->uuid ;
+                 $what_are_talking['post_uuid']= $post[$j]->uuid;
+                 $what_are_talking['post_id']= $post[$j]->post_id;
+                 $what_are_talking['formato']=$post[$j]->formato_id;
+                 $what_are_talking['estado_post']=$post[$j]->estado_post_id;
+                 $what_are_talking['foto_page']=$page_name[0]->foto;
+                 if($what_are_talking['formato']==1 || $what_are_talking['formato']== 2){
+                 $what_are_talking['file']=$post[$j]->file;
+                 }
+                 $a=$soma;
+               }}
 
-        }}
-         //  dd($what_are_talking);
-          return $what_are_talking;
-        }
+             }
 
-        public function peneira($melhores)
-        {
-          $c=array();
-          for ($i=0; $i <10 ; $i++) {
-            $a=0;
-            for ($j=0; $j <sizeof($melhores) ; $j++) {
-              $b=$this->verificar_melhores($c, $melhores[$j]['id']);
-              if ($melhores[$j]['soma']>=$a && $b!=1 ) {
-                $a=$melhores[$j]['soma'];
-                $c[$i]['id']=$melhores[$j]['id'];
-              }
-            }
-          }
+             $dates = [
+                "melhores" => $melhore,
+                "what_are_talking" => $what_are_talking,
+            ];
+            return $dates;
+         }
 
-          return $c;
-        }
+         public function F2($init, $limit, $melhores, $what_are_talking, $post)
+         {
+           for ($i=$init; $i <$limit ; $i++) {
+             $a=0;
+             $array = $this->FunctionName($a, $post, $melhores);
+             $melhores[$i]= $array['melhores'];
+             $what_are_talking[$i]= $array['what_are_talking'];
+           }
+           if ($limit == 18) {
+             dd($limit);
+             $init+=3; $limit +=2;
+             $array1 = $this->F2($init, $limit, $melhores, $what_are_talking, $post);
+             $melhores= $array1['melhores'];
+             $what_are_talking= $array1['what_are_talking'];
+
+           }elseif ($limit < 18) {
+             $init+=3; $limit +=3;
+             $array1 = $this->F2($init, $limit, $melhores, $what_are_talking, $post);
+             $melhores= $array1['melhores'];
+             $what_are_talking= $array1['what_are_talking'];
+           }
+
+           $dates = [
+              "melhores" => $melhores,
+              "what_are_talking" => $what_are_talking,
+          ];
+          return $dates;
+         }
 
        public function qtd_total($post_id)
        {
@@ -421,7 +427,7 @@ class AuthController extends Controller
         {
           $b=0;
          for ($j=0; $j <sizeof($melhores); $j++) {
-           if ($post_id == $melhores[$j]['id']){
+           if ($post_id == $melhores[$j]){
              $b=1;
              $j=sizeof($melhores);
            }
@@ -604,7 +610,7 @@ class AuthController extends Controller
 
      */
 
-     $what_are_talking = array();
+     $what_are_talking = $this->Destacados();
 
 
 
