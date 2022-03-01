@@ -68,7 +68,7 @@
 
     <?php endif; ?>
     <?php if (false): ?>
-        @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")  
+        @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
             <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
                 <div class="profile-photo-container l-5">
                     <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
@@ -81,8 +81,8 @@
                         <h3 class="edit-profile-mobile" style="margin-top: 0;">Actualizar foto de Perfil</h3>
                     </div>
                 </label>
-            </div>              
-        @endif        
+            </div>
+        @endif
     <?php endif ?>
     <div class="" id="div_father_post" name="div_father_post">
 
@@ -286,7 +286,7 @@
 
                     </div>
                 </div>
-                
+
         <?php if ($dados[$key]['qtd_comment']>0): ?>
           <div class="comment-users" id="comment-users-{{$dados[$key]['post_id']}}">
                     <div class="comment-user-container" >
@@ -380,9 +380,9 @@
                             } else if ($('#id_click').val().split(';')[0] == id[1] && $('#id_click').val().split(';')[1] == 1) {
                                 //alert('verif ' + verif);
                                 verif = parseInt($('#id_click').val().split(';')[1]);
-                                alert(verif); 
+                                alert(verif);
                                 if (verif == 1) {
-                                }   
+                                }
                                 verif = parseInt($('#id_click').val().split(';')[1]) + 1;
                                 $('#id_click').val(id[1] + ';' + verif);
                             }*/
@@ -412,7 +412,7 @@
                             });
                             $.each(response.add, function(key, value){
                                 console.log(response.id + ' add ' + value);
-                               document.getElementById(response.id).classList.add(value); 
+                               document.getElementById(response.id).classList.add(value);
                             });
                             let react = 'reacções';
                             if (response.reactions < 2) {
@@ -529,10 +529,10 @@
 </div>
         <script type="text/javascript">
             window.onload = function (argument) {
-                
+
             }
             document.addEventListener('load', function(){
-                
+
                 let more = document.getElementsByClassName('like-a-more');
                 let i = 0;
                 for (let i = more.length - 1; i >= 0; i--) {
@@ -558,30 +558,11 @@
                 'width' : '100%',
                 'height' : '100px',
             });
-            $('.like-a').on('click', function (e) {
-                e.preventDefault();
-                let id = e.target.id.split('|');
-                //alert(id);
-                if(id[0] == "on"){
-                    gostar(id[1]);
-                    let new_id = "off|" + id[1] + "|i";
-                    document.getElementById("on|" + id[1] + "|i").setAttribute('id', new_id);
-                    document.getElementById("off|" + id[1] + "|i").classList.remove('fas');
-                    document.getElementById("off|" + id[1] + "|i").classList.remove('liked');
-                    document.getElementById("off|" + id[1] + "|i").classList.add('far');
-                } else if(id[0] == "off") {
-                    gostar(id[1]);
-                    let new_id = "on|" + id[1] + "|i";
-                    document.getElementById("off|" + id[1] + "|i").setAttribute('id', new_id);
-                    document.getElementById("on|" + id[1] + "|i").classList.add('fas');
-                    document.getElementById("on|" + id[1] + "|i").classList.add('liked');
-                    document.getElementById("on|" + id[1] + "|i").classList.remove('far');
-                }
-            });
+
             /*document.getElementById('refresh-profile-photo-id').style.display = 'block';
             document.getElementById('refresh-profile-photo-id').style.width = 100 + '%';
             document.getElementById('refresh-profile-photo-id').style.height = 100 + 'px';*/
-            
+
             function gostar(id){
             $.ajax({
               url: "{{ route('like')}}",

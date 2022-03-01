@@ -323,97 +323,6 @@ class AuthController extends Controller
          return $date_create_update;
        }
 
-       public function Destacados(){
-//         $conta = DB::select('select post_id, formato_id, description, conta_id, file, nome, foto, uuid from (select post_id, formato_id, page_id, descricao as description, conta_id, file from (select post_id as post_id_post, formato_id, page_id, descricao, file from posts) posts join views as v on v.post_id = posts.post_id_post WHERE formato_id = ?) posts join pages as p on p.page_id = posts.page_id', [1]);
-         $conta = DB::select('select post_id, page_id from posts join page_id from pages as p on p.page_id = posts.page_id');
-
-
-           dd($conta);
-           dd(sizeof($conta));
-           $users = DB::table('users')
-            ->join('contacts', 'users.id', '=', 'contacts.user_id')
-            ->join('orders', 'users.id', '=', 'orders.user_id')
-            ->select('users.*', 'contacts.phone', 'orders.price')
-            ->get();
-
-                     $post= DB::table('posts')->where('estado_post_id', 1)->get();
-                     $melhores=array();
-                     $what_are_talking=array();
-
-                       $array = $this->F2(0, 3, $melhores, $what_are_talking, $post);
-                       $melhores= $array['melhores'];
-                       $what_are_talking= $array['what_are_talking'];
-
-
-                     dd($what_are_talking);
-                     return $what_are_talking;
-         }
-
-         public function FunctionName($a, $post, $melhores)
-         {
-           $melhore=array();
-           $what_are_talking=array();
-
-           for ($j=0; $j <sizeof($post); $j++) {
-
-             $page_name= DB::table('pages')->where('page_id', $post[$j]->page_id)->get();
-             if ($page_name[0]->estado_pagina_id == 1){
-               $soma=$this->qtd_total($post[$j]->post_id);
-               $b=$this->verificar_melhores($melhores, $post[$j]->post_id);
-
-               if ($soma >= $a && $b!=1 && $post[$j]->estado_post_id == 1) {
-                 $melhore= $post[$j]->post_id;
-                 $what_are_talking['post']=$post[$j]->descricao;
-                 $what_are_talking['page_id']= $post[$j]->page_id ;
-                 $what_are_talking['page_uuid']= $page_name[0]->uuid ;
-                 $what_are_talking['post_uuid']= $post[$j]->uuid;
-                 $what_are_talking['post_id']= $post[$j]->post_id;
-                 $what_are_talking['formato']=$post[$j]->formato_id;
-                 $what_are_talking['estado_post']=$post[$j]->estado_post_id;
-                 $what_are_talking['foto_page']=$page_name[0]->foto;
-                 if($what_are_talking['formato']==1 || $what_are_talking['formato']== 2){
-                 $what_are_talking['file']=$post[$j]->file;
-                 }
-                 $a=$soma;
-               }}
-
-             }
-
-             $dates = [
-                "melhores" => $melhore,
-                "what_are_talking" => $what_are_talking,
-            ];
-            return $dates;
-         }
-
-         public function F2($init, $limit, $melhores, $what_are_talking, $post)
-         {
-           for ($i=$init; $i <$limit ; $i++) {
-             $a=0;
-             $array = $this->FunctionName($a, $post, $melhores);
-             $melhores[$i]= $array['melhores'];
-             $what_are_talking[$i]= $array['what_are_talking'];
-           }
-           if ($limit == 18) {
-             dd($limit);
-             $init+=3; $limit +=2;
-             $array1 = $this->F2($init, $limit, $melhores, $what_are_talking, $post);
-             $melhores= $array1['melhores'];
-             $what_are_talking= $array1['what_are_talking'];
-
-           }elseif ($limit < 18) {
-             $init+=3; $limit +=3;
-             $array1 = $this->F2($init, $limit, $melhores, $what_are_talking, $post);
-             $melhores= $array1['melhores'];
-             $what_are_talking= $array1['what_are_talking'];
-           }
-
-           $dates = [
-              "melhores" => $melhores,
-              "what_are_talking" => $what_are_talking,
-          ];
-          return $dates;
-         }
 
        public function qtd_total($post_id)
        {
@@ -434,6 +343,47 @@ class AuthController extends Controller
          }
          return $b;
         }
+
+
+        public function destacados(){
+          $post= DB::table('posts')
+          ->join('pages', 'posts.page_id', '=', 'pages.page_id')
+          ->select('posts.*', 'pages.estado_pagina_id', 'pages.uuid as page_uuid', 'pages.foto as page_foto')
+          ->get();
+            foreach ($post as $key) {
+              $key->qtd_total=$this->qtd_total($key->post_id);
+            }
+
+                      $melhores=array();
+                      $what_are_talking = array();
+                      $i=0;
+                      while($i <20) {
+                        $a=0;
+                        foreach ($post as $key) {
+                          if ($key->estado_pagina_id == 1){
+                            $b=$this->verificar_melhores($melhores, $key->post_id);
+
+                            if ($key->qtd_total >= $a && $b!=1 && $key->estado_post_id == 1) {
+                              $melhores[$i]= $key->post_id;
+                              $what_are_talking[$i]['post']=$key->descricao;
+                              $what_are_talking[$i]['page_id']= $key->page_id ;
+                              $what_are_talking[$i]['page_uuid']= $key->page_uuid ;
+                              $what_are_talking[$i]['post_uuid']= $key->uuid;
+                              $what_are_talking[$i]['post_id']= $key->post_id;
+                              $what_are_talking[$i]['formato']=$key->formato_id;
+                              $what_are_talking[$i]['estado_post']=$key->estado_post_id;
+                              $what_are_talking[$i]['foto_page']=$key->page_foto;
+                              if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
+                              $what_are_talking['file']=$key->file;
+                              }
+
+                              $a=$key->qtd_total;
+                            }}
+                          }
+                       $i++;}
+              return $what_are_talking;
+          }
+
 
              public function DadosPost($id){
                $dates = $this->default_();
@@ -612,8 +562,7 @@ class AuthController extends Controller
 
     //$what_are_talking = $this->Destacados();
 
-     $what_are_talking = [];
-
+     $what_are_talking = $this->destacados();
      $mudar_estado_view= DB::table('views')->where('state_views_id', 2)->limit(1)->get();
     if (sizeof($mudar_estado_view)>0) {
       DB::table('views')
@@ -1235,11 +1184,11 @@ public function dados_comment($key){
                 'reactions' => $reactions_number,
                 'state' => 'like',
                 'add' => [
-                    1 => 'far'   
+                    1 => 'far'
                 ],
                 'remove' => [
                     1 => 'fas',
-                    2 => 'liked',   
+                    2 => 'liked',
                 ],
               ];
 
@@ -1252,10 +1201,10 @@ public function dados_comment($key){
                 'state' => 'unlike',
                 'add' => [
                     1 => 'fas',
-                    2 => 'liked',   
+                    2 => 'liked',
                 ],
                 'remove' => [
-                    1 => 'far',   
+                    1 => 'far',
                 ],
               ];
               $resposta = [
@@ -1264,10 +1213,10 @@ public function dados_comment($key){
                 'state' => 'like',
                 'add' => [
                     1 => 'fas',
-                    2=> 'liked'   
+                    2=> 'liked'
                 ],
                 'remove' => [
-                    1 => 'far',  
+                    1 => 'far',
                 ],
               ];
             }
