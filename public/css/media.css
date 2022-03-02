@@ -894,19 +894,6 @@
 		right: 80px;
 	}
 }
-@media screen and (min-width: 540px) {
-	.post-cover {
-	    height: 538px;
-	}
-	.post-cover.post-cover-post-index {
-		height: auto;
-    	margin: auto;
-	}
-	.post-cover-post-index img {
-	    height: auto;
-	    position: relative;
-	}
-}
 @media screen and (max-width: 570px) {
 	.card-page {
 	    width: 100%;
@@ -1210,5 +1197,37 @@
 	}
 	.menu-header {
 		margin-right: 450px;
+	}
+}
+@media screen and (min-width: 540px) {
+	.post-cover {
+	    height: 538px;
+	}
+	.post-cover.post-cover-post-index {
+		height: auto;
+    	margin: auto;
+	}
+	.post-cover-post-index img {
+	    height: auto;
+	    position: relative;
+	}
+	.video-post video {
+	    position: relative;
+	    width: 100%;
+	    max-height: 560px;
+	    height: auto;
+	    contain: inherit;
+	}
+	.post-video {
+		border-right: none;
+		border-left: none;
+	}
+	.video-post {
+	    height: auto;
+	}
+	.video-post {
+	    height: auto;
+	    position: relative;
+	    background-color: #18191a;
 	}
 }

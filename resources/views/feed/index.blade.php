@@ -89,8 +89,8 @@
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post'] == 1): ?>
     <?php //dd($conta_logada[0]->uuid); ?>
-        <div class="card br-10" id="m_post-{{$dados[$key]['post_id']}}">
-            <div class="post post-view" id="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}">
+        <div class="card br-10 post-video" id="m_post-{{$dados[$key]['post_id']}}">
+            <div class="post post-view post-video" id="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}">
                 <input type="hidden" name="" value="{{$dados[$key]['formato']}}" id="format-{{$dados[$key]['post_uuid']}}">
                 <header class="clearfix">
                     <div class="first-component clearfix l-5">
@@ -152,7 +152,7 @@
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
-                        <div class="video-post" id="video-post-{{$dados[$key]['post_uuid']}}">
+                        <div class="video-post post-video" id="video-post-{{$dados[$key]['post_uuid']}}">
                             <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$dados[$key]['post_id']?>>
                             <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$dados[$key]['post_id']?>>
                             <video class="video-post-video" id="video_{{$dados[$key]['post_id']}}">

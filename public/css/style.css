@@ -1464,14 +1464,18 @@ label[for="hugo"]{
     height: 498px;
 }*/
 .post-cover.post-cover-home {
-    overflow: hidden; 
+    overflow: hidden;
     width: 100%;
+    height: auto;
+    max-height: 538px;
 }
 .post-cover-post-index {
     height: auto;
 }
 .post-cover-post-index img {
+    position: relative;
     height: auto;
+    min-height: 100%;
 }
 .video-post {
     width: 100%;
@@ -1480,10 +1484,16 @@ label[for="hugo"]{
     position: relative;
 }
 .video-post video {
-    position: absolute;
+    /*position: absolute;
     width: 100%;
     height: 100%;
-    contain: strict;
+    contain: strict;*/
+}
+.video-post video {
+    position: relative;
+    width: 100%;
+    height: auto;
+    contain: content;
 }
 .img-user-comment {
     position: relative;
@@ -3310,4 +3320,7 @@ label[for="hugo"]{
 .reload-component img {
     width: 70px;
     height: 70px;
+}
+.post-video {
+    border: none;
 }
