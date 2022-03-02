@@ -353,6 +353,12 @@ class AuthController extends Controller
             foreach ($post as $key) {
               $key->qtd_total=$this->qtd_total($key->post_id);
             }
+          /*  uasort($teste, function ($a, $b) {
+    return $a['qtd'] < $b['qtd'];
+    //Se quiser inverter a ordem basta trocar por return $a['qtd'] > $b['qtd'];
+});*/
+
+
 
                       $melhores=array();
                       $what_are_talking = array();
@@ -373,7 +379,7 @@ class AuthController extends Controller
                               $what_are_talking[$i]['formato']=$key->formato_id;
                               $what_are_talking[$i]['estado_post']=$key->estado_post_id;
                               $what_are_talking[$i]['foto_page']=$key->page_foto;
-                              if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
+                              if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']==2){
                               $what_are_talking['file']=$key->file;
                               }
 
