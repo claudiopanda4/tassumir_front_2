@@ -3324,3 +3324,7 @@ label[for="hugo"]{
 .post-video {
     border: none;
 }
+.foto-page-video {
+    top: 0;
+    left: 0;
+}
