@@ -898,6 +898,14 @@
 	.post-cover {
 	    height: 538px;
 	}
+	.post-cover.post-cover-post-index {
+		height: auto;
+    	margin: auto;
+	}
+	.post-cover-post-index img {
+	    height: auto;
+	    position: relative;
+	}
 }
 @media screen and (max-width: 570px) {
 	.card-page {
