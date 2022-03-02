@@ -1027,7 +1027,8 @@ function gostar(id){
                                 getVideo($('#vid-' + id).val(), id);
                             }*/
                             id = video_post1[i].id.split('_')[1];
-
+                            //console.log(video_post1[i].id);
+                            //console.log(id);
                             if ($('#video_' + id)) {
                                 offset_video = $('#video_' + id).offset();
                                 //console.log('offset video ' + offset_video.top);
@@ -1035,7 +1036,7 @@ function gostar(id){
                                 if(offset_video.top < 190 && offset_video.top > -300){
                                     //console.log('hasvideo ' + id + ' ' + $('#has-video-' + id).val());
                                     if ($('#has-video-' + id).val() != "ok") {
-                                        //console.log('entrou');
+                                        //console.log('entrou + id ' + id);
                                         getVideo($('#vid-' + id).val(), id);
                                     }else{
                                         ////console.log('não entrou');
@@ -1084,6 +1085,31 @@ function gostar(id){
                         }
                         document.get
                     }, 2000);
+                    function getVideo(post, id){
+                        let storage_video, video, type_file, source;
+                        $.ajax({
+                            url: "{{route('post.video.get')}}",
+                            type: 'get',
+                            data: {'data': post},
+                            dataType: 'json',
+                            success: function(response){
+                                //////console.log('Respondeu...');
+                                //////console.log(response);
+                                video = response.video;
+                                type_file = response.type_file;
+                                storage_video = "{{asset('storage/video/page/') . '/'}}" + video;
+                                ////console.log(storage_video);
+                                source = document.createElement('source');
+                                source.setAttribute('src', storage_video);
+                                source.setAttribute('type', type_file);
+                                source.setAttribute('autoload', 'true');
+                                document.getElementById('video_' + id).setAttribute('src', storage_video);
+                                document.getElementById('video_' + id).setAttribute('autoload', 'true');
+                                document.getElementById('video_' + id).append(source);
+                                $('#has-video-' + id).val('ok');
+                            }
+                        });
+                    }
 
 </script>
 @stop

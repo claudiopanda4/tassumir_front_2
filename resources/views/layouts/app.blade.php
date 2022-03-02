@@ -1468,7 +1468,7 @@
         });
 
 
-        function getVideo(post, id){
+        /*function getVideo(post, id){
             let storage_video, video, type_file, source;
             $.ajax({
                 url: "{{route('post.video.get')}}",
@@ -1492,7 +1492,7 @@
                     $('#has-video-' + id).val('ok');
                 }
             });
-        }
+        }*/
 
 
         $('.play_button').click(function(e){
