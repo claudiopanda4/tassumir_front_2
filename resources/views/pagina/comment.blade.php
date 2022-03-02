@@ -243,6 +243,10 @@
                               </div>
                         </div>
                         <?php endforeach; ?>
+                      <?php else: ?>
+                      <div class="comment-users" id="comment-users-">
+
+                            </div>
                       <?php endif; ?>
                     </div>
 

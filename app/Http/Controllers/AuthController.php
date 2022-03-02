@@ -353,6 +353,12 @@ class AuthController extends Controller
             foreach ($post as $key) {
               $key->qtd_total=$this->qtd_total($key->post_id);
             }
+          /*  uasort($teste, function ($a, $b) {
+    return $a['qtd'] < $b['qtd'];
+    //Se quiser inverter a ordem basta trocar por return $a['qtd'] > $b['qtd'];
+});*/
+
+
 
                       $melhores=array();
                       $what_are_talking = array();
