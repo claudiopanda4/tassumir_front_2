@@ -1454,10 +1454,12 @@ label[for="hugo"]{
 }
 .post-cover img {
     height: auto;
+    position: relative;
 }
 .post-cover.post-cover-home.post-cover img {
     height: auto;
     min-height: 100%;
+    position: relative;
 }
 /*.post-cover.post-cover-home {
     overflow: hidden; 
