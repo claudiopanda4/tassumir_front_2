@@ -1066,7 +1066,7 @@
 }
 @media screen and (max-width: 500px) {
 	.video-post {
-	    height: 100vh;
+	    height: auto;
 	}
 	.title h1 {
 	    font-size: 24px;
@@ -1197,6 +1197,11 @@
 	}
 	.menu-header {
 		margin-right: 450px;
+	}
+}
+@media screen and (max-width: 420px) {
+	.video-post video {
+		max-height: inherit;
 	}
 }
 @media screen and (min-width: 540px) {
