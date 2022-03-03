@@ -29,10 +29,13 @@
                                 <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
                                     <img class="img-back-stories center" src="{{asset('storage/img/page/') . '/' . $what_are_talking[$i]['file']}}">
                               <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>
-                                    <video controls>
-                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
-                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
-                                    </video>
+                                    <?php if (false): ?>
+                                        <video controls>
+                                            <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
+                                            <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
+                                        </video>    
+                                    <?php endif ?>
+                                    <img class="img-full circle foto-page-video" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
                                 <?php else: ?>
                                 <img class="img-back-stories center" src="{{asset('storage/img/page/unnamed.jpg')}}">
                                 <?php endif ?>
@@ -89,8 +92,8 @@
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post'] == 1): ?>
     <?php //dd($conta_logada[0]->uuid); ?>
-        <div class="card br-10" id="m_post-{{$dados[$key]['post_id']}}">
-            <div class="post post-view" id="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}">
+        <div class="card br-10 post-video" id="m_post-{{$dados[$key]['post_id']}}">
+            <div class="post post-view post-video" id="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}">
                 <input type="hidden" name="" value="{{$dados[$key]['formato']}}" id="format-{{$dados[$key]['post_uuid']}}">
                 <header class="clearfix">
                     <div class="first-component clearfix l-5">
@@ -152,7 +155,7 @@
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
-                        <div class="video-post" id="video-post-{{$dados[$key]['post_uuid']}}">
+                        <div class="video-post post-video" id="video-post-{{$dados[$key]['post_uuid']}}">
                             <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$dados[$key]['post_id']?>>
                             <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$dados[$key]['post_id']?>>
                             <video class="video-post-video" id="video_{{$dados[$key]['post_id']}}">
@@ -906,7 +909,7 @@ function gostar(id){
                                      nome +='<p>'+value.post+'</p>'
                                    }
                                    if (value.formato == 2) {
-                                     nome +='<div class="post-cover post-cover-home"> <img  class="img-full circle" src=' + src1 + '/' + value.file + '> </div>'
+                                     nome +='<div class="post-cover post-cover-home"> <img  class="img-full" src=' + src1 + '/' + value.file + '> </div>'
                                    }else if (value.formato == 1) {
                                      nome +='<div class="video-post" id="video-post-'+value.post_uuid+'}"> <img class="play_button center" src="{{asset("storage/icons/play_button.png")}}" id="play_button_'+value.post_id+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+value.post_id+'"> <video class="video-post-video" id="video_'+value.post_id+'"><source src="{{asset("storage/video/page/'+value.file+'")}} type="video/mp4">Your browser does not support the video tag.</video>'
                                      nome +='<input type="hidden" name="" value="post_view_'+value.post_uuid+'_'+value.conta_logada_uuid+'" id="watch-video-'+value.post_id+'"> <input type="hidden" name="" value="'+value.post_uuid+'" id="vid-'+value.post_id+'"> <input type="hidden" name="" id="has-video-'+value.post_id+'"> <input type="hidden" name="" id="video-post-time-'+value.post_id+'}"> <input type="hidden" name="" id="video-post-time-all-'+value.post_id+'"></div></div></div>'
