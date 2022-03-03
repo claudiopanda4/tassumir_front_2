@@ -18,7 +18,7 @@
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[0]['page_uuid']) }}"><h1 class="">{{$dados[0]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
-                                <span class="time-posted l-5">50 min</span><div id="seguir"><?php if ($dados[0]['seguir_S_N'] == 0): ?>
+                                <span class="time-posted l-5">{{$dados[0]['post_data']}}  as {{$dados[0]['post_hora']}}</span><div id="seguir"><?php if ($dados[0]['seguir_S_N'] == 0): ?>
                                   <a href="" class="seguir-a r-5" id="{{$dados[0]['page_id']}}">seguir</a>
                                 <?php endif; ?></div>
                             </div>

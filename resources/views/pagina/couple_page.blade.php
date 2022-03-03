@@ -307,14 +307,10 @@
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
 
-            if ($('.nao_sigo').eq(2).attr("id").split('-')[3] != null) {
-                var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];
+            if ($('.nao_sigo').eq(9).attr("id").split('-')[3] != null) {
+                var id_last_page = $('.nao_sigo').eq(9).attr("id").split('-')[3];
             }else{
-                if ($('.nao_sigo').eq(1).attr("id").split('-')[3] == null) {
-                    var id_last_page = $('.nao_sigo').eq(1).attr("id").split('-')[3];
-                }else{
-                    var id_last_page = 0;
-                }
+                var id_last_page = 0;
             }            //$('#' + valor_pagina_id).empty();
 
 

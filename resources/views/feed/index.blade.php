@@ -736,17 +736,16 @@ function gostar(id){
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
 
-            if (($('.sugest_page').eq(2).attr("id")) == null) {
+            if (($('.sugest_page').eq(9).attr("id")) == null) {
                 if (($('#last_page').val()) != 0) {
                     var id_last_page = $('#last_page').val();
                 }else{
                     var id_last_page = 0;
                 }
             }else{
-               var id_last_page = $('.sugest_page').eq(2).attr("id").split('-')[3];
+               var id_last_page = $('.sugest_page').eq(9).attr("id").split('-')[3];
             }            //$('#' + valor_pagina_id).empty();
-            alert('valor_pagina_id: '+valor_pagina_id+'valor_idconta: '+valor_idconta+'last_page: '+id_last_page);
-             $.ajax({
+            $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
                 data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id, 'last_page': id_last_page},
