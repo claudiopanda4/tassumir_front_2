@@ -663,7 +663,8 @@
         <div class="header-height"></div>
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <div class="">
-                <input class="file" type="file" name="imgOrVideo" id="testeVid" style="width: 250px; margin-left: 10px; color: #fff;">
+                <input class="file" type="file" name="imgOrVideo" id="testeVid" style="width: 250px; margin-left: 10px; color: #fff;" onchange="checkDuration(this)" >
+                <input type="file" name="onlyVideo" id="putVideoHere" style="display: none;">
                 <video style="display: none;" id="vidAnalyzer">
                   <source src="" type="">
                 </video>
@@ -1684,21 +1685,43 @@ $.ajax({
 
 
 
-  const trigger = document.querySelector('#cover-done-post');
-  trigger.addEventListener('click', function(e) {
-    const vid = document.querySelector('#testeVid');
-    const vid_container = document.querySelector('#vidAnalyzer > source');
-    for (var i = 0; i < vid.files.length; i++) {
-      //console.log(vid.files[i].type);
-      vid_container.src = "video.mp4";
-      //vid_container
-      //console.log(vid_container.src);
+
+
+
+/* SIENE CODING  */
+
+  function checkDuration(file_control) {
+    
+    let fileType = file_control.files[0].type;
+    
+    if ( check_for_file_type(fileType) ) {
+      
+      window.URL = window.URL || window.webkitURL;
+      var video = document.createElement('video');
+      video.preload = 'metadata';
+
+      video.onloadedmetadata = function () {
+          window.URL.revokeObjectURL(video.src);
+          let minutes = Math.floor((video.duration) / 60); 
+
+          if (minutes > 1) {
+            var esvaziar = document.querySelector('#testeVid').value = null;
+            alert('video muito longo, troca: ' + esvaziar);
+          }
+      }
+      video.src = URL.createObjectURL(file_control.files[0]);
     }
-    e.preventDefault();
-  });
-  ////console.log(vid);
+
+  }
 
 
+  function check_for_file_type(fileType) {
+    
+    return fileType == 'video/mp4' || fileType == 'video/avi' || fileType =='video/ogg' || fileType =='video/mkv' || fileType =='video/3gp' || fileType =='video/wmv' || fileType =='video/flv';
+  }
+
+
+/* END SIENE CODING  */
 
 </script>
 </html>
