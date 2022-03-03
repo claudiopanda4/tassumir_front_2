@@ -1474,6 +1474,8 @@ label[for="hugo"]{
     width: 100%;
     height: auto;
     max-height: 538px;
+    min-height: 400px;
+    background: #3a3b3c;
 }
 .post-cover-post-index {
     height: auto;
@@ -3339,7 +3341,7 @@ label[for="hugo"]{
     display: none;
     position: relative;
     width: 100%;
-    height: 50px;
+    height: 45px;
     background-color: #000;
     z-index: 1000;
 }

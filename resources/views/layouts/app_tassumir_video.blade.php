@@ -57,11 +57,11 @@
                 <?php $controller = 0; ?>
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
-                        <a href="{{route('allSearch1.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
+                        <a href="{{route('allSearch1.page')}}"><i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i></a>
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " >
-                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container far fa-bell fa-24 fa-option notify-icon" size="7"></i>
+                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i>
                                 @if($notificacoes_count > 0)
                                 <div class="number-notification circle">
                                     <span class="center">{{$notificacoes_count}}</span>
@@ -69,7 +69,7 @@
                                 @endif
                             </label>
                             <a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide notify-icon">
-                                <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
+                                <i class="hidden-click-any-container fi-rs-bell f-footer fi- fa-24 fa-option" size="7"></i>
                                 @if($notificacoes_count > 0)
                                 <div class="number-notification circle">
                                     <span class="center">{{$notificacoes_count}}</span>

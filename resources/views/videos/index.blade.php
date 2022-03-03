@@ -172,6 +172,9 @@
                                     </div>
                                     <div class="comment-user-container comment-user-container-react">
                                       <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
+                                        <?php if (false): ?>
+                                            
+                                        <?php endif ?>
                                           @if($dados[$key]['comment_S_N'] > 0)
                                               <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                                           @else
@@ -202,7 +205,7 @@
                         <nav class="row interaction-numbers">
                             <ul class="">
                                 <li>
-                                  <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_uuid']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
+                                  <a href="" id="likes-qtd-{{$dados[$key]['post_uuid']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
                                 </li>
                                 <li>
                                     <a href="{{route('post_index', $dados[$key]['post_uuid'])}}" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
