@@ -28,13 +28,11 @@
                                 </div>
                                 <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
                                     <img class="img-back-stories center" src="{{asset('storage/img/page/') . '/' . $what_are_talking[$i]['file']}}">
-                              <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>
-                                    <?php if (false): ?>
-                                        <video controls>
-                                            <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
-                                            <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
-                                        </video>    
-                                    <?php endif ?>
+                              <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>                
+                                    <video controls class="video-post-dest">
+                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
+                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
+                                    </video>    
                                     <img class="img-full circle foto-page-video" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
                                 <?php else: ?>
                                 <img class="img-back-stories center" src="{{asset('storage/img/page/unnamed.jpg')}}">
@@ -738,17 +736,16 @@ function gostar(id){
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
 
-            if (($('.sugest_page').eq(2).attr("id")) == null) {
+            if (($('.sugest_page').eq(9).attr("id")) == null) {
                 if (($('#last_page').val()) != 0) {
                     var id_last_page = $('#last_page').val();
                 }else{
                     var id_last_page = 0;
                 }
             }else{
-               var id_last_page = $('.sugest_page').eq(2).attr("id").split('-')[3];
+               var id_last_page = $('.sugest_page').eq(9).attr("id").split('-')[3];
             }            //$('#' + valor_pagina_id).empty();
-            alert('valor_pagina_id: '+valor_pagina_id+'valor_idconta: '+valor_idconta+'last_page: '+id_last_page);
-             $.ajax({
+            $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
                 data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id, 'last_page': id_last_page},
