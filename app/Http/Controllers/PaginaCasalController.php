@@ -658,7 +658,6 @@ class PaginaCasalController extends Controller
         try
         {
             //dd($request);
-
             $page_id = DB::select('select page_id from pages where uuid = ?', [$request->page_u])[0]->page_id;
 
             if ($request->hasFile('imgOrVideo'))
@@ -675,18 +674,47 @@ class PaginaCasalController extends Controller
                 } else if ( $this->check_video_extension($request->imgOrVideo->extension()) ) {
 
                     $path = $request->file('imgOrVideo')->storeAs('public/video/page', $file_name);
+
+                    // Check for video duration
+                      if ( $this->check_video_duration($request->file('imgOrVideo')) > 1 ) {
+                        return back();                      
+                     }
+
                     $this->store($request->message, $file_name, $page_id, $this->formato_id('Video'));
                 }
 
-            } else {
+            } 
+
+            else {
+                if ($request->file('imgOrVideo') == null) {
+                  return back();
+                }
                 $this->store($request->message, null, $page_id, $this->formato_id('Textos'));
             }
+
             return back();
+
 
         } catch (Exception $e) {
             dd($e);
         }
     }
+
+    /* SIENE CODING - Check for video duration */
+
+    function check_video_duration($video) {
+
+      $check = new \getID3;
+      $file = $check->analyze($video);
+      $duration_seconds = $file['playtime_seconds'];
+      $minutos = number_format(floor($duration_seconds / 60), 0);
+
+      return intval($minutos);
+
+    }
+
+
+    /* END SIENE CODING */
 
 
     public function ask_for_annulment(Request $request)
