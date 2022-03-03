@@ -32,10 +32,14 @@
                                     <video controls class="video-post-dest">
                                         <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
                                         <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
-                                    </video>    
-                                    <img class="img-full circle foto-page-video" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
+                                    </video> 
+                                    @if( !($what_are_talking[$i]['foto_page'] == null) )
+                                        <img class="img-full circle foto-page-video" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
+                                    @else
+                                        <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                    @endif   
                                 <?php else: ?>
-                                <img class="img-back-stories center" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                        <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
                                 <?php endif ?>
                                 <div class="headline">
                                     <h2 class="center">{{$what_are_talking[$i]['post']}}</h2>
@@ -1040,7 +1044,7 @@ function gostar(id){
                                     //console.log('hasvideo ' + id + ' ' + $('#has-video-' + id).val());
                                     if ($('#has-video-' + id).val() != "ok") {
                                         //console.log('entrou + id ' + id);
-                                        //getVideo($('#vid-' + id).val(), id);
+                                        getVideo($('#vid-' + id).val(), id);
                                     }else{
                                         ////console.log('não entrou');
                                         $('#video-post-time-all-' + id).val(document.getElementById('video_' + id).duration / 2);
@@ -1090,7 +1094,10 @@ function gostar(id){
                     }, 2000);
                     function getVideo(post, id){
                         let storage_video, video, type_file, source;
-                        $.ajax({
+                        //document.getElementById('video_' + id).setAttribute('src', storage_video);
+                        document.getElementById('video_' + id).setAttribute('autoload', 'true');
+                        $('#has-video-' + id).val('ok');
+                        /*$.ajax({
                             url: "{{route('post.video.get')}}",
                             type: 'get',
                             data: {'data': post},
@@ -1111,7 +1118,7 @@ function gostar(id){
                                 document.getElementById('video_' + id).append(source);
                                 $('#has-video-' + id).val('ok');
                             }
-                        });
+                        });*/
                     }
 
 </script>
