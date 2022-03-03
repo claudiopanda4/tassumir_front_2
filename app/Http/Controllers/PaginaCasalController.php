@@ -104,7 +104,7 @@ class PaginaCasalController extends Controller
     public function index(){
 
 
-      $page_couple = new PerfilController();    
+      $page_couple = new PerfilController();
       $dates = $page_couple->default_();
 
       $controll = new AuthController;
@@ -601,6 +601,16 @@ class PaginaCasalController extends Controller
         }
     }
 
+    public function editar_pagina(Request $request)
+{
+    $pages = DB::table('pages')->where(['page_id'=>$request->id])->update([
+     'nome' => $request->nome,
+     'descricao' => $request->descricao,
+     'categoria_id' => $request->categoria
+ ]);
+}
+
+
     /*
     ------------------------------------
             siene codificando
@@ -802,8 +812,8 @@ class PaginaCasalController extends Controller
             if($description == null || $description == ""){
                 $description = "";
             }
-            DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?)',
-                [$uuid, $description, $file_name, $id, $format, 1, $controll->dat_create_update()]);
+            DB::insert('insert into posts(uuid, descricao, file, page_id,reactions, comments, total_reactions_comments, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [$uuid, $description, $file_name, $id, 0, 0, 0, $format, 1, $controll->dat_create_update()]);
 
                 DB::table('identificadors')->insert([
               'tipo_identificador_id' => 3,
