@@ -379,7 +379,7 @@
 	.add-post {
 	    position: fixed;
 	    top: inherit;
-	    bottom: 20px;
+	    bottom: 70px;
 	}
 	.pop-up-component {
 	    width: 97%;
@@ -533,6 +533,12 @@
     }
 	#app-log-reg {
 	    margin-top: 10px;
+	}
+	.video-post-dest {
+		display: none;
+	}
+	.foto-page-video {
+		display: block;
 	}
     #main-profile header.card {
 	    background-color: transparent;
@@ -1236,5 +1242,23 @@
 	    height: auto;
 	    position: relative;
 	    background-color: #18191a;
+	}
+}
+@media screen and (max-width: 1024px) {
+	.menu-footer {
+		display: block;
+	    background-color: #242526;
+	}
+}
+@media screen and (max-width: 720px) {
+	.menu-footer {
+	    background-color: #000;
+	}
+	.filter-main-search-mobile::-webkit-scrollbar {
+		width: 0px;
+		height: 2px;
+	}
+	.filter-main-search-mobile::-webkit-scrollbar-thumb {
+		width: 0px;
 	}
 }

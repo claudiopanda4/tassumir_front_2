@@ -668,6 +668,7 @@ class PaginaCasalController extends Controller
         try
         {
             //dd($request);
+          
             $page_id = DB::select('select page_id from pages where uuid = ?', [$request->page_u])[0]->page_id;
 
             if ($request->hasFile('imgOrVideo'))
@@ -696,7 +697,7 @@ class PaginaCasalController extends Controller
             }
 
             else {
-                if ($request->file('imgOrVideo') == null) {
+                if ($request->longVideo) {
                   return back();
                 }
                 $this->store($request->message, null, $page_id, $this->formato_id('Textos'));
