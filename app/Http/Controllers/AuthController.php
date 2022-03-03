@@ -85,9 +85,10 @@ class AuthController extends Controller
                  if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
                    $control_data=1;
                    $notificacoes[$a]['barra_data']=1;
-                 }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1) {
+                 }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
                    $control_data=2;
-                   $notificacoes[$a]['barra_data']=2;                 }
+                   $notificacoes[$a]['barra_data']=2;
+                   }
 
 
                     $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_causador ]);
@@ -346,13 +347,14 @@ class AuthController extends Controller
 
 
         public function destacados(){
-          $post= DB::table('posts')
-          ->join('pages', 'posts.page_id', '=', 'pages.page_id')
+          $post= DB::table('posts')->where('estado_post_id', '=', 1)
+          ->join('pages', 'pages.page_id', '=', 'posts.page_id')
           ->select('posts.*', 'pages.estado_pagina_id', 'pages.uuid as page_uuid', 'pages.foto as page_foto')
           ->get();
             foreach ($post as $key) {
               $key->qtd_total=$this->qtd_total($key->post_id);
             }
+
 
                       $melhores=array();
                       $what_are_talking = array();
@@ -374,15 +376,49 @@ class AuthController extends Controller
                               $what_are_talking[$i]['estado_post']=$key->estado_post_id;
                               $what_are_talking[$i]['foto_page']=$key->page_foto;
                               if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
-                              $what_are_talking['file']=$key->file;
+                              $what_are_talking[$i]['file']=$key->file;
                               }
 
                               $a=$key->qtd_total;
                             }}
                           }
                        $i++;}
+                       dd($what_are_talking);
               return $what_are_talking;
           }
+
+          public function destaques(){
+            $post= DB::table('posts')->where('estado_post_id', '=', 1)
+            ->orderBy('total_reactions_comments', 'desc')
+            ->orderBy('post_id', 'desc')
+            ->limit(20)
+            ->join('pages', 'pages.page_id', '=', 'posts.page_id')
+            ->select('posts.*', 'pages.estado_pagina_id', 'pages.uuid as page_uuid', 'pages.foto as page_foto')
+            ->get();
+
+                        $what_are_talking = array();
+                        $i=0;
+                          foreach ($post as $key) {
+                            if ($key->estado_pagina_id == 1){
+
+                                $melhores[$i]= $key->post_id;
+                                $what_are_talking[$i]['post']=$key->descricao;
+                                $what_are_talking[$i]['page_id']= $key->page_id ;
+                                $what_are_talking[$i]['page_uuid']= $key->page_uuid ;
+                                $what_are_talking[$i]['post_uuid']= $key->uuid;
+                                $what_are_talking[$i]['post_id']= $key->post_id;
+                                $what_are_talking[$i]['formato']=$key->formato_id;
+                                $what_are_talking[$i]['estado_post']=$key->estado_post_id;
+                                $what_are_talking[$i]['foto_page']=$key->page_foto;
+                                if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
+                                $what_are_talking[$i]['file']=$key->file;
+                              }
+                            }
+
+                          $i++;}
+
+                return $what_are_talking;
+            }
 
 
              public function DadosPost($id){
@@ -1014,7 +1050,9 @@ class AuthController extends Controller
         $dados[0]['page_id']= $post[0]->page_id ;
         $dados[0]['page_uuid']= $page[$post[0]->page_id - 1]->uuid ;
         $dados[0]['reagir_S_N']=sizeof($ja_reagiu);
-       //        $dados[0]['comment_S_N']=sizeof($ja_reagiu1);
+        $aux_divisão_data = explode(' ', $post[0]->created_at);
+        $dados[0]['post_data']= $aux_divisão_data[0];
+        $dados[0]['post_hora']= str_split($aux_divisão_data[1], 5)[0];
         $dados[0]['guardado']=sizeof($guardado);
         $dados[0]['formato']=$post[0]->formato_id;
         $dados[0]['estado_post']=$post[0]->estado_post_id;
@@ -1107,6 +1145,13 @@ public function dados_comment($key){
                 'post_id' => $post[0]->post_id,
                 'created_at'=> $this->dat_create_update(),
               ]);
+                DB::table('posts')
+                ->where('post_id', $post[0]->post_id)
+                ->update([
+                  'reactions'=> $post[0]->reactions + 1,
+                  'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
+                  'updated_at' => $this->dat_create_update()
+                      ]);
               if ($page[0]->conta_id_a != $conta[0]->conta_id && $page[0]->conta_id_b != $conta[0]->conta_id) {
               DB::table('notifications')->insert([
                     'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -1133,6 +1178,13 @@ public function dados_comment($key){
 
             } elseif (sizeof($likes_verificacao) == 1){
               DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
+              DB::table('posts')
+              ->where('post_id', $post[0]->post_id)
+              ->update([
+                'reactions'=> $post[0]->reactions - 1,
+                'total_reactions_comments'=> $post[0]->total_reactions_comments - 1,
+                'updated_at' => $this->dat_create_update()
+                    ]);
               $resposta= 2;
             }
             return response()->json($resposta);
@@ -1157,6 +1209,13 @@ public function dados_comment($key){
                 'post_id' => $post[0]->post_id,
                 'created_at'=> $this->dat_create_update(),
               ]);
+              DB::table('posts')
+                  ->where('post_id', $post[0]->post_id)
+                  ->update([
+                    'reactions'=> $post[0]->reactions + 1,
+                    'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
+                    'updated_at' => $this->dat_create_update()
+                    ]);
               if ($page[0]->conta_id_a != $conta[0]->conta_id && $page[0]->conta_id_b != $conta[0]->conta_id) {
               DB::table('notifications')->insert([
                     'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -1194,6 +1253,13 @@ public function dados_comment($key){
 
             } elseif (sizeof($likes_verificacao) == 1){
               DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
+              DB::table('posts')
+                ->where('post_id', $post[0]->post_id)
+                ->update([
+                  'reactions'=> $post[0]->reactions - 1,
+                  'total_reactions_comments'=> $post[0]->total_reactions_comments - 1,
+                  'updated_at' => $this->dat_create_update()
+                    ]);
               $reactions_number++;
               $resposta = [
                 'id' => $id_full,
@@ -1364,7 +1430,7 @@ public function dados_comment($key){
                     }
 
     public function comentar(Request $request){
-      $post= DB::select('select page_id from posts where post_id = ?', [$request->id]);
+      $post= DB::select('select * from posts where post_id = ?', [$request->id]);
       $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
       $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
       $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
@@ -1382,6 +1448,13 @@ public function dados_comment($key){
                 'comment'=>$request->comment,
                 'created_at'=> $this->dat_create_update(),
                 ]);
+                DB::table('posts')
+            ->where('post_id', $post[0]->post_id)
+            ->update([
+              'comments'=> $post[0]->comments + 1,
+              'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
+              'updated_at' => $this->dat_create_update()
+                          ]);
 
                 $variable=  DB::table('comments')->get();
                 foreach ($variable as $key) {
@@ -1440,6 +1513,13 @@ public function dados_comment($key){
                 'comment'=>$request->comment,
                 'created_at'=> $this->dat_create_update(),
                 ]);
+                DB::table('posts')
+                  ->where('post_id', $post[0]->post_id)
+                  ->update([
+                    'comments'=> $post[0]->comments + 1,
+                    'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
+                    'updated_at' => $this->dat_create_update()
+                          ]);
                 DB::table('identificadors')->insert([
               'tipo_identificador_id' => 4,
               'id' => $resposta[0]['comment_id'],

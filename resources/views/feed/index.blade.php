@@ -29,10 +29,13 @@
                                 <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
                                     <img class="img-back-stories center" src="{{asset('storage/img/page/') . '/' . $what_are_talking[$i]['file']}}">
                               <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>
-                                    <video controls>
-                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
-                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
-                                    </video>
+                                    <?php if (false): ?>
+                                        <video controls>
+                                            <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
+                                            <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
+                                        </video>    
+                                    <?php endif ?>
+                                    <img class="img-full circle foto-page-video" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
                                 <?php else: ?>
                                 <img class="img-back-stories center" src="{{asset('storage/img/page/unnamed.jpg')}}">
                                 <?php endif ?>
@@ -89,8 +92,8 @@
 <?php foreach ($dados as $key => $value): ?>
   <?php if ($dados[$key]['estado_post'] == 1): ?>
     <?php //dd($conta_logada[0]->uuid); ?>
-        <div class="card br-10" id="m_post-{{$dados[$key]['post_id']}}">
-            <div class="post post-view" id="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}">
+        <div class="card br-10 post-video" id="m_post-{{$dados[$key]['post_id']}}">
+            <div class="post post-view post-video" id="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}">
                 <input type="hidden" name="" value="{{$dados[$key]['formato']}}" id="format-{{$dados[$key]['post_uuid']}}">
                 <header class="clearfix">
                     <div class="first-component clearfix l-5">
@@ -152,18 +155,18 @@
                             <img class="img-full" src="{{asset('storage/img/page/') . '/' . $dados[$key]['file']}}">
                         </div>
                       <?php elseif ($dados[$key]['formato'] == 1): ?>
-                        <div class="video-post" id="video-post-{{$dados[$key]['post_uuid']}}">
-                            <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$key ?>>
-                            <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$key ?>>
-                            <video class="video-post-video" id="video_{{$key}}">
+                        <div class="video-post post-video" id="video-post-{{$dados[$key]['post_uuid']}}">
+                            <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$dados[$key]['post_id']?>>
+                            <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$dados[$key]['post_id']?>>
+                            <video class="video-post-video" id="video_{{$dados[$key]['post_id']}}">
                                 <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
-                            <input type="hidden" name="" value="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}" id="watch-video-{{$key}}">
-                            <input type="hidden" name="" value="{{$dados[$key]['post_uuid']}}" id="vid-{{$key}}">
-                            <input type="hidden" name="" id="has-video-{{$key}}">
-                            <input type="hidden" name="" id="video-post-time-{{$key}}">
-                            <input type="hidden" name="" id="video-post-time-all-{{$key}}">
+                            <input type="hidden" name="" value="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}" id="watch-video-{{$dados[$key]['post_id']}}">
+                            <input type="hidden" name="" value="{{$dados[$key]['post_uuid']}}" id="vid-{{$dados[$key]['post_id']}}">
+                            <input type="hidden" name="" id="has-video-{{$dados[$key]['post_id']}}">
+                            <input type="hidden" name="" id="video-post-time-{{$dados[$key]['post_id']}}">
+                            <input type="hidden" name="" id="video-post-time-all-{{$dados[$key]['post_id']}}">
                         </div>
                         <?php endif ?>
                     </div>
@@ -658,20 +661,23 @@ function gostar(id){
           data: {'id': id, 'comment': c},
            dataType: 'json',
            success:function(response){
+
            //console.log(response);
            var nome = '';
            comment_qtd = parseInt(comment_qtd) + 1;
            $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
 
 
-                nome +=     '<a href="" class="comment-like-a" id="on|'+response[0]['comment_id']+'">'
+           nome +=     '<div name="comment-like">'
+           nome +=     '<a href="" class="comment-like-a" id="on|'+response[0]['comment_id']+'">'
                 if(response[0]['comment_S_N'] > 0){
                   nome +=            ' <i class="fas fa-heart fa-12 liked" id="on|'+response[0]['comment_id']+'|i"></i>'
                 }else{
                   nome +=             '<i class="fas fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
                 }
                 nome +=     '</a>'
-
+                nome +=     '</div>'
+                    $('div[name=comment-like]').remove();
                     $('div[name=novo-comment]').append(nome);
 
           }
@@ -881,9 +887,9 @@ function gostar(id){
                                    }
                                    nome +='</div></div></div></div>'
                                    nome +='<div class="last-component clearfix r-5">'
-                                   nome +='<label for= "more-option-'+key+'";>'
+                                   nome +='<label for= "more-option-'+value.post_id+'";>'
                                    nome +='<i class="fas fa-ellipsis-h fa-14 fa-option"></i></label>'
-                                   nome +='<input type="checkbox" name="" id="more-option-'+key+'" class="hidden">'
+                                   nome +='<input type="checkbox" name="" id="more-option-'+value.post_id+'" class="hidden">'
                                    nome +=' <ul class="clearfix more-option-post">'
                                    if (value.dono_da_pag == 1) {
                                      nome +='<li><a href="" class="edit-option" id="edit-option|'+value.post_uuid+'">Editar</a></li>'
@@ -902,10 +908,10 @@ function gostar(id){
                                      nome +='<p>'+value.post+'</p>'
                                    }
                                    if (value.formato == 2) {
-                                     nome +='<div class="post-cover post-cover-home"> <img  class="img-full circle" src=' + src1 + '/' + value.file + '> </div>'
+                                     nome +='<div class="post-cover post-cover-home"> <img  class="img-full" src=' + src1 + '/' + value.file + '> </div>'
                                    }else if (value.formato == 1) {
-                                     nome +='<div class="video-post" id="video-post-'+value.post_uuid+'}"> <img class="play_button center" src="{{asset("storage/icons/play_button.png")}}" id="play_button_'+key+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+key+'"> <video class="video-post-video" id="video_'+key+'"><source src="{{asset("storage/video/page/'+value.file+'")}} type="video/mp4">Your browser does not support the video tag.</video>'
-                                     nome +='<input type="hidden" name="" value="post_view_'+value.post_uuid+'_'+value.conta_logada_uuid+'" id="watch-video-'+key+'"> <input type="hidden" name="" value="'+value.post_uuid+'" id="vid-'+key+'"> <input type="hidden" name="" id="has-video-'+key+'"> <input type="hidden" name="" id="video-post-time-'+key+'}"> <input type="hidden" name="" id="video-post-time-all-'+key+'"></div></div></div>'
+                                     nome +='<div class="video-post" id="video-post-'+value.post_uuid+'}"> <img class="play_button center" src="{{asset("storage/icons/play_button.png")}}" id="play_button_'+value.post_id+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+value.post_id+'"> <video class="video-post-video" id="video_'+value.post_id+'"><source src="{{asset("storage/video/page/'+value.file+'")}} type="video/mp4">Your browser does not support the video tag.</video>'
+                                     nome +='<input type="hidden" name="" value="post_view_'+value.post_uuid+'_'+value.conta_logada_uuid+'" id="watch-video-'+value.post_id+'"> <input type="hidden" name="" value="'+value.post_uuid+'" id="vid-'+value.post_id+'"> <input type="hidden" name="" id="has-video-'+value.post_id+'"> <input type="hidden" name="" id="video-post-time-'+value.post_id+'}"> <input type="hidden" name="" id="video-post-time-all-'+value.post_id+'"></div></div></div>'
                                    }
                                    nome +=' <nav class="row interaction-numbers"><ul class=""><li> <a href="" id="likes-qtd-'+value.post_uuid+'">'+value.qtd_likes+' reacções</a></li>'
                                    nome +='<li><a href='+url_link1+' id="comment-qtd-'+value.post_id+'">'+value.qtd_comment+' comentários</a></li>'
@@ -1026,7 +1032,8 @@ function gostar(id){
                                 getVideo($('#vid-' + id).val(), id);
                             }*/
                             id = video_post1[i].id.split('_')[1];
-
+                            //console.log(video_post1[i].id);
+                            //console.log(id);
                             if ($('#video_' + id)) {
                                 offset_video = $('#video_' + id).offset();
                                 //console.log('offset video ' + offset_video.top);
@@ -1034,7 +1041,7 @@ function gostar(id){
                                 if(offset_video.top < 190 && offset_video.top > -300){
                                     //console.log('hasvideo ' + id + ' ' + $('#has-video-' + id).val());
                                     if ($('#has-video-' + id).val() != "ok") {
-                                        //console.log('entrou');
+                                        //console.log('entrou + id ' + id);
                                         getVideo($('#vid-' + id).val(), id);
                                     }else{
                                         ////console.log('não entrou');
@@ -1083,6 +1090,31 @@ function gostar(id){
                         }
                         document.get
                     }, 2000);
+                    function getVideo(post, id){
+                        let storage_video, video, type_file, source;
+                        $.ajax({
+                            url: "{{route('post.video.get')}}",
+                            type: 'get',
+                            data: {'data': post},
+                            dataType: 'json',
+                            success: function(response){
+                                //////console.log('Respondeu...');
+                                //////console.log(response);
+                                video = response.video;
+                                type_file = response.type_file;
+                                storage_video = "{{asset('storage/video/page/') . '/'}}" + video;
+                                ////console.log(storage_video);
+                                source = document.createElement('source');
+                                source.setAttribute('src', storage_video);
+                                source.setAttribute('type', type_file);
+                                source.setAttribute('autoload', 'true');
+                                document.getElementById('video_' + id).setAttribute('src', storage_video);
+                                document.getElementById('video_' + id).setAttribute('autoload', 'true');
+                                document.getElementById('video_' + id).append(source);
+                                $('#has-video-' + id).val('ok');
+                            }
+                        });
+                    }
 
 </script>
 @stop

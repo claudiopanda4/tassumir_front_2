@@ -18,7 +18,7 @@
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[0]['page_uuid']) }}"><h1 class="">{{$dados[0]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
-                                <span class="time-posted l-5">50 min</span><div id="seguir"><?php if ($dados[0]['seguir_S_N'] == 0): ?>
+                                <span class="time-posted l-5">{{$dados[0]['post_data']}}  as {{$dados[0]['post_hora']}}</span><div id="seguir"><?php if ($dados[0]['seguir_S_N'] == 0): ?>
                                   <a href="" class="seguir-a r-5" id="{{$dados[0]['page_id']}}">seguir</a>
                                 <?php endif; ?></div>
                             </div>
@@ -76,7 +76,7 @@
                 <nav class="row interaction-numbers">
                     <ul class="">
                       <li>
-                        <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[0]['post_uuid']}}">{{$dados[0]['qtd_likes']}} reacções</a>
+                        <a href="" id="likes-qtd-{{$dados[0]['post_uuid']}}">{{$dados[0]['qtd_likes']}} reacções</a>
                       </li>
                       <li>
                           <a href="" id="comment-qtd-{{$dados[0]['post_id']}}">{{$dados[0]['qtd_comment']}} comentários</a>
@@ -243,6 +243,10 @@
                               </div>
                         </div>
                         <?php endforeach; ?>
+                      <?php else: ?>
+                      <div class="comment-users" id="comment-users-">
+
+                            </div>
                       <?php endif; ?>
                     </div>
 
