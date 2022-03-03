@@ -14,6 +14,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/uicons/css/uicons-regular-rounded.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/uicons-straight/css/uicons-regular-straight.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media.css') }}" rel="stylesheet">
@@ -56,12 +58,12 @@
             <nav class="menu-header ">
                 <?php $controller = 0; ?>
                 <ul class="clearfix ">
-                    <li class="l-5 mobile-header-icon">
+                    <!--<li class="l-5 mobile-header-icon">
                         <a href="{{route('allSearch1.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
-                    </li>
+                    </li>-->
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
-                        <div class="hidden-click-any-container last-component-n clearfix-n " >
-                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container far fa-bell fa-24 fa-option notify-icon" size="7"></i>
+                        <div class="hidden-click-any-container last-component-n clearfix-n " id="notification-header-icon">
+                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i>
                                 @if($notificacoes_count > 0)
                                 <div class="number-notification circle">
                                     <span class="center">{{$notificacoes_count}}</span>
@@ -69,7 +71,7 @@
                                 @endif
                             </label>
                             <a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide notify-icon">
-                                <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
+                                <i class="hidden-click-any-container fi-rs-bell f-footer fi- fa-24 fa-option" size="7"></i>
                                 @if($notificacoes_count > 0)
                                 <div class="number-notification circle">
                                     <span class="center">{{$notificacoes_count}}</span>
@@ -81,42 +83,6 @@
                                 <li class="hidden-click-any-container mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">
                                     <span style="color:#efefef;">Actividades</span>
                                 </li>
-
-
-
-                            <!--<li class="hidden-click-any-container send-invited-relationship clearfix">
-                                <div class="hidden-click-any-container user-identify-img circle l-5">
-                                    <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
-                                </div>
-                                <div class="hidden-click-any-container details-invited l-5">
-                                    <span class="hidden-click-any-container description-invited">
-                                        <a href="">Hugo Paulo</a> enviou um Pedido de Relacionamento para VOCÊ
-                                    </span>
-                                    <div class="hidden-click-any-container options-invited clearfix">
-                                        <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
-                                            <div class="hidden-click-any-container label-invited">
-                                                <h2 class="accept">Aceitar</h2>
-                                                <h2>Aceitar</h2>
-                                            </div>
-                                        </label>
-                                        <a href="" class="hidden-click-any-container l-5 denied">Rejeitar</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="hidden-click-any-container send-invited-relationship clearfix">
-                                <div class="hidden-click-any-container user-identify-img circle l-5">
-                                    <img src="{{asset('storage/img/users/anselmoralph.jpg')}}" class="img-full circle">
-                                </div>
-                                <div class="hidden-click-any-container details-invited l-5">
-                                    <span class="hidden-click-any-container description-invited">
-                                        <a href="">Hugo Paulo</a> Respondeu a sua Solicitação de Registo de compromisso
-                                    </span>
-                                    <div class="hidden-click-any-container options-invited clearfix">
-                                        <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
-                                    </div>
-                                </div>
-                            </li>-->
-
                             @for($i=0; $i < sizeof($notificacoes) ; $i++)
                               @if($notificacoes[$i]['barra_data']==1)
 
@@ -525,7 +491,12 @@
         
     </div>
     <footer class="menu-footer menu-footer-main">
-        
+        <ul>
+            <a href="{{route('account.home.feed')}}"><li><i class="fi-rr-home fa-20 f-footer"></i></li></a>
+            <a href="{{route('account.all.notifications')}}"><li><i class="fi-rs-bell fa-20 f-footer"></i></li></a>
+            <a href="{{route('post.tassumir.video', 'ma')}}"><li><i class="fi-rr-play fa-20 f-footer"></i></li></a>
+            <a href="{{route('allSearch1.page')}}"><li><i class="fi-rr-search fa-20 f-footer"></i></li></a>
+        </ul>
     </footer>
     </div>
 </body>

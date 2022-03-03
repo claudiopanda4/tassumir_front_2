@@ -1244,3 +1244,14 @@
 	    background-color: #18191a;
 	}
 }
+@media screen and (max-width: 1024px) {
+	.menu-footer {
+		display: block;
+	    background-color: #242526;
+	}
+}
+@media screen and (max-width: 720px) {
+	.menu-footer {
+	    background-color: #000;
+	}
+}
