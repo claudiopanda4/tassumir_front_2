@@ -379,7 +379,7 @@
 	.add-post {
 	    position: fixed;
 	    top: inherit;
-	    bottom: 20px;
+	    bottom: 70px;
 	}
 	.pop-up-component {
 	    width: 97%;
@@ -1253,5 +1253,12 @@
 @media screen and (max-width: 720px) {
 	.menu-footer {
 	    background-color: #000;
+	}
+	.filter-main-search-mobile::-webkit-scrollbar {
+		width: 0px;
+		height: 2px;
+	}
+	.filter-main-search-mobile::-webkit-scrollbar-thumb {
+		width: 0px;
 	}
 }

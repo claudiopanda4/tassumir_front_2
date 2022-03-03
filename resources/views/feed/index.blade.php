@@ -1040,7 +1040,7 @@ function gostar(id){
                                     //console.log('hasvideo ' + id + ' ' + $('#has-video-' + id).val());
                                     if ($('#has-video-' + id).val() != "ok") {
                                         //console.log('entrou + id ' + id);
-                                        getVideo($('#vid-' + id).val(), id);
+                                        //getVideo($('#vid-' + id).val(), id);
                                     }else{
                                         ////console.log('não entrou');
                                         $('#video-post-time-all-' + id).val(document.getElementById('video_' + id).duration / 2);
