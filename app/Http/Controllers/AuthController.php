@@ -1144,13 +1144,13 @@ public function dados_comment($key){
                 'post_id' => $post[0]->post_id,
                 'created_at'=> $this->dat_create_update(),
               ]);
-                DB::table('posts')
+                /*DB::table('posts')
                 ->where('post_id', $post[0]->post_id)
                 ->update([
                   'reactions'=> $post[0]->reactions + 1,
                   'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
                   'updated_at' => $this->dat_create_update()
-                      ]);
+                ]);*/
               if ($page[0]->conta_id_a != $conta[0]->conta_id && $page[0]->conta_id_b != $conta[0]->conta_id) {
               DB::table('notifications')->insert([
                     'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -1177,13 +1177,13 @@ public function dados_comment($key){
 
             } elseif (sizeof($likes_verificacao) == 1){
               DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
-              DB::table('posts')
+              /*DB::table('posts')
               ->where('post_id', $post[0]->post_id)
               ->update([
                 'reactions'=> $post[0]->reactions - 1,
                 'total_reactions_comments'=> $post[0]->total_reactions_comments - 1,
                 'updated_at' => $this->dat_create_update()
-                    ]);
+              ]);*/
               $resposta= 2;
             }
             return response()->json($resposta);
@@ -1208,13 +1208,13 @@ public function dados_comment($key){
                 'post_id' => $post[0]->post_id,
                 'created_at'=> $this->dat_create_update(),
               ]);
-              DB::table('posts')
+              /*DB::table('posts')
                   ->where('post_id', $post[0]->post_id)
                   ->update([
                     'reactions'=> $post[0]->reactions + 1,
                     'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
                     'updated_at' => $this->dat_create_update()
-                    ]);
+                  ]);*/
               if ($page[0]->conta_id_a != $conta[0]->conta_id && $page[0]->conta_id_b != $conta[0]->conta_id) {
               DB::table('notifications')->insert([
                     'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -1252,13 +1252,13 @@ public function dados_comment($key){
 
             } elseif (sizeof($likes_verificacao) == 1){
               DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
-              DB::table('posts')
+              /*DB::table('posts')
                 ->where('post_id', $post[0]->post_id)
                 ->update([
                   'reactions'=> $post[0]->reactions - 1,
                   'total_reactions_comments'=> $post[0]->total_reactions_comments - 1,
                   'updated_at' => $this->dat_create_update()
-                    ]);
+                ]);*/
               $reactions_number++;
               $resposta = [
                 'id' => $id_full,
@@ -1447,13 +1447,13 @@ public function dados_comment($key){
                 'comment'=>$request->comment,
                 'created_at'=> $this->dat_create_update(),
                 ]);
-                DB::table('posts')
+                /*DB::table('posts')
             ->where('post_id', $post[0]->post_id)
             ->update([
               'comments'=> $post[0]->comments + 1,
               'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
               'updated_at' => $this->dat_create_update()
-                          ]);
+            ]);*/
 
                 $variable=  DB::table('comments')->get();
                 foreach ($variable as $key) {
@@ -1512,13 +1512,13 @@ public function dados_comment($key){
                 'comment'=>$request->comment,
                 'created_at'=> $this->dat_create_update(),
                 ]);
-                DB::table('posts')
+                /*DB::table('posts')
                   ->where('post_id', $post[0]->post_id)
                   ->update([
                     'comments'=> $post[0]->comments + 1,
                     'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
                     'updated_at' => $this->dat_create_update()
-                          ]);
+                  ]);*/
                 DB::table('identificadors')->insert([
               'tipo_identificador_id' => 4,
               'id' => $resposta[0]['comment_id'],

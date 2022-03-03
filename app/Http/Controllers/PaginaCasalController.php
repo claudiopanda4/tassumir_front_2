@@ -687,13 +687,13 @@ class PaginaCasalController extends Controller
 
                     // Check for video duration
                       if ( $this->check_video_duration($request->file('imgOrVideo')) > 1 ) {
-                        return back();                      
+                        return back();
                      }
 
                     $this->store($request->message, $file_name, $page_id, $this->formato_id('Video'));
                 }
 
-            } 
+            }
 
             else {
                 if ($request->file('imgOrVideo') == null) {
@@ -812,8 +812,12 @@ class PaginaCasalController extends Controller
             if($description == null || $description == ""){
                 $description = "";
             }
-            DB::insert('insert into posts(uuid, descricao, file, page_id,reactions, comments, total_reactions_comments, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [$uuid, $description, $file_name, $id, 0, 0, 0, $format, 1, $controll->dat_create_update()]);
+          /*  DB::insert('insert into posts(uuid, descricao, file, page_id,reactions, comments, total_reactions_comments, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [$uuid, $description, $file_name, $id, 0, 0, 0, $format, 1, $controll->dat_create_update()]);*/
+
+                DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?)',
+                    [$uuid, $description, $file_name, $id, $format, 1, $controll->dat_create_update()]);
+
 
                 DB::table('identificadors')->insert([
               'tipo_identificador_id' => 3,
