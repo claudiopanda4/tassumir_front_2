@@ -664,7 +664,7 @@
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <div class="">
                 <input class="file" type="file" name="imgOrVideo" id="testeVid" style="width: 250px; margin-left: 10px; color: #fff;" onchange="checkDuration(this)" >
-                <input type="file" name="onlyVideo" id="putVideoHere" style="display: none;">
+                <input type="hidden" name="longVideo" id="putInfo" value="">
                 <video style="display: none;" id="vidAnalyzer">
                   <source src="" type="">
                 </video>
@@ -1705,6 +1705,7 @@ $.ajax({
           let minutes = Math.floor((video.duration) / 60); 
 
           if (minutes > 1) {
+            var certificar = document.querySelector('#putInfo').value = 'long_video_duration';
             var esvaziar = document.querySelector('#testeVid').value = null;
             alert('video muito longo, troca: ' + esvaziar);
           }
