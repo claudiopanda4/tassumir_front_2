@@ -741,8 +741,7 @@ function gostar(id){
             }else{
                var id_last_page = $('.sugest_page').eq(2).attr("id").split('-')[3];
             }            //$('#' + valor_pagina_id).empty();
-            alert('valor_pagina_id: '+valor_pagina_id+'valor_idconta: '+valor_idconta+'last_page: '+id_last_page);
-             $.ajax({
+            $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
                 data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id, 'last_page': id_last_page},
