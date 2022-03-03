@@ -534,6 +534,12 @@
 	#app-log-reg {
 	    margin-top: 10px;
 	}
+	.video-post-dest {
+		display: none;
+	}
+	.foto-page-video {
+		display: block;
+	}
     #main-profile header.card {
 	    background-color: transparent;
 	}

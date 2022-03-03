@@ -521,6 +521,12 @@
     <main class="main-container">
         @yield('content');
     </main>
+    <div class="menu-footer">
+        
+    </div>
+    <footer class="menu-footer menu-footer-main">
+        
+    </footer>
     </div>
 </body>
 <input type="checkbox" name="" id="delete-page-target" class="invisible">

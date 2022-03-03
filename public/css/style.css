@@ -3331,6 +3331,11 @@ label[for="hugo"]{
     border: none;
 }
 .foto-page-video {
+    display: none;
     top: 0;
     left: 0;
+}
+.menu-footer {
+    width: 100%;
+    height: 60px;
 }
