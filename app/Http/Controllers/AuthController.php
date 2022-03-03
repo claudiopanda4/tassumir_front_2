@@ -383,7 +383,6 @@ class AuthController extends Controller
                             }}
                           }
                        $i++;}
-                       dd($what_are_talking);
               return $what_are_talking;
           }
 
@@ -598,7 +597,7 @@ class AuthController extends Controller
 
     //$what_are_talking = $this->Destacados();
 
-     $what_are_talking = $this->destacados();
+     $what_are_talking =[];// $this->destacados();
      $mudar_estado_view= DB::table('views')->where('state_views_id', 2)->limit(1)->get();
     if (sizeof($mudar_estado_view)>0) {
       DB::table('views')
