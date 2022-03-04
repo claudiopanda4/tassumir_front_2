@@ -604,9 +604,9 @@
 	    margin: 0;
 	}
 	.tv-video-cont video {
-	    contain: strict;
-	    height: 417px;
-	    width: 360px;
+	    contain: content;
+    	height: auto;
+    	width: 360px;
 	}
     .filter-main-search-mobile {
     	display: block;
@@ -1242,6 +1242,15 @@
 	    height: auto;
 	    position: relative;
 	    background-color: #18191a;
+	}
+}
+@media screen and (min-width: 720px) {
+	.menu-header ul li.mobile-lg-notify {
+	    display: none;
+	}
+
+	.menu-header ul li.mobile-hidden-notify-icon {
+	    display: block;
 	}
 }
 @media screen and (max-width: 1024px) {

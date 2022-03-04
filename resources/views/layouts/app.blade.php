@@ -493,9 +493,20 @@
     <footer class="menu-footer menu-footer-main">
         <ul>
             <a href="{{route('account.home.feed')}}"><li><i class="fi-rr-home fa-20 f-footer"></i></li></a>
-            <a href="{{route('account.all.notifications')}}"><li><i class="fi-rs-bell fa-20 f-footer"></i></li></a>
+            <a href="{{route('account.all.notifications')}}">
+                <li class="li-footer-menu">
+                    <i class="fi-rs-bell fa-20 f-footer"></i>
+                    @if($notificacoes_count > 0)
+                        <div class="number-notification circle">
+                            <span class="center">{{$notificacoes_count}}</span>
+                        </div>
+                    @endif
+                </li>
+            </a>
             <a href="{{route('post.tassumir.video', 'ma')}}"><li><i class="fi-rr-play fa-20 f-footer"></i></li></a>
-            <a href="{{route('allSearch1.page')}}"><li><i class="fi-rr-search fa-20 f-footer"></i></li></a>
+            <a href="{{route('allSearch1.page')}}">
+                <li class="li-footer-menu"><i class="fi-rr-search fa-20 f-footer"></i></li>
+            </a>
         </ul>
     </footer>
     </div>

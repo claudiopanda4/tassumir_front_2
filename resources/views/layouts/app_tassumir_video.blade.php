@@ -17,6 +17,8 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/uicons/css/uicons-regular-rounded.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/uicons-straight/css/uicons-regular-straight.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/checked.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
@@ -56,26 +58,31 @@
             <nav class="menu-header ">
                 <?php $controller = 0; ?>
                 <ul class="clearfix ">
-                    <li class="l-5 mobile-header-icon">
-                        <a href="{{route('allSearch1.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
+                    <li class="l-5 mobile-header-icon mobile-lg-notify">
+                        <a href="{{route('allSearch1.page')}}"><i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i></a>
+                        @if($notificacoes_count > 0)
+                            <div class="number-notification circle">
+                                <span class="center">{{$notificacoes_count}}</span>
+                            </div>
+                        @endif
                     </li>
-                    <li class="l-5 mobile-header-icon" style="z-index:2;">
+                    <li class="l-5 mobile-header-icon mobile-hidden-notify-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " >
-                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container far fa-bell fa-24 fa-option notify-icon" size="7"></i>
+                            <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i>
                                 @if($notificacoes_count > 0)
                                 <div class="number-notification circle">
                                     <span class="center">{{$notificacoes_count}}</span>
                                 </div>
                                 @endif
                             </label>
-                            <a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide notify-icon">
-                                <i class="hidden-click-any-container far fa-bell fa-24 fa-option" size="7"></i>
+                            <!--<a href="{{route('account.all.notifications')}}" class="hidden-click-any-container fa-option-mobile-lg-hide notify-icon">
+                                <i class="hidden-click-any-container fi-rs-bell f-footer fi- fa-24 fa-option" size="7"></i>
                                 @if($notificacoes_count > 0)
                                 <div class="number-notification circle">
                                     <span class="center">{{$notificacoes_count}}</span>
                                 </div>
                                 @endif
-                            </a>
+                            </a>-->
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="noti-card-first clearfix br-10">
                                 <li class="hidden-click-any-container mb-4" style="display: flex;justify-content: flex-start;align-content: flex-start;">

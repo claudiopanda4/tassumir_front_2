@@ -1244,15 +1244,15 @@ public function dados_comment($key){
                 'reactions' => $reactions_number,
                 'state' => 'like',
                 'add' => [
-                    1 => 'far'
-                ],
-                'remove' => [
                     1 => 'fas',
                     2 => 'liked',
                 ],
+                'remove' => [
+                    1 => 'far',
+                ],
               ];
 
-            } elseif (sizeof($likes_verificacao) == 1){
+            } elseif (sizeof($likes_verificacao) > 0){
               DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
               /*DB::table('posts')
                 ->where('post_id', $post[0]->post_id)
@@ -1261,29 +1261,17 @@ public function dados_comment($key){
                   'total_reactions_comments'=> $post[0]->total_reactions_comments - 1,
                   'updated_at' => $this->dat_create_update()
                 ]);*/
-              $reactions_number++;
+              $reactions_number--;
               $resposta = [
                 'id' => $id_full,
                 'reactions' => $reactions_number,
                 'state' => 'unlike',
                 'add' => [
+                    1 => 'far',
+                ],
+                'remove' => [
                     1 => 'fas',
                     2 => 'liked',
-                ],
-                'remove' => [
-                    1 => 'far',
-                ],
-              ];
-              $resposta = [
-                'id' => $id_full,
-                'reactions' => $reactions_number,
-                'state' => 'like',
-                'add' => [
-                    1 => 'fas',
-                    2=> 'liked'
-                ],
-                'remove' => [
-                    1 => 'far',
                 ],
               ];
             }
