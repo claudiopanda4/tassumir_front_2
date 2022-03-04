@@ -460,6 +460,7 @@ class AuthController extends Controller
                  $dados['post_id']=$id->post_id;
                  $dados['page_id']= $id->page_id;
                  $dados['page_uuid']= $page[0]->uuid ;
+                 $dados['page_tipo_relac']= $page[0]->tipo_relacionamento_id;
                  $dados['post_uuid']= $id->uuid;
                  $aux_divisão_data = explode(' ', $id->created_at);
                  $dados['post_data']= $aux_divisão_data[0] ;
@@ -1046,6 +1047,7 @@ class AuthController extends Controller
         $dados[0]['seguir_S_N']=sizeof($seguidor);
         $dados[0]['post_id']=$post[0]->post_id;
         $dados[0]['post_uuid']= $post[0]->uuid;
+        $dados[0]['page_tipo_relac']= $page[0]->tipo_relacionamento_id;
         $dados[0]['page_id']= $post[0]->page_id ;
         $dados[0]['page_uuid']= $page[$post[0]->page_id - 1]->uuid ;
         $dados[0]['reagir_S_N']=sizeof($ja_reagiu);
