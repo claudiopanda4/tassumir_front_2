@@ -510,7 +510,7 @@ class AuthController extends Controller
                  }
                }
 
-               $aux_view= DB::table('views')->where('post_id', $id->post_id)->get();
+               $aux_view= DB::table('views')->where('post_id', $id->post_id)->where('conta_id',$conta_logada[0]->conta_id)->get();
                if (sizeof($aux_view)<=0) {
                  DB::table('views')->insert([
                    'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -599,9 +599,10 @@ class AuthController extends Controller
     $what_are_talking = $this->destacados();
 
     // $what_are_talking = $this->destaques();
-     $mudar_estado_view= DB::table('views')->where('state_views_id', 2)->limit(1)->get();
+     $mudar_estado_view= DB::table('views')->where('conta_id',$conta_logada[0]->conta_id)->where('state_views_id', 2)->limit(1)->get();
     if (sizeof($mudar_estado_view)>0) {
       DB::table('views')
+            ->where('conta_id',$conta_logada[0]->conta_id)
             ->where('state_views_id', 2)
             ->delete();
     }
