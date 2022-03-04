@@ -1474,7 +1474,7 @@ label[for="hugo"]{
     width: 100%;
     height: auto;
     max-height: 538px;
-    min-height: 400px;
+    min-height: 100px;
     background: #3a3b3c;
 }
 .post-cover-post-index {
@@ -3362,4 +3362,16 @@ label[for="hugo"]{
 }
 #notification-header-icon {
     margin-top: -3px;
+}
+.li-footer-menu {
+    position: relative;
+}
+.li-footer-menu .number-notification {
+    top: -5px;
+}
+.menu-header ul li.mobile-lg-notify {
+    display: block;
+}
+.menu-header ul li.mobile-hidden-notify-icon {
+    display: none;
 }
