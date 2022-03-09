@@ -146,6 +146,12 @@
 	    display: block;
 	    margin-left: 5px;
 	}
+	.menu-header ul li.mobile-hidden-notify-icon,
+	.menu-header ul li.mobile-lg-notify,
+	.menu-header ul li.mobile-header-icon,
+	.menu-header ul li.mobile-header-icon {
+	    margin-top: 8px;
+	}
 	.menu-header ul {
 	    margin-left: -40px;
 	    margin-bottom: 0;
@@ -1140,6 +1146,9 @@
 		border-radius: 0;
 		border-top: 1px solid #343a40;
 	}
+	.distinctiv {
+	    border: 2px solid #000;
+	}
 	#refresh-profile-photo-id {
 	    display: block;
 	}
@@ -1262,6 +1271,10 @@
 @media screen and (max-width: 720px) {
 	.menu-footer {
 	    background-color: #000;
+	}
+	.number-notification {
+	    top: -10px;
+	    right: -10px;
 	}
 	.filter-main-search-mobile::-webkit-scrollbar {
 		width: 0px;

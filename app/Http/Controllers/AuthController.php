@@ -1201,7 +1201,7 @@ public function dados_comment($key){
             $resposta = 0;
             $id_full = $request->id_full;
             $reactions_number = sizeof($likes_verificacao);
-            if (sizeof($likes_verificacao) == 0) {
+            if ($reactions_number < 1) {
               DB::table('post_reactions')->insert([
                 'reaction_id' => 1,
                 'identificador_id' => $aux[0]->identificador_id,
@@ -1250,7 +1250,7 @@ public function dados_comment($key){
                 ],
               ];
 
-            } elseif (sizeof($likes_verificacao) > 0){
+            } elseif ($reactions_number > 0){
               DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
               /*DB::table('posts')
                 ->where('post_id', $post[0]->post_id)

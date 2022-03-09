@@ -3054,8 +3054,8 @@ label[for="hugo"]{
 .number-notification {
     position: absolute;
     width: 20px;
-    top: -10px;
-    right: -10px;
+    top: -5px;
+    right: -5px;
     height: 20px;
     background-color: red;
     z-index: 3;
@@ -3374,4 +3374,37 @@ label[for="hugo"]{
 }
 .menu-header ul li.mobile-hidden-notify-icon {
     display: none;
+}
+.menu-header ul li.mobile-hidden-notify-icon,
+.menu-header ul li.mobile-lg-notify {
+    margin-top: 0;
+}
+.distinctiv {
+    position: absolute;
+    background-color: red;
+    width: 22px;
+    height: 22px;
+    left: 28px;
+    bottom: 0;
+    border: 2px solid #242526;
+    border-radius: 50%;
+    text-transform: uppercase;
+}
+.distinctiv h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 9px;
+    font-weight: bolder;
+}
+.distinctiv-casamento-igreja {
+    background-color: #f55c08;
+}
+.distinctiv-pedido {
+    background-color: #ff9800;
+}
+.distinctiv.distinctiv-namoro {
+    background-color: #3490dc;
+}
+.distinctiv-apresentado {
+    background-color: #9c27b0;
 }

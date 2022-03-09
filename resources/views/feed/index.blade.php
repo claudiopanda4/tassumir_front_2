@@ -108,6 +108,28 @@
                                 <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                             </div>
                         @endif
+                        <?php if (false): ?>
+                            <div class="distinctiv distinctiv-">
+                                <h1 class="center">2c</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-casamento-igreja">
+                                <h1 class="center">ci</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-namoro">
+                                <h1 class="center">na</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-apresentado">
+                                <h1 class="center">ap</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-pedido">
+                                <h1 class="center">p</h1>
+                            </div>
+                        <?php endif ?>
+                        
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
@@ -419,11 +441,13 @@
                 let id_full = t.id;
                 let id = id_full.split('|')[1];
                 if (id_full.split('|')[0] == 'on') {
-                    id_full = 'off|' + id_full.split('|')[1] + '|i';
+                    id_full = id_full.split('|')[1];
                 } else {
-                    id_full = 'on|' + id_full.split('|')[1] + '|i';
+                    id_full = id_full.split('|')[1];
                 }
                 
+                alert(id);
+                alert(id_full);
                 like(id, id_full)
                 //evt.preventDefault();
                 /*let id_full = e.target.id;
@@ -874,9 +898,9 @@ function gostar(id){
                                    nome +=' </ul></nav><nav class="row clearfix interaction-user"><ul class="row clearfix ul-interaction-user"><li class="l-5"><div class="content-button">'
                                    nome +='<a href="" class="like-a-more" onclick = teste(this) id="on|'+value.post_uuid+'">'
                                    if (value.reagir_S_N  > 0) {
-                                     nome +='<i class="fas fa-heart center fa-16 liked like-a-more" id="on|'+value.post_uuid+'|i"></i> <h2 id="on|'+value.post_uuid+'|h2">Like</h2>'
+                                     nome +='<i class="fas fa-heart center fa-16 liked like-a-more" id="'+value.post_uuid+'"></i> <h2 id="on|'+value.post_uuid+'|h2">Like</h2>'
                                    }else {
-                                     nome +='<i class="far fa-heart center fa-16 unliked like-a-more" id="off|'+value.post_uuid+'|i"></i> <h2 id="off|'+value.post_uuid+'|h2">Like</h2>'
+                                     nome +='<i class="far fa-heart center fa-16 unliked like-a-more" id="'+value.post_uuid+'"></i> <h2 id="on|'+value.post_uuid+'|h2">Like</h2>'
                                    }
                                    nome +=' </a></div></li><li class="l-5"><div class="content-button comment-send-post" id="comment-'+value.post_id+'"><a href="" id="comment_a-'+value.post_id+'"><i class="far fa-comment-alt center fa-16 comment-post-more" id="comment_i-'+value.post_id+'"></i><h2>Comentar</h2></a></div></li>'
                                    nome +='<li class="r-5"><div class="content-button"><a href=""><i class="far fa-share-square fa-16"></i><h2>Partilhar</h2></a></div></li>'
@@ -933,7 +957,7 @@ function gostar(id){
                                      if (value.comment_S_N>0) {
                                        nome +='<i class="fas fa-heart fa-12 liked" id="on|'+value.comment_id+'|i"></i>'
                                      }else {
-                                       nome +=' <i class="far fa-heart fa-12 unliked" id="off|'+value.comment_id+'|i"></i>'
+                                       nome +=' <i class="far fa-heart fa-12 unliked" id="'+value.comment_id+'"></i>'
                                      }
                                      nome +='</a></div></div>'
                                    }
