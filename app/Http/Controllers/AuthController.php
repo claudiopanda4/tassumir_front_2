@@ -460,6 +460,7 @@ class AuthController extends Controller
                  $dados['post_id']=$id->post_id;
                  $dados['page_id']= $id->page_id;
                  $dados['page_uuid']= $page[0]->uuid ;
+                 $dados['page_tipo_relac']= $page[0]->tipo_relacionamento_id;
                  $dados['post_uuid']= $id->uuid;
                  $aux_divisão_data = explode(' ', $id->created_at);
                  $dados['post_data']= $aux_divisão_data[0] ;
@@ -509,7 +510,7 @@ class AuthController extends Controller
                  }
                }
 
-               $aux_view= DB::table('views')->where('post_id', $id->post_id)->get();
+               $aux_view= DB::table('views')->where('post_id', $id->post_id)->where('conta_id',$conta_logada[0]->conta_id)->get();
                if (sizeof($aux_view)<=0) {
                  DB::table('views')->insert([
                    'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -598,9 +599,10 @@ class AuthController extends Controller
     $what_are_talking = $this->destacados();
 
     // $what_are_talking = $this->destaques();
-     $mudar_estado_view= DB::table('views')->where('state_views_id', 2)->limit(1)->get();
+     $mudar_estado_view= DB::table('views')->where('conta_id',$conta_logada[0]->conta_id)->where('state_views_id', 2)->limit(1)->get();
     if (sizeof($mudar_estado_view)>0) {
       DB::table('views')
+            ->where('conta_id',$conta_logada[0]->conta_id)
             ->where('state_views_id', 2)
             ->delete();
     }
@@ -1046,6 +1048,7 @@ class AuthController extends Controller
         $dados[0]['seguir_S_N']=sizeof($seguidor);
         $dados[0]['post_id']=$post[0]->post_id;
         $dados[0]['post_uuid']= $post[0]->uuid;
+        $dados[0]['page_tipo_relac']= $page[0]->tipo_relacionamento_id;
         $dados[0]['page_id']= $post[0]->page_id ;
         $dados[0]['page_uuid']= $page[$post[0]->page_id - 1]->uuid ;
         $dados[0]['reagir_S_N']=sizeof($ja_reagiu);
