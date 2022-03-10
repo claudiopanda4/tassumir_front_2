@@ -399,7 +399,7 @@ class AuthController extends Controller
           //  $post=DB::select('select p.post_id ,p.descricao,num, COUNT(c.post_id) as numc, (num + COUNT(c.post_id)) as total FROM (select p.post_id,p.descricao, COUNT(post_reactions.post_id) as num FROM posts as p LEFT JOIN post_reactions on post_reactions.post_id = p.post_id GROUP BY(p.post_id) ORDER BY p.post_id DESC) as p LEFT JOIN comments as c on c.post_id = p.post_id GROUP BY(p.post_id) ORDER BY total DESC LIMIT 20');
            /*$post=DB::select('select p.post_id,p.descricao,p.page_id,p.uuid,p.formato_id,p.estado_post_id,p.page_foto,p.file, (p.reactionaaa + p.commentaaa ) as total from (select p.*, (select pg.uuid from pages as pg where p.page_id = pg.page_id ) as page_uuid, (select pg.estado_pagina_id from pages as pg where p.page_id = pg.page_id ) as estado_pagina_id, (select pg.foto from pages as pg where p.page_id = pg.page_id ) as page_foto, (select count(*) from post_reactions as pr where pr.post_id = p.post_id) as reactionaaa, (select count(*) from comments as c where c.post_id = p.post_id) as commentaaa from posts as p order by p.post_id desc )as p order by total desc limit 20');
           $post = DB::select('select * from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id,p.descricao,p.formato_id,p.page_id,pa.nome as page_name,pa.foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL WHERE DATA_CRIACAO =now() ORDER BY SOMA DESC,AL.post_id DESC,DATA_CRIACAO DESC LIMIT 20');*/
-          $post = DB::select('select * from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id,p.descricao,p.formato_id,p.page_id,pa.nome as page_name,pa.foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');
+          $post = DB::select('select * from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id, p.uuid,p.descricao,p.estado_post_id,p.formato_id,p.page_id,pa.uuid as page_uuid,pa.nome as page_name,pa.estado_pagina_id as estado_pagina_id,pa.foto as page_foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');
 
                         $what_are_talking = array();
                         $i=0;
@@ -409,7 +409,7 @@ class AuthController extends Controller
                                 $melhores[$i]= $key->post_id;
                                 $what_are_talking[$i]['post']=$key->descricao;
                                 $what_are_talking[$i]['page_id']= $key->page_id ;
-                                $what_are_talking[$i]['page_uuid']= $key->page_uuid ;
+                                $what_are_talking[$i]['page_uuid']= $key->page_uuid;
                                 $what_are_talking[$i]['post_uuid']= $key->uuid;
                                 $what_are_talking[$i]['post_id']= $key->post_id;
                                 $what_are_talking[$i]['formato']=$key->formato_id;
