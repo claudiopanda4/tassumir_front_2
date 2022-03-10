@@ -108,6 +108,28 @@
                                 <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
                             </div>
                         @endif
+                        <?php if (false): ?>
+                            <div class="distinctiv distinctiv-">
+                                <h1 class="center">2c</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-casamento-igreja">
+                                <h1 class="center">ci</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-namoro">
+                                <h1 class="center">na</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-apresentado">
+                                <h1 class="center">ap</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-pedido">
+                                <h1 class="center">p</h1>
+                            </div>
+                        <?php endif ?>
+                        
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
@@ -324,7 +346,7 @@
                         </div>
                     </div>
                       <div class="comment-user-container comment-user-container-react">
-                        <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
+                        <a href="" class="comment-like-a" onclick = "reaction_comment(this)" id="on|{{$dados[$key]['comment_id']}}">
                             @if($dados[$key]['comment_S_N'] > 0)
                                 <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                             @else
@@ -343,28 +365,31 @@
         <?php //dd($last_post_dest.' '.$last_post_id); ?>
       <?php endif ?>
         <script type="text/javascript">
-                    $(document).click(function(e){
-                        let id_full = e.target.id;
-                        let id = id_full.split('|');
-                        let className = e.target.className;
-                        if (className.indexOf('savepost-more') > 0) {
-                            e.preventDefault();
-                        }
-                        if (className.indexOf('comment-post-more') > 0) {
-                            e.preventDefault();
-                            let id_final = e.target.id.split('-')[1];
-                            $('#comment-send-' + id_final).css({
-                                'display' : 'block',
-                            });
-                        }
-                        if (className.indexOf('comment-send-done-icon') > 0) {
-                            e.preventDefault();
-                        }
-                        if (className.indexOf('like-a-more') > 0) {
-                            e.preventDefault();
-                        }
-                        });
-                </script>
+            $(document).click(function(e){
+                let id_full = e.target.id;
+                let id = id_full.split('|');
+                let className = e.target.className;
+                if (className.indexOf('savepost-more') > 0) {
+                    e.preventDefault();
+                }
+                if (className.indexOf('comment-post-more') > 0) {
+                    e.preventDefault();
+                    let id_final = e.target.id.split('-')[1];
+                    $('#comment-send-' + id_final).css({
+                        'display' : 'block',
+                    });
+                }
+                if (className.indexOf('like-a-more') > 0) {
+                    e.preventDefault();
+                }
+                if (className.indexOf('comment-send-done-icon') > 0) {
+                    e.preventDefault();
+                }
+                if (className.indexOf('comment-like-a') > 0) {
+                    e.preventDefault();
+                }
+            });
+        </script>
         <?php if ($key == 3 || $key == 7): ?>
                 <section class="suggest-slide">
                     <header>
@@ -414,23 +439,22 @@
             <?php endif ?>
         <?php endforeach ?>
         <script type="text/javascript">
-            function teste(t){
+            function reaction_comment(e) {
+                let id_full = e.target.id;
+                let id = id_full.split('|')[1];
+                alert(id);
+            }
+            function like_ajax(t){
                 console.log(t);
                 let id_full = t.id;
                 let id = id_full.split('|')[1];
                 if (id_full.split('|')[0] == 'on') {
-                    id_full = 'off|' + id_full.split('|')[1] + '|i';
+                    id_full = id_full.split('|')[1];
                 } else {
-                    id_full = 'on|' + id_full.split('|')[1] + '|i';
+                    id_full = id_full.split('|')[1];
                 }
                 
                 like(id, id_full)
-                //evt.preventDefault();
-                /*let id_full = e.target.id;
-                let id = id_full.split('|');
-                //like(id[1], id_full);   */           
-                
-                //alert(id_full);
             }
             function like(id, id_full){
                         $.ajax({
@@ -459,6 +483,45 @@
                           }
                         });
                 }
+            function com(element){
+                let id = element.id;
+                let c = document.getElementById('comentario-' + id).value;
+                if(c != ''){
+                    $("#comment-own-" + id).text(c);
+                  $("#comment-users-own-" + id).css({
+                    display: "flex",
+                  });
+                  $("#comment-users-" + id).hide();
+                  $("#comentario-" + id).val('');
+                    comment(id, c);
+                }
+            }
+            function comment(id, c){
+                //alert('COMENT ' + c);
+                let comment_qtd = $("#comment-qtd-" + id).text().split(' ')[0];
+                $.ajax({
+                  url: "{{route('comentar')}}",
+                  type: 'get',
+                  data: {'id': id, 'comment': c},
+                   dataType: 'json',
+                   success:function(response){
+                   console.log(response);
+                   var nome = '';
+                   comment_qtd = parseInt(comment_qtd) + 1;
+                   $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
+                        nome +=     '<a href="" class="comment-like-a" onclick = reaction_comment(this) id="on|'+response[0]['comment_id']+'">'
+                        if(response[0]['comment_S_N'] > 0){
+                          nome +=            ' <i class="fas fa-heart fa-12 unliked" id="on|'+response[0]['comment_id']+'|i"></i>'
+                        }else{
+                          nome +=             '<i class="far fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
+                        }
+                        let new_comment = 'novo-comment-' + id;
+                        console.log(new_comment);
+                        $('#' + new_comment).append(nome);
+
+                  }
+                });
+              }
       </script>
       </div>
        <div class="reload-component" id="reload-component" name="reload-component"><img class="center" src="{{asset('storage/icons/aguarde1.gif')}}"></div>
@@ -601,7 +664,6 @@ function gostar(id){
          $('.seguir-' + id).hide();
          $('#li-component-suggest-' + id).remove();
          $('#li-component-sugest-' + id).remove();
-
         }
       });
     }
@@ -622,11 +684,11 @@ function gostar(id){
 
 
            nome +=     '<div name="comment-like">'
-           nome +=     '<a href="" class="comment-like-a" id="on|'+response[0]['comment_id']+'">'
+           nome +=     '<a href="" class="comment-like-a" onclick = reaction_comment(this) id="on|'+response[0]['comment_id']+'">'
                 if(response[0]['comment_S_N'] > 0){
                   nome +=            ' <i class="fas fa-heart fa-12 liked" id="on|'+response[0]['comment_id']+'|i"></i>'
                 }else{
-                  nome +=             '<i class="fas fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
+                  nome +=             '<i class="far fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
                 }
                 nome +=     '</a>'
                 nome +=     '</div>'
@@ -824,11 +886,11 @@ function gostar(id){
                                    nome +='<header class="clearfix">'
                                    nome +='<div class="first-component clearfix l-5">'
                                    if( !(value.foto_page == null) ){
-                                       nome += '<div class="page-cover circle l-5">'
+                                       nome += '<div class="page-cover page-cover-comment circle l-5">'
                                        nome += '<img  class="img-full circle" src=' + src1 + '/' + value.foto_page + '> </div>'
 
                                    }else{
-                                       nome += '<div class="page-cover circle l-5">'
+                                       nome += '<div class="page-cover page-cover-comment circle l-5">'
                                        nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"> </div>'
                                    }
                                    nome +='<div class="page-identify l-5 clearfix">'
@@ -872,11 +934,11 @@ function gostar(id){
                                      nome +='<li><a href="">0 partilhas</a></li>'
                                    }
                                    nome +=' </ul></nav><nav class="row clearfix interaction-user"><ul class="row clearfix ul-interaction-user"><li class="l-5"><div class="content-button">'
-                                   nome +='<a href="" class="like-a-more" onclick = teste(this) id="on|'+value.post_uuid+'">'
+                                   nome +='<a href="" class="like-a-more" onclick = like_ajax(this) id="on|'+value.post_uuid+'">'
                                    if (value.reagir_S_N  > 0) {
-                                     nome +='<i class="fas fa-heart center fa-16 liked like-a-more" id="on|'+value.post_uuid+'|i"></i> <h2 id="on|'+value.post_uuid+'|h2">Like</h2>'
+                                     nome +='<i class="fas fa-heart center fa-16 liked like-a-more" id="'+value.post_uuid+'"></i> <h2 id="on|'+value.post_uuid+'|h2">Like</h2>'
                                    }else {
-                                     nome +='<i class="far fa-heart center fa-16 unliked like-a-more" id="off|'+value.post_uuid+'|i"></i> <h2 id="off|'+value.post_uuid+'|h2">Like</h2>'
+                                     nome +='<i class="far fa-heart center fa-16 unliked like-a-more" id="'+value.post_uuid+'"></i> <h2 id="on|'+value.post_uuid+'|h2">Like</h2>'
                                    }
                                    nome +=' </a></div></li><li class="l-5"><div class="content-button comment-send-post" id="comment-'+value.post_id+'"><a href="" id="comment_a-'+value.post_id+'"><i class="far fa-comment-alt center fa-16 comment-post-more" id="comment_i-'+value.post_id+'"></i><h2>Comentar</h2></a></div></li>'
                                    nome +='<li class="r-5"><div class="content-button"><a href=""><i class="far fa-share-square fa-16"></i><h2>Partilhar</h2></a></div></li>'
@@ -890,7 +952,7 @@ function gostar(id){
                                      nome +='<div class="img-user-comment l-5"><i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i></div>'
                                    }
                                    nome +='<div class="input-text comment-send-text l-5 clearfix"><input type="text" class="" name="comentario" id="comentario-'+value.post_id+'" placeholder="O que você tem a dizer?">'
-                                   nome +='<div class="r-5 "><a href="" class="comentar-a" id="'+value.post_id+'"><i class="far fa-paper-plane fa-20 fa-img-comment comment-send-done-icon" id="'+value.post_id+'"></i></a></div>'
+                                   nome +='<div class="r-5 "><a href="" class="comentar-a" id="'+value.post_id+'"><i class="far fa-paper-plane fa-20 fa-img-comment comment-send-done-icon" id="'+value.post_id+'" onclick = com(this)></i></a></div>'
                                    if (false) {
                                      nome +='<div class="r-5 " id=""><a href=""><i class="far fa-images fa-20 fa-img-comment"></i></a></div'
                                    }
@@ -904,15 +966,15 @@ function gostar(id){
                                      }
                                    }else {
                                      if( !(value.foto_page == null) ){
-                                         nome += '<div class="page-cover circle l-5">'
+                                         nome += '<div class="page-cover page-cover-comment circle l-5">'
                                          nome += '<img  class="img-full circle" src=' + src1 + '/' + value.foto_page + '> </div>'
 
                                      }else{
-                                         nome += '<div class="page-cover circle l-5">'
+                                         nome += '<div class="page-cover page-cover-comment circle l-5">'
                                          nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"> </div>'
                                      }
                                    }
-                                   nome +='</div><div class="comment-user-comment comment-user-comment-feed"><p class="text-ellips" id="comment-own-'+value.post_id+'"></p></div></div><div class="comment-user-container comment-user-container-react" name="novo-comment"></div></div>'
+                                   nome +='</div><div class="comment-user-comment comment-user-comment-feed"><p class="text-ellips" id="comment-own-'+value.post_id+'"></p></div></div><div class="comment-user-container comment-user-container-react" id="novo-comment-' + value.post_id + '"></div></div>'
                                    if (value.qtd_comment>0) {
                                      nome +='<div class="comment-users" id="comment-users-'+value.post_id+'"><div class="comment-user-container" ><div class="user-identify-comment user-identify-comment-feed">'
                                      if (value.foto_ver==1) {
@@ -928,12 +990,12 @@ function gostar(id){
                                          nome +='<div class="profille-img"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
                                        }
                                      }
-                                     nome +='<h2 class="text-ellips">'+value.nome_comment+'</h2></div><div class="comment-user-comment comment-user-comment-feed"><p class="text-ellips">'+value.comment+'</p></div> </div><div class="comment-user-container comment-user-container-react"><a href="" class="comment-like-a" id="on|'+value.comment_id+'">'
+                                     nome +='<h2 class="text-ellips">'+value.nome_comment+'</h2></div><div class="comment-user-comment comment-user-comment-feed"><p class="text-ellips">'+value.comment+'</p></div> </div><div class="comment-user-container comment-user-container-react"><a href="" class="comment-like-a" onclick = reaction_comment(this) id="on|'+value.comment_id+'">'
                                      nome +=''
                                      if (value.comment_S_N>0) {
                                        nome +='<i class="fas fa-heart fa-12 liked" id="on|'+value.comment_id+'|i"></i>'
                                      }else {
-                                       nome +=' <i class="far fa-heart fa-12 unliked" id="off|'+value.comment_id+'|i"></i>'
+                                       nome +=' <i class="far fa-heart fa-12 unliked" id="'+value.comment_id+'"></i>'
                                      }
                                      nome +='</a></div></div>'
                                    }
@@ -1010,15 +1072,16 @@ function gostar(id){
                                                 add_view(watched_video);
                                             }
                                         } else {
+                                            document.getElementById('play_button_' + id).classList.remove('invisible');
                                             if (document.getElementById('video_' + id).readyState == 4) {
-                                                document.getElementById('video_' + id).play();
-                                                document.getElementById('play_button_' + id).classList.add('invisible');
+                                                //document.getElementById('video_' + id).play();
+                                                //document.getElementById('play_button_' + id).classList.add('invisible');
                                             }
                                         }
                                     }
 
                                 } else {
-                                    document.getElementById('video_' + id).pause();
+                                    //document.getElementById('video_' + id).pause();
                                     document.getElementById('play_button_' + id).classList.remove('invisible');
                                     //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
                                 }

@@ -146,6 +146,12 @@
 	    display: block;
 	    margin-left: 5px;
 	}
+	.menu-header ul li.mobile-hidden-notify-icon,
+	.menu-header ul li.mobile-lg-notify,
+	.menu-header ul li.mobile-header-icon,
+	.menu-header ul li.mobile-header-icon {
+	    margin-top: 8px;
+	}
 	.menu-header ul {
 	    margin-left: -40px;
 	    margin-bottom: 0;
@@ -367,7 +373,8 @@
 	}
 	.options-profile-btn {
 		width: 47.5%;
-		margin-right: 5px;
+		margin-right: 1%;
+		margin-left: 1%;
 		margin-top: 0;
 	}
 	#options-profile-btn-profile {
@@ -676,7 +683,7 @@
 		width: 150px;
 	}
 	.comment-user-comment {
-		margin: 10px 10px 10px;
+		margin: 2px;
 	}
 	.suggest-slide {
 		display: block;
@@ -956,7 +963,8 @@
 	    width: 65%;
 	}
 	.comment-users {	    
-		width: 290px;
+		width: 280px;
+    	margin-left: 20px;
 	}
 	.user-identify-comment {
 	    width: 230px;
@@ -1068,6 +1076,14 @@
 	    overflow-y: auto;
 	    overflow-x: hidden;
 	}
+	.comment-users {
+	    width: 270px;
+	    margin-left: 53px;
+	}
+	.comment-users.comment-blade {
+	    width: 90%;
+	    margin-left: 5%;
+	}
 }
 @media screen and (max-width: 500px) {
 	.video-post {
@@ -1139,6 +1155,9 @@
 		border: none;
 		border-radius: 0;
 		border-top: 1px solid #343a40;
+	}
+	.distinctiv {
+	    border: 2px solid #000;
 	}
 	#refresh-profile-photo-id {
 	    display: block;
@@ -1263,6 +1282,10 @@
 	.menu-footer {
 	    background-color: #000;
 	}
+	.number-notification {
+	    top: -10px;
+	    right: -10px;
+	}
 	.filter-main-search-mobile::-webkit-scrollbar {
 		width: 0px;
 		height: 2px;
@@ -1270,4 +1293,15 @@
 	.filter-main-search-mobile::-webkit-scrollbar-thumb {
 		width: 0px;
 	}
+}
+@media screen and (max-width: 360px){
+	.comment-user-comment.comment-user-comment-feed p {
+	    font-size: 11px;
+	    max-width: 140px;
+	}	
+}
+@media screen and (max-width: 470px){
+	.btn-a-default {
+	    font-size: 11px;
+	}	
 }

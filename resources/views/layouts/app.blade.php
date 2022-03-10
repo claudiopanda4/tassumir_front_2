@@ -31,7 +31,7 @@
         <header class="header-main header-main-component clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
-                    <a href="{{route('account.home')}}"><i class="fas fa-link fa-24"></i><h1>Tass<span class="title-final">umir</span></h1></a>
+                    <a href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1>Tass<span class="title-final">umir</span></h1></a>
                 </li>
                 <li class="search-lg mobile-hidden">
                     <div class="input-search">
@@ -628,7 +628,7 @@
             </div>
             <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
                 <div class="" id="cover-done">
-                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Publicar</button>
+                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Publicar</button>
                 </div>
             </div>
         <!-- </form> -->
@@ -661,7 +661,7 @@
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
             <label for="target-profile-cover-post" class="label-full">
                 <div class="cover-done checker" id="cover-done-post">
-                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
+                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px; width: 100%;">Concluido</h2>
                 </div>
             </label>
         </div>
@@ -692,7 +692,7 @@
                     <input class="file" type="file" name="pagePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
-                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Concluido</button>
 
                         </div>
                     </div>
@@ -725,7 +725,7 @@
                     <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
-                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 14px; width: 100%;">Concluido</button>
 
                         </div>
                     </div>
@@ -761,7 +761,7 @@
                 <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                     <label for="target-profile-cover-post" class="label-full">
                         <div class="cover-done" id="">
-                          <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                          <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Concluido</button>
                           <button type="button" name="button">aaaaa</button>
                         </div>
                     </label>
@@ -821,7 +821,7 @@
                     <input type="hidden" name="tipo_relac"  id="relationship-type-selected">
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done-marriage">
-                          <button type="submit" name="button" style="padding: 10px; font-size: 14px;" >
+                          <button type="submit" name="button" style="padding: 10px; font-size: 14px; width: 100%" >
                             Concluido
                             </button>
                         </div>
@@ -937,7 +937,7 @@
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
             <label for="target-profile-cover-post" class="label-full">
                 <div class="cover-done checker" id="cover-done-post">
-                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
+                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px; width: 100%;">Concluido</h2>
                 </div>
             </label>
         </div>
@@ -945,6 +945,10 @@
 </div>
 <?php endif ?>
 <script type="text/javascript">
+    $(document).click(function (e) {
+         let className = e.target.className;
+         if (className.indexOf('comment-user-container-react') > 0) {e.preventDefault();}
+    });
     $(document).ready(function () {
         //alert($('main').scrollTop());
         $(window).scroll(function() {
@@ -1248,7 +1252,18 @@
                 opacity : 1
             });
       });
-
+      $('.video-post-video').click(function(e){
+        let id = e.target.id;
+        //let state_video = document.getElementById(id).play();
+        console.log($('.video-post-video'));
+        if (document.getElementById(id).paused) {
+            document.getElementById(id).play();
+            document.getElementById('play_button_' + id.split('_')[1]).classList.add('invisible');
+        } else {
+            document.getElementById('play_button_' + id.split('_')[1]).classList.remove('invisible');
+            document.getElementById(id).pause();
+        }
+      });
       $('#edit-page-cover-profile').click(function(evt){
             evt.preventDefault();
             $('#cover-page-post').css({
@@ -1660,11 +1675,12 @@ $.ajax({
         $('.play_button').click(function(e){
             let id = e.target.id.split('_')[2];
             let video = $('#video_' + id).offset();
-            //console.log('margem top ' + video.top)
-            if (true) {
-                $('#video_' + id).get(0).play();
+            if (document.getElementById('video_' + id).paused) {
+                document.getElementById('video_' + id).play();
+                document.getElementById(id).classList.remove('invisible');
             } else {
-                $('#video_' + id).get(0).pause();
+                document.getElementById('video_' + id).pause();
+                document.getElementById(id).classList.add('invisible');
             }
         });
 
@@ -1678,6 +1694,7 @@ $.ajax({
 
 /* SIENE CODING  */
 
+if (document.getElementById('#putInfo')) {
   function checkDuration(file_control) {
     
     let fileType = file_control.files[0].type;
@@ -1707,7 +1724,9 @@ $.ajax({
   function check_for_file_type(fileType) {
     
     return fileType == 'video/mp4' || fileType == 'video/avi' || fileType =='video/ogg' || fileType =='video/mkv' || fileType =='video/3gp' || fileType =='video/wmv' || fileType =='video/flv';
-  }
+  }    
+}
+
 
 
 /* END SIENE CODING  */
