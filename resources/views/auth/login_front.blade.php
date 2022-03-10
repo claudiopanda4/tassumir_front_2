@@ -34,7 +34,7 @@
             <div style="height: 1px;"></div>
             <header class="logo-form" id="logo-login-form-lg" style="margin-left: 10px;">
                 <div class="title clearfix">
-                    <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
+                    <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                 </div>
             </header>
             <div class="cover-login" id="cover-login-id">
@@ -43,7 +43,7 @@
             <div class="" id="main-login">
                 <header class="logo-form" id="title-login">
                     <div class="title clearfix">
-                        <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
+                        <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                     </div>
                 </header>
                 
