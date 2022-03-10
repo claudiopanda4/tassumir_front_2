@@ -387,13 +387,19 @@ class AuthController extends Controller
           }
 
           public function destaques(){
-            $post= DB::table('posts')->where('estado_post_id', '=', 1)
+            /*$post= DB::table('posts')->where('estado_post_id', '=', 1)
             ->orderBy('total_reactions_comments', 'desc')
             ->orderBy('post_id', 'desc')
             ->limit(20)
             ->join('pages', 'pages.page_id', '=', 'posts.page_id')
             ->select('posts.*', 'pages.estado_pagina_id', 'pages.uuid as page_uuid', 'pages.foto as page_foto')
-            ->get();
+            ->get();*/
+
+          //  $view_post = DB::select('select post_id, formato_id, description, conta_id, file, nome, foto, uuid from (select post_id, formato_id, page_id, descricao as description, conta_id, file from (select post_id as post_id_post, formato_id, page_id, descricao, file from posts) posts join views as v on v.post_id = posts.post_id_post WHERE formato_id = ?) posts join pages as p on p.page_id = posts.page_id', [1]);
+          //  $post=DB::select('select p.post_id ,p.descricao,num, COUNT(c.post_id) as numc, (num + COUNT(c.post_id)) as total FROM (select p.post_id,p.descricao, COUNT(post_reactions.post_id) as num FROM posts as p LEFT JOIN post_reactions on post_reactions.post_id = p.post_id GROUP BY(p.post_id) ORDER BY p.post_id DESC) as p LEFT JOIN comments as c on c.post_id = p.post_id GROUP BY(p.post_id) ORDER BY total DESC LIMIT 20');
+           /*$post=DB::select('select p.post_id,p.descricao,p.page_id,p.uuid,p.formato_id,p.estado_post_id,p.page_foto,p.file, (p.reactionaaa + p.commentaaa ) as total from (select p.*, (select pg.uuid from pages as pg where p.page_id = pg.page_id ) as page_uuid, (select pg.estado_pagina_id from pages as pg where p.page_id = pg.page_id ) as estado_pagina_id, (select pg.foto from pages as pg where p.page_id = pg.page_id ) as page_foto, (select count(*) from post_reactions as pr where pr.post_id = p.post_id) as reactionaaa, (select count(*) from comments as c where c.post_id = p.post_id) as commentaaa from posts as p order by p.post_id desc )as p order by total desc limit 20');
+          $post = DB::select('select * from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id,p.descricao,p.formato_id,p.page_id,pa.nome as page_name,pa.foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL WHERE DATA_CRIACAO =now() ORDER BY SOMA DESC,AL.post_id DESC,DATA_CRIACAO DESC LIMIT 20');*/
+          $post = DB::select('select * from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id,p.descricao,p.formato_id,p.page_id,pa.nome as page_name,pa.foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');
 
                         $what_are_talking = array();
                         $i=0;
@@ -596,9 +602,9 @@ class AuthController extends Controller
 
      */
 
-    $what_are_talking = $this->destacados();
+    $what_are_talking = $this->destaques();
 
-    // $what_are_talking = $this->destaques();
+  //   $what_are_talking = [];
      $mudar_estado_view= DB::table('views')->where('conta_id',$conta_logada[0]->conta_id)->where('state_views_id', 2)->limit(1)->get();
     if (sizeof($mudar_estado_view)>0) {
       DB::table('views')
@@ -609,13 +615,12 @@ class AuthController extends Controller
      $post_controller = new PageController();
      $array_aux=array();
      $dados=array();
-     $post = $post_controller->get_posts(0, 0, $array_aux, 0);
+     $post = $post_controller->PP(0);
      $a=0;
      //dd($post);
      if (sizeof($post)>0) {
        foreach ($post as $key) {
-         $page= DB::table('pages')->where('page_id', $key->page_id)->get();
-         if ($page[0]->estado_pagina_id == 1){
+         if ($key->estado_pagina_id == 1){
            $dados[$a] = $this->DadosPost($key);
          }
          $a++;
@@ -934,13 +939,12 @@ class AuthController extends Controller
     $post_controller = new PageController();
     $array_aux=array();
     $dados=array();
-    $post = $post_controller->get_posts(0, 0, $array_aux, 1);
+    $post = $post_controller->PP(1);
     $a=0;
     //dd($post);
     if (sizeof($post)>0) {
       foreach ($post as $key) {
-        $page= DB::table('pages')->where('page_id', $key->page_id)->get();
-        if ($page[0]->estado_pagina_id == 1){
+        if ($key->estado_pagina_id == 1){
           $dados[$a] = $this->DadosPost($key);
         }
         $a++;
