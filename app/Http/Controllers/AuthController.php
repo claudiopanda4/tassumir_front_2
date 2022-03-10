@@ -460,6 +460,7 @@ class AuthController extends Controller
                  $dados['post_id']=$id->post_id;
                  $dados['page_id']= $id->page_id;
                  $dados['page_uuid']= $page[0]->uuid ;
+                 $dados['page_tipo_relac']= $page[0]->tipo_relacionamento_id;
                  $dados['post_uuid']= $id->uuid;
                  $aux_divisão_data = explode(' ', $id->created_at);
                  $dados['post_data']= $aux_divisão_data[0] ;
@@ -509,7 +510,7 @@ class AuthController extends Controller
                  }
                }
 
-               $aux_view= DB::table('views')->where('post_id', $id->post_id)->get();
+               $aux_view= DB::table('views')->where('post_id', $id->post_id)->where('conta_id',$conta_logada[0]->conta_id)->get();
                if (sizeof($aux_view)<=0) {
                  DB::table('views')->insert([
                    'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -598,9 +599,10 @@ class AuthController extends Controller
     $what_are_talking = $this->destacados();
 
     // $what_are_talking = $this->destaques();
-     $mudar_estado_view= DB::table('views')->where('state_views_id', 2)->limit(1)->get();
+     $mudar_estado_view= DB::table('views')->where('conta_id',$conta_logada[0]->conta_id)->where('state_views_id', 2)->limit(1)->get();
     if (sizeof($mudar_estado_view)>0) {
       DB::table('views')
+            ->where('conta_id',$conta_logada[0]->conta_id)
             ->where('state_views_id', 2)
             ->delete();
     }
@@ -1046,6 +1048,7 @@ class AuthController extends Controller
         $dados[0]['seguir_S_N']=sizeof($seguidor);
         $dados[0]['post_id']=$post[0]->post_id;
         $dados[0]['post_uuid']= $post[0]->uuid;
+        $dados[0]['page_tipo_relac']= $page[0]->tipo_relacionamento_id;
         $dados[0]['page_id']= $post[0]->page_id ;
         $dados[0]['page_uuid']= $page[$post[0]->page_id - 1]->uuid ;
         $dados[0]['reagir_S_N']=sizeof($ja_reagiu);
@@ -1242,15 +1245,15 @@ public function dados_comment($key){
                 'reactions' => $reactions_number,
                 'state' => 'like',
                 'add' => [
-                    1 => 'far'
-                ],
-                'remove' => [
                     1 => 'fas',
                     2 => 'liked',
                 ],
+                'remove' => [
+                    1 => 'far',
+                ],
               ];
 
-            } elseif (sizeof($likes_verificacao) == 1){
+            } elseif (sizeof($likes_verificacao) > 0){
               DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
               /*DB::table('posts')
                 ->where('post_id', $post[0]->post_id)
@@ -1259,29 +1262,17 @@ public function dados_comment($key){
                   'total_reactions_comments'=> $post[0]->total_reactions_comments - 1,
                   'updated_at' => $this->dat_create_update()
                 ]);*/
-              $reactions_number++;
+              $reactions_number--;
               $resposta = [
                 'id' => $id_full,
                 'reactions' => $reactions_number,
                 'state' => 'unlike',
                 'add' => [
+                    1 => 'far',
+                ],
+                'remove' => [
                     1 => 'fas',
                     2 => 'liked',
-                ],
-                'remove' => [
-                    1 => 'far',
-                ],
-              ];
-              $resposta = [
-                'id' => $id_full,
-                'reactions' => $reactions_number,
-                'state' => 'like',
-                'add' => [
-                    1 => 'fas',
-                    2=> 'liked'
-                ],
-                'remove' => [
-                    1 => 'far',
                 ],
               ];
             }
