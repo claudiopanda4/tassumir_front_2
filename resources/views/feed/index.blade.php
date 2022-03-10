@@ -1073,15 +1073,15 @@ function gostar(id){
                                             }
                                         } else {
                                             if (document.getElementById('video_' + id).readyState == 4) {
-                                                document.getElementById('video_' + id).play();
-                                                document.getElementById('play_button_' + id).classList.add('invisible');
+                                                //document.getElementById('video_' + id).play();
+                                                //document.getElementById('play_button_' + id).classList.add('invisible');
                                             }
                                         }
                                     }
 
                                 } else {
-                                    document.getElementById('video_' + id).pause();
-                                    document.getElementById('play_button_' + id).classList.remove('invisible');
+                                    //document.getElementById('video_' + id).pause();
+                                    //document.getElementById('play_button_' + id).classList.remove('invisible');
                                     //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
                                 }
                             }

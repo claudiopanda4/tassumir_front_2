@@ -1252,7 +1252,18 @@
                 opacity : 1
             });
       });
-
+      $('.video-post-video').click(function(e){
+        let id = e.target.id;
+        //let state_video = document.getElementById(id).play();
+        console.log($('.video-post-video'));
+        if (document.getElementById(id).paused) {
+            document.getElementById(id).play();
+            document.getElementById('play_button_' + id.split('_')[1]).classList.add('invisible');
+        } else {
+            document.getElementById('play_button_' + id.split('_')[1]).classList.remove('invisible');
+            document.getElementById(id).pause();
+        }
+      });
       $('#edit-page-cover-profile').click(function(evt){
             evt.preventDefault();
             $('#cover-page-post').css({
@@ -1664,11 +1675,12 @@ $.ajax({
         $('.play_button').click(function(e){
             let id = e.target.id.split('_')[2];
             let video = $('#video_' + id).offset();
-            //console.log('margem top ' + video.top)
-            if (true) {
-                $('#video_' + id).get(0).play();
+            if (document.getElementById('video_' + id).paused) {
+                document.getElementById('video_' + id).play();
+                document.getElementById(id).classList.remove('invisible');
             } else {
-                $('#video_' + id).get(0).pause();
+                document.getElementById('video_' + id).pause();
+                document.getElementById(id).classList.add('invisible');
             }
         });
 
@@ -1682,6 +1694,7 @@ $.ajax({
 
 /* SIENE CODING  */
 
+if (document.getElementById('#putInfo')) {
   function checkDuration(file_control) {
     
     let fileType = file_control.files[0].type;
@@ -1711,7 +1724,9 @@ $.ajax({
   function check_for_file_type(fileType) {
     
     return fileType == 'video/mp4' || fileType == 'video/avi' || fileType =='video/ogg' || fileType =='video/mkv' || fileType =='video/3gp' || fileType =='video/wmv' || fileType =='video/flv';
-  }
+  }    
+}
+
 
 
 /* END SIENE CODING  */
