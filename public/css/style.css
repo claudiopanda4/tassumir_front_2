@@ -1648,8 +1648,8 @@ label[for="hugo"]{
 }
 .li-component-suggest div.sugest_component {
     position: relative;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     border: 3px solid #800080;
     margin: 10px auto;
 }
