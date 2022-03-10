@@ -1072,6 +1072,7 @@ function gostar(id){
                                                 add_view(watched_video);
                                             }
                                         } else {
+                                            document.getElementById('play_button_' + id).classList.remove('invisible');
                                             if (document.getElementById('video_' + id).readyState == 4) {
                                                 //document.getElementById('video_' + id).play();
                                                 //document.getElementById('play_button_' + id).classList.add('invisible');
@@ -1081,7 +1082,7 @@ function gostar(id){
 
                                 } else {
                                     //document.getElementById('video_' + id).pause();
-                                    //document.getElementById('play_button_' + id).classList.remove('invisible');
+                                    document.getElementById('play_button_' + id).classList.remove('invisible');
                                     //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
                                 }
                             }
