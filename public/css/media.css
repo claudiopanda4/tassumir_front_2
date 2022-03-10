@@ -373,7 +373,8 @@
 	}
 	.options-profile-btn {
 		width: 47.5%;
-		margin-right: 5px;
+		margin-right: 1%;
+		margin-left: 1%;
 		margin-top: 0;
 	}
 	#options-profile-btn-profile {
@@ -682,7 +683,7 @@
 		width: 150px;
 	}
 	.comment-user-comment {
-		margin: 10px 10px 10px;
+		margin: 2px;
 	}
 	.suggest-slide {
 		display: block;
@@ -962,7 +963,8 @@
 	    width: 65%;
 	}
 	.comment-users {	    
-		width: 290px;
+		width: 280px;
+    	margin-left: 20px;
 	}
 	.user-identify-comment {
 	    width: 230px;
@@ -1073,6 +1075,14 @@
 	    height: 80vh;
 	    overflow-y: auto;
 	    overflow-x: hidden;
+	}
+	.comment-users {
+	    width: 270px;
+	    margin-left: 53px;
+	}
+	.comment-users.comment-blade {
+	    width: 90%;
+	    margin-left: 5%;
 	}
 }
 @media screen and (max-width: 500px) {
@@ -1283,4 +1293,15 @@
 	.filter-main-search-mobile::-webkit-scrollbar-thumb {
 		width: 0px;
 	}
+}
+@media screen and (max-width: 360px){
+	.comment-user-comment.comment-user-comment-feed p {
+	    font-size: 11px;
+	    max-width: 140px;
+	}	
+}
+@media screen and (max-width: 470px){
+	.btn-a-default {
+	    font-size: 11px;
+	}	
 }

@@ -1201,6 +1201,8 @@ public function dados_comment($key){
             $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
             $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
             $likes_verificacao = DB::select('select post_reaction_id from post_reactions where (post_id,identificador_id) = (?, ?)', [$post[0]->post_id, $aux[0]->identificador_id]);
+            $likes_total = DB::select('select post_reaction_id from post_reactions where (post_id) = (?)', [$post[0]->post_id]);
+            $likes_total = sizeof($likes_total);
             $resposta = 0;
             $id_full = $request->id_full;
             $reactions_number = sizeof($likes_verificacao);
@@ -1219,7 +1221,7 @@ public function dados_comment($key){
                     'updated_at' => $this->dat_create_update()
                   ]);*/
               if ($page[0]->conta_id_a != $conta[0]->conta_id && $page[0]->conta_id_b != $conta[0]->conta_id) {
-              DB::table('notifications')->insert([
+                DB::table('notifications')->insert([
                     'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                     'id_state_notification' => 2,
                     'id_action_notification' => 1,
@@ -1228,21 +1230,21 @@ public function dados_comment($key){
                     'identificador_id_receptor'=> $aux2[0]->identificador_id,
                     'created_at'=> $this->dat_create_update(),
                     ]);
-                  DB::table('notifications')->insert([
-                          'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                          'id_state_notification' => 2,
-                          'id_action_notification' => 1,
-                          'identificador_id_causador'=> $aux[0]->identificador_id,
-                          'identificador_id_destino'=> $aux4[0]->identificador_id,
-                          'identificador_id_receptor'=> $aux3[0]->identificador_id,
-                          'created_at'=> $this->dat_create_update(),
+                DB::table('notifications')->insert([
+                    'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'id_state_notification' => 2,
+                    'id_action_notification' => 1,
+                    'identificador_id_causador'=> $aux[0]->identificador_id,
+                    'identificador_id_destino'=> $aux4[0]->identificador_id,
+                    'identificador_id_receptor'=> $aux3[0]->identificador_id,
+                    'created_at'=> $this->dat_create_update(),
 
-                          ]);
-                        }
-            $reactions_number++;
+                    ]);
+                }
+            $likes_total++;
               $resposta = [
                 'id' => $id_full,
-                'reactions' => $reactions_number,
+                'reactions' => $likes_total,
                 'state' => 'like',
                 'add' => [
                     1 => 'fas',
@@ -1262,10 +1264,10 @@ public function dados_comment($key){
                   'total_reactions_comments'=> $post[0]->total_reactions_comments - 1,
                   'updated_at' => $this->dat_create_update()
                 ]);*/
-              $reactions_number--;
+              $likes_total--;
               $resposta = [
                 'id' => $id_full,
-                'reactions' => $reactions_number,
+                'reactions' => $likes_total,
                 'state' => 'unlike',
                 'add' => [
                     1 => 'far',

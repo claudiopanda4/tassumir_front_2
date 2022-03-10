@@ -144,6 +144,9 @@ body {
 .title-log-reg i, 
 .title-log-reg h1 {
     display: inline-block;
+    margin-left: -16px;
+    margin-top: 11px;
+    font-size: 33px;
 }
 #title-login i {
     margin-right: 10px;
@@ -153,7 +156,7 @@ body {
 }
 #title-login div, 
 .title-log-reg div {
-    width: 200px;
+    width: 220px;
     margin: 5px auto;
 }
 .form-group label {
@@ -1559,6 +1562,7 @@ label[for="hugo"]{
 }
 .comment-send .fa-img-comment.fa-paper-plane {
     display: block;
+    font-size: 17px;
 }
 .stories-about-talking nav {
     
@@ -1772,6 +1776,9 @@ label[for="hugo"]{
     justify-content: flex-start;
     width: 96%;
     margin-left: 20px;
+    margin-bottom: 10px;
+}
+.hidden-click-any-container.noti-flex-info {
     margin-bottom: 10px;
 }
 .noti-info-aside {
@@ -2113,7 +2120,7 @@ label[for="hugo"]{
     width: 100%;
 }
 #options-profile-mobile-user-log {
-    width: 95%;
+    width: 75%;
     margin: auto;
 }
 #options-profile-mobile-user-log-pages  {
@@ -2636,6 +2643,7 @@ label[for="hugo"]{
     display: flex;
     justify-content: space-between;
     margin-left: 60px;
+    width: 75%;
 }
 .user-identify-comment {
     padding-left: 10px;
@@ -2657,7 +2665,7 @@ label[for="hugo"]{
     padding: 5px;
     font-size: 11px;
     color: #fff;
-    padding-top: 10px;
+    padding-top: 6px;
     width: 85px;
 }
 .user-identify-comment h2, 
@@ -2665,13 +2673,13 @@ label[for="hugo"]{
     display: inline-flex;
 }
 .comment-user-comment {
-    margin: 10px 10px 10px;
+    margin: 2px;
 }
 .comment-user-comment p {
     color: #fff;
     font-size: 12px;
     padding: 7px;
-    display: inline-flex;
+    display: block;
     width: auto;
     max-width: 170px;
     padding-top: 14px;
@@ -2681,7 +2689,10 @@ label[for="hugo"]{
 }
 .comment-user-comment.comment-user-comment-feed p {
     max-width: 127px;
+    margin-top: 10px;
     background-color: transparent;
+    padding: 0 10px;
+    margin-bottom: 0;
 }
 .comment-user-container {
     display: flex;
@@ -2699,10 +2710,11 @@ label[for="hugo"]{
     width: 310px;
     border-radius: 10px;
     margin: 10px;
-    margin-left: 60px;
+    margin-left: 93px;
 }
 .comment-users-own .user-identify-comment {
-    width: 40px;
+    width: 50px;
+    margin-bottom: 5px;
 }
 .img-profile-page-container {
     position: relative;
@@ -2765,9 +2777,9 @@ label[for="hugo"]{
     display: none;
 }
 .comment-user-comment .user {
-    font-size: 13px;
+    font-size: 12px;
     color: #fff;
-    margin-top: -5px;
+    margin: 4px;
 }
 .btn-message {
     position: relative;
@@ -3262,7 +3274,7 @@ label[for="hugo"]{
     background-color: #fd09fd;
     border-radius: 50%;
     top: 10px;
-    right: 10px;
+    right: 20px;
 }
 .cancel-delete {
     border: none;
@@ -3407,4 +3419,20 @@ label[for="hugo"]{
 }
 .distinctiv-apresentado {
     background-color: #9c27b0;
+}
+.page-cover.page-cover-comment {
+    width: 28px;
+    height: 28px;
+}
+.card-post .comment-user-comment-feed p {
+    margin-left: 5px;
+    margin-top: 10px;
+}
+#my-pages-profile-mobile {
+    width: 77%;
+}
+.img-logo {
+    width: 50px;
+    height: 45px;
+    border-radius: 50%;
 }

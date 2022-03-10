@@ -341,8 +341,30 @@ function gostar(id){
            var nome = '';
            comment_qtd = parseInt(comment_qtd) + 1;
            $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
+                nome +=     '<a href="" class="comment-like-a" id="on|'+response[0]['comment_id']+'">'
+                if(response[0]['comment_S_N'] > 0){
+                  nome +=            ' <i class="fas fa-heart fa-12 liked" id="on|'+response[0]['comment_id']+'|i"></i>'
+                }else{
+                  nome +=             '<i class="fas fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
+                }
+                    $('div[name=novo-comment]').append(nome);
 
+          }
+        });
+      }
 
+    function comment(id, c){
+        let comment_qtd = $("#comment-qtd-" + id).text().split(' ')[0];
+        $.ajax({
+          url: "{{route('comentar')}}",
+          type: 'get',
+          data: {'id': id, 'comment': c},
+           dataType: 'json',
+           success:function(response){
+           console.log(response);
+           var nome = '';
+           comment_qtd = parseInt(comment_qtd) + 1;
+           $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
                 nome +=     '<a href="" class="comment-like-a" id="on|'+response[0]['comment_id']+'">'
                 if(response[0]['comment_S_N'] > 0){
                   nome +=            ' <i class="fas fa-heart fa-12 liked" id="on|'+response[0]['comment_id']+'|i"></i>'

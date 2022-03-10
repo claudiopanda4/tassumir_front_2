@@ -628,7 +628,7 @@
             </div>
             <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
                 <div class="" id="cover-done">
-                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Publicar</button>
+                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Publicar</button>
                 </div>
             </div>
         <!-- </form> -->
@@ -661,7 +661,7 @@
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
             <label for="target-profile-cover-post" class="label-full">
                 <div class="cover-done checker" id="cover-done-post">
-                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
+                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px; width: 100%;">Concluido</h2>
                 </div>
             </label>
         </div>
@@ -692,7 +692,7 @@
                     <input class="file" type="file" name="pagePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
-                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Concluido</button>
 
                         </div>
                     </div>
@@ -725,7 +725,7 @@
                     <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done">
-                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 14px; width: 100%;">Concluido</button>
 
                         </div>
                     </div>
@@ -761,7 +761,7 @@
                 <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                     <label for="target-profile-cover-post" class="label-full">
                         <div class="cover-done" id="">
-                          <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Concluido</button>
+                          <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Concluido</button>
                           <button type="button" name="button">aaaaa</button>
                         </div>
                     </label>
@@ -821,7 +821,7 @@
                     <input type="hidden" name="tipo_relac"  id="relationship-type-selected">
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                         <div class="cover-done" id="cover-done-marriage">
-                          <button type="submit" name="button" style="padding: 10px; font-size: 14px;" >
+                          <button type="submit" name="button" style="padding: 10px; font-size: 14px; width: 100%" >
                             Concluido
                             </button>
                         </div>
@@ -937,7 +937,7 @@
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
             <label for="target-profile-cover-post" class="label-full">
                 <div class="cover-done checker" id="cover-done-post">
-                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px;">Concluido</h2>
+                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px; width: 100%;">Concluido</h2>
                 </div>
             </label>
         </div>
@@ -945,6 +945,10 @@
 </div>
 <?php endif ?>
 <script type="text/javascript">
+    $(document).click(function (e) {
+         let className = e.target.className;
+         if (className.indexOf('comment-user-container-react') > 0) {e.preventDefault();}
+    });
     $(document).ready(function () {
         //alert($('main').scrollTop());
         $(window).scroll(function() {
