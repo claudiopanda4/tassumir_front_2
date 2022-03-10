@@ -239,6 +239,7 @@ class PageController extends Controller
      */
     public function show($id)
     {
+      
         $auth = new AuthController();
         $dates = $auth->default_();
         $account_name = $dates['account_name'];
