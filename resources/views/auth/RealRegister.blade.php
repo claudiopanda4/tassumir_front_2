@@ -96,9 +96,9 @@
 
             <span class="hidden" style="color:red;" id="erroData"> Insira a Data de Nascimento</span>
 
-            <div class="row" style="margin-top: 10px;">
+            <div class="row" style="" id="genre-id-container">
 
-              <div class="col-md-8">
+              <div class="col-md-8" id="genre-id-component">
 
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="sexo" id="exampleRadios1" value="Masculino" checked>
@@ -110,7 +110,7 @@
 
               </div>
 
-              <div class="col-md-4">
+              <div class="col-md-4" id="genre-id-component">
 
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="sexo" id="exampleRadios2" value="Feminino">

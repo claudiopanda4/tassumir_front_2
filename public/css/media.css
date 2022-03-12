@@ -790,6 +790,9 @@
 	.statistics-profile-page-component h2 {
 	    font-size: 12px;
 	}
+	#genre-id-container {
+	    margin-right: 10px;
+	}
 	.input-login {
 	    margin: 5px auto;
 	}
@@ -1305,6 +1308,10 @@
 	}
 }
 @media screen and (max-width: 720px) {
+	#login-register {
+	    background-color: #3b3b3b;
+	    border: 1px solid #3b3b3b;
+	}
 	.menu-footer {
 	    background-color: #000;
 	}
