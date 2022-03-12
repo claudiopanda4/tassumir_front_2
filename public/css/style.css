@@ -160,6 +160,9 @@ body {
 #title-login i {
     margin-right: 10px;
 }
+.form-group {
+    margin-bottom: 5px;
+}
 #title-login .title-final {
     color: #800080;
 }
@@ -3108,7 +3111,7 @@ label[for="hugo"]{
 #password_login_id #eye {
     position: absolute;
     right: 15px;
-    top: 40px;
+    top: 36px;
 }
 .header-img-post-video {
     width: 40px;
