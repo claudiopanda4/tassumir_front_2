@@ -1569,8 +1569,9 @@ public function dados_comment($key){
    public function sendMsgToPhone($takePhone,$code){
 
    // meu token a80fed69fcde464b35cee02ae7a172aa918235239
-         $response = Http::post('http://52.30.114.86:8080/mimosms/v1/message/send?token=e5a2c12e2876ed474072ee9a10e4f3f2926312782 ', [   
-             'sender'=>'Evacin',
+    //token Ch: e5a2c12e2876ed474072ee9a10e4f3f2926312782
+         $response = Http::post('http://52.30.114.86:8080/mimosms/v1/message/send?token=a80fed69fcde464b35cee02ae7a172aa918235239 ', [   
+             'sender'=>'918235239',
              'recipients' => $takePhone,
              'text' => 'Codigo de Confirmação Tassumir :'.$code,
         ]);
