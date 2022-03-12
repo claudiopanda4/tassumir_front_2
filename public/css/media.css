@@ -800,6 +800,9 @@
 	    width: 240px;
 	    height: auto;
 	}
+	.enter-login {
+	    color: #fff;
+	}
 	.couple-profile-img {
 	    position: absolute;
 	    width: 50px;
