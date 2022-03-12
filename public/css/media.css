@@ -789,6 +789,13 @@
 	.statistics-profile-page-component h2 {
 	    font-size: 12px;
 	}
+	.input-login {
+	    margin: 5px auto;
+	}
+	#main-login, #main-reg {
+	    width: 240px;
+	    height: auto;
+	}
 	.couple-profile-img {
 	    position: absolute;
 	    width: 50px;
@@ -933,13 +940,21 @@
 	    margin-top: 5px;
 	}
 }
+@media screen and (max-height: 500px) {
+	#main-login {
+	    margin: 13% auto 10px;
+	}
+	#main-login, #main-reg {
+	    margin: auto;
+	}
+}
 @media screen and (max-width: 328px) {
 	.img-profile-page {
 	    width: 65px;
 	    height: 65px;
 	}
 	#main-login {
-	    width: 240px;
+	    width: 220px;
 	}
 	.video-post {
 	    height: 328px;
@@ -1217,6 +1232,9 @@
 	.post-cover.post-cover-post-index img {
 	    height: auto;
     	position: relative;
+	}
+	#main-reg {
+	    margin: 35px auto 10px;
 	}
 }
 @media screen and (min-width: 2400px) {

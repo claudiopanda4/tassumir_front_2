@@ -50,7 +50,7 @@ body {
 }
 .enter-login {
     color: #fff;
-    font-size: 13.5px;
+    font-size: 11.5px;
 }
 #login-enter {
     background-color: #800080;
@@ -131,6 +131,10 @@ body {
     font-weight: bolder;
     text-align: center;
 }
+#login-register,
+#login-enter {
+    font-size: 12px;
+}
 #title-login h1,
 .title-log-reg h1 {
     width: 150px;
@@ -146,6 +150,12 @@ body {
     margin-left: -22px;
     margin-top: 11px;
     font-size: 33px;
+}
+#main-reg #title-login i, 
+#main-reg #title-login h1, 
+#main-reg .title-log-reg i, 
+#main-reg .title-log-reg h1 {
+    margin-left: 0px;
 }
 #title-login i {
     margin-right: 10px;
