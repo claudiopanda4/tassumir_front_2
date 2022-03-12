@@ -14,6 +14,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/uicons/css/uicons-regular-rounded.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/uicons-straight/css/uicons-regular-straight.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/checked.css') }}" rel="stylesheet">
@@ -27,7 +29,7 @@
   <header class="header-main-n header-main-component-n clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
-                    <a href="{{route('account.home')}}"><i class="fas fa-link fa-24"></i><h1 class="">Tass<span class="title-final">umir</span></h1></a>
+                    <a href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1 class="">Tass<span class="title-final">umir</span></h1></a>
                 </li>
                 <li class="search-lg mobile-hidden">
                     <div class="input-search">
@@ -39,7 +41,7 @@
             <nav class="menu-header ">
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
-                        <a href="{{route('allSearch1.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
+                        <a href="{{route('allSearch1.page')}}"><i class="fi-rr-search fa-20 f-footer" size="7"></i></a>
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="last-component-n clearfix-n " >
@@ -49,10 +51,15 @@
                                   <span class="center">{{$notificacoes_count}}</span>
                               </div>
                               @endif
-                                <i class="fa fa-bell fa-24 fa-option" size="7"></i>
+                                <i class="fi-rs-bell fa-20 f-footer hidden-lg-screen-icon" size="7"></i>
                             </label>
                             <a href="{{route('account.all.notifications')}}" class="fa-option-mobile-lg-hide">
-                                <i class="far fa-bell fa-24 fa-option" size="7"></i>
+                                <i class="fi-rs-bell fa-20 f-footer" size="7"></i>
+                                @if($notificacoes_count > 0)
+                                  <div class="number-notification circle">
+                                      <span class="center">{{$notificacoes_count}}</span>
+                                  </div>
+                                @endif
                             </a>
                             <input type="checkbox" name="" id="more-option-notify" class="hidden">
                             <ul class="clearfix noti-card-first  br-10">

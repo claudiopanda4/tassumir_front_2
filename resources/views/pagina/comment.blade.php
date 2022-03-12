@@ -194,7 +194,7 @@
                 <?php if ($dados[0]['qtd_comment']>0): ?>
                   <?php foreach ($comment as $key => $value): ?>
 
-                  <div class="comment-users" id="comment-users-{{$dados[0]['post_id']}}">
+                  <div class="comment-users comment-blade" id="comment-users-{{$dados[0]['post_id']}}">
                             <div class="comment-user-container" >
                               <div class="user-identify-comment">
                                 @if( $dados[$key]['foto_ver']==1 )
@@ -244,7 +244,7 @@
                         </div>
                         <?php endforeach; ?>
                       <?php else: ?>
-                      <div class="comment-users" id="comment-users-">
+                      <div class="comment-users comment-blade" id="comment-users-">
 
                             </div>
                       <?php endif; ?>

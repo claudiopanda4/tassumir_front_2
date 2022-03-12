@@ -326,27 +326,6 @@ class AuthController extends Controller
        }
 
 
-       public function qtd_total($post_id)
-       {
-         $likes = DB::select('select * from post_reactions where post_id = ?', [$post_id]);
-          $comment = DB::select('select * from comments where post_id = ?', [$post_id]);
-          $soma= sizeof($likes) + sizeof($comment);
-          return $soma;
-       }
-
-        public function verificar_melhores($melhores, $post_id)
-        {
-          $b=0;
-         for ($j=0; $j <sizeof($melhores); $j++) {
-           if ($post_id == $melhores[$j]){
-             $b=1;
-             $j=sizeof($melhores);
-           }
-         }
-         return $b;
-        }
-
-
         public function destacados(){
           $post= DB::table('posts')->where('estado_post_id', '=', 1)
           ->join('pages', 'pages.page_id', '=', 'posts.page_id')
@@ -388,13 +367,7 @@ class AuthController extends Controller
           }
 
           public function destaques(){
-            $post= DB::table('posts')->where('estado_post_id', '=', 1)
-            ->orderBy('total_reactions_comments', 'desc')
-            ->orderBy('post_id', 'desc')
-            ->limit(20)
-            ->join('pages', 'pages.page_id', '=', 'posts.page_id')
-            ->select('posts.*', 'pages.estado_pagina_id', 'pages.uuid as page_uuid', 'pages.foto as page_foto')
-            ->get();
+          $post = DB::select('select * from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id, p.uuid,p.descricao,p.estado_post_id,p.formato_id,p.page_id,pa.uuid as page_uuid,pa.nome as page_name,pa.estado_pagina_id as estado_pagina_id,pa.foto as page_foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');
 
                         $what_are_talking = array();
                         $i=0;
@@ -404,7 +377,7 @@ class AuthController extends Controller
                                 $melhores[$i]= $key->post_id;
                                 $what_are_talking[$i]['post']=$key->descricao;
                                 $what_are_talking[$i]['page_id']= $key->page_id ;
-                                $what_are_talking[$i]['page_uuid']= $key->page_uuid ;
+                                $what_are_talking[$i]['page_uuid']= $key->page_uuid;
                                 $what_are_talking[$i]['post_uuid']= $key->uuid;
                                 $what_are_talking[$i]['post_id']= $key->post_id;
                                 $what_are_talking[$i]['formato']=$key->formato_id;
@@ -461,6 +434,7 @@ class AuthController extends Controller
                  $dados['post_id']=$id->post_id;
                  $dados['page_id']= $id->page_id;
                  $dados['page_uuid']= $page[0]->uuid ;
+                 $dados['page_tipo_relac']= $page[0]->tipo_relacionamento_id;
                  $dados['post_uuid']= $id->uuid;
                  $aux_divisão_data = explode(' ', $id->created_at);
                  $dados['post_data']= $aux_divisão_data[0] ;
@@ -510,7 +484,7 @@ class AuthController extends Controller
                  }
                }
 
-               $aux_view= DB::table('views')->where('post_id', $id->post_id)->get();
+               $aux_view= DB::table('views')->where('post_id', $id->post_id)->where('conta_id',$conta_logada[0]->conta_id)->get();
                if (sizeof($aux_view)<=0) {
                  DB::table('views')->insert([
                    'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -596,25 +570,25 @@ class AuthController extends Controller
 
      */
 
-    $what_are_talking = $this->destacados();
+    $what_are_talking = $this->destaques();
 
-    // $what_are_talking = $this->destaques();
-     $mudar_estado_view= DB::table('views')->where('state_views_id', 2)->limit(1)->get();
+  //   $what_are_talking = [];
+     $mudar_estado_view= DB::table('views')->where('conta_id',$conta_logada[0]->conta_id)->where('state_views_id', 2)->limit(1)->get();
     if (sizeof($mudar_estado_view)>0) {
       DB::table('views')
+            ->where('conta_id',$conta_logada[0]->conta_id)
             ->where('state_views_id', 2)
             ->delete();
     }
      $post_controller = new PageController();
      $array_aux=array();
      $dados=array();
-     $post = $post_controller->get_posts(0, 0, $array_aux, 0);
+     $post = $post_controller->PP(0);
      $a=0;
      //dd($post);
      if (sizeof($post)>0) {
        foreach ($post as $key) {
-         $page= DB::table('pages')->where('page_id', $key->page_id)->get();
-         if ($page[0]->estado_pagina_id == 1){
+         if ($key->estado_pagina_id == 1){
            $dados[$a] = $this->DadosPost($key);
          }
          $a++;
@@ -933,13 +907,12 @@ class AuthController extends Controller
     $post_controller = new PageController();
     $array_aux=array();
     $dados=array();
-    $post = $post_controller->get_posts(0, 0, $array_aux, 1);
+    $post = $post_controller->PP(1);
     $a=0;
     //dd($post);
     if (sizeof($post)>0) {
       foreach ($post as $key) {
-        $page= DB::table('pages')->where('page_id', $key->page_id)->get();
-        if ($page[0]->estado_pagina_id == 1){
+        if ($key->estado_pagina_id == 1){
           $dados[$a] = $this->DadosPost($key);
         }
         $a++;
@@ -1047,6 +1020,7 @@ class AuthController extends Controller
         $dados[0]['seguir_S_N']=sizeof($seguidor);
         $dados[0]['post_id']=$post[0]->post_id;
         $dados[0]['post_uuid']= $post[0]->uuid;
+        $dados[0]['page_tipo_relac']= $page[0]->tipo_relacionamento_id;
         $dados[0]['page_id']= $post[0]->page_id ;
         $dados[0]['page_uuid']= $page[$post[0]->page_id - 1]->uuid ;
         $dados[0]['reagir_S_N']=sizeof($ja_reagiu);
@@ -1199,10 +1173,12 @@ public function dados_comment($key){
             $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
             $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
             $likes_verificacao = DB::select('select post_reaction_id from post_reactions where (post_id,identificador_id) = (?, ?)', [$post[0]->post_id, $aux[0]->identificador_id]);
+            $likes_total = DB::select('select post_reaction_id from post_reactions where (post_id) = (?)', [$post[0]->post_id]);
+            $likes_total = sizeof($likes_total);
             $resposta = 0;
             $id_full = $request->id_full;
             $reactions_number = sizeof($likes_verificacao);
-            if (sizeof($likes_verificacao) == 0) {
+            if ($reactions_number < 1) {
               DB::table('post_reactions')->insert([
                 'reaction_id' => 1,
                 'identificador_id' => $aux[0]->identificador_id,
@@ -1217,7 +1193,7 @@ public function dados_comment($key){
                     'updated_at' => $this->dat_create_update()
                   ]);*/
               if ($page[0]->conta_id_a != $conta[0]->conta_id && $page[0]->conta_id_b != $conta[0]->conta_id) {
-              DB::table('notifications')->insert([
+                DB::table('notifications')->insert([
                     'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                     'id_state_notification' => 2,
                     'id_action_notification' => 1,
@@ -1226,32 +1202,32 @@ public function dados_comment($key){
                     'identificador_id_receptor'=> $aux2[0]->identificador_id,
                     'created_at'=> $this->dat_create_update(),
                     ]);
-                  DB::table('notifications')->insert([
-                          'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                          'id_state_notification' => 2,
-                          'id_action_notification' => 1,
-                          'identificador_id_causador'=> $aux[0]->identificador_id,
-                          'identificador_id_destino'=> $aux4[0]->identificador_id,
-                          'identificador_id_receptor'=> $aux3[0]->identificador_id,
-                          'created_at'=> $this->dat_create_update(),
+                DB::table('notifications')->insert([
+                    'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'id_state_notification' => 2,
+                    'id_action_notification' => 1,
+                    'identificador_id_causador'=> $aux[0]->identificador_id,
+                    'identificador_id_destino'=> $aux4[0]->identificador_id,
+                    'identificador_id_receptor'=> $aux3[0]->identificador_id,
+                    'created_at'=> $this->dat_create_update(),
 
-                          ]);
-                        }
-            $reactions_number++;
+                    ]);
+                }
+            $likes_total++;
               $resposta = [
                 'id' => $id_full,
-                'reactions' => $reactions_number,
+                'reactions' => $likes_total,
                 'state' => 'like',
                 'add' => [
-                    1 => 'far'
-                ],
-                'remove' => [
                     1 => 'fas',
                     2 => 'liked',
                 ],
+                'remove' => [
+                    1 => 'far',
+                ],
               ];
 
-            } elseif (sizeof($likes_verificacao) == 1){
+            } elseif ($reactions_number > 0){
               DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
               /*DB::table('posts')
                 ->where('post_id', $post[0]->post_id)
@@ -1260,29 +1236,17 @@ public function dados_comment($key){
                   'total_reactions_comments'=> $post[0]->total_reactions_comments - 1,
                   'updated_at' => $this->dat_create_update()
                 ]);*/
-              $reactions_number++;
+              $likes_total--;
               $resposta = [
                 'id' => $id_full,
-                'reactions' => $reactions_number,
+                'reactions' => $likes_total,
                 'state' => 'unlike',
                 'add' => [
+                    1 => 'far',
+                ],
+                'remove' => [
                     1 => 'fas',
                     2 => 'liked',
-                ],
-                'remove' => [
-                    1 => 'far',
-                ],
-              ];
-              $resposta = [
-                'id' => $id_full,
-                'reactions' => $reactions_number,
-                'state' => 'like',
-                'add' => [
-                    1 => 'fas',
-                    2=> 'liked'
-                ],
-                'remove' => [
-                    1 => 'far',
                 ],
               ];
             }

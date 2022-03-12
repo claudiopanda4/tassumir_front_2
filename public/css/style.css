@@ -144,6 +144,9 @@ body {
 .title-log-reg i, 
 .title-log-reg h1 {
     display: inline-block;
+    margin-left: -22px;
+    margin-top: 11px;
+    font-size: 33px;
 }
 #title-login i {
     margin-right: 10px;
@@ -153,7 +156,7 @@ body {
 }
 #title-login div, 
 .title-log-reg div {
-    width: 200px;
+    width: 220px;
     margin: 5px auto;
 }
 .form-group label {
@@ -1474,6 +1477,8 @@ label[for="hugo"]{
     width: 100%;
     height: auto;
     max-height: 538px;
+    min-height: 100px;
+    background: #3a3b3c;
 }
 .post-cover-post-index {
     height: auto;
@@ -1557,6 +1562,7 @@ label[for="hugo"]{
 }
 .comment-send .fa-img-comment.fa-paper-plane {
     display: block;
+    font-size: 17px;
 }
 .stories-about-talking nav {
     
@@ -1642,8 +1648,8 @@ label[for="hugo"]{
 }
 .li-component-suggest div.sugest_component {
     position: relative;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     border: 3px solid #800080;
     margin: 10px auto;
 }
@@ -1770,6 +1776,9 @@ label[for="hugo"]{
     justify-content: flex-start;
     width: 96%;
     margin-left: 20px;
+    margin-bottom: 10px;
+}
+.hidden-click-any-container.noti-flex-info {
     margin-bottom: 10px;
 }
 .noti-info-aside {
@@ -2111,7 +2120,7 @@ label[for="hugo"]{
     width: 100%;
 }
 #options-profile-mobile-user-log {
-    width: 95%;
+    width: 75%;
     margin: auto;
 }
 #options-profile-mobile-user-log-pages  {
@@ -2634,6 +2643,7 @@ label[for="hugo"]{
     display: flex;
     justify-content: space-between;
     margin-left: 60px;
+    width: 75%;
 }
 .user-identify-comment {
     padding-left: 10px;
@@ -2655,7 +2665,7 @@ label[for="hugo"]{
     padding: 5px;
     font-size: 11px;
     color: #fff;
-    padding-top: 10px;
+    padding-top: 6px;
     width: 85px;
 }
 .user-identify-comment h2, 
@@ -2663,13 +2673,13 @@ label[for="hugo"]{
     display: inline-flex;
 }
 .comment-user-comment {
-    margin: 10px 10px 10px;
+    margin: 2px;
 }
 .comment-user-comment p {
     color: #fff;
     font-size: 12px;
     padding: 7px;
-    display: inline-flex;
+    display: block;
     width: auto;
     max-width: 170px;
     padding-top: 14px;
@@ -2679,7 +2689,10 @@ label[for="hugo"]{
 }
 .comment-user-comment.comment-user-comment-feed p {
     max-width: 127px;
+    margin-top: 10px;
     background-color: transparent;
+    padding: 0 10px;
+    margin-bottom: 0;
 }
 .comment-user-container {
     display: flex;
@@ -2697,10 +2710,11 @@ label[for="hugo"]{
     width: 310px;
     border-radius: 10px;
     margin: 10px;
-    margin-left: 60px;
+    margin-left: 93px;
 }
 .comment-users-own .user-identify-comment {
-    width: 40px;
+    width: 50px;
+    margin-bottom: 5px;
 }
 .img-profile-page-container {
     position: relative;
@@ -2763,9 +2777,9 @@ label[for="hugo"]{
     display: none;
 }
 .comment-user-comment .user {
-    font-size: 13px;
+    font-size: 12px;
     color: #fff;
-    margin-top: -5px;
+    margin: 4px;
 }
 .btn-message {
     position: relative;
@@ -3042,8 +3056,8 @@ label[for="hugo"]{
 }
 .play_button {
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 80px;
+    height: 80px;
     z-index: 2;
 }
 .notify-icon {
@@ -3052,8 +3066,8 @@ label[for="hugo"]{
 .number-notification {
     position: absolute;
     width: 20px;
-    top: -10px;
-    right: -10px;
+    top: -5px;
+    right: -5px;
     height: 20px;
     background-color: red;
     z-index: 3;
@@ -3260,7 +3274,7 @@ label[for="hugo"]{
     background-color: #fd09fd;
     border-radius: 50%;
     top: 10px;
-    right: 10px;
+    right: 20px;
 }
 .cancel-delete {
     border: none;
@@ -3339,7 +3353,7 @@ label[for="hugo"]{
     display: none;
     position: relative;
     width: 100%;
-    height: 50px;
+    height: 45px;
     background-color: #000;
     z-index: 1000;
 }
@@ -3360,4 +3374,65 @@ label[for="hugo"]{
 }
 #notification-header-icon {
     margin-top: -3px;
+}
+.li-footer-menu {
+    position: relative;
+}
+.li-footer-menu .number-notification {
+    top: -5px;
+}
+.menu-header ul li.mobile-lg-notify {
+    display: block;
+}
+.menu-header ul li.mobile-hidden-notify-icon {
+    display: none;
+}
+.menu-header ul li.mobile-hidden-notify-icon,
+.menu-header ul li.mobile-lg-notify {
+    margin-top: 0;
+}
+.distinctiv {
+    position: absolute;
+    background-color: red;
+    width: 22px;
+    height: 22px;
+    left: 28px;
+    bottom: 0;
+    border: 2px solid #242526;
+    border-radius: 50%;
+    text-transform: uppercase;
+}
+.distinctiv h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 9px;
+    font-weight: bolder;
+}
+.distinctiv-casamento-igreja {
+    background-color: #f55c08;
+}
+.distinctiv-pedido {
+    background-color: #ff9800;
+}
+.distinctiv.distinctiv-namoro {
+    background-color: #3490dc;
+}
+.distinctiv-apresentado {
+    background-color: #9c27b0;
+}
+.page-cover.page-cover-comment {
+    width: 28px;
+    height: 28px;
+}
+.card-post .comment-user-comment-feed p {
+    margin-left: 5px;
+    margin-top: 10px;
+}
+#my-pages-profile-mobile {
+    width: 77%;
+}
+.img-logo {
+    width: 50px;
+    height: 45px;
+    border-radius: 50%;
 }

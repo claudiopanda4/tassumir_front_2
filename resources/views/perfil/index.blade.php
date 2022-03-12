@@ -153,7 +153,7 @@
                             </div>
                         @else
                             <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5">
-                                <a href="{{route('couple.page.mine')}}"><h3 class="edit-profile-mobile">Minhas Páginas</h3></a>
+                                <a href="{{route('couple.page.mine')}}"><h3 class="edit-profile-mobile" id="my-pages-profile-mobile">Minhas Páginas</h3></a>
                             </div>
                         @endif
                     <?php endif ?>

@@ -172,6 +172,9 @@
                                     </div>
                                     <div class="comment-user-container comment-user-container-react">
                                       <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
+                                        <?php if (false): ?>
+                                            
+                                        <?php endif ?>
                                           @if($dados[$key]['comment_S_N'] > 0)
                                               <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
                                           @else
@@ -202,7 +205,7 @@
                         <nav class="row interaction-numbers">
                             <ul class="">
                                 <li>
-                                  <i class="fas fa-heart fa-16" style="display: inline-flex; margin-right: 5px; color: red;"></i><a href="" id="likes-qtd-{{$dados[$key]['post_uuid']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
+                                  <a href="" id="likes-qtd-{{$dados[$key]['post_uuid']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
                                 </li>
                                 <li>
                                     <a href="{{route('post_index', $dados[$key]['post_uuid'])}}" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
@@ -338,8 +341,30 @@ function gostar(id){
            var nome = '';
            comment_qtd = parseInt(comment_qtd) + 1;
            $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
+                nome +=     '<a href="" class="comment-like-a" id="on|'+response[0]['comment_id']+'">'
+                if(response[0]['comment_S_N'] > 0){
+                  nome +=            ' <i class="fas fa-heart fa-12 liked" id="on|'+response[0]['comment_id']+'|i"></i>'
+                }else{
+                  nome +=             '<i class="fas fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
+                }
+                    $('div[name=novo-comment]').append(nome);
 
+          }
+        });
+      }
 
+    function comment(id, c){
+        let comment_qtd = $("#comment-qtd-" + id).text().split(' ')[0];
+        $.ajax({
+          url: "{{route('comentar')}}",
+          type: 'get',
+          data: {'id': id, 'comment': c},
+           dataType: 'json',
+           success:function(response){
+           console.log(response);
+           var nome = '';
+           comment_qtd = parseInt(comment_qtd) + 1;
+           $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
                 nome +=     '<a href="" class="comment-like-a" id="on|'+response[0]['comment_id']+'">'
                 if(response[0]['comment_S_N'] > 0){
                   nome +=            ' <i class="fas fa-heart fa-12 liked" id="on|'+response[0]['comment_id']+'|i"></i>'
