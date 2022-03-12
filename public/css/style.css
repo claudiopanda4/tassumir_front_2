@@ -56,12 +56,11 @@ body {
     background-color: #800080;
     border: 1px solid #800080;
     width: 100%;
-    padding: 6px;
-    border-radius: 5px;
+    padding: 5px;
+    border-radius: 10px;
     color: #fff;
     margin-top: 5px;
     font-weight: bolder;
-
     text-align: center;
 }
 
@@ -80,7 +79,7 @@ body {
 }
 
 #forget-password {
-    width: 45%;
+    width: 60%;
     margin-top: 15px;
 }
 #forget-password a h1 {
@@ -113,7 +112,7 @@ body {
     background-color: #242526;
     margin-top: 5px;
     border-radius: 20px;
-    padding: 6px
+    padding: 5px
 }
 .risk h2 {
     padding: 10px;
@@ -122,11 +121,11 @@ body {
     background-color: #3b3b3b;
 }
 #login-register {
-    background-color: #800080;
-    border: 1px solid #800080;
+    background-color: #3b3b3b;
+    border: 1px solid #3b3b3b;
     width: 100%;
-    padding: 6px;
-    border-radius: 5px;
+    padding: 5px;
+    border-radius: 10px;
     color: #fff;
     margin-top: 20px;
     font-weight: bolder;
@@ -157,7 +156,7 @@ body {
 #title-login div, 
 .title-log-reg div {
     width: 220px;
-    margin: 5px auto;
+    margin: 5px auto 15px;
 }
 .form-group label {
     color: #fff;
