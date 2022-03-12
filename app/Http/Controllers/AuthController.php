@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\PaginaCasalController;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Pais;
+use Illuminate\Support\Facades\Http;
 
 
 /* email */
@@ -1600,6 +1601,48 @@ public function dados_comment($key){
             return view('auth.RealRegister', compact('dadosPais'));
         }
 
+   
+   public function sendMsgToPhone($takePhone,$code){
+
+   // meu token a80fed69fcde464b35cee02ae7a172aa918235239
+         $response = Http::post('http://52.30.114.86:8080/mimosms/v1/message/send?token=e5a2c12e2876ed474072ee9a10e4f3f2926312782 ', [   
+             'sender'=>'Evacin',
+             'recipients' => $takePhone,
+             'text' => 'Codigo de Confirmação Tassumir :'.$code,
+        ]);
+   
+            $responseBody = $response->body();
+
+   }
+
+   public function criptCode($plain_text_code){
+
+        $cifra = "AES-128-CTR";
+        $tmh_crypt = openssl_cipher_iv_length($cifra);
+
+        $encryption_iv = '1234567891011121';
+        $encryption_key = "tassumir";
+        $options = 0;
+        $encryp_conf_cod = openssl_encrypt(  $plain_text_code,$cifra, $encryption_key,$options,$encryption_iv);
+
+        return $encryp_conf_cod;
+   }
+   public function decriptCode($codigo_criado){
+
+        $options = 0;
+        $cifra = "AES-128-CTR";
+        $decription_iv = '1234567891011121';
+        $decription_key = "tassumir";
+        $decryp_code_confi=openssl_decrypt( $codigo_criado,  $cifra , $decription_key,$options,$decription_iv) ;
+        return $decryp_code_confi;
+   }
+
+   public function sendMsgEmail($takeEmail,$get_verification_code){
+
+     Mail::to($takeEmail)->send(new SendVerificationCode($get_verification_code));
+
+   }
+
   public function joinAndSave(Request $request){
 
           try{
@@ -1634,19 +1677,13 @@ public function dados_comment($key){
                       $takeEmail = $request->email;
 
                       $get_verification_code = $code;
-                      Mail::to($takeEmail)->send(new SendVerificationCode($get_verification_code));
+                     
+                     $this->sendMsgEmail($takeEmail,$get_verification_code);
 
                       //Criptografia do codigo de confirmacao
 
-                    $plain_text_code = $code;
-                    $cifra = "AES-128-CTR";
-                    $tmh_crypt = openssl_cipher_iv_length($cifra);
-
-                    $encryption_iv = '1234567891011121';
-                    $encryption_key = "tassumir";
-                    $options = 0;
-                    $encryp_conf_cod = openssl_encrypt(  $plain_text_code,$cifra, $encryption_key,$options,$encryption_iv);
-
+                        $plain_text_code = $code;
+                        $encryp_conf_cod = $this->criptCode($plain_text_code);
 
                       //fim criptografia
 
@@ -1669,15 +1706,24 @@ public function dados_comment($key){
                       $takePhone = $takePhone;
                       $takeEmail = $request->email;
 
-                      //$get_verification_code = $code;
-                      /*Mail::to($takeEmail)->send(new SendVerificationCode($get_verification_code));*/
+                      //==== algoritmo para envio de msg para o telefone ====
 
-                    return view('auth.codigoRecebidoRegister',compact('nome','apelido','data_nascimento','genero','nacionalidade','code','takePhone','takeEmail','password'));
+                        $this->sendMsgToPhone($takePhone,$code);
+                      
+                     // ==== fim algoritmo para envio de msg para o telefone ====
+
+                    //Criptografia do codigo de confirmacao
+                                            
+                     $plain_text_code = $code;
+                     $encryp_conf_cod = $this->criptCode($plain_text_code);
+
+                      //fim criptografia
+
+                    return view('auth.codigoRecebidoRegister',compact('nome','apelido','data_nascimento','genero','nacionalidade','encryp_conf_cod','takePhone','takeEmail','password'));
 
                  }
 
             }else{
-
                // return redirect()->route('auth.ErrorStatus');
             }
 
@@ -1699,12 +1745,8 @@ public function dados_comment($key){
 
         //decriptografia cod confirmacao
 
-        $options = 0;
-        $cifra = "AES-128-CTR";
-        $decription_iv = '1234567891011121';
-        $decription_key = "tassumir";
-        $decryp_code_confi=openssl_decrypt( $codigo_criado,  $cifra , $decription_key,$options,$decription_iv) ;
-
+        $decryp_code_confi = $this->decriptCode($codigo_criado);
+      
         //fim decriptografia
 
         $phoneReceived = $request->telefone;
@@ -1716,9 +1758,7 @@ public function dados_comment($key){
         $sexo = $request->receivedGenero;
         $password = $request->password;
 
-
         if($input_code === $decryp_code_confi){
-
 
             $conta = new Conta();
             $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
@@ -1826,26 +1866,31 @@ public function dados_comment($key){
         $password=$request->password;
 
        if($phoneReceived != null){
-            return redirect()->route('auth.ErrorStatus');
+
+            $code2 = random_int(100000,900000);
+            
+                    $this->sendMsgToPhone($phoneReceived,$code2);
+
+                   $plain_text_code = $code2;
+
+                        $encryp_conf_cod = $this->criptCode($plain_text_code);
+
+ return view('auth.codigoRecebidoNovaConfirmation',compact('phoneReceived','encryp_conf_cod','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
+
        }else if($emailReceived != null) {
 
              $code2 = random_int(100000,900000);
                       $get_verification_code = $code2;
-                      Mail::to($emailReceived)->send(new SendVerificationCode($get_verification_code));
 
+                      $this->sendMsgEmail($emailReceived,$get_verification_code);
                       //Criptografia do codigo de confirmacao
                     $plain_text_code = $code2;
-                    $cifra = "AES-128-CTR";
-                    $tmh_crypt = openssl_cipher_iv_length($cifra);
-                    $encryption_iv = '1234567891011121';
-                    $encryption_key = "tassumir";
-                    $options = 0;
-                    $encryp_conf_cod = openssl_encrypt(  $plain_text_code,$cifra, $encryption_key,$options,$encryption_iv);
+                        $encryp_conf_cod = $this->criptCode($plain_text_code);
 
                        return view('auth.codigoRecebidoNovaConfirmation',compact('phoneReceived','encryp_conf_cod','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
        }else{
 
-            return redirect()->route('auth.ErrorStatus');
+            dd("Telefone ou Email Vazio");
        }
 
         }catch(\Exception $error){
@@ -1861,15 +1906,8 @@ public function dados_comment($key){
         $codeSent = $request->codeReceived;
         $code_digitado = $request->codeReceived1;
 
-
         //decriptografia cod confirmacao
-
-        $options = 0;
-        $cifra = "AES-128-CTR";
-        $decription_iv = '1234567891011121';
-        $decription_key = "tassumir";
-        $decryp_code_confi=openssl_decrypt( $codeSent,  $cifra , $decription_key,$options,$decription_iv) ;
-
+        $decryp_code_confi = $this->decriptCode($codeSent);
         //fim decriptografia
 
         $phoneReceived = $request->telefone;
@@ -1979,6 +2017,8 @@ public function dados_comment($key){
                             $foundedId = $info->conta_id;
                             $foundedPhone = $info->telefone;
                             $codeToSend = random_int(100000,900000);
+                             $this->sendMsgToPhone($phone,$codeToSend);
+
                             DB::table('codigo_confirmacaos')
                                           ->where('conta_id', $foundedId)
                                           ->update(['codigoGerado' => $codeToSend]);
@@ -1996,18 +2036,19 @@ public function dados_comment($key){
                      ->get();
 
               if (isset($takeEmail)) {
-
-                  foreach($takeEmail as $info){
+                foreach($takeEmail as $info){
 
                     $foundedId = $info->conta_id;
 
                     $foundedEmail = $info->email;
                     $codeToSend = random_int(100000,900000);
                      $get_verification_code = $codeToSend;
-                    Mail::to($email)->send(new SendVerificationCode($get_verification_code));
+
+         $this->sendMsgEmail($email,$get_verification_code);
                        DB::table('codigo_confirmacaos')
                                   ->where('conta_id', $foundedId)
                                   ->update(['codigoGerado' => $codeToSend]);
+
                         return view('auth.codigoRecebido',compact('foundedId','codeToSend','phone','email'));
                 }
           }
