@@ -438,6 +438,7 @@
                 </section>
             <?php endif ?>
         <?php endforeach ?>
+        <input type="hidden" id="current-video-id" name="">
         <script type="text/javascript">
             function reaction_comment(e) {
                 let id_full = e.target.id;
@@ -456,6 +457,23 @@
                 
                 like(id, id_full)
             }
+
+            function play(element){
+                let id = element.id.split('_')[1];
+                let id_button = 'playbutton_' + id;
+                if (document.getElementById('video_' + id).paused) {
+                    document.getElementById('video_' + id).play();
+                    document.getElementById(id_button).classList.add('invisible');
+                } else {
+                    document.getElementById('video_' + id).pause();
+                    document.getElementById(id_button).classList.remove('invisible');
+                }
+                $('#current-video-id').val('video_' + id);
+            }
+            function play_video(element){
+                play(element);
+            }
+
             function like(id, id_full){
                         $.ajax({
                           url: "{{ route('like_unlike')}}",
@@ -832,6 +850,20 @@ function gostar(id){
                                 //---DS console.log('last_post_id ' + $('#last_post').val());
                             }
                         }
+                        if ($('#current-video-id').val() != '') {
+                            let id_video = $('#current-video-id').val().split('_');
+                            let size_id_video = id_video.length;
+                            let id_video_final = id_video[size_id_video - 1];
+                            if (document.getElementById('video_' + id_video_final).paused) {
+                                if (document.getElementById('play_button_' + id_video_final)) {
+                                    document.getElementById('play_button_' + id_video_final).classList.remove('invisible');    
+                                } else if (document.getElementById('playbutton_' + id_video_final)) {
+                                    document.getElementById('playbutton_' + id_video_final).classList.remove('invisible');
+                                }
+                                
+                            }
+                        }
+
                         let margin_stories = $('.main-container').offset();
                         let margin_s = $('.main').offset();
                         //console.log('margin_s ' + margin_s.top);
@@ -864,7 +896,7 @@ function gostar(id){
                                dataType: 'json',
                                success: function(response){
                                  $('.reload-component').remove();
-                                 console.log(response);
+                                 //console.log(response);
                                  if (response.length > 0) {
                                  $.each(response, function(key, value){
 
@@ -925,7 +957,7 @@ function gostar(id){
                                    if (value.formato == 2) {
                                      nome +='<div class="post-cover post-cover-home"> <img  class="img-full" src=' + src1 + '/' + value.file + '> </div>'
                                    }else if (value.formato == 1) {
-                                     nome +='<div class="video-post" id="video-post-'+value.post_uuid+'}"> <img class="play_button center" src="{{asset("storage/icons/play_button.png")}}" id="play_button_'+value.post_id+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+value.post_id+'"> <video class="video-post-video" id="video_'+value.post_id+'"><source src="{{asset("storage/video/page/")}}/'+value.file+'" type="video/mp4">Your browser does not support the video tag.</video>'
+                                     nome +='<div class="video-post" id="videopost-'+value.post_id+'} onclick = play(this)"> <img class="play_button center" onclick = play_video(this) src="{{asset("storage/icons/play_button.png")}}" id="playbutton_'+value.post_id+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+value.post_id+'"> <video class="video-post-video" id="video_'+value.post_id+'" onclick = play_video(this)><source src="{{asset("storage/video/page/")}}/'+value.file+'" type="video/mp4">Your browser does not support the video tag.</video>'
                                      nome +='<input type="hidden" name="" value="post_view_'+value.post_uuid+'_'+value.conta_logada_uuid+'" id="watch-video-'+value.post_id+'"> <input type="hidden" name="" value="'+value.post_uuid+'" id="vid-'+value.post_id+'"> <input type="hidden" name="" id="has-video-'+value.post_id+'"> <input type="hidden" name="" id="video-post-time-'+value.post_id+'}"> <input type="hidden" name="" id="video-post-time-all-'+value.post_id+'"></div></div></div>'
                                    }
                                    nome +=' <nav class="row interaction-numbers"><ul class=""><li> <a href="" id="likes-qtd-'+value.post_uuid+'">'+value.qtd_likes+' reacções</a></li>'
@@ -1057,11 +1089,11 @@ function gostar(id){
                                     //console.log('hasvideo ' + id + ' ' + $('#has-video-' + id).val());
                                     if ($('#has-video-' + id).val() != "ok") {
                                         //console.log('entrou + id ' + id);
-                                        getVideo($('#vid-' + id).val(), id);
+                                        //getVideo($('#vid-' + id).val(), id);
                                     }else{
                                         ////console.log('não entrou');
                                         $('#video-post-time-all-' + id).val(document.getElementById('video_' + id).duration / 2);
-                                        if (!(document.getElementById('video_' + id).paused) && $('#has-video-' + id).val() == 'ok') {
+                                        if (!(document.getElementById('video_' + id).paused) /*&& $('#has-video-' + id).val() == 'ok'*/) {
                                             currentTime = document.getElementById('video_' + id).currentTime;
                                             duration = document.getElementById('video_' + id).duration;
                                             $('#video-post-time-' + id).val(currentTime);
@@ -1071,8 +1103,9 @@ function gostar(id){
                                                 //console.log('entrou no video watch-video ' + watched_video);
                                                 add_view(watched_video);
                                             }
+                                            document.getElementById('play_button_' + id).classList.remove('invisible');
                                         } else {
-                                            //document.getElementById('play_button_' + id).classList.remove('invisible');
+                                            document.getElementById('play_button_' + id).classList.add('invisible');
                                             if (document.getElementById('video_' + id).readyState == 4) {
                                                 //document.getElementById('video_' + id).play();
                                                 //document.getElementById('play_button_' + id).classList.add('invisible');
@@ -1081,8 +1114,8 @@ function gostar(id){
                                     }
 
                                 } else {
-                                    document.getElementById('video_' + id).pause();
-                                    document.getElementById('play_button_' + id).classList.remove('invisible');
+                                    //document.getElementById('video_' + id).pause();
+                                    //document.getElementById('play_button_' + id).classList.remove('invisible');
                                     //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
                                 }
                             }

@@ -1263,6 +1263,7 @@
             document.getElementById('play_button_' + id.split('_')[1]).classList.remove('invisible');
             document.getElementById(id).pause();
         }
+        $('#current-video-id').val('video_' + id);
       });
       $('#edit-page-cover-profile').click(function(evt){
             evt.preventDefault();
@@ -1672,16 +1673,18 @@ $.ajax({
             }
             //console.log(className[0]);
         });
+
         $('.play_button').click(function(e){
             let id = e.target.id.split('_')[2];
             let video = $('#video_' + id).offset();
             if (document.getElementById('video_' + id).paused) {
                 document.getElementById('video_' + id).play();
-                document.getElementById(id).classList.remove('invisible');
+                document.getElementById(e.target.id).classList.add('invisible');
             } else {
                 document.getElementById('video_' + id).pause();
-                document.getElementById(id).classList.add('invisible');
+                document.getElementById(e.target.id).classList.remove('invisible');
             }
+            $('#current-video-id').val('video_' + id);
         });
 
 
