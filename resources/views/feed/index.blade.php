@@ -182,6 +182,7 @@
                         <div class="video-post post-video" id="video-post-{{$dados[$key]['post_uuid']}}">
                             <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$dados[$key]['post_id']?>>
                             <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$dados[$key]['post_id']?>>
+                            <img class="loader_icon center" src="{{asset('css/uicons/loading.gif')}}" id=<?php echo "loader_icon_".$dados[$key]['post_id']; ?>>
                             <video class="video-post-video" id="video_{{$dados[$key]['post_id']}}">
                                 <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
@@ -763,6 +764,7 @@ function gostar(id){
             }
 
     $(document).ready(function () {
+        $(".loader_icon").hide();
       document.getElementById("route_feed").classList.add('li-component-aside-active');
 
             $('.seguir_index').click(function(e){
@@ -861,6 +863,21 @@ function gostar(id){
                                     document.getElementById('playbutton_' + id_video_final).classList.remove('invisible');
                                 }
                                 
+                            }
+                            console.log('paused ' + $("#video_" + id_video_final)[0].paused);
+                            console.log('.HAVE_FUTURE_DATA ' + $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA);
+                            console.log('readyState ' + $("#video_" + id_video_final)[0].readyState);
+                            console.log('seeking ' + $("#video_" + id_video_final)[0].seeking);
+                            console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);
+                            if ($("#video_" + id_video_final)[0].paused != true && 
+                                !$("#video_" + id_video_final)[0].seeking &&
+                                 $("#video_" + id_video_final)[0].currentTime > 0 && 
+                                 $("#video_" + id_video_final)[0].readyState >= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA) {
+                                    $("#loader_icon_" + id_video_final).hide();
+                            } else {
+                                if ($("#video_" + id_video_final)[0].readyState <= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA){
+                                    $("#loader_icon_" + id_video_final).show();
+                                } 
                             }
                         }
 
