@@ -268,7 +268,7 @@
       return false;
     }
   });
-  $("#nome").bind('keydown', function(e) {
+  $("#nome-id").bind('keydown', function(e) {
 
     var codTecla = e.which;
     var teclas = (codTecla > 64 && codTecla <= 90);
@@ -279,7 +279,7 @@
       return false;
     }
   });
-  $("#apelido").bind('keydown', function(e) {
+  $("#apelido-id").bind('keydown', function(e) {
 
     var codTecla = e.which;
     var teclas = (codTecla > 64 && codTecla <= 90);
