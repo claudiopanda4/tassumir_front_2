@@ -36,30 +36,7 @@
 	<div name="pessoa">
 	</div>
 	<div name="page">
-           <!--<li class="change-look" style="display:flex;justify-content: space-between;align-content: space-between;" >
 
-            <img class="l-5 circle img-40 " src='{{asset("storage/img/users/anselmoralph.jpg")}}'>
-             <span class="mt-2 " style="font-size:12pt;color: #fff; position: relative;" >João Nunes </span>
-             <div class="mr-5">
-
-             </div>
-             <div class="mr-5">
-
-             </div>
-             <div class="mr-5">
-
-             </div>
-             <div class="mr-5">
-
-             </div>
-             <div class="mr-5">
-
-             </div>
-
-            <div class="invite-icon circle mt-1 " >
-                <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
-            </div>
-        </li>-->
     </div>
     <div name="post">
 

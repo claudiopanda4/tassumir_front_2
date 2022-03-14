@@ -13,39 +13,6 @@
             </div>
     </header>
 
-
-      <!--  <div class="send-invited-relationship clearfix">
-            <div class="user-identify-img circle l-5">
-                <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
-            </div>
-            <div class="details-invited l-5">
-                <span class="description-invited">
-                    <a href="">Hugo Paulo</a> enviou um Pedido de Relacionamento para VOCÊ
-                </span>
-                <div class="options-invited clearfix">
-                    <label class="l-5" for="options-invited-pop-up">
-                        <div class="label-invited">
-                            <!-<h2 class="accept">Aceitar</h2>->
-                            <h2>Aceitar</h2>
-                        </div>
-                    </label>
-                    <a href="" class="l-5 denied">Rejeitar</a>
-                </div>
-            </div>
-        </div>
-        <div class="send-invited-relationship clearfix">
-            <div class="user-identify-img circle l-5">
-                <img src='{{asset("storage/img/users/anselmoralph.jpg")}}' class="img-full circle">
-            </div>
-            <div class="details-invited l-5">
-                <span class="description-invited">
-                    <a href="">Hugo Paulo</a> Respondeu a sua Solicitação de Registo de compromisso
-                </span>
-                <div class="options-invited clearfix">
-                    <a href="{{route('relationship.page')}}" class="l-5 denied">Ver Resposta</a>
-                </div>
-            </div>
-        </div>-->
         @for($i=0; $i < sizeof($notificacoes) ; $i++)
           @if($notificacoes[$i]['barra_data']==1)
 

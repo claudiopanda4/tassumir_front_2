@@ -575,4 +575,5 @@
 }
 #search-lg-home:checked ~ .container-search-home {
 	display: block;
+	
 }
