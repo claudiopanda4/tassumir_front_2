@@ -15,9 +15,7 @@
 			<li>
 				<div style="cursor: pointer; color: white;" class="nameclass">Apresentados</div>
 			</li>
-			<li>
-				<div style="cursor: pointer; color: white;" class="">Casados</div>
-			</li>
+			 
 			<li>
 				<div style="cursor: pointer; color: white;" class="nameclass">Vivendo Maritalmente</div>
 			</li>

@@ -10,7 +10,7 @@
           @if($v[0]['id'] == $conta_logada[0]->conta_id)
             <h1 class="title">Casais que eu sigo</h1>
             @else
-            <h1 class="title">Casais que sigue</h1>
+            <h1 class="title">Casais que eu sigo</h1>
             @endif
             <ul>
              @if(sizeof($PS)>0)
