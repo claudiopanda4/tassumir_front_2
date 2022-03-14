@@ -1514,6 +1514,19 @@
 
             }
           });
+        $('#table_search').on('keyup',function(){
+            let variavel= $('#table_search').val();
+            $('#search-lg-home-id').val(variavel);
+            let v= 1;
+            if (variavel!='') {
+              searchP(variavel, v);
+            }else {
+              $('div[name=pessoa]').empty();
+              $('div[name=page]').empty();
+              $('div[name=ver_td]').empty();
+
+            }
+        })
 
 function searchP(variavel, v){
   var s1=0;
