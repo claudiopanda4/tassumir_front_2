@@ -72,13 +72,8 @@
                         <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}">Rejeitar</a>
                     </div>
                   </div>
-                          <!-- <label for="target-invited-relationship" style="width: 100%;">
-                              <div class="follwing-btn follwing-btn-pop-up" >
-
-                                  <h2>Aceitar</h2>
-                              </div>
-                          </label>-->
-                      </div>
+                    
+                </div>
 
                     <?php elseif ($perfil[0]['verificacao_pedido'] == 1 ): ?>
                       <div class="hidden-click-any-container options-invited clearfix">
@@ -86,12 +81,7 @@
                           <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}">Cancelar Pedido De Relacionamento</a>
                       </div>
                     </div>
-                            <!-- <label for="target-invited-relationship" style="width: 100%;">
-                                <div class="follwing-btn follwing-btn-pop-up" >
-
-                                    <h2>Aceitar</h2>
-                                </div>
-                            </label>-->
+                           
                         </div>
 
                     <?php elseif ($perfil[0]['verificacao_pedido'] == 2 ): ?>
@@ -99,12 +89,7 @@
                           <a  href="{{route('relationship.page1', $perfil[0]['Pedido_relac_uuid']) }}" class="ver_mais" id="VR|{{$perfil[0]['not_id']}}">Ver Resposta</a>
 
                         </div>
-                            <!-- <label for="target-invited-relationship" style="width: 100%;">
-                                <div class="follwing-btn follwing-btn-pop-up" >
-
-                                    <h2>Aceitar</h2>
-                                </div>
-                            </label>-->
+                           
                         </div>
 
                     <?php else: ?>
@@ -184,7 +169,7 @@
 <div class="card br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">
                 <ul class="" id="ul-profile">
-                    <li><a href="?post-container-post=images"><i class="far fa-images fas-32 center icon-hover-option-profile" style="font-size: 22px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                    <li><a href="?post-container-post=images"><i class="far fa-images fas-32 center icon-hover-option-profile " style="font-size: 22px;"></i><h1 class="menu-option-profile"></h1></a></li>
                     <li><a href="?post-container-post=video"><i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 22px;"></i><h1 class="menu-option-profile"></h1></a></li>
                     <li><a href="?post-container-post=post"><i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 22px;"></i><h1 class="menu-option-profile"></h1></a></li>
                     <li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 18px;"></i><h1 class="menu-option-profile"></h1></a></li>

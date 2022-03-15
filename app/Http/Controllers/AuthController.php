@@ -2178,7 +2178,7 @@ public function dados_comment($key){
         Auth::logout();
 
         $request->session()->invalidate();
-
+        $request->session()->regenerateToken();
         return redirect('/');
     }
 

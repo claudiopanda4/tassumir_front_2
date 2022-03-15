@@ -33,7 +33,7 @@
                 <li class="title clearfix">
                     <a href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1>Tass<span class="title-final">umir</span></h1></a>
                 </li>
-                <li class="search-lg mobile-hidden">
+                <li class="search-lg mobile-hidden" style="margin-left:48px;">
                     <div class="input-search">
                         <label for="search-lg-home"><i class="fas fa-search fa-16 fa-search-main"></i></label>
                         <input type="search" name="" placeholder="O que está procurando?" class="input-text" id="search-lg-home-id">
@@ -58,9 +58,7 @@
             <nav class="menu-header ">
                 <?php $controller = 0; ?>
                 <ul class="clearfix ">
-                    <!--<li class="l-5 mobile-header-icon">
-                        <a href="{{route('allSearch1.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
-                    </li>-->
+                  
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " id="notification-header-icon">
                             <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i>
