@@ -257,6 +257,8 @@
         </div>
 </div>
 <script>
+
+
 function gostar(id){
 
   $.ajax({
