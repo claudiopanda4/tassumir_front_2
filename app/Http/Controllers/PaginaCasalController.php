@@ -392,8 +392,6 @@ class PaginaCasalController extends Controller
 
     }
 
-
-
     public function my_pages(){
         try {
           $controll = new AuthController;

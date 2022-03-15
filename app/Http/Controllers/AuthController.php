@@ -367,9 +367,11 @@ class AuthController extends Controller
           }
 
           public function destaques(){
-          $post = DB::select('select * from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id, p.uuid,p.descricao,p.estado_post_id,p.formato_id,p.page_id,pa.uuid as page_uuid,pa.nome as page_name,pa.estado_pagina_id as estado_pagina_id,pa.foto as page_foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');
+              $post = DB::select('select AL.uuid,AL.descricao, AL.formato_id, AL.file, AL.page_uuid, AL.page_foto from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id, p.uuid,p.descricao,p.estado_post_id,p.formato_id,p.page_id,pa.uuid as page_uuid,pa.nome as page_name,pa.estado_pagina_id as estado_pagina_id,pa.foto as page_foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');
 
-                        $what_are_talking = array();
+          /*$post = DB::select('select * from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id, p.uuid,p.descricao,p.estado_post_id,p.formato_id,p.page_id,pa.uuid as page_uuid,pa.nome as page_name,pa.estado_pagina_id as estado_pagina_id,pa.foto as page_foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');*/
+
+                      /*  $what_are_talking = array();
                         $i=0;
                           foreach ($post as $key) {
                             if ($key->estado_pagina_id == 1){
@@ -389,12 +391,11 @@ class AuthController extends Controller
                             }
 
                           $i++;}
-
-                return $what_are_talking;
+                          */
+                return $post;
             }
 
-
-             public function DadosPost($id){
+            public function DadosPost($id){
                $dates = $this->default_();
                $conta_logada= $dates['conta_logada'];
 
@@ -500,6 +501,76 @@ class AuthController extends Controller
                return $dados;
                    }
 
+             public function DadosPost1($id){
+               $dates = $this->default_();
+               $conta_logada= $dates['conta_logada'];
+
+               $a=0;
+
+               $dados = array();
+
+                 $comment = DB::select('select * from comments where post_id = ?', [$id->post_id]);
+
+
+                 $dados['nome_pag'] = $id->page_nome;
+                 $dados['conta_logada_foto']= $conta_logada[0]->foto;
+                 $dados['conta_logada_uuid']= $conta_logada[0]->uuid;
+                 $dados['post']=$id->descricao;
+                 $dados['qtd_likes']= $id->qtd_reacoes;
+                 $dados['qtd_comment']=$id->qtd_comment;
+                 $dados['seguir_S_N']=$id->segui;
+                 $dados['post_id']=$id->post_id;
+                 $dados['page_id']= $id->page_id;
+                 $dados['page_uuid']= $id->page_uuid ;
+                 $dados['page_tipo_relac']= $id->page_tipo_relacionamento_id;
+                 $dados['post_uuid']= $id->uuid;
+                 $aux_divisão_data = explode(' ', $id->created_at);
+                 $dados['post_data']= $aux_divisão_data[0] ;
+                 $dados['post_hora']= str_split($aux_divisão_data[1], 5)[0];
+                 $dados['reagir_S_N']=$id->reagi;
+                 $dados['guardado']=$id->guardado;
+                 $dados['formato']=$id->formato_id;
+                 $dados['estado_post']=$id->estado_post_id;
+                 $dados['foto_page']=$id->page_foto;
+                 if($dados['formato']==1 || $dados['formato']== 2){
+                 $dados['file']=$id->file;
+                 }
+                   $dados['dono_da_pag']=$id->dono_page;
+                   $dados['qtd_comment_reaction']=$id->qtd_reaction_unic_comment;
+                   $dados['comment']=$id->last_comment;
+                   $dados['comment_id']=$id->id_last_comment;
+                   $dados['comment_uuid']=$id->uuid_last_comment;
+                   $dados['comment_S_N']=$id->comment_s_n;
+                   $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$id->identificadorc_last_comment]);
+                   if (sizeof($aux2)>0) {
+                     if($aux2[0]->tipo_identificador_id == 1) {
+                     $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
+                     $dados['nome_comment']=$conta[0]->nome;
+                     $dados['nome_comment'].=" ";
+                     $dados['nome_comment'].=$conta[0]->apelido;
+                     $dados['foto_conta']=$conta[0]->foto;
+                     $dados['foto_ver']=1;
+                   }elseif ($aux2[0]->tipo_identificador_id == 2) {
+                     $dados['nome_comment']=$id->page_nome;
+                     $dados['foto_conta']=$id->page_foto;
+                     $dados['foto_ver']=2;
+                   }
+                   }
+
+              // dd($dados);
+
+                 DB::table('views')->insert([
+                   'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                   'post_id' => $id->post_id,
+                   'ip_view'=>'',
+                   'conta_id'=>$conta_logada[0]->conta_id,
+                   'state_views_id'=>2,
+                   'created_at'=> $this->dat_create_update(),
+                   ]);
+
+               return $dados;
+                   }
+
     public function index(Request $request){
         if (Auth::check() == true) {
           $default = new PerfilController();
@@ -570,9 +641,10 @@ class AuthController extends Controller
 
      */
 
-    $what_are_talking = $this->destaques();
 
-  //   $what_are_talking = [];
+     $what_are_talking = $this->destacados();
+     //$what_are_talking = $this->destaques();
+     //$what_are_talking = [];
      $mudar_estado_view= DB::table('views')->where('conta_id',$conta_logada[0]->conta_id)->where('state_views_id', 2)->limit(1)->get();
     if (sizeof($mudar_estado_view)>0) {
       DB::table('views')
@@ -588,9 +660,7 @@ class AuthController extends Controller
      //dd($post);
      if (sizeof($post)>0) {
        foreach ($post as $key) {
-         if ($key->estado_pagina_id == 1){
-           $dados[$a] = $this->DadosPost($key);
-         }
+           $dados[$a] = $this->DadosPost1($key);
          $a++;
        }
      }
@@ -625,6 +695,32 @@ class AuthController extends Controller
           //dd($conta_logada);
             return view('error.alert_working', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida'));
     }
+    /*Função para pegar os dados com ajax*/
+    
+    public function paginasqueSigo(){
+        
+        $dates = $this->default_();
+        $conta_logada_identify = $dates['conta_logada_identify'];
+        $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 1 limit 3', [$conta_logada_identify[0]->identificador_id]);
+        return response()->json($pagequesigo);
+    }
+
+     public function paginasquenaoSigo(){
+        
+        $dates = $this->default_();
+        $conta_logada_identify = $dates['conta_logada_identify'];
+        $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 limit 3', [$conta_logada_identify[0]->identificador_id]);
+        return response()->json($pagequesigo);
+    }
+
+    public function paginasquenaoSigoIndex(){
+        
+        $dates = $this->default_();
+        $conta_logada_identify = $dates['conta_logada_identify'];
+        $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 limit 10', [$conta_logada_identify[0]->identificador_id]);
+        return response()->json($pagequesigo);
+    }
+    /*Fim função para pegar os dados com ajax*/
 
   /*Páginas Seguidas e Não seguidas para index e perfil*/
     public function paginasSeguidasIndex(){
@@ -652,7 +748,7 @@ class AuthController extends Controller
             }
          foreach ($paginasSeguidas as $key => $valorPage) {
 
-          if ($contador > 9) {
+          if ($contador > 3) {
               break;
             }
             $pagePage[$key] = $valorPage;
@@ -708,7 +804,7 @@ class AuthController extends Controller
         }
          foreach ($paginasNaoSeguidas as $key => $valuePage) {
 
-          if ($parada > 7) {
+          if ($parada > 9) {
               break;
             }
             $pagenaoPage[$key] = $valuePage;
@@ -1423,6 +1519,7 @@ public function dados_comment($key){
             if ($page[0]->conta_id_a == $conta[0]->conta_id || $page[0]->conta_id_b == $conta[0]->conta_id) {
               $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$post[0]->page_id, 2 ]);
               DB::table('comments')->insert([
+                'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
                 'post_id' => $request->id,
                 'identificador_id' => $aux[0]->identificador_id,
                 'tipo_estado_comment_id'=>1,
@@ -1582,17 +1679,17 @@ public function dados_comment($key){
             return view('auth.RealRegister', compact('dadosPais'));
         }
 
-   
+
    public function sendMsgToPhone($takePhone,$code){
 
    // meu token a80fed69fcde464b35cee02ae7a172aa918235239
     //token Ch: e5a2c12e2876ed474072ee9a10e4f3f2926312782
-         $response = Http::post('http://52.30.114.86:8080/mimosms/v1/message/send?token=a80fed69fcde464b35cee02ae7a172aa918235239 ', [   
+         $response = Http::post('http://52.30.114.86:8080/mimosms/v1/message/send?token=a80fed69fcde464b35cee02ae7a172aa918235239 ', [
              'sender'=>'918235239',
              'recipients' => $takePhone,
              'text' => 'Codigo de Confirmação Tassumir :'.$code,
         ]);
-   
+
             $responseBody = $response->body();
 
    }
@@ -1659,7 +1756,7 @@ public function dados_comment($key){
                       $takeEmail = $request->email;
 
                       $get_verification_code = $code;
-                     
+
                      $this->sendMsgEmail($takeEmail,$get_verification_code);
 
                       //Criptografia do codigo de confirmacao
@@ -1691,11 +1788,11 @@ public function dados_comment($key){
                       //==== algoritmo para envio de msg para o telefone ====
 
                         $this->sendMsgToPhone($takePhone,$code);
-                      
+
                      // ==== fim algoritmo para envio de msg para o telefone ====
 
                     //Criptografia do codigo de confirmacao
-                                            
+
                      $plain_text_code = $code;
                      $encryp_conf_cod = $this->criptCode($plain_text_code);
 
@@ -1728,7 +1825,7 @@ public function dados_comment($key){
         //decriptografia cod confirmacao
 
         $decryp_code_confi = $this->decriptCode($codigo_criado);
-      
+
         //fim decriptografia
 
         $phoneReceived = $request->telefone;
@@ -1850,7 +1947,7 @@ public function dados_comment($key){
        if($phoneReceived != null){
 
             $code2 = random_int(100000,900000);
-            
+
                     $this->sendMsgToPhone($phoneReceived,$code2);
 
                    $plain_text_code = $code2;
