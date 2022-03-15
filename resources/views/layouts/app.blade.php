@@ -33,7 +33,7 @@
                 <li class="title clearfix">
                     <a href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1>Tass<span class="title-final">umir</span></h1></a>
                 </li>
-                <li class="search-lg mobile-hidden">
+                <li class="search-lg mobile-hidden" style="margin-left:48px;">
                     <div class="input-search">
                         <label for="search-lg-home"><i class="fas fa-search fa-16 fa-search-main"></i></label>
                         <input type="search" name="" placeholder="O que está procurando?" class="input-text" id="search-lg-home-id">
@@ -58,9 +58,7 @@
             <nav class="menu-header ">
                 <?php $controller = 0; ?>
                 <ul class="clearfix ">
-                    <!--<li class="l-5 mobile-header-icon">
-                        <a href="{{route('allSearch1.page')}}"><i class="fas fa-search fa-24" size="7"></i></a>
-                    </li>-->
+                  
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " id="notification-header-icon">
                             <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i>
@@ -1137,6 +1135,7 @@
               }
             });
       });
+     
       $('.comentar-aa').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
@@ -1408,15 +1407,16 @@
             }else{
                var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];
             }
-             $('#li-component-sugest-' + valor_pagina_id).remove();
-             $('#li-component-suggest-' + valor_pagina_id).remove();
-             $('.seguir-' + valor_pagina_id).hide();
+             
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
                 data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id, 'last_page': id_last_page},
                 dataType: 'json',
                 success: function(response){
+                    $('#li-component-sugest-' + valor_pagina_id).remove();
+                    $('#li-component-suggest-' + valor_pagina_id).remove();
+                    $('.seguir-' + valor_pagina_id).hide();
                     if (response.page != 'Vazio') {
                   $.each(response.page, function(key, value){
                     $('#id_last_suggest').val(value.page_id);
@@ -1424,7 +1424,7 @@
                         let src = "{{asset('storage/img/page/unnamed.jpg')}}";
                   $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='seguir(event)' id=a-"+value.page_id+">seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
                     }else{
-                        let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
                         $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='seguir(event)' id=a-"+value.page_id+">seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
                     }
                     });
@@ -1462,7 +1462,7 @@
                         let src = "{{asset('storage/img/page/unnamed.jpg')}}";
                   $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
                     }else{
-                        let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
                         $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
                     }
                     });
@@ -1516,6 +1516,19 @@
 
             }
           });
+        $('#table_search').on('keyup',function(){
+            let variavel= $('#table_search').val();
+            $('#search-lg-home-id').val(variavel);
+            let v= 1;
+            if (variavel!='') {
+              searchP(variavel, v);
+            }else {
+              $('div[name=pessoa]').empty();
+              $('div[name=page]').empty();
+              $('div[name=ver_td]').empty();
+
+            }
+        })
 
 function searchP(variavel, v){
   var s1=0;

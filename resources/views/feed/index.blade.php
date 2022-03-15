@@ -182,6 +182,7 @@
                         <div class="video-post post-video" id="video-post-{{$dados[$key]['post_uuid']}}">
                             <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$dados[$key]['post_id']?>>
                             <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$dados[$key]['post_id']?>>
+                            <img class="loader_icon center" src="{{asset('css/uicons/loading.gif')}}" id=<?php echo "loader_icon_".$dados[$key]['post_id']; ?>>
                             <video class="video-post-video" id="video_{{$dados[$key]['post_id']}}">
                                 <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
@@ -417,7 +418,7 @@
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
+                                                <a href="{{ route('couple.page1', $Paginas->uuid) }}"><img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}"></a>
                                             </div>
                                         @else
                                             <div class="sugest_component circle clearfix">
@@ -425,7 +426,7 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
+                                    <a href="{{ route('couple.page1', $Paginas->uuid) }}"><h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1></a>
                                     <a href="" class="seguir_index" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
                                     <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
                                    <input type="hidden" name="" value="0" id="last_page">
@@ -763,6 +764,7 @@ function gostar(id){
             }
 
     $(document).ready(function () {
+        $(".loader_icon").hide();
       document.getElementById("route_feed").classList.add('li-component-aside-active');
 
             $('.seguir_index').click(function(e){
@@ -794,12 +796,15 @@ function gostar(id){
                   if (response.page != 'Vazio') {
                   $.each(response.page, function(key, value){
                     $('#last_page').val(value.page_id);
-                    if (value.foto != null) {
-                    let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
-                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
+                    let url_link = "{{ route('couple.page1', 0) }}";
+                        url_array = url_link.split('/');
+                        url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/" + url_array[3] + "/" + value.uuid;
+                    if (value.foto != null) {                        
+                    let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
+                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }else{
                         let src = "{{asset('storage/img/page/unnamed.jpg')}}";
-                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
+                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }
                 });
                 }
@@ -861,6 +866,21 @@ function gostar(id){
                                     document.getElementById('playbutton_' + id_video_final).classList.remove('invisible');
                                 }
                                 
+                            }
+                            console.log('paused ' + $("#video_" + id_video_final)[0].paused);
+                            console.log('.HAVE_FUTURE_DATA ' + $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA);
+                            console.log('readyState ' + $("#video_" + id_video_final)[0].readyState);
+                            console.log('seeking ' + $("#video_" + id_video_final)[0].seeking);
+                            console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);
+                            if ($("#video_" + id_video_final)[0].paused != true && 
+                                !$("#video_" + id_video_final)[0].seeking &&
+                                 $("#video_" + id_video_final)[0].currentTime > 0 && 
+                                 $("#video_" + id_video_final)[0].readyState >= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA) {
+                                    $("#loader_icon_" + id_video_final).hide();
+                            } else {
+                                if ($("#video_" + id_video_final)[0].readyState <= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA){
+                                    $("#loader_icon_" + id_video_final).show();
+                                } 
                             }
                         }
 
