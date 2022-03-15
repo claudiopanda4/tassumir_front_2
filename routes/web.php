@@ -33,7 +33,18 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/delete_post', [App\Http\Controllers\AuthController::class, 'delete_post'])->name('delete_post');
     Route::get('/pegar_mais_post', [App\Http\Controllers\AuthController::class, 'pegar_mais_post'])->name('pegar_mais_post');
     Route::get('/ocultar_post', [App\Http\Controllers\AuthController::class, 'ocultar_post'])->name('ocultar_post');
+    
+
     Route::get('/post_index/{id}', [App\Http\Controllers\AuthController::class, 'post_index'])->name('post_index');
+
+    /* siene */
+    Route::get('/get_only_post/', [App\Http\Controllers\AuthController::class, 'get_only_post'])->name('get_post');
+
+
+    Route::get('/get_only_comments/', [App\Http\Controllers\AuthController::class, 'get_only_comments'])->name('get_comments');
+    /* end siene  */
+
+
     Route::get('/savepost', [App\Http\Controllers\AuthController::class, 'savepost'])->name('savepost');
     Route::get('/comentar', [App\Http\Controllers\AuthController::class, 'comentar'])->name('comentar');
     Route::post('/Pedido_relac/', [App\Http\Controllers\PerfilController::class, 'Pedido_relac'])->name('Pedido_relac');

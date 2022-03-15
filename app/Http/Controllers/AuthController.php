@@ -1040,7 +1040,24 @@ class AuthController extends Controller
     return response()->json($dados);
   }
 
+
+/* Siene */
+
+  public function get_only_post(Request $request) {
+    if ($request->ajax()) {
+        $data = DB::table('posts')->where('uuid', $request->id)->get();
+        return response()->json($data);
+    }
+  }
+
+  public function get_only_comments(Request $request) {
+    return DB::select('select * from comments where post_id = (select post_id from posts where uuid = ?)', [$request->id]);
+  }
+
+/* EndSiene */
+
   public function post_index($id){
+
 
       $dates = $this->default_();
       $account_name = $dates['account_name'];
