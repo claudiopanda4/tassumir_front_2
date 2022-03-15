@@ -146,6 +146,12 @@
 	    display: block;
 	    margin-left: 5px;
 	}
+	.menu-header ul li.mobile-hidden-notify-icon,
+	.menu-header ul li.mobile-lg-notify,
+	.menu-header ul li.mobile-header-icon,
+	.menu-header ul li.mobile-header-icon {
+	    margin-top: 8px;
+	}
 	.menu-header ul {
 	    margin-left: -40px;
 	    margin-bottom: 0;
@@ -367,7 +373,8 @@
 	}
 	.options-profile-btn {
 		width: 47.5%;
-		margin-right: 5px;
+		margin-right: 1%;
+		margin-left: 1%;
 		margin-top: 0;
 	}
 	#options-profile-btn-profile {
@@ -613,6 +620,7 @@
     }
     .input-login {
 	    background-color: #3b3b3b;
+	    font-size: 12px;
 	}
 	.input-emai-log {
 		margin-top: 10px;
@@ -630,7 +638,7 @@
 	#main-login {
 		width: 275px;
 	    height: auto;
-	    margin: 20px auto 10px;
+	    margin: 20% auto 10px;
 	    float: none;
 	}
 	#app-log-reg {
@@ -676,7 +684,7 @@
 		width: 150px;
 	}
 	.comment-user-comment {
-		margin: 10px 10px 10px;
+		margin: 2px;
 	}
 	.suggest-slide {
 		display: block;
@@ -782,10 +790,26 @@
 	.statistics-profile-page-component h2 {
 	    font-size: 12px;
 	}
+	#genre-id-container {
+	    margin-right: 10px;
+	}
+	.input-login {
+	    margin: 5px auto;
+	}
+	#main-login, #main-reg {
+	    width: 240px;
+	    height: auto;
+	}
+	.enter-login {
+	    color: #fff;
+	}
 	.couple-profile-img {
 	    position: absolute;
 	    width: 50px;
 	    height: 50px;
+	}
+	.img-logo {
+	    border-radius: 0%;
 	}
 	.couple-profile-container {
     	width: 75px;
@@ -814,6 +838,10 @@
 	}
 }
 @media screen and (max-width: 500px) {
+
+	#main-login {
+		width: 240px;
+	}
 	#pop-up-component-create-post {
 	    width: 100%;
 	    height: 100%;
@@ -919,13 +947,21 @@
 	    margin-top: 5px;
 	}
 }
+@media screen and (max-height: 500px) {
+	#main-login {
+	    margin: 13% auto 10px;
+	}
+	#main-login, #main-reg {
+	    margin: auto;
+	}
+}
 @media screen and (max-width: 328px) {
 	.img-profile-page {
 	    width: 65px;
 	    height: 65px;
 	}
 	#main-login {
-	    width: 298px;
+	    width: 220px;
 	}
 	.video-post {
 	    height: 328px;
@@ -956,7 +992,8 @@
 	    width: 65%;
 	}
 	.comment-users {	    
-		width: 290px;
+		width: 280px;
+    	margin-left: 20px;
 	}
 	.user-identify-comment {
 	    width: 230px;
@@ -1068,6 +1105,14 @@
 	    overflow-y: auto;
 	    overflow-x: hidden;
 	}
+	.comment-users {
+	    width: 270px;
+	    margin-left: 53px;
+	}
+	.comment-users.comment-blade {
+	    width: 90%;
+	    margin-left: 5%;
+	}
 }
 @media screen and (max-width: 500px) {
 	.video-post {
@@ -1140,6 +1185,9 @@
 		border-radius: 0;
 		border-top: 1px solid #343a40;
 	}
+	.distinctiv {
+	    border: 2px solid #000;
+	}
 	#refresh-profile-photo-id {
 	    display: block;
 	}
@@ -1191,6 +1239,9 @@
 	.post-cover.post-cover-post-index img {
 	    height: auto;
     	position: relative;
+	}
+	#main-reg {
+	    margin: 35px auto 10px;
 	}
 }
 @media screen and (min-width: 2400px) {
@@ -1260,8 +1311,16 @@
 	}
 }
 @media screen and (max-width: 720px) {
+	#login-register {
+	    background-color: #3b3b3b;
+	    border: 1px solid #3b3b3b;
+	}
 	.menu-footer {
 	    background-color: #000;
+	}
+	.number-notification {
+	    top: -10px;
+	    right: -10px;
 	}
 	.filter-main-search-mobile::-webkit-scrollbar {
 		width: 0px;
@@ -1270,4 +1329,15 @@
 	.filter-main-search-mobile::-webkit-scrollbar-thumb {
 		width: 0px;
 	}
+}
+@media screen and (max-width: 360px){
+	.comment-user-comment.comment-user-comment-feed p {
+	    font-size: 11px;
+	    max-width: 140px;
+	}	
+}
+@media screen and (max-width: 470px){
+	.btn-a-default {
+	    font-size: 11px;
+	}	
 }

@@ -9,3 +9,13 @@ MAIL_PASSWORD=dsdwizszwjojllmi
 MAIL_ENCRYPTION=TLS
 MAIL_FROM_ADDRESS=hugopaulo95.hp@gmail.com
 MAIL_FROM_NAME="${APP_NAME}"
+
+//real
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=deltoneinstein@gmail.com
+MAIL_PASSWORD=gbsdplnjwutaadet
+MAIL_ENCRYPTION=TLS
+MAIL_FROM_ADDRESS=support@tassumir.com
+MAIL_FROM_NAME="Tassumir | Equipa de Suporte Aplicacional"

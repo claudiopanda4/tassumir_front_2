@@ -47,7 +47,27 @@ class PageController extends Controller
         return $return;
     }
 
+    public function PP($controller)
+    {
+      $post=[];
+      $auth = new AuthController();
+      $dates = $auth->default_();
+      $conta_logada= $dates['conta_logada'];
+      $conta_logada_identify = $dates['conta_logada_identify'];
+      //posts de paginas q segue
+      $p1=DB::select('select * from (select p.*,(select pg.estado_pagina_id from pages as pg where p.page_id = pg.page_id ) as estado_pagina_id, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ? ) as vi, (select count(*) from seguidors where 	identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui  from posts as p order by rand()) as p where p.vi = 0 and p.segui = 1  order by rand() limit 10',[$conta_logada[0]->conta_id, $conta_logada_identify[0]->identificador_id]);
+      // posts de paginas q ñ segue
+      $limit = 12 - sizeof($p1);
+      $p2=DB::select('select * from (select p.*,(select pg.estado_pagina_id from pages as pg where p.page_id = pg.page_id ) as estado_pagina_id, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ? ) as vi, (select count(*) from seguidors where 	identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui  from posts as p order by rand()) as p where p.vi = 0 and p.segui = 0  order by rand() limit ?',[$conta_logada[0]->conta_id, $conta_logada_identify[0]->identificador_id, $limit]);
+      $post= array_merge($p1, $p2);
+      shuffle($post);
+      //caso ñ tenha posts
+      if (sizeof($post)<=0 && $controller=0) {
+        $post=[];
+      }
 
+      return $post;
+    }
 
     public function get_posts($init, $aux_post, $pegar_posts, $verificacao){
 

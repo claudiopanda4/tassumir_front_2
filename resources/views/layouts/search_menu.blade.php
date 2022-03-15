@@ -29,7 +29,7 @@
   <header class="header-main-n header-main-component-n clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
-                    <a href="{{route('account.home')}}"><i class="fas fa-link fa-24"></i><h1 class="">Tass<span class="title-final">umir</span></h1></a>
+                    <a href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1 class="">Tass<span class="title-final">umir</span></h1></a>
                 </li>
                 <li class="search-lg mobile-hidden">
                     <div class="input-search">

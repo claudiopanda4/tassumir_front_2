@@ -96,9 +96,9 @@
 
             <span class="hidden" style="color:red;" id="erroData"> Insira a Data de Nascimento</span>
 
-            <div class="row" style="margin-top: 10px;">
+            <div class="row" style="" id="genre-id-container">
 
-              <div class="col-md-8">
+              <div class="col-md-8" id="genre-id-component">
 
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="sexo" id="exampleRadios1" value="Masculino" checked>
@@ -110,7 +110,7 @@
 
               </div>
 
-              <div class="col-md-4">
+              <div class="col-md-4" id="genre-id-component">
 
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="sexo" id="exampleRadios2" value="Feminino">
@@ -181,7 +181,7 @@
           <div class="hugo-btn">
             <button type="button" id="login-enter" class="next">Seguinte</button>
             <button type="button" id="login-enter" class="recuar">Voltar</button>
-            <button type="submit" id="login-enter">Criar Conta</button>
+            <button type="submit" id="login-enter" class="my-form">Criar Conta</button>
           </div>
 
           <div class="clearfix">
@@ -206,7 +206,7 @@
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script>
 
-  var myForm = $("#my-form");
+  var myForm = $(".my-form");
   myForm.submit(function(){
     myForm.submit(function(){
         return false;
@@ -268,7 +268,7 @@
       return false;
     }
   });
-  $("#nome").bind('keydown', function(e) {
+  $("#nome-id").bind('keydown', function(e) {
 
     var codTecla = e.which;
     var teclas = (codTecla > 64 && codTecla <= 90);
@@ -279,7 +279,7 @@
       return false;
     }
   });
-  $("#apelido").bind('keydown', function(e) {
+  $("#apelido-id").bind('keydown', function(e) {
 
     var codTecla = e.which;
     var teclas = (codTecla > 64 && codTecla <= 90);

@@ -44,7 +44,7 @@
     setTimeout(()=>{  
        take_error.fadeOut();
        suc.fadeOut();
-    },4000);
+    },5000);
         
     }
   

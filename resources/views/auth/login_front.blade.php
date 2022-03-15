@@ -33,8 +33,8 @@
         <main class="main" id="main-login-container">
             <div style="height: 1px;"></div>
             <header class="logo-form" id="logo-login-form-lg" style="margin-left: 10px;">
-                <div class="title">
-                    <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
+                <div class="title clearfix">
+                    <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                 </div>
             </header>
             <div class="cover-login" id="cover-login-id">
@@ -42,8 +42,8 @@
             </div>
             <div class="" id="main-login">
                 <header class="logo-form" id="title-login">
-                    <div class="title">
-                        <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
+                    <div class="title clearfix">
+                        <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                     </div>
                 </header>
                 
@@ -87,11 +87,10 @@
                             
                         </div>
                     </div>
-
-                <div class="clearfix" style="padding: 10px;">
+                <!--<div class="clearfix" style="padding: 10px;">
                     <span class="alert-login">Ao clicar em criar uma nova conta, você aceita o Contrato de Utilizador, a Política de Privacidade e a Política de Cookies do Tassumir</span><br>
                     <a href="" class="politic-privacy">Política de Privacidade e a Política de Cookies do Tassumir</a>
-                </div>
+                </div>-->
             </div>
         </main>
     </div>
