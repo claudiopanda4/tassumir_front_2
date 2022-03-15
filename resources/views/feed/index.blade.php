@@ -418,7 +418,7 @@
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
+                                                <a href="{{ route('couple.page1', $Paginas->uuid) }}"><img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}"></a>
                                             </div>
                                         @else
                                             <div class="sugest_component circle clearfix">
@@ -426,7 +426,7 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
+                                    <a href="{{ route('couple.page1', $Paginas->uuid) }}"><h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1></a>
                                     <a href="" class="seguir_index" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
                                     <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
                                    <input type="hidden" name="" value="0" id="last_page">
@@ -796,12 +796,15 @@ function gostar(id){
                   if (response.page != 'Vazio') {
                   $.each(response.page, function(key, value){
                     $('#last_page').val(value.page_id);
-                    if (value.foto != null) {
-                    let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
-                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
+                    let url_link = "{{ route('couple.page1', 0) }}";
+                        url_array = url_link.split('/');
+                        url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/" + url_array[3] + "/" + value.uuid;
+                    if (value.foto != null) {                        
+                    let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
+                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }else{
                         let src = "{{asset('storage/img/page/unnamed.jpg')}}";
-                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
+                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }
                 });
                 }

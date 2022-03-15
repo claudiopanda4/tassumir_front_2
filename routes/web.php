@@ -84,6 +84,13 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/postpesquisa', [App\Http\Controllers\searchController::class, 'postpesquisa'])->name('post.pesquisa');
     Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home.feed');
     Route::get('/pegar_ultimocomment', [App\Http\Controllers\AuthController::class, 'pegar_ultimocomment'])->name('pegar_ultimocomment');
+
+    /*Rotas para requisições Ajax*/
+    Route::get('/page/que/sigo', [App\Http\Controllers\AuthController::class, 'paginasqueSigo'])->name('page.que.sigo');
+    Route::get('/page/para/index', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigoIndex'])->name('page.para.index');
+    Route::get('/page/que/nao/sigo', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigo'])->name('page.que.nao.sigo');
+    /*Fim rotas para Ajax*/
+    
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');
     Route::get('nao/seguir', [App\Http\Controllers\SeguidorController::class, 'destroy'])->name('nao.seguir.seguindo');
     Route::get('/direct/', [App\Http\Controllers\MessageController::class, 'index'])->name('message.index');

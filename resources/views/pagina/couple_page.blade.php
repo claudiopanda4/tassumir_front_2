@@ -201,15 +201,15 @@
                                     <div class="clearfix sugest_component_div">
                                         @if( !($Paginas->foto == null) )
                                             <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}">
+                                               <a href="{{ route('couple.page1', $Paginas->uuid) }}"><img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}"></a>
                                             </div>
                                         @else
                                             <div class="sugest_component circle clearfix">
-                                                <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                                <a href="{{ route('couple.page1', $Paginas->uuid) }}"><img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}"></a>
                                             </div>
                                         @endif
                                     </div>
-                                    <h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1>
+                                    <a href="{{ route('couple.page1', $Paginas->uuid) }}"><h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1></a>
                                     <a href="" class="seguir_couple" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
                                     <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
                                 </li>
@@ -307,14 +307,19 @@
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
 
-            if ($('.nao_sigo').eq(9).attr("id").split('-')[3] != null) {
-                var id_last_page = $('.nao_sigo').eq(9).attr("id").split('-')[3];
+            if ($('.nao_sigo').eq(9).attr("id").split('-')[2] != null) {
+                var id_last_page = $('.nao_sigo').eq(3).attr("id").split('-')[2];
             }else{
-                var id_last_page = 0;
+                if ($('.nao_sigo').eq(8).attr("id").split('-')[2] != null) {
+
+                }else{
+                    var id_last_page = 0;
+                }
             }            //$('#' + valor_pagina_id).empty();
+            
 
 
-            var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];;
+            //var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];;
             //$('#' + valor_pagina_id).empty();
 
             $('#li-component-suggest-' + valor_pagina_id).remove();
@@ -331,12 +336,16 @@
                   $('.seguir-' + valor_pagina_id).hide();
                   if (response.page != 'Vazio') {
                   $.each(response.page, function(key, value){
+                    let url_link = "{{ route('couple.page1', 0) }}";
+                    console.log(url_link);
+                        url_array = url_link.split('/');
+                        url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/" + url_array[3] + "/" + value.uuid;
                     if (value.foto != null) {
-                    let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
-                        $('#sugest_couple').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=></li>");
+                    let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
+                        $('#sugest_couple').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=></li>");
                     }else{
                         let src = "{{asset('storage/img/page/unnamed.jpg')}}";
-                        $('#sugest_couple').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><img class='img-full circle' src="+src+"></div></div><h1 class='name-suggest text-ellips'>"+value.nome+"</h1><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=></li>");
+                        $('#sugest_couple').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=></li>");
                     }
                 });
                 }

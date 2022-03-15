@@ -625,6 +625,32 @@ class AuthController extends Controller
           //dd($conta_logada);
             return view('error.alert_working', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida'));
     }
+    /*Função para pegar os dados com ajax*/
+    
+    public function paginasqueSigo(){
+        
+        $dates = $this->default_();
+        $conta_logada_identify = $dates['conta_logada_identify'];
+        $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 1 limit 3', [$conta_logada_identify[0]->identificador_id]);
+        return response()->json($pagequesigo);
+    }
+
+     public function paginasquenaoSigo(){
+        
+        $dates = $this->default_();
+        $conta_logada_identify = $dates['conta_logada_identify'];
+        $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 limit 3', [$conta_logada_identify[0]->identificador_id]);
+        return response()->json($pagequesigo);
+    }
+
+    public function paginasquenaoSigoIndex(){
+        
+        $dates = $this->default_();
+        $conta_logada_identify = $dates['conta_logada_identify'];
+        $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 limit 10', [$conta_logada_identify[0]->identificador_id]);
+        return response()->json($pagequesigo);
+    }
+    /*Fim função para pegar os dados com ajax*/
 
   /*Páginas Seguidas e Não seguidas para index e perfil*/
     public function paginasSeguidasIndex(){
@@ -652,7 +678,7 @@ class AuthController extends Controller
             }
          foreach ($paginasSeguidas as $key => $valorPage) {
 
-          if ($contador > 9) {
+          if ($contador > 3) {
               break;
             }
             $pagePage[$key] = $valorPage;
@@ -708,7 +734,7 @@ class AuthController extends Controller
         }
          foreach ($paginasNaoSeguidas as $key => $valuePage) {
 
-          if ($parada > 7) {
+          if ($parada > 9) {
               break;
             }
             $pagenaoPage[$key] = $valuePage;
