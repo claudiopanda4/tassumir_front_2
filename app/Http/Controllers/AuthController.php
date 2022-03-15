@@ -502,107 +502,17 @@ class AuthController extends Controller
 
     public function index(Request $request){
         if (Auth::check() == true) {
-          $default = new PerfilController();
-          $dates = $this->default_();
-          $account_name = $dates['account_name'];
-          $checkUserStatus = $dates['checkUserStatus'];
-          $profile_picture = $dates['profile_picture'];
-          $isUserHost = $dates['isUserHost'];
-          $hasUserManyPages = $dates['hasUserManyPages'];
-          $allUserPages = $dates['allUserPages'];
-          $page_content = $dates['page_content'];
-          $conta_logada = $dates['conta_logada'];
-          $notificacoes = $dates['notificacoes'];
-          $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
-          $paginasSeguidas = $dates['paginasSeguidas'];
-          $dadosSeguida = $dates['dadosSeguida'];
-          $notificacoes_count = $dates['notificacoes_count'];
-
-        //=========================================================
-        $paginasSeguidas = $this->paginasSeguidas();
-        $paginasNaoSeguidas = $this->paginasNaoSeguidas();
-        $page_current = 'auth';
-        $conta_logada = $this->defaultDate();
-        $pagenaoseguidas = $this->paginasNaoSeguidasIndex();
-        $pageseguidas = $this->paginasSeguidasIndex();
-
-      /*  $post_controller = new PostController();
-        //$post= DB::table('posts')->limit(7)->get();
-        //dd($post);
-        if ($request->checked) {
-            //return ['state' => 'checked', 'init' => $request->init, 'dest_init' => $request->dest_init];
-            $posts_return = $post_controller->posts($request);
-            $post = $posts_return['dados'];
-            //dd($post);
-            //return $post;
-        } else {
-            $posts_return = $post_controller->posts($request);
-            $post = $posts_return['dados'];
-            //dd($post);
+            $page_current = 'home_index';
+            return view('feed.index', compact('page_current'));
         }
-
-      $last_post_id = $posts_return['last_post_id'];
-      $last_post_dest = $posts_return['last_post_dest'];
-      $a=0;
-
-      //dd($this->DadosPost());
-
-      $dados = array();
-      //dd('post');
-      foreach ($post as $post[0]) {
-        $page= DB::table('pages')->where('page_id', $key->page_id)->get();
-        if ($page[0]->estado_pagina_id == 1){
-          $dados[$a] = $this->DadosPost($key);
-        }
-        $a++;
-      }
-        //dd('entrou');
-      if (sizeof($dados) < 0) {
-          $dados = ['dados' => []];
-      }
-     //dd($dados);
-     // dd($this->getPostAndFilter($dados, "5aeaec63-91e1-4a2f-a735-81e5580a50de", 'video'));
-     return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas', 'last_post_id', 'last_post_dest'));
-
-     <input type="hidden" id="last_post" name="init" value=<?php echo $last_post_id; ?>>
-     <input type="hidden" id="last_post_dest" name="dest_init" value=<?php echo $last_post_dest; ?>>
-
-
-     */
-
-    $what_are_talking = $this->destaques();
-
-  //   $what_are_talking = [];
-     $mudar_estado_view= DB::table('views')->where('conta_id',$conta_logada[0]->conta_id)->where('state_views_id', 2)->limit(1)->get();
-    if (sizeof($mudar_estado_view)>0) {
-      DB::table('views')
-            ->where('conta_id',$conta_logada[0]->conta_id)
-            ->where('state_views_id', 2)
-            ->delete();
+        return redirect()->route('account.login.form');
     }
-     $post_controller = new PageController();
-     $array_aux=array();
-     $dados=array();
-     $post = $post_controller->PP(0);
-     $a=0;
-     //dd($post);
-     if (sizeof($post)>0) {
-       foreach ($post as $key) {
-         if ($key->estado_pagina_id == 1){
-           $dados[$a] = $this->DadosPost($key);
-         }
-         $a++;
-       }
-     }
 
-      //--------------------------------------------------------------------------------------------o que estão falando --------------------------------------------------------------
-
-
-        return view('feed.index', compact('account_name','notificacoes_count','notificacoes','what_are_talking', 'dados', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas', 'pagenaoseguidas', 'pagenaoseguidas'));
-
-
-    }
-    return redirect()->route('account.login.form');
+    public function user_data(Request $request){
+        $id = Auth::user()->conta_id;
+        $contas = DB::select('select foto, nome, apelido from contas where (conta_id) = (?)', [$id]);
+        //DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+        return $contas[0];
     }
     public function alert(Request $request){
           $default = new PerfilController();

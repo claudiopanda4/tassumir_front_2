@@ -501,6 +501,8 @@ label[for="hugo"]{
     position: relative;
     width: 40px;
     height: 40px;
+    background-color: #343a40;
+    border-radius: 50%;
 }
 .page-cover ~ h2 {
     color: #6c757d;
@@ -1239,7 +1241,7 @@ label[for="hugo"]{
     margin: 10px auto 10px;
 }
 #stories-card {
-    width: 650px;
+    width: 620px;
     margin-bottom: -10px;
     margin-top: -10px;
     background-color: transparent;
@@ -1534,6 +1536,8 @@ label[for="hugo"]{
     height: 34px;
     margin-top: 10px;
     margin-left: 15px;
+    background-color: #343a40;
+    border-radius: 50%;
 }
 .comment-send {
     width: 90%;
@@ -1592,7 +1596,7 @@ label[for="hugo"]{
 .stories-about-talking nav ul {
     position: relative;
     margin-left: -20px;
-    width: 655px;
+    width: 2560px;
     min-height: 80px;
 }
 .stories-about-talking nav ul li {
@@ -2675,6 +2679,7 @@ label[for="hugo"]{
 }
 .user-identify-comment.user-identify-comment-feed {
     width: 130px;
+    margin-bottom: 5px;
 }
 .user-identify-comment .profille-img {
     width: 28px;
@@ -3395,7 +3400,7 @@ label[for="hugo"]{
     color: #ffff;
 }
 #notification-header-icon {
-    margin-top: -3px;
+    margin-top: 2px;
 }
 .li-footer-menu {
     position: relative;
@@ -3462,4 +3467,23 @@ label[for="hugo"]{
     width: 28px;
     height: 28px;
     z-index: 3;
+}
+.loading-img {
+    display: block;
+}
+.invisible-post {
+    display: none;
+}
+.invisible-component {
+    display: none;
+}
+.user-account-container-img {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    background-color: #343a40;
+    border-radius: 50%;
+}
+.transparent-back {
+    background-color: transparent;
 }
