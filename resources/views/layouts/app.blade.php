@@ -34,7 +34,7 @@
                 <li class="title clearfix">
                     <a href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1>Tass<span class="title-final">umir</span></h1></a>
                 </li>
-                <li class="search-lg mobile-hidden">
+                <li class="search-lg mobile-hidden" style="margin-left:48px;">
                     <div class="input-search">
                         <label for="search-lg-home"><i class="fas fa-search fa-16 fa-search-main"></i></label>
                         <input type="search" name="" placeholder="O que está procurando?" class="input-text" id="search-lg-home-id">
@@ -78,8 +78,6 @@
                             <li class="hidden-click-any-container noti-flex mt-2">
                                 <div class="hidden-click-any-container noti-div-subtitle">
                                     <h4 class="noti-subtitle">Antigas</h4>
-                                </div>
-                            </li>
                             <li class="hidden-click-any-container change-look noti-flex-info" id="not-3" name="not-3">
                                 <div class="hidden-click-any-container ml-2 novi-div-image circle l-5">
                                     <img class="hidden-click-any-container circle img-24 center invisible-component">
@@ -157,13 +155,15 @@
                 <h1>Sugestões para Você</h1>
             </header>
             <?php $key = 0; while($key < 40){ ?>
-                <li  id="li-component-sugest-" <?php if ($key < 2) {echo "class='li-component-aside-right clearfix'";} else {echo  "class='li-component-aside-right clearfix invisible-component'";}?>>
+                <li  id="li-component-sugest-{{$key}}" <?php if ($key < 2) {echo "class='li-component-aside-right clearfix'";} else {echo  "class='li-component-aside-right clearfix invisible-component'";}?>>
                     <div class="page-cover circle l-5">
-                        <img class="img-full circle invisible-component" src="">
+                        <a href="" id="a-suggest-id-aside-{{$key}}">
+                            <img class="img-full circle invisible-component" id="page-cover-suggest-id-{{$key}}">
+                        </a>
                     </div>
-                    <h1 class="l-5 name-page text-ellips"></h1>
-                    <h2 class="l-5 text-ellips">seguidores</h2>
-                    <a href="" class="seguir"></a>
+                    <a id="a-suggest-id-aside-name-{{$key}}"><h1 class="l-5 name-page text-ellips" id="page-name-suggest-id-{{$key}}"></h1></a>
+                    <h2 class="l-5 text-ellips" id="page-followers-suggest-id-{{$key}}">seguidores</h2>
+                    <a href="" class="seguir" id="follwing-{{$key}}">seguir</a>
                 </li>
             <?php $key++; } ?>
             <footer class="clearfix invisible">
@@ -820,6 +820,7 @@
               }
             });
       });
+     
       $('.comentar-aa').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
@@ -1091,15 +1092,16 @@
             }else{
                var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];
             }
-             $('#li-component-sugest-' + valor_pagina_id).remove();
-             $('#li-component-suggest-' + valor_pagina_id).remove();
-             $('.seguir-' + valor_pagina_id).hide();
+             
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
                 data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id, 'last_page': id_last_page},
                 dataType: 'json',
                 success: function(response){
+                    $('#li-component-sugest-' + valor_pagina_id).remove();
+                    $('#li-component-suggest-' + valor_pagina_id).remove();
+                    $('.seguir-' + valor_pagina_id).hide();
                     if (response.page != 'Vazio') {
                   $.each(response.page, function(key, value){
                     $('#id_last_suggest').val(value.page_id);
@@ -1107,7 +1109,7 @@
                         let src = "{{asset('storage/img/page/unnamed.jpg')}}";
                   $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='seguir(event)' id=a-"+value.page_id+">seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
                     }else{
-                        let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
                         $('#pagenaoseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='seguir(event)' id=a-"+value.page_id+">seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
                     }
                     });
@@ -1145,7 +1147,7 @@
                         let src = "{{asset('storage/img/page/unnamed.jpg')}}";
                   $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
                     }else{
-                        let src = "{{asset('storage/img/users/')}}" + "/" + value.foto;
+                        let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
                         $('#pageseguida').append("<li class='li-component-aside-right clearfix sigo' id='seguida-"+value.page_id+"'><div class='page-cover circle l-5'><img class='img-full circle' src="+src+"></div><h1 class='l-5 name-page text-ellips'>"+value.nome+"</h1><h2 class='l-5 text-ellips'>"+response.seguidores+" seguidores</h2><a href='' class='nao_seguir' onclick='naoseguir(event)' id=a-"+value.page_id+">não seguir</a><input type='hidden' id='npage_id' value="+value.page_id+" name=''></li>");
                     }
                     });
@@ -1199,6 +1201,19 @@
 
             }
           });
+        $('#table_search').on('keyup',function(){
+            let variavel= $('#table_search').val();
+            $('#search-lg-home-id').val(variavel);
+            let v= 1;
+            if (variavel!='') {
+              searchP(variavel, v);
+            }else {
+              $('div[name=pessoa]').empty();
+              $('div[name=page]').empty();
+              $('div[name=ver_td]').empty();
+
+            }
+        })
 
 function searchP(variavel, v){
   var s1=0;
