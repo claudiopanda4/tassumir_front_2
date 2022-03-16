@@ -1906,23 +1906,24 @@ public function dados_comment($key){
               ]);
 
                DB::commit();
-
                 return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
-
         }else{
 
+            DB::rollBack();
 
-            return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
+           $response = $this->return_view_on_error($phoneReceived,$emailReceived,$nome,$apelido,$data_nascimento,$nacional,$sexo,$password);
+            return $response;
+            
         }
 
         }catch(\Exception $error){
-
                DB::rollBack();
                 dd($error);
-
-
         }
+    }
 
+    public function return_view_on_error($phoneReceived,$emailReceived,$nome,$apelido,$data_nascimento,$nacional,$sexo,$password){
+        return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
     }
 
     //nao recebi o codigo
