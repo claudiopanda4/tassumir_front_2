@@ -1870,11 +1870,9 @@ public function dados_comment($key){
 
 
    public function sendMsgToPhone($takePhone,$code){
-
-   // meu token a80fed69fcde464b35cee02ae7a172aa918235239
-    //token Ch: e5a2c12e2876ed474072ee9a10e4f3f2926312782
+    
          $response = Http::post('http://52.30.114.86:8080/mimosms/v1/message/send?token=a80fed69fcde464b35cee02ae7a172aa918235239 ', [
-             'sender'=>'918235239',
+             'sender'=>'Tassumir',
              'recipients' => $takePhone,
              'text' => 'Codigo de Confirmação Tassumir :'.$code,
         ]);
@@ -2075,23 +2073,24 @@ public function dados_comment($key){
               ]);
 
                DB::commit();
-
                 return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
-
         }else{
 
+            DB::rollBack();
 
-            return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
+           $response = $this->return_view_on_error($phoneReceived,$emailReceived,$nome,$apelido,$data_nascimento,$nacional,$sexo,$password);
+            return $response;
+            
         }
 
         }catch(\Exception $error){
-
                DB::rollBack();
                 dd($error);
-
-
         }
+    }
 
+    public function return_view_on_error($phoneReceived,$emailReceived,$nome,$apelido,$data_nascimento,$nacional,$sexo,$password){
+        return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
     }
 
     //nao recebi o codigo

@@ -92,7 +92,7 @@
             </div>
             <span class="hidden" style="color:red;" id="erroApelido"> Insira o teu Apelido</span>
 
-            <input type="text" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="Data de Nascimento" onfocus="(this.type='date')">
+            <input type="text" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="Data de Nascimento" onfocus="(this.type='date')"  max="2006-12-31">
 
             <span class="hidden" style="color:red;" id="erroData"> Insira a Data de Nascimento</span>
 
