@@ -3,11 +3,11 @@
 @section('content')
 <div class="main" id="main-profile">
     <header class="card br-10 card-flex">
-        <div id="img-profile-container" class="circle">
+        <div id="img-profile-container" class="circle bring-to-front">
             @if ($account_name[0]->foto == null || $account_name[0]->foto == "null" || $account_name[0]->foto == NULL || $account_name[0]->foto == "NULL" || $account_name[0]->foto == "" || $account_name[0]->foto == " ")
                 <i class="fas fa-user center" style="font-size: 50px; color: #ccc;"></i>
             @else
-                <img class="img-profile img-full circle" src="{{asset('storage/img/users') . '/' . $account_name[0]->foto}}">
+                <img class="img-profile img-full circle" src="{{asset('storage/img/users') . '/' . $account_name[0]->foto}}" >
             @endif
             @if ($account_name[0]->uuid == $conta_logada[0]->uuid)
             <label for="target-profile-cover">
@@ -19,7 +19,7 @@
         </div>
         <div class="" id="card-ident">
             <div id="ident-profile">
-                <h1 class="profile-name">{{$account_name[0]->nome}} {{$account_name[0]->apelido}}</h1>
+                <h1 class="profile-name" style="margin-left:15px">{{$account_name[0]->nome}} {{$account_name[0]->apelido}}</h1>
                 <div class="invite-icon circle">
                     <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
                 </div>
@@ -27,7 +27,7 @@
             <ul class="profile-follow profile-item-center">
                 <li class="statistics-profile">
                   <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}">  <h2 style="justify-content: center; font-weight: bolder; font-size: 14px; width: 100%; margin-bottom: 0;">{{$perfil[0]['qtd_ps']}}</h2></a>
-                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}" style="margin-top: -5px;  text-align: center;"><h2 style="justify-content: center; font-size: 11.5px; text-align: center;">Seguindo</h2></a>
+                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}" style="margin-top: -5px;  text-align: center;"><h2 style="justify-content: center; font-size: 11.5px; text-align: center;margin-top: 12px;">Seguindo</h2></a>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                     <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar</h3></a>
                   <?php endif; ?>
@@ -106,7 +106,7 @@
             <?php if (false): ?>
                 <div >
                   <form action="{{route('message.mostrar', ['uuid_remetente' =>$conta_logada[0]->uuid, 'uuid_destino' => $account_name[0]->uuid])}}">
-
+                    @csrf
                       <button class="btn-message">
                           <i class="far fa-comment-dots fa-24 fa-option center"></i>
                       </button>

@@ -3464,3 +3464,11 @@ label[for="hugo"]{
     height: 28px;
     z-index: 3;
 }
+ .bring-to-front:hover{
+         -webkit-transform: scale(1.5);
+          
+    }
+    .bring-to-front img:hover{
+        /*background-position: 0px 0px;
+        background-size: 200px 200px;*/
+    }
