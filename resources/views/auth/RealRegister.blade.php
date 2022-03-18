@@ -97,21 +97,15 @@
             <span class="hidden" style="color:red;" id="erroData"> Insira a Data de Nascimento</span>
 
             <div class="row" style="" id="genre-id-container">
-
               <div class="col-md-8" id="genre-id-component">
-
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="sexo" id="exampleRadios1" value="Masculino" checked>
                   <label class="form-check-label text-white" for="exampleRadios1">
                     Masculino
                   </label>
-
                 </div>
-
               </div>
-
               <div class="col-md-4" id="genre-id-component">
-
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="sexo" id="exampleRadios2" value="Feminino">
                   <label class="form-check-label text-white" for="exampleRadios2">
@@ -119,14 +113,9 @@
                   </label>
                 </div>
               </div>
-
-
             </div>
           </div>
-
-
           <div class="form-section">
-
             <select name="nacionalidade" id="nationality" required>
               <option value="" class="option-nationality" disabled selected>País de Origem</option>
               @forelse($dadosPais as $pais)
@@ -134,16 +123,10 @@
               @empty
               <option>...</option>
               @endforelse
-              
-             
-               
             </select>
-
             <div class="invalid-feedback">
               Insira a tua Nacionalidade
             </div>
-
-
             <div class="row mt-2">
               <div class="col-md-6">
                 <select id="inputState" class="input-text-default input-full input-login" required>
@@ -151,57 +134,41 @@
                   <option value="emailSele">Email</option>
                   <option value="telefSele">Telefone</option>
                 </select>
-
                 <div class="invalid-feedback">
                   Seleccione uma Opção
                 </div>
               </div>
-
               <div class="col-md-6">
-
                 <input type="email" class="input-text-default input-full input-login hidden input-emai-log" placeholder="Email" id="email" name="email">
-               
                 <span id="emailMsg"></span>
                 <input type="text" class="input-text-default input-full input-login hidden input-emai-log" name="telefone" placeholder="Telefone" id="telefone" data-mask="000-000-000">
-
               </div>
-
             </div>
-
             <div id="password_login_id2">
               <input type="password" class="input-text-default input-full input-login" name="password" placeholder="Password" value="" id="password" required>
-
               <i class="fa fa-eye" id="eye"></i>
               <div class="invalid-feedback">
                 Insira uma Palavra Passe
               </div>
             </div>
           </div>
-
           <div class="hugo-btn">
             <button type="button" id="login-enter" class="next">Seguinte</button>
             <button type="button" id="login-enter" class="recuar">Voltar</button>
             <button type="submit" id="login-enter" class="my-form">Criar Conta</button>
           </div>
-
           <div class="clearfix">
-
             <div id="forget-password" class="l-5">
               <a href="{{route('account.login.form')}}" class="hp-style">
                 <h1>Já tenho uma conta</h1>
               </a>
-
             </div>
-
-
           </div>
-
         </form>
       </div>
     </main>
   </div>
 </body>
-
 </html>
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script>
@@ -244,6 +211,37 @@
        $("#verify-dados").html("<p class='text-danger' id='v-f-d'>Não se permite espaços</p>");
     }
   });
+  /*function att(){
+    let valor = $("#dataNas").val();
+
+    if(valor !=""){
+
+      let hoje = new Date();
+      let aniv = new Date(valor);
+
+      let idade = hoje.getFullYear() - aniv.getFullYear();
+      let mes = hoje.getMonth() - aniv.getMonth();
+      let dia = hoje.getDate() - aniv.getDate();
+
+      if(mes < 0 || (mes === 0 && hoje.getDate() < aniv.getDate())){
+        idade--;
+      }
+      if (mes < 0) {
+        mes +=12;
+      }
+      if (dia < 0) {
+        dia+=30;
+      }
+      if (idade < 18 || idade >100) {
+        alert("Idade: "+idade+" nao e permitida");
+      }else{
+        alert("Idade: "+idade+" e permitida");
+      }
+    }else{
+      alert("Forneca a sua data de nascimento");
+    }
+  }*/
+
   $("#eye").on('click', function() {
 
     if (pass.prop('type') == 'password') {
