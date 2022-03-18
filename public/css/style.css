@@ -1237,7 +1237,7 @@ label[for="hugo"]{
 }
 .info-post {
     margin-top: -5px;
-    width: 180px;
+    width: 190px;
 }
 .card {
     background-color: #242526;
@@ -1253,18 +1253,25 @@ label[for="hugo"]{
     border: none;
 }
 .card-p{
-
-    background-color: #242526;
-    margin-top: 15px;
-    border-radius: 10px;
+    color: #fff;
     padding: 10px;
-
+    padding-top: 0;
+    font-size: 14px;
+    margin-left: 50px;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 .move-right{
     margin-left: 100px;
 }
 .card-post {
     
+}
+#notification-header-icon-container {
+    display: none;
+}
+.seguir-a {
+    margin-top: 0;
 }
 .card-post p {
     color: #fff;
@@ -1672,20 +1679,29 @@ label[for="hugo"]{
 }
 .li-component-suggest {
     position: relative;
-    width: 118px;
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #2f3134;
+    width: 145px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #2f3134;
+}
+.more-info-about-profile h1,
+.more-info-about-profile h2 {
+    font-size: 12px;
+    color: #efefef;
+}
+.more-info-about-profile h1 {
+    font-size: 13px;
+    font-weight: bolder;
 }
 .li-component-suggest div.sugest_component {
     position: relative;
     width: 80px;
     height: 80px;
-    border: 3px solid #800080;
+    border: 0px solid #800080;
     margin: 10px auto;
 }
 .li-component-suggest img {   
-    border: 3px solid #18191a;
+    border: 0px solid #18191a;
 }
 .suggest-slide {
     display: none;
@@ -1697,11 +1713,13 @@ label[for="hugo"]{
     text-align: left;
 }
 .suggest-slide .name-suggest {
-    font-size: 13px;
+    font-size: 12px;
+    font-weight: bolder;
     color: #fff;
+    margin: auto;
     margin-top: 0px;
     margin-bottom: 2px;
-    width: 100%;
+    width: 90%;
     text-align: center;
 }
 .suggest-slide a {
@@ -1710,7 +1728,7 @@ label[for="hugo"]{
 }
 .suggest-slide ul {
     padding-left: 10px;
-    width: 1045px;
+    width: 1260px;
 }
 .suggest-slide nav {
     width: 100%;
@@ -1740,7 +1758,7 @@ label[for="hugo"]{
     position: relative;
     margin-top: 15px;
     margin-left: 15px;
-    background-color: #fff;
+    background-color: transparent;
 }
 .alert-login {
     font-size: 12px;
@@ -1924,7 +1942,7 @@ label[for="hugo"]{
     font-size: 19px;
     width: 185px;
     font-weight: bolder;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 .profile-name-1 {
     color: #efefef;
@@ -1967,13 +1985,12 @@ label[for="hugo"]{
     margin-top: -8px;
     display: none;
 }
-
 .statistics-profile {
     display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
     font-size: 17px;
-    padding: 10px;
+    padding: 0 10px;
     width: 30.5%;
 }
 .statistics-profile h2 {
@@ -2152,7 +2169,8 @@ label[for="hugo"]{
 }
 #options-profile-mobile-user-log {
     width: 75%;
-    margin: auto;
+    min-width: 240px;
+    margin: 5px auto;
 }
 #options-profile-mobile-user-log-pages  {
     width: 100%;
@@ -2162,8 +2180,7 @@ label[for="hugo"]{
 #profile-cover-alert-no-img {
     display: block;
     float: left;
-    width: 60%;
-    margin-left: 80px;
+    width: 80%;
 }
 #options-profile-mobile-user-log-pages .options-profile-btn {
     width: 95%;
@@ -2294,7 +2311,8 @@ label[for="hugo"]{
     width: 95%;
     height: 0px;
 }
-.cancel-box {
+.cancel-box,
+.cancel-box-component {
     position: absolute;
     width: 32px;
     height: 32px;
@@ -2305,9 +2323,9 @@ label[for="hugo"]{
     z-index: 2;
     cursor: pointer;
 }
-.cancel-box {
+.cancel-box,
+.cancel-box-component {
     background-color: #000;
-    border: 1px solid #ffffff0d;
 }
 #cover-done {
     width: 60%;
@@ -2380,7 +2398,7 @@ label[for="hugo"]{
     margin: auto;
     flex-direction: column;
     border: none;
-    width: 570px;
+    width: 500px;
     background-color: transparent;
 }
 #main-container-profile {
@@ -2454,7 +2472,7 @@ label[for="hugo"]{
     position: relative;
 }
 #card-profile-option .option-profile-menu #ul-profile li {
-    width: 23%;
+    width: 32%;
 }
 #card-profile-option .option-profile-menu li:hover > a .icon-hover-option-profile{
     color: #800080;
@@ -2532,6 +2550,7 @@ label[for="hugo"]{
 }
 #main-profile header.card {
     background-color: #242526;
+    border-radius: 5px;
 }
 #main-profile .card-page-maried {
     background-color: #242526;
@@ -2584,6 +2603,9 @@ label[for="hugo"]{
 .options-profile-btn-center .edit-profile-mobile{
     background-color: #800080;
     border: none;
+    display: block;
+    font-size: 12px;
+    border-radius: 4px;
 }
 .options-profile-btn a {
     width: 100%;
@@ -2601,9 +2623,11 @@ label[for="hugo"]{
     padding: 4px;
     color: #fff;
     background-color: #3490dc;
-    border-radius: 5px;
+    margin: 9px auto 5px;
+    border-radius: 4px;
     margin-top: 9px;
     font-size: 12px;
+    width: 90%;
 }
 .relationship-type {
     padding: 8px;
@@ -3089,8 +3113,8 @@ label[for="hugo"]{
 }
 .play_button {
     position: absolute;
-    width: 80px;
-    height: 80px;
+    width: 65px;
+    height: 65px;
     z-index: 2;
 }
 .notify-icon {
@@ -3355,7 +3379,7 @@ label[for="hugo"]{
     border-radius: 50%;
 }
 .content-profile-photo {
-    width: 60%;
+    width: 70%;
 }
 .content-profile-photo h1 {
     font-size: 12px;
@@ -3492,4 +3516,51 @@ label[for="hugo"]{
 }
 .transparent-back {
     background-color: transparent;
+}
+.loader_button {
+    z-index: 3;
+}
+#options-profile-btn-couple {
+    width: 100%;
+    display: block;
+    float: left;
+}
+.alert-info-about-us {
+    width: 76%;
+    min-width: 500px;
+    margin: 5px auto 10px;
+    background-color: #242526;
+    padding-top: 5px;
+    border-radius: 10px;
+}
+.profile-alert-tassumir {
+    width: 90%;
+}
+.suggest-slide a div.sugest_component_div {
+    background-color: transparent;
+    border-radius: 50%;
+}
+.sugest_component .li-component-suggest img {
+    position: relative;
+}
+.more-options-profile-btn {
+    position: relative;
+    width: 100%;
+    height: 35px;
+    border-radius: 4px;
+    background-color: #3b3b3b;
+}
+.more-options-component {
+    color: #ffff;
+}
+.target-options-profile {
+    width: 100%;
+    cursor: pointer;
+}
+.options-profile-btn.more-options-profile-bt {
+    position: relative;
+    width: 17%;
+    height: 35px;
+    margin: 10px 2%;
+    margin-right: 0;
 }

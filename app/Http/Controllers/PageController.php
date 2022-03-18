@@ -79,7 +79,7 @@ class PageController extends Controller
       return $post;
     }
 
-    public function post_final1($controller)
+    public function post_final1(Request $request)
     {
 
       $conta_logada= Auth::user()->conta_id;
@@ -88,17 +88,17 @@ class PageController extends Controller
       $post=DB::select('select p.post_id, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ? ) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where 	identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1  order by rand()) as p where p.vi = 0 and p.segui = 1  order by rand() limit 10',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
       //dd($post);
 
-      return $post;
+      return json_encode($post);
     }
 
-    public function post_final2($controller)
+    public function post_final2(Request $request)
     {
       $conta_logada= Auth::user()->conta_id;
       // posts de paginas q ñ segue
-      $limit = 12 - sizeof($p1);
+      $limit = $request->limit;
       $post=DB::select('select p.post_id, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ? ) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where 	identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1  order by rand()) as p where p.vi = 0 and p.segui = 0  order by rand() limit ?',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada, $limit]);
       //dd($post);
-      return $post;
+      return json_encode($post);
     }
 
     public function get_posts($init, $aux_post, $pegar_posts, $verificacao){
@@ -291,6 +291,7 @@ class PageController extends Controller
      */
     public function show($id)
     {
+      
         $auth = new AuthController();
         $dates = $auth->default_();
         $account_name = $dates['account_name'];

@@ -10,14 +10,17 @@
     </ul>
 </header>
 <header class="card br-10 stories stories-about-talking" id="stories-card">
-            <header>
+            <header class="header-stories">
                 <h1>O que está a pipocar...</h1>
             </header>
+            <input type="hidden" id="home-page-checked" value=<?php echo md5("OKAY_HOME") ?>>
+            <input type="hidden" id="posts-following" value="0">
+            <input type="hidden" id="loading-finished" value="0">
             <nav>
                 <ul class="clearfix">
                     <?php $i = 0; while ($i < 21) { ?>
                     <li class="li-component-stories l-5" id="li-component-stories-{{$i}}">
-                        <a href="">
+                        <a href="" id="a-stories-dest-{{$i}}">
                             <div class="identify-cover circle">
                                 <img class="img-full circle invisible" id="li-component-stories-img-profile-{{$i}}">
                             </div>
@@ -25,8 +28,8 @@
                             <video controls class="video-post-dest invisible" id="li-component-stories-video-post-{{$i}}">
                                 <source src="" type="video/mp4">
                             </video> 
-                            <div  id="li-component-stories-cover-video-{{$i}}">
-                               <img class="img-full circle foto-page-video invisible-component"> 
+                            <div  id="li-component-stories-cover-video-container-{{$i}}">
+                               <img  id="li-component-stories-cover-video-{{$i}}" class="img-full circle foto-page-video invisible-component"> 
                             </div>
                             <div class="headline">
                                 <h2 class="center" id="headline-stories-{{$i}}"></h2>
@@ -37,62 +40,88 @@
                 </ul>
             </nav>
         </header>
-        <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
-            <div class="profile-photo-container l-5">
-                <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
-            </div>
-            <div class="content-profile-photo l-5">
-                <h1>O Tassumir ajuda casais a assumirem-se publicamente e também ajuda casais a partilharem habilidades pessoais, que podem promover</h1>
-            </div>
-            <label for="target-profile-cover" id="profile-cover-alert-no-img">
-                <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
-                    <h3 class="edit-profile-mobile" style="margin-top: 0;">Assumir Relacionamento</h3>
-                </div>
-            </label>
-        </div>
-        <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
+        <div class="refresh-profile-photo clearfix invisible-component" id="refresh-profile-photo-id">
             <div class="profile-photo-container l-5">
                 <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
             </div>
             <div class="content-profile-photo l-5">
                 <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
+                <label for="target-profile-cover" id="profile-cover-alert-no-img">
+                    <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
+                        <h3 class="edit-profile-mobile" style="margin-top: 0;">Actualizar foto de Perfil</h3>
+                    </div>
+                </label>
             </div>
-            <label for="target-profile-cover" id="profile-cover-alert-no-img">
-                <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
-                    <h3 class="edit-profile-mobile" style="margin-top: 0;">Actualizar foto de Perfil</h3>
-                </div>
-            </label>
         </div>
     <div class="" id="div_father_post" name="div_father_post">
         <?php $key = 0; while($key < 240){ ?>
-            <div id="m_post-25" <?php if ($key < 1) {echo "class='card br-10 post-video'";} else {echo "class='card br-10 post-video invisible-post'";}
+        <?php if ($key == 2 || $key == 5 || $key == 9): ?>
+            <div class="refresh-profile-photo clearfix invisible-component alert-info-about-us" id="alert-info-about-us-{{$key}}">
+                <div class="profile-photo-container l-5">
+                    <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                </div>
+                <div class="content-profile-photo l-5">
+                    <h1 id="content-p-{{$key}}">O Tassumir ajuda casais a assumirem seus relacionamentos publicamente, aumentando a segurança e fidelidade nos relacionamentos e também ajuda casais a partilharem habilidades pessoais, e ganharem dinheiro com isso.</h1>
+                    <label for="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
+                        <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-couple">
+                            <h3 class="edit-profile-mobile" style="margin-top: 0;" id="btn-alert-info-{{$key}}">Assumir Relacionamento</h3>
+                        </div>
+                    </label>
+                </div>
+            </div>            
+        <?php endif ?>
+        <?php if ($key == 3 || $key == 25): ?>
+                <section class="suggest-slide invisible-component" id="sugest_index_{{$key}}">
+                    <header>
+                        <h1>Sugestões pra você</h1>
+                    </header>
+                    <nav class="clearfix">
+                        <ul class="clearfix"> 
+                        <?php $key_ = 0; while ($key_ < 8) {?>
+                                <li class="li-component-suggest clearfix l-5 sugest_page" id="li-component-suggest-{{$key_}}">
+                                    <div class="clearfix sugest_component_div" id="sugestcomponentdiv_{{$key}}">
+                                        <div class="sugest_component circle clearfix">
+                                            <img class="img-full circle" id="cover-suggest-index-page-{{$key_}}">
+                                        </div>
+                                    </div>
+                                    <a href="" id="a-name-suggest-index-page-{{$key_}}"><h1 class="name-suggest text-ellips" id="name-suggest-index-page-{{$key_}}"></h1></a>
+                                    <a href="" class="seguir_index"><div id="{{$key_}}">seguir</div></a>
+                                    <input type="hidden" id="link_page_{{$key_}}">
+                                </li>
+                        <?php $key_++; } ?>
+                        </ul>
+                    </nav>
+                </section>
+        <?php endif ?>
+            <div id="m_post-{{$key}}" <?php if ($key < 1) {echo "class='card br-10 post-video'";} else {echo "class='card br-10 post-video invisible-post'";}
              ?>>
-            <div class="post post-view post-video" id="post_view_">
-                <input type="hidden" name="" value="1" id="format-">
+            <div class="post post-view post-video" id="post_view_{{$key}}">
                 <header class="clearfix">
                     <div class="first-component clearfix l-5">
                         <div class="page-cover circle l-5">
-                            <img class="img-full circle invisible">
+                            <img class="img-full circle invisible-component" id="page-cover-post-{{$key}}">
                         </div>   
                         <div class="page-identify l-5 clearfix">
-                            <a href=""><h1 class="text-ellips"></h1></a>
+                            <a href="" id="a-page-name-post-{{$key}}"><h1 class="text-ellips" id="page-name-post-{{$key}}"></h1></a>
                             <div class="info-post clearfix">
-                                <span class="time-posted l-5"></span><div id="seguir-1-25"><span class="seguir-1"><a href="" class="seguir-a r-5" id="seguir-1-25"></a></span>
+                                <span class="time-posted l-5" id="time-posted-{{$key}}"></span>
+                                <div id="seguir-1-{{$key}}">
+                                    <span class="seguir-{{$key}}"><a href="" class="seguir-a r-5" id="seguir-a-{{$key}}"></a></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="last-component clearfix r-5">
-                        <label for="more-option-1">
+                        <label for="more-option-{{$key}}">
                             <i class="fas fa-ellipsis-h fa-14 fa-option"></i>
                         </label>
-                        <input type="checkbox" name="" id="more-option-1" class="hidden">
-                        <ul class="clearfix more-option-post">
-                                                      <li>
+                        <input type="checkbox" name="" id="more-option-{{$key}}" class="hidden">
+                        <ul class="clearfix more-option-post" id="more-option-post-{{$key}}">
+                            <li>
                                 <a href="" class="edit-option" id="edit-option|ca504ca7-0475-4dd3-936d-56b5d05b612b">Editar</a>
                             </li>
                             <li>
-                                <a href="" class="delete_post" id="delete_post-25">Apagar Publicação</a>
+                                <a href="" class="delete_post" id="delete_post-{{$key}}">Apagar Publicação</a>
                             </li>
                                                         <li>
                                 <a href="">Denunciar</a>
@@ -105,29 +134,33 @@
                 </header>
                 <div class="card-post">
                     <div class="">
-                        <div class="video-post post-video" id="video-post-">
-                            <img class="play_button center invisible" src="{{asset('storage/icons/play_button.png')}}" id="play_button_25">
-                            <img class="loader_button center invisible" src="{{asset('storage/icons/aguarde.gif')}}" id="loader_button_25">
-                            <img class="loader_icon center invisible" src="{{asset('css/uicons/loading.gif')}}" id="loader_icon_25">
-                            <video class="video-post-video" id="video_25">
-                                <source src="" class="" type="video/mp4">
+                        <p class="invisible-component" id="p-post-{{$key}}"></p>
+                        <div class="post-cover post-cover-post-index invisible-component" id="post-cover-post-index-{{$key}}">
+                            <img class="img-full" id="cover-post-index-{{$key}}">
+                        </div>
+                        <div class="video-post post-video invisible-component" id="video-post-{{$key}}">
+                            <img class="play_button center invisible-component" src="{{asset('storage/icons/play_button.png')}}" id="play_button_{{$key}}">
+                            <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id="loader_button_{{$key}}">
+                            <img class="loader_icon center" src="{{asset('css/uicons/loading.gif')}}" id="loader_icon_{{$key}}">
+                            <video class="video-post-video" id="video_{{$key}}">
+                                <source id="video-post-link-{{$key}}">
                                 Your browser does not support the video tag.
                             </video>
-                            <input type="hidden" name="" value="post_view_" id="watch-video-25">
-                            <input type="hidden" name="" value="" id="vid-25">
-                            <input type="hidden" name="" id="has-video-25">
-                            <input type="hidden" name="" id="video-post-time-25">
-                            <input type="hidden" name="" id="video-post-time-all-25">
+                            <input type="hidden" name="" value="post_view_" id="watch-video-{{$key}}">
+                            <input type="hidden" name="" value="" id="vid-{{$key}}">
+                            <input type="hidden" name="" id="has-video-{{$key}}">
+                            <input type="hidden" name="" id="video-post-time-{{$key}}">
+                            <input type="hidden" name="" id="video-post-time-all-{{$key}}">
                         </div>
                     </div>
                 </div>
                 <nav class="row interaction-numbers">
                     <ul class="">
                         <li>
-                            <a href="" id="likes-qtd-">reacções</a>
+                            <a href="" id="likes-qtd-{{$key}}">reacções</a>
                         </li>
                         <li>
-                            <a href="">comentários</a>
+                            <a href="" id="comment_-post-{{$key}}">comentários</a>
                         </li>
                     </ul>
                 </nav>
@@ -135,16 +168,16 @@
                     <ul class="row clearfix ul-interaction-user">
                         <li class="l-5">
                             <div class="content-button">
-                                <a href="" class="like-a" id="on|">
-                                    <i class="far fa-heart center fa-16 unliked" id="off||i"></i>
+                                <a href="" class="like-a" id="reaction-id-a-{{$key}}">
+                                    <i class="far fa-heart center fa-16 unliked" id="reaction-id-{{$key}}"></i>
                                     <h2 id="off||h2">Like</h2>
                                 </a>
                             </div>
                         </li>
                         <li class="l-5">
-                            <div class="content-button comment-send-post" id="comment-25">
-                                <a href="" id="comment_a-25">
-                                    <i class="far fa-comment-alt center fa-16" id="comment_i-25"></i>
+                            <div class="content-button comment-send-post" id="comment-{{$key}}">
+                                <a href="" id="comment_a-{{$key}}">
+                                    <i class="far fa-comment-alt center fa-16" id="comment_i-{{$key}}"></i>
                                     <h2>Comentar</h2>
                                 </a>
                             </div>
@@ -157,30 +190,30 @@
                                 </a>
                             </div>
                         </li>
-                        <li class="r-5" id="savepost-25">
+                        <li class="r-5" id="savepost-{{$key}}">
                             <div class="content-button">
-                                <a href="" class="savepost" id="savepost-25">
-                                    <i class="far fa-bookmark center fa-16" id="savepost-25"></i>
-                                    <h2 id="savepost-25">Guardar</h2>
+                                <a href="" class="savepost" id="savepost-{{$key}}">
+                                    <i class="far fa-bookmark center fa-16" id="savepost-{{$key}}"></i>
+                                    <h2 id="savepost-{{$key}}">Guardar</h2>
                                 </a>
                             </div>
                         </li>
                     </ul>
                 </nav>
-                <div class="comment-send clearfix" id="comment-send-25">
+                <div class="comment-send clearfix" id="comment-send-{{$key}}">
                     <div class="img-user-comment l-5">
-                        <img class="img-full circle invisible">
+                        <img class="img-full circle" id="comment-send-profile-{{$key}}">
                     </div>
                     <div class="input-text comment-send-text l-5 clearfix">
-                        <input type="text" class="" name="comentario" id="comentario-25" placeholder="O que você tem a dizer?">
+                        <input type="text" class="" name="comentario" id="comentario-{{$key}}" placeholder="O que você tem a dizer?">
                         <div class="r-5 ">
-                            <a href="" class="comentar-a" id="25">
-                                <i class="far fa-paper-plane fa-20 fa-img-comment" id="25"></i>
+                            <a href="" class="comentar-a" id="{{$key}}">
+                                <i class="far fa-paper-plane fa-20 fa-img-comment" id="{{$key}}"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="comment-users comment-users-own" id="comment-users-own-25">
+                <div class="comment-users comment-users-own invisible-component" id="comment-users-own-{{$key}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment user-identify-comment-feed">
                           <div class="profille-img">
@@ -188,7 +221,7 @@
                           </div>
                         </div>
                         <div class="comment-user-comment comment-user-comment-feed">
-                            <p class="text-ellips" id="comment-own-25"></p>
+                            <p class="text-ellips" id="comment-own-{{$key}}"></p>
                         </div>
                     </div>
                     <div class="comment-user-container comment-user-container-react" name="novo-comment">
@@ -196,7 +229,7 @@
                     </div>
                 </div>
 
-                  <div class="comment-users" id="comment-users-25">
+                  <div class="comment-users invisible-component" id="comment-users-{{$key}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment user-identify-comment-feed">
                             <div class="profille-img">
@@ -209,8 +242,8 @@
                         </div>
                     </div>
                       <div class="comment-user-container comment-user-container-react">
-                        <a href="" class="comment-like-a" onclick="reaction_comment(this)" id="on|29">
-                            <i class="far fa-heart fa-12 unliked" id="off|29|i"></i>
+                        <a href="" class="comment-like-a" onclick="reaction_comment(this)" id="on|{{$key}}">
+                            <i class="far fa-heart fa-12 unliked" id="off|{{$key}}|i"></i>
                         </a>
                       </div>
                 </div>
@@ -244,30 +277,7 @@
                 }
             });
         </script>
-        <?php if ($key == 3 || $key == 7): ?>
-                <section class="suggest-slide">
-                    <header>
-                        <h1>Sugestões pra você</h1>
-                    </header>
-                    <nav class="clearfix">
-                        <ul id="sugest_index" class="clearfix"> 
-                            <li class="li-component-suggest clearfix l-5 sugest_page">
-                                <div class="clearfix sugest_component_div">
-                                    <div class="sugest_component circle clearfix">
-                                        <img class="img-full circle">
-                                    </div>
-                                </div>
-                                <h1 class="name-suggest text-ellips"></h1>
-                                <a href="" class="seguir_index" ><div id="">seguir</div></a>
-                                <input type="hidden" id="conta_id" value="" name="">
-                                <input type="hidden" name="" value="0" id="last_page">
-                            </li>
-                        </ul>
-                    </nav>
-                </section>
-        <?php endif ?>
         <input type="hidden" id="current-video-id" name="">
-        <input type="hidden" id="host" value="{{route('account.data')}}" name="">
         <script type="text/javascript">
 
         //let route = "{{route('account.data')}}"; 
@@ -657,11 +667,11 @@ function gostar(id){
                                 }
                                 
                             }
-                            console.log('paused ' + $("#video_" + id_video_final)[0].paused);
-                            console.log('.HAVE_FUTURE_DATA ' + $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA);
-                            console.log('readyState ' + $("#video_" + id_video_final)[0].readyState);
-                            console.log('seeking ' + $("#video_" + id_video_final)[0].seeking);
-                            console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);
+                            //console.log('paused ' + $("#video_" + id_video_final)[0].paused);
+                            //console.log('.HAVE_FUTURE_DATA ' + $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA);
+                            //console.log('readyState ' + $("#video_" + id_video_final)[0].readyState);
+                            //console.log('seeking ' + $("#video_" + id_video_final)[0].seeking);
+                            //console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);
                             if ($("#video_" + id_video_final)[0].paused != true && 
                                 !$("#video_" + id_video_final)[0].seeking &&
                                  $("#video_" + id_video_final)[0].currentTime > 0 && 
@@ -710,144 +720,7 @@ function gostar(id){
                                  if (response.length > 0) {
                                  $.each(response, function(key, value){
 
-                                   let src = '{{asset("storage/img/users/") }}';
-                                   let src1 = '{{ asset("storage/img/page/") }}';
-                                   var route10 = "{{route('couple.page1', 1) }}"
-                                   url_array10 = route10.split('/');
-                                   url_link10 = url_array10[0] + "/" + url_array10[1] + "/" + url_array10[2] + "/"+ url_array10[3] +  "/" + value.post_uuid;
-
-                                   var route1 = "{{route('post_index', 1) }}"
-                                   url_array1 = route1.split('/');
-                                   url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + value.post_uuid;
-
-                                   var nome = '';
-
-                                   nome +='<div class="card br-10" id="m_post-'+value.post_id+'">'
-                                   nome +='<div class="post post-view" id="post_view_'+value.post_uuid+'_'+value.conta_logada_uuid+'">'
-                                   nome +='<input type="hidden" name="" value="'+value.formato+'" id="format-'+value.post_uuid+'">'
-                                   nome +='<header class="clearfix">'
-                                   nome +='<div class="first-component clearfix l-5">'
-                                   if( !(value.foto_page == null) ){
-                                       nome += '<div class="page-cover page-cover-comment circle l-5">'
-                                       nome += '<img  class="img-full circle" src=' + src1 + '/' + value.foto_page + '> </div>'
-
-                                   }else{
-                                       nome += '<div class="page-cover page-cover-comment circle l-5">'
-                                       nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"> </div>'
-                                   }
-                                   nome +='<div class="page-identify l-5 clearfix">'
-                                   nome +='<a href='+url_link10+'><h1 class="text-ellips">'+value.nome_pag+'</h1></a>'
-                                   nome +='<div class="info-post clearfix">'
-                                   nome +='<span class="time-posted l-5">'+value.post_data+'  as '+value.post_hora+'</span><div id="seguir-'+value.page_id+'-'+value.post_id+'">'
-                                   if (value.seguir_S_N == 0) {
-                                     nome +='<span class="seguir-'+value.page_id+'"><a href="" class="seguir-a r-5"  id="seguir-'+value.page_id+'-'+value.post_id+'">seguir</a></span>'
-                                   }
-                                   nome +='</div></div></div></div>'
-                                   nome +='<div class="last-component clearfix r-5">'
-                                   nome +='<label for= "more-option-'+value.post_id+'";>'
-                                   nome +='<i class="fas fa-ellipsis-h fa-14 fa-option"></i></label>'
-                                   nome +='<input type="checkbox" name="" id="more-option-'+value.post_id+'" class="hidden">'
-                                   nome +=' <ul class="clearfix more-option-post">'
-                                   if (value.dono_da_pag == 1) {
-                                     nome +='<li><a href="" class="edit-option" id="edit-option|'+value.post_uuid+'">Editar</a></li>'
-                                   }
-                                   if (value.dono_da_pag != 1) {
-                                     nome +='<li><a href="" class="ocultar_post" id="ocultar_post-'+value.post_id+'">Ocultar Publicação</a></li>'
-                                   }
-                                   if (value.dono_da_pag == 1) {
-                                     nome +='<li><a href="" class="delete_post" id="delete_post-'+value.post_id+'">Apagar Publicação</a></li>'
-                                   }
-                                   nome +='<li><a href="">Denunciar</a></li><li><a href="">Copiar Link</a></li></ul></div></header>'
-                                   nome +='<div class="card-post"><div class="">'
-                                   if (value.post == "" || value.post == null
-                                   || value.post == " " || value.post == "null") {
-                                   }else {
-                                     nome +='<p>'+value.post+'</p>'
-                                   }
-                                   if (value.formato == 2) {
-                                     nome +='<div class="post-cover post-cover-home"> <img  class="img-full" src=' + src1 + '/' + value.file + '> </div>'
-                                   }else if (value.formato == 1) {
-                                     nome +='<div class="video-post" id="videopost-'+value.post_id+'} onclick = play(this)"> <img class="play_button center" onclick = play_video(this) src="{{asset("storage/icons/play_button.png")}}" id="playbutton_'+value.post_id+'"> <img class="loader_button center" src="{{asset("storage/icons/aguarde.gif")}}" id="loader_button_'+value.post_id+'"> <video class="video-post-video" id="video_'+value.post_id+'" onclick = play_video(this)><source src="{{asset("storage/video/page/")}}/'+value.file+'" type="video/mp4">Your browser does not support the video tag.</video>'
-                                     nome +='<input type="hidden" name="" value="post_view_'+value.post_uuid+'_'+value.conta_logada_uuid+'" id="watch-video-'+value.post_id+'"> <input type="hidden" name="" value="'+value.post_uuid+'" id="vid-'+value.post_id+'"> <input type="hidden" name="" id="has-video-'+value.post_id+'"> <input type="hidden" name="" id="video-post-time-'+value.post_id+'}"> <input type="hidden" name="" id="video-post-time-all-'+value.post_id+'"></div></div></div>'
-                                   }
-                                   nome +=' <nav class="row interaction-numbers"><ul class=""><li> <a href="" id="likes-qtd-'+value.post_uuid+'">'+value.qtd_likes+' reacções</a></li>'
-                                   nome +='<li><a href='+url_link1+' id="comment-qtd-'+value.post_id+'">'+value.qtd_comment+' comentários</a></li>'
-                                   if (false) {
-                                     nome +='<li><a href="">0 partilhas</a></li>'
-                                   }
-                                   nome +=' </ul></nav><nav class="row clearfix interaction-user"><ul class="row clearfix ul-interaction-user"><li class="l-5"><div class="content-button">'
-                                   nome +='<a href="" class="like-a-more" onclick = like_ajax(this) id="on|'+value.post_uuid+'">'
-                                   if (value.reagir_S_N  > 0) {
-                                     nome +='<i class="fas fa-heart center fa-16 liked like-a-more" id="'+value.post_uuid+'"></i> <h2 id="on|'+value.post_uuid+'|h2">Like</h2>'
-                                   }else {
-                                     nome +='<i class="far fa-heart center fa-16 unliked like-a-more" id="'+value.post_uuid+'"></i> <h2 id="on|'+value.post_uuid+'|h2">Like</h2>'
-                                   }
-                                   nome +=' </a></div></li><li class="l-5"><div class="content-button comment-send-post" id="comment-'+value.post_id+'"><a href="" id="comment_a-'+value.post_id+'"><i class="far fa-comment-alt center fa-16 comment-post-more" id="comment_i-'+value.post_id+'"></i><h2>Comentar</h2></a></div></li>'
-                                   nome +='<li class="r-5"><div class="content-button"><a href=""><i class="far fa-share-square fa-16"></i><h2>Partilhar</h2></a></div></li>'
-                                   if (value.guardado ==0) {
-                                     nome +=' <li class="r-5" id="savepost-'+value.post_id+'"><div class="content-button"><a href="" class="savepost" id="savepost-'+value.post_id+'"><i class="far fa-bookmark center fa-16 savepost-more" id="savepost-'+value.post_id+'"></i><h2 id="savepost-'+value.post_id+'">Guardar</h2></a></div></li>'
-                                   }
-                                   nome +='</ul></nav><div class="comment-send clearfix"  id="comment-send-'+value.post_id+'">'
-                                   if (value.conta_logada_foto != null) {
-                                     nome +='<div class="img-user-comment l-5"><img  class="img-full circle" src=' + src + '/' + value.conta_logada_foto + '></div>'
-                                   }else {
-                                     nome +='<div class="img-user-comment l-5"><i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i></div>'
-                                   }
-                                   nome +='<div class="input-text comment-send-text l-5 clearfix"><input type="text" class="" name="comentario" id="comentario-'+value.post_id+'" placeholder="O que você tem a dizer?">'
-                                   nome +='<div class="r-5 "><a href="" class="comentar-a" id="'+value.post_id+'"><i class="far fa-paper-plane fa-20 fa-img-comment comment-send-done-icon" id="'+value.post_id+'" onclick = com(this)></i></a></div>'
-                                   if (false) {
-                                     nome +='<div class="r-5 " id=""><a href=""><i class="far fa-images fa-20 fa-img-comment"></i></a></div'
-                                   }
-                                   nome +='</div></div><div class="comment-users comment-users-own" id="comment-users-own-'+value.post_id+'"><div class="comment-user-container"><div class="user-identify-comment user-identify-comment-feed">'
-                                   if (value.dono_da_pag == 0) {
-                                     if (value.conta_logada_foto != null) {
-                                       nome +='<div class="img-user-comment l-5"><img  class="img-full circle" src=' + src + '/' + value.conta_logada_foto + '></div>'
-                                     }else {
-                                       nome +='<div class="img-user-comment l-5"><i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i></div>'
-
-                                     }
-                                   }else {
-                                     if( !(value.foto_page == null) ){
-                                         nome += '<div class="page-cover page-cover-comment circle l-5">'
-                                         nome += '<img  class="img-full circle" src=' + src1 + '/' + value.foto_page + '> </div>'
-
-                                     }else{
-                                         nome += '<div class="page-cover page-cover-comment circle l-5">'
-                                         nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"> </div>'
-                                     }
-                                   }
-                                   nome +='</div><div class="comment-user-comment comment-user-comment-feed"><p class="text-ellips" id="comment-own-'+value.post_id+'"></p></div></div><div class="comment-user-container comment-user-container-react" id="novo-comment-' + value.post_id + '"></div></div>'
-                                   if (value.qtd_comment>0) {
-                                     nome +='<div class="comment-users" id="comment-users-'+value.post_id+'"><div class="comment-user-container" ><div class="user-identify-comment user-identify-comment-feed">'
-                                     if (value.foto_ver==1) {
-                                       if (value.foto_conta != null) {
-                                         nome +='<div class="profille-img"><img  class="img-full circle" src=' + src + '/' + value.foto_conta + '></div>'
-                                       }else {
-                                         nome +='<div class="profille-img"><i class="fas fa-user center fa-16" style="color: #ccc;"></i></div>'
-                                       }
-                                     }else if (value.foto_ver==2) {
-                                       if (value.foto_conta != null) {
-                                         nome +='<div class="profille-img"><img  class="img-full circle" src=' + src1 + '/' + value.foto_conta + '></div>'
-                                       }else {
-                                         nome +='<div class="profille-img"><img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}"></div>'
-                                       }
-                                     }
-                                     nome +='<h2 class="text-ellips">'+value.nome_comment+'</h2></div><div class="comment-user-comment comment-user-comment-feed"><p class="text-ellips">'+value.comment+'</p></div> </div><div class="comment-user-container comment-user-container-react"><a href="" class="comment-like-a" onclick = reaction_comment(this) id="on|'+value.comment_id+'">'
-                                     nome +=''
-                                     if (value.comment_S_N>0) {
-                                       nome +='<i class="fas fa-heart fa-12 liked" id="on|'+value.comment_id+'|i"></i>'
-                                     }else {
-                                       nome +=' <i class="far fa-heart fa-12 unliked" id="'+value.comment_id+'"></i>'
-                                     }
-                                     nome +='</a></div></div>'
-                                   }
-
-                                   nome +='<di></di></di></div>'
-
-                                   $('div[name=div_father_post]').append(nome);
-                                   contar = 0;
-
-                               });
+                                });
                                 $('div[name=div_father_post]').append(load);
                                }}
                              });
@@ -911,11 +784,12 @@ function gostar(id){
                                             if (currentTime >= (duration / 2)) {
                                                 watched_video = $('#watch-video-' + id).val();
                                                 //console.log('entrou no video watch-video ' + watched_video);
-                                                add_view(watched_video);
+                                                //add_view(watched_video);
                                             }
                                             document.getElementById('play_button_' + id).classList.remove('invisible');
                                         } else {
                                             document.getElementById('play_button_' + id).classList.add('invisible');
+                                            document.getElementById('video_' + id).pause();
                                             if (document.getElementById('video_' + id).readyState == 4) {
                                                 //document.getElementById('video_' + id).play();
                                                 //document.getElementById('play_button_' + id).classList.add('invisible');
@@ -924,7 +798,7 @@ function gostar(id){
                                     }
 
                                 } else {
-                                    //document.getElementById('video_' + id).pause();
+                                    document.getElementById('video_' + id).pause();
                                     //document.getElementById('play_button_' + id).classList.remove('invisible');
                                     //document.getElementById('play_button_' + id).src = '{{asset("storage/icons/pause.png")}}';
                                 }
@@ -941,7 +815,7 @@ function gostar(id){
                             if(offset_post.top < 120 && offset_post.top > -100){
                                 ////console.log($('#format-' + id.split('_')[2]).val());
                                 if ($('#format-' + id.split('_')[2]).val() != 1) {
-                                    add_view(post_view[i].id);
+                                    //add_view(post_view[i].id);
                                 }
                             } else {
 
@@ -977,6 +851,10 @@ function gostar(id){
                             }
                         });*/
                     }
+
+
+
+
 
 </script>
 @stop

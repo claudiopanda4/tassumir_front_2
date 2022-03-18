@@ -57,7 +57,7 @@
                 </li>
             </ul>
             <nav class="menu-header ">
-                <li class="l-5 mobile-header-icon" style="z-index:2;">
+                <li class="l-5 mobile-header-icon" style="z-index:2;" id="notification-header-icon-container">
                     <div class="hidden-click-any-container last-component-n clearfix-n " id="notification-header-icon">
                         <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i>
                             <div class="number-notification circle invisible-component">
@@ -66,8 +66,8 @@
                         </label>
                         <a href="" class="hidden-click-any-container fa-option-mobile-lg-hide notify-icon">
                             <i class="hidden-click-any-container fi-rs-bell f-footer fi- fa-24 fa-option" size="7"></i>
-                            <div class="number-notification circle">
-                                <span class="center">2</span>
+                            <div class="number-notification invisible-component circle">
+                                <span class="center"></span>
                             </div>
                         </a>
                         <input type="checkbox" name="" id="more-option-notify" class="hidden">
@@ -100,7 +100,7 @@
                     </div>
                 </li>
                 <li class="user-tassumir clearfix l-5">
-                    <a href="">
+                    <a href="{{route('account.profile')}}">
                         <div class="l-5 user-account-container-img">
                             <img class="img-full invisible-component center" id="user-account-container-img-id">
                         </div>
@@ -109,11 +109,12 @@
                 </li>
             </nav>
     </header>
+    <input type="hidden" id="host" value="{{route('account.data')}}" name="">
     <div class="header-main-component"></div>
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix">
-                <li class="li-component-aside li-component-aside-active" id="route_feed"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="">Feed de Notícias</a></li>
+                <li class="li-component-aside" id="route_feed"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('account.home.feed')}}">Feed de Notícias</a></li>
                 <li class="li-component-aside text-ellips invisible-component" id="route_account"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a class="text-ellips" href="" id="complete_name_id"></a></li>
                 <!--<li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Criar Relacionamento</a></li>
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
@@ -142,11 +143,11 @@
                 <h1>Páginas que eu sigo</h1>
             </header>
             <ul class="" id="pageseguida">
-                <li class="li-component-aside-right clearfix">
+                <li class="li-component-aside-right clearfix invisible-component">
                     <h1 class="l-5 name-page text-ellips">Nenhuma Página Seguida</h1>
                 </li>            
             </ul>
-            <footer class="clearfix">
+            <footer class="clearfix invisible-component">
                 <a href="" class="r-5">Ver Todas</a>
             </footer>
         </nav>
@@ -163,10 +164,10 @@
                     </div>
                     <a id="a-suggest-id-aside-name-{{$key}}"><h1 class="l-5 name-page text-ellips" id="page-name-suggest-id-{{$key}}"></h1></a>
                     <h2 class="l-5 text-ellips" id="page-followers-suggest-id-{{$key}}">seguidores</h2>
-                    <a href="" class="seguir" id="follwing-{{$key}}">seguir</a>
+                    <a href="" class="seguir seguir-{{$key}}" id="follwing-{{$key}}">seguir</a>
                 </li>
             <?php $key++; } ?>
-            <footer class="clearfix invisible">
+            <footer class="clearfix invisible-component">
                 <a href="" class="r-5">Ver Todas</a>
             </footer>
         </nav>
@@ -184,7 +185,8 @@
             <a href="{{route('account.all.notifications')}}">
                 <li class="li-footer-menu">
                     <i class="fi-rs-bell fa-20 f-footer"></i>
-                    <div class="number-notification circle">
+                    <!--<h1 class="descript">Notificações</h1>-->
+                    <div class="number-notification circle invisible-component">
                         <span class="center"></span>
                     </div>
                 </li>

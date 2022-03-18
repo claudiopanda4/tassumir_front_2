@@ -327,7 +327,29 @@ class AuthController extends Controller
 
 
         public function destacados(){
-          $post= DB::table('posts')->where('estado_post_id', '=', 1)
+          $post = DB::select('select * from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id, p.uuid,p.descricao,p.estado_post_id,p.formato_id,p.page_id,pa.uuid as page_uuid,pa.nome as page_name,pa.estado_pagina_id as estado_pagina_id,pa.foto as page_foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');
+
+                       $what_are_talking = array();
+                        $i=0;
+                          foreach ($post as $key) {
+                            if ($key->estado_pagina_id == 1){
+
+                                $melhores[$i]= $key->post_id;
+                                $what_are_talking[$i]['post']=$key->descricao;
+                                $what_are_talking[$i]['page_id']= $key->page_id ;
+                                $what_are_talking[$i]['page_uuid']= $key->page_uuid;
+                                $what_are_talking[$i]['post_uuid']= $key->uuid;
+                                $what_are_talking[$i]['post_id']= $key->post_id;
+                                $what_are_talking[$i]['formato']=$key->formato_id;
+                                $what_are_talking[$i]['estado_post']=$key->estado_post_id;
+                                $what_are_talking[$i]['foto_page']=$key->page_foto;
+                                if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
+                                $what_are_talking[$i]['file']=$key->file;
+                              }
+                            }
+
+                          $i++;}
+          /*$post= DB::table('posts')->where('estado_post_id', '=', 1)
           ->join('pages', 'pages.page_id', '=', 'posts.page_id')
           ->select('posts.*', 'pages.estado_pagina_id', 'pages.uuid as page_uuid', 'pages.foto as page_foto')
           ->get();
@@ -362,7 +384,7 @@ class AuthController extends Controller
                               $a=$key->qtd_total;
                             }}
                           }
-                       $i++;}
+                       $i++;}*/
               return $what_are_talking;
           }
 
@@ -370,29 +392,7 @@ class AuthController extends Controller
               $post = DB::select('select AL.uuid,AL.descricao, AL.formato_id, AL.file, AL.page_uuid, AL.page_foto from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id, p.uuid,p.descricao,p.estado_post_id,p.formato_id,p.page_id,pa.uuid as page_uuid,pa.nome as page_name,pa.estado_pagina_id as estado_pagina_id,pa.foto as page_foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');
 
           /*$post = DB::select('select * from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id, p.uuid,p.descricao,p.estado_post_id,p.formato_id,p.page_id,pa.uuid as page_uuid,pa.nome as page_name,pa.estado_pagina_id as estado_pagina_id,pa.foto as page_foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');*/
-
-                      /*  $what_are_talking = array();
-                        $i=0;
-                          foreach ($post as $key) {
-                            if ($key->estado_pagina_id == 1){
-
-                                $melhores[$i]= $key->post_id;
-                                $what_are_talking[$i]['post']=$key->descricao;
-                                $what_are_talking[$i]['page_id']= $key->page_id ;
-                                $what_are_talking[$i]['page_uuid']= $key->page_uuid;
-                                $what_are_talking[$i]['post_uuid']= $key->uuid;
-                                $what_are_talking[$i]['post_id']= $key->post_id;
-                                $what_are_talking[$i]['formato']=$key->formato_id;
-                                $what_are_talking[$i]['estado_post']=$key->estado_post_id;
-                                $what_are_talking[$i]['foto_page']=$key->page_foto;
-                                if($what_are_talking[$i]['formato']==1 || $what_are_talking[$i]['formato']== 2){
-                                $what_are_talking[$i]['file']=$key->file;
-                              }
-                            }
-
-                          $i++;}
-                          */
-                return $post;
+                return json_encode($post);
             }
 
             public function DadosPost($id){
@@ -606,7 +606,7 @@ class AuthController extends Controller
             return view('error.alert_working', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida'));
     }
     /*Função para pegar os dados com ajax*/
-    
+
     public function paginasqueSigo(){
         $id = Auth::user()->conta_id;
         $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 limit 3', [$id]);
@@ -616,14 +616,15 @@ class AuthController extends Controller
      public function paginasquenaoSigo(){
         $id = Auth::user()->conta_id;
         $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 limit 3', [$id]);
+
         return response()->json($pagequesigo);
     }
 
     public function paginasquenaoSigoIndex(){
-        
+
         $dates = $this->default_();
         $conta_logada_identify = $dates['conta_logada_identify'];
-        $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 limit 10', [$conta_logada_identify[0]->identificador_id]);
+        $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 limit 10', [$conta_logada_identify[0]->identificador_id]);
         return response()->json($pagequesigo);
     }
     /*Fim função para pegar os dados com ajax*/
@@ -924,7 +925,24 @@ class AuthController extends Controller
     return response()->json($dados);
   }
 
+
+/* Siene */
+
+  public function get_only_post(Request $request) {
+    if ($request->ajax()) {
+        $data = DB::table('posts')->where('uuid', $request->id)->get();
+        return response()->json($data);
+    }
+  }
+
+  public function get_only_comments(Request $request) {
+    return DB::select('select * from comments where post_id = (select post_id from posts where uuid = ?)', [$request->id]);
+  }
+
+/* EndSiene */
+
   public function post_index($id){
+
 
       $dates = $this->default_();
       $account_name = $dates['account_name'];

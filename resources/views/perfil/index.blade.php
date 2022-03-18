@@ -28,23 +28,14 @@
                 <li class="statistics-profile">
                   <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}">  <h2 style="justify-content: center; font-weight: bolder; font-size: 14px; width: 100%; margin-bottom: 0;">{{$perfil[0]['qtd_ps']}}</h2></a>
                     <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}" style="margin-top: -5px;  text-align: center;"><h2 style="justify-content: center; font-size: 11.5px; text-align: center;">Seguindo</h2></a>
-                    <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar</h3></a>
-                  <?php endif; ?>
                 </li>
                 <li class="statistics-profile">
                     <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_like']}}</h2>
                     <h2 style="justify-content: center; font-size: 11.5px;">Curtiu</h2>
-                    <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar</h3></a>
-                  <?php endif; ?>
                 </li>
                 <li class="statistics-profile">
                     <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">{{$perfil[0]['qtd_guardados']}}</h2>
                     <h2 style="justify-content: center; font-size: 11.5px;">Guardados</h2>
-                    <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                    <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar</h3></a>
-                  <?php endif; ?>
                 </li>
             </ul>
             <div id="option-profile-no-own">
@@ -117,19 +108,32 @@
             </div>
             <div class="clearfix" id="options-profile-mobile-user-log">
                 <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
-                    <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5">
-                        <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
+                    <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5" id="options-profile-btn-edit-profile">
+                        <a href=""><h3 class="edit-profile-mobile">...</h3></a>
                     </div>
-                    <div class="l-5 options-profile-btn">
-                        <a href="">
-                            <div class="container-logout">
-                                <a href="{{route('account.logout')}}"><h1 class="btn-a-default">Terminar Sessão</h1></a>
+                    <div class="l-5 options-profile-btn more-options-profile-bt">
+                        <label for="more-option-target-profile" class="target-options-profile">
+                            <div class="">
+                                <div class="more-options-profile-btn">
+                                    <div class="more-options-component"><i class="fas fa-caret-down center" style="font-size: 18px;"></i></div>
+                                </div>
                             </div>
+                        </label>
+                    </div>
+                    <div class="l-5 options-profile-btn more-options-profile-bt">
+                        <a href="">
+                            <label for="more-option-target" class="target-options-profile">
+                                <div class="">
+                                    <div class="more-options-profile-btn">
+                                        <div class="more-options-component center"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 14px;"></i></div>
+                                    </div>
+                                </div>
+                            </label>
                         </a>
                     </div>
                 <?php endif; ?>
             </div>
-            <div class="clearfix" id="options-profile-mobile-user-log-pages">
+            <!--<div class="clearfix" id="options-profile-mobile-user-log-pages">
                 @if($checkUserStatus)
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                         @if(!$hasUserManyPages)
@@ -143,7 +147,7 @@
                         @endif
                     <?php endif ?>
                 @endif
-            </div>
+            </div>-->
                     <!--<?php //if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                     <div class="options-profile-btn options-profile-btn-center profile-item-center">
                         <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile-mobile">Editar Perfil</h3></a>
@@ -172,7 +176,7 @@
                     <li><a href="?post-container-post=images"><i class="far fa-images fas-32 center icon-hover-option-profile " style="font-size: 22px;"></i><h1 class="menu-option-profile"></h1></a></li>
                     <li><a href="?post-container-post=video"><i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 22px;"></i><h1 class="menu-option-profile"></h1></a></li>
                     <li><a href="?post-container-post=post"><i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 22px;"></i><h1 class="menu-option-profile"></h1></a></li>
-                    <li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 18px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                    <!--<li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 18px;"></i><h1 class="menu-option-profile"></h1></a></li>-->
                 </ul>
             </nav>
 
@@ -340,6 +344,63 @@
             </div>
             <?php endif; ?>
 </div>
+</div>
+<input type="checkbox" name="" id="more-option-target-profile" class="invisible">
+<div class="pop-up" id="more-option-profile-component">
+    <div class="pop-up-component full-component-mobile" id="more-option-profile-component-pop-up" style="">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Mais Informações</h1>
+            <div class="container-pop-up-component-header">
+                <label for="more-option-target-profile">
+                    <div class="cancel-box-component div-img">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+       <!-- <form enctype="multipart/form-data">-->
+        <div class="header-height"></div>
+        <div class="clearfix content-more" style="margin-top: 15px; margin-bottom: 10px;">
+            <nav>
+                <ul class="invisible-component">
+                    <li class="li-component-aside">
+                        <i class="fas fa-sign-out-alt fa-20 fa-icon-aside-left"></i>
+                        <a href="">Terminar Sessão</a>
+                    </li>
+                    <li class="li-component-aside">
+                        <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
+                        <a href="">Meus Ganhos</a>
+                    </li>
+                    <li class="li-component-aside">
+                        <i class="fas fa-rss fa-20 fa-icon-aside-left"></i>
+                        <a href="">Actualizações do Tassumir</a>
+                    </li>
+                    <li class="li-component-aside">
+                        <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
+                        <a href="">Dicas Para Ganhar Mais</a>
+                    </li>
+                    <li class="li-component-aside">
+                        <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
+                        <a href="">Explorar Melhor o Tassumir</a>
+                    </li>
+                </ul>
+                <ul class="">
+                    <li class="li-component-aside more-info-about-profile">
+                        <h1>Estado</h1>
+                        <h2>Solteiro</h2>
+                    </li>
+                    <li class="li-component-aside more-info-about-profile">
+                        <h1>Idade</h1>
+                        <h2>24 anos</h2>
+                    </li>
+                    <li class="li-component-aside more-info-about-profile">
+                        <h1>Vive em</h1>
+                        <h2>Sem Endereço Actual</h2>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
 $(document).ready(function () {

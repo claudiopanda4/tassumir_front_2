@@ -34,7 +34,18 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/delete_post', [App\Http\Controllers\AuthController::class, 'delete_post'])->name('delete_post');
     Route::get('/pegar_mais_post', [App\Http\Controllers\AuthController::class, 'pegar_mais_post'])->name('pegar_mais_post');
     Route::get('/ocultar_post', [App\Http\Controllers\AuthController::class, 'ocultar_post'])->name('ocultar_post');
+    
+
     Route::get('/post_index/{id}', [App\Http\Controllers\AuthController::class, 'post_index'])->name('post_index');
+
+    /* siene */
+    Route::get('/get_only_post/', [App\Http\Controllers\AuthController::class, 'get_only_post'])->name('get_post');
+
+
+    Route::get('/get_only_comments/', [App\Http\Controllers\AuthController::class, 'get_only_comments'])->name('get_comments');
+    /* end siene  */
+
+
     Route::get('/savepost', [App\Http\Controllers\AuthController::class, 'savepost'])->name('savepost');
     Route::get('/comentar', [App\Http\Controllers\AuthController::class, 'comentar'])->name('comentar');
     Route::post('/Pedido_relac/', [App\Http\Controllers\PerfilController::class, 'Pedido_relac'])->name('Pedido_relac');
@@ -90,6 +101,9 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/page/following', [App\Http\Controllers\AuthController::class, 'paginasqueSigo'])->name('page.que.sigo');
     Route::get('/page/following/index', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigoIndex'])->name('page.para.index');
     Route::get('/page/no_following', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigo'])->name('page.que.nao.sigo');
+    Route::get('/home/destaques', [App\Http\Controllers\AuthController::class, 'destaques'])->name('home.destaque');
+    Route::get('/home/posts', [App\Http\Controllers\PageController::class, 'post_final1'])->name('home.posts');
+    Route::get('/home/posts_page_no_follow', [App\Http\Controllers\PageController::class, 'post_final2'])->name('home.posts.no_follow');
     /*Fim rotas para Ajax*/
     
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');

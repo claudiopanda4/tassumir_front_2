@@ -541,9 +541,10 @@
 		display: none;
 	}
 }
-#target-profile-cover:checked ~ .pop-up#cover-profile {
+#target-profile-cover:checked ~ .pop-up#cover-profile,
+#more-option-target-profile:checked ~  #more-option-profile-component {
 	opacity: 1;
-    z-index: 1000;
+    z-index: 1001;
 }
 #add-post-target:checked ~ #add-post-container {
 	opacity: 1;
