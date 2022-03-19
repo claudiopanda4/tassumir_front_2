@@ -82,6 +82,27 @@ class PaginaCasalController extends Controller
 
         return view('pagina.couple_page_following', compact('account_name','v','PS','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir', 'pagenaoseguidas'));
     }
+
+    public function page_update(Request $request)
+    {
+    try {
+
+
+        if ($request->nome_page != null ) {
+        $pages = DB::table('pages')->where(['uuid'=>$request->uuid])->update([
+         'nome' => $request->nome_page,
+         //'tipo_relacionamento_id' => 1,
+     ]);
+    }
+    return redirect()->route('account.home.feed');
+
+
+    }  catch (Exception $e) {
+        dd($e);
+    }
+
+
+    }
     public function conta_seguinte()
     {
        $dadosSeguida = DB::table('seguidors')
@@ -666,7 +687,7 @@ class PaginaCasalController extends Controller
         try
         {
             //dd($request);
-          
+
             $page_id = DB::select('select page_id from pages where uuid = ?', [$request->page_u])[0]->page_id;
 
             if ($request->hasFile('imgOrVideo'))

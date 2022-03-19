@@ -321,7 +321,7 @@ class PageController extends Controller
         $paginasNaoSeguidas = $auth->paginasNaoSeguidas();
         $page_current = 'edit_couple';
         $conta_logada = $auth->defaultDate();
-        $page=DB::select('select * from pages where uuid = ?', [$id]);
+        $page=DB::select('select uuid,nome,foto,tipo_relacionamento_id from pages where uuid = ?', [$id]);
 
 
         return view('pagina.edit_couple', compact('account_name','page','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
