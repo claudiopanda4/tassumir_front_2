@@ -330,7 +330,7 @@ class AuthController extends Controller
         {
           $conta=Auth::user()->conta_id;
         //  dd($conta->conta_id);
-          $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(tipo_causador_identify=1||tipo_causador_identify=2 ||tipo_causador_identify=3 ||tipo_causador_identify=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(tipo_causador_identify=1||tipo_causador_identify=2 ||tipo_causador_identify=3 ||tipo_causador_identify=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(tipo_causador_identify=4||tipo_causador_identify=7 ||tipo_causador_identify=9 ||tipo_causador_identify=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(tipo_causador_identify=4||tipo_causador_identify=7 ||tipo_causador_identify=9 ||tipo_causador_identify=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(tipo_causador_identify=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
+          $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
           //dd($control);$control[0]->
           $notificacoes=array();
           $notificacoes_count=0;
@@ -852,10 +852,10 @@ class AuthController extends Controller
 
      */
 
-
+     $what_are_talking = $this->destacados();
      //$what_are_talking = $this->Notifications_final();
      //$what_are_talking = $this->destaques();
-     $what_are_talking = [];
+     //$what_are_talking = [];
      $mudar_estado_view= DB::table('views')->where('conta_id',$conta_logada[0]->conta_id)->where('state_views_id', 2)->limit(1)->get();
     if (sizeof($mudar_estado_view)>0) {
       DB::table('views')
@@ -1963,6 +1963,13 @@ public function dados_comment($key){
 
               } else {
 
+                DB::table('comments')->insert([
+                'post_id' => $request->id,
+                'identificador_id' => $aux[0]->identificador_id,
+                'tipo_estado_comment_id'=>1,
+                'comment'=>$request->comment,
+                'created_at'=> $this->dat_create_update(),
+                ]);
 
                 $variable=  DB::table('comments')->get();
                 foreach ($variable as $key) {
@@ -1985,13 +1992,7 @@ public function dados_comment($key){
                    $resposta[0]['comment']=$key->comment;
                 }
 
-                DB::table('comments')->insert([
-                'post_id' => $request->id,
-                'identificador_id' => $aux[0]->identificador_id,
-                'tipo_estado_comment_id'=>1,
-                'comment'=>$request->comment,
-                'created_at'=> $this->dat_create_update(),
-                ]);
+
                 /*DB::table('posts')
                   ->where('post_id', $post[0]->post_id)
                   ->update([
@@ -2606,6 +2607,54 @@ public function dados_comment($key){
         dd($error);
      }
   }
+
+  public function qtd_like(Request $request)
+  {
+    try {
+
+     $qtd_like=DB::select('select count(*) from post_reactions as p where p.identificador_id = (select i.identificador_id from identificadors as i where i.tipo_identificador_id= 1 and i.id = ?)',[$request->id]);
+      return $qtd_like;
+    } catch (\Exception $error){
+      dd($error);
+    }
+  }
+  public function qtd_pages_seg(Request $request)
+  {
+    try {
+      $qtd_pages=DB::select('select count(*) from seguidors as s where s.identificador_id_seguindo =(select i.identificador_id from identificadors as i where i.tipo_identificador_id= 1 and i.id = ?)',[$request->id]);
+      return $qtd_pages;
+    } catch (\Exception $error){
+      dd($error);
+    }
+  }
+  public function qtd_saves(Request $request)
+  {
+    try {
+      $qtd_saves=DB::select('select count(*) from saveds as s where s.conta_id =?',[$request->id]);
+      return $qtd_saves;
+       } catch (\Exception $error){
+      dd($error);
+    }
+  }
+  public function state_civil_and_descrition(Request $request)
+  {
+    try {
+      $scad=DB::select('select count()',[$request->id]);
+      return $scad;
+    } catch (\Exception $error){
+      dd($error);
+    }
+  }
+  public function tip_of_relac_you(Request $request)
+  {
+    try {
+      $tory=DB::select('select al.*, if(id_conta_a=? ,(select ct.nome from contas as ct where ct.conta_id =id_conta_b),(select ct.nome from contas as ct where ct.conta_id =id_conta_a))as nome_outra_pessoa,if(id_conta_a=? ,(select ct.apelido from contas as ct where ct.conta_id =id_conta_b),(select ct.apelido from contas as ct where ct.conta_id =id_conta_a))as apelido_outra_pessoa from (select (select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page,(select pg.page_id from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1 limit 1)as page_id, (select pg.tipo_relacionamento_id from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as tipo_relac_id, (select p.conta_id_a from pages as p where p.page_id=page_id order by p.page_id desc limit 1)as id_conta_a, (select pa.conta_id_b from pages as pa where pa.page_id=page_id order by pa.page_id desc limit 1)as id_conta_b, (select tp.tipo_relacionamento from tipo_relacionamentos as tp where tp.tipo_relacionamento_id=tipo_relac_id)as tipo_relac from contas as c where c.conta_id=?) as al',[$request->id,$request->id,$request->id]);
+      return $tory;
+    } catch (\Exception $error){
+      dd($error);
+    }
+  }
+
   public function updatePassword2(Request $request){
 
    try{
