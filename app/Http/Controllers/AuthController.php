@@ -2146,7 +2146,7 @@ public function dados_comment($key){
 
                  if (sizeof($result_email) > 0 ) {
 
-                    return back()->with('error',"Já existe uma conta com o emai: ".$takeEmail." ". "na plataforma Tassumir");
+                    return back()->with('error',"Já existe uma conta com o email: ".$takeEmail." ". "na plataforma Tassumir");
 
                  }else{
 
@@ -2213,9 +2213,10 @@ public function dados_comment($key){
 
     public function verifyCodeSent(Request $request){
 
-        DB::beginTransaction();
 
         try{
+
+         DB::beginTransaction();
 
         $input_code = $request->codeSent;
 
@@ -2285,6 +2286,7 @@ public function dados_comment($key){
               ]);
 
                DB::commit();
+
                 return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
         }else{
 

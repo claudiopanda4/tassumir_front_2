@@ -92,26 +92,26 @@
             </div>
             <span class="hidden" style="color:red;" id="erroApelido"> Insira o teu Apelido</span>
 
-            <input type="text" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="Data de Nascimento" onfocus="(this.type='date')"  max="2006-12-31">
+            <input type="text" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="Data de Nascimento" data-mask="00/00/0000">
+
+         
+            <div id=verify-dados2>
+              
+            </div>
+            <!--onfocus="(this.type='date')"-->
 
             <span class="hidden" style="color:red;" id="erroData"> Insira a Data de Nascimento</span>
 
             <div class="row" style="" id="genre-id-container">
-
               <div class="col-md-8" id="genre-id-component">
-
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="sexo" id="exampleRadios1" value="Masculino" checked>
                   <label class="form-check-label text-white" for="exampleRadios1">
                     Masculino
                   </label>
-
                 </div>
-
               </div>
-
               <div class="col-md-4" id="genre-id-component">
-
                 <div class="form-check">
                   <input class="form-check-input" type="radio" name="sexo" id="exampleRadios2" value="Feminino">
                   <label class="form-check-label text-white" for="exampleRadios2">
@@ -119,14 +119,9 @@
                   </label>
                 </div>
               </div>
-
-
             </div>
           </div>
-
-
           <div class="form-section">
-
             <select name="nacionalidade" id="nationality" required>
               <option value="" class="option-nationality" disabled selected>País de Origem</option>
               @forelse($dadosPais as $pais)
@@ -134,16 +129,10 @@
               @empty
               <option>...</option>
               @endforelse
-              
-             
-               
             </select>
-
             <div class="invalid-feedback">
               Insira a tua Nacionalidade
             </div>
-
-
             <div class="row mt-2">
               <div class="col-md-6">
                 <select id="inputState" class="input-text-default input-full input-login" required>
@@ -151,60 +140,46 @@
                   <option value="emailSele">Email</option>
                   <option value="telefSele">Telefone</option>
                 </select>
-
                 <div class="invalid-feedback">
                   Seleccione uma Opção
                 </div>
               </div>
-
               <div class="col-md-6">
-
                 <input type="email" class="input-text-default input-full input-login hidden input-emai-log" placeholder="Email" id="email" name="email">
-               
                 <span id="emailMsg"></span>
                 <input type="text" class="input-text-default input-full input-login hidden input-emai-log" name="telefone" placeholder="Telefone" id="telefone" data-mask="000-000-000">
-
               </div>
-
             </div>
-
             <div id="password_login_id2">
               <input type="password" class="input-text-default input-full input-login" name="password" placeholder="Password" value="" id="password" required>
-
               <i class="fa fa-eye" id="eye"></i>
               <div class="invalid-feedback">
                 Insira uma Palavra Passe
               </div>
             </div>
           </div>
-
           <div class="hugo-btn">
             <button type="button" id="login-enter" class="next">Seguinte</button>
             <button type="button" id="login-enter" class="recuar">Voltar</button>
-            <button type="submit" id="login-enter" class="my-form">Criar Conta</button>
+            <button type="submit" id="login-enter" class="my-form" >Criar Conta</button>
           </div>
-
           <div class="clearfix">
-
             <div id="forget-password" class="l-5">
               <a href="{{route('account.login.form')}}" class="hp-style">
                 <h1>Já tenho uma conta</h1>
               </a>
-
             </div>
-
-
           </div>
-
         </form>
       </div>
     </main>
   </div>
 </body>
-
 </html>
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script>
+
+  var take_age = 0;
 
   var myForm = $(".my-form");
   myForm.submit(function(){
@@ -244,6 +219,39 @@
        $("#verify-dados").html("<p class='text-danger' id='v-f-d'>Não se permite espaços</p>");
     }
   });
+
+  $('#dataNas').on('keyup', function(){
+
+    var valor = $("#dataNas").val();
+    if(valor.length === 10){
+
+      var hoje = new Date();
+      var aniv = new Date(valor);
+
+      var idade = hoje.getFullYear() - aniv.getFullYear();
+
+      var mes = hoje.getMonth() - aniv.getMonth();
+      var dia = hoje.getDate() - aniv.getDate();
+
+      if(mes < 0 || (mes === 0 && hoje.getDate() < aniv.getDate())){
+        idade--;
+      }
+      if (mes < 0) {
+        mes +=12;
+      }
+      if (dia < 0) {
+        dia+=30;
+      }
+      if (idade < 18 || idade >100) {
+        
+         $("#verify-dados2").html("<p class='text-danger' id='v-f-d'>Não é permitida a idade de: "+idade+" anos </p>");
+      }
+     
+    }else {
+        $('#v-f-d').remove();
+    }
+  });
+ 
   $("#eye").on('click', function() {
 
     if (pass.prop('type') == 'password') {
@@ -293,12 +301,11 @@
 
   $("#email").keyup(function(){
     if(validateEmail()){
-     // $("#email").css("border","2px solid green");
-
+     
       $("#emailMsg").html("<p class='text-success'>Email Válido</p>");
 
     }else{
-          //$("#email").css("border","2px solid red");
+         
            $("#emailMsg").html("<p class='text-danger'>Email Inválido</p>");
     }
 
@@ -350,22 +357,28 @@
       let apelido = $('#apelido-id').val();
       let data_nas = $('#dataNas').val();
 
-      if (nome && apelido && data_nas) {
+      var hoje = new Date();
+      var aniv = new Date(data_nas);
+
+      var idade = hoje.getFullYear() - aniv.getFullYear();
+
+      if (nome && apelido && data_nas && idade >=18) {
+
         navigateTo(curIndex() + 1);
         $('#erroNome').fadeOut();
         $('#erroApelido').fadeOut();
         $('#erroData').fadeOut();
-      } else {
+        
+      } else if(nome && apelido && data_nas && idade < 18){
+
+       $("#verify-dados2").html("<p class='text-danger' id='v-f-d'>Não é permitida a idade de: "+idade+" anos </p>");
+      }
+      else {
         $('#erroNome').show();
         $('#erroApelido').show();
         $('#erroData').show();
       }
 
-      /*$('.tassumir-form').parsley().whenValidated({
-           group:'block-' + curIndex()
-      }).done(function(){
-           navigateTo(curIndex()+1);
-      });*/
     });
 
     $sections.each(function(index, section) {
@@ -418,21 +431,5 @@
 
   });
 
-  /*
-    $(document).ready(function(){
-    var buscar_pais = 'Buscar';
 
-    $.ajax({
-        url: "{{route('buscar.pais')}}",
-        type: 'get',
-        data: {'bucar': buscar_pais},
-        dataType: 'json',
-          success: function(response){
-            $.each(response.pais, function(key, value){
-                  $('#nationality').append('<option value="'+value.pais_id+'" class="option-nationality" >'+value.nome+'</option>')
-                })
-                }
-              });
-    })*/
-  
 </script>
