@@ -17,6 +17,11 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/', function () {
         return view('feed.index');
     })->middleware('auth:web1');
+    Route::get('/tip_of_relac_you', [App\Http\Controllers\AuthController::class, 'tip_of_relac_you'])->name('tip_of_relac_you');
+    Route::get('/state_civil_and_descrition', [App\Http\Controllers\AuthController::class, 'state_civil_and_descrition'])->name('state_civil_and_descrition');
+    Route::get('/qtd_savesqtd_saves', [App\Http\Controllers\AuthController::class, 'qtd_saves'])->name('qtd_saves');
+    Route::get('/qtd_pages_seg', [App\Http\Controllers\AuthController::class, 'qtd_pages_seg'])->name('qtd_pages_seg');
+    Route::get('/qtd_like', [App\Http\Controllers\AuthController::class, 'qtd_like'])->name('lqtd_like');
     Route::get('/like', [App\Http\Controllers\AuthController::class, 'like'])->name('like');
     Route::get('/like_unlike', [App\Http\Controllers\AuthController::class, 'like_unlike'])->name('like_unlike');
     Route::get('/alert', [App\Http\Controllers\AuthController::class, 'alert'])->name('error.alert');
@@ -33,7 +38,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/delete_post', [App\Http\Controllers\AuthController::class, 'delete_post'])->name('delete_post');
     Route::get('/pegar_mais_post', [App\Http\Controllers\AuthController::class, 'pegar_mais_post'])->name('pegar_mais_post');
     Route::get('/ocultar_post', [App\Http\Controllers\AuthController::class, 'ocultar_post'])->name('ocultar_post');
-    
+
 
     Route::get('/post_index/{id}', [App\Http\Controllers\AuthController::class, 'post_index'])->name('post_index');
 
@@ -56,7 +61,9 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/profile/{perfil}', [App\Http\Controllers\PerfilController::class, 'edit'])->name('account.profile.edit');
 
     Route::get('/paginas_que_sigo/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas_que_sigo'])->name('paginas_que_sigo.page');
+    Route::get('/who_follows_me/{id}', [App\Http\Controllers\PaginaCasalController::class, 'who_follows_me'])->name('who_follows_me.page');
 
+    Route::post('/page_update/', [App\Http\Controllers\PaginaCasalController::class, 'page_update'])->name('page_update');
     Route::get('/couple_page/', [App\Http\Controllers\PaginaCasalController::class, 'index'])->name('couple.page');
     Route::get('/my_pages/', [App\Http\Controllers\PaginaCasalController::class, 'my_pages'])->name('couple.page.mine');
     Route::get('/posts/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'post'])->name('couple.page.post');
@@ -101,7 +108,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/page/para/index', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigoIndex'])->name('page.para.index');
     Route::get('/page/que/nao/sigo', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigo'])->name('page.que.nao.sigo');
     /*Fim rotas para Ajax*/
-    
+
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');
     Route::get('nao/seguir', [App\Http\Controllers\SeguidorController::class, 'destroy'])->name('nao.seguir.seguindo');
     Route::get('/direct/', [App\Http\Controllers\MessageController::class, 'index'])->name('message.index');

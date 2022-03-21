@@ -543,68 +543,41 @@ class PerfilController extends Controller
     public function Pedido_relac(Request $request)
     {
         try {
-          $controll = new AuthController();
+          $auth = new AuthController();
+          $conta=Auth::user()->conta_id;
+          $control= DB::select('select ct.conta_id, (select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_pedida_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_pedinte_identify,(select count(*)from pedido_relacionamentos as pr where pr.conta_id_pedida = ? and pr.conta_id_pedinte= ct.conta_id or pr.conta_id_pedida = ct.conta_id and pr.conta_id_pedinte = ?) as verify_pr, (select count(*) from pages as pg where pg.conta_id_a=? and pg.tipo_page_id=1 or pg.conta_id_b=? and pg.tipo_page_id=1 or pg.conta_id_a=ct.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=ct.conta_id and pg.tipo_page_id=1)as verify_page, if((select c.genero from contas as c where c.conta_id=?)=(select c.genero from contas as c where c.conta_id=ct.conta_id),1,0) as verify_gener from contas as ct where ct.uuid=?', [$conta,$conta,$conta,$conta,$conta,$conta, $request->conta_pedida]);
+          //dd($control);
+          if ( $control[0]->verify_pr== 0 && $control[0]->verify_page== 0 && $control[0]->verify_gener== 0) {
 
+          $pedido=DB::table('pedido_relacionamentos')->insertGetId([
 
-          $conta_pedida=array();
-          $verificacao_page_conta_pedida_b=array();
-          $verificacao_page_conta_pedida_a=array();
-          $verificacao_pedido=array();
-          $conta_pedinte = Auth::user()->conta_id;
-          $conta_pedida = DB::select('select * from contas where uuid = ?', [$request->conta_pedida]);
-          $verificacao_page_conta_pedinte_a=DB::select('select * from pages where (conta_id_a,tipo_page_id) = (?, ?)', [$conta_pedinte, 1]);
-          $verificacao_page_conta_pedinte_b=DB::select('select * from pages where (conta_id_b,tipo_page_id) = (?, ?)', [$conta_pedinte, 1]);
-          if (sizeof($conta_pedida) == 0  ) {
-              $verificacao_pedido[0]=1;
-              $verificacao_page_conta_pedida_b[0]=1;
-              $verificacao_page_conta_pedida_a[0]=1;
-          }else {
-          $verificacao_pedido= DB::select('select * from pedido_relacionamentos where (conta_id_pedida, conta_id_pedinte) = (?, ?)', [$conta_pedida[0]->conta_id, $conta_pedinte]);
-          $verificacao_page_conta_pedida_b=DB::select('select * from pages where (conta_id_b,tipo_page_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1]);
-          $verificacao_page_conta_pedida_a=DB::select('select * from pages where (conta_id_a,tipo_page_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1]);
-          }
-          $conta= DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
-          if ( sizeof($verificacao_pedido) == 0 && sizeof($verificacao_page_conta_pedinte_a) == 0 && sizeof($verificacao_page_conta_pedinte_b) == 0 && sizeof($verificacao_page_conta_pedida_b) == 0 && sizeof($verificacao_page_conta_pedida_a) == 0 && $conta_pedida[0]->genero != $conta[0]->genero ) {
-
-          DB::table('pedido_relacionamentos')->insert([
-            
               'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-              'conta_id_pedida' => $conta_pedida[0]->conta_id,
-              'conta_id_pedinte' =>  $conta_pedinte,
+              'conta_id_pedida' => $control[0]->conta_id,
+              'conta_id_pedinte' =>  $conta,
               'estado_pedido_relac_id' => 1,
               'name_page' => $request->name_page,
               'tipo_relacionamento_id' =>$request->tipo_relac,
-              'created_at'=> $controll->dat_create_update(),
+              'created_at'=> $auth->dat_create_update(),
 
 
           ]);
 
-          $a=DB::table('pedido_relacionamentos')->get();
-          foreach ($a as $key) {
-             $c=$key->pedido_relacionamento_id;
-             }
 
-          DB::table('identificadors')->insert([
+          $idf=DB::table('identificadors')->insertGetId([
         'tipo_identificador_id' => 5,
-        'id' => $c,
-        'created_at'=> $controll->dat_create_update(),
+        'id' => $pedido,
+        'created_at'=> $auth->dat_create_update(),
 
    ]);
-          $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedida[0]->conta_id, 1 ]);
-          $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_pedinte, 1 ]);
 
-         $a=DB::table('identificadors')->get();
-         foreach ($a as $key) {
-            $b=$key->identificador_id;
-            }
           DB::table('notifications')->insert([
                   'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
                   'id_state_notification' => 2,
                   'id_action_notification' => 4,
-                  'identificador_id_causador'=> $aux[0]->identificador_id,
-                  'identificador_id_destino'=> $b,
-                  'identificador_id_receptor'=> $aux2[0]->identificador_id,
-                  'created_at'=> $controll->dat_create_update(),
+                  'identificador_id_causador'=> $control[0]->conta_pedinte_identify,
+                  'identificador_id_destino'=> $idf,
+                  'identificador_id_receptor'=> $control[0]->conta_pedida_identify,
+                  'created_at'=> $auth->dat_create_update(),
                   ]);
 
         }

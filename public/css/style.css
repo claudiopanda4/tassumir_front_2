@@ -43,6 +43,28 @@ body {
     border: 1px solid var(--background-dark-input);
     padding: 8px;
 }
+/* init teste  */
+
+.input-text-default2 {
+    background-color: var(--background-dark-input);
+    border: 1px solid var(--background-dark-input);
+    padding: 8px;
+}
+.input-full2 {
+    width: 100%;
+    border-radius: 5px;
+    color: #fff;
+}
+.input-login2 {
+    background-color: #242526;
+    margin-top: 5px;
+    border-radius: 20px;
+    padding: 14px;
+   
+}
+
+/* end teste  */
+
 .input-full {
     width: 100%;
     border-radius: 5px;
@@ -3464,3 +3486,11 @@ label[for="hugo"]{
     height: 28px;
     z-index: 3;
 }
+ .bring-to-front:hover{
+         -webkit-transform: scale(1.5);
+          
+    }
+    .bring-to-front img:hover{
+        /*background-position: 0px 0px;
+        background-size: 200px 200px;*/
+    }
