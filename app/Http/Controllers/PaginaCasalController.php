@@ -537,6 +537,7 @@ class PaginaCasalController extends Controller
           $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
           $dadosSeguida = $dates['dadosSeguida'];
           $page_current = 'relationship_request';
+            
 
         //***************** siene *******************//
           $casalPageName = self::get_casalPage_name($uuid);
@@ -1005,7 +1006,27 @@ class PaginaCasalController extends Controller
     {
       //dd($uid);
       $data = DB::table('pages')->where('uuid', $uid)->select('conta_id_a', 'conta_id_b')->get();
-      return self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b);
+
+      $donodapage = DB::table('pedido_relacionamentos')->where('conta_id_pedida', $data[0]->conta_id_a)->orwhere('conta_id_pedinte', $data[0]->conta_id_a)->get();
+      
+      if (sizeof($donodapage) > 0) {       
+      $tipo_relac = $donodapage[0]->tipo_relacionamento_id;
+      
+      if ($tipo_relac == 1) {
+            return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Nativos';
+          } elseif ($tipo_relac == 2) {
+            return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Noivos';
+          }elseif ($tipo_relac == 3) {
+            return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Apresentados';
+          }elseif ($tipo_relac == 4) {
+            return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Casados';
+          }elseif ($tipo_relac == 5) {
+            return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Namorados';
+          }
+          } else{
+            return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Nativos';
+          }   
+     
     }
 
     private static function get_account_nomeAndApelido($table_name, $account_id) {
