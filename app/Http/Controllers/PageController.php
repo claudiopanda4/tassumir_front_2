@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -55,18 +56,57 @@ class PageController extends Controller
       $conta_logada= $dates['conta_logada'];
       $conta_logada_identify = $dates['conta_logada_identify'];
       //posts de paginas q segue
-      $p1=DB::select('select * from (select p.*,(select pg.estado_pagina_id from pages as pg where p.page_id = pg.page_id ) as estado_pagina_id, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ? ) as vi, (select count(*) from seguidors where 	identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui  from posts as p order by rand()) as p where p.vi = 0 and p.segui = 1  order by rand() limit 10',[$conta_logada[0]->conta_id, $conta_logada_identify[0]->identificador_id]);
+
+      $p1=DB::select('select * from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ? ) as vi, (select count(*) from seguidors where 	identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = ?) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select comment from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as last_comment,(select comment_id from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as id_last_comment,(select uuid from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as uuid_last_comment,(select identificador_id from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as identificadorc_last_comment, (select count(*) from reactions_comments where comment_id = id_last_comment) as qtd_reaction_unic_comment,(select count(*) from reactions_comments where comment_id = id_last_comment and identificador_id = ?) as comment_s_n, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id  order by rand()) as p where p.vi = 0 and p.segui = 1 and estado_pagina_id = 1   order by rand() limit 10',[$conta_logada[0]->conta_id, $conta_logada_identify[0]->identificador_id,$conta_logada_identify[0]->identificador_id,$conta_logada[0]->conta_id,$conta_logada_identify[0]->identificador_id,$conta_logada[0]->conta_id,$conta_logada[0]->conta_id]);
+
+      /*select * from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = 1 ) as vi, (select count(*) from seguidors where 	identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = 9) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.conta_id_a, pa.conta_id_b, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = 9) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = 1) as guardado, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select comment from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as last_comment,(select comment_id from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as id_last_comment,(select uuid from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as uuid_last_comment,(select identificador_id from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as identificadorc_last_comment, (select count(*) from reactions_comments where comment_id = id_last_comment) as qtd_reaction_unic_comment,(select count(*) from reactions_comments where comment_id = id_last_comment and identificador_id = 9) as comment_s_n, if(pa.conta_id_a = 1 || pa.conta_id_b = 1, 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id  order by rand()) as p where p.vi = 0 and p.segui = 0 and estado_pagina_id = 1   order by rand() limit 10*/
+        //dd($p1);
+
+
       // posts de paginas q ñ segue
       $limit = 12 - sizeof($p1);
-      $p2=DB::select('select * from (select p.*,(select pg.estado_pagina_id from pages as pg where p.page_id = pg.page_id ) as estado_pagina_id, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ? ) as vi, (select count(*) from seguidors where 	identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui  from posts as p order by rand()) as p where p.vi = 0 and p.segui = 0  order by rand() limit ?',[$conta_logada[0]->conta_id, $conta_logada_identify[0]->identificador_id, $limit]);
+      $p2=DB::select('select * from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ? ) as vi, (select count(*) from seguidors where 	identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = ?) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select comment from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as last_comment,(select comment_id from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as id_last_comment,(select uuid from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as uuid_last_comment,(select identificador_id from comments cm where cm.post_id = p.post_id order by comment_id desc limit 1) as identificadorc_last_comment, (select count(*) from reactions_comments where comment_id = id_last_comment) as qtd_reaction_unic_comment,(select count(*) from reactions_comments where comment_id = id_last_comment and identificador_id = ?) as comment_s_n, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id  order by rand()) as p where p.vi = 0 and p.segui = 0 and estado_pagina_id = 1   order by rand() limit ?',[$conta_logada[0]->conta_id, $conta_logada_identify[0]->identificador_id,$conta_logada_identify[0]->identificador_id,$conta_logada[0]->conta_id,$conta_logada_identify[0]->identificador_id,$conta_logada[0]->conta_id,$conta_logada[0]->conta_id, $limit]);
+
+      //dd($p2);
+
+      //$p2=DB::select('select * from (select p.*,(select pg.estado_pagina_id from pages as pg where p.page_id = pg.page_id ) as estado_pagina_id, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ? ) as vi, (select count(*) from seguidors where 	identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui  from posts as p order by rand()) as p where p.vi = 0 and p.segui = 0  order by rand() limit ?',[$conta_logada[0]->conta_id, $conta_logada_identify[0]->identificador_id, $limit]);
       $post= array_merge($p1, $p2);
       shuffle($post);
+    //  dd($post);
       //caso ñ tenha posts
       if (sizeof($post)<=0 && $controller=0) {
         $post=[];
       }
+      return $post;
+    }
+
+    public function post_final1($controller)
+    {
+
+      $conta_logada= Auth::user()->conta_id;
+      //dd($conta_logada);
+      //posts de paginas q segue
+      $post=DB::select('select p.post_id, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ? ) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where 	identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1  order by rand()) as p where p.vi = 0 and p.segui = 1  order by rand() limit 10',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
+      //dd($post);
 
       return $post;
+    }
+
+    public function post_final2($controller)
+    {
+      $conta_logada= Auth::user()->conta_id;
+      // posts de paginas q ñ segue
+      $limit = 12 - sizeof($p1);
+      $post=DB::select('select p.post_id, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ? ) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where 	identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1  order by rand()) as p where p.vi = 0 and p.segui = 0  order by rand() limit ?',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada, $limit]);
+      //dd($post);
+      return $post;
+    }
+
+    public function best_comment($id)
+    {
+      $best_comment=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions , if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify   from comments as c where c.post_id = ?) as c order by qtd_comment_reactions desc, c.comment_id desc limit 1',[Auth::user()->conta_id, $id]);
+
+      return $best_comment;
     }
 
     public function get_posts($init, $aux_post, $pegar_posts, $verificacao){
@@ -259,6 +299,7 @@ class PageController extends Controller
      */
     public function show($id)
     {
+
         $auth = new AuthController();
         $dates = $auth->default_();
         $account_name = $dates['account_name'];

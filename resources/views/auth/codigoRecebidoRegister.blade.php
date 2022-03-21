@@ -131,7 +131,7 @@
 
       var codTecla = e.which;
       var teclas = (codTecla >= 48 && codTecla <= 57);
-      var teclasAlter = (",8,32,46,37,38,39,40".indexOf("," + codTecla + ",") > -1);
+      var teclasAlter = (",8,46,37,38,39,40".indexOf("," + codTecla + ",") > -1);
       if (teclas || teclasAlter) {
         return true;
       } else {

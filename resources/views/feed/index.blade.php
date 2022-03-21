@@ -1188,5 +1188,9 @@ function gostar(id){
                         });*/
                     }
 
+
+
+
+
 </script>
 @stop
