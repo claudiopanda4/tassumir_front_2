@@ -2137,8 +2137,9 @@ public function dados_comment($key){
                 $nacionalidade = intval($request->nacionalidade);
                 $takeEmail = $request->email;
                 $takePhone = str_replace("-","",$request->telefone);
-                   $password = Hash::make($request->password);
-                   dd($data_nascimento);
+
+                $password = Hash::make($request->password);
+
             //========== fim variaveis request ======
 
             if($takeEmail != null){
