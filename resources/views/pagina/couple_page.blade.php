@@ -311,10 +311,10 @@
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
 
-            if ($('.nao_sigo').eq(9).attr("id").split('-')[2] != null) {
+            if ($('.nao_sigo').eq(7).attr("id").split('-')[2] != null) {
                 var id_last_page = $('.nao_sigo').eq(3).attr("id").split('-')[2];
             }else{
-                if ($('.nao_sigo').eq(8).attr("id").split('-')[2] != null) {
+                if ($('.nao_sigo').eq(6).attr("id").split('-')[2] != null) {
 
                 }else{
                     var id_last_page = 0;

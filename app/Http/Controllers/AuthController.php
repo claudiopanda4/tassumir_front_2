@@ -1017,7 +1017,7 @@ class AuthController extends Controller
         }
          foreach ($paginasNaoSeguidas as $key => $valuePage) {
 
-          if ($parada > 9) {
+          if ($parada > 7) {
               break;
             }
             $pagenaoPage[$key] = $valuePage;
