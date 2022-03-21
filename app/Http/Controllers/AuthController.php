@@ -328,190 +328,1686 @@ class AuthController extends Controller
 
         public function Notifications_final()
         {
-          $conta=Auth::user()->conta_id;
-        //  dd($conta->conta_id);
-          $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
-          //dd($control);$control[0]->
-          $notificacoes=array();
-          $notificacoes_count=0;
-          $a=0;
-          $control_data=0;
-          if (sizeof($control)>0) {
-            foreach ($control as $key) {
-              if($key->id_state_notification!= 3){
+              $conta=Auth::user()->conta_id;
+            //  dd($conta->conta_id);select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador, (select nome from pages where page_id = destino_id) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= 1) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10
+              $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
+              //dd($control);$control[0]->
+              $notificacoes=array();
+              $notificacoes_count=0;
+              $a=0;
+              $control_data=0;
+              if (sizeof($control)>0) {
+                foreach ($control as $key) {
+                  if($key->id_state_notification!= 3){
 
-                $notificacoes[$a]['id1']=$key->notification_id;
-                $aux_divisão_data = explode(' ', $key->created_at);
-                $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
-                $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
-                $notificacoes[$a]['barra_data']=0;
+                    $notificacoes[$a]['id1']=$key->notification_id;
+                    $aux_divisão_data = explode(' ', $key->created_at);
+                    $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
+                    $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
+                    $notificacoes[$a]['barra_data']=0;
 
-                $date_create_update=date("Y");
-                $date_create_update.="-";
-                $date_create_update.=date("m");
-                $date_create_update.="-";
-                $date_create_update.=date("d");
+                    $date_create_update=date("Y");
+                    $date_create_update.="-";
+                    $date_create_update.=date("m");
+                    $date_create_update.="-";
+                    $date_create_update.=date("d");
 
-                if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
-                  $control_data=1;
-                  $notificacoes[$a]['barra_data']=1;
-                }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
-                  $control_data=2;
-                  $notificacoes[$a]['barra_data']=2;
-                  }
+                    if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
+                      $control_data=1;
+                      $notificacoes[$a]['barra_data']=1;
+                    }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
+                      $control_data=2;
+                      $notificacoes[$a]['barra_data']=2;
+                      }
 
 
 
-                  //dd($key);
+                      //dd($key);
 
-                  switch ($key->id_action_notification) {
-                   case 1:
-                      $notificacoes[$a]['notificacao']=$key->nome_causador;
-                      $notificacoes[$a]['notificacao'].=" ";
-                      $notificacoes[$a]['notificacao'].=$key->apelido_causador;
-                      $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
-                      $notificacoes[$a]['tipo']=1;
-                      $notificacoes[$a]['id']=$key->identificador_id_destino;
-                      $notificacoes[$a]['link']=$key->link;
-                      break;
-                   case 2:
-                     $notificacoes[$a]['notificacao']=$key->nome_causador;
-                     $notificacoes[$a]['notificacao'].=" ";
-                     $notificacoes[$a]['notificacao'].=$key->apelido_causador;
-                     $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
-                      $notificacoes[$a]['tipo']=2;
-                      $notificacoes[$a]['id']=$key->identificador_id_destino;
-                      $notificacoes[$a]['link']=$key->link;
-                      break;
-                   case 3:
-                   $notificacoes[$a]['notificacao']=$key->nome_causador;
-                   $notificacoes[$a]['notificacao'].=" ";
-                   $notificacoes[$a]['notificacao'].=$key->apelido_causador;
-                      $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
-                      $notificacoes[$a]['tipo']=3;
-                      $notificacoes[$a]['id']=$key->identificador_id_destino;
-                      break;
-                   case 4:
-                              $notificacoes[$a]['notificacao']=$key->nome_causador;
-                              $notificacoes[$a]['notificacao'].=" ";
-                              $notificacoes[$a]['notificacao'].=$key->apelido_causador;
-                               $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
-                               $notificacoes[$a]['notificacao'].=$key->tipo_pedido_relac;
-                               $notificacoes[$a]['tipo']=4;
-                               $notificacoes[$a]['id']=$key->link1_destino;
-                       break;
-                   case 5:
-                   $notificacoes[$a]['notificacao']=$key->nome_causador;
-                   $notificacoes[$a]['notificacao'].=" ";
-                   $notificacoes[$a]['notificacao'].=$key->apelido_causador;
-                   $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                   $notificacoes[$a]['tipo']=5;
-                   $notificacoes[$a]['id']=$key->identificador_id_destino;
-                   $notificacoes[$a]['link']=$key->link;
-                       break;
-                   case 6:
-                   $notificacoes[$a]['notificacao']=$key->nome_causador;
-                   $notificacoes[$a]['notificacao'].=" ";
-                   $notificacoes[$a]['notificacao'].=$key->apelido_causador;
-                   $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
-                       $notificacoes[$a]['tipo']=6;
-                       $notificacoes[$a]['id']=$key->identificador_id_destino;
-                       $notificacoes[$a]['link']=$key->link;
-                       break;
-                   case 7:
-                   $notificacoes[$a]['notificacao']=$key->nome_causador;
-                   $notificacoes[$a]['notificacao'].=" ";
-                   $notificacoes[$a]['notificacao'].=$key->apelido_causador;
-                    $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
-                    $notificacoes[$a]['tipo']=7;
-                    $notificacoes[$a]['id']=$key->link1_destino;
-                       break;
-                   case 8:
-                       $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
-                       $notificacoes[$a]['tipo']=8;
-                       $notificacoes[$a]['id']=$key->identificador_id_destino;
-                       $notificacoes[$a]['link']=$key->link;
-                       break;
-                   case 9:
-                               $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
-                               $notificacoes[$a]['tipo']=9;
-                               $notificacoes[$a]['id']=$key->link1_destino;
-                       break;
-                   case 10:
-                   $notificacoes[$a]['notificacao']=$key->nome_causador;
-                   $notificacoes[$a]['notificacao'].=" ";
-                   $notificacoes[$a]['notificacao'].=$key->apelido_causador;
-                   $notificacoes[$a]['notificacao'].=" Pediu que você page";
-                   $notificacoes[$a]['tipo']=10;
-                   $notificacoes[$a]['id']=$key->link1_destino;
-                       break;
-                       case 11:
-                               if ($key->causador_id == $key->conta_id){
-                                   $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
-                                   $notificacoes[$a]['notificacao'].=$key->nome_destino;
-                                   $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
-                               }else {
-                                 $notificacoes[$a]['notificacao']=$key->nome_causador;
-                                 $notificacoes[$a]['notificacao'].=" ";
-                                 $notificacoes[$a]['notificacao'].=$key->apelido_causador;
-                                 $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
-                                 $notificacoes[$a]['notificacao'].=$key->nome_destino;
-                                 $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
-                               }
-                               $notificacoes[$a]['tipo']=11;
-                               $notificacoes[$a]['id']=$key->causador_id ;
-
+                      switch ($key->id_action_notification) {
+                       case 1:
+                          $notificacoes[$a]['notificacao']=$key->nome_causador;
+                          $notificacoes[$a]['notificacao'].=" ";
+                          $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                          $notificacoes[$a]['tipo']=1;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 2:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                         $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                          $notificacoes[$a]['tipo']=2;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 3:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          $notificacoes[$a]['tipo']=3;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          break;
+                       case 4:
+                                  $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                  $notificacoes[$a]['notificacao'].=" ";
+                                  $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                   $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                                   $notificacoes[$a]['notificacao'].=$key->tipo_pedido_relac;
+                                   $notificacoes[$a]['tipo']=4;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
                            break;
-
-                           case 12:
-                           $notificacoes[$a]['notificacao']=$key->nome_causador;
-                           $notificacoes[$a]['notificacao'].=" ";
-                           $notificacoes[$a]['notificacao'].=$key->apelido_causador;
-                           $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
-                                   $notificacoes[$a]['notificacao'].=$key->nome_destino;
-                                   $notificacoes[$a]['notificacao'].=" '.";
-                                   $notificacoes[$a]['tipo']=12;
-                                   $notificacoes[$a]['id']=$key->causador_id;
-                                   $notificacoes[$a]['id1']=$key->notify_id_aux;
+                       case 5:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                       $notificacoes[$a]['tipo']=5;
+                       $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 6:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                           $notificacoes[$a]['tipo']=6;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 7:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                        $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                        $notificacoes[$a]['tipo']=7;
+                        $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 8:
+                           $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                           $notificacoes[$a]['tipo']=8;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 9:
+                                   $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+                                   $notificacoes[$a]['tipo']=9;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 10:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" Pediu que você page";
+                       $notificacoes[$a]['tipo']=10;
+                       $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                           case 11:
+                                   if ($key->causador_id == $key->conta_id){
+                                       $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }else {
+                                     $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                     $notificacoes[$a]['notificacao'].=" ";
+                                     $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                     $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
+                                     $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                     $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }
+                                   $notificacoes[$a]['tipo']=11;
+                                   $notificacoes[$a]['id']=$key->causador_id ;
 
                                break;
 
-                               case 13:
-                                       if ($key->causador_id == $key->conta_id){
-                                           $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
-                                           $notificacoes[$a]['notificacao'].=$key->nome_destino;
-                                           $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
-                                       }else {
-                                         $notificacoes[$a]['notificacao']=$key->nome_causador;
-                                         $notificacoes[$a]['notificacao'].=" ";
-                                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
-                                         $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
-                                         $notificacoes[$a]['notificacao'].=$key->nome_destino;
-                                         $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
-                                       }
-                                       $notificacoes[$a]['tipo']=13;
+                               case 12:
+                               $notificacoes[$a]['notificacao']=$key->nome_causador;
+                               $notificacoes[$a]['notificacao'].=" ";
+                               $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                               $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" '.";
+                                       $notificacoes[$a]['tipo']=12;
                                        $notificacoes[$a]['id']=$key->causador_id;
-                                       $notificacoes[$a]['link']=$key->link;
-
+                                       $notificacoes[$a]['id1']=$key->notify_id_aux;
 
                                    break;
 
-                                 }
+                                   case 13:
+                                           if ($key->causador_id == $key->conta_id){
+                                               $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
+                                               $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                               $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }else {
+                                             $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                             $notificacoes[$a]['notificacao'].=" ";
+                                             $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                             $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
+                                             $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                             $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }
+                                           $notificacoes[$a]['tipo']=13;
+                                           $notificacoes[$a]['id']=$key->causador_id;
+                                           $notificacoes[$a]['link']=$key->link;
 
-                 $notificacoes[$a]['foto']=$key->foto_causador;
-                 $notificacoes[$a]['v']=$key->tipo_causador_identify;
-                  if ($key->id_state_notification == 2) {
-                    $notificacoes_count++;
-                    $notificacoes[$a]['state_notification']=2;
-                  }else {
-                    $notificacoes[$a]['state_notification']=1;
-                  }
-                  $a++;
+
+                                       break;
+
+                                     }
+
+                     $notificacoes[$a]['foto']=$key->foto_causador;
+                     $notificacoes[$a]['v']=$key->tipo_causador_identify;
+                      if ($key->id_state_notification == 2) {
+                        $notificacoes_count++;
+                        $notificacoes[$a]['state_notification']=2;
+                      }else {
+                        $notificacoes[$a]['state_notification']=1;
+                      }
+                      $a++;
+                    }
+              }
+              }
+              dd($notificacoes);
+              return $notificacoes;
+        }
+        public function Notifications_pedido_final()
+        {
+              $conta=Auth::user()->conta_id;
+            //  dd($conta->conta_id);
+              $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
+              //dd($control);$control[0]->
+              $notificacoes=array();
+              $notificacoes_count=0;
+              $a=0;
+              $control_data=0;
+              if (sizeof($control)>0) {
+                foreach ($control as $key) {
+                  if($key->id_state_notification!= 3){
+
+                    $notificacoes[$a]['id1']=$key->notification_id;
+                    $aux_divisão_data = explode(' ', $key->created_at);
+                    $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
+                    $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
+                    $notificacoes[$a]['barra_data']=0;
+
+                    $date_create_update=date("Y");
+                    $date_create_update.="-";
+                    $date_create_update.=date("m");
+                    $date_create_update.="-";
+                    $date_create_update.=date("d");
+
+                    if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
+                      $control_data=1;
+                      $notificacoes[$a]['barra_data']=1;
+                    }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
+                      $control_data=2;
+                      $notificacoes[$a]['barra_data']=2;
+                      }
+
+
+
+                      //dd($key);
+
+                      switch ($key->id_action_notification) {
+                       case 1:
+                          $notificacoes[$a]['notificacao']=$key->nome_causador;
+                          $notificacoes[$a]['notificacao'].=" ";
+                          $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                          $notificacoes[$a]['tipo']=1;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 2:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                         $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                          $notificacoes[$a]['tipo']=2;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 3:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          $notificacoes[$a]['tipo']=3;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          break;
+                       case 4:
+                                  $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                  $notificacoes[$a]['notificacao'].=" ";
+                                  $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                   $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                                   $notificacoes[$a]['notificacao'].=$key->tipo_pedido_relac;
+                                   $notificacoes[$a]['tipo']=4;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 5:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                       $notificacoes[$a]['tipo']=5;
+                       $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 6:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                           $notificacoes[$a]['tipo']=6;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 7:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                        $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                        $notificacoes[$a]['tipo']=7;
+                        $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 8:
+                           $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                           $notificacoes[$a]['tipo']=8;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 9:
+                                   $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+                                   $notificacoes[$a]['tipo']=9;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 10:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" Pediu que você page";
+                       $notificacoes[$a]['tipo']=10;
+                       $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                           case 11:
+                                   if ($key->causador_id == $key->conta_id){
+                                       $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }else {
+                                     $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                     $notificacoes[$a]['notificacao'].=" ";
+                                     $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                     $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
+                                     $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                     $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }
+                                   $notificacoes[$a]['tipo']=11;
+                                   $notificacoes[$a]['id']=$key->causador_id ;
+
+                               break;
+
+                               case 12:
+                               $notificacoes[$a]['notificacao']=$key->nome_causador;
+                               $notificacoes[$a]['notificacao'].=" ";
+                               $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                               $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" '.";
+                                       $notificacoes[$a]['tipo']=12;
+                                       $notificacoes[$a]['id']=$key->causador_id;
+                                       $notificacoes[$a]['id1']=$key->notify_id_aux;
+
+                                   break;
+
+                                   case 13:
+                                           if ($key->causador_id == $key->conta_id){
+                                               $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
+                                               $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                               $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }else {
+                                             $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                             $notificacoes[$a]['notificacao'].=" ";
+                                             $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                             $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
+                                             $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                             $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }
+                                           $notificacoes[$a]['tipo']=13;
+                                           $notificacoes[$a]['id']=$key->causador_id;
+                                           $notificacoes[$a]['link']=$key->link;
+
+
+                                       break;
+
+                                     }
+
+                     $notificacoes[$a]['foto']=$key->foto_causador;
+                     $notificacoes[$a]['v']=$key->tipo_causador_identify;
+                      if ($key->id_state_notification == 2) {
+                        $notificacoes_count++;
+                        $notificacoes[$a]['state_notification']=2;
+                      }else {
+                        $notificacoes[$a]['state_notification']=1;
+                      }
+                      $a++;
+                    }
+              }
+              }
+              dd($notificacoes);
+              return $notificacoes;
+        }
+        public function Notifications_request_response_final()
+        {
+              $conta=Auth::user()->conta_id;
+            //  dd($conta->conta_id);
+              $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
+              //dd($control);$control[0]->
+              $notificacoes=array();
+              $notificacoes_count=0;
+              $a=0;
+              $control_data=0;
+              if (sizeof($control)>0) {
+                foreach ($control as $key) {
+                  if($key->id_state_notification!= 3){
+
+                    $notificacoes[$a]['id1']=$key->notification_id;
+                    $aux_divisão_data = explode(' ', $key->created_at);
+                    $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
+                    $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
+                    $notificacoes[$a]['barra_data']=0;
+
+                    $date_create_update=date("Y");
+                    $date_create_update.="-";
+                    $date_create_update.=date("m");
+                    $date_create_update.="-";
+                    $date_create_update.=date("d");
+
+                    if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
+                      $control_data=1;
+                      $notificacoes[$a]['barra_data']=1;
+                    }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
+                      $control_data=2;
+                      $notificacoes[$a]['barra_data']=2;
+                      }
+
+
+
+                      //dd($key);
+
+                      switch ($key->id_action_notification) {
+                       case 1:
+                          $notificacoes[$a]['notificacao']=$key->nome_causador;
+                          $notificacoes[$a]['notificacao'].=" ";
+                          $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                          $notificacoes[$a]['tipo']=1;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 2:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                         $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                          $notificacoes[$a]['tipo']=2;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 3:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          $notificacoes[$a]['tipo']=3;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          break;
+                       case 4:
+                                  $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                  $notificacoes[$a]['notificacao'].=" ";
+                                  $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                   $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                                   $notificacoes[$a]['notificacao'].=$key->tipo_pedido_relac;
+                                   $notificacoes[$a]['tipo']=4;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 5:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                       $notificacoes[$a]['tipo']=5;
+                       $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 6:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                           $notificacoes[$a]['tipo']=6;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 7:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                        $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                        $notificacoes[$a]['tipo']=7;
+                        $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 8:
+                           $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                           $notificacoes[$a]['tipo']=8;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 9:
+                                   $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+                                   $notificacoes[$a]['tipo']=9;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 10:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" Pediu que você page";
+                       $notificacoes[$a]['tipo']=10;
+                       $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                           case 11:
+                                   if ($key->causador_id == $key->conta_id){
+                                       $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }else {
+                                     $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                     $notificacoes[$a]['notificacao'].=" ";
+                                     $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                     $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
+                                     $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                     $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }
+                                   $notificacoes[$a]['tipo']=11;
+                                   $notificacoes[$a]['id']=$key->causador_id ;
+
+                               break;
+
+                               case 12:
+                               $notificacoes[$a]['notificacao']=$key->nome_causador;
+                               $notificacoes[$a]['notificacao'].=" ";
+                               $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                               $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" '.";
+                                       $notificacoes[$a]['tipo']=12;
+                                       $notificacoes[$a]['id']=$key->causador_id;
+                                       $notificacoes[$a]['id1']=$key->notify_id_aux;
+
+                                   break;
+
+                                   case 13:
+                                           if ($key->causador_id == $key->conta_id){
+                                               $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
+                                               $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                               $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }else {
+                                             $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                             $notificacoes[$a]['notificacao'].=" ";
+                                             $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                             $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
+                                             $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                             $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }
+                                           $notificacoes[$a]['tipo']=13;
+                                           $notificacoes[$a]['id']=$key->causador_id;
+                                           $notificacoes[$a]['link']=$key->link;
+
+
+                                       break;
+
+                                     }
+
+                     $notificacoes[$a]['foto']=$key->foto_causador;
+                     $notificacoes[$a]['v']=$key->tipo_causador_identify;
+                      if ($key->id_state_notification == 2) {
+                        $notificacoes_count++;
+                        $notificacoes[$a]['state_notification']=2;
+                      }else {
+                        $notificacoes[$a]['state_notification']=1;
+                      }
+                      $a++;
+                    }
+              }
+              }
+              dd($notificacoes);
+              return $notificacoes;
+        }
+        public function Notifications_page_creat_final()
+        {
+              $conta=Auth::user()->conta_id;
+            //  dd($conta->conta_id);
+              $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
+              //dd($control);$control[0]->
+              $notificacoes=array();
+              $notificacoes_count=0;
+              $a=0;
+              $control_data=0;
+              if (sizeof($control)>0) {
+                foreach ($control as $key) {
+                  if($key->id_state_notification!= 3){
+
+                    $notificacoes[$a]['id1']=$key->notification_id;
+                    $aux_divisão_data = explode(' ', $key->created_at);
+                    $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
+                    $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
+                    $notificacoes[$a]['barra_data']=0;
+
+                    $date_create_update=date("Y");
+                    $date_create_update.="-";
+                    $date_create_update.=date("m");
+                    $date_create_update.="-";
+                    $date_create_update.=date("d");
+
+                    if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
+                      $control_data=1;
+                      $notificacoes[$a]['barra_data']=1;
+                    }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
+                      $control_data=2;
+                      $notificacoes[$a]['barra_data']=2;
+                      }
+
+
+
+                      //dd($key);
+
+                      switch ($key->id_action_notification) {
+                       case 1:
+                          $notificacoes[$a]['notificacao']=$key->nome_causador;
+                          $notificacoes[$a]['notificacao'].=" ";
+                          $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                          $notificacoes[$a]['tipo']=1;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 2:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                         $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                          $notificacoes[$a]['tipo']=2;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 3:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          $notificacoes[$a]['tipo']=3;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          break;
+                       case 4:
+                                  $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                  $notificacoes[$a]['notificacao'].=" ";
+                                  $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                   $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                                   $notificacoes[$a]['notificacao'].=$key->tipo_pedido_relac;
+                                   $notificacoes[$a]['tipo']=4;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 5:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                       $notificacoes[$a]['tipo']=5;
+                       $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 6:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                           $notificacoes[$a]['tipo']=6;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 7:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                        $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                        $notificacoes[$a]['tipo']=7;
+                        $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 8:
+                           $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                           $notificacoes[$a]['tipo']=8;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 9:
+                                   $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+                                   $notificacoes[$a]['tipo']=9;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 10:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" Pediu que você page";
+                       $notificacoes[$a]['tipo']=10;
+                       $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                           case 11:
+                                   if ($key->causador_id == $key->conta_id){
+                                       $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }else {
+                                     $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                     $notificacoes[$a]['notificacao'].=" ";
+                                     $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                     $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
+                                     $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                     $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }
+                                   $notificacoes[$a]['tipo']=11;
+                                   $notificacoes[$a]['id']=$key->causador_id ;
+
+                               break;
+
+                               case 12:
+                               $notificacoes[$a]['notificacao']=$key->nome_causador;
+                               $notificacoes[$a]['notificacao'].=" ";
+                               $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                               $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" '.";
+                                       $notificacoes[$a]['tipo']=12;
+                                       $notificacoes[$a]['id']=$key->causador_id;
+                                       $notificacoes[$a]['id1']=$key->notify_id_aux;
+
+                                   break;
+
+                                   case 13:
+                                           if ($key->causador_id == $key->conta_id){
+                                               $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
+                                               $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                               $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }else {
+                                             $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                             $notificacoes[$a]['notificacao'].=" ";
+                                             $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                             $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
+                                             $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                             $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }
+                                           $notificacoes[$a]['tipo']=13;
+                                           $notificacoes[$a]['id']=$key->causador_id;
+                                           $notificacoes[$a]['link']=$key->link;
+
+
+                                       break;
+
+                                     }
+
+                     $notificacoes[$a]['foto']=$key->foto_causador;
+                     $notificacoes[$a]['v']=$key->tipo_causador_identify;
+                      if ($key->id_state_notification == 2) {
+                        $notificacoes_count++;
+                        $notificacoes[$a]['state_notification']=2;
+                      }else {
+                        $notificacoes[$a]['state_notification']=1;
+                      }
+                      $a++;
+                    }
+              }
+              }
+              dd($notificacoes);
+              return $notificacoes;
+        }
+        public function Notifications_page_denied_final()
+        {
+              $conta=Auth::user()->conta_id;
+            //  dd($conta->conta_id);
+              $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
+              //dd($control);$control[0]->
+              $notificacoes=array();
+              $notificacoes_count=0;
+              $a=0;
+              $control_data=0;
+              if (sizeof($control)>0) {
+                foreach ($control as $key) {
+                  if($key->id_state_notification!= 3){
+
+                    $notificacoes[$a]['id1']=$key->notification_id;
+                    $aux_divisão_data = explode(' ', $key->created_at);
+                    $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
+                    $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
+                    $notificacoes[$a]['barra_data']=0;
+
+                    $date_create_update=date("Y");
+                    $date_create_update.="-";
+                    $date_create_update.=date("m");
+                    $date_create_update.="-";
+                    $date_create_update.=date("d");
+
+                    if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
+                      $control_data=1;
+                      $notificacoes[$a]['barra_data']=1;
+                    }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
+                      $control_data=2;
+                      $notificacoes[$a]['barra_data']=2;
+                      }
+
+
+
+                      //dd($key);
+
+                      switch ($key->id_action_notification) {
+                       case 1:
+                          $notificacoes[$a]['notificacao']=$key->nome_causador;
+                          $notificacoes[$a]['notificacao'].=" ";
+                          $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                          $notificacoes[$a]['tipo']=1;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 2:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                         $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                          $notificacoes[$a]['tipo']=2;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 3:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          $notificacoes[$a]['tipo']=3;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          break;
+                       case 4:
+                                  $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                  $notificacoes[$a]['notificacao'].=" ";
+                                  $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                   $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                                   $notificacoes[$a]['notificacao'].=$key->tipo_pedido_relac;
+                                   $notificacoes[$a]['tipo']=4;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 5:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                       $notificacoes[$a]['tipo']=5;
+                       $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 6:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                           $notificacoes[$a]['tipo']=6;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 7:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                        $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                        $notificacoes[$a]['tipo']=7;
+                        $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 8:
+                           $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                           $notificacoes[$a]['tipo']=8;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 9:
+                                   $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+                                   $notificacoes[$a]['tipo']=9;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 10:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" Pediu que você page";
+                       $notificacoes[$a]['tipo']=10;
+                       $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                           case 11:
+                                   if ($key->causador_id == $key->conta_id){
+                                       $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }else {
+                                     $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                     $notificacoes[$a]['notificacao'].=" ";
+                                     $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                     $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
+                                     $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                     $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }
+                                   $notificacoes[$a]['tipo']=11;
+                                   $notificacoes[$a]['id']=$key->causador_id ;
+
+                               break;
+
+                               case 12:
+                               $notificacoes[$a]['notificacao']=$key->nome_causador;
+                               $notificacoes[$a]['notificacao'].=" ";
+                               $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                               $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" '.";
+                                       $notificacoes[$a]['tipo']=12;
+                                       $notificacoes[$a]['id']=$key->causador_id;
+                                       $notificacoes[$a]['id1']=$key->notify_id_aux;
+
+                                   break;
+
+                                   case 13:
+                                           if ($key->causador_id == $key->conta_id){
+                                               $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
+                                               $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                               $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }else {
+                                             $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                             $notificacoes[$a]['notificacao'].=" ";
+                                             $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                             $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
+                                             $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                             $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }
+                                           $notificacoes[$a]['tipo']=13;
+                                           $notificacoes[$a]['id']=$key->causador_id;
+                                           $notificacoes[$a]['link']=$key->link;
+
+
+                                       break;
+
+                                     }
+
+                     $notificacoes[$a]['foto']=$key->foto_causador;
+                     $notificacoes[$a]['v']=$key->tipo_causador_identify;
+                      if ($key->id_state_notification == 2) {
+                        $notificacoes_count++;
+                        $notificacoes[$a]['state_notification']=2;
+                      }else {
+                        $notificacoes[$a]['state_notification']=1;
+                      }
+                      $a++;
+                    }
+              }
+              }
+              dd($notificacoes);
+              return $notificacoes;
+        }
+        public function Notifications_ask_to_cancel_delete_pagefinal()
+        {
+                $conta=Auth::user()->conta_id;
+              //  dd($conta->conta_id);
+                $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
+                //dd($control);$control[0]->
+                $notificacoes=array();
+                $notificacoes_count=0;
+                $a=0;
+                $control_data=0;
+                if (sizeof($control)>0) {
+                  foreach ($control as $key) {
+                    if($key->id_state_notification!= 3){
+
+                      $notificacoes[$a]['id1']=$key->notification_id;
+                      $aux_divisão_data = explode(' ', $key->created_at);
+                      $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
+                      $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
+                      $notificacoes[$a]['barra_data']=0;
+
+                      $date_create_update=date("Y");
+                      $date_create_update.="-";
+                      $date_create_update.=date("m");
+                      $date_create_update.="-";
+                      $date_create_update.=date("d");
+
+                      if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
+                        $control_data=1;
+                        $notificacoes[$a]['barra_data']=1;
+                      }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
+                        $control_data=2;
+                        $notificacoes[$a]['barra_data']=2;
+                        }
+
+
+
+                        //dd($key);
+
+                        switch ($key->id_action_notification) {
+                         case 1:
+                            $notificacoes[$a]['notificacao']=$key->nome_causador;
+                            $notificacoes[$a]['notificacao'].=" ";
+                            $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                            $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                            $notificacoes[$a]['tipo']=1;
+                            $notificacoes[$a]['id']=$key->identificador_id_destino;
+                            $notificacoes[$a]['link']=$key->link;
+                            break;
+                         case 2:
+                           $notificacoes[$a]['notificacao']=$key->nome_causador;
+                           $notificacoes[$a]['notificacao'].=" ";
+                           $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                           $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                            $notificacoes[$a]['tipo']=2;
+                            $notificacoes[$a]['id']=$key->identificador_id_destino;
+                            $notificacoes[$a]['link']=$key->link;
+                            break;
+                         case 3:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                            $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                            $notificacoes[$a]['tipo']=3;
+                            $notificacoes[$a]['id']=$key->identificador_id_destino;
+                            break;
+                         case 4:
+                                    $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                    $notificacoes[$a]['notificacao'].=" ";
+                                    $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                     $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                                     $notificacoes[$a]['notificacao'].=$key->tipo_pedido_relac;
+                                     $notificacoes[$a]['tipo']=4;
+                                     $notificacoes[$a]['id']=$key->link1_destino;
+                             break;
+                         case 5:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                         $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                         $notificacoes[$a]['tipo']=5;
+                         $notificacoes[$a]['id']=$key->identificador_id_destino;
+                         $notificacoes[$a]['link']=$key->link;
+                             break;
+                         case 6:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                         $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                             $notificacoes[$a]['tipo']=6;
+                             $notificacoes[$a]['id']=$key->identificador_id_destino;
+                             $notificacoes[$a]['link']=$key->link;
+                             break;
+                         case 7:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                          $notificacoes[$a]['tipo']=7;
+                          $notificacoes[$a]['id']=$key->link1_destino;
+                             break;
+                         case 8:
+                             $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                             $notificacoes[$a]['tipo']=8;
+                             $notificacoes[$a]['id']=$key->identificador_id_destino;
+                             $notificacoes[$a]['link']=$key->link;
+                             break;
+                         case 9:
+                                     $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+                                     $notificacoes[$a]['tipo']=9;
+                                     $notificacoes[$a]['id']=$key->link1_destino;
+                             break;
+                         case 10:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                         $notificacoes[$a]['notificacao'].=" Pediu que você page";
+                         $notificacoes[$a]['tipo']=10;
+                         $notificacoes[$a]['id']=$key->link1_destino;
+                             break;
+                             case 11:
+                                     if ($key->causador_id == $key->conta_id){
+                                         $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
+                                         $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                         $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                     }else {
+                                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                       $notificacoes[$a]['notificacao'].=" ";
+                                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                       $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                     }
+                                     $notificacoes[$a]['tipo']=11;
+                                     $notificacoes[$a]['id']=$key->causador_id ;
+
+                                 break;
+
+                                 case 12:
+                                 $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                 $notificacoes[$a]['notificacao'].=" ";
+                                 $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                 $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
+                                         $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                         $notificacoes[$a]['notificacao'].=" '.";
+                                         $notificacoes[$a]['tipo']=12;
+                                         $notificacoes[$a]['id']=$key->causador_id;
+                                         $notificacoes[$a]['id1']=$key->notify_id_aux;
+
+                                     break;
+
+                                     case 13:
+                                             if ($key->causador_id == $key->conta_id){
+                                                 $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
+                                                 $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                                 $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                             }else {
+                                               $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                               $notificacoes[$a]['notificacao'].=" ";
+                                               $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                               $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
+                                               $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                               $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                             }
+                                             $notificacoes[$a]['tipo']=13;
+                                             $notificacoes[$a]['id']=$key->causador_id;
+                                             $notificacoes[$a]['link']=$key->link;
+
+
+                                         break;
+
+                                       }
+
+                       $notificacoes[$a]['foto']=$key->foto_causador;
+                       $notificacoes[$a]['v']=$key->tipo_causador_identify;
+                        if ($key->id_state_notification == 2) {
+                          $notificacoes_count++;
+                          $notificacoes[$a]['state_notification']=2;
+                        }else {
+                          $notificacoes[$a]['state_notification']=1;
+                        }
+                        $a++;
+                      }
                 }
-          }
-          }
-          dd($notificacoes);
-          return $notificacoes;
+                }
+                dd($notificacoes);
+                return $notificacoes;
+        }
+        public function Notifications_delete_page_final()
+        {
+              $conta=Auth::user()->conta_id;
+            //  dd($conta->conta_id);
+              $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
+              //dd($control);$control[0]->
+              $notificacoes=array();
+              $notificacoes_count=0;
+              $a=0;
+              $control_data=0;
+              if (sizeof($control)>0) {
+                foreach ($control as $key) {
+                  if($key->id_state_notification!= 3){
+
+                    $notificacoes[$a]['id1']=$key->notification_id;
+                    $aux_divisão_data = explode(' ', $key->created_at);
+                    $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
+                    $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
+                    $notificacoes[$a]['barra_data']=0;
+
+                    $date_create_update=date("Y");
+                    $date_create_update.="-";
+                    $date_create_update.=date("m");
+                    $date_create_update.="-";
+                    $date_create_update.=date("d");
+
+                    if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
+                      $control_data=1;
+                      $notificacoes[$a]['barra_data']=1;
+                    }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
+                      $control_data=2;
+                      $notificacoes[$a]['barra_data']=2;
+                      }
+
+
+
+                      //dd($key);
+
+                      switch ($key->id_action_notification) {
+                       case 1:
+                          $notificacoes[$a]['notificacao']=$key->nome_causador;
+                          $notificacoes[$a]['notificacao'].=" ";
+                          $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                          $notificacoes[$a]['tipo']=1;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 2:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                         $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                          $notificacoes[$a]['tipo']=2;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 3:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          $notificacoes[$a]['tipo']=3;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          break;
+                       case 4:
+                                  $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                  $notificacoes[$a]['notificacao'].=" ";
+                                  $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                   $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                                   $notificacoes[$a]['notificacao'].=$key->tipo_pedido_relac;
+                                   $notificacoes[$a]['tipo']=4;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 5:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                       $notificacoes[$a]['tipo']=5;
+                       $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 6:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                           $notificacoes[$a]['tipo']=6;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 7:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                        $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                        $notificacoes[$a]['tipo']=7;
+                        $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 8:
+                           $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                           $notificacoes[$a]['tipo']=8;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 9:
+                                   $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+                                   $notificacoes[$a]['tipo']=9;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 10:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" Pediu que você page";
+                       $notificacoes[$a]['tipo']=10;
+                       $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                           case 11:
+                                   if ($key->causador_id == $key->conta_id){
+                                       $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }else {
+                                     $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                     $notificacoes[$a]['notificacao'].=" ";
+                                     $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                     $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
+                                     $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                     $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }
+                                   $notificacoes[$a]['tipo']=11;
+                                   $notificacoes[$a]['id']=$key->causador_id ;
+
+                               break;
+
+                               case 12:
+                               $notificacoes[$a]['notificacao']=$key->nome_causador;
+                               $notificacoes[$a]['notificacao'].=" ";
+                               $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                               $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" '.";
+                                       $notificacoes[$a]['tipo']=12;
+                                       $notificacoes[$a]['id']=$key->causador_id;
+                                       $notificacoes[$a]['id1']=$key->notify_id_aux;
+
+                                   break;
+
+                                   case 13:
+                                           if ($key->causador_id == $key->conta_id){
+                                               $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
+                                               $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                               $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }else {
+                                             $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                             $notificacoes[$a]['notificacao'].=" ";
+                                             $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                             $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
+                                             $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                             $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }
+                                           $notificacoes[$a]['tipo']=13;
+                                           $notificacoes[$a]['id']=$key->causador_id;
+                                           $notificacoes[$a]['link']=$key->link;
+
+
+                                       break;
+
+                                     }
+
+                     $notificacoes[$a]['foto']=$key->foto_causador;
+                     $notificacoes[$a]['v']=$key->tipo_causador_identify;
+                      if ($key->id_state_notification == 2) {
+                        $notificacoes_count++;
+                        $notificacoes[$a]['state_notification']=2;
+                      }else {
+                        $notificacoes[$a]['state_notification']=1;
+                      }
+                      $a++;
+                    }
+              }
+              }
+              dd($notificacoes);
+              return $notificacoes;
+        }
+        public function Notifications_ask_the_other_page_final()
+        {
+              $conta=Auth::user()->conta_id;
+            //  dd($conta->conta_id);
+              $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
+              //dd($control);$control[0]->
+              $notificacoes=array();
+              $notificacoes_count=0;
+              $a=0;
+              $control_data=0;
+              if (sizeof($control)>0) {
+                foreach ($control as $key) {
+                  if($key->id_state_notification!= 3){
+
+                    $notificacoes[$a]['id1']=$key->notification_id;
+                    $aux_divisão_data = explode(' ', $key->created_at);
+                    $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
+                    $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
+                    $notificacoes[$a]['barra_data']=0;
+
+                    $date_create_update=date("Y");
+                    $date_create_update.="-";
+                    $date_create_update.=date("m");
+                    $date_create_update.="-";
+                    $date_create_update.=date("d");
+
+                    if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
+                      $control_data=1;
+                      $notificacoes[$a]['barra_data']=1;
+                    }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
+                      $control_data=2;
+                      $notificacoes[$a]['barra_data']=2;
+                      }
+
+
+
+                      //dd($key);
+
+                      switch ($key->id_action_notification) {
+                       case 1:
+                          $notificacoes[$a]['notificacao']=$key->nome_causador;
+                          $notificacoes[$a]['notificacao'].=" ";
+                          $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                          $notificacoes[$a]['tipo']=1;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 2:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                         $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                          $notificacoes[$a]['tipo']=2;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 3:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          $notificacoes[$a]['tipo']=3;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          break;
+                       case 4:
+                                  $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                  $notificacoes[$a]['notificacao'].=" ";
+                                  $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                   $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                                   $notificacoes[$a]['notificacao'].=$key->tipo_pedido_relac;
+                                   $notificacoes[$a]['tipo']=4;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 5:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                       $notificacoes[$a]['tipo']=5;
+                       $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 6:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                           $notificacoes[$a]['tipo']=6;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 7:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                        $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                        $notificacoes[$a]['tipo']=7;
+                        $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 8:
+                           $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                           $notificacoes[$a]['tipo']=8;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 9:
+                                   $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+                                   $notificacoes[$a]['tipo']=9;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 10:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" Pediu que você page";
+                       $notificacoes[$a]['tipo']=10;
+                       $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                           case 11:
+                                   if ($key->causador_id == $key->conta_id){
+                                       $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }else {
+                                     $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                     $notificacoes[$a]['notificacao'].=" ";
+                                     $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                     $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
+                                     $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                     $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }
+                                   $notificacoes[$a]['tipo']=11;
+                                   $notificacoes[$a]['id']=$key->causador_id ;
+
+                               break;
+
+                               case 12:
+                               $notificacoes[$a]['notificacao']=$key->nome_causador;
+                               $notificacoes[$a]['notificacao'].=" ";
+                               $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                               $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" '.";
+                                       $notificacoes[$a]['tipo']=12;
+                                       $notificacoes[$a]['id']=$key->causador_id;
+                                       $notificacoes[$a]['id1']=$key->notify_id_aux;
+
+                                   break;
+
+                                   case 13:
+                                           if ($key->causador_id == $key->conta_id){
+                                               $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
+                                               $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                               $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }else {
+                                             $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                             $notificacoes[$a]['notificacao'].=" ";
+                                             $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                             $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
+                                             $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                             $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }
+                                           $notificacoes[$a]['tipo']=13;
+                                           $notificacoes[$a]['id']=$key->causador_id;
+                                           $notificacoes[$a]['link']=$key->link;
+
+
+                                       break;
+
+                                     }
+
+                     $notificacoes[$a]['foto']=$key->foto_causador;
+                     $notificacoes[$a]['v']=$key->tipo_causador_identify;
+                      if ($key->id_state_notification == 2) {
+                        $notificacoes_count++;
+                        $notificacoes[$a]['state_notification']=2;
+                      }else {
+                        $notificacoes[$a]['state_notification']=1;
+                      }
+                      $a++;
+                    }
+              }
+              }
+              dd($notificacoes);
+              return $notificacoes;
+        }
+        public function Notifications_cancel_delete_page_final()
+        {
+              $conta=Auth::user()->conta_id;
+            //  dd($conta->conta_id);
+              $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
+              //dd($control);$control[0]->
+              $notificacoes=array();
+              $notificacoes_count=0;
+              $a=0;
+              $control_data=0;
+              if (sizeof($control)>0) {
+                foreach ($control as $key) {
+                  if($key->id_state_notification!= 3){
+
+                    $notificacoes[$a]['id1']=$key->notification_id;
+                    $aux_divisão_data = explode(' ', $key->created_at);
+                    $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
+                    $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
+                    $notificacoes[$a]['barra_data']=0;
+
+                    $date_create_update=date("Y");
+                    $date_create_update.="-";
+                    $date_create_update.=date("m");
+                    $date_create_update.="-";
+                    $date_create_update.=date("d");
+
+                    if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
+                      $control_data=1;
+                      $notificacoes[$a]['barra_data']=1;
+                    }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
+                      $control_data=2;
+                      $notificacoes[$a]['barra_data']=2;
+                      }
+
+
+
+                      //dd($key);
+
+                      switch ($key->id_action_notification) {
+                       case 1:
+                          $notificacoes[$a]['notificacao']=$key->nome_causador;
+                          $notificacoes[$a]['notificacao'].=" ";
+                          $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                          $notificacoes[$a]['tipo']=1;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 2:
+                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                         $notificacoes[$a]['notificacao'].=" ";
+                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                         $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                          $notificacoes[$a]['tipo']=2;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          $notificacoes[$a]['link']=$key->link;
+                          break;
+                       case 3:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                          $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                          $notificacoes[$a]['tipo']=3;
+                          $notificacoes[$a]['id']=$key->identificador_id_destino;
+                          break;
+                       case 4:
+                                  $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                  $notificacoes[$a]['notificacao'].=" ";
+                                  $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                   $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                                   $notificacoes[$a]['notificacao'].=$key->tipo_pedido_relac;
+                                   $notificacoes[$a]['tipo']=4;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 5:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                       $notificacoes[$a]['tipo']=5;
+                       $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 6:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                           $notificacoes[$a]['tipo']=6;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 7:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                        $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                        $notificacoes[$a]['tipo']=7;
+                        $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 8:
+                           $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                           $notificacoes[$a]['tipo']=8;
+                           $notificacoes[$a]['id']=$key->identificador_id_destino;
+                           $notificacoes[$a]['link']=$key->link;
+                           break;
+                       case 9:
+                                   $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+                                   $notificacoes[$a]['tipo']=9;
+                                   $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                       case 10:
+                       $notificacoes[$a]['notificacao']=$key->nome_causador;
+                       $notificacoes[$a]['notificacao'].=" ";
+                       $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                       $notificacoes[$a]['notificacao'].=" Pediu que você page";
+                       $notificacoes[$a]['tipo']=10;
+                       $notificacoes[$a]['id']=$key->link1_destino;
+                           break;
+                           case 11:
+                                   if ($key->causador_id == $key->conta_id){
+                                       $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }else {
+                                     $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                     $notificacoes[$a]['notificacao'].=" ";
+                                     $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                     $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
+                                     $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                     $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                                   }
+                                   $notificacoes[$a]['tipo']=11;
+                                   $notificacoes[$a]['id']=$key->causador_id ;
+
+                               break;
+
+                               case 12:
+                               $notificacoes[$a]['notificacao']=$key->nome_causador;
+                               $notificacoes[$a]['notificacao'].=" ";
+                               $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                               $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
+                                       $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                       $notificacoes[$a]['notificacao'].=" '.";
+                                       $notificacoes[$a]['tipo']=12;
+                                       $notificacoes[$a]['id']=$key->causador_id;
+                                       $notificacoes[$a]['id1']=$key->notify_id_aux;
+
+                                   break;
+
+                                   case 13:
+                                           if ($key->causador_id == $key->conta_id){
+                                               $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
+                                               $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                               $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }else {
+                                             $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                             $notificacoes[$a]['notificacao'].=" ";
+                                             $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                             $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
+                                             $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                             $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                           }
+                                           $notificacoes[$a]['tipo']=13;
+                                           $notificacoes[$a]['id']=$key->causador_id;
+                                           $notificacoes[$a]['link']=$key->link;
+
+
+                                       break;
+
+                                     }
+
+                     $notificacoes[$a]['foto']=$key->foto_causador;
+                     $notificacoes[$a]['v']=$key->tipo_causador_identify;
+                      if ($key->id_state_notification == 2) {
+                        $notificacoes_count++;
+                        $notificacoes[$a]['state_notification']=2;
+                      }else {
+                        $notificacoes[$a]['state_notification']=1;
+                      }
+                      $a++;
+                    }
+              }
+              }
+              dd($notificacoes);
+              return $notificacoes;
         }
 
 
