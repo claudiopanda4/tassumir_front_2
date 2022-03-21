@@ -1696,6 +1696,9 @@ public function dados_comment($key){
 
 
     public function comentar(Request $request){
+
+      //$ordenar = ['nice'];
+
       $post= DB::select('select * from posts where post_id = ?', [$request->id]);
       $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
       $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
@@ -1818,7 +1821,7 @@ public function dados_comment($key){
               }
 
        return response()->json($resposta);
-          }
+     }
 
     public function defaultDate(){
         $account_name = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
@@ -1870,7 +1873,7 @@ public function dados_comment($key){
 
 
    public function sendMsgToPhone($takePhone,$code){
-    
+
          $response = Http::post('http://52.30.114.86:8080/mimosms/v1/message/send?token=a80fed69fcde464b35cee02ae7a172aa918235239 ', [
              'sender'=>'Tassumir',
              'recipients' => $takePhone,
@@ -2082,7 +2085,7 @@ public function dados_comment($key){
 
            $response = $this->return_view_on_error($phoneReceived,$emailReceived,$nome,$apelido,$data_nascimento,$nacional,$sexo,$password);
             return $response;
-            
+
         }
 
         }catch(\Exception $error){

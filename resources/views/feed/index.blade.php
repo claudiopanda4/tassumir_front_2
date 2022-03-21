@@ -28,16 +28,16 @@
                                 </div>
                                 <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
                                     <img class="img-back-stories center" src="{{asset('storage/img/page/') . '/' . $what_are_talking[$i]['file']}}">
-                              <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>                
+                              <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>
                                     <video controls class="video-post-dest">
                                         <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
                                         <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
-                                    </video> 
+                                    </video>
                                     @if( !($what_are_talking[$i]['foto_page'] == null) )
                                         <img class="img-full circle foto-page-video" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
                                     @else
                                         <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                    @endif   
+                                    @endif
                                 <?php else: ?>
                                         <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
                                 <?php endif ?>
@@ -129,7 +129,7 @@
                                 <h1 class="center">p</h1>
                             </div>
                         <?php endif ?>
-                        
+
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
@@ -455,7 +455,7 @@
                 } else {
                     id_full = id_full.split('|')[1];
                 }
-                
+
                 like(id, id_full)
             }
 
@@ -524,7 +524,7 @@
                   data: {'id': id, 'comment': c},
                    dataType: 'json',
                    success:function(response){
-                   console.log(response);
+                   //console.log(response);
                    var nome = '';
                    comment_qtd = parseInt(comment_qtd) + 1;
                    $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
@@ -659,7 +659,10 @@ function gostar(id){
          /*let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
          if (response == 1) {
            likes_qtd = parseInt(likes_qtd) + 1;
-           $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+           $("#likes-qtd-" + id).text((likes_qtd) + "
+
+
+           ");
          } else if (response == 2) {
            likes_qtd = parseInt(likes_qtd) - 1;
            if (likes_qtd >= 0) {
@@ -799,7 +802,7 @@ function gostar(id){
                     let url_link = "{{ route('couple.page1', 0) }}";
                         url_array = url_link.split('/');
                         url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/" + url_array[3] + "/" + value.uuid;
-                    if (value.foto != null) {                        
+                    if (value.foto != null) {
                     let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
                         $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }else{
@@ -861,26 +864,26 @@ function gostar(id){
                             let id_video_final = id_video[size_id_video - 1];
                             if (document.getElementById('video_' + id_video_final).paused) {
                                 if (document.getElementById('play_button_' + id_video_final)) {
-                                    document.getElementById('play_button_' + id_video_final).classList.remove('invisible');    
+                                    document.getElementById('play_button_' + id_video_final).classList.remove('invisible');
                                 } else if (document.getElementById('playbutton_' + id_video_final)) {
                                     document.getElementById('playbutton_' + id_video_final).classList.remove('invisible');
                                 }
-                                
+
                             }
                             console.log('paused ' + $("#video_" + id_video_final)[0].paused);
                             console.log('.HAVE_FUTURE_DATA ' + $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA);
                             console.log('readyState ' + $("#video_" + id_video_final)[0].readyState);
                             console.log('seeking ' + $("#video_" + id_video_final)[0].seeking);
                             console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);
-                            if ($("#video_" + id_video_final)[0].paused != true && 
+                            if ($("#video_" + id_video_final)[0].paused != true &&
                                 !$("#video_" + id_video_final)[0].seeking &&
-                                 $("#video_" + id_video_final)[0].currentTime > 0 && 
+                                 $("#video_" + id_video_final)[0].currentTime > 0 &&
                                  $("#video_" + id_video_final)[0].readyState >= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA) {
                                     $("#loader_icon_" + id_video_final).hide();
                             } else {
                                 if ($("#video_" + id_video_final)[0].readyState <= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA){
                                     $("#loader_icon_" + id_video_final).show();
-                                } 
+                                }
                             }
                         }
 
