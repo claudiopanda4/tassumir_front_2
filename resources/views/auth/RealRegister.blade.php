@@ -92,13 +92,14 @@
             </div>
             <span class="hidden" style="color:red;" id="erroApelido"> Insira o teu Apelido</span>
 
-            <input type="text" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="Data de Nascimento" data-mask="00/00/0000">
+            <!--<input type="text" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="Data de Nascimento" data-mask="00/00/0000">-->
 
+            <input type="text" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="Data de Nascimento" onfocus="(this.type='date')">
          
             <div id=verify-dados2>
               
             </div>
-            <!--onfocus="(this.type='date')"-->
+
 
             <span class="hidden" style="color:red;" id="erroData"> Insira a Data de Nascimento</span>
 
