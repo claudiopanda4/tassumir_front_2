@@ -1013,7 +1013,7 @@ class PaginaCasalController extends Controller
       $tipo_relac = $donodapage[0]->tipo_relacionamento_id;
       
       if ($tipo_relac == 1) {
-            return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Nativos Daqui';
+            return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Nativos';
           } elseif ($tipo_relac == 2) {
             return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Noivos';
           }elseif ($tipo_relac == 3) {

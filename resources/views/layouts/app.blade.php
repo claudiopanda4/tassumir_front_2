@@ -337,7 +337,7 @@
                             <a href="" class="nao_seguir" id="a-{{$Paginas->page_id}}">não seguir</a>
                             <input type="hidden" id="npage_id" value="{{$Paginas->page_id}}" name="">
 
-                            <input type="hidden" id="seguindo" value="{{ $account_name[0]->conta_id }}" name="">
+                            <input type="hidden" id="seguindo" value="{{ $conta_logada[0]->conta_id }}" name="">
                            <?php
                            /*echo " <a href=". route('nao.seguir.seguindo', ['seguida' => $Seguida->identificador_id_seguida, 'seguindo' =>$Seguida->identificador_id_seguindo]). ">não seguir</a>";*/?>
                         </li>
@@ -471,7 +471,7 @@
                         <a href=". route('seguir.seguindo', ['seguida' => $Paginas->page_id, 'seguindo' =>$account_name[0]->conta_id]). ">seguir</a>";
                                 */?>
                             </li>
-                            <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
+                            <input type="hidden" id="conta_id" value="{{ $conta_logada[0]->conta_id }}" name="">
                 @empty
 
                 @endforelse
