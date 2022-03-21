@@ -524,7 +524,7 @@
                   data: {'id': id, 'comment': c},
                    dataType: 'json',
                    success:function(response){
-                   //console.log(response);
+
                    var nome = '';
                    comment_qtd = parseInt(comment_qtd) + 1;
                    $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
@@ -535,7 +535,7 @@
                           nome +=             '<i class="far fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
                         }
                         let new_comment = 'novo-comment-' + id;
-                        console.log(new_comment);
+                        //console.log(new_comment);
                         $('#' + new_comment).append(nome);
 
                   }
