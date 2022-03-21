@@ -15,6 +15,9 @@ class PaginaCasalController extends Controller
     private $current_page_uuid;
     private static $uuid = '';
 
+
+
+
     public function paginas_que_sigo($id){
       $controll = new AuthController;
       $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
@@ -82,6 +85,70 @@ class PaginaCasalController extends Controller
 
         return view('pagina.couple_page_following', compact('account_name','v','PS','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir', 'pagenaoseguidas'));
     }
+
+    public function who_follows_me($id){
+      $controll = new AuthController;
+      $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
+       $dates = $controll->default_();
+      $account_name = $dates['account_name'];
+      $checkUserStatus = $dates['checkUserStatus'];
+      $profile_picture = $dates['profile_picture'];
+      $isUserHost = $dates['isUserHost'];
+      $hasUserManyPages = $dates['hasUserManyPages'];
+      $allUserPages = $dates['allUserPages'];
+      $page_content = $dates['page_content'];
+      $conta_logada = $dates['conta_logada'];
+      $notificacoes = $dates['notificacoes'];
+      $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
+      $paginasSeguidas = $dates['paginasSeguidas'];
+      $dadosSeguida = $dates['dadosSeguida'];
+      $notificacoes_count = $dates['notificacoes_count'];
+
+
+      /*siene*/ //$casalPageName = $this->get_casalPage_name($uuid);
+
+      $page_current = 'page';
+      if (sizeof($page_content)>0) {
+
+      $seguidores = Self::seguidores($page_content[0]->page_id);
+      $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
+      $publicacoes = $this->get_all_post($page_content[0]->page_id);
+      $this->current_page_id = $page_content[0]->page_id;
+      $sugerir = $this->suggest_pages($page_content[0]->page_id);
+      $allPosts = $this->get_post_types($page_content[0]->page_id);
+    }else {
+      $seguidores =array();
+      $tipo_relac = array();
+      $publicacoes = array();
+      $this->current_page_id = array();
+      $sugerir = array();
+      $allPosts = array();
+    }
+      $who_follows_me=DB::select('select c.uuid,c.nome,c.apelido,c.foto from (select s.identificador_id_seguindo, (select i.id from identificadors as i where i.identificador_id=s.identificador_id_seguindo)as id from seguidors as s where s.identificador_id_seguida = (select i.identificador_id from identificadors as i where i.tipo_identificador_id = 2 and i.id= (select pa.page_id from pages as pa where pa.uuid=?)))  as al inner join contas as c on c.conta_id = id order by c.nome, c.apelido ',[$id]);
+
+        return view('pagina.who_follows_me', compact('account_name','who_follows_me','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir', 'pagenaoseguidas'));
+    }
+
+    public function page_update(Request $request)
+    {
+    try {
+
+
+        if ($request->nome_page != null ) {
+        $pages = DB::table('pages')->where(['uuid'=>$request->uuid])->update([
+         'nome' => $request->nome_page,
+         //'tipo_relacionamento_id' => 1,
+     ]);
+    }
+    return redirect()->route('couple.page1',$request->uuid);
+
+
+    }  catch (Exception $e) {
+        dd($e);
+    }
+
+
+    }
     public function conta_seguinte()
     {
        $dadosSeguida = DB::table('seguidors')
@@ -104,7 +171,7 @@ class PaginaCasalController extends Controller
     public function index(){
 
 
-      $page_couple = new PerfilController();
+      $page_couple = new AuthController();
       $dates = $page_couple->default_();
 
       $controll = new AuthController;
@@ -139,8 +206,8 @@ class PaginaCasalController extends Controller
       $sugerir = $this->suggest_pages($page_content[0]->page_id);
       $allPosts = $this->get_post_types($page_content[0]->page_id);
       $v=1;
-
-      return view('pagina.couple_page', compact('account_name','v','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'paginasSeguidas', 'dadosSeguida', 'paginasNaoSeguidas', 'allPosts', 'sugerir', 'conta_seguinte', 'pagenaoseguidas'));
+      $casalPageName = $this->get_casalPage_name($page_content);
+      return view('pagina.couple_page', compact('account_name','v','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'paginasSeguidas', 'dadosSeguida', 'paginasNaoSeguidas', 'allPosts', 'sugerir','casalPageName', 'pagenaoseguidas'));
     }
 
     public function conf_PR(Request $request)
@@ -666,7 +733,7 @@ class PaginaCasalController extends Controller
         try
         {
             //dd($request);
-          
+
             $page_id = DB::select('select page_id from pages where uuid = ?', [$request->page_u])[0]->page_id;
 
             if ($request->hasFile('imgOrVideo'))

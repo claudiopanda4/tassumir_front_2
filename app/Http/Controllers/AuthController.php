@@ -326,6 +326,195 @@ class AuthController extends Controller
        }
 
 
+        public function Notifications_final()
+        {
+          $conta=Auth::user()->conta_id;
+        //  dd($conta->conta_id);
+          $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
+          //dd($control);$control[0]->
+          $notificacoes=array();
+          $notificacoes_count=0;
+          $a=0;
+          $control_data=0;
+          if (sizeof($control)>0) {
+            foreach ($control as $key) {
+              if($key->id_state_notification!= 3){
+
+                $notificacoes[$a]['id1']=$key->notification_id;
+                $aux_divisão_data = explode(' ', $key->created_at);
+                $notificacoes[$a]['data_creat']=$aux_divisão_data[0];
+                $notificacoes[$a]['hora_creat']=str_split($aux_divisão_data[1], 5)[0];
+                $notificacoes[$a]['barra_data']=0;
+
+                $date_create_update=date("Y");
+                $date_create_update.="-";
+                $date_create_update.=date("m");
+                $date_create_update.="-";
+                $date_create_update.=date("d");
+
+                if ($aux_divisão_data[0] == $date_create_update && $control_data==0) {
+                  $control_data=1;
+                  $notificacoes[$a]['barra_data']=1;
+                }elseif ($aux_divisão_data[0] != $date_create_update && $control_data==1 || $notificacoes[0]['barra_data'] == 0 && $a == 0) {
+                  $control_data=2;
+                  $notificacoes[$a]['barra_data']=2;
+                  }
+
+
+
+                  //dd($key);
+
+                  switch ($key->id_action_notification) {
+                   case 1:
+                      $notificacoes[$a]['notificacao']=$key->nome_causador;
+                      $notificacoes[$a]['notificacao'].=" ";
+                      $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                      $notificacoes[$a]['notificacao'].=" curtiu a sua publicação ";
+                      $notificacoes[$a]['tipo']=1;
+                      $notificacoes[$a]['id']=$key->identificador_id_destino;
+                      $notificacoes[$a]['link']=$key->link;
+                      break;
+                   case 2:
+                     $notificacoes[$a]['notificacao']=$key->nome_causador;
+                     $notificacoes[$a]['notificacao'].=" ";
+                     $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                     $notificacoes[$a]['notificacao'].=" comentou a sua publicação";
+                      $notificacoes[$a]['tipo']=2;
+                      $notificacoes[$a]['id']=$key->identificador_id_destino;
+                      $notificacoes[$a]['link']=$key->link;
+                      break;
+                   case 3:
+                   $notificacoes[$a]['notificacao']=$key->nome_causador;
+                   $notificacoes[$a]['notificacao'].=" ";
+                   $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                      $notificacoes[$a]['notificacao'].=" partilhou a sua publicação";
+                      $notificacoes[$a]['tipo']=3;
+                      $notificacoes[$a]['id']=$key->identificador_id_destino;
+                      break;
+                   case 4:
+                              $notificacoes[$a]['notificacao']=$key->nome_causador;
+                              $notificacoes[$a]['notificacao'].=" ";
+                              $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                               $notificacoes[$a]['notificacao'].=" quer assumir o vosso ";
+                               $notificacoes[$a]['notificacao'].=$key->tipo_pedido_relac;
+                               $notificacoes[$a]['tipo']=4;
+                               $notificacoes[$a]['id']=$key->link1_destino;
+                       break;
+                   case 5:
+                   $notificacoes[$a]['notificacao']=$key->nome_causador;
+                   $notificacoes[$a]['notificacao'].=" ";
+                   $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                   $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                   $notificacoes[$a]['tipo']=5;
+                   $notificacoes[$a]['id']=$key->identificador_id_destino;
+                   $notificacoes[$a]['link']=$key->link;
+                       break;
+                   case 6:
+                   $notificacoes[$a]['notificacao']=$key->nome_causador;
+                   $notificacoes[$a]['notificacao'].=" ";
+                   $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                   $notificacoes[$a]['notificacao'].=" esta seguindo a sua pagina";
+                       $notificacoes[$a]['tipo']=6;
+                       $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       $notificacoes[$a]['link']=$key->link;
+                       break;
+                   case 7:
+                   $notificacoes[$a]['notificacao']=$key->nome_causador;
+                   $notificacoes[$a]['notificacao'].=" ";
+                   $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                    $notificacoes[$a]['notificacao'].=" Respondeu a sua Solicitação de Registo de compromisso";
+                    $notificacoes[$a]['tipo']=7;
+                    $notificacoes[$a]['id']=$key->link1_destino;
+                       break;
+                   case 8:
+                       $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                       $notificacoes[$a]['tipo']=8;
+                       $notificacoes[$a]['id']=$key->identificador_id_destino;
+                       $notificacoes[$a]['link']=$key->link;
+                       break;
+                   case 9:
+                               $notificacoes[$a]['notificacao']= "o seu pedido de criação de pagina foi negado";
+                               $notificacoes[$a]['tipo']=9;
+                               $notificacoes[$a]['id']=$key->link1_destino;
+                       break;
+                   case 10:
+                   $notificacoes[$a]['notificacao']=$key->nome_causador;
+                   $notificacoes[$a]['notificacao'].=" ";
+                   $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                   $notificacoes[$a]['notificacao'].=" Pediu que você page";
+                   $notificacoes[$a]['tipo']=10;
+                   $notificacoes[$a]['id']=$key->link1_destino;
+                       break;
+                       case 11:
+                               if ($key->causador_id == $key->conta_id){
+                                   $notificacoes[$a]['notificacao']=" você eliminou a sua pagina ' ";
+                                   $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                   $notificacoes[$a]['notificacao'].=" ', tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                               }else {
+                                 $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                 $notificacoes[$a]['notificacao'].=" ";
+                                 $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                 $notificacoes[$a]['notificacao'].=" eliminou a vossa pagina ' ";
+                                 $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                 $notificacoes[$a]['notificacao'].=" ', ele tem 3 meses para anular esta acção, caso contrario sera eliminada de forma permanente";
+                               }
+                               $notificacoes[$a]['tipo']=11;
+                               $notificacoes[$a]['id']=$key->causador_id ;
+
+                           break;
+
+                           case 12:
+                           $notificacoes[$a]['notificacao']=$key->nome_causador;
+                           $notificacoes[$a]['notificacao'].=" ";
+                           $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                           $notificacoes[$a]['notificacao'].=" pediu que você anulasse a eliminação da vossa pagina ' ";
+                                   $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                   $notificacoes[$a]['notificacao'].=" '.";
+                                   $notificacoes[$a]['tipo']=12;
+                                   $notificacoes[$a]['id']=$key->causador_id;
+                                   $notificacoes[$a]['id1']=$key->notify_id_aux;
+
+                               break;
+
+                               case 13:
+                                       if ($key->causador_id == $key->conta_id){
+                                           $notificacoes[$a]['notificacao']=" você anulou a eliminação da vossa pagina ' ";
+                                           $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                           $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                       }else {
+                                         $notificacoes[$a]['notificacao']=$key->nome_causador;
+                                         $notificacoes[$a]['notificacao'].=" ";
+                                         $notificacoes[$a]['notificacao'].=$key->apelido_causador;
+                                         $notificacoes[$a]['notificacao'].=" anulou a eliminação da vossa pagina ' ";
+                                         $notificacoes[$a]['notificacao'].=$key->nome_destino;
+                                         $notificacoes[$a]['notificacao'].=" ', agora ja pode voltar a postar nela.";
+                                       }
+                                       $notificacoes[$a]['tipo']=13;
+                                       $notificacoes[$a]['id']=$key->causador_id;
+                                       $notificacoes[$a]['link']=$key->link;
+
+
+                                   break;
+
+                                 }
+
+                 $notificacoes[$a]['foto']=$key->foto_causador;
+                 $notificacoes[$a]['v']=$key->tipo_causador_identify;
+                  if ($key->id_state_notification == 2) {
+                    $notificacoes_count++;
+                    $notificacoes[$a]['state_notification']=2;
+                  }else {
+                    $notificacoes[$a]['state_notification']=1;
+                  }
+                  $a++;
+                }
+          }
+          }
+          dd($notificacoes);
+          return $notificacoes;
+        }
+
+
         public function destacados(){
           $post = DB::select('select * from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id, p.uuid,p.descricao,p.estado_post_id,p.formato_id,p.page_id,pa.uuid as page_uuid,pa.nome as page_name,pa.estado_pagina_id as estado_pagina_id,pa.foto as page_foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');
 
@@ -663,8 +852,8 @@ class AuthController extends Controller
 
      */
 
-
      $what_are_talking = $this->destacados();
+     //$what_are_talking = $this->Notifications_final();
      //$what_are_talking = $this->destaques();
      //$what_are_talking = [];
      $mudar_estado_view= DB::table('views')->where('conta_id',$conta_logada[0]->conta_id)->where('state_views_id', 2)->limit(1)->get();
@@ -1364,13 +1553,7 @@ public function dados_comment($key){
                 'post_id' => $post[0]->post_id,
                 'created_at'=> $this->dat_create_update(),
               ]);
-              /*DB::table('posts')
-                  ->where('post_id', $post[0]->post_id)
-                  ->update([
-                    'reactions'=> $post[0]->reactions + 1,
-                    'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
-                    'updated_at' => $this->dat_create_update()
-                  ]);*/
+
               if ($page[0]->conta_id_a != $conta[0]->conta_id && $page[0]->conta_id_b != $conta[0]->conta_id) {
                 DB::table('notifications')->insert([
                     'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -1408,13 +1591,7 @@ public function dados_comment($key){
 
             } elseif ($reactions_number > 0){
               DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
-              /*DB::table('posts')
-                ->where('post_id', $post[0]->post_id)
-                ->update([
-                  'reactions'=> $post[0]->reactions - 1,
-                  'total_reactions_comments'=> $post[0]->total_reactions_comments - 1,
-                  'updated_at' => $this->dat_create_update()
-                ]);*/
+
               $likes_total--;
               $resposta = [
                 'id' => $id_full,
@@ -1432,21 +1609,14 @@ public function dados_comment($key){
             return response()->json($resposta);
           }
 
-          public function comment_reac(Request $request){
-                  $comment=DB::select('select * from comments where comment_id = ?', [$request->id]);
-                  $post=DB::select('select * from posts where uuid = ?', [$comment[0]->post_id]);
-        //                $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
-        //                  $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
-      //                  $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
-                  $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
-                  $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
-                  $comment_reac_v = DB::select('select reaction_comment_id from reactions_comments where (comment_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
+          public function comment_reac_final(Request $request){
+            $control=DB::select('select (select identificadors.identificador_id from identificadors where identificadors.id = c.comment_id and identificadors.tipo_identificador_id = 4) as comment_identify,(select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = conta_identify) as ja_reagi,(select r.reaction_comment_id from reactions_comments as r where r.comment_id = c.comment_id and r.identificador_id = conta_identify) as id_ja_reagi  from comments as c where c.comment_id = ?', [Auth::user()->conta_id,$request->id]);
                   $resposta = 0;
-                  if (sizeof($comment_reac_v) == 0) {
+                  if ($control[0]->ja_reagi == 0) {
                     DB::table('reactions_comments')->insert([
                       'comment_id' => $request->id,
                       'reaction_id' => 1,
-                      'identificador_id' => $aux[0]->identificador_id,
+                      'identificador_id' => $control[0]->conta_identify,
                       'created_at'=> $this->dat_create_update(),
 
                     ]);
@@ -1468,11 +1638,53 @@ public function dados_comment($key){
                     $resposta= 1;
 
                   } elseif (sizeof($comment_reac_v) == 1){
-                    DB::table('reactions_comments')->where(['reaction_comment_id'=>$comment_reac_v[0]->reaction_comment_id])->delete();
+                    DB::table('reactions_comments')->where(['reaction_comment_id'=>$control[0]->id_ja_reagi])->delete();
                     $resposta= 2;
                   }
                   return response()->json($resposta);
                 }
+
+                public function comment_reac(Request $request){
+                        $comment=DB::select('select * from comments where comment_id = ?', [$request->id]);
+                        $post=DB::select('select * from posts where uuid = ?', [$comment[0]->post_id]);
+              //                $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
+              //                  $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
+            //                  $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
+                        $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
+                        $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
+                        $comment_reac_v = DB::select('select reaction_comment_id from reactions_comments where (comment_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
+                        $resposta = 0;
+                        if (sizeof($comment_reac_v) == 0) {
+                          DB::table('reactions_comments')->insert([
+                            'comment_id' => $request->id,
+                            'reaction_id' => 1,
+                            'identificador_id' => $aux[0]->identificador_id,
+                            'created_at'=> $this->dat_create_update(),
+
+                          ]);
+                        /*  DB::table('notifications')->insert([
+                                'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                                'id_state_notification' => 2,
+                                'id_action_notification' => 1,
+                                'identificador_id_causador'=> $aux[0]->identificador_id,
+                                'identificador_id_destino'=> $aux2[0]->identificador_id,
+                                ]);
+                              DB::table('notifications')->insert([
+                                      'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                                      'id_state_notification' => 2,
+                                      'id_action_notification' => 1,
+                                      'identificador_id_causador'=> $aux[0]->identificador_id,
+                                      'identificador_id_destino'=> $aux3[0]->identificador_id,
+                                    ]);*/
+
+                          $resposta= 1;
+
+                        } elseif (sizeof($comment_reac_v) == 1){
+                          DB::table('reactions_comments')->where(['reaction_comment_id'=>$comment_reac_v[0]->reaction_comment_id])->delete();
+                          $resposta= 2;
+                        }
+                        return response()->json($resposta);
+                      }
 
     public function seguir(Request $request){
 
@@ -1754,6 +1966,13 @@ public function dados_comment($key){
 
               } else {
 
+                DB::table('comments')->insert([
+                'post_id' => $request->id,
+                'identificador_id' => $aux[0]->identificador_id,
+                'tipo_estado_comment_id'=>1,
+                'comment'=>$request->comment,
+                'created_at'=> $this->dat_create_update(),
+                ]);
 
                 $variable=  DB::table('comments')->get();
                 foreach ($variable as $key) {
@@ -1776,13 +1995,7 @@ public function dados_comment($key){
                    $resposta[0]['comment']=$key->comment;
                 }
 
-                DB::table('comments')->insert([
-                'post_id' => $request->id,
-                'identificador_id' => $aux[0]->identificador_id,
-                'tipo_estado_comment_id'=>1,
-                'comment'=>$request->comment,
-                'created_at'=> $this->dat_create_update(),
-                ]);
+
                 /*DB::table('posts')
                   ->where('post_id', $post[0]->post_id)
                   ->update([
@@ -2397,6 +2610,54 @@ public function dados_comment($key){
         dd($error);
      }
   }
+
+  public function qtd_like(Request $request)
+  {
+    try {
+
+     $qtd_like=DB::select('select count(*) from post_reactions as p where p.identificador_id = (select i.identificador_id from identificadors as i where i.tipo_identificador_id= 1 and i.id = ?)',[$request->id]);
+      return $qtd_like;
+    } catch (\Exception $error){
+      dd($error);
+    }
+  }
+  public function qtd_pages_seg(Request $request)
+  {
+    try {
+      $qtd_pages=DB::select('select count(*) from seguidors as s where s.identificador_id_seguindo =(select i.identificador_id from identificadors as i where i.tipo_identificador_id= 1 and i.id = ?)',[$request->id]);
+      return $qtd_pages;
+    } catch (\Exception $error){
+      dd($error);
+    }
+  }
+  public function qtd_saves(Request $request)
+  {
+    try {
+      $qtd_saves=DB::select('select count(*) from saveds as s where s.conta_id =?',[$request->id]);
+      return $qtd_saves;
+       } catch (\Exception $error){
+      dd($error);
+    }
+  }
+  public function state_civil_and_descrition(Request $request)
+  {
+    try {
+      $scad=DB::select('select count()',[$request->id]);
+      return $scad;
+    } catch (\Exception $error){
+      dd($error);
+    }
+  }
+  public function tip_of_relac_you(Request $request)
+  {
+    try {
+      $tory=DB::select('select al.*, if(id_conta_a=? ,(select ct.nome from contas as ct where ct.conta_id =id_conta_b),(select ct.nome from contas as ct where ct.conta_id =id_conta_a))as nome_outra_pessoa,if(id_conta_a=? ,(select ct.apelido from contas as ct where ct.conta_id =id_conta_b),(select ct.apelido from contas as ct where ct.conta_id =id_conta_a))as apelido_outra_pessoa from (select (select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page,(select pg.page_id from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1 limit 1)as page_id, (select pg.tipo_relacionamento_id from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as tipo_relac_id, (select p.conta_id_a from pages as p where p.page_id=page_id order by p.page_id desc limit 1)as id_conta_a, (select pa.conta_id_b from pages as pa where pa.page_id=page_id order by pa.page_id desc limit 1)as id_conta_b, (select tp.tipo_relacionamento from tipo_relacionamentos as tp where tp.tipo_relacionamento_id=tipo_relac_id)as tipo_relac from contas as c where c.conta_id=?) as al',[$request->id,$request->id,$request->id]);
+      return $tory;
+    } catch (\Exception $error){
+      dd($error);
+    }
+  }
+
   public function updatePassword2(Request $request){
 
    try{

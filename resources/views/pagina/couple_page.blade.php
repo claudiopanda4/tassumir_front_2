@@ -46,12 +46,16 @@
                         </div>
                         <?php endif ?>
                         <div class="statistics-profile-page-component l-5">
+                          <a href="{{route('who_follows_me.page',$page_content[0]->uuid)}}">
                             <h1>{{ $seguidores }}</h1>
+                            </a>
+                            <a href="{{route('who_follows_me.page',$page_content[0]->uuid)}}">
                             @if ($seguidores > 1)
                                 <h2 class="text-ellips">Seguidores</h2>
                             @else
                                 <h2 class="text-ellips">Seguidor</h2>
                             @endif
+                            </a>
 
                         </div>
                         <div class="statistics-profile-page-component l-5">
@@ -303,7 +307,7 @@
             $('.seguir_couple').click(function(e){
             e.preventDefault();
             var valor_pagina_id = e.target.id;
-            
+
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
 
@@ -316,7 +320,7 @@
                     var id_last_page = 0;
                 }
             }            //$('#' + valor_pagina_id).empty();
-            
+
 
 
             //var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];;
@@ -379,7 +383,7 @@
              });
 
             $('#btn_nao_seguir').click(function(){
-                
+
             var seguida = $('#sgda').val();
             var seguindo = $('#sgdo').val();
              $.ajax({
@@ -400,7 +404,7 @@
              });
         document.getElementById("route_page").classList.add('li-component-aside-active');
 
-                
+
 
                 //alert('Abriu o Documento');
 

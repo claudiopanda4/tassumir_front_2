@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -31,28 +32,34 @@
 
 
    <div class="card br-10 check" >
-
+      <form class="" action="{{ route('page_update') }}" method="POST" enctype="multipart/form-data">
+					@csrf
     	<div class="couple-info-inputs mt-2">
     		<p class="couple-name mt-2 ">Nome da pagina</p>
-    		<input type="text" placeholder="Escreva o nome da pagina " class="couple-input-edit" name="" value="{{$page[0]->nome}}">
+    		<input type="text" placeholder="Escreva o nome da pagina " class="couple-input-edit" name="nome_page" value="{{$page[0]->nome}}">
 
     	</div>
 
     	<div class="couple-info-inputs mt-2">
     		<p class="couple-name mt-2">Relacionamento </p>
-    		<select class="couple-input-edit-select">
-    			<option>Namoro</option>
+				<input type="hidden" name="tipo_relac"  id="relationship-type-selected">
+				<input type="hidden" name="uuid"  value="{{$page[0]->uuid}}">
+					<div class="couple-input-edit-select" name="relationship-type-container">
+					</div>
     	    </select>
+
     	</div>
 
     	<div class="couple-info-inputs-btn" style="position: relative; height: 45px; margin-top: 10px; margin-bottom: 10px;">
 	    	<p class="couple-name"></p>
 	    	<div class="" style="position: relative; width: 140px; height: 100%; margin-bottom: 10px; margin-top: 10px;">
                 <a href="">
-                    <h3 class="edit-profile check-width edit-page-btn-alter" style="width: 100%;">Guadar alterações</h3>
+									<button type="submit" name="button"><h3 class="edit-profile check-width edit-page-btn-alter" style="width: 100%;">Guadar alterações</h3>
+</button>
                 </a>
             </div>
     	</div>
+		</form>
 
     	<div class="couple-info-inputs-btn" style="position: relative; height: 45px;">
     		<p class="couple-name-p" style="font-size: 12px; width: 50%;">Eliminar ou desactivar página </p>
@@ -69,6 +76,35 @@
 <script type="text/javascript">
 $(document).ready(function () {
   document.getElementById("route_page").classList.add('li-component-aside-active');
+	$('.relationship-type-component').click(function(e){
+				//alert(e.target.id.split('-')[3]);
+				$('#relationship-type-selected').val(e.target.id.split('-')[3]);
+	});
+
+		$.ajax({
+			url: "{{ route('tipos')}}",
+			type: 'get',
+			dataType: 'json',
+			success:function(response){
+				var tipo = '';
+				var a =0;
+				console.log(response);
+				$.each(response, function(key, value){
+
+					if (a == 0) {
+					tipo +=	'<select class="couple-input-edit-select">'
+					}
+					if (value.tipo_relacionamento_id>1) {
+						tipo +=        '<option><h2 id="' + value.tipo_relacionamento + '-' + value.tipo_relacionamento_id + '" class="relationship-type-component">' + value.tipo_relacionamento + '</h2></option>'
+					}
+					a++;
+				})
+				console.log(tipo);
+				$('div[name=relationship-type-container]').append(tipo);
+				}
+			});
+
+
 });
 </script>
 @stop
