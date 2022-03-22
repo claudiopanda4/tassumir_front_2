@@ -2034,8 +2034,9 @@ public function dados_comment($key){
                             ]);
 
               }
-        $data = 'Siene';
-       return response()->json($data);
+        //$data = 'Siene';
+        //$resposta
+       return response()->json($resposta);
      }
 
     public function defaultDate(){

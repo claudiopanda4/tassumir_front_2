@@ -183,10 +183,13 @@
                             <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$dados[$key]['post_id']?>>
                             <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$dados[$key]['post_id']?>>
                             <img class="loader_icon center" src="{{asset('css/uicons/loading.gif')}}" id=<?php echo "loader_icon_".$dados[$key]['post_id']; ?>>
-                            <video class="video-post-video" id="video_{{$dados[$key]['post_id']}}">
+
+                            <video class="video-post-video playOrPause" id="video_{{$dados[$key]['post_id']}}" >
                                 <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
+
+
                             <input type="hidden" name="" value="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}" id="watch-video-{{$dados[$key]['post_id']}}">
                             <input type="hidden" name="" value="{{$dados[$key]['post_uuid']}}" id="vid-{{$dados[$key]['post_id']}}">
                             <input type="hidden" name="" id="has-video-{{$dados[$key]['post_id']}}">
@@ -482,7 +485,7 @@
                           data: {'id': id, 'id_full' : id_full},
                            dataType: 'json',
                            success:function(response){
-                           console.log(response);
+                           //console.log(response);
 
                             $.each(response.remove, function(key, value){
                                 //console.log(response.id + ' remove ' + value);
@@ -505,6 +508,7 @@
             function com(element){
                 let id = element.id;
                 let c = document.getElementById('comentario-' + id).value;
+
                 if(c != ''){
                     $("#comment-own-" + id).text(c);
                   $("#comment-users-own-" + id).css({
@@ -1192,6 +1196,40 @@ function gostar(id){
                     }
 
 
+/*siene coding*/
+
+function playAndPause() {
+
+  const allVideos = document.querySelectorAll('.playOrPause');
+
+  let options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1.0
+  };
+
+  let callback = (entries, observer) => {
+    entries.forEach(entrada => {
+      if (entrada.target.className == 'video-post-video playOrPause') {
+        if (entrada.isIntersecting) {
+          entrada.target.play();
+          console.log()
+        } else {
+          entrada.target.pause();
+        }
+      } else {
+        console.log('erro');
+      }
+    });
+  };
+
+  let observer = new IntersectionObserver(callback, options);
+  allVideos.forEach(video => { observer.observe(video); });
+}
+
+this.playAndPause();
+
+/*end siene coding*/
 
 
 
