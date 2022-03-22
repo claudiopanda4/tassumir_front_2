@@ -910,7 +910,7 @@ class AuthController extends Controller
 
     public function paginasqueSigo(){
 
-                
+
         $conta_logada = Auth::user()->conta_id;
         $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 1 limit 3', [$conta_logada]);
 
@@ -1910,6 +1910,9 @@ public function dados_comment($key){
 
 
     public function comentar(Request $request){
+
+      //$ordenar = ['nice'];
+
       $post= DB::select('select * from posts where post_id = ?', [$request->id]);
       $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
       $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
@@ -2031,9 +2034,10 @@ public function dados_comment($key){
                             ]);
 
               }
-
+        //$data = 'Siene';
+        //$resposta
        return response()->json($resposta);
-          }
+     }
 
     public function defaultDate(){
         $account_name = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);

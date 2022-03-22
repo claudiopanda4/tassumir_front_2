@@ -198,34 +198,33 @@
                             <div class="comment-user-container" >
                               <div class="user-identify-comment">
                                 @if( $dados[$key]['foto_ver']==1 )
-                                <a href="{{route('account1.profile', $dados[$key]['uuid']) }}">
-                                  @if( !($dados[$key]['foto_conta'] == null) )
-                                  <div class="profille-img">
-                                      <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
-                                  </div>
-                                  @else
-                                  <div class="profille-img">
-                                        <i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>
-                                  </div>
-                              @endif
-                              </a>
-                              <a href="{{route('account1.profile', $dados[$key]['uuid']) }}">
-
-                            @elseif( $dados[$key]['foto_ver']==2 )
-                            <a href="{{route('couple.page1', $dados[$key]['uuid']) }}">
-                              @if( !($dados[$key]['foto_conta'] == null) )
-                                <div class="profille-img">
-                                  <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_conta'] }}">
-                                </div>
-                              @else
-                                <div class="profille-img">
-                                  <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                </div>
+                                  <a href="{{route('account1.profile', $dados[$key]['uuid']) }}">
+                                    @if( !($dados[$key]['foto_conta'] == null) )
+                                    <div class="profille-img">
+                                        <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
+                                    </div>
+                                    @else
+                                    <div class="profille-img">
+                                          <i class="fas fa-user center" style="font-size: 15px; color: #ccc;"></i>
+                                    </div>
+                                    @endif
+                                  </a>
+                                  <a href="{{route('account1.profile', $dados[$key]['uuid']) }}">
+                                @elseif( $dados[$key]['foto_ver']==2 )
+                                  <a href="{{route('couple.page1', $dados[$key]['uuid']) }}">
+                                    @if( !($dados[$key]['foto_conta'] == null) )
+                                      <div class="profille-img">
+                                        <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_conta'] }}">
+                                      </div>
+                                    @else
+                                      <div class="profille-img">
+                                        <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                      </div>
+                                    @endif
+                                  </a>
+                                  <a href="{{route('couple.page1', $dados[$key]['uuid']) }}">
                                 @endif
-                              </a>
-                                <a href="{{route('couple.page1', $dados[$key]['uuid']) }}">
-                            @endif
-                            <div class="comment-user-comment">
+                                  <div class="comment-user-comment">
                                     <h1 class="user">{{$dados[$key]['nome_comment']}}</h1>
                                   </a>
                                     <p class="">{{$value->comment}}</p>
@@ -324,9 +323,11 @@ function gostar(id){
           data: {'id': id, 'comment': c},
            dataType: 'json',
            success:function(response){
-           console.log(response);
+           //console.log(response);
+
            comment_qtd = parseInt(comment_qtd) + 1;
            $("#comment-qtd-" + id).text((comment_qtd) + " comentários");
+
           }
         });
       }
