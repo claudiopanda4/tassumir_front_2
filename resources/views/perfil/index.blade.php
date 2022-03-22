@@ -234,12 +234,12 @@
                 <div class="post-video-container-page post-page-container">
                     <?php foreach ($gostos as $key => $value): ?>
                       <?php if ($gostos[$key]['formato']==1): ?>
-                    <div class="img-post">
+                    <a href="{{route('post_index', $gostos[$key]['post_uuid'])}}"><div class="img-post">
                         <video>
                             <source src="{{asset('storage/video/page/') . '/' . $gostos[$key]['file']}}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                    </div>
+                    </div></a>
                       <?php endif; ?>
                     <?php endforeach ?>
                 </div>
@@ -248,9 +248,9 @@
                 <div class="post-img-container-page post-page-container">
                     <?php foreach ($gostos as $key => $value): ?>
                       <?php if ($gostos[$key]['formato']==2): ?>
-                    <div class="img-post">
+                    <a href="{{route('post_index', $gostos[$key]['post_uuid'])}}"><div class="img-post">
                         <img src="{{asset('storage/img/page/') . '/' . $gostos[$key]['file']}}" class="img-full">
-                    </div>
+                    </div></a>
                       <?php endif; ?>
                     <?php endforeach ?>
                 </div>
@@ -332,9 +332,9 @@
             <div class="post-img-container-page post-page-container">
                 <?php foreach ($gostos as $key => $value): ?>
                   <?php if ($gostos[$key]['formato']==2): ?>
-                <div class="img-post">
+                <a href="{{route('post_index', $gostos[$key]['post_uuid'])}}"><div class="img-post">
                     <img src="{{asset('storage/img/page/') . '/' . $gostos[$key]['file']}}" class="img-full">
-                </div>
+                </div></a>
                   <?php endif; ?>
                 <?php endforeach ?>
             </div>
