@@ -7,55 +7,55 @@
         <li>
 
         </li>
-    </ul>
+      </ul>
 </header>
 <header class="card br-10 stories stories-about-talking" id="stories-card">
-            <header>
-                <h1>O que está a pipocar...</h1>
-            </header>
-            <nav>
-                <ul class="clearfix">
-                  @for ($i=0; $i< sizeof($what_are_talking); $i++)
-                    @if($i < 5)
-                        <li class="li-component-stories l-5">
-                            <a href="{{route('post_index', $what_are_talking[$i]['post_uuid'])}}">
-                                <div class="identify-cover circle">
-                                @if( !($what_are_talking[$i]['foto_page'] == null) )
-                                    <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
-                                @else
-                                    <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                @endif
-                                </div>
-                                <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
-                                    <img class="img-back-stories center" src="{{asset('storage/img/page/') . '/' . $what_are_talking[$i]['file']}}">
-                              <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>
-                                    <video controls class="video-post-dest">
-                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
-                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
-                                    </video>
-                                    @if( !($what_are_talking[$i]['foto_page'] == null) )
-                                        <img class="img-full circle foto-page-video" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
-                                    @else
-                                        <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                    @endif
-                                <?php else: ?>
-                                        <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                <?php endif ?>
-                                <div class="headline">
-                                    <h2 class="center">{{$what_are_talking[$i]['post']}}</h2>
-                                </div>
-                            </a>
-                        </li>
-                    @endif
-                    @endfor
-                    <div class="see-all-stories circle">
-                        <a href="">
-                            <i class="fas fa-arrow-right fa-16 center"></i>
-                        </a>
-                    </div>
-                </ul>
-            </nav>
-        </header>
+      <header>
+          <h1>O que está a pipocar...</h1>
+      </header>
+      <nav>
+          <ul class="clearfix">
+            @for ($i=0; $i< sizeof($what_are_talking); $i++)
+              @if($i < 5)
+                  <li class="li-component-stories l-5">
+                      <a href="{{route('post_index', $what_are_talking[$i]['post_uuid'])}}">
+                          <div class="identify-cover circle">
+                          @if( !($what_are_talking[$i]['foto_page'] == null) )
+                              <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
+                          @else
+                              <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          @endif
+                          </div>
+                          <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
+                              <img class="img-back-stories center" src="{{asset('storage/img/page/') . '/' . $what_are_talking[$i]['file']}}">
+                        <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>
+                              <video controls class="video-post-dest">
+                                  <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
+                                  <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
+                              </video>
+                              @if( !($what_are_talking[$i]['foto_page'] == null) )
+                                  <img class="img-full circle foto-page-video" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
+                              @else
+                                  <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                              @endif
+                          <?php else: ?>
+                                  <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          <?php endif ?>
+                          <div class="headline">
+                              <h2 class="center">{{$what_are_talking[$i]['post']}}</h2>
+                          </div>
+                      </a>
+                  </li>
+              @endif
+              @endfor
+              <div class="see-all-stories circle">
+                  <a href="">
+                      <i class="fas fa-arrow-right fa-16 center"></i>
+                  </a>
+              </div>
+          </ul>
+      </nav>
+  </header>
         <?php if ($conta_logada[0]->foto == null): ?>
         <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
             <div class="profile-photo-container l-5">

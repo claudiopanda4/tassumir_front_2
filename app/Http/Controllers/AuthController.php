@@ -910,7 +910,7 @@ class AuthController extends Controller
 
     public function paginasqueSigo(){
 
-                
+
         $conta_logada = Auth::user()->conta_id;
         $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 1 limit 3', [$conta_logada]);
 
@@ -2034,8 +2034,8 @@ public function dados_comment($key){
                             ]);
 
               }
-
-       return response()->json($resposta);
+        $data = 'Siene';
+       return response()->json($data);
      }
 
     public function defaultDate(){
