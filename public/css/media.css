@@ -318,8 +318,8 @@
 	    height: 80px;
 	}
 	#img-profile-container {
-	    width: 115px;
-	    height: 115px;
+	    width: 96px;
+	    height: 96px;
 	    position: relative;
 	    margin-top: 0;
 	    margin-left: 0;
@@ -345,6 +345,7 @@
 	}
 	.inform-profile {
 	    margin-left: 10px;
+	    margin: 10px auto 0;
 	}
 	.profile-follow {
 		padding-left: 10px;
@@ -519,6 +520,7 @@
 @media screen and (max-width: 420px) {
 	.statistics-profile-page-component {
 		width: 24%;
+		margin-top: 0;
 	}
 	#statistics-profile-page-component-container-lg {
 		display: block;
@@ -531,14 +533,15 @@
 	}
 	.description-couple p {
 	    color: #ffff;
-	    font-size: 13px;
+	    font-size: 12px;
 	    width: 305px;
-	    padding: 10px;
-	    margin-left: 10px;
+	    padding: 5px 10px;
+	    margin-left: 0px;
 	}
 	.follwing-btn {
 	    padding: 8px;
 	    width: 100%;
+	    max-width: 240px;
 	}	
 	.statistics-profile-page {
 	    width: 200px;
@@ -549,6 +552,9 @@
 		background-color: transparent;
 		border: none;
     }
+    #card-profile-option .option-profile-menu #ul-profile li {
+	    padding: 0;
+	}
     .user-account-container-img {
     	margin-top: 1px;
     }
@@ -752,6 +758,9 @@
 		background-color: #18191a;
 		border: none;
 	}
+	#main-container-profile .card {
+		background-color: transparent;
+	}
 	.main, .header-main-component,
 	.stories-about-talking nav, .stories-about-talking nav ul,
 	main {
@@ -878,10 +887,15 @@
 		margin: 2px auto 10px;
 	}
 	.description-couple h1, .description-couple h2 {
-	    padding-left: 20px;
+	    padding: 0 10px;
 	}
 	.follwing-btn-container {
-	    width: 250px;
+	    width: 78%;
+	    max-width: 155px;
+	    margin-top: 0;
+	}
+	.follwing-btn-container.l-5 {
+	    margin: 1%;
 	}
 	#pop-up-component-create-post .pop-up-component-header {
 	    width: 100%;
@@ -921,6 +935,7 @@
 @media screen and (max-width: 650px) {
 	#main-container-profile {
 		width: 100%;
+		margin-top: 0px;
 	}
 	.seguir-a {
 	    margin-top: 3px;
@@ -1176,7 +1191,8 @@
 	    font-size: 13px;
 	}
 	.seguir-a {
-		font-size: 12px;
+	    font-size: 14px;
+    	margin-top: 1px;
 	}
 	.description-couple h2 {
 	    font-size: 12px;
@@ -1228,19 +1244,30 @@
 	    border: 2px solid #000;
 	}
 	#more-option-profile-component-pop-up {
-		width: 100%;
-	    height: 42%;
+		width: 94%;
+	    height: 45%;
 	    position: absolute;
-	    margin: 0;
-	    bottom: 0;
+	    margin: auto;
+	    bottom: 46px;
+	    border-radius: 0;
+	    left: 50%;
+	    -o-transform: translateX(-50%);
+    	-ms-transform: translateX(-50%);
+    	-moz-transform: translateX(-50%);
+    	-webkit-transform: translateX(-50%);
+	    transform: translateX(-50%);
 	}
 	#more-option-profile-component-pop-up,
 	#more-option-profile-component-pop-up header {
-	    border-top-right-radius: 30px;
-	    border-top-left-radius: 30px;
+	    border-top-right-radius: 25px;
+	    border-top-left-radius: 25px;
 	}
 	#more-option-profile-component-pop-up header {
 		margin-top: -1px;
+	}
+	#more-option-profile-component-pop-up header h1 {
+	    font-size: 15px;
+	    font-weight: bolder;
 	}
 	#refresh-profile-photo-id {
 	    display: block;
@@ -1438,8 +1465,11 @@
 	    background-color: #242526;
 	}
 	.menu-footer {
+	    background-color: transparent;
+	}
+	.menu-footer-main {
 	    background-color: #000;
-	    border-top: 1px solid #18191a;
+	    /*border-top: 1px solid #18191a;*/
 	}
 	.number-notification {
 	    top: -10px;

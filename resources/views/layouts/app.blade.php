@@ -110,12 +110,12 @@
             </nav>
     </header>
     <input type="hidden" id="host" value="{{route('account.data')}}" name="">
-    <div class="header-main-component"></div>
+    <div class="header-main-component" id="header-height-component"></div>
     <aside class="aside aside-left">
         <nav>
             <ul class="clearfix">
                 <li class="li-component-aside" id="route_feed"><i class="fas fa-rss fa-20 fa-icon-aside-left"></i><a href="{{route('account.home.feed')}}">Feed de Notícias</a></li>
-                <li class="li-component-aside text-ellips invisible-component" id="route_account"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a class="text-ellips" href="" id="complete_name_id"></a></li>
+                <li class="li-component-aside text-ellips invisible-component" id="route_account"><i class="far fa-user-circle fa-20 fa-icon-aside-left"></i><a class="text-ellips" href="{{route('account.profile')}}" id="complete_name_id"></a></li>
                 <!--<li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Criar Relacionamento</a></li>
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
                 <li class="li-component-aside invisible-component" id="route_page"><i class="fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="">Minhas Páginas</a></li>
@@ -129,7 +129,7 @@
             <ul>
                 <li class="li-component-aside" id="definitions"><i class="fas fa-cog fa-20 fa-icon-aside-left"></i><a href="">Definições</a></li>
                 <li class="li-component-aside" id="help"><i class="far fa-question-circle fa-20 fa-icon-aside-left"></i><a href="">Ajuda e Suporte</a></li>
-                <li class="li-component-aside"><i class="fas fa-sign-out-alt fa-20 fa-icon-aside-left"></i><a href="">Sair</a></li>
+                <!--<li class="li-component-aside"><i class="fas fa-sign-out-alt fa-20 fa-icon-aside-left"></i><a href="">Sair</a></li>-->
             </ul>
         </nav>
     </aside>

@@ -28,13 +28,13 @@
     </div>
 @endif
 
-@if($errors->any())
+<!--@if($errors->any())
     <div class="alert alert-danger" >
         <button class="close" type="button" data-dismiss="alert">x</button>
         Verificacao de Erros
         {{$errors}}
     </div>
-@endif
+@endif-->
 
 <script>
     let take_error = $("#error");

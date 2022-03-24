@@ -1184,6 +1184,50 @@ public function dados_comment($key){
             return response()->json($resposta);
           }
 
+          public function like_final(Request $request){
+                  $conta =Auth::user()->conta_id;
+                  $control= DB::select('select p.post_id,(select identificadors.identificador_id from identificadors where identificadors.id = p.post_id and identificadors.tipo_identificador_id = 3) as post_identify, (select identificadors.identificador_id from identificadors where identificadors.id = 1 and identificadors.tipo_identificador_id = ?) as conta_logada_identify,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_logada_identify) as reagi,(select prr.post_reaction_id from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_logada_identify) as id_reagi,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_a and identificadors.tipo_identificador_id = 1) as conta_a_identify, (select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_b and identificadors.tipo_identificador_id = 1) as conta_b_identify, if(pa.conta_id_a = ?|| pa.conta_id_b = ?, 1, 0) as dono_page from posts as p  inner join pages as pa on p.page_id = pa.page_id where p.uuid = ?', [$conta,$conta,$conta,$request->id]);
+
+                  if ($control[0]->reagi == 0) {
+                    DB::table('post_reactions')->insert([
+                      'reaction_id' => 1,
+                      'identificador_id' => $control[0]->conta_logada_identify,
+                      'post_id' => $control[0]->post_id,
+                      'created_at'=> $this->dat_create_update(),
+                    ]);
+                    if ($control[0]->dono_page == 0) {
+                    DB::table('notifications')->insert([
+                      [
+                          'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                          'id_state_notification' => 2,
+                          'id_action_notification' => 1,
+                          'identificador_id_causador'=> $control[0]->conta_logada_identify,
+                          'identificador_id_destino'=> $control[0]->post_identify,
+                          'identificador_id_receptor'=> $control[0]->conta_a_identify,
+                          'created_at'=> $this->dat_create_update(),
+                        ],
+                        [
+                                'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                                'id_state_notification' => 2,
+                                'id_action_notification' => 1,
+                                'identificador_id_causador'=> $control[0]->conta_logada_identify,
+                                'identificador_id_destino'=> $control[0]->post_identify,
+                                'identificador_id_receptor'=> $control[0]->conta_b_identify,
+                                'created_at'=> $this->dat_create_update(),
+                                ]
+                              ]);
+                              }
+
+                    $resposta= 1;
+
+                  } else {
+                    DB::table('post_reactions')->where(['post_reaction_id'=>$control[0]->id_reagi])->delete();
+
+                    $resposta= 2;
+                  }
+                  return response()->json($resposta);
+                }
+
           public function like_unlike(Request $request){
             $post=DB::select('select * from posts where uuid = ?', [$request->id]);
             $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
@@ -1364,6 +1408,56 @@ public function dados_comment($key){
                 return response()->json($resposta);
         }
 
+        public function seguir_final(Request $request){
+
+
+              $conta =Auth::user()->conta_id;
+              $page= DB::select('select (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_logada_identify,(select count(*) from seguidors where 	identificador_id_seguida = page_identify and identificador_id_seguindo = conta_logada_identify) as segui, (select seguidor_id from seguidors where identificador_id_seguida = page_identify and identificador_id_seguindo = conta_logada_identify) as id_seguidors,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_a and identificadors.tipo_identificador_id = 1) as conta_a_identify, (select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_b and identificadors.tipo_identificador_id = 1) as conta_b_identify, if(pa.conta_id_a =? || pa.conta_id_b = ?  , 1, 0) as dono_page from pages as pa where page_id = ? ', [$conta,$conta,$conta,$request->id]);
+
+              if ($page[0]->segui==0) {
+              DB::table('seguidors')->insert([
+                  'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'identificador_id_seguida' => $page[0]->page_identify,
+                  'identificador_id_seguindo' => $page[0]->conta_logada_identify,
+                  'created_at'=> $this->dat_create_update(),
+                  ]);
+                  $resposta='seguiu';
+                  if ($page[0]->dono_page == 0) {
+                DB::table('notifications')->insert([
+                  [
+                      'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                      'id_state_notification' => 2,
+                      'id_action_notification' => 5,
+                      'identificador_id_causador'=> $page[0]->conta_logada_identify,
+                      'identificador_id_destino'=> $page[0]->page_identify,
+                      'identificador_id_receptor'=> $page[0]->conta_a_identify,
+                      'created_at'=> $this->dat_create_update(),
+
+                    ],
+                    [
+                            'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                            'id_state_notification' => 2,
+                            'id_action_notification' => 5,
+                            'identificador_id_causador'=> $page[0]->conta_logada_identify,
+                            'identificador_id_destino'=> $page[0]->page_identify,
+                            'identificador_id_receptor'=> $page[0]->conta_b_identify,
+                            'created_at'=> $this->dat_create_update(),
+                          ],
+                        ]);
+                          }
+
+                        }else {
+                          DB::table('seguidors')
+                                ->where('seguidor_id',$page[0]->id_seguidors)
+                                ->delete();
+                                $resposta='parou de seguir';
+                        }
+
+
+
+                    return response()->json($resposta);
+            }
+
         public function savepost(Request $request){
 
               $conta =Auth::user()->conta_id;
@@ -1412,6 +1506,79 @@ public function dados_comment($key){
 
                             return response()->json($resposta);
                     }
+
+
+                    public function comentar_final(Request $request){
+                      $conta_logada= Auth::user()->conta_id;
+                      $control= DB::select('select p.post_id,(select identificadors.identificador_id from identificadors where identificadors.id = p.post_id and identificadors.tipo_identificador_id = 3) as post_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_logada_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_a and identificadors.tipo_identificador_id = 1) as conta_a_identify, (select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_b and identificadors.tipo_identificador_id = 1) as conta_b_identify, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p  inner join pages as pa on p.page_id = pa.page_id where p.post_id = ??', [$conta,$conta,$conta,$request->id]);
+
+
+                            if ($control[0]->dono_page == 1) {
+                              $comment= DB::table('comments')->insertGetId([
+                                'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                                'post_id' => $request->id,
+                                'identificador_id' => $control[0]->page_identify,
+                                'tipo_estado_comment_id'=>1,
+                                'comment'=>$request->comment,
+                                'created_at'=> $this->dat_create_update(),
+                                ]);
+
+                          DB::table('identificadors')->insert([
+                              'tipo_identificador_id' => 4,
+                              'id' => $comment,
+                              'created_at'=> $this->dat_create_update(),
+                         ]);
+
+                         $last_comment=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions , if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify   from comments as c where c.comment_id = ?) as c ',[$conta_logada, $comment]);
+
+
+                              } else {
+                                $comment= DB::table('comments')->insertGetId([
+                                'post_id' => $request->id,
+                                'identificador_id' => $control[0]->conta_logada_identify,
+                                'tipo_estado_comment_id'=>1,
+                                'comment'=>$request->comment,
+                                'created_at'=> $this->dat_create_update(),
+                                ]);
+
+
+                                $identificador=DB::table('identificadors')->insertGetId([
+                                'tipo_identificador_id' => 4,
+                                'id' => $comment,
+                                'created_at'=> $this->dat_create_update(),
+                                ]);
+
+                                $last_comment=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions , if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify   from comments as c where c.comment_id = ?) as c ',[$conta_logada, $comment]);
+
+
+                                  DB::table('notifications')->insert([
+                                    [
+                                      'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                                      'id_state_notification' => 2,
+                                      'id_action_notification' => 2,
+                                      'identificador_id_causador'=> $control[0]->conta_logada_identify,
+                                      'identificador_id_destino'=> $control[0]->post_identify,
+                                      'identificador_id_receptor'=> $control[0]->conta_a_identify,
+                                      'created_at'=> $this->dat_create_update(),
+
+                                    ],
+                                    [
+                                            'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                                            'id_state_notification' => 2,
+                                            'id_action_notification' => 2,
+                                            'identificador_id_causador'=> $control[0]->conta_logada_identify,
+                                            'identificador_id_destino'=> $control[0]->post_identify,
+                                            'identificador_id_receptor'=> $control[0]->conta_b_identify,
+                                            'created_at'=> $this->dat_create_update(),
+
+                                            ]
+                                          ]);
+
+                              }
+
+                       return response()->json($last_comment);
+                          }
+
 
     public function comentar(Request $request){
       $post= DB::select('select * from posts where post_id = ?', [$request->id]);
@@ -1588,11 +1755,9 @@ public function dados_comment($key){
 
 
    public function sendMsgToPhone($takePhone,$code){
-
-   // meu token a80fed69fcde464b35cee02ae7a172aa918235239
-    //token Ch: e5a2c12e2876ed474072ee9a10e4f3f2926312782
+    
          $response = Http::post('http://52.30.114.86:8080/mimosms/v1/message/send?token=a80fed69fcde464b35cee02ae7a172aa918235239 ', [
-             'sender'=>'918235239',
+             'sender'=>'Tassumir',
              'recipients' => $takePhone,
              'text' => 'Codigo de Confirmação Tassumir :'.$code,
         ]);
@@ -1654,7 +1819,7 @@ public function dados_comment($key){
 
                  if (sizeof($result_email) > 0 ) {
 
-                    return back()->with('error',"Já existe uma conta com o emai: ".$takeEmail." ". "na plataforma Tassumir");
+                    return back()->with('error',"Já existe uma conta com o email: ".$takeEmail." ". "na plataforma Tassumir");
 
                  }else{
 
@@ -1721,9 +1886,10 @@ public function dados_comment($key){
 
     public function verifyCodeSent(Request $request){
 
-        DB::beginTransaction();
 
         try{
+
+         DB::beginTransaction();
 
         $input_code = $request->codeSent;
 
@@ -1795,21 +1961,23 @@ public function dados_comment($key){
                DB::commit();
 
                 return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
-
         }else{
 
+            DB::rollBack();
 
-            return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
+           $response = $this->return_view_on_error($phoneReceived,$emailReceived,$nome,$apelido,$data_nascimento,$nacional,$sexo,$password);
+            return $response;
+            
         }
 
         }catch(\Exception $error){
-
                DB::rollBack();
                 dd($error);
-
-
         }
+    }
 
+    public function return_view_on_error($phoneReceived,$emailReceived,$nome,$apelido,$data_nascimento,$nacional,$sexo,$password){
+        return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
     }
 
     //nao recebi o codigo

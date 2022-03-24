@@ -194,49 +194,9 @@ class PerfilController extends Controller
     public function index()
     {
         try {
-
-          $controll = new AuthController();
-           $dates = $controll->default_();
-            $checkUserStatus = $dates['checkUserStatus'];
-            $profile_picture = $dates['profile_picture'];
-            $isUserHost = $dates['isUserHost'];
-            $hasUserManyPages = $dates['hasUserManyPages'];
-            $allUserPages = $dates['allUserPages'];
-            $page_content = $dates['page_content'];
-            $conta_logada = $dates['conta_logada'];
-            $dadosP = $this->dadosPerfil($conta_logada[0]->uuid);
-            $perfil=$dadosP['perfil'];
-            $gostos=$dadosP['gostos'];
-            $account_name=$dadosP['account_name'];
-            $guardadosP=$dadosP['guardadosP'];
-            $tipos_de_relacionamento=DB::table('tipo_relacionamentos')->get();
-            $notificacoes = $dates['notificacoes'];
-            $notificacoes_count = $dates['notificacoes_count'];
-            $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
-            $paginasSeguidas = $dates['paginasSeguidas'];
-            $dadosSeguida = $dates['dadosSeguida'];
-            $this->active_account_id = $account_name[0]->conta_id;
-            //---------------------------------------------------------------------
-             $authctrol = new AuthController;
-            $paginasSeguidas = $authctrol->paginasSeguidas();
-            $paginasNaoSeguidas = $authctrol->paginasNaoSeguidas();
-             $dadosSeguida = DB::table('seguidors')
-             ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
-             ->select('seguidors.*', 'identificadors.id')
-             ->get();
-
-
-
-              $page_current = 'profile';
-
-              //dd($account_name);
-
-
-
-              return view('perfil.index', compact('account_name','guardadosP','notificacoes_count', 'notificacoes','gostos', 'perfil', 'checkUserStatus', 'profile_picture', 'conta_logada', 'tipos_de_relacionamento', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
-
-
-
+          $page_current = 'profile';
+          $uuid = Auth::user()->uuid;
+          return view('perfil.index', compact('page_current', 'uuid'));
         } catch (Exception $e) {
             dd('erro');
         }

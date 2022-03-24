@@ -40,6 +40,7 @@
                 </ul>
             </nav>
         </header>
+        <input type="hidden" id="posts" name="" value="0">
         <div class="refresh-profile-photo clearfix invisible-component" id="refresh-profile-photo-id">
             <div class="profile-photo-container l-5">
                 <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
@@ -147,7 +148,7 @@
                                 Your browser does not support the video tag.
                             </video>
                             <input type="hidden" name="" value="post_view_" id="watch-video-{{$key}}">
-                            <input type="hidden" name="" value="" id="vid-{{$key}}">
+                            <input type="hidden" name="" id="vid-{{$key}}">
                             <input type="hidden" name="" id="has-video-{{$key}}">
                             <input type="hidden" name="" id="video-post-time-{{$key}}">
                             <input type="hidden" name="" id="video-post-time-all-{{$key}}">
@@ -750,6 +751,7 @@ function gostar(id){
                         //console.log('video ' + video_post1[0].id);
                         let id;
                         let video_post = $('.video-');
+                        let getvideo = $('.getvideo');
                         let currentTime;
                         let duration;
                         let watched_video;
@@ -768,6 +770,13 @@ function gostar(id){
                                 offset_video = $('#video_' + id).offset();
                                 //console.log('offset video ' + offset_video.top);
                                 video_post_time = $('#video-post-time-' + id);
+                                //console.log('src ' + document.getElementById('video_' + id).src);
+                               // console.log('src ' + (document.getElementById('video_' + id).src == ''));
+                                if (document.getElementById('video_' + id).src == '') {
+                                    $("#loader_button_" + id).removeClass('invisible-component');
+                                } else {
+                                    $("#loader_button_" + id).addClass('invisible-component');
+                                }
                                 if(offset_video.top < 190 && offset_video.top > -300){
                                     //console.log('hasvideo ' + id + ' ' + $('#has-video-' + id).val());
                                     if ($('#has-video-' + id).val() != "ok") {
@@ -786,9 +795,18 @@ function gostar(id){
                                                 //console.log('entrou no video watch-video ' + watched_video);
                                                 //add_view(watched_video);
                                             }
-                                            document.getElementById('play_button_' + id).classList.remove('invisible');
-                                        } else {
                                             document.getElementById('play_button_' + id).classList.add('invisible');
+                                            //$("#loader_button_" + id).hide();
+                                        } else {
+                                            //console.log('state ' + document.getElementById('video_' + id).readyState);
+                                            //console.log('state ' + document.getElementById('video_' + id).src);
+                                            /*if (document.getElementById('video_' + id).readyState < 4) {
+                                                $("#loader_button_" + id).addClass('invisible-component');
+                                            } else {
+                                                $("#loader_button_" + id).removeClass('invisible-component');
+                                            }*/
+                                            console.log('id_video ' + id);
+                                            document.getElementById('play_button_' + id).classList.remove('invisible');
                                             document.getElementById('video_' + id).pause();
                                             if (document.getElementById('video_' + id).readyState == 4) {
                                                 //document.getElementById('video_' + id).play();
@@ -825,9 +843,12 @@ function gostar(id){
                     }, 2000);
                     function getVideo(post, id){
                         let storage_video, video, type_file, source;
+                        //alert(id);
+                        $("#video_" + id).attr('src', );
+                        $("#video-post-link-" + id).attr('src', );
                         //document.getElementById('video_' + id).setAttribute('src', storage_video);
-                        document.getElementById('video_' + id).setAttribute('autoload', 'true');
                         $('#has-video-' + id).val('ok');
+                        //document.getElementById('video_' + id).play();
                         /*$.ajax({
                             url: "{{route('post.video.get')}}",
                             type: 'get',

@@ -1758,7 +1758,7 @@ label[for="hugo"]{
     position: relative;
     margin-top: 15px;
     margin-left: 15px;
-    background-color: transparent;
+    background-color: #343a40;
 }
 .alert-login {
     font-size: 12px;
@@ -2001,12 +2001,15 @@ label[for="hugo"]{
 .inform-profile {
     margin-left: 5px;
     margin-top: 20px;
+    width: 80%;
+    max-width: 65%;
 }
 .inform-profile p, 
 .inform-profile h2, 
 .inform-profile h3 {
     color: #efefef;
     font-size: 14px;
+    margin-bottom: 0;
 }
 .img-profile-user-married {
     position: relative;
@@ -2384,7 +2387,7 @@ label[for="hugo"]{
     font-size: 20px;
 }
 .follwing-btn {
-    width: 250px;
+    width: 100%;
     border-radius: 5px;
     padding: 8px;
     color: #fff;
@@ -2392,7 +2395,8 @@ label[for="hugo"]{
     background-color: #800080;
 }
 .follwing-btn-container {
-    margin: 15px auto 10px;
+    margin: 10px auto 10px;
+    width: 80%;
 }
 .card-page {
     margin: auto;
@@ -2403,7 +2407,7 @@ label[for="hugo"]{
 }
 #main-container-profile {
     width: 580px;
-    margin-top: 5px;
+    margin-top: 40px;
     /*background-color: #242526;*/
     border-radius: 10px;
 }
@@ -2473,6 +2477,9 @@ label[for="hugo"]{
 }
 #card-profile-option .option-profile-menu #ul-profile li {
     width: 32%;
+}
+#img-profile-container.transparent-back {
+    background-color: transparent;
 }
 #card-profile-option .option-profile-menu li:hover > a .icon-hover-option-profile{
     color: #800080;
@@ -3498,6 +3505,7 @@ label[for="hugo"]{
     height: 28px;
     z-index: 3;
 }
+<<<<<<< HEAD
 .loading-img {
     display: block;
 }
@@ -3546,7 +3554,7 @@ label[for="hugo"]{
 .more-options-profile-btn {
     position: relative;
     width: 100%;
-    height: 35px;
+    height: 38px;
     border-radius: 4px;
     background-color: #3b3b3b;
 }
@@ -3563,4 +3571,27 @@ label[for="hugo"]{
     height: 35px;
     margin: 10px 2%;
     margin-right: 0;
+}
+ .bring-to-front:hover{
+    -webkit-transform: scale(1.5);  
+}
+.bring-to-front img:hover{
+    /*background-position: 0px 0px;
+    background-size: 200px 200px;*/
+}
+#more-option-profile-component-pop-up .header-height {
+    height: 52px;
+    width: 100%;
+    position: relative;
+}
+.content-more {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 80%;
+}
+#option-btn-profile {
+    font-size: 15px;
+}
+#header-height-component {
+    position: relative;
 }

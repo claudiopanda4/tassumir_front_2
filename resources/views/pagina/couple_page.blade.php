@@ -2,164 +2,70 @@
 
 @section('content')
 <div class="main" id="main-container-profile">
+    <input type="hidden" id="page_couple" value=<?php echo md5('OK'); ?>>
     <div class="card br-10 card-flex card-page">
         <div class="clearfix page-card-header">
             <div class="img-profile-page-container clearfix l-5">
-                @if($page_content[0]->foto)
-                    <div class="img-profile-page circle l-5">
-                        <img src="{{asset('storage/img/page/') . '/' . $page_content[0]->foto}}" class="img-full circle">
+                <div class="img-profile-page circle l-5">
+                    <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full circle">
+                </div>
+                <label for="target-profile-cover-page" id="add-cover">
+                    <div class="add-edit-profile circle">
+                        <i class="fas fa-plus center" style="font-size: 10px;"></i>
                     </div>
-                @else
-                    <div class="img-profile-page circle l-5">
-                        <img src="{{asset('storage/img/page/unnamed.jpg')}}" class="img-full circle">
-                    </div>
-                @endif
-
-                @if($v==1)
-                    <label for="target-profile-cover-page">
-                        <div class="add-edit-profile circle">
-                            <i class="fas fa-plus center" style="font-size: 10px;"></i>
-                        </div>
-                    </label>
-                @endif
+                </label>
             </div>
             <div class="statistics-profile-page l-5 clearfix">
                 <div class="statistics-profile-page-identify">
-                    <h1>{{ $page_content[0]->nome }}</h1>
-                    <h2 class="lg-invisible-user-name">@<span></span>{{ $page_content[0]->nome }} </h2>
+                    <h1>Destacados</h1>
+                    <h2 class="lg-invisible-user-name">@<span></span>destacados</h2>
                 </div>
-                @if($isUserHost)
-                    <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg-1">
-                        <div class="statistics-profile-page-component l-5">
-                            @if ($publicacoes > 1)
-                            <h1>{{ $publicacoes }}</h1>
-                            <h2 class="text-ellips">Publicações</h2>
-                            @else
-                            <h1>{{ $publicacoes }}</h1>
-                            <h2 class="text-ellips">Publicação</h2>
-                            @endif
-                        </div>
-                        <?php if (false): ?>
-                        <div class="statistics-profile-page-component l-5 invisible">
-                            <h1>123</h1>
-                            <h2>A Seguir</h2>
-                        </div>
-                        <?php endif ?>
-                        <div class="statistics-profile-page-component l-5">
-                            <h1>{{ $seguidores }}</h1>
-                            @if ($seguidores > 1)
-                                <h2 class="text-ellips">Seguidores</h2>
-                            @else
-                                <h2 class="text-ellips">Seguidor</h2>
-                            @endif
+                <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg-1">
+                    <div class="statistics-profile-page-component l-5">
+                        <h1>0</h1>
+                        <h2 class="text-ellips">Publicações</h2>
+                    </div>
+                    <div class="statistics-profile-page-component l-5">
+                        <h1>0</h1>
+                        <h2 class="text-ellips">Seguidores</h2>
+                    </div>
+                    <div class="statistics-profile-page-component l-5">
+                        <h1>0</h1>
+                        <h2 class="text-ellips">Curtidas</h2>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <a href="" id="a-btn-flw-edt">
+                        <div id="btn_follwing" class="follwing-btn-container l-5">
+                            <button type="submit" class="follwing-btn" id="btn_seguir">
+                                Seguir
+                            </button>
+                        </div>                    
+                    </a>
+                    <div class="l-5 options-profile-btn more-options-profile-bt">
+                        <label for="more-option-target-profile" class="target-options-profile">
+                            <div class="">
+                                <div class="more-options-profile-btn">
+                                    <div class="more-options-component"><i class="fas fa-caret-down center" style="font-size: 18px;"></i></div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>                    
+                </div>
 
-                        </div>
-                        <div class="statistics-profile-page-component l-5">
-                            <h1>{{ $seguidores }}</h1>
-                            <h2 class="text-ellips">Curtidas</h2>
-                        </div>
-                    </div>
-                @else
-                    <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg">
-                        <div class="statistics-profile-page-component l-5">
-                            @if ($publicacoes > 1)
-                            <h1>{{ $publicacoes }}</h1>
-                            <h2 class="text-ellips">Publicações</h2>
-                            @else
-                            <h1>{{ $publicacoes }}</h1>
-                            <h2 class="text-ellips">Publicação</h2>
-                            @endif
-                        </div>
-                        <?php if (false): ?>
-                        <div class="statistics-profile-page-component l-5 invisible">
-                            <h1>123</h1>
-                            <h2>A Seguir</h2>
-                        </div>
-                        <?php endif ?>
-                        <div class="statistics-profile-page-component l-5">
-                            <h1 id="qtd_seguidores">{{ $seguidores }}</h1>
-                            <h2 class="text-ellips">Seguidor</h2>
-                        </div>
-                        <div class="statistics-profile-page-component l-5">
-                            <h1>{{ $seguidores }}</h1>
-                            <h2 class="text-ellips">Curtidas</h2>
-                        </div>
-                    </div>
-                    <div id="btn_follwing" class="follwing-btn-container">
-                        <?php $contador = 0;
-                              $sgda = 0;
-                              $sgdo = 0;
-                         ?>
-                        @forelse($conta_seguinte as $Seguida)
-                        <?php  if (($page_content[0]->page_id == $Seguida)) : ?>
-                         <?php $sgda = $page_content[0]->page_id;?>
-                         <?php $sgdo = $account_name[0]->conta_id;?>
-                        <?php $contador = 1;?>
-                        <?php endif ?>
-                        @empty
-                        @endforelse
-                        <?php if ($contador == 1): ?>
-                        <button type="submit" class="follwing-btn" id="btn_nao_seguir">
-                            Não Seguir
-                        </button>
-                        <?php else : ?>
-                        <button type="submit" class="follwing-btn" id="btn_seguir">
-                            Seguir
-                        </button>
-                        <?php endif ?>
-                        <input type="hidden" id="seguinte" value="{{ $account_name[0]->conta_id }}" name="">
-                        <input type="hidden" id="seguida_page" value="{{ $page_content[0]->page_id }}" name="">
-                        <input type="hidden" id="sgdo" value="{{ $sgdo }}" name="">
-                        <input type="hidden" id="sgda" value="{{ $sgda }}" name="">
-                    </div>
-                @endif
             </div>
-            <?php if ($v==1): ?>
-                <a href="{{route('page.edit.get', $page_content[0]->uuid)}}">
-                    @csrf
-                    <div class="edit-page-container">
-                        <button type="submit" class="follwing-btn" id="edit-page">
-                            Editar
-                        </button>
-                    </div>
-                </a>
-            <?php endif ?>
-
         </div>
-        <?php if (false): ?>
-            <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-mobile">
-                <div class="statistics-profile-page-component l-5">
-                   @if ($publicacoes > 1)
-                   <h1>{{ $publicacoes }}</h1>
-                   <h2>Publicações</h2>
-                   @else
-                   <h1>{{ $publicacoes }}</h1>
-                   <h2>Publicação</h2>
-                   @endif
-                </div>
-                @if (false)
-                <div class="statistics-profile-page-component l-5">
-                    <h1>123</h1>
-                    <h2>A Seguir</h2>
-                </div>
-                @endif
-                <div class="statistics-profile-page-component l-5">
-                    <h1>{{ $seguidores }}</h1>
-                    <h2>Seguindo</h2>
-                </div>
-            </div>
-        <?php endif ?>
         <div class="clearfix page-card-header">
 
             <div class="description-couple">
                 <h2 class="mobile-user-name">@<span></span>
-                    <?php echo strtolower($page_content[0]->nome); ?>
+                    <?php echo strtolower('destacados'); ?>
                 </h2>
 
-                <h2><span>{{ $casalPageName }}</h2>
+                <h2><span>Destacados</h2>
             </div>
             <div class="description-couple">
-                <p> {{ $page_content[0]->descricao }} </p>
+                <p> Para os destaques da semana </p>
             </div>
         </div>
         @if($v == 1)
@@ -180,45 +86,24 @@
             </div>
         </label>
         @endif
-        <section class="suggest-slide suggest-slide-page">
+        <section class="suggest-slide invisible-component" id="sugest_index_page">
             <header>
-                <h1>Sugestões de Páginas pra Você</h1>
+                <h1>Sugestões pra você</h1>
             </header>
             <nav class="clearfix">
-                <ul id="sugest_couple" class="clearfix">
-                            @forelse($pagenaoseguidas as $Paginas)
-                                <?php $conta_page = 0;
-                                    $seguidors = 0;
-                                        foreach ($dadosSeguida as  $val){
-                                            if ($val->id == $Paginas->page_id) {
-                                                $seguidors += 1;
-
-                                            }
-                                        }
-                                    ?>
-                                @if( $Paginas->page_id != $page_content[0]->page_id)
-                                <li class="li-component-suggest clearfix l-5 nao_sigo" id="li-component_suggest-{{$Paginas->page_id}}">
-                                    <div class="clearfix sugest_component_div">
-                                        @if( !($Paginas->foto == null) )
-                                            <div class="sugest_component circle clearfix">
-                                               <a href="{{ route('couple.page1', $Paginas->uuid) }}"><img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $Paginas->foto }}"></a>
-                                            </div>
-                                        @else
-                                            <div class="sugest_component circle clearfix">
-                                                <a href="{{ route('couple.page1', $Paginas->uuid) }}"><img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}"></a>
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <a href="{{ route('couple.page1', $Paginas->uuid) }}"><h1 class="name-suggest text-ellips">{{ $Paginas->nome }}</h1></a>
-                                    <a href="" class="seguir_couple" ><div id="{{ $Paginas->page_id }}">seguir</div></a>
-                                    <input type="hidden" id="conta_id" value="{{ $account_name[0]->conta_id }}" name="">
-                                </li>
-                                @endif
-                                @empty
-                                <li class="li-component-aside-right clearfix">
-                                <h1 class="l-5 name-page text-ellips">Nenhuma Página Encontrada</h1>
-                                </li>
-                            @endforelse
+                <ul class="clearfix"> 
+                <?php $key_ = 0; while ($key_ < 8) {?>
+                    <li class="li-component-suggest clearfix l-5 sugest_page" id="li-component-suggest-{{$key_}}">
+                        <div class="clearfix sugest_component_div" id="sugestcomponentdiv_{{$key_}}">
+                            <div class="sugest_component circle clearfix">
+                                <img class="img-full circle" id="cover-suggest-index-page-{{$key_}}">
+                            </div>
+                        </div>
+                        <a href="" id="a-name-suggest-index-page-{{$key_}}"><h1 class="name-suggest text-ellips" id="name-suggest-index-page-{{$key_}}"></h1></a>
+                        <a href="" class="seguir_index"><div id="{{$key_}}">seguir</div></a>
+                        <input type="hidden" id="link_page_{{$key_}}">
+                    </li>
+                <?php $key_++; } ?>
                 </ul>
             </nav>
         </section>
@@ -230,70 +115,47 @@
                     <li><a href="?post-container-post=post"><i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 24px;"></i><h1 class="menu-option-profile"></h1></a></li>
                 </ul>
             </nav>
-            <?php
-                $posts = [
-                    [],[],[],
-                    [],[],[],
-                    [],[],[],
-                    [],[],[],
-                ];
-            ?>
             <?php if (isset($_GET['post-container-post'])): ?>
-                <?php if ($_GET['post-container-post'] == 'post'): ?>
-                <div class="post-img-container-page post-page-container">
-                    <?php foreach ($posts as $key => $value): ?>
-
-                    <?php endforeach ?>
-                </div>
-                <?php endif ?>
                 <?php if ($_GET['post-container-post'] == 'video'): ?>
                 <div class="post-video-container-page post-page-container">
-
-                    @for($i = 0; $i < count($allPosts); $i++)
-                        @if(isset($allPosts[$i]['postVideos']))
-                        <a href="">
-                            <div class="img-post">
-                                <video>
-                                    <source src="{{asset('storage/video/page/' . $allPosts[$i]['postVideos'])}}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-                        </a>
-                        @endif
-                    @endfor
+                    <a href="">
+                        <div class="img-post">
+                            <video>
+                                <source src="" type="video/mp4">
+                            </video>
+                        </div>
+                    </a>
                 </div>
                 <?php endif ?>
 
                 <?php if ($_GET['post-container-post'] == 'images'): ?>
                     <div class="post-img-container-page post-page-container">
-
-                        @for($i = 0; $i < count($allPosts); $i++)
-                            @if(isset($allPosts[$i]['postImages']))
-                            <a href="">
-                                <div class="img-post">
-                                    <img src="{{asset('storage/img/page/' . $allPosts[$i]['postImages'])}}" class="img-full">
-                                </div>
-                            </a>
-                            @endif
-                        @endfor
-
+                        <a href="">
+                            <div class="img-post">
+                                <img src="" class="img-full">
+                            </div>
+                        </a>
                     </div>
                 <?php endif ?>
-
             <?php else: ?>
-                <div class="post-img-container-page post-page-container">
-
-                        @for($i = 0; $i < count($allPosts); $i++)
-                            @if(isset($allPosts[$i]['postImages']))
-                            <a href="">
-                                <div class="img-post">
-                                    <img src="{{asset('storage/img/page/' . $allPosts[$i]['postImages'])}}" class="img-full">
-                                </div>
-                            </a>
-                            @endif
-                        @endfor
-
+                <?php $key = 0; while($key < 200){ ?>
+                    <div class="post-img-container-page post-page-container invisible-component">
+                        <a href="">
+                            <div class="img-post">
+                                <img src="" class="img-full">
+                            </div>
+                        </a>
                     </div>
+                    <div class="post-video-container-page post-page-container invisible-component">
+                        <a href="">
+                            <div class="img-post">
+                                <video>
+                                    <source type="video/mp4">
+                                </video>
+                            </div>
+                        </a>
+                    </div>
+                <?php $key++; } ?>
             <?php endif ?>
         </div>
     </div>
