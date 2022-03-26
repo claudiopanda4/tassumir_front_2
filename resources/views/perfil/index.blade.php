@@ -48,7 +48,7 @@
                 </li>
             </ul>
             <div id="option-profile-no-own">
-            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $account_name[0]->tipo_contas_id != 1 && $conta_logada[0]->tipo_contas_id != 1 ): ?>
+            <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $account_name[0]->tipo_contas_id != 1 && $conta_logada[0]->tipo_contas_id != 1 && $perfil[0]['verificacao_pedido2'] ==0): ?>
             <div>
                 <?php if ($account_name[0]->uuid != $conta_logada[0]->uuid && $perfil[0]['verificacao_page'] == 0 && $perfil[0]['verificacao_page1'] == 0  && $perfil[0]['verificacao_page2'] == 0 && $perfil[0]['verificacao_page3'] == 0  ): ?>
 
@@ -65,14 +65,14 @@
                     <div class="hidden-click-any-container options-invited clearfix">
                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                             <div class="hidden-click-any-container label-invited" id="">
-                                <h2 class="accept_relationship" id="{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}">Aceitar</h2>
+                                <h2 class="accept_relationship" id="{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}|{{$perfil[0]['uuid']}}">Aceitar</h2>
                             </div>
                         </label>
                         <div class="reject_relationship" id="R|{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}">
                         <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}">Rejeitar</a>
                     </div>
                   </div>
-                    
+
                 </div>
 
                     <?php elseif ($perfil[0]['verificacao_pedido'] == 1 ): ?>
@@ -81,7 +81,7 @@
                           <a href="" class="hidden-click-any-container l-5 denied " id="R|{{$perfil[0]['Pedido_relac_uuid']}}|{{$perfil[0]['not_id']}}">Cancelar Pedido De Relacionamento</a>
                       </div>
                     </div>
-                           
+
                         </div>
 
                     <?php elseif ($perfil[0]['verificacao_pedido'] == 2 ): ?>
@@ -89,7 +89,7 @@
                           <a  href="{{route('relationship.page1', $perfil[0]['Pedido_relac_uuid']) }}" class="ver_mais" id="VR|{{$perfil[0]['not_id']}}">Ver Resposta</a>
 
                         </div>
-                           
+
                         </div>
 
                     <?php else: ?>

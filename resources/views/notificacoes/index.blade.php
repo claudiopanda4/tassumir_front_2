@@ -116,7 +116,7 @@
                 <div class="hidden-click-any-container options-invited clearfix">
                     <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                         <div class="hidden-click-any-container label-invited" id="">
-                            <h2 class="accept_relationship" id="{{$notificacoes[$i]['id']}}|{{$notificacoes[$i]['id1']}}">Aceitar</h2>
+                            <h2 class="accept_relationship" id="{{$notificacoes[$i]['id']}}|{{$notificacoes[$i]['id1']}}|{{$notificacoes[$i]['uuid_pedinte']}}">Aceitar</h2>
                         </div>
                     </label>
                     <div class="reject_relationship" id="R|{{$notificacoes[$i]['id']}}|{{$notificacoes[$i]['id1']}}">

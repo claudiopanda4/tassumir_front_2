@@ -48,6 +48,9 @@ class PerfilController extends Controller
            $verificacao_page1= DB::select('select * from pages where (conta_id_b,tipo_page_id) = (?, ?)', [$account_name[0]->conta_id, 1]);
            $verificacao_page2= DB::select('select * from pages where (conta_id_a,tipo_page_id) = (?, ?)', [$conta_logada[0]->conta_id, 1]);
            $verificacao_page3= DB::select('select * from pages where (conta_id_b,tipo_page_id) = (?, ?)', [$conta_logada[0]->conta_id, 1]);
+           $verificacao_pedido2= DB::select('select * from pedido_relacionamentos where conta_id_pedida = ? and estado_pedido_relac_id  <> ? || conta_id_pedinte = ? and estado_pedido_relac_id  <> ?', [$account_name[0]->conta_id, 1,$account_name[0]->conta_id, 1]);
+
+             $perfil[0]['verificacao_pedido2']=sizeof($verificacao_pedido2);
 
            $perfil[0]['verificacao_relac']=0;
            if (sizeof($verificacao_page) > 0){
@@ -99,6 +102,8 @@ class PerfilController extends Controller
              if (sizeof($verificacao_pedido)>0) {
                if ($verificacao_pedido[0]->estado_pedido_relac_id == 1) {
                  $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido[0]->uuid;
+                 $conta = DB::select('select uuid from contas where conta_id = ?', [$verificacao_pedido[0]->conta_id_pedinte]);
+                 $perfil[0]['uuid']=$conta[0]->uuid;
                  $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
                  $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
                  $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido[0]->pedido_relacionamento_id, 5 ]);
@@ -107,6 +112,8 @@ class PerfilController extends Controller
                  $perfil[0]['verificacao_pedido']=1;
                }elseif ($verificacao_pedido[0]->estado_pedido_relac_id == 2) {
                  $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido[0]->uuid;
+                 $conta = DB::select('select uuid from contas where conta_id = ?', [$verificacao_pedido[0]->conta_id_pedinte]);
+                 $perfil[0]['uuid']=$conta[0]->uuid;
                  $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
                  $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
                  $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido[0]->pedido_relacionamento_id, 5 ]);
@@ -123,6 +130,8 @@ class PerfilController extends Controller
              if (sizeof($verificacao_pedido1)>0) {
                if ($verificacao_pedido1[0]->estado_pedido_relac_id== 1) {
                  $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido1[0]->uuid;
+                 $conta = DB::select('select uuid from contas where conta_id = ?', [$verificacao_pedido1[0]->conta_id_pedinte]);
+                 $perfil[0]['uuid']=$conta[0]->uuid;
                  $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
                  $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
                  $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido1[0]->pedido_relacionamento_id, 5 ]);

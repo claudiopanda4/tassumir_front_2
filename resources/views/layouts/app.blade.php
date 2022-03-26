@@ -58,7 +58,7 @@
             <nav class="menu-header ">
                 <?php $controller = 0; ?>
                 <ul class="clearfix ">
-                  
+
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="hidden-click-any-container last-component-n clearfix-n " id="notification-header-icon">
                             <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i>
@@ -185,7 +185,7 @@
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
-                                                <h2 class="accept_relationship" id="{{$notificacoes[$i]['id']}}|{{$notificacoes[$i]['id1']}}">Aceitar</h2>
+                                                <h2 class="accept_relationship" id="{{$notificacoes[$i]['id']}}|{{$notificacoes[$i]['id1']}}|{{$notificacoes[$i]['uuid_pedinte']}}">Aceitar</h2>
                                             </div>
                                         </label>
                                         <div class="reject_relationship" id="R|{{$notificacoes[$i]['id']}}|{{$notificacoes[$i]['id1']}}">
@@ -288,7 +288,7 @@
                                     <div class="hidden-click-any-container options-invited clearfix">
                                         <label class="hidden-click-any-container l-5" for="options-invited-pop-up">
                                             <div class="hidden-click-any-container label-invited" id="">
-                                                <h2 class="accept_relationship" id="{{$notificacoes[$i]['id']}}|{{$notificacoes[$i]['id1']}}">Aceitar</h2>
+                                                <h2 class="accept_relationship" id="{{$notificacoes[$i]['id']}}|{{$notificacoes[$i]['id1']}}|{{$notificacoes[$i]['uuid_pedinte']}}">Aceitar</h2>
                                             </div>
                                         </label>
                                         <div class="reject_relationship" id="R|{{$notificacoes[$i]['id']}}|{{$notificacoes[$i]['id1']}}">
@@ -486,7 +486,7 @@
         @yield('content');
     </main>
     <div class="menu-footer">
-        
+
     </div>
     <footer class="menu-footer menu-footer-main">
         <ul>
@@ -1095,9 +1095,28 @@
           let id = e.target.id;
           let id1= id.split('|')[0];
           let id2= id.split('|')[1];
+          let id3= id.split('|')[2];
+          //alert(id3);
+          $.ajax({
+            url: "{{ route('verify_not')}}",
+            type: 'get',
+            data: {'id': id1},
+            dataType: 'json',
+            success:function(response){
+              //alert(response.length);
+              //console.log(response);
+              if(response.length>0){
+                tela_confirm(id1, id2);
+              }else {
+              //  alert(id3);
+                  var route1 = "{{route('account1.profile', 1) }}"
+                  url_array1 = route1.split('/');
+                  url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + id3;
+                  window.location.href =url_link1;
+              }
+              }
+            });
 
-
-            tela_confirm(id1, id2);
 
       });
 
@@ -1135,7 +1154,7 @@
               }
             });
       });
-     
+
       $('.comentar-aa').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
@@ -1407,7 +1426,7 @@
             }else{
                var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];
             }
-             
+
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
@@ -1712,18 +1731,18 @@ $.ajax({
 
 if (document.getElementById('#putInfo')) {
   function checkDuration(file_control) {
-    
+
     let fileType = file_control.files[0].type;
-    
+
     if ( check_for_file_type(fileType) ) {
-      
+
       window.URL = window.URL || window.webkitURL;
       var video = document.createElement('video');
       video.preload = 'metadata';
 
       video.onloadedmetadata = function () {
           window.URL.revokeObjectURL(video.src);
-          let minutes = Math.floor((video.duration) / 60); 
+          let minutes = Math.floor((video.duration) / 60);
 
           if (minutes > 1) {
             var certificar = document.querySelector('#putInfo').value = 'long_video_duration';
@@ -1738,9 +1757,9 @@ if (document.getElementById('#putInfo')) {
 
 
   function check_for_file_type(fileType) {
-    
+
     return fileType == 'video/mp4' || fileType == 'video/avi' || fileType =='video/ogg' || fileType =='video/mkv' || fileType =='video/3gp' || fileType =='video/wmv' || fileType =='video/flv';
-  }    
+  }
 }
 
 

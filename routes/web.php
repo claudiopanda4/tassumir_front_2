@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/get_only_comments/', [App\Http\Controllers\AuthController::class, 'get_only_comments'])->name('get_comments');
     /* end siene  */
 
-
+    Route::get('/verify_not', [App\Http\Controllers\AuthController::class, 'verify_not'])->name('verify_not');
     Route::get('/savepost', [App\Http\Controllers\AuthController::class, 'savepost'])->name('savepost');
     Route::get('/comentar', [App\Http\Controllers\AuthController::class, 'comentar'])->name('comentar');
     Route::post('/Pedido_relac/', [App\Http\Controllers\PerfilController::class, 'Pedido_relac'])->name('Pedido_relac');

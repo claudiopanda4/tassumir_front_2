@@ -218,63 +218,15 @@ class PaginaCasalController extends Controller
         DB::table('notifications')->where('notification_id',$request->id_notification)
         ->update(['id_state_notification' => 3, 'updated_at' => $controll->dat_create_update()]);
 
- $aux= DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->accept_relacd]);
- $aux1=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->pedido_relacionamento_id, 5 ]);
- $aux2=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedida, 1 ]);
- $aux3=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedinte, 1]);
+       $aux= DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->accept_relacd]);
+       $aux1=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->pedido_relacionamento_id, 5 ]);
+       $aux2=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedida, 1 ]);
+       $aux3=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedinte, 1]);
 
-   $contaPDD = DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedida)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedida)
-         ->get();
-
-   $contaPDT = DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedinte)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedinte)
-               ->get();
-
-              if(sizeof($contaPDD)>1) {
-                      for ($i=sizeof($contaPDD); $i > 0 ; $i--) {
-                        if ($contaPDD[$i - 1]->pedido_relacionamento_id != $aux[0]->pedido_relacionamento_id) {
-                          DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$contaPDD[$i - 1]->pedido_relacionamento_id)
-                          ->delete();
-                        }
-                      }
-                    }
-              if(sizeof($contaPDT)>1) {
-                      for ($i=sizeof($contaPDT); $i > 0 ; $i--) {
-                        if ($contaPDT[$i - 1]->pedido_relacionamento_id != $aux[0]->pedido_relacionamento_id) {
-                          DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$contaPDT[$i - 1]->pedido_relacionamento_id)
-                          ->delete();
-                        }
-                      }
-             }
-
-             $notContaPDD = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux2[0]->identificador_id]);
-             $notContaPDD1 = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux2[0]->identificador_id]);
-             $notContaPDT = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux3[0]->identificador_id]);
-             $notContaPDT1 = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador) = (?, ?)', [4, $aux3[0]->identificador_id]);
-
-             if(sizeof($notContaPDD)>0) {
-                     for ($i=sizeof($notContaPDD); $i > 0 ; $i--) {
-                       DB::table('notifications')->where('notification_id',$notContaPDD[$i - 1]->notification_id)
-                       ->delete();
-                     }
-                   }
-             if(sizeof($notContaPDT)>0) {
-                     for ($i=sizeof($notContaPDT); $i > 0 ; $i--) {
-                       DB::table('notifications')->where('notification_id',$notContaPDT[$i - 1]->notification_id)
-                       ->delete();
-                     }
-            }
-            if(sizeof($notContaPDD1)>0) {
-                    for ($i=sizeof($notContaPDD1); $i > 0 ; $i--) {
-                      DB::table('notifications')->where('notification_id',$notContaPDD[$i - 1]->notification_id)
-                      ->delete();
-                    }
-                  }
-            if(sizeof($notContaPDT1)>0) {
-                    for ($i=sizeof($notContaPDT1); $i > 0 ; $i--) {
-                      DB::table('notifications')->where('notification_id',$notContaPDT[$i - 1]->notification_id)
-                      ->delete();
-                    }
-           }
+       DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedida)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedida)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->delete();
+       DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedinte)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedinte)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->delete();
+       DB::table('notifications')->where('id_action_notification',4)->where('identificador_id_receptor',$aux2[0]->identificador_id)->delete();
+       DB::table('notifications')->where('id_action_notification',4)->where('identificador_id_receptor',$aux3[0]->identificador_id)->delete();
 
 
         DB::table('notifications')->insert([
@@ -537,7 +489,7 @@ class PaginaCasalController extends Controller
           $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
           $dadosSeguida = $dates['dadosSeguida'];
           $page_current = 'relationship_request';
-            
+
 
         //***************** siene *******************//
           $casalPageName = self::get_casalPage_name($uuid);
@@ -1008,10 +960,10 @@ class PaginaCasalController extends Controller
       $data = DB::table('pages')->where('uuid', $uid)->select('conta_id_a', 'conta_id_b')->get();
 
       $donodapage = DB::table('pedido_relacionamentos')->where('conta_id_pedida', $data[0]->conta_id_a)->orwhere('conta_id_pedinte', $data[0]->conta_id_a)->get();
-      
-      if (sizeof($donodapage) > 0) {       
+
+      if (sizeof($donodapage) > 0) {
       $tipo_relac = $donodapage[0]->tipo_relacionamento_id;
-      
+
       if ($tipo_relac == 1) {
             return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Nativos';
           } elseif ($tipo_relac == 2) {
@@ -1025,8 +977,8 @@ class PaginaCasalController extends Controller
           }
           } else{
             return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Nativos';
-          }   
-     
+          }
+
     }
 
     private static function get_account_nomeAndApelido($table_name, $account_id) {
