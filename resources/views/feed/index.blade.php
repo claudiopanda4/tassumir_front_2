@@ -7,55 +7,55 @@
         <li>
 
         </li>
-    </ul>
+      </ul>
 </header>
 <header class="card br-10 stories stories-about-talking" id="stories-card">
-            <header>
-                <h1>O que está a pipocar...</h1>
-            </header>
-            <nav>
-                <ul class="clearfix">
-                  @for ($i=0; $i< sizeof($what_are_talking); $i++)
-                    @if($i < 5)
-                        <li class="li-component-stories l-5">
-                            <a href="{{route('post_index', $what_are_talking[$i]['post_uuid'])}}">
-                                <div class="identify-cover circle">
-                                @if( !($what_are_talking[$i]['foto_page'] == null) )
-                                    <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
-                                @else
-                                    <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                @endif
-                                </div>
-                                <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
-                                    <img class="img-back-stories center" src="{{asset('storage/img/page/') . '/' . $what_are_talking[$i]['file']}}">
-                              <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>                
-                                    <video controls class="video-post-dest">
-                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
-                                        <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
-                                    </video> 
-                                    @if( !($what_are_talking[$i]['foto_page'] == null) )
-                                        <img class="img-full circle foto-page-video" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
-                                    @else
-                                        <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                    @endif   
-                                <?php else: ?>
-                                        <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                                <?php endif ?>
-                                <div class="headline">
-                                    <h2 class="center">{{$what_are_talking[$i]['post']}}</h2>
-                                </div>
-                            </a>
-                        </li>
-                    @endif
-                    @endfor
-                    <div class="see-all-stories circle">
-                        <a href="">
-                            <i class="fas fa-arrow-right fa-16 center"></i>
-                        </a>
-                    </div>
-                </ul>
-            </nav>
-        </header>
+      <header>
+          <h1>O que está a pipocar...</h1>
+      </header>
+      <nav>
+          <ul class="clearfix">
+            @for ($i=0; $i< sizeof($what_are_talking); $i++)
+              @if($i < 5)
+                  <li class="li-component-stories l-5">
+                      <a href="{{route('post_index', $what_are_talking[$i]['post_uuid'])}}">
+                          <div class="identify-cover circle">
+                          @if( !($what_are_talking[$i]['foto_page'] == null) )
+                              <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
+                          @else
+                              <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          @endif
+                          </div>
+                          <?php if ( $what_are_talking[$i]['formato'] == 2 ): ?>
+                              <img class="img-back-stories center" src="{{asset('storage/img/page/') . '/' . $what_are_talking[$i]['file']}}">
+                        <?php elseif ($what_are_talking[$i]['formato'] == 1): ?>
+                              <video controls class="video-post-dest">
+                                  <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/mp4">
+                                  <source src="{{asset('storage/video/page/') . '/' . $what_are_talking[$i]['file']}}" type="video/webcam">
+                              </video>
+                              @if( !($what_are_talking[$i]['foto_page'] == null) )
+                                  <img class="img-full circle foto-page-video" src="{{ asset('storage/img/page/') . '/' . $what_are_talking[$i]['foto_page'] }}">
+                              @else
+                                  <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                              @endif
+                          <?php else: ?>
+                                  <img class="img-full circle foto-page-video" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                          <?php endif ?>
+                          <div class="headline">
+                              <h2 class="center">{{$what_are_talking[$i]['post']}}</h2>
+                          </div>
+                      </a>
+                  </li>
+              @endif
+              @endfor
+              <div class="see-all-stories circle">
+                  <a href="">
+                      <i class="fas fa-arrow-right fa-16 center"></i>
+                  </a>
+              </div>
+          </ul>
+      </nav>
+  </header>
         <?php if ($conta_logada[0]->foto == null): ?>
         <div class="refresh-profile-photo clearfix" id="refresh-profile-photo-id">
             <div class="profile-photo-container l-5">
@@ -129,7 +129,7 @@
                                 <h1 class="center">p</h1>
                             </div>
                         <?php endif ?>
-                        
+
                         <div class="page-identify l-5 clearfix">
                             <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
                             <div class="info-post clearfix">
@@ -183,10 +183,13 @@
                             <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$dados[$key]['post_id']?>>
                             <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$dados[$key]['post_id']?>>
                             <img class="loader_icon center" src="{{asset('css/uicons/loading.gif')}}" id=<?php echo "loader_icon_".$dados[$key]['post_id']; ?>>
-                            <video class="video-post-video" id="video_{{$dados[$key]['post_id']}}">
+
+                            <video class="video-post-video playOrPause" id="video_{{$dados[$key]['post_id']}}" >
                                 <source src="{{asset('storage/video/page/') . '/' . $dados[$key]['file']}}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
+
+
                             <input type="hidden" name="" value="post_view_{{$dados[$key]['post_uuid']}}_{{$conta_logada[0]->uuid}}" id="watch-video-{{$dados[$key]['post_id']}}">
                             <input type="hidden" name="" value="{{$dados[$key]['post_uuid']}}" id="vid-{{$dados[$key]['post_id']}}">
                             <input type="hidden" name="" id="has-video-{{$dados[$key]['post_id']}}">
@@ -455,7 +458,7 @@
                 } else {
                     id_full = id_full.split('|')[1];
                 }
-                
+
                 like(id, id_full)
             }
 
@@ -482,7 +485,7 @@
                           data: {'id': id, 'id_full' : id_full},
                            dataType: 'json',
                            success:function(response){
-                           console.log(response);
+                           //console.log(response);
 
                             $.each(response.remove, function(key, value){
                                 //console.log(response.id + ' remove ' + value);
@@ -505,6 +508,7 @@
             function com(element){
                 let id = element.id;
                 let c = document.getElementById('comentario-' + id).value;
+
                 if(c != ''){
                     $("#comment-own-" + id).text(c);
                   $("#comment-users-own-" + id).css({
@@ -524,7 +528,7 @@
                   data: {'id': id, 'comment': c},
                    dataType: 'json',
                    success:function(response){
-                   console.log(response);
+
                    var nome = '';
                    comment_qtd = parseInt(comment_qtd) + 1;
                    $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
@@ -535,7 +539,7 @@
                           nome +=             '<i class="far fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
                         }
                         let new_comment = 'novo-comment-' + id;
-                        console.log(new_comment);
+                        //console.log(new_comment);
                         $('#' + new_comment).append(nome);
 
                   }
@@ -659,7 +663,10 @@ function gostar(id){
          /*let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
          if (response == 1) {
            likes_qtd = parseInt(likes_qtd) + 1;
-           $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+           $("#likes-qtd-" + id).text((likes_qtd) + "
+
+
+           ");
          } else if (response == 2) {
            likes_qtd = parseInt(likes_qtd) - 1;
            if (likes_qtd >= 0) {
@@ -799,7 +806,7 @@ function gostar(id){
                     let url_link = "{{ route('couple.page1', 0) }}";
                         url_array = url_link.split('/');
                         url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/" + url_array[3] + "/" + value.uuid;
-                    if (value.foto != null) {                        
+                    if (value.foto != null) {
                     let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
                         $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }else{
@@ -861,26 +868,26 @@ function gostar(id){
                             let id_video_final = id_video[size_id_video - 1];
                             if (document.getElementById('video_' + id_video_final).paused) {
                                 if (document.getElementById('play_button_' + id_video_final)) {
-                                    document.getElementById('play_button_' + id_video_final).classList.remove('invisible');    
+                                    document.getElementById('play_button_' + id_video_final).classList.remove('invisible');
                                 } else if (document.getElementById('playbutton_' + id_video_final)) {
                                     document.getElementById('playbutton_' + id_video_final).classList.remove('invisible');
                                 }
-                                
+
                             }
                             console.log('paused ' + $("#video_" + id_video_final)[0].paused);
                             console.log('.HAVE_FUTURE_DATA ' + $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA);
                             console.log('readyState ' + $("#video_" + id_video_final)[0].readyState);
                             console.log('seeking ' + $("#video_" + id_video_final)[0].seeking);
                             console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);
-                            if ($("#video_" + id_video_final)[0].paused != true && 
+                            if ($("#video_" + id_video_final)[0].paused != true &&
                                 !$("#video_" + id_video_final)[0].seeking &&
-                                 $("#video_" + id_video_final)[0].currentTime > 0 && 
+                                 $("#video_" + id_video_final)[0].currentTime > 0 &&
                                  $("#video_" + id_video_final)[0].readyState >= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA) {
                                     $("#loader_icon_" + id_video_final).hide();
                             } else {
                                 if ($("#video_" + id_video_final)[0].readyState <= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA){
                                     $("#loader_icon_" + id_video_final).show();
-                                } 
+                                }
                             }
                         }
 
@@ -1189,6 +1196,40 @@ function gostar(id){
                     }
 
 
+/*siene coding*/
+
+function playAndPause() {
+
+  const allVideos = document.querySelectorAll('.playOrPause');
+
+  let options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1.0
+  };
+
+  let callback = (entries, observer) => {
+    entries.forEach(entrada => {
+      if (entrada.target.className == 'video-post-video playOrPause') {
+        if (entrada.isIntersecting) {
+          entrada.target.play();
+          console.log()
+        } else {
+          entrada.target.pause();
+        }
+      } else {
+        console.log('erro');
+      }
+    });
+  };
+
+  let observer = new IntersectionObserver(callback, options);
+  allVideos.forEach(video => { observer.observe(video); });
+}
+
+this.playAndPause();
+
+/*end siene coding*/
 
 
 

@@ -27,7 +27,7 @@
             <ul class="profile-follow profile-item-center">
                 <li class="statistics-profile">
                   <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}">  <h2 style="justify-content: center; font-weight: bolder; font-size: 14px; width: 100%; margin-bottom: 0;">{{$perfil[0]['qtd_ps']}}</h2></a>
-                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}" style="margin-top: -5px;  text-align: center;"><h2 style="justify-content: center; font-size: 11.5px; text-align: center;margin-top: 12px;">Seguindo</h2></a>
+                    <a href="{{route('paginas_que_sigo.page', $account_name[0]->uuid) }}" style="margin-top: -5px;  text-align: center;"><h2 style="justify-content: center; font-size: 11.5px; text-align: center;margin-top:9px;">Seguindo</h2></a>
                     <?php if ($account_name[0]->uuid == $conta_logada[0]->uuid): ?>
                     <a href="{{route('account.profile.edit', $conta_logada[0]->uuid)}}"><h3 class="edit-profile">Editar</h3></a>
                   <?php endif; ?>
@@ -234,12 +234,12 @@
                 <div class="post-video-container-page post-page-container">
                     <?php foreach ($gostos as $key => $value): ?>
                       <?php if ($gostos[$key]['formato']==1): ?>
-                    <div class="img-post">
+                    <a href="{{route('post_index', $gostos[$key]['post_uuid'])}}"><div class="img-post">
                         <video>
                             <source src="{{asset('storage/video/page/') . '/' . $gostos[$key]['file']}}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                    </div>
+                    </div></a>
                       <?php endif; ?>
                     <?php endforeach ?>
                 </div>
@@ -248,9 +248,9 @@
                 <div class="post-img-container-page post-page-container">
                     <?php foreach ($gostos as $key => $value): ?>
                       <?php if ($gostos[$key]['formato']==2): ?>
-                    <div class="img-post">
+                    <a href="{{route('post_index', $gostos[$key]['post_uuid'])}}"><div class="img-post">
                         <img src="{{asset('storage/img/page/') . '/' . $gostos[$key]['file']}}" class="img-full">
-                    </div>
+                    </div></a>
                       <?php endif; ?>
                     <?php endforeach ?>
                 </div>
@@ -332,9 +332,9 @@
             <div class="post-img-container-page post-page-container">
                 <?php foreach ($gostos as $key => $value): ?>
                   <?php if ($gostos[$key]['formato']==2): ?>
-                <div class="img-post">
+                <a href="{{route('post_index', $gostos[$key]['post_uuid'])}}"><div class="img-post">
                     <img src="{{asset('storage/img/page/') . '/' . $gostos[$key]['file']}}" class="img-full">
-                </div>
+                </div></a>
                   <?php endif; ?>
                 <?php endforeach ?>
             </div>
