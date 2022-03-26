@@ -142,14 +142,6 @@
             <header>
                 <h1>Páginas que eu sigo</h1>
             </header>
-            <ul class="" id="pageseguida">
-                <li class="li-component-aside-right clearfix invisible-component">
-                    <h1 class="l-5 name-page text-ellips">Nenhuma Página Seguida</h1>
-                </li>            
-            </ul>
-            <footer class="clearfix invisible-component">
-                <a href="" class="r-5">Ver Todas</a>
-            </footer>
         </nav>
         <nav class="last-nav">
             <header>
@@ -643,7 +635,7 @@
            //alert("bot");
         });
         $('.like-a').click(function (e) {
-          e.preventDefault();
+          /*e.preventDefault();
           let id = e.target.id.split('|');
           if(id[0] == "on"){
             gostar(id[1]);
@@ -659,7 +651,7 @@
             document.getElementById("on|" + id[1] + "|i").classList.add('fas');
             document.getElementById("on|" + id[1] + "|i").classList.add('liked');
             document.getElementById("on|" + id[1] + "|i").classList.remove('far');
-          }
+          }*/
       });
 
       $('.comment-like-a').click(function (e) {
@@ -756,11 +748,11 @@
 
       $('.seguir-a').click(function (e) {
           e.preventDefault();
-          let id = e.target.id;
+          /*let id = e.target.id;
           let id1= id.split('-')[1];
-          let id2= id.split('-')[2];
+          let id2= id.split('-')[2];*/
 
-            seguir(id1, id2);
+            //seguir(id1, id2);
 
       });
 

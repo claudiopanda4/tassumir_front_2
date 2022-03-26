@@ -7,15 +7,16 @@
         <li>
 
         </li>
-    </ul>
+      </ul>
 </header>
 <header class="card br-10 stories stories-about-talking" id="stories-card">
             <header class="header-stories">
                 <h1>O que está a pipocar...</h1>
             </header>
             <input type="hidden" id="home-page-checked" value=<?php echo md5("OKAY_HOME") ?>>
+            <input type="hidden" id="post_loading" value=''>
             <input type="hidden" id="posts-following" value="0">
-            <input type="hidden" id="loading-finished" value="0">
+            <input type="hidden" id="loading-finished" value="1">
             <nav>
                 <ul class="clearfix">
                     <?php $i = 0; while ($i < 21) { ?>
@@ -79,7 +80,7 @@
                     <nav class="clearfix">
                         <ul class="clearfix"> 
                         <?php $key_ = 0; while ($key_ < 8) {?>
-                                <li class="li-component-suggest clearfix l-5 sugest_page" id="li-component-suggest-{{$key_}}">
+                                <li class="li-component-suggest clearfix l-5 sugest_page" id="li-component-suggest-index-{{$key_}}">
                                     <div class="clearfix sugest_component_div" id="sugestcomponentdiv_{{$key}}">
                                         <div class="sugest_component circle clearfix">
                                             <img class="img-full circle" id="cover-suggest-index-page-{{$key_}}">
@@ -102,12 +103,36 @@
                         <div class="page-cover circle l-5">
                             <img class="img-full circle invisible-component" id="page-cover-post-{{$key}}">
                         </div>   
+                        <?php if (false): ?>
+                            <div class="distinctiv distinctiv-">
+                                <h1 class="center">2c</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-casamento-igreja">
+                                <h1 class="center">ci</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-namoro">
+                                <h1 class="center">na</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-apresentado">
+                                <h1 class="center">ap</h1>
+                            </div>
+                        <?php elseif (false): ?>
+                            <div class="distinctiv distinctiv-pedido">
+                                <h1 class="center">p</h1>
+                            </div>
+                        <?php endif ?>
                         <div class="page-identify l-5 clearfix">
                             <a href="" id="a-page-name-post-{{$key}}"><h1 class="text-ellips" id="page-name-post-{{$key}}"></h1></a>
                             <div class="info-post clearfix">
                                 <span class="time-posted l-5" id="time-posted-{{$key}}"></span>
-                                <div id="seguir-1-{{$key}}">
-                                    <span class="seguir-{{$key}}"><a href="" class="seguir-a r-5" id="seguir-a-{{$key}}"></a></span>
+                                <div class="follow-propriets seguir-a-{{$key}}" id="seguir-1-{{$key}}">
+                                    <div class="load-icon-react invisible-component center" id="loader-id-icon-post-{{$key}}">
+                                        <img class="img-full" src="{{asset('storage/icons/aguarde1.gif')}}">
+                                    </div>
+                                    <span class="seguir-span-{{$key}}" id="seguir-span-{{$key}}"><a href="" class="seguir-a r-5" id="seguir-a-{{$key}}"></a></span>
                                 </div>
                             </div>
                         </div>
@@ -169,9 +194,12 @@
                     <ul class="row clearfix ul-interaction-user">
                         <li class="l-5">
                             <div class="content-button">
+                                <div class="load-icon-react invisible-component center" id="loader-id-icon-{{$key}}">
+                                    <img class="img-full" src="{{asset('storage/icons/aguarde1.gif')}}">
+                                </div>
                                 <a href="" class="like-a" id="reaction-id-a-{{$key}}">
-                                    <i class="far fa-heart center fa-16 unliked" id="reaction-id-{{$key}}"></i>
-                                    <h2 id="off||h2">Like</h2>
+                                    <i class="far fa-heart center fa-16 unliked" id="off-id-i-{{$key}}"></i>
+                                    <h2 id="reaction-id-text-">Like</h2>
                                 </a>
                             </div>
                         </li>
@@ -284,19 +312,19 @@
         //let route = "{{route('account.data')}}"; 
             function reaction_comment(e) {
                 let id_full = e.target.id;
-                let id = id_full.split('|')[1];
+                let id = id_full.split('_')[1];
                 alert(id);
             }
             function like_ajax(t){
-                console.log(t);
+                //console.log(t);
                 let id_full = t.id;
-                let id = id_full.split('|')[1];
-                if (id_full.split('|')[0] == 'on') {
-                    id_full = id_full.split('|')[1];
+                let id = id_full.split('_')[1];
+                if (id_full.split('_')[0] == 'on') {
+                    id_full = id_full.split('_')[1];
                 } else {
-                    id_full = id_full.split('|')[1];
+                    id_full = id_full.split('_')[1];
                 }
-                
+
                 like(id, id_full)
             }
 
@@ -323,7 +351,7 @@
                           data: {'id': id, 'id_full' : id_full},
                            dataType: 'json',
                            success:function(response){
-                           console.log(response);
+                           //console.log(response);
 
                             $.each(response.remove, function(key, value){
                                 //console.log(response.id + ' remove ' + value);
@@ -346,6 +374,7 @@
             function com(element){
                 let id = element.id;
                 let c = document.getElementById('comentario-' + id).value;
+
                 if(c != ''){
                     $("#comment-own-" + id).text(c);
                   $("#comment-users-own-" + id).css({
@@ -365,7 +394,7 @@
                   data: {'id': id, 'comment': c},
                    dataType: 'json',
                    success:function(response){
-                   console.log(response);
+
                    var nome = '';
                    comment_qtd = parseInt(comment_qtd) + 1;
                    $("#comment-qtd-" + id).text((comment_qtd) + " comentários")
@@ -376,7 +405,7 @@
                           nome +=             '<i class="far fa-heart fa-12 unliked" id="off|'+response[0]['comment_id']+'|i"></i>'
                         }
                         let new_comment = 'novo-comment-' + id;
-                        console.log(new_comment);
+                        //console.log(new_comment);
                         $('#' + new_comment).append(nome);
 
                   }
@@ -460,7 +489,10 @@ function gostar(id){
          /*let likes_qtd = $("#likes-qtd-" + id).text().split(' ')[0];
          if (response == 1) {
            likes_qtd = parseInt(likes_qtd) + 1;
-           $("#likes-qtd-" + id).text((likes_qtd) + " reacções");
+           $("#likes-qtd-" + id).text((likes_qtd) + "
+
+
+           ");
          } else if (response == 2) {
            likes_qtd = parseInt(likes_qtd) - 1;
            if (likes_qtd >= 0) {
@@ -574,14 +606,14 @@ function gostar(id){
             var valor_idconta = $('#conta_id').val();
             var an = $('.seguir_index').text();
 
-            if (($('.sugest_page').eq(9).attr("id")) == null) {
+            if (($('.sugest_page').eq(7).attr("id")) == null) {
                 if (($('#last_page').val()) != 0) {
                     var id_last_page = $('#last_page').val();
                 }else{
                     var id_last_page = 0;
                 }
             }else{
-               var id_last_page = $('.sugest_page').eq(9).attr("id").split('-')[3];
+               var id_last_page = $('.sugest_page').eq(7).attr("id").split('-')[3];
             }            //$('#' + valor_pagina_id).empty();
             $.ajax({
                 url: "{{route('seguir.seguindo')}}",
@@ -600,7 +632,7 @@ function gostar(id){
                     let url_link = "{{ route('couple.page1', 0) }}";
                         url_array = url_link.split('/');
                         url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/" + url_array[3] + "/" + value.uuid;
-                    if (value.foto != null) {                        
+                    if (value.foto != null) {
                     let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
                         $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }else{
@@ -644,44 +676,38 @@ function gostar(id){
 
                     setInterval(function(e){
                         let control_ = $('#control-1').offset();
-                        //control_ = $(document).height() - control_;
-                        //$(window).scrollTop() + $(window).height() == $(document).height();
-                        //console.log('scrollTop + ' + $(window).scrollTop() + ' heightWindow + ' + $(window).height() + ' = ' + $(document).height() + ' top_control ' + control_.top);
                         if(control_){
-                            //console.log(control_.top + " " + $(document).height());
                             if (control_.top <= $(document).height()) {
-                                //alert('carregar');
-                                //alert('oi');
-                          //--DShome_index();
-                                //---DS console.log('last_post_id ' + $('#last_post').val());
                             }
                         }
                         if ($('#current-video-id').val() != '') {
                             let id_video = $('#current-video-id').val().split('_');
+                            //alert(id_video);
                             let size_id_video = id_video.length;
                             let id_video_final = id_video[size_id_video - 1];
                             if (document.getElementById('video_' + id_video_final).paused) {
                                 if (document.getElementById('play_button_' + id_video_final)) {
-                                    document.getElementById('play_button_' + id_video_final).classList.remove('invisible');    
+                                    document.getElementById('play_button_' + id_video_final).classList.remove('invisible');
                                 } else if (document.getElementById('playbutton_' + id_video_final)) {
                                     document.getElementById('playbutton_' + id_video_final).classList.remove('invisible');
                                 }
-                                
+
                             }
+
                             //console.log('paused ' + $("#video_" + id_video_final)[0].paused);
                             //console.log('.HAVE_FUTURE_DATA ' + $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA);
                             //console.log('readyState ' + $("#video_" + id_video_final)[0].readyState);
                             //console.log('seeking ' + $("#video_" + id_video_final)[0].seeking);
                             //console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);
-                            if ($("#video_" + id_video_final)[0].paused != true && 
+                            if ($("#video_" + id_video_final)[0].paused != true &&
                                 !$("#video_" + id_video_final)[0].seeking &&
-                                 $("#video_" + id_video_final)[0].currentTime > 0 && 
+                                 $("#video_" + id_video_final)[0].currentTime > 0 &&
                                  $("#video_" + id_video_final)[0].readyState >= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA) {
                                     $("#loader_icon_" + id_video_final).hide();
                             } else {
                                 if ($("#video_" + id_video_final)[0].readyState <= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA){
                                     $("#loader_icon_" + id_video_final).show();
-                                } 
+                                }
                             }
                         }
 
@@ -694,47 +720,9 @@ function gostar(id){
                         //console.log('height_margin_stories ' + height);
                         //console.log('bottom ' + (height + margin_stories.top));
                         let height_stories = $('#stories-card').height();
-                        //console.log('height ' + height);
-                        //console.log('height stories ' + height_stories);
-                        //console.log(margin_stories.top);
-                        //console.log('subt. ' + ((height - 400) + margin_stories.top));
                         let control = 0;
-                        if (contar==0) {
-
-
-                        if ((height - 400) + margin_stories.top  <= 450) {
-                            control++;
-
-                            //alert(contar);
-                              contar++;
-                                let load = '';
-                                load += '<div class="reload-component" id="reload-component-1"><img class="center" src="{{asset("storage/icons/aguarde1.gif")}}"></div>'
-                                $('div[name=load]').append(load);
-
-                            $.ajax({
-                               url: "{{route('pegar_mais_post')}}",
-                               type: 'get',
-                               dataType: 'json',
-                               success: function(response){
-                                 $('.reload-component').remove();
-                                 //console.log(response);
-                                 if (response.length > 0) {
-                                 $.each(response, function(key, value){
-
-                                });
-                                $('div[name=div_father_post]').append(load);
-                               }}
-                             });
-
-
-                        }
-                        }
-                        //console.log('janela width ' + window.innerWidth);
                         window_width = window.innerWidth;
-                        //console.log('scroll log: ' + $('.main').scrollTop());
-                        //console.log('janela width ' + window.innerWidth);
                         window_width = window.innerWidth;
-                        //console.log('scroll log: ' + $('.main').scrollTop());
                         $(document).scroll(function() {
                            if($(window).scrollTop() + $(window).height() == $(document).height()) {
                                //alert("bottom!");
@@ -746,44 +734,32 @@ function gostar(id){
 
                         }
                         let video_post1 = document.getElementsByClassName('video-post-video');
-                        //console.log(video_post1);
 
                         //console.log('video ' + video_post1[0].id);
                         let id;
-                        let video_post = $('.video-');
-                        let getvideo = $('.getvideo');
+                        let video_post = $('.video-post-video');
+                        let getvideo = document.getElementsByClassName('getvideo');
+                        //console.log('control');
+                        //console.log(getvideo);
                         let currentTime;
                         let duration;
                         let watched_video;
                         //console.log(video_post1);
                         let video_post_time;
                         let storage_video;
-                        for (var i = 0; i <= video_post1.length - 1; i++) {
-                            /*if ($('#has-video-' + id).val() != "ok") {
-                                console.log('entrou');
-                                getVideo($('#vid-' + id).val(), id);
-                            }*/
-                            id = video_post1[i].id.split('_')[1];
-                            //console.log(video_post1[i].id);
-                            //console.log(id);
-                            if ($('#video_' + id)) {
+                        for (var i = 0; i <= getvideo.length - 1; i++) {
+                            id = getvideo[i].id.split('_')[2];
+                            if (document.getElementById('video_' + id)) {
                                 offset_video = $('#video_' + id).offset();
-                                //console.log('offset video ' + offset_video.top);
                                 video_post_time = $('#video-post-time-' + id);
-                                //console.log('src ' + document.getElementById('video_' + id).src);
-                               // console.log('src ' + (document.getElementById('video_' + id).src == ''));
                                 if (document.getElementById('video_' + id).src == '') {
                                     $("#loader_button_" + id).removeClass('invisible-component');
                                 } else {
                                     $("#loader_button_" + id).addClass('invisible-component');
                                 }
                                 if(offset_video.top < 190 && offset_video.top > -300){
-                                    //console.log('hasvideo ' + id + ' ' + $('#has-video-' + id).val());
-                                    if ($('#has-video-' + id).val() != "ok") {
-                                        //console.log('entrou + id ' + id);
-                                        //getVideo($('#vid-' + id).val(), id);
+                                    if ($('#has-video_' + id).val() != "ok") {
                                     }else{
-                                        ////console.log('não entrou');
                                         $('#video-post-time-all-' + id).val(document.getElementById('video_' + id).duration / 2);
                                         if (!(document.getElementById('video_' + id).paused) /*&& $('#has-video-' + id).val() == 'ok'*/) {
                                             currentTime = document.getElementById('video_' + id).currentTime;
@@ -805,7 +781,7 @@ function gostar(id){
                                             } else {
                                                 $("#loader_button_" + id).removeClass('invisible-component');
                                             }*/
-                                            console.log('id_video ' + id);
+                                            //console.log('id_video ' + id);
                                             document.getElementById('play_button_' + id).classList.remove('invisible');
                                             document.getElementById('video_' + id).pause();
                                             if (document.getElementById('video_' + id).readyState == 4) {
@@ -874,6 +850,40 @@ function gostar(id){
                     }
 
 
+/*siene coding*/
+
+function playAndPause() {
+
+  const allVideos = document.querySelectorAll('.playOrPause');
+
+  let options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1.0
+  };
+
+  let callback = (entries, observer) => {
+    entries.forEach(entrada => {
+      if (entrada.target.className == 'video-post-video playOrPause') {
+        if (entrada.isIntersecting) {
+          entrada.target.play();
+          //console.log()
+        } else {
+          entrada.target.pause();
+        }
+      } else {
+        //console.log('erro');
+      }
+    });
+  };
+
+  let observer = new IntersectionObserver(callback, options);
+  allVideos.forEach(video => { observer.observe(video); });
+}
+
+this.playAndPause();
+
+/*end siene coding*/
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Seguidor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\DB;
 
@@ -28,6 +29,47 @@ class SeguidorController extends Controller
     public function create()
     {
         //
+    }
+
+    public function follow(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $uuid = $request->uuid;
+            $id = Auth::user()->conta_id;
+            $identificadors = DB::select("select identificadors.identificador_id_seguida, identificadors.identificador_id_seguindo, seguidors.identificador_id_seguida as seguir from (select identificador_id_seguida, identificador_id_seguindo from (select identificador_id as identificador_id_seguida from identificadors where identificador_id = (select pages.page_id from pages where uuid = ?) and tipo_identificador_id = 2) as identificador_id_seguida left join (select identificador_id as identificador_id_seguindo from identificadors where id = (select contas.conta_id from contas where conta_id = ?) and tipo_identificador_id = 1) as identificador_id_seguindo on identificador_id_seguida.identificador_id_seguida <> identificador_id_seguindo.identificador_id_seguindo) as identificadors left join (select identificador_id_seguida , identificador_id_seguindo from seguidors where identificador_id_seguida = (select identificador_id as identificador_id_seguida from identificadors where identificador_id = (select pages.page_id from pages where uuid = ?) and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id as identificador_id_seguindo from identificadors where id = (select contas.conta_id from contas where conta_id = ?) and tipo_identificador_id = 1)) as seguidors on seguidors.identificador_id_seguida = identificadors.identificador_id_seguida and seguidors.identificador_id_seguindo = identificadors.identificador_id_seguindo", [$uuid, $id, $uuid, $id]);
+
+            $sql = "select identificadors.identificador_id_seguida, identificadors.identificador_id_seguindo, seguidors.identificador_id_seguida as seguir from (select identificador_id_seguida, identificador_id_seguindo from (select identificador_id as identificador_id_seguida from identificadors where identificador_id = (select pages.page_id from pages where uuid = $uuid) and tipo_identificador_id = 2) as identificador_id_seguida left join (select identificador_id as identificador_id_seguindo from identificadors where id = (select contas.conta_id from contas where conta_id = $id) and tipo_identificador_id = 1) as identificador_id_seguindo on identificador_id_seguida.identificador_id_seguida <> identificador_id_seguindo.identificador_id_seguindo) as identificadors left join (select identificador_id_seguida , identificador_id_seguindo from seguidors where identificador_id_seguida = (select identificador_id as identificador_id_seguida from identificadors where identificador_id = (select pages.page_id from pages where uuid = $uuid) and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id as identificador_id_seguindo from identificadors where id = (select contas.conta_id from contas where conta_id = $id) and tipo_identificador_id = 1)) as seguidors on seguidors.identificador_id_seguida = identificadors.identificador_id_seguida and seguidors.identificador_id_seguindo = identificadors.identificador_id_seguindo";
+
+            $identificador_id_seguida = $identificadors[0]->identificador_id_seguida;
+            $identificador_id_seguindo = $identificadors[0]->identificador_id_seguindo;
+            $seguir = $identificadors[0]->seguir;
+
+            $auth = new AuthController();
+            $id = 0;
+            if ($seguir == null) {
+                $id = DB::table('seguidors')->insertGetId([
+                    'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'identificador_id_seguida' => $identificador_id_seguida,
+                    'identificador_id_seguindo' =>  $identificador_id_seguindo,
+                    'created_at'=> $auth->dat_create_update(),
+                ]);
+            }
+            
+            DB::commit();  
+            
+            return json_encode([
+                'identificador_id_seguida' => $identificador_id_seguida,
+                'identificador_id_seguindo' => $identificador_id_seguindo,
+                'uuid' => $uuid,
+                'sql' => $sql,
+                'id' => $id,
+                'seguir' => $seguir,
+            ]);        
+        } catch (Exception $e) {
+            DB::beginTransaction();
+        }
+
     }
 
     /**

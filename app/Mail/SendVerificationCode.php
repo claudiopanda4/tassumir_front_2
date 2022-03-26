@@ -28,7 +28,7 @@ class SendVerificationCode extends Mailable
      */
     public function build()
     {
-        return $this->subject('Tassumir S.A')
+        return $this->subject('BeAble S.A')
                     ->markdown('Email.Email');
                     
     }

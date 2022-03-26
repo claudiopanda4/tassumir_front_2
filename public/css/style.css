@@ -43,6 +43,28 @@ body {
     border: 1px solid var(--background-dark-input);
     padding: 8px;
 }
+/* init teste  */
+
+.input-text-default2 {
+    background-color: var(--background-dark-input);
+    border: 1px solid var(--background-dark-input);
+    padding: 8px;
+}
+.input-full2 {
+    width: 100%;
+    border-radius: 5px;
+    color: #fff;
+}
+.input-login2 {
+    background-color: #242526;
+    margin-top: 5px;
+    border-radius: 20px;
+    padding: 14px;
+   
+}
+
+/* end teste  */
+
 .input-full {
     width: 100%;
     border-radius: 5px;
@@ -3593,5 +3615,15 @@ label[for="hugo"]{
     font-size: 15px;
 }
 #header-height-component {
+    position: relative;
+}
+.load-icon-react {
+    width: 24px;
+    height: 24px;
+    z-index: 5;
+    background-color: #1d1f22;
+    border-radius: 50%;
+}
+.follow-propriets {
     position: relative;
 }
