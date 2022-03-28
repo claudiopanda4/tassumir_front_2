@@ -35,36 +35,36 @@
                 </li>
             </ul>
             <div id="option-profile-no-own">
-            <div class="clearfix" id="options-profile-mobile-user-log">
-                    <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5" id="options-profile-btn-edit-profile">
-                        <a href=""><h3 class="edit-profile-mobile" id="option-btn-profile">Casado</h3></a>
-                    </div>
-                    <div class="l-5 options-profile-btn more-options-profile-bt">
-                        <label for="more-option-target-profile" class="target-options-profile">
-                            <div class="">
-                                <div class="more-options-profile-btn">
-                                    <div class="more-options-component"><i class="fas fa-caret-down center" style="font-size: 18px;"></i></div>
+                <div class="clearfix" id="options-profile-mobile-user-log">
+                        <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5" id="options-profile-btn-edit-profile">
+                            <a href=""><h3 class="edit-profile-mobile" id="option-btn-profile">Casado</h3></a>
+                        </div>
+                        <div class="l-5 options-profile-btn more-options-profile-bt">
+                            <label for="more-option-target-profile" class="target-options-profile">
+                                <div class="">
+                                    <div class="more-options-profile-btn">
+                                        <div class="more-options-component"><i class="fas fa-caret-down center" style="font-size: 18px;"></i></div>
+                                    </div>
                                 </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div class="l-5 options-profile-btn more-options-profile-bt">
-                        <label for="more-option-target" class="target-options-profile">
-                            <div class="">
-                                <div class="more-options-profile-btn">
-                                    <div class="more-options-component center"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 14px;"></i></div>
+                            </label>
+                        </div>
+                        <div class="l-5 options-profile-btn more-options-profile-bt">
+                            <label for="more-option-target" class="target-options-profile">
+                                <div class="">
+                                    <div class="more-options-profile-btn">
+                                        <div class="more-options-component center"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 14px;"></i></div>
+                                    </div>
                                 </div>
-                            </div>
-                        </label>
-                    </div>
+                            </label>
+                        </div>
+                </div>
+                <div class="inform-profile">
+                    <h3 id="civil-state">Casado</h3>
+                </div>
+                <div class="inform-profile">
+                    <p class="description-couple"></p>
+                </div>
             </div>
-            <div class="inform-profile">
-                <h3 id="civil-state">Casado</h3>
-            </div>
-            <div class="inform-profile">
-                <p class="description-couple"></p>
-            </div>
-        </div>
     </header>
 <div class="card br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">

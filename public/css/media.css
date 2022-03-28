@@ -83,6 +83,7 @@
 	}
 	.post header .first-component .page-identify h1 {
 	    margin-top: 12px;
+	    font-weight: bolder;
 	}
 	.page-identify {
 	    margin-top: 0px;
@@ -216,7 +217,7 @@
 	    width: 95px;
 	}
 	.comment-send {
-		display: none;
+		display: block;
 	}
 	.interaction-user {
 	    border-bottom: none;
@@ -789,8 +790,8 @@
 	    margin-top: 10px;
 	}
 	.stories-about-talking nav ul li {
-	    width: 66px;
-	    height: 66px;
+	    width: 56px;
+	    height: 56px;
 	    border-radius: 50%;
 	    border: 2px solid transparent;
 	    padding: 7px;
@@ -922,6 +923,10 @@
 @media screen and (min-width: 800px) {
 	.identify-cover {
 		display: block;
+	}
+	.stories-about-talking nav ul li:hover .identify-cover ~ img {
+	    transition: all 1s;
+	    width: 200%;
 	}
 }
 @media screen and (max-width: 330px) {
@@ -1210,7 +1215,7 @@
 }
 @media screen and (max-width: 470px) {
 	.post header .first-component .page-identify h1 {
-	    font-size: 12px;
+	    font-size: 13px;
 	}
 	.edit-profile-mobile {
 		font-size: 12px;
@@ -1457,6 +1462,18 @@
 	#login-register {
 	    background-color: #3b3b3b;
 	    border: 1px solid #3b3b3b;
+	}
+	.container-li-dest {
+	    width: 57px;
+	}
+	.name-page-dest {
+		display: block;
+	    width: 98%;
+	    font-size: 10px;
+	    color: #fff;
+	    margin-top: -5px;
+	    font-weight: bolder;
+	    text-transform: lowercase;
 	}
 	#profile-cover-alert-no-img {
 	    /*margin-left: 0px;*/

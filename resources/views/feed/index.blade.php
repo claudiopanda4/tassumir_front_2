@@ -20,23 +20,26 @@
             <nav>
                 <ul class="clearfix">
                     <?php $i = 0; while ($i < 21) { ?>
-                    <li class="li-component-stories l-5" id="li-component-stories-{{$i}}">
-                        <a href="" id="a-stories-dest-{{$i}}">
-                            <div class="identify-cover circle">
-                                <img class="img-full circle invisible" id="li-component-stories-img-profile-{{$i}}">
-                            </div>
-                            <img class="img-back-stories center invisible" id="li-component-stories-img-back-{{$i}}">
-                            <video controls class="video-post-dest invisible" id="li-component-stories-video-post-{{$i}}">
-                                <source src="" type="video/mp4">
-                            </video> 
-                            <div  id="li-component-stories-cover-video-container-{{$i}}">
-                               <img  id="li-component-stories-cover-video-{{$i}}" class="img-full circle foto-page-video invisible-component"> 
-                            </div>
-                            <div class="headline">
-                                <h2 class="center" id="headline-stories-{{$i}}"></h2>
-                            </div>
-                        </a>
-                    </li>
+                    <div class="container-li-dest l-5">
+                        <li class="li-component-stories l-5" id="li-component-stories-{{$i}}">
+                            <a href="" id="a-stories-dest-{{$i}}">
+                                <div class="identify-cover circle">
+                                    <img class="img-full circle invisible" id="li-component-stories-img-profile-{{$i}}">
+                                </div>
+                                <img class="img-back-stories center invisible" id="li-component-stories-img-back-{{$i}}">
+                                <video controls class="video-post-dest invisible" id="li-component-stories-video-post-{{$i}}">
+                                    <source src="" type="video/mp4">
+                                </video> 
+                                <div  id="li-component-stories-cover-video-container-{{$i}}">
+                                   <img  id="li-component-stories-cover-video-{{$i}}" class="img-full circle foto-page-video invisible-component"> 
+                                </div>
+                                <div class="headline">
+                                    <h2 class="center" id="headline-stories-{{$i}}"></h2>
+                                </div>
+                            </a>
+                        </li>
+                        <h1 class="text-ellips name-page-dest l-5" id="name-page-dest-{{$i}}" style="font-size: 10px;"></h1>
+                    </div>
                     <?php $i++; } ?>
                 </ul>
             </nav>
@@ -86,8 +89,11 @@
                                             <img class="img-full circle" id="cover-suggest-index-page-{{$key_}}">
                                         </div>
                                     </div>
+                                    <div class="load-icon-react invisible-component center" id="loader-id-icon-post-index-{{$key}}">
+                                        <img class="img-full" src="{{asset('storage/icons/aguarde1.gif')}}">
+                                    </div>
                                     <a href="" id="a-name-suggest-index-page-{{$key_}}"><h1 class="name-suggest text-ellips" id="name-suggest-index-page-{{$key_}}"></h1></a>
-                                    <a href="" class="seguir_index"><div id="{{$key_}}">seguir</div></a>
+                                    <a href="" class="seguir-a seguir_index"><div id="seguir-index_{{$key_}}">seguir</div></a>
                                     <input type="hidden" id="link_page_{{$key_}}">
                                 </li>
                         <?php $key_++; } ?>
@@ -236,17 +242,17 @@
                     <div class="input-text comment-send-text l-5 clearfix">
                         <input type="text" class="" name="comentario" id="comentario-{{$key}}" placeholder="O que você tem a dizer?">
                         <div class="r-5 ">
-                            <a href="" class="comentar-a" id="{{$key}}">
-                                <i class="far fa-paper-plane fa-20 fa-img-comment" id="{{$key}}"></i>
+                            <a href="" class="comentar-a" id="comentario-a-{{$key}}">
+                                <i class="far fa-paper-plane fa-20 fa-img-comment" id="comentario-i-{{$key}}"></i>
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="comment-users comment-users-own invisible-component" id="comment-users-own-{{$key}}">
+                <div class="comment-users comment-users-own" id="comment-users-own-{{$key}}">
                     <div class="comment-user-container">
                         <div class="user-identify-comment user-identify-comment-feed">
                           <div class="profille-img">
-                            <img class="img-full circle invisible" src="">
+                            <img id="comment-user-profile-{{$key}}" class="img-full circle invisible" src="">
                           </div>
                         </div>
                         <div class="comment-user-comment comment-user-comment-feed">
@@ -258,23 +264,23 @@
                     </div>
                 </div>
 
-                  <div class="comment-users invisible-component" id="comment-users-{{$key}}">
-                    <div class="comment-user-container">
-                        <div class="user-identify-comment user-identify-comment-feed">
+                  <div class="comment-users comment-users-own-send clearfix" id="comment-users-{{$key}}">
+                    <div class="comment-user-container l-5">
+                        <div class="user-identify-comment user-identify-comment-feed l-5">
                             <div class="profille-img">
-                                <img class="img-full circle invisible" src="">
+                                <img class="img-full circle invisible" id="user-identify-comment-feed-{{$key}}">
                             </div>
                             <h2 class="text-ellips"></h2>
                         </div>
-                        <div class="comment-user-comment comment-user-comment-feed">
-                            <p class="text-ellips"></p>
+                        <div class="comment-user-comment comment-user-comment-feed l-5">
+                            <p class="" id="comment-user-comment-feed-{{$key}}"></p>
                         </div>
                     </div>
-                      <div class="comment-user-container comment-user-container-react">
+                    <div class="comment-user-container comment-user-container-react r-5">
                         <a href="" class="comment-like-a" onclick="reaction_comment(this)" id="on|{{$key}}">
                             <i class="far fa-heart fa-12 unliked" id="off|{{$key}}|i"></i>
                         </a>
-                      </div>
+                    </div>
                 </div>
                 <input type="hidden" id="id_click" value="none;0" name="">
             </div>

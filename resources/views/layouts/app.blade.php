@@ -32,7 +32,7 @@
         <header class="header-main header-main-component clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
-                    <a href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1>Tass<span class="title-final">umir</span></h1></a>
+                    <a href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1>tass<span class="title-final">umir</span></h1></a>
                 </li>
                 <li class="search-lg mobile-hidden" style="margin-left:48px;">
                     <div class="input-search">
@@ -169,23 +169,43 @@
         @yield('content');
     </main>
     <div class="menu-footer">
-        
+
     </div>
     <footer class="menu-footer menu-footer-main">
         <ul>
-            <a href="{{route('account.home.feed')}}"><li><i class="fi-rr-home fa-20 f-footer"></i></li></a>
+            <a href="{{route('account.home.feed')}}">
+                <li>
+                    <!--<i class="fi-rr-home fa-20 f-footer"></i>-->
+                    <img src="{{asset('/css/uicons/home.png')}}" class="center img-26">
+                </li>
+            </a>
             <a href="{{route('account.all.notifications')}}">
                 <li class="li-footer-menu">
-                    <i class="fi-rs-bell fa-20 f-footer"></i>
+                    <!--<i class="fi-rs-bell fa-20 f-footer"></i>-->
+                    <img src="{{asset('/css/uicons/notification.png')}}" class="center img-26">
                     <!--<h1 class="descript">Notificações</h1>-->
                     <div class="number-notification circle invisible-component">
                         <span class="center"></span>
                     </div>
                 </li>
             </a>
-            <a href="{{route('post.tassumir.video', 'ma')}}"><li><i class="fi-rr-play fa-20 f-footer"></i></li></a>
+            <a href="{{route('post.tassumir.video', 'ma')}}">
+                <li>
+                    <!--<i class="fi-rr-play fa-20 f-footer"></i>-->
+                    <img src="{{asset('/css/uicons/add.png')}}" class="center img-32">
+                </li>
+            </a>
+            <a href="{{route('post.tassumir.video', 'ma')}}">
+                <li>
+                    <!--<i class="fi-rr-play fa-20 f-footer"></i>-->
+                    <img src="{{asset('/css/uicons/tv_show.png')}}" class="center img-26">
+                </li>
+            </a>
             <a href="{{route('allSearch1.page')}}">
-                <li class="li-footer-menu"><i class="fi-rr-search fa-20 f-footer"></i></li>
+                <li class="li-footer-menu">
+                    <!--<i class="fi-rr-search fa-20 f-footer"></i>-->
+                    <img src="{{asset('/css/uicons/search.png')}}" class="center img-26">
+                </li>
             </a>
         </ul>
     </footer>
@@ -248,21 +268,6 @@
             <div class="header-height"></div>
             <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
                 <div class="first-component clearfix l-5">
-                  @if(sizeof($page_content)>0)
-                    @if($page_content[0]->foto)
-                        <div class="page-cover circle l-5">
-                            <img class="img-full circle" src="{{asset('storage/img/page/' . $page_content[0]->foto)}}">
-                        </div>
-                    @else
-                        <div class="page-cover circle l-5">
-                            <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                        </div>
-                        @endif
-
-                    <div class="page-identify l-5 clearfix">
-                        <h1 class="text-ellips">{{ $page_content[0]->nome }}</h1>
-                    </div>
-                    @endif
                 </div>
                 <div class="textarea-container l-5" style="width:100%;">
                     <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
@@ -774,9 +779,28 @@
           let id = e.target.id;
           let id1= id.split('|')[0];
           let id2= id.split('|')[1];
+          let id3= id.split('|')[2];
+          //alert(id3);
+          $.ajax({
+            url: "{{ route('verify_not')}}",
+            type: 'get',
+            data: {'id': id1},
+            dataType: 'json',
+            success:function(response){
+              //alert(response.length);
+              //console.log(response);
+              if(response.length>0){
+                tela_confirm(id1, id2);
+              }else {
+              //  alert(id3);
+                  var route1 = "{{route('account1.profile', 1) }}"
+                  url_array1 = route1.split('/');
+                  url_link1 = url_array1[0] + "/" + url_array1[1] + "/" + url_array1[2] + "/"+ url_array1[3] +  "/" + id3;
+                  window.location.href =url_link1;
+              }
+              }
+            });
 
-
-            tela_confirm(id1, id2);
 
       });
 
@@ -814,7 +838,7 @@
               }
             });
       });
-     
+
       $('.comentar-aa').click(function (e) {
           e.preventDefault();
           let id = e.target.id;
@@ -1086,7 +1110,7 @@
             }else{
                var id_last_page = $('.nao_sigo').eq(2).attr("id").split('-')[3];
             }
-             
+
              $.ajax({
                 url: "{{route('seguir.seguindo')}}",
                 type: 'get',
@@ -1391,18 +1415,18 @@ $.ajax({
 
 if (document.getElementById('#putInfo')) {
   function checkDuration(file_control) {
-    
+
     let fileType = file_control.files[0].type;
-    
+
     if ( check_for_file_type(fileType) ) {
-      
+
       window.URL = window.URL || window.webkitURL;
       var video = document.createElement('video');
       video.preload = 'metadata';
 
       video.onloadedmetadata = function () {
           window.URL.revokeObjectURL(video.src);
-          let minutes = Math.floor((video.duration) / 60); 
+          let minutes = Math.floor((video.duration) / 60);
 
           if (minutes > 1) {
             var certificar = document.querySelector('#putInfo').value = 'long_video_duration';
@@ -1417,9 +1441,9 @@ if (document.getElementById('#putInfo')) {
 
 
   function check_for_file_type(fileType) {
-    
+
     return fileType == 'video/mp4' || fileType == 'video/avi' || fileType =='video/ogg' || fileType =='video/mkv' || fileType =='video/3gp' || fileType =='video/wmv' || fileType =='video/flv';
-  }    
+  }
 }
 
 

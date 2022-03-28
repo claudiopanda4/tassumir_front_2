@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PaginaCasalController;
+use Illuminate\Support\Facades\Hash;
+
 
 class PerfilController extends Controller
 {
@@ -48,6 +50,9 @@ class PerfilController extends Controller
            $verificacao_page1= DB::select('select * from pages where (conta_id_b,tipo_page_id) = (?, ?)', [$account_name[0]->conta_id, 1]);
            $verificacao_page2= DB::select('select * from pages where (conta_id_a,tipo_page_id) = (?, ?)', [$conta_logada[0]->conta_id, 1]);
            $verificacao_page3= DB::select('select * from pages where (conta_id_b,tipo_page_id) = (?, ?)', [$conta_logada[0]->conta_id, 1]);
+           $verificacao_pedido2= DB::select('select * from pedido_relacionamentos where conta_id_pedida = ? and estado_pedido_relac_id  <> ? || conta_id_pedinte = ? and estado_pedido_relac_id  <> ?', [$account_name[0]->conta_id, 1,$account_name[0]->conta_id, 1]);
+
+             $perfil[0]['verificacao_pedido2']=sizeof($verificacao_pedido2);
 
            $perfil[0]['verificacao_relac']=0;
            if (sizeof($verificacao_page) > 0){
@@ -99,6 +104,8 @@ class PerfilController extends Controller
              if (sizeof($verificacao_pedido)>0) {
                if ($verificacao_pedido[0]->estado_pedido_relac_id == 1) {
                  $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido[0]->uuid;
+                 $conta = DB::select('select uuid from contas where conta_id = ?', [$verificacao_pedido[0]->conta_id_pedinte]);
+                 $perfil[0]['uuid']=$conta[0]->uuid;
                  $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
                  $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
                  $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido[0]->pedido_relacionamento_id, 5 ]);
@@ -107,6 +114,8 @@ class PerfilController extends Controller
                  $perfil[0]['verificacao_pedido']=1;
                }elseif ($verificacao_pedido[0]->estado_pedido_relac_id == 2) {
                  $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido[0]->uuid;
+                 $conta = DB::select('select uuid from contas where conta_id = ?', [$verificacao_pedido[0]->conta_id_pedinte]);
+                 $perfil[0]['uuid']=$conta[0]->uuid;
                  $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
                  $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
                  $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido[0]->pedido_relacionamento_id, 5 ]);
@@ -123,6 +132,8 @@ class PerfilController extends Controller
              if (sizeof($verificacao_pedido1)>0) {
                if ($verificacao_pedido1[0]->estado_pedido_relac_id== 1) {
                  $perfil[0]['Pedido_relac_uuid']=$verificacao_pedido1[0]->uuid;
+                 $conta = DB::select('select uuid from contas where conta_id = ?', [$verificacao_pedido1[0]->conta_id_pedinte]);
+                 $perfil[0]['uuid']=$conta[0]->uuid;
                  $n1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
                  $n2 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta_logada[0]->conta_id, 1 ]);
                  $n3 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$verificacao_pedido1[0]->pedido_relacionamento_id, 5 ]);
@@ -457,9 +468,14 @@ class PerfilController extends Controller
     public function update(Request $request)
     {
         try {
+
+          $takePhone = str_replace("-","",$request->telefone);
+          $takeEmail = $request->email;
           $auth = new AuthController();
           $account_name = $auth->defaultDate();
-          //dd($request->genre);
+      
+          $password = Hash::make($request->password);
+
           $date_create_update=date("Y");
           $date_create_update.="-";
           $date_create_update.=date("m");
@@ -471,19 +487,150 @@ class PerfilController extends Controller
           $date_create_update.=date("i");
           $date_create_update.=":";
           $date_create_update.=date("s");
-          DB::table('contas')
-                ->where('conta_id', $account_name[0]->conta_id)
-                ->update([
-                  'nome' => $request->nome,
-                  'apelido' => $request->apelido,
-                  'genero' => $request->genre,
-                  'descricao' => $request->bio,
-                  'email' => $request->email,
-                  'telefone' => $request->telefone,
-                  'updated_at' => $request->$date_create_update
 
-              ]);
-              return redirect()->route('account.profile');
+         
+                $result_email = DB::table('contas')
+                     ->where('email','=',$takeEmail)
+                     ->get();
+
+                $result_phone = DB::table('contas')
+                     ->where('telefone','=',$takePhone)
+                     ->get();
+
+                if (sizeof($result_email) > 0) {
+
+
+                    DB::table('contas')
+                            ->where('conta_id', $account_name[0]->conta_id)
+                            ->update([
+                              'nome' => $request->nome,
+                              'apelido' => $request->apelido,
+                              'genero' => $request->genre,
+                              'descricao' => $request->bio,
+                              
+                              'telefone' =>$takePhone,
+                              'updated_at' => $request->$date_create_update
+
+                          ]);
+
+                  if ($password != null) {
+
+                                DB::table('logins')->where('conta_id', $account_name[0]->conta_id)
+                                ->update([
+                                  'password' => $password,
+                                  
+                                  'telefone' =>$takePhone,
+                                  'updated_at' => $request->$date_create_update
+                                ]);
+
+                  }else{
+                              DB::table('logins')->where('conta_id', $account_name[0]->conta_id)
+                              ->update([
+                                  'telefone' =>$takePhone,
+                                  'updated_at' => $request->$date_create_update
+                              ]);
+                      }
+
+                    return back()->with('info',"Email não salvo porque já existe, salvamos as outras informações");
+
+                }else if(sizeof($result_phone) > 0){
+
+
+                    DB::table('contas')
+                            ->where('conta_id', $account_name[0]->conta_id)
+                            ->update([
+                              'nome' => $request->nome,
+                              'apelido' => $request->apelido,
+                              'genero' => $request->genre,
+                              'descricao' => $request->bio,
+                              'email' =>  $takeEmail,
+                              
+                              'updated_at' => $request->$date_create_update
+
+                          ]);
+
+                  if ($password != null) {
+                                DB::table('logins')->where('conta_id', $account_name[0]->conta_id)
+                                ->update([
+                                  'password' => $password,
+                                  'email' => $request->email,
+                                  
+                                  'updated_at' => $request->$date_create_update
+                                ]);
+
+                  }else{
+                              DB::table('logins')->where('conta_id', $account_name[0]->conta_id)
+                              ->update([
+                                  'email' => $request->email,
+                                  
+                                  'updated_at' => $request->$date_create_update
+                              ]);
+                      }
+
+                    return back()->with('info'," Telefone não salvo porque já existe, salvamos as outras informações");
+
+
+                }else if(sizeof($result_phone) > 0 && sizeof($result_email) > 0){
+
+                            DB::table('contas')
+                            ->where('conta_id', $account_name[0]->conta_id)
+                            ->update([
+                              'nome' => $request->nome,
+                              'apelido' => $request->apelido,
+                              'genero' => $request->genre,
+                              'descricao' => $request->bio,
+                              'updated_at' => $request->$date_create_update
+
+                          ]);
+
+                  if ($password != null) {
+                                DB::table('logins')->where('conta_id', $account_name[0]->conta_id)
+                                ->update([
+                                  'password' => $password,
+                                  'updated_at' => $request->$date_create_update
+                                ]);
+
+                  }
+
+                    return back()->with('info'," Email e Telefone não salvos porque já existem, salvamos as outras informações");
+
+
+                }
+                else{
+
+                      DB::table('contas')
+                            ->where('conta_id', $account_name[0]->conta_id)
+                            ->update([
+                              'nome' => $request->nome,
+                              'apelido' => $request->apelido,
+                              'genero' => $request->genre,
+                              'descricao' => $request->bio,
+                              'email' =>  $takeEmail,
+                              'telefone' =>$takePhone,
+                              'updated_at' => $request->$date_create_update
+
+                          ]);
+
+                           if ($password != null) {
+                              DB::table('logins')->where('conta_id', $account_name[0]->conta_id)
+                              ->update([
+                                'password' => $password,
+                                'email' => $request->email,
+                                'telefone' =>$takePhone,
+                                'updated_at' => $request->$date_create_update
+                              ]);
+
+                         }else{
+                                DB::table('logins')->where('conta_id', $account_name[0]->conta_id)
+                                ->update([
+                                'email' => $request->email,
+                                'telefone' =>$takePhone,
+                                'updated_at' => $request->$date_create_update
+                            ]);
+                         }
+                        return redirect()->route('account.profile');
+              }
+          
         } catch (Exception $e) {
             dd('erro');
         }
