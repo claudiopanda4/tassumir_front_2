@@ -2425,11 +2425,12 @@ public function dados_comment($key){
 
 
                     public function comentar_final(Request $request){
-                      $conta_logada= Auth::user()->conta_id;
+                      $conta= Auth::user()->conta_id;
                       $control= DB::select('select p.post_id,(select identificadors.identificador_id from identificadors where identificadors.id = p.post_id and identificadors.tipo_identificador_id = 3) as post_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_logada_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_a and identificadors.tipo_identificador_id = 1) as conta_a_identify, (select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_b and identificadors.tipo_identificador_id = 1) as conta_b_identify, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p  inner join pages as pa on p.page_id = pa.page_id where p.post_id = (select post_id from posts where uuid = ?)', [$conta,$conta,$conta,$request->id]);
 
-
-                            if ($control[0]->dono_page == 1) {
+                        $owner_page = false;
+                        if ($control[0]->dono_page == 1) {
+                            $owner_page = true;
                               $comment= DB::table('comments')->insertGetId([
                                 'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
                                 'post_id' => $control[0]->post_id,
@@ -2439,22 +2440,22 @@ public function dados_comment($key){
                                 'created_at'=> $this->dat_create_update(),
                                 ]);
 
-                          DB::table('identificadors')->insert([
-                              'tipo_identificador_id' => 4,
-                              'id' => $comment,
-                              'created_at'=> $this->dat_create_update(),
-                         ]);
+                            DB::table('identificadors')->insert([
+                                  'tipo_identificador_id' => 4,
+                                  'id' => $comment,
+                                  'created_at'=> $this->dat_create_update(),
+                            ]);
 
-                         $last_comment=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions,(select count(*) from comments as c where c.post_id = p.post_id) as qtd_comments , if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify   from comments as c where c.comment_id = ?) as c ',[$control[0]->post_id,$conta_logada, $comment]);
+                            $last_comment=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions,(select count(*) from comments as c where c.post_id = ?) as qtd_comments , if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify   from comments as c where c.comment_id = ?) as c ',[$control[0]->post_id,$conta, $comment]);
 
 
                               } else {
                                 $comment= DB::table('comments')->insertGetId([
-                                'post_id' => $control[0]->post_id,
-                                'identificador_id' => $control[0]->conta_logada_identify,
-                                'tipo_estado_comment_id'=>1,
-                                'comment'=>$request->comment,
-                                'created_at'=> $this->dat_create_update(),
+                                    'post_id' => $control[0]->post_id,
+                                    'identificador_id' => $control[0]->conta_logada_identify,
+                                    'tipo_estado_comment_id'=>1,
+                                    'comment'=>$request->comment,
+                                    'created_at'=> $this->dat_create_update(),
                                 ]);
 
 
@@ -2464,7 +2465,7 @@ public function dados_comment($key){
                                 'created_at'=> $this->dat_create_update(),
                                 ]);
 
-                                $last_comment=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions,(select count(*) from comments as c where c.post_id = p.post_id) as qtd_comments  , if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify   from comments as c where c.comment_id = ?) as c ',[$control[0]->post_id,$conta_logada, $comment]);
+                                $last_comment=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions,(select count(*) from comments as c where c.post_id = ?) as qtd_comments  , if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify   from comments as c where c.comment_id = ?) as c ',[$control[0]->post_id,$conta, $comment]);
 
 
                                   DB::table('notifications')->insert([
@@ -2492,10 +2493,21 @@ public function dados_comment($key){
 
                               }
 
-                       return response()->json($last_comment);
-                          }
+                        return response()->json(
+                            [
+                                'owner' => $owner_page,
+                                'loader' => 'loader_button_comment_'.$request->id,
+                                'img_scr' => $request->img_scr
+                            ]
+                        );
+                      }
 
-
+    public function ident(Request $request){
+        return response()->json([
+            'id' => $request->id,
+            'file' => $request->file
+        ]);
+    }
     public function comentar(Request $request){
 
       //$ordenar = ['nice'];

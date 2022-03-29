@@ -90,6 +90,8 @@ $(document).ready(function () {
 		   		$('#p-post-' + key).text(data.descricao);
 		   		$('#p-post-' + key).removeClass('invisible-component');
 		    }
+		    $('#loader_button_' + key).addClass('invisible-component');
+		    $('#vid-load-' + key).attr('id', 'vid-load_' + data.uuid);
 		    if (data.formato_id == 1) {
 		    	$('#video-post-' + key).removeClass('invisible-component');
 		    	$('#post-cover-post-index-' + key).addClass('invisible-component');
@@ -103,8 +105,6 @@ $(document).ready(function () {
 		   		$('#video_' + key).attr('id', 'video_' + data.uuid);
 				$('#has-video-' + key).attr('id', 'has-video_' + data.uuid);
 			    $('#vid-' + key).attr('id', 'vid_' + data.uuid);
-			    //alert('data.uuid ' + data.uuid);
-		    	$('#loader_button_' + key).addClass('invisible-component');
 		    	$('#play_button_' + key).removeClass('invisible-component');
 		    	$('#loader_button_' + key).attr('id', 'loader_button_' + data.uuid);
 		    	$('#play_button_' + key).attr('id', 'play_button_' + data.uuid);
@@ -133,6 +133,7 @@ $(document).ready(function () {
 		    }
 		    $('#comment-own-' + key).attr('id', 'comment-own_' + data.uuid);
 		    $('#comment-users-own-' + key).attr('id', 'comment-users-own_' + data.uuid);
+		    $('#comment-users-' + key).attr('id', 'comment-users_' + data.uuid);
 		    $('#comentario-' + key).attr('id', 'comentario_' + data.uuid);
 		    $('#comentario-i-' + key).attr('id', 'comentario-i_' + data.uuid);
 		    $('#comment-user-comment-feed-' + key).attr('id', 'comment-user-comment-feed_' + data.uuid);
@@ -185,7 +186,7 @@ $(document).ready(function () {
 				});
 			    $('#content-p-9').text('Ao assumir o seu relacionamento no tassumir, você ganhará automaticamente uma página, e poderá publicar e ganhar dinheiro por meio dos seus conteúdos')
 			}
-
+			$('#loader-id-icon-post-' + key).attr('id', 'loader-id-icon-post_' + data.uuid);
 		    $('#page-name-post-' + key).attr('id', 'page-name-post_' + data.uuid);
 		    $('#p-post-' + key).attr('id', 'p-post_' + data.uuid);
 		    $('#reaction-id-a-' + key).attr('id', 'reaction-id-a_' + data.uuid);
@@ -198,6 +199,9 @@ $(document).ready(function () {
 		    $('#a-page-name-post-' + key).attr('id', 'a-page-name-post_' + data.uuid);
 		    $('#post-cover-post-index-' + key).attr('id', 'post-cover-post-index_' + data.uuid);
 		    $('#m_post-' + key).attr('id', 'm_post_' + data.uuid);
+    		$('#page-cover-post-' + key).attr('id', 'page-cover-post_' + data.uuid);
+			//alert('loader_button_comment_' + key);
+		    $('#loader_button_comment_' + key).attr('id', 'loader_button_comment_' + data.uuid);
 
 			if (key == 3) {
 				if (window.innerWidth <= 720){
@@ -251,6 +255,7 @@ $(document).ready(function () {
 			    	}
 			    	$('#loading-finished').val(0);
 			        console.log(response);
+					videos();
 			    }
 			});
 			$('#posts').val(1);
@@ -345,6 +350,28 @@ $(document).ready(function () {
     let getvideo;
     let post_view;
     let offset_post;
+    function videos(){
+	    //alert(getvideo.length);
+	    /*for (var i = 0; i <= getvideo.length - 1; i++) {
+		    id = getvideo[i].id.split('_')[2];
+		    //alert(id);
+		    document.getElementById('video_' + id).oncanplay = function() {
+				console.log('id => ' + id);
+				$('#loader_button_' + id).addClass('invisible-component');
+			}
+		}*/
+    }
+    setInterval(function (e) {
+	    getvideo = document.getElementsByClassName('getvideo');
+	    for (var i = 0; i <= getvideo.length - 1; i++) {
+		    id = getvideo[i].id.split('_')[2];
+		    document.getElementById('video_' + id).oncanplay = function() {
+		    	//$('#loader_button_' + id).addClass('invisible-component');
+		    	$('#vid-load_' + id).val('ready');
+		    }
+	    }
+	    videos();
+    }, 10);
     setInterval(function (e) {
     	let main = $('.main-container').offset();
     	let document_height = $('#main-home').height();
@@ -381,8 +408,19 @@ $(document).ready(function () {
     			//console.log('vid_' + id);
 	    		link_video = document.getElementById('vid_' + id).value;
 
-	    		
-	    		if (window.innerHeight > 650) {
+		    	document.getElementById('video_' + id).oncanplay = function() {
+		           	$.ajax({
+					    url: '/return/id',
+					    type: 'get',
+					    data: {'id' : 'loader_button_' + id, 'file' : false},
+					    dataType: 'json',
+					    success:function(response){
+						    //$("#loading-finished-video").val(response.id);
+					    }
+					});
+	           	}
+
+	    		if (window.innerHeight > 680) {
 	    			if ($('#m_post_' + id).offset().top < 300 && $('#has-video_' + id).val() != 'ok') {
 		    			$('#video-post-link_' + id).attr('src', link_video);
 		    			$('#video_' + id).attr('src', link_video);
@@ -393,6 +431,8 @@ $(document).ready(function () {
 		    			$('#video-post-link_' + id).attr('src', link_video);
 		    			$('#video_' + id).attr('src', link_video);
 		    			$('#has-video_' + id).val('ok');
+						console.log(("id = #" + id));
+		    			//$("#loading-finished-video").val(id);
 		    		}
 	    		}
 	    		$('#video-post-time-all-' + id).val(document.getElementById('video_' + id).duration / 2);
@@ -480,13 +520,26 @@ $(document).ready(function () {
   	let text = "";
     $('.comentar-a').click(function (e) {
     	e.preventDefault();
-    	//alert(e.target.id);
     	id = e.target.id.split('_')[1];
+    	$('#loader_button_comment_' + id).removeClass('invisible-component');
     	text = $('#comentario_' + id).val();
     	$("#comentario_" + id).val('');
     	$('#comment-user-comment-feed_' + id).text(text);
-    	//alert(id);
-    	//alert(text);
+		document.getElementById('comment-users_' + id).classList.remove('invisible-component');
+    	$.ajax({
+		    url: '/post/index/comment',
+		    type: 'get',
+		    data: {'id' : id, 'comment' : text, 'img_scr' : document.getElementById('page-cover-post_' + id).src},
+		    dataType: 'json',
+		    success: function(response){
+		    	console.log(response);
+		    	if (response.owner) {
+		    		document.getElementById('user-identify-comment-feed_' + id).src = response.img_scr;
+		    	}
+		    	$('#' + response.loader).addClass('invisible-component');
+		    }
+    		
+		});
     });
     //$('#reaction-id-a-')
 });

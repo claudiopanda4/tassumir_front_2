@@ -3673,7 +3673,11 @@ label[for="hugo"]{
 } */
 
 .comment-users-own-send {
+    position: relative;
     display: block;
+    border-radius: 10px;
+    background-color: #3a3b3c;
+    margin-bottom: 5px;
 }
 .comment-users-own-send .comment-user-container {
     display: block;
@@ -3684,14 +3688,20 @@ label[for="hugo"]{
     padding: 0;
 }
 .comment-users-own-send .comment-user-container-react {
-    width: 30px;
+    width: 26px;
 }
 .comment-users-own-send .comment-user-comment.comment-user-comment-feed p {
     margin-top: 2px;
-    height: 53px;
+    max-height: 53px;
     padding: 0;
     padding-top: 5px;
 }
 .comment-users-own-send .comment-user-container-react i {
     padding-top: 13px;
+}
+.invisible-component {
+    display: none;
+}
+.fa-16 {
+    font-size: 18px;
 }

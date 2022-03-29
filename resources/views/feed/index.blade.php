@@ -17,6 +17,7 @@
             <input type="hidden" id="post_loading" value=''>
             <input type="hidden" id="posts-following" value="0">
             <input type="hidden" id="loading-finished" value="1">
+            <input type="hidden" id="loading-finished-video" value="none">
             <nav>
                 <ul class="clearfix">
                     <?php $i = 0; while ($i < 21) { ?>
@@ -180,6 +181,7 @@
                             </video>
                             <input type="hidden" name="" value="post_view_" id="watch-video-{{$key}}">
                             <input type="hidden" name="" id="vid-{{$key}}">
+                            <input type="hidden" name="" id="vid-load-{{$key}}">
                             <input type="hidden" name="" id="has-video-{{$key}}">
                             <input type="hidden" name="" id="video-post-time-{{$key}}">
                             <input type="hidden" name="" id="video-post-time-all-{{$key}}">
@@ -264,7 +266,8 @@
                     </div>
                 </div>
 
-                  <div class="comment-users comment-users-own-send clearfix" id="comment-users-{{$key}}">
+                  <div class="comment-users comment-users-own-send invisible-component clearfix" id="comment-users-{{$key}}">
+
                     <div class="comment-user-container l-5">
                         <div class="user-identify-comment user-identify-comment-feed l-5">
                             <div class="profille-img">
@@ -274,6 +277,9 @@
                         </div>
                         <div class="comment-user-comment comment-user-comment-feed l-5">
                             <p class="" id="comment-user-comment-feed-{{$key}}"></p>
+                        </div>
+                        <div class="loader_button" id="loader_button_comment_{{$key}}">
+                            <img style="width: 30px;" class=" center" src="{{asset('css/uicons/loading.gif')}}">
                         </div>
                     </div>
                     <div class="comment-user-container comment-user-container-react r-5">
@@ -761,7 +767,9 @@ function gostar(id){
                                 if (document.getElementById('video_' + id).src == '') {
                                     $("#loader_button_" + id).removeClass('invisible-component');
                                 } else {
-                                    $("#loader_button_" + id).addClass('invisible-component');
+                                    if ($('#vid-load_' + id).val() == 'ready') {
+                                        console.log('intensive');
+                                    }
                                 }
                                 if(offset_video.top < 190 && offset_video.top > -300){
                                     if ($('#has-video_' + id).val() != "ok") {

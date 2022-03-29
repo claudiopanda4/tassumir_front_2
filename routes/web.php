@@ -21,6 +21,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/tip_of_relac_you', [App\Http\Controllers\AuthController::class, 'tip_of_relac_you'])->name('tip_of_relac_you');
     Route::get('/state_civil_and_descrition', [App\Http\Controllers\AuthController::class, 'state_civil_and_descrition'])->name('state_civil_and_descrition');
     Route::get('/post/like', [App\Http\Controllers\AuthController::class, 'like_final'])->name('like');
+    Route::get('/post/index/comment', [App\Http\Controllers\AuthController::class, 'comentar_final'])->name('comentar.index');
+    Route::get('/return/id', [App\Http\Controllers\AuthController::class, 'ident'])->name('like');
     Route::get('/qtd_savesqtd_saves', [App\Http\Controllers\AuthController::class, 'qtd_saves'])->name('qtd_saves');
     Route::get('/qtd_pages_seg', [App\Http\Controllers\AuthController::class, 'qtd_pages_seg'])->name('qtd_pages_seg');
     Route::get('/qtd_like', [App\Http\Controllers\AuthController::class, 'qtd_like'])->name('lqtd_like');
