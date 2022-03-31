@@ -1245,6 +1245,9 @@
 	    width: 24px;
 	    height: 24px;
 	}
+	.time-posted {
+	    font-size: 10px;
+	}
 	.distinctiv {
 	    border: 2px solid #000;
 	}
@@ -1510,6 +1513,10 @@
 	.btn-a-default {
 	    font-size: 11px;
 	}	
+	.comment-users {
+	    width: 71%;
+	    min-width: 260px;
+	}
 }
 @media screen and (max-width: 540px){
 	.invisible-component {

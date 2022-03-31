@@ -119,6 +119,7 @@
                 <!--<li class="li-component-aside"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Criar Relacionamento</a></li>
                 <li class="li-component-aside"><i class="fas fa-book-open fa-20 fa-icon-aside-left"></i><a href="">Página de Casal</a></li>-->
                 <li class="li-component-aside invisible-component" id="route_page"><i class="fas fa-paperclip fa-20 fa-icon-aside-left"></i><a href="">Minhas Páginas</a></li>
+                <li class="li-component-aside" id="route_couples_i_follow"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Casais que eu sigo</a></li>
                 <li class="li-component-aside" id="route_save"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="">Guardados</a></li>
                 <li class="li-component-aside invisible-component" id="route_couples_i_follow"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Casais que eu sigo</a></li>
                 <li class="li-component-aside" id="Earn_money"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="">Ganhar Dinheiro</a></li>
@@ -189,12 +190,12 @@
                     </div>
                 </li>
             </a>
-            <a href="{{route('post.tassumir.video', 'ma')}}">
-                <li>
+            <label for="target-alert-post-denied">
+                <li id="add-post-target-pop-up">
                     <!--<i class="fi-rr-play fa-20 f-footer"></i>-->
                     <img src="{{asset('/css/uicons/add.png')}}" class="center img-32">
                 </li>
-            </a>
+            </label>
             <a href="{{route('post.tassumir.video', 'ma')}}">
                 <li>
                     <!--<i class="fi-rr-play fa-20 f-footer"></i>-->
@@ -211,6 +212,30 @@
     </footer>
     </div>
 </body>
+<input type="checkbox" name="" id="target-alert-post-denied" class="invisible">
+<div class="pop-up" id="alert-denied-post">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 210px; overflow: hidden;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1 class="">Publicar um POST</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-alert-post-denied">
+                    <div class="cancel-box-component div-img">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+            <p style="color: #fff; font-size: 13px;" >Só é permitido fazer um post quem tem assumido um relacionamento no Tassumir. Assuma agora mesmo o seu relacionamento, se torne um criador de conteúdo e ganhe dinheiro com seus posts.</p>
+            <label for="target-alert-post-denied" class="label-full">
+                <div class="cover-done checker" id="cover-done-post">
+                    <h2 id="concluir_file" style="padding: 10px; font-size: 11px; width: 100%;">Assumir Meu relacionamento</h2>
+                </div>
+            </label>
+        </div>
+    </div>
+</div>
 <input type="checkbox" name="" id="delete-page-target" class="invisible">
 <div class="pop-up" id="delete-page-container">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">

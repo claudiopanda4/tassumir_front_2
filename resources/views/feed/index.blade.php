@@ -229,8 +229,8 @@
                         </li>
                         <li class="r-5" id="savepost-{{$key}}">
                             <div class="content-button">
-                                <a href="" class="savepost" id="savepost-{{$key}}">
-                                    <i class="far fa-bookmark center fa-16" id="savepost-{{$key}}"></i>
+                                <a href="" class="save-post" id="savepost-a-{{$key}}">
+                                    <i class="far fa-bookmark center fa-16" id="savepost-i-{{$key}}"></i>
                                     <h2 id="savepost-{{$key}}">Guardar</h2>
                                 </a>
                             </div>
@@ -283,8 +283,8 @@
                         </div>
                     </div>
                     <div class="comment-user-container comment-user-container-react r-5">
-                        <a href="" class="comment-like-a" onclick="reaction_comment(this)" id="on|{{$key}}">
-                            <i class="far fa-heart fa-12 unliked" id="off|{{$key}}|i"></i>
+                        <a href="" class="comment-a-react" id="comment-like-a-{{$key}}">
+                            <i class="far fa-heart fa-12 unliked" id="comment-like-i-{{$key}}"></i>
                         </a>
                     </div>
                 </div>
@@ -768,12 +768,11 @@ function gostar(id){
                                     $("#loader_button_" + id).removeClass('invisible-component');
                                 } else {
                                     if ($('#vid-load_' + id).val() == 'ready') {
-                                        console.log('intensive');
                                     }
                                 }
                                 if(offset_video.top < 190 && offset_video.top > -300){
                                     if ($('#has-video_' + id).val() != "ok") {
-                                    }else{
+                                    } else {
                                         $('#video-post-time-all-' + id).val(document.getElementById('video_' + id).duration / 2);
                                         if (!(document.getElementById('video_' + id).paused) /*&& $('#has-video-' + id).val() == 'ok'*/) {
                                             currentTime = document.getElementById('video_' + id).currentTime;

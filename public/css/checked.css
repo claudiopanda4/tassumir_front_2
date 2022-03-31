@@ -570,7 +570,8 @@
     z-index: 1001;
 }
 #target-proof:checked ~ #cover-proof,
-#delete-page-target:checked ~ #delete-page-container {
+#delete-page-target:checked ~ #delete-page-container,
+#target-alert-post-denied:checked ~ #alert-denied-post {
 	opacity: 1;
     z-index: 1001;
 }

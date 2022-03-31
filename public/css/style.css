@@ -3684,7 +3684,7 @@ label[for="hugo"]{
 }
 .comment-users-own-send .user-identify-comment {
     display: block;
-    height: 40px;
+    height: 26px;
     padding: 0;
 }
 .comment-users-own-send .comment-user-container-react {
@@ -3703,5 +3703,9 @@ label[for="hugo"]{
     display: none;
 }
 .fa-16 {
-    font-size: 18px;
+    font-size: 16px;
+}
+#add-post-target-pop-up {
+    position: relative;
+    margin-top: 5px;
 }

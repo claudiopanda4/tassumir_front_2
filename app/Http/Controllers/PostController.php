@@ -451,6 +451,64 @@ class PostController extends Controller
         //
     }
 
+    public function toSave(Request $request)
+    {
+        try {
+            $uuid = $request->id;
+            $conta_id = Auth::user()->conta_id;
+            $data = DB::select("select id_post, saveds.conta_id from saveds right join (select post_id as id_post from posts where uuid = ?) as posts on saveds.post_id = posts.id_post", [$uuid]);
+            $sql = "select post_id from saveds right join (select post_id as id_post from posts where uuid = $uuid) as posts on saveds.post_id = posts.id_post";
+            if ($data[0]->conta_id != null) {
+                DB::table('saveds')
+                ->where('conta_id', $conta_id)
+                ->where('post_id', $data[0]->id_post)
+                ->delete();
+                return [
+                    'message' => 'just save',
+                    'state' => false,
+                    'e' => false,
+                    'add' => [
+                        'far'
+                    ],
+                    'remove' => [
+                        'fas'
+                    ],
+                    'sql' => $sql
+                ];
+            } else {
+                $controll = new AuthController();
+                $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
+                $result = DB::insert('insert into saveds(uuid, post_id, conta_id, created_at) values(?, ?, ?, ?)',
+                    [$uuid, $data[0]->id_post, $conta_id, $controll->dat_create_update()]);
+                return [
+                    'message' => 'saved',
+                    'state' => true,
+                    'e' => false,
+                    'add' => [
+                        'fas'
+                    ],
+                    'remove' => [
+                        'far'
+                    ],
+                    'sql' => $sql
+                ];
+            }            
+        } catch (Exception $e) {
+            return [
+                'message' => 'saved',
+                'state' => true,
+                'e' => $e,
+                'add' => [
+                    'fas'
+                ],
+                'remove' => [
+                    'far'
+                ],
+                'sql' => $sql
+            ];
+        }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -472,6 +530,77 @@ class PostController extends Controller
     {
         //
     }
+
+    public function comment_reac_final(Request $request){
+            $auth = new AuthController();
+            $control=DB::select(' select c.*, if(dono_page=1, page_idtf,conta_identify) as idtf,if(dono_page=0,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = conta_identify),(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = page_idtf)) as ja_reagi,if(dono_page=0,(select r.reaction_comment_id from reactions_comments as r where r.comment_id = c.comment_id and r.identificador_id = conta_identify),(select r.reaction_comment_id from reactions_comments as r where r.comment_id = c.comment_id and r.identificador_id = page_idtf))as id_ja_reagi, if(c.identificador_id = page_idtf, 1, 0) page_dono_comment, if(tipo_identify=1, id_identify ,null) as dono_comment from (select (select identificadors.identificador_id from identificadors where identificadors.id = c.comment_id and identificadors.tipo_identificador_id = 4) as comment_identify,c.comment_id, c.identificador_id ,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_a and identificadors.tipo_identificador_id = 1) as conta_ai_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) as page_idtf,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id= c.identificador_id) as tipo_identify,(select identificadors.id from identificadors where identificadors.identificador_id= c.identificador_id) as id_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_b and identificadors.tipo_identificador_id = 1) as conta_b_identify,(select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify,(select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_reactions,if (pa.conta_id_a = ? || pa.conta_id_b = ? , 1, 0) as dono_page, (select identificadors.identificador_id from identificadors where identificadors.id = c.post_id and identificadors.tipo_identificador_id = 3) as post_idtf from comments as c inner join pages as pa on pa.page_id=(select  p.page_id from posts as p where p.post_id= c.post_id) where c.uuid =?)as c', [Auth::user()->conta_id,Auth::user()->conta_id,Auth::user()->conta_id,$request->id]);
+                  $resposta = 'falhou';
+                  //dd($control);
+                  if ($control[0]->ja_reagi == 0) {
+                    DB::table('reactions_comments')->insert([
+                      'comment_id' => $control[0]->comment_id,
+                      'reaction_id' => 1,
+                      'identificador_id' => $control[0]->idtf,
+                      'created_at'=> $auth->dat_create_update(),
+
+                    ]);
+
+                    if($control[0]->dono_page==0 && $control[0]->page_dono_comment ==0 && $control[0]->id_identify!= Auth::user()->conta_id ){
+                      DB::table('notifications')->insert([
+                              'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                              'id_state_notification' => 2,
+                              'id_action_notification' => 6,
+                              'identificador_id_causador'=> $control[0]->idtf,
+                              'identificador_id_destino'=> $control[0]->post_idtf,
+                              'identificador_id_receptor'=> $control[0]->identificador_id,
+                              'created_at'=> $auth->dat_create_update(),
+                              ]);
+
+                    }elseif ($control[0]->dono_page==0 && $control[0]->page_dono_comment ==1) {
+                      DB::table('notifications')->insert([
+                              'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                              'id_state_notification' => 2,
+                              'id_action_notification' => 6,
+                              'identificador_id_causador'=> $control[0]->idtf,
+                              'identificador_id_destino'=> $control[0]->post_idtf,
+                              'identificador_id_receptor'=> $control[0]->conta_a_identify,
+                              'created_at'=> $auth->dat_create_update(),
+
+                              ]);
+                              DB::table('notifications')->insert([
+                                      'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                                      'id_state_notification' => 2,
+                                      'id_action_notification' => 6,
+                                      'identificador_id_causador'=> $control[0]->idtf,
+                                      'identificador_id_destino'=> $control[0]->post_idtf,
+                                      'identificador_id_receptor'=> $control[0]->conta_b_identify,
+                                      'created_at'=> $auth->dat_create_update(),
+
+                                      ]);
+                    }elseif ($control[0]->dono_page==1 && $control[0]->page_dono_comment ==0) {
+                      DB::table('notifications')->insert([
+                              'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                              'id_state_notification' => 2,
+                              'id_action_notification' => 6,
+                              'identificador_id_causador'=> $control[0]->idtf,
+                              'identificador_id_destino'=> $control[0]->post_idtf,
+                              'identificador_id_receptor'=> $control[0]->identificador_id,
+                              'created_at'=> $auth->dat_create_update(),
+
+                              ]);
+                    }
+
+                    $resposta = $control[0]->qtd_reactions + 1;
+
+                  } else{
+                    DB::table('reactions_comments')->where(['reaction_comment_id'=>$control[0]->id_ja_reagi])->delete();
+                    $resposta= $control[0]->qtd_reactions - 1;
+                  }
+                  return response()->json([
+                    'saved' => true,
+                    'qtd_reactions' => $resposta,
+                  ]);
+                }
 
     /**
      * Update the specified resource in storage.

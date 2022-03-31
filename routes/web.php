@@ -124,6 +124,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/show/', [App\Http\Controllers\MessageController::class, 'show'])->name('message.show');
     Route::get('/message/antigas', [App\Http\Controllers\MessageController::class, 'last_sms'])->name('message.antigas');
     Route::get('/message/novas', [App\Http\Controllers\MessageController::class, 'first_sms'])->name('message.novas');
+    Route::get('/post/index/save', [App\Http\Controllers\PostController::class, 'toSave'])->name('post.index.save');
+    Route::get('/post/comment/reaction', [App\Http\Controllers\PostController::class, 'comment_reac_final'])->name('post.index.comment.reaction');
     Route::get('/mostrar/{uuid_remetente}/{uuid_destino}', [App\Http\Controllers\MessageController::class, 'mostrar_sms'])->name('message.mostrar');
     Route::get('/pesquisar/destinatario', [App\Http\Controllers\MessageController::class, 'pesquisar_destinatario'])->name('people.send.message');
 });
