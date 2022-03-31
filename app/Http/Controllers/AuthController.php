@@ -2454,6 +2454,7 @@ public function dados_comment($key){
 
                               } else {
                                 $comment= DB::table('comments')->insertGetId([
+                                    'uuid' => $uuid,
                                     'post_id' => $control[0]->post_id,
                                     'identificador_id' => $control[0]->conta_logada_identify,
                                     'tipo_estado_comment_id'=>1,
