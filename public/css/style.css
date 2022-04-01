@@ -1117,6 +1117,10 @@ label[for="hugo"]{
     width: 28px;
     height: 28px;
 }
+.img-30 {
+    width: 30px;
+    height: 30px;
+}
 .img-32 {
     width: 32px;
     height: 32px;
@@ -1583,7 +1587,7 @@ label[for="hugo"]{
     position: relative;
     width: 34px;
     height: 34px;
-    margin-top: 10px;
+    margin-top: 7px;
     margin-left: 15px;
     background-color: #343a40;
     border-radius: 50%;
@@ -2038,6 +2042,7 @@ label[for="hugo"]{
 .inform-profile {
     margin-left: 5px;
     margin-top: 20px;
+    margin-bottom: 10px;
     width: 80%;
     max-width: 65%;
 }
@@ -2463,7 +2468,7 @@ label[for="hugo"]{
 }
 .description-couple {
     width: 343px;
-    margin-left: 145px;
+    margin-left: 0;
 }
 .description-couple p {
     color: #ffff;
@@ -2612,7 +2617,7 @@ label[for="hugo"]{
     border: 1px solid #606060;
 }
 .edit-profile-mobile {
-    padding: 11px 10px;
+    padding: /*11px 10px*/0px;
     width: 100%;
     text-align: center;
     /* display: inline-flex; */
@@ -2623,7 +2628,7 @@ label[for="hugo"]{
     text-align: center;
     border: 1px solid #606060;
     display: none;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 .fa-15 {
     font-size: 15px;
@@ -3431,14 +3436,15 @@ label[for="hugo"]{
     border-radius: 5px;
 }
 .profile-photo-container {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     position: relative;
     border-radius: 50%;
     margin-left: 20px;
+    background-color: #3a3b3c;
 }
 .profile-photo-container img {
-    border-radius: 50%;
+    /*border-radius: 50%;*/
 }
 .content-profile-photo {
     width: 70%;
@@ -3627,7 +3633,7 @@ label[for="hugo"]{
     position: relative;
     width: 17%;
     height: 35px;
-    margin: 10px 2%;
+    margin: 0px 2%;
     margin-right: 0;
 }
  .bring-to-front:hover{
@@ -3717,4 +3723,14 @@ label[for="hugo"]{
 #add-post-target-pop-up {
     position: relative;
     margin-top: 5px;
+}
+.options-alert-btn-feed {
+    position: relative;
+    border-radius: 7px;
+    cursor: pointer;
+    background-color: #800080;
+}
+#reload-component img {
+    width: 32px;
+    height: 32px;
 }
