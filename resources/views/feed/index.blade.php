@@ -20,7 +20,7 @@
             <input type="hidden" id="loading-finished-video" value="none">
             <nav>
                 <ul class="clearfix">
-                    <?php $i = 0; while ($i < 21) { ?>
+                    <?php $i = 0; while ($i < 20) { ?>
                     <div class="container-li-dest l-5">
                         <li class="li-component-stories l-5" id="li-component-stories-{{$i}}">
                             <a href="" id="a-stories-dest-{{$i}}">
@@ -203,7 +203,7 @@
                         <li class="l-5">
                             <div class="content-button">
                                 <div class="load-icon-react invisible-component center" id="loader-id-icon-{{$key}}">
-                                    <img class="img-full" src="{{asset('css/uicons/aguarde.gif')}}">
+                                    <img class="img-full" src="{{asset('css/uicons/aguarde1.gif')}}">
                                 </div>
                                 <a href="" class="like-a" id="reaction-id-a-{{$key}}">
                                     <i class="far fa-heart center fa-16 unliked" id="off-id-i-{{$key}}"></i>

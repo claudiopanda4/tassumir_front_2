@@ -154,6 +154,10 @@ $(document).ready(function () {
 		    $('#comment-user-comment-feed-' + key).attr('id', 'comment-user-comment-feed_' + data.uuid);
 		    $('#comentario-a-' + key).attr('id', 'comentario-a_' + data.uuid);
 		    $('#comment-send-profile-' + key).attr('src', document.getElementById('user-account-container-img-id').src);
+		    if (document.getElementById('user-account-container-img-id').src.indexOf('user.png')) {
+		    	$('#comment-send-profile-' + key).addClass('img-32');
+		    	$('#comment-send-profile-' + key).removeClass('img-24');
+		    }
 		    $('#comment-send-profile-' + key).attr('id', 'comment-send-profile_' + data.uuid);
 		    $('#comment-user-profile-' + key).attr('id', 'comment-user-profile_' + data.uuid);
 		    $('#likes-qtd-' + key).attr('id', 'likes-qtd_' + data.uuid);	
