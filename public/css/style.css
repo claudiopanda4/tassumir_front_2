@@ -2612,7 +2612,7 @@ label[for="hugo"]{
     border: 1px solid #606060;
 }
 .edit-profile-mobile {
-    padding: 10px;
+    padding: 11px 10px;
     width: 100%;
     text-align: center;
     /* display: inline-flex; */
@@ -2638,8 +2638,17 @@ label[for="hugo"]{
     width: 60%;
 }
 .options-profile-btn {
+    position: relative;
     display: block;
     width: 48%;
+    height: 37px;
+}
+#options-profile-btn-edit-profile {
+    background-color: #800080;
+    border-radius: 2px;
+}
+.a-link-detail-profile {
+    font-weight: bolder;
 }
 .options-profile-btn-center .edit-profile-mobile{
     background-color: #800080;
@@ -3604,8 +3613,8 @@ label[for="hugo"]{
     position: relative;
     width: 100%;
     height: 38px;
-    border-radius: 4px;
-    background-color: #3b3b3b;
+    border-radius: 2px;
+    background-color: #2f3338;
 }
 .more-options-component {
     color: #ffff;
@@ -3639,7 +3648,7 @@ label[for="hugo"]{
     max-height: 80%;
 }
 #option-btn-profile {
-    font-size: 15px;
+    font-size: 13px;
 }
 #header-height-component {
     position: relative;

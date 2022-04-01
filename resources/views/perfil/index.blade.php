@@ -14,7 +14,7 @@
         </div>
         <div class="" id="card-ident">
             <div id="ident-profile">
-                <h1 class="profile-name" style="margin-left:15px"></h1>
+                <h1 class="profile-name" id="profille-name"></h1>
                 <div class="invite-icon circle">
                     <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
                 </div>
@@ -22,28 +22,31 @@
             <h1>{{$uuid}}</h1>
             <ul class="profile-follow profile-item-center">
                 <li class="statistics-profile">
-                  <a href=""><h2 style="justify-content: center; font-weight: bolder; font-size: 14px; width: 100%; margin-bottom: 0;">0</h2></a>
+                  <a href=""><h2 style="justify-content: center; font-weight: bolder; font-size: 14px; width: 100%; margin-bottom: 0;" id="data-profile-0"></h2></a>
                     <a href="" style="margin-top: -5px;  text-align: center;"><h2 style="justify-content: center; font-size: 11.5px; text-align: center;">Seguindo</h2></a>
                 </li>
                 <li class="statistics-profile">
-                    <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">0</h2>
+                    <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;" id="data-profile-1"> </h2>
                     <h2 style="justify-content: center; font-size: 11.5px;">Curtiu</h2>
                 </li>
                 <li class="statistics-profile">
-                    <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;">0</h2>
+                    <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;" id="data-profile-2"> </h2>
                     <h2 style="justify-content: center; font-size: 11.5px;">Guardados</h2>
                 </li>
             </ul>
             <div id="option-profile-no-own">
                 <div class="clearfix" id="options-profile-mobile-user-log">
                         <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5" id="options-profile-btn-edit-profile">
-                            <a href=""><h3 class="edit-profile-mobile" id="option-btn-profile">Casado</h3></a>
+                            <a href=""><h3 class="edit-profile-mobile center" id="option-btn-profile">Casado</h3></a>
                         </div>
                         <div class="l-5 options-profile-btn more-options-profile-bt">
                             <label for="more-option-target-profile" class="target-options-profile">
                                 <div class="">
                                     <div class="more-options-profile-btn">
-                                        <div class="more-options-component"><i class="fas fa-caret-down center" style="font-size: 18px;"></i></div>
+                                        <div class="more-options-component">
+                                            <!--<i class="fas fa-caret-down center" style="font-size: 18px;"></i>-->
+                                            <img class="center img-26" src="{{asset('css/uicons/caret-down.png')}}">
+                                        </div>
                                     </div>
                                 </div>
                             </label>
@@ -52,26 +55,50 @@
                             <label for="more-option-target" class="target-options-profile">
                                 <div class="">
                                     <div class="more-options-profile-btn">
-                                        <div class="more-options-component center"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 14px;"></i></div>
+                                        <div class="more-options-component center">
+                                            <!--<i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 14px;"></i>-->
+                                            <img class="center img-26" src="{{asset('css/uicons/bookmark.png')}}">
+                                        </div>
                                     </div>
                                 </div>
                             </label>
                         </div>
                 </div>
                 <div class="inform-profile">
-                    <h3 id="civil-state">Casado</h3>
+                    <h3 id="civil-state">Casado com <a href="" class="a-link-detail-profile">Domingos</a></h3>
                 </div>
                 <div class="inform-profile">
-                    <p class="description-couple"></p>
+                    <p class="description-couple" style="width: 100%;">
+                        <span>CasadoCasadoCasadoCasadoCasadoCasadoCasadoCasadoCasado... </span><a href="" class="a-link-detail-profile">ver mais</a></p>
+                        <input type="hidden" id="description-all" name="">
                 </div>
             </div>
     </header>
 <div class="card br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">
                 <ul class="" id="ul-profile">
-                    <li><a href="?post-container-post=images"><i class="far fa-images fas-32 center icon-hover-option-profile " style="font-size: 22px;"></i><h1 class="menu-option-profile"></h1></a></li>
-                    <li><a href="?post-container-post=video"><i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 22px;"></i><h1 class="menu-option-profile"></h1></a></li>
-                    <li><a href="?post-container-post=post"><i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 22px;"></i><h1 class="menu-option-profile"></h1></a></li>
+                    <li>
+                        <a href="?post-container-post=images">
+                            <!--<i class="far fa-images fas-32 center icon-hover-option-profile " style="font-size: 22px;"></i>-->
+                            <h1 class="menu-option-profile"></h1>
+                            <img class="center img-26" src="{{asset('css/uicons/images.png')}}">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?post-container-post=video">
+                            <!--<i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 22px;"></i>-->
+                            <h1 class="menu-option-profile">        
+                            </h1>
+                            <img class="center img-26" src="{{asset('css/uicons/video_liked.png')}}">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?post-container-post=post">
+                            <!--<i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 22px;"></i>-->
+                            <h1 class="menu-option-profile"></h1>
+                            <img class="center img-26" src="{{asset('css/uicons/text.png')}}">
+                        </a>
+                    </li>
                     <!--<li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 18px;"></i><h1 class="menu-option-profile"></h1></a></li>-->
                 </ul>
             </nav>
