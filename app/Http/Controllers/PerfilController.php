@@ -213,6 +213,26 @@ class PerfilController extends Controller
         }
     }
 
+    public function data_profile(Request $request){
+      $id = Auth::user()->conta_id;
+      if ($request->type == 0) {
+        $data = DB::select('select count(*) as seguindo from seguidors where seguidors.identificador_id_seguindo = (select identificador_id as identificador_id_seguindo from identificadors where id = ? and identificadors.tipo_identificador_id = 1)', [$id]);
+        return response()->json([
+          'data' => $data[0]->seguindo
+        ]);
+      } elseif ($request->type == 1) {
+        $data = DB::select('select count(*) as reactions from post_reactions where post_reactions.identificador_id = (select identificador_id as identificador_id_seguindo from identificadors where id = ? and identificadors.tipo_identificador_id = 1)', [$id]);
+        return response()->json([
+          'data' => $data[0]->reactions
+        ]);        
+      } elseif ($request->type == 2) {
+        $data = DB::select('select count(*) as saveds from saveds where conta_id = ?', [$id]);
+        return response()->json([
+          'data' => $data[0]->saveds
+        ]);        
+      }
+    }
+
     public function perfil_das_contas($id)
     {
         try {

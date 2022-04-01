@@ -22,10 +22,23 @@ $(document).ready(function () {
         	}
 			$('#complete_name_id').text(response.nome + ' ' + response.apelido);
         	if($('#profile-container-id').val()){
+        		$('#profille-name').text(response.nome + ' ' + response.apelido);
 		    	src = document.getElementById('user-account-container-img-id').src;
 		    	$('#img-profile-component').attr('src', src);
 				$('#img-profile-component').removeClass('invisible-component');
 				$('#img-profile-container').addClass('transparent-back');
+				for(let i = 0; i < 3; i++){
+					$.ajax({
+						url: '/profile/data',
+						type: 'get',
+						data: {'type': i},
+						dataType: 'json',
+						success: function (response) {
+							console.log(response);
+							$('#data-profile-' + i).text(response.data);
+						}
+					});
+				}
 		    }
         	
         }

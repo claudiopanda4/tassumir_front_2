@@ -114,7 +114,7 @@
 	.edit-profile-mobile {
 		display: block;
 		margin-top: 0px;
-		padding: 10px;
+		padding: 0px;
 	}
 	.edit-page-container {
 		display: none;
@@ -261,7 +261,7 @@
 	    height: 60px;
 	}
 	.profile-name {
-	    font-size: 15px;
+	    font-size: 14px;
 	    width: 170px;
 	    padding-left: 10px;
 	}
@@ -339,7 +339,7 @@
 	}
 	.profile-name {
 		margin-top: 10px;
-	    font-size: 18px;
+	    font-size: 14px;
 	    width: 170px;
 	    padding-left: 10px;
 	    margin: 5px auto
@@ -914,7 +914,9 @@
 }
 @media screen and (max-width: 600px) {
 	#main-profile {
-		width: 100%;
+	    width: 100%;
+	    background: #18191a;
+	    border-radius: 0;
 	}
 }
 @media screen and (max-width: 967px) {
@@ -1240,6 +1242,9 @@
 		border: none;
 		border-radius: 0;
 		/*border-top: 1px solid #343a40;*/
+	}
+	.inform-profile h3, .inform-profile p {
+	    font-size: 12px;
 	}
 	.user-account-container-img {
 	    width: 24px;
