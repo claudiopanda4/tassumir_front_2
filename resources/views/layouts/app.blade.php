@@ -60,7 +60,7 @@
                 <li class="l-5 mobile-header-icon" style="z-index:2;" id="notification-header-icon-container">
                     <div class="hidden-click-any-container last-component-n clearfix-n " id="notification-header-icon">
                         <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><!--<i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i>-->
-                            <img src="{{asset('/css/uicons/notification.png')}}" class="center img-26">
+                            <img src="{{asset('/css/uicons/notification.png')}}" class="center img-28">
                             <div class="number-notification circle invisible-component">
                                 <span class="center"></span>
                             </div>

@@ -457,7 +457,7 @@ class PostController extends Controller
             $uuid = $request->id;
             $conta_id = Auth::user()->conta_id;
             $data = DB::select("select id_post, saveds.conta_id from saveds right join (select post_id as id_post from posts where uuid = ?) as posts on saveds.post_id = posts.id_post", [$uuid]);
-            $sql = "select post_id from saveds right join (select post_id as id_post from posts where uuid = $uuid) as posts on saveds.post_id = posts.id_post";
+            $sql = "select post_id, saveds.conta_id from saveds right join (select post_id as id_post from posts where uuid = $uuid) as posts on saveds.post_id = posts.id_post AND saveds.conta_id = $conta_id";
             if ($data[0]->conta_id != null) {
                 DB::table('saveds')
                 ->where('conta_id', $conta_id)

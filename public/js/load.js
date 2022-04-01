@@ -275,7 +275,7 @@ $(document).ready(function () {
 			    		$('#loading-finished').val('0');
 			    	}
 			    	$('#loading-finished').val(0);
-			        console.log(response);
+			        //console.log(response);
 					//videos();
 			    }
 			});
@@ -573,7 +573,7 @@ $(document).ready(function () {
 		    data: {'id' : id},
 		    dataType: 'json',
 		    success: function(response){
-		    	console.log(response);
+		    	//console.log(response);
 		    	$.each(response.add, function(key, data){
 		    		$('#' + e.target.id).addClass(data);
 		    	});
