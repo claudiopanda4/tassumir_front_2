@@ -39,6 +39,21 @@ $(document).ready(function () {
 						}
 					});
 				}
+				$.ajax({
+					url: '/profile/maritalstatus',
+					type: 'get',
+					data: {'id': ''},
+					dataType: 'json',
+					success: function (response) {
+						$('#option-btn-profile').text('Editar');
+						console.log(response);
+						$('#relationship-selected-type-profile').text(response[0].relationship + ' ');
+						$('#spouse-profile').text(response[0].spouse_name + ' ' + response[0].spouse_apelido);
+						$('#spouse-profile').attr('href', route + '/profile/' + response[0].spouse_uuid);
+						$('#btn-profile-redirect').attr('href', route + '/profile/edit/' + response[0].spouse_uuid);
+
+					}
+				});
 		    }
         	
         }
@@ -87,11 +102,12 @@ $(document).ready(function () {
 		});
 	    home_posts_assync();
 		page_following();
+		page_no_following();
 	    $(window).resize(function () {
 	    	page_following();
 			page_no_following();
 	    });
-    	//home_posts();
+
     	function home_posts(data, key, option) {
 		    $('#vid-load-' + key).attr('id', 'vid-load_' + data.uuid);
     		$('#page-cover-post-' + key).attr('src', route + "/css/uicons/page_icon.jpg");
@@ -280,6 +296,8 @@ $(document).ready(function () {
 			    }
 			});
 			$('#posts').val(1);
+			$('#m_post-145').addClass('invisible-component');
+		   	$('#m_post-144').addClass('invisible-component');
     	}
     }
 

@@ -206,11 +206,37 @@ class PerfilController extends Controller
     {
         try {
           $page_current = 'profile';
-          $uuid = Auth::user()->uuid;
-          return view('perfil.index', compact('page_current', 'uuid'));
+          $conta_id = Auth::user()->conta_id;
+          $user = DB::select('select uuid, descricao, genero, foto from contas where conta_id = ?', [$conta_id]);
+          $uuid = $user[0]->uuid;
+          $descricao = $user[0]->descricao;
+          return view('perfil.index', compact('page_current', 'uuid', 'descricao'));
         } catch (Exception $e) {
             dd('erro');
         }
+    }
+
+    public function marital_status(){
+        $conta_id = Auth::user()->conta_id;
+        $result = DB::select("select page_id, if(count(pages.tipo_page_id) > 0, (select tipo from tipo_pages where tipo_page_id = pages.tipo_page_id), 'not') as relationship, if ((select count(*) from pages where conta_id_a = ?) > 0, (select uuid from contas where conta_id = pages.conta_id_b), (select uuid from contas where conta_id = pages.conta_id_a)) as spouse_uuid, if ((select count(*) from pages where conta_id_a = ?) > 0, (select nome from contas where conta_id = pages.conta_id_b), (select nome from contas where conta_id = pages.conta_id_a)) as spouse_name, if ((select count(*) from pages where conta_id_a = ?) > 0, (select apelido from contas where conta_id = pages.conta_id_b), (select apelido from contas where conta_id = pages.conta_id_a)) as spouse_apelido from pages where pages.conta_id_a = ? or pages.conta_id_b = ? group by page_id limit 1", [$conta_id, $conta_id, $conta_id, $conta_id, $conta_id]);
+        $state_marital = $result[0]->relationship;
+        $state = false;
+        
+        if ($state_marital == 'Nativa') {
+          $state_marital = 'Tem um relacionamento com ';
+          $state = 'Nativo';
+        } elseif ($state_marital == 'Nativa') {
+          $state_marital = '';
+        } elseif ($state_marital == 'Nativa') {
+          $state_marital = '';
+        } elseif ($state_marital == 'Nativa') {
+          $state_marital = '';
+        }
+        $result[0]->relationship = $state_marital;
+        return response()->json([
+          $result[0],
+          'state' => $state,
+        ]);
     }
 
     public function data_profile(Request $request){

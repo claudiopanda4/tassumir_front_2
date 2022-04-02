@@ -60,7 +60,7 @@
             </div>
         </div>
     <div class="" id="div_father_post" name="div_father_post">
-        <?php $key = 0; while($key < 240){ ?>
+        <?php $key = 0; while($key < 146){ ?>
         <?php if ($key == 2 || $key == 5 || $key == 9): ?>
             <div class="refresh-profile-photo clearfix invisible-component alert-info-about-us" id="alert-info-about-us-{{$key}}">
                 <div class="profile-photo-container l-5">
@@ -102,7 +102,7 @@
                     </nav>
                 </section>
         <?php endif ?>
-            <div id="m_post-{{$key}}" <?php if ($key < 1) {echo "class='card br-10 post-video'";} else {echo "class='card br-10 post-video invisible-post'";}
+            <div id="m_post-{{$key}}" <?php if ($key >= 144 && $key < 146) {echo "class='card br-10 post-video'";} else {echo "class='card br-10 post-video invisible-post'";}
              ?>>
             <div class="post post-view post-video" id="post_view_{{$key}}">
                 <header class="clearfix">

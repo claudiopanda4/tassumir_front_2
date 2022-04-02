@@ -3261,6 +3261,7 @@ public function dados_comment($key){
   public function tip_of_relac_you(Request $request)
   {
     try {
+        $request->id = Auth::user()->conta_id;
       $tory=DB::select('select al.*, if(id_conta_a=? ,(select ct.nome from contas as ct where ct.conta_id =id_conta_b),(select ct.nome from contas as ct where ct.conta_id =id_conta_a))as nome_outra_pessoa,if(id_conta_a=? ,(select ct.apelido from contas as ct where ct.conta_id =id_conta_b),(select ct.apelido from contas as ct where ct.conta_id =id_conta_a))as apelido_outra_pessoa from (select (select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page,(select pg.page_id from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1 limit 1)as page_id, (select pg.tipo_relacionamento_id from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as tipo_relac_id, (select p.conta_id_a from pages as p where p.page_id=page_id order by p.page_id desc limit 1)as id_conta_a, (select pa.conta_id_b from pages as pa where pa.page_id=page_id order by pa.page_id desc limit 1)as id_conta_b, (select tp.tipo_relacionamento from tipo_relacionamentos as tp where tp.tipo_relacionamento_id=tipo_relac_id)as tipo_relac from contas as c where c.conta_id=?) as al',[$request->id,$request->id,$request->id]);
       return $tory;
     } catch (\Exception $error){
