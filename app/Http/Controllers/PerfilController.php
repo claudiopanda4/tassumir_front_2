@@ -201,27 +201,62 @@ class PerfilController extends Controller
      }
 
 
-
+    public function data_profile_defaut() {
+      $page_current = 'profile';
+      $conta_id = Auth::user()->conta_id;
+      $user = DB::select('select nome, apelido, uuid, descricao, genero, foto from contas where conta_id = ?', [$conta_id]);
+      $uuid = $user[0]->uuid;
+      $descricao = $user[0]->descricao;
+      $nome_completo = $user[0]->nome + ' ' + $user[0]->apelido;
+      return [
+        'page_current' => $page_current,
+        'nome_completo' => $nome_completo,
+        'descricao' => $descricao,
+      ];
+    }
+    
     public function index()
     {
         try {
           $page_current = 'profile';
           $conta_id = Auth::user()->conta_id;
-          $user = DB::select('select uuid, descricao, genero, foto from contas where conta_id = ?', [$conta_id]);
+          $user = DB::select('select nome, apelido, uuid, descricao, genero, foto from contas where conta_id = ?', [$conta_id]);
           $uuid = $user[0]->uuid;
           $descricao = $user[0]->descricao;
-          return view('perfil.index', compact('page_current', 'uuid', 'descricao'));
+          $foto = $user[0]->foto;
+          $nome_completo = $user[0]->nome . ' ' . $user[0]->apelido;
+          return view('perfil.index', compact('page_current', 'uuid', 'descricao', 'nome_completo', 'foto'));
+        } catch (Exception $e) {
+            dd('erro');
+        }
+    }
+    public function index_visit(Request $request, $id)
+    {
+        try {
+          $page_current = 'profile';
+          $uuid = $id;
+          $user = DB::select('select uuid, descricao, apelido, nome, genero, foto from contas where uuid = ?', [$id]);
+          $descricao = $user[0]->descricao;
+          $foto = $user[0]->foto;
+          $nome_completo = $user[0]->nome . ' ' . $user[0]->apelido;
+          return view('perfil.index', compact('page_current', 'descricao', 'uuid', 'nome_completo', 'foto'));
         } catch (Exception $e) {
             dd('erro');
         }
     }
 
-    public function marital_status(){
+    public function marital_status(Request $request){
         $conta_id = Auth::user()->conta_id;
-        $result = DB::select("select page_id, if(count(pages.tipo_page_id) > 0, (select tipo from tipo_pages where tipo_page_id = pages.tipo_page_id), 'not') as relationship, if ((select count(*) from pages where conta_id_a = ?) > 0, (select uuid from contas where conta_id = pages.conta_id_b), (select uuid from contas where conta_id = pages.conta_id_a)) as spouse_uuid, if ((select count(*) from pages where conta_id_a = ?) > 0, (select nome from contas where conta_id = pages.conta_id_b), (select nome from contas where conta_id = pages.conta_id_a)) as spouse_name, if ((select count(*) from pages where conta_id_a = ?) > 0, (select apelido from contas where conta_id = pages.conta_id_b), (select apelido from contas where conta_id = pages.conta_id_a)) as spouse_apelido from pages where pages.conta_id_a = ? or pages.conta_id_b = ? group by page_id limit 1", [$conta_id, $conta_id, $conta_id, $conta_id, $conta_id]);
+        $uuid = $request->id;
+        $result = DB::select("select if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select conta_id from contas where conta_id = pages.conta_id_a), (select conta_id from contas where conta_id = pages.conta_id_b)) as conta_id, if(count(pages.tipo_page_id) > 0, (select tipo from tipo_pages where tipo_page_id = pages.tipo_page_id), 'not') as relationship, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select uuid from contas where conta_id = pages.conta_id_b), (select uuid from contas where conta_id = pages.conta_id_a)) as spouse_uuid, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select nome from contas where conta_id = pages.conta_id_b), (select nome from contas where conta_id = pages.conta_id_a)) as spouse_name, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select apelido from contas where conta_id = pages.conta_id_b), (select apelido from contas where conta_id = pages.conta_id_a)) as spouse_apelido from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?) or pages.conta_id_b = (select conta_id from contas where uuid = ?) limit 1", [$uuid, $uuid, $uuid, $uuid, $uuid, $uuid]);
         $state_marital = $result[0]->relationship;
         $state = false;
+        $my_profile = false;
+        if ($result[0]->conta_id == $conta_id) {
+          $my_profile = true;
+        }
         
+        $addClass = "";
         if ($state_marital == 'Nativa') {
           $state_marital = 'Tem um relacionamento com ';
           $state = 'Nativo';
@@ -231,11 +266,21 @@ class PerfilController extends Controller
           $state_marital = '';
         } elseif ($state_marital == 'Nativa') {
           $state_marital = '';
+        } else {
+          $state = 'Assumir';
+          $addClass = "target-relationship-assumir";
+        }
+        $relationship_details = false;
+        if ($result[0]->conta_id) {
+          $relationship_details = true;
         }
         $result[0]->relationship = $state_marital;
         return response()->json([
           $result[0],
           'state' => $state,
+          'my_profile' => $my_profile,
+          'relationship' => $relationship_details,
+          'addClass' => $addClass
         ]);
     }
 

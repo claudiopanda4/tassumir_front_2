@@ -63,7 +63,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::post('/profile/picture/', [App\Http\Controllers\PerfilController::class, 'add_picture'])->name('account.profile.pic');
 
     Route::post('/update/', [App\Http\Controllers\PerfilController::class, 'update'])->name('account.update');
-    Route::get('/profile/{id}', [App\Http\Controllers\PerfilController::class, 'perfil_das_contas'])->name('account1.profile');
+    Route::get('/profile/{id}', [App\Http\Controllers\PerfilController::class, 'index_visit'])->name('account1.profile');
     Route::get('/profile/edit/{perfil}', [App\Http\Controllers\PerfilController::class, 'edit'])->name('account.profile.edit');
 
     Route::get('/paginas_que_sigo/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas_que_sigo'])->name('paginas_que_sigo.page');

@@ -5,16 +5,22 @@
     <input type="hidden" id="profile-container-id" value=<?php echo md5('OK'); ?>>
     <header class="card br-10 card-flex">
         <div id="img-profile-container" class="circle">
-            <img class="img-profile img-full circle invisible-component" id="img-profile-component">
+            @if ($foto != null)
+                <img class="img-profile img-full circle invisible-component" src="{{asset('storage/img/users') . '/' . $foto}}" id="img-profile-component"> 
+            @else:
+                <img class="img-profile img-full circle invisible-component" src="{{asset('css/uicons/user.png')}}" id="img-profile-component">                            
+            @endif
+
             <label for="target-profile-cover">
                 <div class="add-edit-profile circle">
                     <i class="fas fa-plus center" style="font-size: 10px;"></i>
                 </div>
             </label>
         </div>
+        <input type="hidden" id="ident-profile-id" value="{{$uuid}}" name="">
         <div class="" id="card-ident">
             <div id="ident-profile">
-                <h1 class="profile-name" id="profille-name"></h1>
+                <h1 class="profile-name" id="profille-name">{{$nome_completo}}</h1>
                 <div class="invite-icon circle">
                     <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
                 </div>

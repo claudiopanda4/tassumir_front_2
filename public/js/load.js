@@ -22,8 +22,8 @@ $(document).ready(function () {
         	}
 			$('#complete_name_id').text(response.nome + ' ' + response.apelido);
         	if($('#profile-container-id').val()){
-        		$('#profille-name').text(response.nome + ' ' + response.apelido);
-		    	src = document.getElementById('user-account-container-img-id').src;
+        		//$('#profille-name').text(response.nome + ' ' + response.apelido);
+		    	//src = document.getElementById('user-account-container-img-id').src;
 		    	$('#img-profile-component').attr('src', src);
 				$('#img-profile-component').removeClass('invisible-component');
 				$('#img-profile-container').addClass('transparent-back');
@@ -42,16 +42,22 @@ $(document).ready(function () {
 				$.ajax({
 					url: '/profile/maritalstatus',
 					type: 'get',
-					data: {'id': ''},
+					data: {'id': $('#ident-profile-id').val()},
 					dataType: 'json',
 					success: function (response) {
-						$('#option-btn-profile').text('Editar');
-						console.log(response);
-						$('#relationship-selected-type-profile').text(response[0].relationship + ' ');
-						$('#spouse-profile').text(response[0].spouse_name + ' ' + response[0].spouse_apelido);
-						$('#spouse-profile').attr('href', route + '/profile/' + response[0].spouse_uuid);
-						$('#btn-profile-redirect').attr('href', route + '/profile/edit/' + response[0].spouse_uuid);
-
+						if (response.my_profile) {
+							$('#option-btn-profile').text('Editar');
+							$('#btn-profile-redirect').attr('href', route + '/profile/edit/' + $('#ident-profile-id').val());
+						} else {
+							$('#option-btn-profile').text(response.state);
+						}
+						//console.log(response);
+						if (response.relationship) {
+							$('#relationship-selected-type-profile').text(response[0].relationship + ' ');
+							$('#spouse-profile').text(response[0].spouse_name + ' ' + response[0].spouse_apelido);
+							$('#spouse-profile').attr('href', route + '/profile/' + response[0].spouse_uuid);							
+						}
+						$('#option-btn-profile').addClass(response.addClass);
 					}
 				});
 		    }
