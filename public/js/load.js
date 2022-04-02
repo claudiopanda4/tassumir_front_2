@@ -2,6 +2,12 @@ $(document).ready(function () {
 	let length = $('#host').val().split('/').length;
 	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[length - 2];
 	let src;
+	$('#target-invited-relationship-id').click(function () {
+		$('#target-invited-relationship').removeAttr('checked');
+	});
+	if($('#profile-container-id').val()){
+
+	}
 	$.ajax({
         url: '/user_data',
         type: 'get',
@@ -20,6 +26,7 @@ $(document).ready(function () {
         			document.getElementById('refresh-profile-photo-id').remove();
         		}
         	}
+
 			$('#complete_name_id').text(response.nome + ' ' + response.apelido);
         	if($('#profile-container-id').val()){
         		//$('#profille-name').text(response.nome + ' ' + response.apelido);
@@ -31,7 +38,7 @@ $(document).ready(function () {
 					$.ajax({
 						url: '/profile/data',
 						type: 'get',
-						data: {'type': i},
+						data: {'type': i, 'id' : $('#ident-profile-id').val()},
 						dataType: 'json',
 						success: function (response) {
 							console.log(response);
@@ -45,19 +52,29 @@ $(document).ready(function () {
 					data: {'id': $('#ident-profile-id').val()},
 					dataType: 'json',
 					success: function (response) {
+						$('#btn-profile-redirect').removeClass(response.addClass);
+						$('#option-btn-profile').addClass(response.addClass);
 						if (response.my_profile) {
 							$('#option-btn-profile').text('Editar');
 							$('#btn-profile-redirect').attr('href', route + '/profile/edit/' + $('#ident-profile-id').val());
+							$('#more-option-visit-profile-details').remove();
+							$('#more-option-btn-profile').removeClass('invisible');
+							$('#more-option-btn-profile').attr('src', route + '/css/uicons/bookmark.png');
+							$('#add-edit-profile-owner').removeClass('invisible-component');
 						} else {
 							$('#option-btn-profile').text(response.state);
+							$('#more-option-target-profile-details').remove();
+							$('#more-option-btn-profile').attr('src', route + '/css/uicons/message.png');
+							$('#more-option-btn-profile').addClass('target-message-alert');
+							$('#more-option-btn-profile').removeClass('invisible');
+							$('#add-edit-profile-owner').remove();
 						}
-						//console.log(response);
+						console.log(response);
 						if (response.relationship) {
 							$('#relationship-selected-type-profile').text(response[0].relationship + ' ');
 							$('#spouse-profile').text(response[0].spouse_name + ' ' + response[0].spouse_apelido);
 							$('#spouse-profile').attr('href', route + '/profile/' + response[0].spouse_uuid);							
 						}
-						$('#option-btn-profile').addClass(response.addClass);
 					}
 				});
 		    }
@@ -638,4 +655,16 @@ $(document).ready(function () {
 });
 window.addEventListener('load', function () {
 	//alert('oiii');
+});
+document.addEventListener('click', function (e) {
+	if (e.target.className.indexOf('target-relationship-assumir') > -1) {
+		document.getElementById('target-invited-relationship').checked = true;
+		e.preventDefault();
+	}
+	if (e.target.className.indexOf('target-message-alert') > -1) {
+		$('#concluir_file_ok').addClass('invisible-component');
+		$('#header-title-alert').text('Tassumir Mensagens')
+		$('#alert-description').text('Brevemente você poderá interagir por mensagens no Tassumir... Quando estiver disponível, anunciaremos pra você. Estamos desenvolvendo com muito cuidado para poder proporcionar a você uma experiência melhor e mais PRIVADA no Tassumir. Por favor, AGUARDE...');
+		document.getElementById('target-alert-post-denied').checked = true;
+	}
 });

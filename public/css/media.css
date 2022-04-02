@@ -1256,6 +1256,9 @@
 	.distinctiv {
 	    border: 2px solid #000;
 	}
+	.a-more-option-profile {
+		font-size: 13px;
+	}
 	#more-option-profile-component-pop-up {
 		width: 94%;
 	    height: 45%;

@@ -12,7 +12,7 @@
             @endif
 
             <label for="target-profile-cover">
-                <div class="add-edit-profile circle">
+                <div class="add-edit-profile circle invisible-component" id="add-edit-profile-owner">
                     <i class="fas fa-plus center" style="font-size: 10px;"></i>
                 </div>
             </label>
@@ -42,7 +42,7 @@
             <div id="option-profile-no-own">
                 <div class="clearfix" id="options-profile-mobile-user-log">
                         <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5" id="options-profile-btn-edit-profile">
-                            <a id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="option-btn-profile"></h3></a>
+                            <a class="target-relationship-assumir" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="option-btn-profile"></h3></a>
                         </div>
                         <div class="l-5 options-profile-btn more-options-profile-bt">
                             <label for="more-option-target-profile" class="target-options-profile">
@@ -62,7 +62,7 @@
                                     <div class="more-options-profile-btn">
                                         <div class="more-options-component center">
                                             <!--<i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 14px;"></i>-->
-                                            <img class="center img-26" src="{{asset('css/uicons/bookmark.png')}}">
+                                            <img class="center img-26 invisible" id="more-option-btn-profile" src="">
                                         </div>
                                     </div>
                                 </div>
@@ -134,29 +134,29 @@
         </header>
         <div class="clearfix content-more" style="margin-top: 0px; margin-bottom: 10px;">
             <nav>
-                <ul class="">
+                <ul class="" id="more-option-target-profile-details">
                     <li class="li-component-aside">
                         <i class="fas fa-sign-out-alt fa-20 fa-icon-aside-left"></i>
                         <a href="{{route('account.logout')}}">Terminar Sessão</a>
                     </li>
                     <li class="li-component-aside">
                         <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
-                        <a href="">Meus Ganhos</a>
+                        <a href="" class="a-more-option-profile">Meus Ganhos</a>
                     </li>
                     <li class="li-component-aside">
                         <i class="fas fa-rss fa-20 fa-icon-aside-left"></i>
-                        <a href="">Actualizações do Tassumir</a>
+                        <a href="" class="a-more-option-profile">Actualizações do Tassumir</a>
                     </li>
                     <li class="li-component-aside">
                         <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
-                        <a href="">Dicas Para Ganhar Mais</a>
+                        <a href="" class="a-more-option-profile">Dicas Para Ganhar Mais</a>
                     </li>
                     <li class="li-component-aside">
                         <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
-                        <a href="">Explorar Melhor o Tassumir</a>
+                        <a href="" class="a-more-option-profile">Explorar Melhor o Tassumir</a>
                     </li>
                 </ul>
-                <ul class="">
+                <ul class="" id="more-option-visit-profile-details">
                     <li class="li-component-aside more-info-about-profile">
                         <h1>Estado</h1>
                         <h2>Solteiro</h2>

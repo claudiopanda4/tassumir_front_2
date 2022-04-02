@@ -248,11 +248,11 @@ class PerfilController extends Controller
     public function marital_status(Request $request){
         $conta_id = Auth::user()->conta_id;
         $uuid = $request->id;
-        $result = DB::select("select if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select conta_id from contas where conta_id = pages.conta_id_a), (select conta_id from contas where conta_id = pages.conta_id_b)) as conta_id, if(count(pages.tipo_page_id) > 0, (select tipo from tipo_pages where tipo_page_id = pages.tipo_page_id), 'not') as relationship, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select uuid from contas where conta_id = pages.conta_id_b), (select uuid from contas where conta_id = pages.conta_id_a)) as spouse_uuid, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select nome from contas where conta_id = pages.conta_id_b), (select nome from contas where conta_id = pages.conta_id_a)) as spouse_name, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select apelido from contas where conta_id = pages.conta_id_b), (select apelido from contas where conta_id = pages.conta_id_a)) as spouse_apelido from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?) or pages.conta_id_b = (select conta_id from contas where uuid = ?) limit 1", [$uuid, $uuid, $uuid, $uuid, $uuid, $uuid]);
+        $result = DB::select("select (select conta_id from contas where uuid = ?) as id, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select conta_id from contas where conta_id = pages.conta_id_a), (select conta_id from contas where conta_id = pages.conta_id_b)) as conta_id, if(count(pages.tipo_page_id) > 0, (select tipo from tipo_pages where tipo_page_id = pages.tipo_page_id), 'not') as relationship, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select uuid from contas where conta_id = pages.conta_id_b), (select uuid from contas where conta_id = pages.conta_id_a)) as spouse_uuid, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select nome from contas where conta_id = pages.conta_id_b), (select nome from contas where conta_id = pages.conta_id_a)) as spouse_name, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select apelido from contas where conta_id = pages.conta_id_b), (select apelido from contas where conta_id = pages.conta_id_a)) as spouse_apelido from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?) or pages.conta_id_b = (select conta_id from contas where uuid = ?) limit 1", [$uuid, $uuid, $uuid, $uuid, $uuid, $uuid, $uuid]);
         $state_marital = $result[0]->relationship;
-        $state = false;
+        $state = 'Editar';
         $my_profile = false;
-        if ($result[0]->conta_id == $conta_id) {
+        if ($result[0]->id == $conta_id) {
           $my_profile = true;
         }
         
@@ -267,8 +267,10 @@ class PerfilController extends Controller
         } elseif ($state_marital == 'Nativa') {
           $state_marital = '';
         } else {
-          $state = 'Assumir';
-          $addClass = "target-relationship-assumir";
+          if ($result[0]->id != $conta_id) {
+            $state = 'Assumir';
+            $addClass = "target-relationship-assumir";  
+          }
         }
         $relationship_details = false;
         if ($result[0]->conta_id) {
@@ -280,24 +282,27 @@ class PerfilController extends Controller
           'state' => $state,
           'my_profile' => $my_profile,
           'relationship' => $relationship_details,
-          'addClass' => $addClass
+          'addClass' => $addClass,
+          'auth' => $conta_id,
+          'auth 1' => $result[0]->conta_id,
         ]);
     }
 
     public function data_profile(Request $request){
       $id = Auth::user()->conta_id;
+      $uuid = $request->id;
       if ($request->type == 0) {
-        $data = DB::select('select count(*) as seguindo from seguidors where seguidors.identificador_id_seguindo = (select identificador_id as identificador_id_seguindo from identificadors where id = ? and identificadors.tipo_identificador_id = 1)', [$id]);
+        $data = DB::select('select count(*) as seguindo from seguidors where seguidors.identificador_id_seguindo = (select identificador_id as identificador_id_seguindo from identificadors where id = (select conta_id from contas where uuid = ?) and identificadors.tipo_identificador_id = 1)', [$uuid]);
         return response()->json([
           'data' => $data[0]->seguindo
         ]);
       } elseif ($request->type == 1) {
-        $data = DB::select('select count(*) as reactions from post_reactions where post_reactions.identificador_id = (select identificador_id as identificador_id_seguindo from identificadors where id = ? and identificadors.tipo_identificador_id = 1)', [$id]);
+        $data = DB::select('select count(*) as reactions from post_reactions where post_reactions.identificador_id = (select identificador_id as identificador_id_seguindo from identificadors where id = (select conta_id from contas where uuid = ?) and identificadors.tipo_identificador_id = 1)', [$uuid]);
         return response()->json([
           'data' => $data[0]->reactions
         ]);        
       } elseif ($request->type == 2) {
-        $data = DB::select('select count(*) as saveds from saveds where conta_id = ?', [$id]);
+        $data = DB::select('select count(*) as saveds from saveds where conta_id = (select conta_id from contas where uuid = ?)', [$uuid]);
         return response()->json([
           'data' => $data[0]->saveds
         ]);        

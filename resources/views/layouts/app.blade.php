@@ -218,7 +218,7 @@
 <div class="pop-up" id="alert-denied-post">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 210px; overflow: hidden;">
         <header class="pop-up-component-header pop-up-component-header-default header-height">
-            <h1 class="">Publicar um POST</h1>
+            <h1 class="" id="header-title-alert">Publicar um POST</h1>
             <div class="container-pop-up-component-header">
                 <label for="target-alert-post-denied">
                     <div class="cancel-box-component div-img">
@@ -229,10 +229,10 @@
         </header>
         <div class="header-height"></div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-            <p style="color: #fff; font-size: 13px;" >Só é permitido fazer um post quem tem assumido um relacionamento no Tassumir. Assuma agora mesmo o seu relacionamento, se torne um criador de conteúdo e ganhe dinheiro com seus posts.</p>
+            <p style="color: #fff; font-size: 13px;" id="alert-description" >Só é permitido fazer um post quem tem assumido um relacionamento no Tassumir. Assuma agora mesmo o seu relacionamento, se torne um criador de conteúdo e ganhe dinheiro com seus posts.</p>
             <label for="target-alert-post-denied" class="label-full">
                 <div class="cover-done checker" id="cover-done-post">
-                    <h2 id="concluir_file" style="padding: 10px; font-size: 11px; width: 100%;">Assumir Meu relacionamento</h2>
+                    <h2 id="concluir_file_ok" style="padding: 10px; font-size: 11px; width: 100%;">Assumir Meu relacionamento</h2>
                 </div>
             </label>
         </div>
@@ -491,7 +491,7 @@
             <h1>Pedido de Relacionamento</h1>
             <div class="container-pop-up-component-header">
                 <label for="target-invited-relationship">
-                    <div class="cancel-box div-img" id="target-invited-relationship-id">
+                    <div class="cancel-box-component div-img" id="target-invited-relationship-id">
                         <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
                     </div>
                 </label>
