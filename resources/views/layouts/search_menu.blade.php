@@ -20,7 +20,7 @@
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/checked.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
-    <meta name="viewport" content="width=device-width-width, initial-scale=1,0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
 
@@ -29,7 +29,7 @@
   <header class="header-main-n header-main-component-n clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
-                    <a href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1 class="">Tass<span class="title-final">umir</span></h1></a>
+                    <a href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1 class="">tass<span class="title-final">umir</span></h1></a>
                 </li>
                 <li class="search-lg mobile-hidden">
                     <div class="input-search">
@@ -41,7 +41,7 @@
             <nav class="menu-header ">
                 <ul class="clearfix ">
                     <li class="l-5 mobile-header-icon">
-                        <a href="{{route('allSearch1.page')}}"><i class="fi-rr-search fa-20 f-footer" size="7"></i></a>
+                        <!--<a href="{{route('allSearch1.page')}}"><i class="fi-rr-search fa-20 f-footer" size="7"></i></a>-->
                     </li>
                     <li class="l-5 mobile-header-icon" style="z-index:2;">
                         <div class="last-component-n clearfix-n " >
@@ -51,10 +51,12 @@
                                   <span class="center">{{$notificacoes_count}}</span>
                               </div>
                               @endif
-                                <i class="fi-rs-bell fa-20 f-footer hidden-lg-screen-icon" size="7"></i>
+                                <img src="{{asset('/css/uicons/notification.png')}}" class="center img-28">
+                                <!--<i class="fi-rs-bell fa-20 f-footer hidden-lg-screen-icon" size="7"></i>-->
                             </label>
                             <a href="{{route('account.all.notifications')}}" class="fa-option-mobile-lg-hide">
-                                <i class="fi-rs-bell fa-20 f-footer" size="7"></i>
+                                <!--<i class="fi-rs-bell fa-20 f-footer" size="7"></i>-->
+                                <img src="{{asset('/css/uicons/notification.png')}}" id="fa-option-mobile-notification-1" class="center img-28">
                                 @if($notificacoes_count > 0)
                                   <div class="number-notification circle">
                                       <span class="center">{{$notificacoes_count}}</span>
@@ -208,7 +210,7 @@
                         @if ($profile_picture == null || $profile_picture == "null" || $profile_picture == NULL || $profile_picture == "NULL" || $profile_picture == "" || $profile_picture == " ")
                             <a href="{{route('account.profile')}}"><i class="far fa-user-circle fa-24 l-5" id="imgless"></i></a>
                         @else
-                            <a href="{{route('account.profile')}}"><img class="l-5" src="{{asset('storage/img/users') . '/' . $profile_picture}}"></a>
+                            <a href="{{route('account.profile')}}"><img class="l-5" id="img-profile-header-search" src="{{asset('storage/img/users') . '/' . $profile_picture}}"></a>
                         @endif
                         <a href="{{route('account.profile')}}" class="l-5"><h1 class="user-account" >{{$conta_logada[0]->nome}}</h1></a>
                     </li>

@@ -20,57 +20,16 @@
                     <h1>Destacados</h1>
                     <h2 class="lg-invisible-user-name">@<span></span>destacados</h2>
                 </div>
-<<<<<<< HEAD
-                <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg-1">
-                    <div class="statistics-profile-page-component l-5">
-                        <h1>0</h1>
-                        <h2 class="text-ellips">Publicações</h2>
-=======
-                @if($isUserHost)
-                    <div class="statistics-profile-page-component-container clearfix" id="statistics-profile-page-component-container-lg-1">
-                        <div class="statistics-profile-page-component l-5">
-                            @if ($publicacoes > 1)
-                            <h1>{{ $publicacoes }}</h1>
-                            <h2 class="text-ellips">Publicações</h2>
-                            @else
-                            <h1>{{ $publicacoes }}</h1>
-                            <h2 class="text-ellips">Publicação</h2>
-                            @endif
-                        </div>
-                        <?php if (false): ?>
-                        <div class="statistics-profile-page-component l-5 invisible">
-                            <h1>123</h1>
-                            <h2>A Seguir</h2>
-                        </div>
-                        <?php endif ?>
-                        <div class="statistics-profile-page-component l-5">
-                          <a href="{{route('who_follows_me.page',$page_content[0]->uuid)}}">
-                            <h1>{{ $seguidores }}</h1>
-                            </a>
-                            <a href="{{route('who_follows_me.page',$page_content[0]->uuid)}}">
-                            @if ($seguidores > 1)
-                                <h2 class="text-ellips">Seguidores</h2>
-                            @else
-                                <h2 class="text-ellips">Seguidor</h2>
-                            @endif
-                            </a>
-
-                        </div>
-                        <div class="statistics-profile-page-component l-5">
-                            <h1>{{ $seguidores }}</h1>
-                            <h2 class="text-ellips">Curtidas</h2>
-                        </div>
->>>>>>> c49c2cafda60d4c26475194303086d6110bf4a46
-                    </div>
-                    <div class="statistics-profile-page-component l-5">
-                        <h1>0</h1>
-                        <h2 class="text-ellips">Seguidores</h2>
-                    </div>
-                    <div class="statistics-profile-page-component l-5">
-                        <h1>0</h1>
-                        <h2 class="text-ellips">Curtidas</h2>
-                    </div>
-                </div>
+            </div>
+            <div class="statistics-profile-page-component l-5">
+                <h1>0</h1>
+                    <h2 class="text-ellips">Seguidores</h2>
+            </div>
+            <div class="statistics-profile-page-component l-5">
+                <h1>0</h1>
+                <h2 class="text-ellips">Curtidas</h2>
+            </div>
+        </div>
                 <div class="clearfix">
                     <a href="" id="a-btn-flw-edt">
                         <div id="btn_follwing" class="follwing-btn-container l-5">

@@ -3,23 +3,29 @@
 @section('content')
 <div class="main" id="main-profile">
     <input type="hidden" id="profile-container-id" value=<?php echo md5('OK'); ?>>
-    <header class="card br-10 card-flex">
+    <header class="card br-10 card-flex profile-card" id="">
         <div id="img-profile-container" class="circle">
-            <img class="img-profile img-full circle invisible-component" id="img-profile-component">
+            @if ($foto != null)
+                <img class="img-profile img-full circle invisible-component" src="{{asset('storage/img/users') . '/' . $foto}}" id="img-profile-component"> 
+            @else:
+                <img class="img-profile img-full circle invisible-component" src="{{asset('css/uicons/user.png')}}" id="img-profile-component">                            
+            @endif
+
             <label for="target-profile-cover">
-                <div class="add-edit-profile circle">
+                <div class="add-edit-profile circle invisible-component" id="add-edit-profile-owner">
                     <i class="fas fa-plus center" style="font-size: 10px;"></i>
                 </div>
             </label>
         </div>
+        <input type="hidden" id="ident-profile-id" value="{{$uuid}}" name="">
+        <input type="hidden" id="ident-genre" value="{{$genero}}" name="">
         <div class="" id="card-ident">
             <div id="ident-profile">
-                <h1 class="profile-name" id="profille-name"></h1>
+                <h1 class="profile-name" id="profille-name">{{$nome_completo}}</h1>
                 <div class="invite-icon circle">
                     <a href=""><i class="fas fa-user-plus fa-16 center" style="font-size: 14px;"></i></a>
                 </div>
             </div>
-            <h1>{{$uuid}}</h1>
             <ul class="profile-follow profile-item-center">
                 <li class="statistics-profile">
                   <a href=""><h2 style="justify-content: center; font-weight: bolder; font-size: 14px; width: 100%; margin-bottom: 0;" id="data-profile-0"></h2></a>
@@ -37,7 +43,13 @@
             <div id="option-profile-no-own">
                 <div class="clearfix" id="options-profile-mobile-user-log">
                         <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5" id="options-profile-btn-edit-profile">
-                            <a href=""><h3 class="edit-profile-mobile center" id="option-btn-profile">Casado</h3></a>
+                            <a class="target-relationship-assumir" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="option-btn-profile"></h3></a>
+                        </div>
+                        <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button profile-options-accept invisible-component" id="profile-options-button-1">
+                            <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="btn-request-profile"></h3></a>
+                        </div>
+                        <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button invisible-component" id="profile-options-button-2">
+                            <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="button-request-profile"></h3></a>
                         </div>
                         <div class="l-5 options-profile-btn more-options-profile-bt">
                             <label for="more-option-target-profile" class="target-options-profile">
@@ -57,23 +69,44 @@
                                     <div class="more-options-profile-btn">
                                         <div class="more-options-component center">
                                             <!--<i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 14px;"></i>-->
-                                            <img class="center img-26" src="{{asset('css/uicons/bookmark.png')}}">
+                                            <img class="center img-26 invisible" id="more-option-btn-profile" src="">
                                         </div>
                                     </div>
                                 </div>
                             </label>
                         </div>
                 </div>
+                <div class="options-component-profile clearfix invisible-component" id="options-component-profile-request">
+                    <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button profile-options-accept" id="profile-options-accept-button">
+                        <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="btn-request-profile"></h3></a>
+                    </div>
+                    <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button">
+                        <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="button-request-profile">Rejeitar</h3></a>
+                    </div>
+                </div>
                 <div class="inform-profile">
-                    <h3 id="civil-state">Casado com <a href="" class="a-link-detail-profile">Domingos</a></h3>
+                    <h3 id="civil-state"><span id="relationship-selected-type-profile"></span><a id="spouse-profile" href="" class="a-link-detail-profile"></a></h3>
                 </div>
                 <div class="inform-profile">
                     <p class="description-couple" style="width: 100%;">
-                        <span>CasadoCasadoCasadoCasadoCasadoCasadoCasadoCasadoCasado... </span><a href="" class="a-link-detail-profile">ver mais</a></p>
+                        <span id="description-prof-">{{$descricao}}</span><a href="" id="see-more-description-profile" class="a-link-detail-profile invisible">ver mais</a></p>
                         <input type="hidden" id="description-all" name="">
                 </div>
             </div>
     </header>
+    <div class="refresh-profile-photo clearfix component-card invisible-component" id="relationship-requests">
+            <div class="profile-photo-container l-5">
+                <img class="img-30 center" src="{{asset('css/uicons/about_tips.png')}}">
+            </div>
+            <div class="content-profile-photo l-5">
+                <h1>Tens pedidos Relacionamentos por responder. Aceite ou rejeite</h1>
+                <a href="">
+                    <div class="button-default-tassumir">
+                        <h3 class="button-default-tassumir-text" style="margin-top: 0;">Ver Relacionamentos</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
 <div class="card br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">
                 <ul class="" id="ul-profile">
@@ -102,15 +135,17 @@
                     <!--<li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 18px;"></i><h1 class="menu-option-profile"></h1></a></li>-->
                 </ul>
             </nav>
-            <div class="post-video-container-page post-page-container">
-                <?php $key = 0; while ($key < 100) {?>
-                    <video class="invisible-component" id="video-post-page-{{$key}}">
-                        <source type="video/mp4">            
-                    </video>
-                    <div class="img-post invisible-component" id="img-post-page-{{$key}}">
-                        <img class="img-full" id="img-post-page-container-{{$key}}">
-                    </div>                    
-                <?php $key++; } ?>
+            <div class="post-video-container-page post-page-container clearfix">
+                <?php $ver = 1; $key = 0; while ($key < 15) {?>
+                    <a href="" id=<?php echo 'a-post-component-'.$key; ?>>
+                        <video <?php if (($ver % 3) == 0){echo "class='img-post-video-component img-post img-post-video-component-fl video-post-profile invisible-component'";}else{echo "class='img-post-video-component img-post video-post-profile invisible-component'";} ?> id="video-post-page-{{$key}}">
+                            <source src="http://192.168.43.19:8000/storage/video/page/1648393975_8e49cad1664ecfd238bee51691871d00.mp4" type="video/mp4">            
+                        </video>
+                        <div <?php if (($ver % 3) == 0){echo "class='img-post img-post-video-component img-post-video-component-fl img-cover-video-component'";}else{echo "class='img-post img-post-video-component img-cover-video-component'";} ?> id="img-post-page-{{$key}}">
+                            <img class="" src="http://192.168.43.19:8000/storage/img/users/1648317239_33bce5986c94af8fb0033f11087b9cf2.jpg" id="img-post-page-container-{{$key}}">
+                        </div>                          
+                    </a>
+                <?php $key++; $ver++; } ?>
             </div>
 </div>
 </div>
@@ -129,29 +164,29 @@
         </header>
         <div class="clearfix content-more" style="margin-top: 0px; margin-bottom: 10px;">
             <nav>
-                <ul class="">
+                <ul class="" id="more-option-target-profile-details">
                     <li class="li-component-aside">
                         <i class="fas fa-sign-out-alt fa-20 fa-icon-aside-left"></i>
                         <a href="{{route('account.logout')}}">Terminar Sessão</a>
                     </li>
                     <li class="li-component-aside">
                         <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
-                        <a href="">Meus Ganhos</a>
+                        <a href="" class="a-more-option-profile">Meus Ganhos</a>
                     </li>
                     <li class="li-component-aside">
                         <i class="fas fa-rss fa-20 fa-icon-aside-left"></i>
-                        <a href="">Actualizações do Tassumir</a>
+                        <a href="" class="a-more-option-profile">Actualizações do Tassumir</a>
                     </li>
                     <li class="li-component-aside">
                         <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
-                        <a href="">Dicas Para Ganhar Mais</a>
+                        <a href="" class="a-more-option-profile">Dicas Para Ganhar Mais</a>
                     </li>
                     <li class="li-component-aside">
                         <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
-                        <a href="">Explorar Melhor o Tassumir</a>
+                        <a href="" class="a-more-option-profile">Explorar Melhor o Tassumir</a>
                     </li>
                 </ul>
-                <ul class="">
+                <ul class="" id="more-option-visit-profile-details">
                     <li class="li-component-aside more-info-about-profile">
                         <h1>Estado</h1>
                         <h2>Solteiro</h2>
@@ -170,13 +205,13 @@
     </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function () {
-  var select_li =window.location.href.split('=');
-  if (select_li[select_li.length - 1] == 'saved') {
-    document.getElementById("route_save").classList.add('li-component-aside-active');
-  }else {
-    document.getElementById("route_account").classList.add('li-component-aside-active');
-  }
-});
+    $(document).ready(function () {
+      var select_li = window.location.href.split('=');
+      if (select_li[select_li.length - 1] == 'saved') {
+        document.getElementById("route_save").classList.add('li-component-aside-active');
+      } else {
+        document.getElementById("route_account").classList.add('li-component-aside-active');
+      }
+    });
 </script>
 @stop

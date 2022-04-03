@@ -82,7 +82,7 @@ body {
     background-color: #800080;
     border: 1px solid #800080;
     width: 100%;
-    padding: 5px;
+    padding: 7px 5px;
     border-radius: 10px;
     color: #fff;
     margin-top: 5px;
@@ -161,7 +161,7 @@ body {
     background-color: #9e9e9e;
     border: 1px solid #3b3b3b;
     width: 100%;
-    padding: 5px;
+    padding: 7px 5px;
     border-radius: 10px;
     color: #fff;
     margin-top: 20px;
@@ -363,8 +363,6 @@ body {
     width: 100%;
     background-color: #242526;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    
-
 }
 li {
     list-style-type: none;
@@ -1117,6 +1115,10 @@ label[for="hugo"]{
     width: 28px;
     height: 28px;
 }
+.img-30 {
+    width: 30px;
+    height: 30px;
+}
 .img-32 {
     width: 32px;
     height: 32px;
@@ -1583,7 +1585,7 @@ label[for="hugo"]{
     position: relative;
     width: 34px;
     height: 34px;
-    margin-top: 10px;
+    margin-top: 7px;
     margin-left: 15px;
     background-color: #343a40;
     border-radius: 50%;
@@ -2038,6 +2040,7 @@ label[for="hugo"]{
 .inform-profile {
     margin-left: 5px;
     margin-top: 20px;
+    margin-bottom: 10px;
     width: 80%;
     max-width: 65%;
 }
@@ -2463,7 +2466,7 @@ label[for="hugo"]{
 }
 .description-couple {
     width: 343px;
-    margin-left: 145px;
+    margin-left: 0;
 }
 .description-couple p {
     color: #ffff;
@@ -2612,7 +2615,7 @@ label[for="hugo"]{
     border: 1px solid #606060;
 }
 .edit-profile-mobile {
-    padding: 11px 10px;
+    padding: /*11px 10px*/0px;
     width: 100%;
     text-align: center;
     /* display: inline-flex; */
@@ -2623,7 +2626,7 @@ label[for="hugo"]{
     text-align: center;
     border: 1px solid #606060;
     display: none;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 .fa-15 {
     font-size: 15px;
@@ -2651,7 +2654,7 @@ label[for="hugo"]{
     font-weight: bolder;
 }
 .options-profile-btn-center .edit-profile-mobile{
-    background-color: #800080;
+    background-color: transparent;
     border: none;
     display: block;
     font-size: 12px;
@@ -2845,14 +2848,16 @@ label[for="hugo"]{
     margin-top: 10px;
 }
 .post-page-container {
-    margin: 15px 20px 20px;
+    margin: 15px auto 0;
+    width: 100%;
+    background-color: #18191a;
 }
 .img-post {
     position: relative;
     width: 32%;
     height: 170px;
     display: inline-block;
-    margin-top: -3px;
+    margin-top: 0px;
 
 }
 .img-post video {
@@ -3059,7 +3064,7 @@ label[for="hugo"]{
 }
 .filter-main-search-mobile li {
     display: inline-block;
-    padding: 10px;
+    padding: 8px 10px 4px;
     font-size: 13px;
 }
 #main-direct {
@@ -3079,6 +3084,24 @@ label[for="hugo"]{
 }
 .nav-menu-chat-component-user {
     
+}
+.img-post-video-component {
+    width: 33.3%;
+    height: 180px;
+    background-color: transparent;
+    border: none;
+    float: left;
+    margin-left: 0%;
+}
+.img-cover-video-component {
+    width: 50%;
+    height: 200px;
+}
+.button-default-tassumir-text {
+    padding: 10px;
+    font-size: 13px;
+    text-align: center;
+    color: #fff;
 }
 .nav-menu-chat-component-user h1 {
     color: #fff;
@@ -3173,7 +3196,7 @@ label[for="hugo"]{
 }
 .number-notification {
     position: absolute;
-    width: 20px;
+    min-width: 20px;
     top: -5px;
     right: -5px;
     height: 20px;
@@ -3431,14 +3454,15 @@ label[for="hugo"]{
     border-radius: 5px;
 }
 .profile-photo-container {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     position: relative;
     border-radius: 50%;
     margin-left: 20px;
+    background-color: #3a3b3c;
 }
 .profile-photo-container img {
-    border-radius: 50%;
+    /*border-radius: 50%;*/
 }
 .content-profile-photo {
     width: 70%;
@@ -3626,8 +3650,9 @@ label[for="hugo"]{
 .options-profile-btn.more-options-profile-bt {
     position: relative;
     width: 17%;
+    max-width: 44px;
     height: 35px;
-    margin: 10px 2%;
+    margin: 0px 2%;
     margin-right: 0;
 }
  .bring-to-front:hover{
@@ -3717,4 +3742,107 @@ label[for="hugo"]{
 #add-post-target-pop-up {
     position: relative;
     margin-top: 5px;
+}
+.options-alert-btn-feed {
+    position: relative;
+    border-radius: 7px;
+    cursor: pointer;
+    background-color: #800080;
+}
+#reload-component img {
+    width: 32px;
+    height: 32px;
+}
+#more-option-target-profile-details {
+    padding-left: 2px;
+}
+.options-component-profile {
+    width: 75%;
+    min-width: 240px;
+    margin: 5px auto;
+}
+.profile-options-button {
+    width: 40%;
+    background-color: #2f3338;
+}
+.profile-options-accept {
+    background-color: #800080;
+}
+#profile-options-accept-button {
+    width: 56%;
+}
+#options-component-profile-request {
+    /*display: none;*/
+}
+#profile-options-button-2 {
+    width: 25%;
+}
+#profile-options-button-1 {
+    width: 35%;
+}
+.more-options-profile-btn {
+    max-width: 42px;
+}
+#number-notification-id-footer {
+    width: 100%;
+    margin: auto;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 5px;
+}
+.number-notification-container {
+    width: 100%;
+    margin: auto;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 5px
+}
+#fa-option-mobile-notification-1 {
+    margin-top: 6px;
+    width: 30px;
+    height: 30px;
+}
+.video-post-profile {
+    contain: strict;
+}
+.img-post-video-component img {
+    width: 100%;
+    height: 200px;
+}
+.img-post-video-component {
+    overflow-y: hidden;
+}
+.component-card {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 5px;
+    padding: 2px;
+    border-radius: 10px;
+    background-color: #242526;
+}
+#main-profile .component-card {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.button-default-tassumir {
+    background-color: #800080;
+    border-radius: 5px;
+    margin-top: 5px;
+    max-width: 220px;
+}
+#main-profile .button-default-tassumir {
+    height: 37px;
+}
+#main-profile .more-options-profile-btn {
+    max-width: 42px;
+}
+#options-profile-btn-edit-profile,
+#main-profile .more-options-profile-btn,
+#main-profile .button-default-tassumir {
+    border-radius: 6px;
 }

@@ -29,6 +29,12 @@ class PerfilController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+      public function notificacoes_number(){
+        $id = Auth::user()->conta_id;
+        $numbers = DB::select('select count(*) as not_numbers from notifications where notifications.identificador_id_receptor = (select identificadors.identificador_id from identificadors where identificadors.tipo_identificador_id = 1 and id = ?)', [$id]);
+        return ['not_numbers' => $numbers[0]->not_numbers];
+      } 
+
      public function dadosPerfil($id){
        $controll = new AuthController();
         $dates = $controll->default_();
@@ -201,32 +207,137 @@ class PerfilController extends Controller
      }
 
 
+    public function data_profile_defaut() {
 
+    }
+    
     public function index()
     {
         try {
           $page_current = 'profile';
-          $uuid = Auth::user()->uuid;
-          return view('perfil.index', compact('page_current', 'uuid'));
+          $conta_id = Auth::user()->conta_id;
+          $user = DB::select('select nome, apelido, uuid, descricao, genero, foto from contas where conta_id = ?', [$conta_id]);
+          $uuid = $user[0]->uuid;
+          $descricao = $user[0]->descricao;
+          $foto = $user[0]->foto;
+          $genero = $user[0]->genero;
+          $nome_completo = $user[0]->nome . ' ' . $user[0]->apelido;
+          return view('perfil.index', compact('page_current', 'genero', 'uuid', 'descricao', 'nome_completo', 'foto'));
+        } catch (Exception $e) {
+            dd('erro');
+        }
+    }
+    public function index_visit(Request $request, $id)
+    {
+        try {
+          $page_current = 'profile';
+          $uuid = $id;
+          $user = DB::select('select uuid, descricao, apelido, nome, genero, foto from contas where uuid = ?', [$id]);
+          $descricao = $user[0]->descricao;
+          $foto = $user[0]->foto;
+          $genero = $user[0]->genero;
+          $nome_completo = $user[0]->nome . ' ' . $user[0]->apelido;
+          return view('perfil.index', compact('page_current', 'genero', 'descricao', 'uuid', 'nome_completo', 'foto'));
         } catch (Exception $e) {
             dd('erro');
         }
     }
 
+    public function marital_status(Request $request){
+        $conta_id = Auth::user()->conta_id;
+        $uuid = $request->id;
+        $result = DB::select("select (select conta_id from contas where uuid = ?) as id, (select genero from contas where uuid = ?) as genre, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select conta_id from contas where conta_id = pages.conta_id_a), (select conta_id from contas where conta_id = pages.conta_id_b)) as conta_id, if(count(pages.tipo_page_id) > 0, (select tipo from tipo_pages where tipo_page_id = pages.tipo_page_id), 'not') as relationship, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select uuid from contas where conta_id = pages.conta_id_b), (select uuid from contas where conta_id = pages.conta_id_a)) as spouse_uuid, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select nome from contas where conta_id = pages.conta_id_b), (select nome from contas where conta_id = pages.conta_id_a)) as spouse_name, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select apelido from contas where conta_id = pages.conta_id_b), (select apelido from contas where conta_id = pages.conta_id_a)) as spouse_apelido from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?) or pages.conta_id_b = (select conta_id from contas where uuid = ?) limit 1", [$uuid, $uuid, $uuid, $uuid, $uuid, $uuid, $uuid, $uuid]);
+
+        $state_marital = $result[0]->relationship;
+        $state = 'Editar Perfil';
+        $my_profile = false;
+        $rel_request = false;
+        if ($result[0]->id == $conta_id) {
+          $my_profile = true;
+        }
+        
+        $addClass = "";
+        if ($state_marital == 'Nativa') {
+          $state_marital = 'Tem um relacionamento com ';
+          $state = 'Nativo';
+        } elseif ($state_marital == 'Nativa') {
+          $state_marital = '';
+        } elseif ($state_marital == 'Nativa') {
+          $state_marital = '';
+        } elseif ($state_marital == 'Nativa') {
+          $state_marital = '';
+        } else {
+          if ($result[0]->id != $conta_id) {
+            $relationship_request = $this->relationship_request($result[0]->id, $conta_id);  
+            if ($result[0]->relationship == 'not') {
+              $state = 'Solteiro';
+              $addClass = "nothing";
+              if ($request->genre != $result[0]->genre) {
+                $state = 'Assumir';            
+                $addClass = "target-relationship-assumir"; 
+              } else {
+                if ($result[0]->genre != 'Masculino') {
+                  $state = 'Solteira';
+                }
+              }
+            } 
+            if ($relationship_request->pedido) {
+                $state = 'Cancelar Pedido';
+            } else {
+              $relationship_request = $this->relationship_request($conta_id, $result[0]->id);
+              if ($relationship_request->pedido) {
+                  $rel_request = true;
+              }
+            }
+ 
+          }
+        }
+        $relationship_details = false;
+        if ($result[0]->conta_id) {
+          $relationship_details = true;
+        }
+        $result[0]->relationship = $state_marital;
+        return response()->json([
+          $result[0],
+          'state' => $state,
+          'my_profile' => $my_profile,
+          'relationship' => $relationship_details,
+          'addClass' => $addClass,
+          'auth' => $conta_id,
+          'auth 1' => $result[0]->conta_id,
+          'relationship_request' => $rel_request,
+        ]);
+    }
+
+    public function relationship_request($id_pedida, $id_pedinte){
+      $result = DB::select('select uuid, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedida = ? and pedido_relacionamentos.conta_id_pedinte = ?', [$id_pedida, $id_pedinte]);
+      return $result[0];
+    }
+
+    public function relationship_requests(){
+      $id_pedida = Auth::user()->conta_id;
+      $result = DB::select('select uuid, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedida = ?', [$id_pedida]);
+      $sizeof = sizeof($result) > 0 ? true : false;
+      return response()->json([
+        'state' => $result[0]->pedido,
+      ]);
+    }
+
     public function data_profile(Request $request){
       $id = Auth::user()->conta_id;
+      $uuid = $request->id;
       if ($request->type == 0) {
-        $data = DB::select('select count(*) as seguindo from seguidors where seguidors.identificador_id_seguindo = (select identificador_id as identificador_id_seguindo from identificadors where id = ? and identificadors.tipo_identificador_id = 1)', [$id]);
+        $data = DB::select('select count(*) as seguindo from seguidors where seguidors.identificador_id_seguindo = (select identificador_id as identificador_id_seguindo from identificadors where id = (select conta_id from contas where uuid = ?) and identificadors.tipo_identificador_id = 1)', [$uuid]);
         return response()->json([
           'data' => $data[0]->seguindo
         ]);
       } elseif ($request->type == 1) {
-        $data = DB::select('select count(*) as reactions from post_reactions where post_reactions.identificador_id = (select identificador_id as identificador_id_seguindo from identificadors where id = ? and identificadors.tipo_identificador_id = 1)', [$id]);
+        $data = DB::select('select count(*) as reactions from post_reactions where post_reactions.identificador_id = (select identificador_id as identificador_id_seguindo from identificadors where id = (select conta_id from contas where uuid = ?) and identificadors.tipo_identificador_id = 1)', [$uuid]);
         return response()->json([
           'data' => $data[0]->reactions
         ]);
       } elseif ($request->type == 2) {
-        $data = DB::select('select count(*) as saveds from saveds where conta_id = ?', [$id]);
+        $data = DB::select('select count(*) as saveds from saveds where conta_id = (select conta_id from contas where uuid = ?)', [$uuid]);
         return response()->json([
           'data' => $data[0]->saveds
         ]);

@@ -20,7 +20,7 @@
             <input type="hidden" id="loading-finished-video" value="none">
             <nav>
                 <ul class="clearfix">
-                    <?php $i = 0; while ($i < 21) { ?>
+                    <?php $i = 0; while ($i < 20) { ?>
                     <div class="container-li-dest l-5">
                         <li class="li-component-stories l-5" id="li-component-stories-{{$i}}">
                             <a href="" id="a-stories-dest-{{$i}}">
@@ -48,29 +48,42 @@
         <input type="hidden" id="posts" name="" value="0">
         <div class="refresh-profile-photo clearfix invisible-component" id="refresh-profile-photo-id">
             <div class="profile-photo-container l-5">
-                <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                <img class="img-30 center" src="{{asset('css/uicons/about_tips.png')}}">
             </div>
             <div class="content-profile-photo l-5">
                 <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
                 <label for="target-profile-cover" id="profile-cover-alert-no-img">
                     <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
-                        <h3 class="edit-profile-mobile" style="margin-top: 0;">Actualizar foto de Perfil</h3>
+                        <h3 class="edit-profile-mobile center" style="margin-top: 0;">Actualizar foto de Perfil</h3>
                     </div>
                 </label>
             </div>
         </div>
+        <div class="refresh-profile-photo clearfix component-card invisible-component" id="relationship-requests">
+            <div class="profile-photo-container l-5">
+                <img class="img-30 center" src="{{asset('css/uicons/about_tips.png')}}">
+            </div>
+            <div class="content-profile-photo l-5">
+                <h1>Tens pedidos Relacionamentos por responder. Aceite ou rejeite</h1>
+                <a href="">
+                    <div class="button-default-tassumir">
+                        <h3 class="button-default-tassumir-text" style="margin-top: 0;">Ver Relacionamentos</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
     <div class="" id="div_father_post" name="div_father_post">
-        <?php $key = 0; while($key < 240){ ?>
+        <?php $key = 0; while($key < 146){ ?>
         <?php if ($key == 2 || $key == 5 || $key == 9): ?>
             <div class="refresh-profile-photo clearfix invisible-component alert-info-about-us" id="alert-info-about-us-{{$key}}">
                 <div class="profile-photo-container l-5">
-                    <img class="img-full" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                    <img class="img-30 center" src="{{asset('css/uicons/info_tassumir.png')}}">
                 </div>
                 <div class="content-profile-photo l-5">
                     <h1 id="content-p-{{$key}}">O Tassumir ajuda casais a assumirem seus relacionamentos publicamente, aumentando a segurança e fidelidade nos relacionamentos e também ajuda casais a partilharem habilidades pessoais, e ganharem dinheiro com isso.</h1>
                     <label for="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
-                        <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-couple">
-                            <h3 class="edit-profile-mobile" style="margin-top: 0;" id="btn-alert-info-{{$key}}">Assumir Relacionamento</h3>
+                        <div class="options-profile-btn options-profile-btn-center profile-item-center options-alert-btn-feed" id="options-profile-btn-couple">
+                            <h3 class="edit-profile-mobile center" style="margin-top: 0;" id="btn-alert-info-{{$key}}">Assumir Relacionamento</h3>
                         </div>
                     </label>
                 </div>
@@ -91,7 +104,7 @@
                                         </div>
                                     </div>
                                     <div class="load-icon-react invisible-component center" id="loader-id-icon-post-index-{{$key}}">
-                                        <img class="img-full" src="{{asset('storage/icons/aguarde1.gif')}}">
+                                        <img class="img-full" src="{{asset('css/uicons/aguarde.gif')}}">
                                     </div>
                                     <a href="" id="a-name-suggest-index-page-{{$key_}}"><h1 class="name-suggest text-ellips" id="name-suggest-index-page-{{$key_}}"></h1></a>
                                     <a href="" class="seguir-a seguir_index"><div id="seguir-index_{{$key_}}">seguir</div></a>
@@ -102,7 +115,7 @@
                     </nav>
                 </section>
         <?php endif ?>
-            <div id="m_post-{{$key}}" <?php if ($key < 1) {echo "class='card br-10 post-video'";} else {echo "class='card br-10 post-video invisible-post'";}
+            <div id="m_post-{{$key}}" <?php if ($key >= 144 && $key < 146) {echo "class='card br-10 post-video'";} else {echo "class='card br-10 post-video invisible-post'";}
              ?>>
             <div class="post post-view post-video" id="post_view_{{$key}}">
                 <header class="clearfix">
@@ -137,7 +150,7 @@
                                 <span class="time-posted l-5" id="time-posted-{{$key}}"></span>
                                 <div class="follow-propriets seguir-a-{{$key}}" id="seguir-1-{{$key}}">
                                     <div class="load-icon-react invisible-component center" id="loader-id-icon-post-{{$key}}">
-                                        <img class="img-full" src="{{asset('storage/icons/aguarde1.gif')}}">
+                                        <img class="img-full" src="{{asset('css/uicons/aguarde.gif')}}">
                                     </div>
                                     <span class="seguir-span-{{$key}}" id="seguir-span-{{$key}}"><a href="" class="seguir-a r-5" id="seguir-a-{{$key}}"></a></span>
                                 </div>
@@ -172,8 +185,8 @@
                             <img class="img-full" id="cover-post-index-{{$key}}">
                         </div>
                         <div class="video-post post-video invisible-component" id="video-post-{{$key}}">
-                            <img class="play_button center invisible-component" src="{{asset('storage/icons/play_button.png')}}" id="play_button_{{$key}}">
-                            <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id="loader_button_{{$key}}">
+                            <img class="play_button center invisible-component" src="{{asset('css/uicons/play_button.png')}}" id="play_button_{{$key}}">
+                            <img class="loader_button center" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">
                             <img class="loader_icon center" src="{{asset('css/uicons/loading.gif')}}" id="loader_icon_{{$key}}">
                             <video class="video-post-video" id="video_{{$key}}">
                                 <source id="video-post-link-{{$key}}">
@@ -203,7 +216,7 @@
                         <li class="l-5">
                             <div class="content-button">
                                 <div class="load-icon-react invisible-component center" id="loader-id-icon-{{$key}}">
-                                    <img class="img-full" src="{{asset('storage/icons/aguarde1.gif')}}">
+                                    <img class="img-full" src="{{asset('css/uicons/aguarde1.gif')}}">
                                 </div>
                                 <a href="" class="like-a" id="reaction-id-a-{{$key}}">
                                     <i class="far fa-heart center fa-16 unliked" id="off-id-i-{{$key}}"></i>
@@ -238,8 +251,8 @@
                     </ul>
                 </nav>
                 <div class="comment-send clearfix" id="comment-send-{{$key}}">
-                    <div class="img-user-comment l-5">
-                        <img class="img-full circle" id="comment-send-profile-{{$key}}">
+                    <div class="img-user-comment l-5 circle">
+                        <img class="img-24 center circle" id="comment-send-profile-{{$key}}">
                     </div>
                     <div class="input-text comment-send-text l-5 clearfix">
                         <input type="text" class="" name="comentario" id="comentario-{{$key}}" placeholder="O que você tem a dizer?">
@@ -425,7 +438,7 @@
               }
       </script>
       </div>
-       <div class="reload-component" id="reload-component" name="reload-component"><img class="center" src="{{asset('storage/icons/aguarde1.gif')}}"></div>
+       <div class="reload-component" id="reload-component" name="reload-component"><img class="center" src="{{asset('css/uicons/aguarde1.gif')}}"></div>
         <div class="control" id="control-1">
 
         </div>
@@ -648,7 +661,7 @@ function gostar(id){
                     let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
                         $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }else{
-                        let src = "{{asset('storage/img/page/unnamed.jpg')}}";
+                        let src = "{{asset('css/uicons/info_tassumir.png')}}";
                         $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
                     }
                 });

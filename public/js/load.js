@@ -2,6 +2,39 @@ $(document).ready(function () {
 	let length = $('#host').val().split('/').length;
 	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[length - 2];
 	let src;
+	$('#target-invited-relationship-id').click(function () {
+		$('#target-invited-relationship').removeAttr('checked');
+	});
+	if($('#profile-container-id').val()){
+
+	}
+	$.ajax({
+		url: '/app/notifications/numbers',
+		type: 'get',
+		data: {},
+		dataType: 'json',
+		success:function(response){
+			if (response.not_numbers > 0) {
+				$('#number-notification-component').removeClass('invisible-component');
+				$('#number-notification-id').text(response.not_numbers);
+				$('#number-notification-component-footer').removeClass('invisible-component');
+				$('#number-notification-id-footer').text(response.not_numbers);
+			}
+		}
+	});
+	
+	$.ajax({
+		url: '/relationship/requests',
+		type: 'get',
+		data: {},
+		dataType: 'json',
+		success: function (response) {
+			console.log(response);
+			if (response.state) {
+				$('#relationship-requests').removeClass('invisible-component');	
+			} else {$('#relationship-requests').remove();}
+		}
+	});
 	$.ajax({
         url: '/user_data',
         type: 'get',
@@ -20,10 +53,11 @@ $(document).ready(function () {
         			document.getElementById('refresh-profile-photo-id').remove();
         		}
         	}
+
 			$('#complete_name_id').text(response.nome + ' ' + response.apelido);
         	if($('#profile-container-id').val()){
-        		$('#profille-name').text(response.nome + ' ' + response.apelido);
-		    	src = document.getElementById('user-account-container-img-id').src;
+        		//$('#profille-name').text(response.nome + ' ' + response.apelido);
+		    	//src = document.getElementById('user-account-container-img-id').src;
 		    	$('#img-profile-component').attr('src', src);
 				$('#img-profile-component').removeClass('invisible-component');
 				$('#img-profile-container').addClass('transparent-back');
@@ -31,7 +65,7 @@ $(document).ready(function () {
 					$.ajax({
 						url: '/profile/data',
 						type: 'get',
-						data: {'type': i},
+						data: {'type': i, 'id' : $('#ident-profile-id').val()},
 						dataType: 'json',
 						success: function (response) {
 							console.log(response);
@@ -39,6 +73,47 @@ $(document).ready(function () {
 						}
 					});
 				}
+				$.ajax({
+					url: '/profile/maritalstatus',
+					type: 'get',
+					data: {'id': $('#ident-profile-id').val(), 'genre' : $('#ident-genre').val()},
+					dataType: 'json',
+					success: function (response) {
+						$('#btn-profile-redirect').removeClass(response.addClass);
+						$('#option-btn-profile').addClass(response.addClass);
+						if (response.my_profile) {
+							$('#option-btn-profile').text(response.state);
+							$('#btn-profile-redirect').attr('href', route + '/profile/edit/' + $('#ident-profile-id').val());
+							$('#more-option-visit-profile-details').remove();
+							$('#more-option-btn-profile').removeClass('invisible');
+							$('#more-option-btn-profile').attr('src', route + '/css/uicons/bookmark.png');
+							$('#add-edit-profile-owner').removeClass('invisible-component');
+						} else {
+							$('#option-btn-profile').text(response.state);
+							$('#more-option-target-profile-details').remove();
+							$('#more-option-btn-profile').attr('src', route + '/css/uicons/message.png');
+							$('#more-option-btn-profile').addClass('target-message-alert');
+							$('#more-option-btn-profile').removeClass('invisible');
+							$('#add-edit-profile-owner').remove();
+						}
+						console.log(response);
+						if (response.relationship) {
+							$('#relationship-selected-type-profile').text(response[0].relationship + ' ');
+							$('#spouse-profile').text(response[0].spouse_name + ' ' + response[0].spouse_apelido);
+							$('#spouse-profile').attr('href', route + '/profile/' + response[0].spouse_uuid);							
+						}
+						if (response.relationship_request) {
+							$('#btn-request-profile').text('Aceitar Pedido');
+							$('#button-request-profile').text('Rejeitar');	
+							$('#options-profile-mobile-user-log').addClass('request-option-active');
+							$('#options-profile-btn-edit-profile').remove();
+							$('#profile-options-button-1').removeClass('invisible-component');
+							$('#profile-options-button-2').removeClass('invisible-component');			
+						} else {
+								
+						}
+					}
+				});
 		    }
         	
         }
@@ -87,11 +162,12 @@ $(document).ready(function () {
 		});
 	    home_posts_assync();
 		page_following();
+		page_no_following();
 	    $(window).resize(function () {
 	    	page_following();
 			page_no_following();
 	    });
-    	//home_posts();
+
     	function home_posts(data, key, option) {
 		    $('#vid-load-' + key).attr('id', 'vid-load_' + data.uuid);
     		$('#page-cover-post-' + key).attr('src', route + "/css/uicons/page_icon.jpg");
@@ -154,6 +230,10 @@ $(document).ready(function () {
 		    $('#comment-user-comment-feed-' + key).attr('id', 'comment-user-comment-feed_' + data.uuid);
 		    $('#comentario-a-' + key).attr('id', 'comentario-a_' + data.uuid);
 		    $('#comment-send-profile-' + key).attr('src', document.getElementById('user-account-container-img-id').src);
+		    if (document.getElementById('user-account-container-img-id').src.indexOf('user.png')) {
+		    	$('#comment-send-profile-' + key).addClass('img-32');
+		    	$('#comment-send-profile-' + key).removeClass('img-24');
+		    }
 		    $('#comment-send-profile-' + key).attr('id', 'comment-send-profile_' + data.uuid);
 		    $('#comment-user-profile-' + key).attr('id', 'comment-user-profile_' + data.uuid);
 		    $('#likes-qtd-' + key).attr('id', 'likes-qtd_' + data.uuid);	
@@ -271,11 +351,13 @@ $(document).ready(function () {
 			    		$('#loading-finished').val('0');
 			    	}
 			    	$('#loading-finished').val(0);
-			        console.log(response);
+			        //console.log(response);
 					//videos();
 			    }
 			});
 			$('#posts').val(1);
+			$('#m_post-145').addClass('invisible-component');
+		   	$('#m_post-144').addClass('invisible-component');
     	}
     }
 
@@ -569,7 +651,7 @@ $(document).ready(function () {
 		    data: {'id' : id},
 		    dataType: 'json',
 		    success: function(response){
-		    	console.log(response);
+		    	//console.log(response);
 		    	$.each(response.add, function(key, data){
 		    		$('#' + e.target.id).addClass(data);
 		    	});
@@ -610,4 +692,19 @@ $(document).ready(function () {
 });
 window.addEventListener('load', function () {
 	//alert('oiii');
+});
+document.addEventListener('click', function (e) {
+	if (e.target.className.indexOf('target-relationship-assumir') > -1) {
+		document.getElementById('target-invited-relationship').checked = true;
+		e.preventDefault();
+	}
+	if (e.target.className.indexOf('target-message-alert') > -1) {
+		$('#concluir_file_ok').addClass('invisible-component');
+		$('#header-title-alert').text('Tassumir Mensagens')
+		$('#alert-description').text('Brevemente você poderá interagir por mensagens no Tassumir... Quando estiver disponível, anunciaremos pra você. Estamos desenvolvendo com muito cuidado para poder proporcionar a você uma experiência melhor e mais PRIVADA no Tassumir. Por favor, AGUARDE...');
+		document.getElementById('target-alert-post-denied').checked = true;
+	}
+	if (e.target.className.indexOf('nothing') > -1) {
+		e.preventDefault();
+	}
 });
