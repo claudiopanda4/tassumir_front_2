@@ -363,8 +363,6 @@ body {
     width: 100%;
     background-color: #242526;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    
-
 }
 li {
     list-style-type: none;
@@ -2850,14 +2848,16 @@ label[for="hugo"]{
     margin-top: 10px;
 }
 .post-page-container {
-    margin: 15px 20px 20px;
+    margin: 15px auto 0;
+    width: 100%;
+    background-color: #18191a;
 }
 .img-post {
     position: relative;
     width: 32%;
     height: 170px;
     display: inline-block;
-    margin-top: -3px;
+    margin-top: 0px;
 
 }
 .img-post video {
@@ -3064,7 +3064,7 @@ label[for="hugo"]{
 }
 .filter-main-search-mobile li {
     display: inline-block;
-    padding: 10px;
+    padding: 8px 10px 4px;
     font-size: 13px;
 }
 #main-direct {
@@ -3084,6 +3084,24 @@ label[for="hugo"]{
 }
 .nav-menu-chat-component-user {
     
+}
+.img-post-video-component {
+    width: 33.3%;
+    height: 180px;
+    background-color: transparent;
+    border: none;
+    float: left;
+    margin-left: 0%;
+}
+.img-cover-video-component {
+    width: 50%;
+    height: 200px;
+}
+.button-default-tassumir-text {
+    padding: 10px;
+    font-size: 13px;
+    text-align: center;
+    color: #fff;
 }
 .nav-menu-chat-component-user h1 {
     color: #fff;
@@ -3178,7 +3196,7 @@ label[for="hugo"]{
 }
 .number-notification {
     position: absolute;
-    width: 20px;
+    min-width: 20px;
     top: -5px;
     right: -5px;
     height: 20px;
@@ -3764,4 +3782,67 @@ label[for="hugo"]{
 }
 .more-options-profile-btn {
     max-width: 42px;
+}
+#number-notification-id-footer {
+    width: 100%;
+    margin: auto;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 5px;
+}
+.number-notification-container {
+    width: 100%;
+    margin: auto;
+    position: relative;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 5px
+}
+#fa-option-mobile-notification-1 {
+    margin-top: 6px;
+    width: 30px;
+    height: 30px;
+}
+.video-post-profile {
+    contain: strict;
+}
+.img-post-video-component img {
+    width: 100%;
+    height: 200px;
+}
+.img-post-video-component {
+    overflow-y: hidden;
+}
+.component-card {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 5px;
+    padding: 2px;
+    border-radius: 10px;
+    background-color: #242526;
+}
+#main-profile .component-card {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.button-default-tassumir {
+    background-color: #800080;
+    border-radius: 5px;
+    margin-top: 5px;
+    max-width: 220px;
+}
+#main-profile .button-default-tassumir {
+    height: 37px;
+}
+#main-profile .more-options-profile-btn {
+    max-width: 42px;
+}
+#options-profile-btn-edit-profile,
+#main-profile .more-options-profile-btn,
+#main-profile .button-default-tassumir {
+    border-radius: 6px;
 }

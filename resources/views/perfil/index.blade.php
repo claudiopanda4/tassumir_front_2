@@ -3,7 +3,7 @@
 @section('content')
 <div class="main" id="main-profile">
     <input type="hidden" id="profile-container-id" value=<?php echo md5('OK'); ?>>
-    <header class="card br-10 card-flex">
+    <header class="card br-10 card-flex profile-card" id="">
         <div id="img-profile-container" class="circle">
             @if ($foto != null)
                 <img class="img-profile img-full circle invisible-component" src="{{asset('storage/img/users') . '/' . $foto}}" id="img-profile-component"> 
@@ -94,6 +94,19 @@
                 </div>
             </div>
     </header>
+    <div class="refresh-profile-photo clearfix component-card invisible-component" id="relationship-requests">
+            <div class="profile-photo-container l-5">
+                <img class="img-30 center" src="{{asset('css/uicons/about_tips.png')}}">
+            </div>
+            <div class="content-profile-photo l-5">
+                <h1>Tens pedidos Relacionamentos por responder. Aceite ou rejeite</h1>
+                <a href="">
+                    <div class="button-default-tassumir">
+                        <h3 class="button-default-tassumir-text" style="margin-top: 0;">Ver Relacionamentos</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
 <div class="card br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">
                 <ul class="" id="ul-profile">
@@ -122,15 +135,17 @@
                     <!--<li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 18px;"></i><h1 class="menu-option-profile"></h1></a></li>-->
                 </ul>
             </nav>
-            <div class="post-video-container-page post-page-container">
-                <?php $key = 0; while ($key < 100) {?>
-                    <video class="invisible-component" id="video-post-page-{{$key}}">
-                        <source type="video/mp4">            
-                    </video>
-                    <div class="img-post invisible-component" id="img-post-page-{{$key}}">
-                        <img class="img-full" id="img-post-page-container-{{$key}}">
-                    </div>                    
-                <?php $key++; } ?>
+            <div class="post-video-container-page post-page-container clearfix">
+                <?php $ver = 1; $key = 0; while ($key < 15) {?>
+                    <a href="" id=<?php echo 'a-post-component-'.$key; ?>>
+                        <video <?php if (($ver % 3) == 0){echo "class='img-post-video-component img-post img-post-video-component-fl video-post-profile invisible-component'";}else{echo "class='img-post-video-component img-post video-post-profile invisible-component'";} ?> id="video-post-page-{{$key}}">
+                            <source src="http://192.168.43.19:8000/storage/video/page/1648393975_8e49cad1664ecfd238bee51691871d00.mp4" type="video/mp4">            
+                        </video>
+                        <div <?php if (($ver % 3) == 0){echo "class='img-post img-post-video-component img-post-video-component-fl img-cover-video-component'";}else{echo "class='img-post img-post-video-component img-cover-video-component'";} ?> id="img-post-page-{{$key}}">
+                            <img class="" src="http://192.168.43.19:8000/storage/img/users/1648317239_33bce5986c94af8fb0033f11087b9cf2.jpg" id="img-post-page-container-{{$key}}">
+                        </div>                          
+                    </a>
+                <?php $key++; $ver++; } ?>
             </div>
 </div>
 </div>
@@ -190,13 +205,13 @@
     </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function () {
-  var select_li =window.location.href.split('=');
-  if (select_li[select_li.length - 1] == 'saved') {
-    document.getElementById("route_save").classList.add('li-component-aside-active');
-  }else {
-    document.getElementById("route_account").classList.add('li-component-aside-active');
-  }
-});
+    $(document).ready(function () {
+      var select_li = window.location.href.split('=');
+      if (select_li[select_li.length - 1] == 'saved') {
+        document.getElementById("route_save").classList.add('li-component-aside-active');
+      } else {
+        document.getElementById("route_account").classList.add('li-component-aside-active');
+      }
+    });
 </script>
 @stop

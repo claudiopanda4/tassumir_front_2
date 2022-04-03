@@ -59,6 +59,19 @@
                 </label>
             </div>
         </div>
+        <div class="refresh-profile-photo clearfix component-card invisible-component" id="relationship-requests">
+            <div class="profile-photo-container l-5">
+                <img class="img-30 center" src="{{asset('css/uicons/about_tips.png')}}">
+            </div>
+            <div class="content-profile-photo l-5">
+                <h1>Tens pedidos Relacionamentos por responder. Aceite ou rejeite</h1>
+                <a href="">
+                    <div class="button-default-tassumir">
+                        <h3 class="button-default-tassumir-text" style="margin-top: 0;">Ver Relacionamentos</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
     <div class="" id="div_father_post" name="div_father_post">
         <?php $key = 0; while($key < 146){ ?>
         <?php if ($key == 2 || $key == 5 || $key == 9): ?>

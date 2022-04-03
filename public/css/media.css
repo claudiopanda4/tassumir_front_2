@@ -508,6 +508,7 @@
 @media screen and (max-width: 400px) {
 	.option-profile-menu {
 		overflow-x: auto;
+		overflow-y: hidden;
 	}
 }
 @media screen and (max-width: 800px) {
@@ -683,7 +684,7 @@
 	    margin-top: 0px;
 	}
 	#img-profile-container {
-	    margin: auto;
+	    margin: 10px auto 0;
 	}
 	#main-profile {
 		background-color: transparent;
@@ -769,6 +770,9 @@
 	}
 	#main-profile .card {
 	    flex-direction: column;
+	}
+	#card-profile-option {
+		margin-bottom: 0;
 	}
 	#ident-profile {
 	    flex-direction: column;
@@ -915,8 +919,9 @@
 @media screen and (max-width: 600px) {
 	#main-profile {
 	    width: 100%;
-	    background: #18191a;
+	    background: transparent;
 	    border-radius: 0;
+	    margin-bottom: 0;
 	}
 }
 @media screen and (max-width: 967px) {
@@ -957,6 +962,10 @@
 	    width: 90%;
 	    background-color: #242526;
 	}
+	.component-card {
+	    width: 90%;
+	    max-width: 100%;
+	}
 	.card {
 	    width: 90%;
 	    margin: 10px auto 10px;
@@ -987,14 +996,42 @@
 	}
 	.img-post {
 		position: relative;
-		width: 32%;
-		height: 110px;
-		display: inline-block;
-		margin-top: -3px;
-
+	    width: 33.3%;
+	    height: 110px;
+	    border: 1px solid #2f3338;
+	    border-left: 0;
+	    border-bottom: 0;
+	}
+	.video-post-profile {
+	    height: 150px;
+	}
+	.img-post-video-component-fl {
+	    border-right: 0;
 	}
 	.last-component {
 	    margin-top: 5px;
+	}
+	#main-profile header.card.profile-card {
+		background-color: #18191a;
+		margin-top: 0;
+		border-radius: 0;
+	}
+	#main-search .card-p {
+	   margin-left: 10px;
+	}
+	#main-search .card-flex {
+	    padding-left: 10px;
+	    margin-bottom: 0;
+	}
+	.search-info {
+	    width: 97%;
+	    padding: 4px 10px;
+	}
+	#main-search .profile-name-1 {
+	    font-size: 14px;
+	}
+	.profile-card {
+		background-color: #18191a;
 	}
 }
 @media screen and (max-height: 500px) {
@@ -1242,6 +1279,12 @@
 		border: none;
 		border-radius: 0;
 		/*border-top: 1px solid #343a40;*/
+	}
+	.component-card {
+		border-radius: 0;
+	}
+	.button-default-tassumir-text {
+	    font-size: 12px;
 	}
 	.inform-profile h3, .inform-profile p {
 	    font-size: 13.5px;
@@ -1512,7 +1555,7 @@
 	}
 	.number-notification {
 	    top: -10px;
-	    right: -10px;
+	    right: -15px;
 	}
 	.filter-main-search-mobile::-webkit-scrollbar {
 		width: 0px;
@@ -1547,6 +1590,18 @@
 	    background-color: #18191a;
 	    padding-top: 5px;
 	    border-radius: 0;
+	}
+	.comment-send input[type="text"] {
+	    width: 75%;
+	}
+	.header-main-component-n {
+	    height: 45px;
+	}
+	#img-profile-header-search {
+		margin-top: 0;
+	}
+	.header-main-component-n {
+	    background-color: #000000;
 	}
 	.f-footer {
 	    font-size: 18px;

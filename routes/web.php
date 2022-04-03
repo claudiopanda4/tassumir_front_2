@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/tipos', [App\Http\Controllers\AuthController::class, 'tipos'])->name('tipos');
     Route::get('/profile/data', [App\Http\Controllers\PerfilController::class, 'data_profile'])->name('profile.data');
     Route::get('/profile/relationship/request', [App\Http\Controllers\PerfilController::class, 'relationship_request'])->name('profile.relationship.request');
+    Route::get('/app/notifications/numbers', [App\Http\Controllers\PerfilController::class, 'notificacoes_number'])->name('app.notifications.numbers');
     Route::get('/updatenot', [App\Http\Controllers\AuthController::class, 'updatenot'])->name('updatenot');
     Route::get('/reject_relationship', [App\Http\Controllers\PaginaCasalController::class, 'reject_relationship'])->name('reject_relationship');
     Route::get('/tconfirm', [App\Http\Controllers\PaginaCasalController::class, 'tconfirm'])->name('tconfirm');
@@ -118,6 +119,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/home/destaques', [App\Http\Controllers\AuthController::class, 'destaques'])->name('home.destaque');
     Route::get('/home/posts', [App\Http\Controllers\PageController::class, 'post_final1'])->name('home.posts');
     Route::get('/home/posts_page_no_follow', [App\Http\Controllers\PageController::class, 'post_final2'])->name('home.posts.no_follow');
+    Route::get('/relationship/requests', [App\Http\Controllers\PerfilController::class, 'relationship_requests'])->name('relationship.requests');
     /*Fim rotas para Ajax*/
 
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');

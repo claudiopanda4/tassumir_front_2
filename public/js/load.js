@@ -9,6 +9,33 @@ $(document).ready(function () {
 
 	}
 	$.ajax({
+		url: '/app/notifications/numbers',
+		type: 'get',
+		data: {},
+		dataType: 'json',
+		success:function(response){
+			if (response.not_numbers > 0) {
+				$('#number-notification-component').removeClass('invisible-component');
+				$('#number-notification-id').text(response.not_numbers);
+				$('#number-notification-component-footer').removeClass('invisible-component');
+				$('#number-notification-id-footer').text(response.not_numbers);
+			}
+		}
+	});
+	
+	$.ajax({
+		url: '/relationship/requests',
+		type: 'get',
+		data: {},
+		dataType: 'json',
+		success: function (response) {
+			console.log(response);
+			if (response.state) {
+				$('#relationship-requests').removeClass('invisible-component');	
+			} else {$('#relationship-requests').remove();}
+		}
+	});
+	$.ajax({
         url: '/user_data',
         type: 'get',
         data: {},
@@ -55,7 +82,7 @@ $(document).ready(function () {
 						$('#btn-profile-redirect').removeClass(response.addClass);
 						$('#option-btn-profile').addClass(response.addClass);
 						if (response.my_profile) {
-							$('#option-btn-profile').text('Editar');
+							$('#option-btn-profile').text(response.state);
 							$('#btn-profile-redirect').attr('href', route + '/profile/edit/' + $('#ident-profile-id').val());
 							$('#more-option-visit-profile-details').remove();
 							$('#more-option-btn-profile').removeClass('invisible');
@@ -81,10 +108,9 @@ $(document).ready(function () {
 							$('#options-profile-mobile-user-log').addClass('request-option-active');
 							$('#options-profile-btn-edit-profile').remove();
 							$('#profile-options-button-1').removeClass('invisible-component');
-							$('#profile-options-button-2').removeClass('invisible-component');
-							//$('#options-component-profile-request').removeClass('invisible-component');					
+							$('#profile-options-button-2').removeClass('invisible-component');			
 						} else {
-							//$('#options-component-profile-request').remove();
+								
 						}
 					}
 				});
