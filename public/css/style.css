@@ -82,7 +82,7 @@ body {
     background-color: #800080;
     border: 1px solid #800080;
     width: 100%;
-    padding: 5px;
+    padding: 7px 5px;
     border-radius: 10px;
     color: #fff;
     margin-top: 5px;
@@ -161,7 +161,7 @@ body {
     background-color: #9e9e9e;
     border: 1px solid #3b3b3b;
     width: 100%;
-    padding: 5px;
+    padding: 7px 5px;
     border-radius: 10px;
     color: #fff;
     margin-top: 20px;
@@ -2656,7 +2656,7 @@ label[for="hugo"]{
     font-weight: bolder;
 }
 .options-profile-btn-center .edit-profile-mobile{
-    background-color: #800080;
+    background-color: transparent;
     border: none;
     display: block;
     font-size: 12px;
@@ -3632,6 +3632,7 @@ label[for="hugo"]{
 .options-profile-btn.more-options-profile-bt {
     position: relative;
     width: 17%;
+    max-width: 44px;
     height: 35px;
     margin: 0px 2%;
     margin-right: 0;
@@ -3733,4 +3734,34 @@ label[for="hugo"]{
 #reload-component img {
     width: 32px;
     height: 32px;
+}
+#more-option-target-profile-details {
+    padding-left: 2px;
+}
+.options-component-profile {
+    width: 75%;
+    min-width: 240px;
+    margin: 5px auto;
+}
+.profile-options-button {
+    width: 40%;
+    background-color: #2f3338;
+}
+.profile-options-accept {
+    background-color: #800080;
+}
+#profile-options-accept-button {
+    width: 56%;
+}
+#options-component-profile-request {
+    /*display: none;*/
+}
+#profile-options-button-2 {
+    width: 25%;
+}
+#profile-options-button-1 {
+    width: 35%;
+}
+.more-options-profile-btn {
+    max-width: 42px;
 }

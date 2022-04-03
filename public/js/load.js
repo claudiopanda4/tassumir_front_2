@@ -49,7 +49,7 @@ $(document).ready(function () {
 				$.ajax({
 					url: '/profile/maritalstatus',
 					type: 'get',
-					data: {'id': $('#ident-profile-id').val()},
+					data: {'id': $('#ident-profile-id').val(), 'genre' : $('#ident-genre').val()},
 					dataType: 'json',
 					success: function (response) {
 						$('#btn-profile-redirect').removeClass(response.addClass);
@@ -74,6 +74,17 @@ $(document).ready(function () {
 							$('#relationship-selected-type-profile').text(response[0].relationship + ' ');
 							$('#spouse-profile').text(response[0].spouse_name + ' ' + response[0].spouse_apelido);
 							$('#spouse-profile').attr('href', route + '/profile/' + response[0].spouse_uuid);							
+						}
+						if (response.relationship_request) {
+							$('#btn-request-profile').text('Aceitar Pedido');
+							$('#button-request-profile').text('Rejeitar');	
+							$('#options-profile-mobile-user-log').addClass('request-option-active');
+							$('#options-profile-btn-edit-profile').remove();
+							$('#profile-options-button-1').removeClass('invisible-component');
+							$('#profile-options-button-2').removeClass('invisible-component');
+							//$('#options-component-profile-request').removeClass('invisible-component');					
+						} else {
+							//$('#options-component-profile-request').remove();
 						}
 					}
 				});
@@ -666,5 +677,8 @@ document.addEventListener('click', function (e) {
 		$('#header-title-alert').text('Tassumir Mensagens')
 		$('#alert-description').text('Brevemente você poderá interagir por mensagens no Tassumir... Quando estiver disponível, anunciaremos pra você. Estamos desenvolvendo com muito cuidado para poder proporcionar a você uma experiência melhor e mais PRIVADA no Tassumir. Por favor, AGUARDE...');
 		document.getElementById('target-alert-post-denied').checked = true;
+	}
+	if (e.target.className.indexOf('nothing') > -1) {
+		e.preventDefault();
 	}
 });

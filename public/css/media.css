@@ -1308,9 +1308,20 @@
 	    height: 0;
 	}
 	#options-profile-mobile-user-log,
-	.profile-item-center {
+	.profile-item-center, .options-component-profile {
 		width: 80%;
 		max-width: 65%;
+	}
+	.profile-options-button {
+	    width: 40%;
+	    border-radius: 3px;
+	}
+	.options-component-profile {
+
+	}
+	#options-profile-mobile-user-log.request-option-active {
+		width: 96%;
+    	max-width: 100%;
 	}
 	.profile-item-center {
 		max-width: 90%;

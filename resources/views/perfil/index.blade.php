@@ -18,6 +18,7 @@
             </label>
         </div>
         <input type="hidden" id="ident-profile-id" value="{{$uuid}}" name="">
+        <input type="hidden" id="ident-genre" value="{{$genero}}" name="">
         <div class="" id="card-ident">
             <div id="ident-profile">
                 <h1 class="profile-name" id="profille-name">{{$nome_completo}}</h1>
@@ -44,6 +45,12 @@
                         <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5" id="options-profile-btn-edit-profile">
                             <a class="target-relationship-assumir" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="option-btn-profile"></h3></a>
                         </div>
+                        <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button profile-options-accept invisible-component" id="profile-options-button-1">
+                            <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="btn-request-profile"></h3></a>
+                        </div>
+                        <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button invisible-component" id="profile-options-button-2">
+                            <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="button-request-profile"></h3></a>
+                        </div>
                         <div class="l-5 options-profile-btn more-options-profile-bt">
                             <label for="more-option-target-profile" class="target-options-profile">
                                 <div class="">
@@ -68,6 +75,14 @@
                                 </div>
                             </label>
                         </div>
+                </div>
+                <div class="options-component-profile clearfix invisible-component" id="options-component-profile-request">
+                    <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button profile-options-accept" id="profile-options-accept-button">
+                        <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="btn-request-profile"></h3></a>
+                    </div>
+                    <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button">
+                        <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="button-request-profile">Rejeitar</h3></a>
+                    </div>
                 </div>
                 <div class="inform-profile">
                     <h3 id="civil-state"><span id="relationship-selected-type-profile"></span><a id="spouse-profile" href="" class="a-link-detail-profile"></a></h3>
