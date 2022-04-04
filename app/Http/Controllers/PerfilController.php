@@ -260,6 +260,9 @@ class PerfilController extends Controller
         if ($state_marital == 'Nativa') {
           $state_marital = 'Tem um relacionamento com ';
           $state = 'Nativo';
+          if ($result[0]->id == $conta_id) {
+            $state = 'Editar Perfil';
+          }
         } elseif ($state_marital == 'Nativa') {
           $state_marital = '';
         } elseif ($state_marital == 'Nativa') {
@@ -320,6 +323,26 @@ class PerfilController extends Controller
       $sizeof = sizeof($result) > 0 ? true : false;
       return response()->json([
         'state' => $result[0]->pedido,
+      ]);
+    }
+
+    public function search_assumir(Request $request) {
+      $id = Auth::user()->conta_id;
+      $text = '%'.$request->text.'%';
+      $result = [];
+      if ($request->text != '' && $request->text != ' ') {
+        $result = DB::select("select foto, uuid, conta_id, nome, apelido from contas where genero <> (select genero from contas where conta_id = ?) and tipo_contas_id = (select tipo_contas_id from contas where tipo_contas_id <> 1 limit 1) and (nome like ? or apelido like ?) limit 5", [$id, $text, $text]);
+      }
+      
+      $state = false;
+      $data = $result;
+      if (sizeof($result) > 0) {
+        $state = true;
+      }
+      return response()->json([
+        'state' => $state,
+        'search' => $data,
+        'text' => $text,
       ]);
     }
 

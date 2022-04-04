@@ -48,7 +48,7 @@
         <input type="hidden" id="posts" name="" value="0">
         <div class="refresh-profile-photo clearfix invisible-component" id="refresh-profile-photo-id">
             <div class="profile-photo-container l-5">
-                <img class="img-30 center" src="{{asset('css/uicons/about_tips.png')}}">
+                <img class="img-28 center" src="{{asset('css/uicons/about_tips.png')}}">
             </div>
             <div class="content-profile-photo l-5">
                 <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
@@ -60,14 +60,14 @@
             </div>
         </div>
         <div class="refresh-profile-photo clearfix component-card invisible-component" id="relationship-requests">
-            <div class="profile-photo-container l-5">
-                <img class="img-30 center" src="{{asset('css/uicons/about_tips.png')}}">
+            <div class="profile-photo-container alert-component-card l-5">
+                <img class="img-30 center" src="{{asset('css/uicons/fire_in_my_heart.png')}}">
             </div>
             <div class="content-profile-photo l-5">
-                <h1>Tens pedidos Relacionamentos por responder. Aceite ou rejeite</h1>
+                <h1>Tens pedidos de <span style="font-weight: bolder;">RELACIONAMENTOS</span> por responder. Aceite ou rejeite</h1>
                 <a href="">
                     <div class="button-default-tassumir">
-                        <h3 class="button-default-tassumir-text" style="margin-top: 0;">Ver Relacionamentos</h3>
+                        <h3 class="button-default-tassumir-text" style="margin-top: 0; font-weight: bolder;">Ver Pedidos</h3>
                     </div>
                 </a>
             </div>
@@ -77,11 +77,11 @@
         <?php if ($key == 2 || $key == 5 || $key == 9): ?>
             <div class="refresh-profile-photo clearfix invisible-component alert-info-about-us" id="alert-info-about-us-{{$key}}">
                 <div class="profile-photo-container l-5">
-                    <img class="img-30 center" src="{{asset('css/uicons/info_tassumir.png')}}">
+                    <img class="img-28 center" src="{{asset('css/uicons/info_tassumir.png')}}">
                 </div>
                 <div class="content-profile-photo l-5">
                     <h1 id="content-p-{{$key}}">O Tassumir ajuda casais a assumirem seus relacionamentos publicamente, aumentando a segurança e fidelidade nos relacionamentos e também ajuda casais a partilharem habilidades pessoais, e ganharem dinheiro com isso.</h1>
-                    <label for="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
+                    <label for="target-alert-tassumir" id="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
                         <div class="options-profile-btn options-profile-btn-center profile-item-center options-alert-btn-feed" id="options-profile-btn-couple">
                             <h3 class="edit-profile-mobile center" style="margin-top: 0;" id="btn-alert-info-{{$key}}">Assumir Relacionamento</h3>
                         </div>
@@ -202,7 +202,7 @@
                     </div>
                 </div>
                 <nav class="row interaction-numbers">
-                    <ul class="">
+                    <ul class="interaction-numbers-{{$key}}">
                         <li>
                             <a href="" id="likes-qtd-{{$key}}">reacções</a>
                         </li>

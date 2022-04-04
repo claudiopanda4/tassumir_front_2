@@ -118,6 +118,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/page/no_following', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigo'])->name('page.que.nao.sigo');
     Route::get('/home/destaques', [App\Http\Controllers\AuthController::class, 'destaques'])->name('home.destaque');
     Route::get('/home/posts', [App\Http\Controllers\PageController::class, 'post_final1'])->name('home.posts');
+    Route::get('/relationship/user/search', [App\Http\Controllers\PerfilController::class, 'search_assumir'])->name('/relationship.user.search');
     Route::get('/home/posts_page_no_follow', [App\Http\Controllers\PageController::class, 'post_final2'])->name('home.posts.no_follow');
     Route::get('/relationship/requests', [App\Http\Controllers\PerfilController::class, 'relationship_requests'])->name('relationship.requests');
     /*Fim rotas para Ajax*/
