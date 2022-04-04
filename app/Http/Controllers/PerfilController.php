@@ -33,7 +33,7 @@ class PerfilController extends Controller
         $id = Auth::user()->conta_id;
         $numbers = DB::select('select count(*) as not_numbers from notifications where notifications.identificador_id_receptor = (select identificadors.identificador_id from identificadors where identificadors.tipo_identificador_id = 1 and id = ?)', [$id]);
         return ['not_numbers' => $numbers[0]->not_numbers];
-      } 
+      }
 
      public function dadosPerfil($id){
        $controll = new AuthController();
@@ -210,7 +210,7 @@ class PerfilController extends Controller
     public function data_profile_defaut() {
 
     }
-    
+
     public function index()
     {
         try {
@@ -255,7 +255,7 @@ class PerfilController extends Controller
         if ($result[0]->id == $conta_id) {
           $my_profile = true;
         }
-        
+
         $addClass = "";
         if ($state_marital == 'Nativa') {
           $state_marital = 'Tem um relacionamento com ';
@@ -271,19 +271,19 @@ class PerfilController extends Controller
           $state_marital = '';
         } else {
           if ($result[0]->id != $conta_id) {
-            $relationship_request = $this->relationship_request($result[0]->id, $conta_id);  
+            $relationship_request = $this->relationship_request($result[0]->id, $conta_id);
             if ($result[0]->relationship == 'not') {
               $state = 'Solteiro';
               $addClass = "nothing";
               if ($request->genre != $result[0]->genre) {
-                $state = 'Assumir';            
-                $addClass = "target-relationship-assumir"; 
+                $state = 'Assumir';
+                $addClass = "target-relationship-assumir";
               } else {
                 if ($result[0]->genre != 'Masculino') {
                   $state = 'Solteira';
                 }
               }
-            } 
+            }
             if ($relationship_request->pedido) {
                 $state = 'Cancelar Pedido';
             } else {
@@ -292,7 +292,7 @@ class PerfilController extends Controller
                   $rel_request = true;
               }
             }
- 
+
           }
         }
         $relationship_details = false;
@@ -358,12 +358,12 @@ class PerfilController extends Controller
         $data = DB::select('select count(*) as reactions from post_reactions where post_reactions.identificador_id = (select identificador_id as identificador_id_seguindo from identificadors where id = (select conta_id from contas where uuid = ?) and identificadors.tipo_identificador_id = 1)', [$uuid]);
         return response()->json([
           'data' => $data[0]->reactions
-        ]);        
+        ]);
       } elseif ($request->type == 2) {
         $data = DB::select('select count(*) as saveds from saveds where conta_id = (select conta_id from contas where uuid = ?)', [$uuid]);
         return response()->json([
           'data' => $data[0]->saveds
-        ]);        
+        ]);
       }
     }
 
@@ -571,6 +571,54 @@ class PerfilController extends Controller
      * @param  \App\Models\Perfil $perfil
      * @return \Illuminate\Http\Response
      */
+
+
+
+
+    public function get_nine_text_perfil(Request $request)
+    {
+      try {
+      $conta_logada= Auth::user()->conta_id;
+      if ($request->id==0) {
+        $text=DB::select('select c.* from (select p.page_id,p.formato,p.uuid,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id>0 and p.formato_id=3 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada]);
+      }else {
+        $text=DB::select('select c.* from (select p.page_id,p.formato,p.formatop.uuid,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id<? and p.formato_id=3 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada,$request->id]);
+      }
+      return response()->json($text);
+
+    } catch (\Exception $e) {
+
+    }
+    }
+    public function get_nine_images_perfil(Request $request)
+    {
+      try {
+      $conta_logada= Auth::user()->conta_id;
+      if ($request->id==0) {
+        $img=DB::select('select c.* from (select p.page_id,p.formato,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id>0 and p.formato_id=2 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada]);
+      }else {
+        $img=DB::select('select c.* from (select p.page_id,p.formato,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id<? and p.formato_id=2 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada,$request->id]);
+      }
+      return response()->json($img);
+    } catch (\Exception $e) {
+
+    }
+    }
+    public function get_nine_videos_perfil(Request $request)
+    {
+      try {
+      $conta_logada= Auth::user()->conta_id;
+      if ($request->id==0) {
+        $video=DB::select('select c.* from (select p.page_id,p.formato,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id>0 and p.formato_id=1 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada]);
+      }else {
+        $video=DB::select('select c.* from (select p.page_id,p.formato,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id<? and p.formato_id=1 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada,$request->id]);
+      }
+      return response()->json($video);
+    } catch (\Exception $e) {
+
+    }
+    }
+
     public function edit($perfil)
     {
         try {
@@ -627,7 +675,7 @@ class PerfilController extends Controller
           $takeEmail = $request->email;
           $auth = new AuthController();
           $account_name = $auth->defaultDate();
-      
+
           $password = Hash::make($request->password);
 
           $date_create_update=date("Y");
@@ -642,7 +690,7 @@ class PerfilController extends Controller
           $date_create_update.=":";
           $date_create_update.=date("s");
 
-         
+
                 $result_email = DB::table('contas')
                      ->where('email','=',$takeEmail)
                      ->get();
@@ -661,7 +709,7 @@ class PerfilController extends Controller
                               'apelido' => $request->apelido,
                               'genero' => $request->genre,
                               'descricao' => $request->bio,
-                              
+
                               'telefone' =>$takePhone,
                               'updated_at' => $request->$date_create_update
 
@@ -672,7 +720,7 @@ class PerfilController extends Controller
                                 DB::table('logins')->where('conta_id', $account_name[0]->conta_id)
                                 ->update([
                                   'password' => $password,
-                                  
+
                                   'telefone' =>$takePhone,
                                   'updated_at' => $request->$date_create_update
                                 ]);
@@ -698,7 +746,7 @@ class PerfilController extends Controller
                               'genero' => $request->genre,
                               'descricao' => $request->bio,
                               'email' =>  $takeEmail,
-                              
+
                               'updated_at' => $request->$date_create_update
 
                           ]);
@@ -708,7 +756,7 @@ class PerfilController extends Controller
                                 ->update([
                                   'password' => $password,
                                   'email' => $request->email,
-                                  
+
                                   'updated_at' => $request->$date_create_update
                                 ]);
 
@@ -716,7 +764,7 @@ class PerfilController extends Controller
                               DB::table('logins')->where('conta_id', $account_name[0]->conta_id)
                               ->update([
                                   'email' => $request->email,
-                                  
+
                                   'updated_at' => $request->$date_create_update
                               ]);
                       }
@@ -784,7 +832,7 @@ class PerfilController extends Controller
                          }
                         return redirect()->route('account.profile');
               }
-          
+
         } catch (Exception $e) {
             dd('erro');
         }

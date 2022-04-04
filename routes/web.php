@@ -46,7 +46,12 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/delete_post', [App\Http\Controllers\AuthController::class, 'delete_post'])->name('delete_post');
     Route::get('/pegar_mais_post', [App\Http\Controllers\AuthController::class, 'pegar_mais_post'])->name('pegar_mais_post');
     Route::get('/ocultar_post', [App\Http\Controllers\AuthController::class, 'ocultar_post'])->name('ocultar_post');
+    /*novas rotas perfil*/
+    Route::post('/get_nine_videos_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_videos_perfil'])->name('get_nine_videos_perfil');
+    Route::post('/get_nine_images_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_images_perfil'])->name('get_nine_images_perfil');
+    Route::post('/get_nine_text_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_text_perfil'])->name('get_nine_text_perfil');
 
+    /*fim novas rotas perfil*/
 
     Route::get('/post_index/{id}', [App\Http\Controllers\AuthController::class, 'post_index'])->name('post_index');
 
