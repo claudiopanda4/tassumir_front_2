@@ -215,59 +215,53 @@ class PaginaCasalController extends Controller
         $controll = new AuthController;
         DB::table('pedido_relacionamentos')->where('uuid',$request->accept_relacd)
         ->update(['estado_pedido_relac_id' => 2, 'updated_at' => $controll->dat_create_update()]);
-        DB::table('notifications')->where('notification_id',$request->id_notification)
-        ->update(['id_state_notification' => 3, 'updated_at' => $controll->dat_create_update()]);
+       $aux= DB::select('select pr.conta_id_pedida,pr.conta_id_pedinte,pr.pedido_relacionamento_id,pr.uuid,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)as pedido_relac_idtf,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte)as conta_pedinte_idtf,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida)as conta_pedida_idtf  from pedido_relacionamentos as pr where pr.uuid=?', [$request->accept_relacd]);
+       if (sizeof($aux)>0) {
+         DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedida)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedida)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->delete();
+         DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedinte)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedinte)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->delete();
+         DB::table('notifications')->where('id_action_notification',4)->where('identificador_id_receptor',$aux[0]->conta_pedinte_idtf)->delete();
+         DB::table('notifications')->where('id_action_notification',4)->where('identificador_id_receptor',$aux[0]->conta_pedida_idtf)->delete();
 
-       $aux= DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->accept_relacd]);
-       $aux1=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->pedido_relacionamento_id, 5 ]);
-       $aux2=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedida, 1 ]);
-       $aux3=DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->conta_id_pedinte, 1]);
+          DB::table('notifications')->insert([
+                  'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                  'id_state_notification' => 2,
+                  'id_action_notification' => 7,
+                  'identificador_id_causador'=> $aux[0]->conta_pedida_idtf,
+                  'identificador_id_destino'=> $aux[0]->pedido_relac_idtf,
+                  'identificador_id_receptor'=> $aux[0]->conta_pedinte_idtf,
+                  'created_at'=> $controll->dat_create_update(),
 
-       DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedida)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedida)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->delete();
-       DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedinte)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedinte)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->delete();
-       DB::table('notifications')->where('id_action_notification',4)->where('identificador_id_receptor',$aux2[0]->identificador_id)->delete();
-       DB::table('notifications')->where('id_action_notification',4)->where('identificador_id_receptor',$aux3[0]->identificador_id)->delete();
+                  ]);
+                }
 
-
-        DB::table('notifications')->insert([
-                'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                'id_state_notification' => 2,
-                'id_action_notification' => 7,
-                'identificador_id_causador'=> $aux2[0]->identificador_id,
-                'identificador_id_destino'=> $aux1[0]->identificador_id,
-                'identificador_id_receptor'=> $aux3[0]->identificador_id,
-                'created_at'=> $controll->dat_create_update(),
-
-                ]);
         return redirect()->route('account.home.feed');
       }
       public function tconfirm(Request $request){
 
-        $tipo=DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->id1]);
-        $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
-        $conta = DB::select('select * from contas where conta_id = ?', [$tipo[0]->conta_id_pedinte]);
+        $tipo=DB::select('select (select nome from contas where conta_id = pr.conta_id_pedinte)as nome,(select apelido from contas where conta_id = pr.conta_id_pedinte)as apelid,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = pr.tipo_relacionamento_id )as tipo_relacionamento from pedido_relacionamentos as pr where uuid = ?', [$request->id1]);
         $resposta='Ao clicar em "Sim, Aceito", você concorda com o que os termos dizem sobre o ';
-        $resposta.=$tipos[0]->tipo_relacionamento;
+        $resposta.=$tipo[0]->tipo_relacionamento;
         $resposta.='. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes. Aceita Assumir o(a)  ';
-        $resposta.= $conta[0]->nome;
+        $resposta.= $tipo[0]->nome;
         $resposta.= ' ';
-        $resposta.= $conta[0]->apelido;
+        $resposta.= $tipo[0]->apelido;
         $resposta.= '?';
 
         return response()->json($resposta);
       }
 
       public function reject_relationship(Request $request){
-        $aux=DB::select('select * from pedido_relacionamentos where uuid = ?', [$request->id1]);
-        $aux1 = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$aux[0]->pedido_relacionamento_id, 5 ]);
-        DB::table('identificadors')->where('identificador_id',$aux1[0]->identificador_id)
-        ->delete();
-        DB::table('pedido_relacionamentos')->where('uuid',$request->id1)
-        ->delete();
-        DB::table('notifications')->where('notification_id',$request->id2)
-        ->delete();
-        $resposta= 1;
+        $control=DB::select('select pr.pedido_relacionamento_id,(select n.notification_id from notifications as n where n.id_action_notification=4 and  n.identificador_id_causador=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte) and n.identificador_id_receptor=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida) and n.identificador_id_destino=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)) as id_not (select identificador_id from identificadors where id= pr.pedido_relacionamento_id and tipo_identificador_id=5) as identify from pedido_relacionamentos as pr where uuid = ?', [$request->id1]);
+        $resposta= 0;
 
+        if (sizeof($control)>0) {
+                  DB::table('identificadors')->where('identificador_id',$control[0]->identify)
+                  ->delete();
+                  DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$control[0]->pedido_relacionamento_id)
+                  ->delete();
+                  DB::table('notifications')->where('notification_id',$control[0]->id_not)
+                  ->delete();
+                  $resposta= 1;        }
         return response()->json($resposta);
       }
 
