@@ -50,7 +50,7 @@ class AuthController extends Controller
     }
 
     public function relationship_type(){
-        $result = DB::select('select tipo_relacionamento_id, uuid, tipo_relacionamento from tipo_relacionamentos');
+        $result = DB::select('select tipo_relacionamento_id, uuid, tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id <> 1');
         return response()->json([
             $result,
         ]);

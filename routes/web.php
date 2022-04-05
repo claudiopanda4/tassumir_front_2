@@ -47,9 +47,9 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/pegar_mais_post', [App\Http\Controllers\AuthController::class, 'pegar_mais_post'])->name('pegar_mais_post');
     Route::get('/ocultar_post', [App\Http\Controllers\AuthController::class, 'ocultar_post'])->name('ocultar_post');
     /*novas rotas perfil*/
-    Route::post('/get_nine_videos_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_videos_perfil'])->name('get_nine_videos_perfil');
-    Route::post('/get_nine_images_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_images_perfil'])->name('get_nine_images_perfil');
-    Route::post('/get_nine_text_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_text_perfil'])->name('get_nine_text_perfil');
+    Route::get('/get_nine_videos_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_videos_perfil'])->name('get_nine_videos_perfil');
+    Route::get('/get_nine_images_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_images_perfil'])->name('get_nine_images_perfil');
+    Route::get('/get_nine_text_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_text_perfil'])->name('get_nine_text_perfil');
 
     /*fim novas rotas perfil*/
 
@@ -120,6 +120,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     /*Rotas para requisições Ajax*/
     Route::get('/page/follow', [App\Http\Controllers\SeguidorController::class, 'follow'])->name('page.follow');
     Route::get('/relationship/type', [App\Http\Controllers\AuthController::class, 'relationship_type'])->name('relationship.type');
+    Route::get('/home/index', [App\Http\Controllers\AuthController::class, 'home'])->name('home.index');
     Route::get('/page/following', [App\Http\Controllers\AuthController::class, 'paginasqueSigo'])->name('page.que.sigo');
     Route::get('/page/following/index', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigoIndex'])->name('page.para.index');
     Route::get('/page/no_following', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigo'])->name('page.que.nao.sigo');
@@ -128,6 +129,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/relationship/user/search', [App\Http\Controllers\PerfilController::class, 'search_assumir'])->name('/relationship.user.search');
     Route::get('/home/posts_page_no_follow', [App\Http\Controllers\PageController::class, 'post_final2'])->name('home.posts.no_follow');
     Route::get('/relationship/requests', [App\Http\Controllers\PerfilController::class, 'relationship_requests'])->name('relationship.requests');
+    Route::get('/relationship/requests/pedinte', [App\Http\Controllers\PerfilController::class, 'relationship_requests_pedinte'])->name('relationship.requests.pedinte');
     /*Fim rotas para Ajax*/
 
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');

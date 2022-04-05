@@ -326,6 +326,15 @@ class PerfilController extends Controller
       ]);
     }
 
+    public function relationship_requests_pedinte(){
+      $id_pedinte = Auth::user()->conta_id;
+      $result = DB::select('select uuid, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedinte = ?', [$id_pedinte]);
+      $sizeof = sizeof($result) > 0 ? true : false;
+      return response()->json([
+        'state' => $result[0]->pedido,
+      ]);
+    }
+
     public function search_assumir(Request $request) {
       $id = Auth::user()->conta_id;
       $text = '%'.$request->text.'%';
@@ -580,9 +589,9 @@ class PerfilController extends Controller
       try {
       $conta_logada= Auth::user()->conta_id;
       if ($request->id==0) {
-        $text=DB::select('select c.* from (select p.page_id,p.formato,p.uuid,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id>0 and p.formato_id=3 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada]);
+        $text=DB::select('select c.* from (select p.page_id,p.formato_id,p.uuid,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id>0 and p.formato_id=3 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada]);
       }else {
-        $text=DB::select('select c.* from (select p.page_id,p.formato,p.formatop.uuid,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id<? and p.formato_id=3 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada,$request->id]);
+        $text=DB::select('select c.* from (select p.page_id,p.formato_id,p.formatop.uuid,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id<? and p.formato_id=3 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada,$request->id]);
       }
       return response()->json($text);
 
@@ -595,9 +604,9 @@ class PerfilController extends Controller
       try {
       $conta_logada= Auth::user()->conta_id;
       if ($request->id==0) {
-        $img=DB::select('select c.* from (select p.page_id,p.formato,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id>0 and p.formato_id=2 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada]);
+        $img=DB::select('select c.* from (select p.page_id,p.formato_id,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id>0 and p.formato_id=2 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada]);
       }else {
-        $img=DB::select('select c.* from (select p.page_id,p.formato,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id<? and p.formato_id=2 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada,$request->id]);
+        $img=DB::select('select c.* from (select p.page_id,p.formato_id,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id<? and p.formato_id=2 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada,$request->id]);
       }
       return response()->json($img);
     } catch (\Exception $e) {
@@ -607,16 +616,16 @@ class PerfilController extends Controller
     public function get_nine_videos_perfil(Request $request)
     {
       try {
-      $conta_logada= Auth::user()->conta_id;
-      if ($request->id==0) {
-        $video=DB::select('select c.* from (select p.page_id,p.formato,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id>0 and p.formato_id=1 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada]);
-      }else {
-        $video=DB::select('select c.* from (select p.page_id,p.formato,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id<? and p.formato_id=1 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada,$request->id]);
-      }
-      return response()->json($video);
-    } catch (\Exception $e) {
+        $conta_logada = Auth::user()->conta_id;
+        if ($request->id==0) {
+          $video=DB::select('select c.* from (select p.page_id,p.formato_id,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id>0 and p.formato_id=1 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada]);
+        }else {
+          $video=DB::select('select c.* from (select p.page_id,p.formato_id,p.uuid,p.file,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id<? and p.formato_id=1 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada,$request->id]);
+        }
+        return response()->json($video);
+      } catch (Exception $e) {
 
-    }
+      }
     }
 
     public function edit($perfil)
@@ -855,7 +864,7 @@ class PerfilController extends Controller
         $this->Pedido_relac($request);
         if (Auth::check() == true) {
             $page_current = 'home_index';
-            return redirect()->route('account.login.form');
+            return redirect()->route('home.index');
         }
         return redirect()->route('account.login.form');
     }
