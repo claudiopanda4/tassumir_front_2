@@ -229,10 +229,8 @@
         </header>
         <div class="header-height"></div>
         <div style="margin-top: 15px; margin-bottom: 10px; max-height: 250px; overflow-y: auto;">
-            <div class="">
-                <label for="choose-type-relationship" id="choosed-type-relationship_1" class="choosed-type-relationship" style="display: block;"><h1 class="relationship-type-item" id="choosed-type-relationship-text_1">Namoro</h1></label>
-                <label for="choose-type-relationship" id="choosed-type-relationship_2" class="choosed-type-relationship" style="display: block;"><h1 class="relationship-type-item" id="choosed-type-relationship-text_2">Casamento</h1></label>
-                <label for="choose-type-relationship" id="choosed-type-relationship_3" class="choosed-type-relationship" style="display: block;"><h1 class="relationship-type-item" id="choosed-type-relationship-text_3">Pedido</h1></label>
+            <div class="" id="tipo_relac_id">
+                
             </div>
             <input type="hidden" id="checked-load" value="0">
         </div>
@@ -302,23 +300,23 @@
                 </div>
                 <div id="choose-type-relationship-id" class=" invisible-component clearfix l-5" style="width: 98%; margin-top: 10px; margin-bottom: 10px;">
                     <div class="cover-done" style="border-radius: 8px; min-width: 200px;">
-                        <label for="choose-type-relationship" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 11px; width: 100%; border-radius: 5px; margin-bottom: 0;">Escolher o tipo de Relacionamento</label>
+                        <label for="choose-type-relationship" id="choose-type-relationship-id" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 11px; width: 100%; border-radius: 5px; margin-bottom: 0;">Escolher o tipo de Relacionamento</label>
                     </div>
                 </div>
                 <div id="name-page-container" class=" invisible-component form-group marriage-proposal" style="width: 95%;">
                     <h1 class="target-identi-label">Nome que deseja dar na sua página, caso seja aceite... (Pode ser editada depois)</h1>
                     <input type="text" class="input-text-default input-full" id="name-page-text-choosed" type="text" placeholder="Nome da página,caso seja aceite..." style="border-radius: 7px; padding: 6px;">
                 </div>
-                <form action="" method="POST" enctype="multipart/form-data" id="done-btn-assumir">
+                <form action="{{route('engagement.proposal')}}" method="POST" enctype="multipart/form-data" id="done-btn-assumir">
                     @csrf
                     <div class="clearfix l-5" style="width: 98%; min-width: 200px; margin-top: 10px; margin-bottom: 10px;">
                         <div class="cover-done invisible-component" id="assumir-now" style="border-radius: 8px;">
                             <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 11px; width: 100%; border-radius: 5px;">Assumir o Relacionamento agora</button>
                         </div>
                     </div>
-                    <input type="hidden" id="uuid_user_assumir">
-                    <input type="hidden" id="relationship-type-tassumir">
-                    <input type="hidden" id="name-invited-page-home">
+                    <input type="hidden" name="conta_pedida" id="uuid_user_assumir">
+                    <input type="hidden" name="tipo_relac" id="relationship-type-tassumir">
+                    <input type="hidden" name="name_page" id="name-invited-page-home">
                     <input type="hidden" id="">
                 </form>
             </div>

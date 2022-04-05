@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	let length = $('#host').val().split('/').length;
 	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[length - 2];
-	let any_class, any_id, text, src;
+	let any_class, any_id, text, src, component;
 	let components = [];
 	$('#target-invited-relationship-id').click(function () {
 		$('#target-invited-relationship').removeAttr('checked');
@@ -45,6 +45,26 @@ $(document).ready(function () {
 			} else {$('#relationship-requests').remove();}
 		}
 	});
+	$('#choose-type-relationship-id').click(function (e) {
+		if ($('#checked-load').val() != 1) {
+			$.ajax({
+				url: '/relationship/type',
+				type: 'get',
+				data: {},
+				dataType: 'json',
+				success: function (response) {
+					console.log(response[0]);
+					$.each(response[0], function(key, data) {
+						console.log(data.tipo_relacionamento);
+						component = '<label for="choose-type-relationship" id="choosed-type-relationship_' + data.tipo_relacionamento_id 
+						+ '" class="choosed-type-relationship" style="display: block;"><h1 class="relationship-type-item" id="choosed-type-relationship-text_' + data.tipo_relacionamento_id + '">' + data.tipo_relacionamento + '</h1></label>';
+						$('#tipo_relac_id').append(component);
+					});
+					$('#checked-load').val(1); 
+				}
+			});
+		}
+	});
 	$('.assumir-relationship-user').click(function (e) {
 		e.preventDefault();
 		any_id = e.target.id.split('_')[1];
@@ -86,6 +106,7 @@ $(document).ready(function () {
 		$('#choose-type-relationship-id').addClass('invisible-component');
 		$('#name-page-container').removeClass('invisible-component');
 		$('#relationship-type-tassumir').val(any_id);
+		$('#checked-load').val(1);
 	});
 	$('#assumir-item-text-selected').click(function(){
 		$('#name-search-data-selected').text('');
@@ -788,6 +809,14 @@ document.addEventListener('click', function (e) {
 		$('#header-title-alert').text('Tassumir Mensagens')
 		$('#alert-description').text('Brevemente você poderá interagir por mensagens no Tassumir... Quando estiver disponível, anunciaremos pra você. Estamos desenvolvendo com muito cuidado para poder proporcionar a você uma experiência melhor e mais PRIVADA no Tassumir. Por favor, AGUARDE...');
 		document.getElementById('target-alert-post-denied').checked = true;
+	}
+	if (e.target.className.indexOf('relationship-type-item') > -1) {
+		any_id = e.target.id.split('_')[1];
+		$('#type-data-selected').text($('#choosed-type-relationship-text_' + any_id).text());
+		$('#selected-relationship-assumir').removeClass('invisible-component');
+		$('#choose-type-relationship-id').addClass('invisible-component');
+		$('#name-page-container').removeClass('invisible-component');
+		$('#relationship-type-tassumir').val(any_id);
 	}
 	if (e.target.className.indexOf('nothing') > -1) {
 		e.preventDefault();

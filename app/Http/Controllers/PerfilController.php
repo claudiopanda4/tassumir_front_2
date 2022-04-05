@@ -849,6 +849,14 @@ class PerfilController extends Controller
         //
     }
 
+    public function engagement_proposal(Request $request)
+    {
+        dd($request);
+        //$uuid_user_assumir = $request->uuid_user_assumir;
+        //$relationship_type_tassumir = $request->relationship_type_tassumir;
+        //$name_invited_page_home = $request->name_invited_page_home;
+    }
+
     public function Pedido_relac(Request $request)
     {
         try {
