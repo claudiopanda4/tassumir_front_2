@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/savepost', [App\Http\Controllers\AuthController::class, 'savepost'])->name('savepost');
     Route::get('/comentar', [App\Http\Controllers\AuthController::class, 'comentar'])->name('comentar');
     Route::post('/Pedido_relac/', [App\Http\Controllers\PerfilController::class, 'Pedido_relac'])->name('Pedido_relac');
+    Route::post('/engagement/proposal/', [App\Http\Controllers\PerfilController::class, 'engagement_proposal'])->name('engagement.proposal');
     Route::get('/profile/', [App\Http\Controllers\PerfilController::class, 'index'])->name('account.profile');
     Route::post('/profile/picture/', [App\Http\Controllers\PerfilController::class, 'add_picture'])->name('account.profile.pic');
 
@@ -118,11 +119,13 @@ Route::group(['middleware' => 'auth:web1'], function () {
 
     /*Rotas para requisições Ajax*/
     Route::get('/page/follow', [App\Http\Controllers\SeguidorController::class, 'follow'])->name('page.follow');
+    Route::get('/relationship/type', [App\Http\Controllers\AuthController::class, 'relationship_type'])->name('relationship.type');
     Route::get('/page/following', [App\Http\Controllers\AuthController::class, 'paginasqueSigo'])->name('page.que.sigo');
     Route::get('/page/following/index', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigoIndex'])->name('page.para.index');
     Route::get('/page/no_following', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigo'])->name('page.que.nao.sigo');
     Route::get('/home/destaques', [App\Http\Controllers\AuthController::class, 'destaques'])->name('home.destaque');
     Route::get('/home/posts', [App\Http\Controllers\PageController::class, 'post_final1'])->name('home.posts');
+    Route::get('/relationship/user/search', [App\Http\Controllers\PerfilController::class, 'search_assumir'])->name('/relationship.user.search');
     Route::get('/home/posts_page_no_follow', [App\Http\Controllers\PageController::class, 'post_final2'])->name('home.posts.no_follow');
     Route::get('/relationship/requests', [App\Http\Controllers\PerfilController::class, 'relationship_requests'])->name('relationship.requests');
     /*Fim rotas para Ajax*/

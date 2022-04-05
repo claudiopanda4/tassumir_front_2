@@ -571,9 +571,14 @@
 }
 #target-proof:checked ~ #cover-proof,
 #delete-page-target:checked ~ #delete-page-container,
-#target-alert-post-denied:checked ~ #alert-denied-post {
+#target-alert-post-denied:checked ~ #alert-denied-post,
+#target-alert-tassumir:checked ~ #relationship-container-invited {
 	opacity: 1;
     z-index: 1001;
+}
+#choose-type-relationship:checked ~ #relationship-assumir-type-container {
+	opacity: 1;
+    z-index: 1003;
 }
 #search-lg-home:checked ~ .container-search-home {
 	display: block;

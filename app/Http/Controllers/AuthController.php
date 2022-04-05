@@ -49,6 +49,13 @@ class AuthController extends Controller
         }
     }
 
+    public function relationship_type(){
+        $result = DB::select('select tipo_relacionamento_id, uuid, tipo_relacionamento from tipo_relacionamentos');
+        return response()->json([
+            $result,
+        ]);
+    }
+
    public function default_(){
            $account_name = $this->defaultDate();
            $checkUserStatus = Self::isCasal($account_name[0]->conta_id);
@@ -1530,7 +1537,7 @@ class AuthController extends Controller
                 return json_encode($post);
             }
 
-    public function index(Request $request){
+    public function index(){
         if (Auth::check() == true) {
             $page_current = 'home_index';
             return view('feed.index', compact('page_current'));

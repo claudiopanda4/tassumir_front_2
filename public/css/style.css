@@ -139,7 +139,7 @@ body {
     background-color: #242526;
     margin-top: 5px;
     border-radius: 20px;
-    padding: 5px
+    padding: 7px
 }
 .input-login-h {
     
@@ -1719,8 +1719,9 @@ label[for="hugo"]{
 .li-component-suggest {
     position: relative;
     width: 145px;
-    border-radius: 7px;
+    border-radius: 5px;
     padding: 5px;
+    margin-left: 0;
     background-color: #2f3134;
 }
 .more-info-about-profile h1,
@@ -1748,8 +1749,9 @@ label[for="hugo"]{
 .suggest-slide header h1 {
     color: #fff;
     font-size: 14px;
-    padding: 10px;
+    padding: 5px 10px;
     text-align: left;
+    margin-bottom: 0;
 }
 .suggest-slide .name-suggest {
     font-size: 12px;
@@ -1767,7 +1769,7 @@ label[for="hugo"]{
 }
 .suggest-slide ul {
     padding-left: 10px;
-    width: 1260px;
+    width: 1210px;
 }
 .suggest-slide nav {
     width: 100%;
@@ -2732,7 +2734,7 @@ label[for="hugo"]{
     text-align: center;
 }
 .cover-done {
-    width: 60%;
+    width: 67%;
     text-align: center;
     color: #fff;
     background-color: #800080;
@@ -3832,7 +3834,7 @@ label[for="hugo"]{
 .button-default-tassumir {
     background-color: #800080;
     border-radius: 5px;
-    margin-top: 5px;
+    margin-top: 10px;
     max-width: 220px;
 }
 #main-profile .button-default-tassumir {
@@ -3845,4 +3847,57 @@ label[for="hugo"]{
 #main-profile .more-options-profile-btn,
 #main-profile .button-default-tassumir {
     border-radius: 6px;
+}
+.alert-component-card {
+    background-color: #a42191;
+}
+.inline-perc-1 {
+    margin-left: 1%;
+    float: left;
+}
+.inline-perc-1-r {
+    margin-left: 1%;
+    float: right;    
+}
+.button-assumir {
+    background-color: #d708d7;
+    padding: 5px;
+    font-size: 11px;
+    color: #fff;
+    border-radius: 5px;
+}
+.text-component-text {
+    text-align: left;
+    color: #efefef;
+    font-size: 11px;
+}
+.cover-result-search-component {
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+.text-component {
+    margin-top: 5px;
+}
+.result-search {
+    width: 85%;
+    margin: 10px auto;
+}
+.target-identi-label {
+    font-size: 12px;
+    color: #fff;
+}
+.button-component {
+    cursor: pointer;
+}
+.relationship-type-item {
+    background-color: #232629;
+    font-size: 12px;
+    color: #fff;
+    border-radius: 10px;
+    margin: 5px auto;
+    padding: 8px;
+    max-width: 220px;
+    cursor: pointer;
+    text-align: center;
 }

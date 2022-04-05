@@ -61,8 +61,8 @@
                     <div class="hidden-click-any-container last-component-n clearfix-n " id="notification-header-icon">
                         <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><!--<i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i>-->
                             <img src="{{asset('/css/uicons/notification.png')}}" class="center img-28">
-                            <div class="number-notification circle invisible-component" id="number-notification-component">
-                                <span class="center" id="number-notification-id"></span>
+                            <div class="number-notification invisible-component br-10" id="number-notification-component-footer">
+                                <div class="" id="number-notification-id-footer"></div>
                             </div>
                         </label>
                         <a href="" class="hidden-click-any-container fa-option-mobile-lg-hide notify-icon">
@@ -214,6 +214,115 @@
     </footer>
     </div>
 </body>
+<input type="checkbox" name="" id="choose-type-relationship" class="invisible">
+<div class="pop-up" id="relationship-assumir-type-container">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Tipos de Relacionamentos</h1>
+            <div class="container-pop-up-component-header">
+                <label for="choose-type-relationship">
+                    <div class="cancel-box-component div-img">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px; max-height: 250px; overflow-y: auto;">
+            <div class="" id="tipo_relac_id">
+                
+            </div>
+            <input type="hidden" id="checked-load" value="0">
+        </div>
+    </div>
+</div>
+<input type="checkbox" id="target-alert-tassumir">
+<div class="pop-up" id="relationship-container-invited">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; max-height: 90%; min-height: 220px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1>Assumir o Relacionamento</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-alert-tassumir">
+                    <div class="cancel-box-component div-img">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px; border-radius: 8px;">
+            <div class="">
+                <div class="form-group marriage-proposal" style="width: 95%;" id="search-container-user-assumir">
+                    <h1 class="target-identi-label">Nome da pessoa que deseja assumir</h1>
+                    <input type="text" class="input-text-default input-full" id="search-person-assumir" type="text" placeholder="Nome da pessoa que deseja assumir" style="border-radius: 7px; padding: 6px;">
+                </div>
+                <div class="result-search" style="max-height: 295px; overflow-y: auto;">
+                    <?php $key = 0; while($key < 5){ ?>
+                        <div id="a-result-search-{{$key}}" class="invisible-component">
+                            <div class="result-search-component clearfix">
+                                <div class="cover-result-search-component inline-perc-1 circle">
+                                    <img class="img-26 center" src="{{asset('css/uicons/user.png')}}">
+                                </div>
+                                <div class="text-component inline-perc-1" style="margin-top: 10px;">
+                                    <h1 class="text-component-text" id="name-search-data-{{$key}}"></h1>
+                                </div>
+                                <a class="button-component inline-perc-1-r" id="assumir-item-{{$key}}" style="margin-top: 10px;">
+                                    <h1 id="assumir-item-text-{{$key}}" class="text-button-component button-assumir assumir-relationship-user" style="font-size: 8px; text-transform: uppercase; min-width: 60px; text-align: center; font-weight: bolder;">Assumir</h1>                                   
+                                </a>
+                            </div>                        
+                        </div>
+                    <?php $key++; } ?>
+                </div>
+                <div>
+                    <div id="selected-user-assumir" class="invisible-component">
+                        <div class="result-search-component clearfix" style="margin: auto; width: 85%;">
+                            <div class="cover-result-search-component inline-perc-1 circle">
+                                <img class="img-26 center" src="{{asset('css/uicons/user.png')}}">
+                            </div>
+                            <div class="text-component inline-perc-1" style="margin-top: 10px;">
+                                <h1 class="text-component-text" id="name-search-data-selected"></h1>
+                            </div>
+                            <a class="button-component inline-perc-1-r" id="assumir-relationship-user-desfazer" style="margin-top: 10px;">
+                                <h1 id="assumir-item-text-selected" class="text-button-component button-assumir" style="font-size: 8px; text-transform: uppercase; min-width: 60px; text-align: center; font-weight: bolder;">desfazer</h1>                                   
+                            </a>
+                        </div>                        
+                    </div>
+                    <div id="selected-relationship-assumir" class="invisible-component">
+                        <div class="result-search-component clearfix" style="margin: auto; width: 85%;">
+                            <div class="text-component inline-perc-1" style="margin-top: 10px; margin-left: 20px;">
+                                <h1 class="text-component-text" id="type-data-selected"></h1>
+                            </div>
+                            <label for="choose-type-relationship" class="button-component inline-perc-1-r" style="margin-top: 10px; display: block;">
+                                <h1 id="assumir-item-type-relationship-selected" class="text-button-component button-assumir" style="font-size: 8px; text-transform: uppercase; min-width: 60px; text-align: center; font-weight: bolder;">mudar</h1>                                   
+                            </label>
+                        </div>                        
+                    </div>
+                </div>
+                <div id="choose-type-relationship-id" class=" invisible-component clearfix l-5" style="width: 98%; margin-top: 10px; margin-bottom: 10px;">
+                    <div class="cover-done" style="border-radius: 8px; min-width: 200px;">
+                        <label for="choose-type-relationship" id="choose-type-relationship-id" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 11px; width: 100%; border-radius: 5px; margin-bottom: 0;">Escolher o tipo de Relacionamento</label>
+                    </div>
+                </div>
+                <div id="name-page-container" class=" invisible-component form-group marriage-proposal" style="width: 95%;">
+                    <h1 class="target-identi-label">Nome que deseja dar na sua página, caso seja aceite... (Pode ser editada depois)</h1>
+                    <input type="text" class="input-text-default input-full" id="name-page-text-choosed" type="text" placeholder="Nome da página,caso seja aceite..." style="border-radius: 7px; padding: 6px;">
+                </div>
+                <form action="{{route('engagement.proposal')}}" method="POST" enctype="multipart/form-data" id="done-btn-assumir">
+                    @csrf
+                    <div class="clearfix l-5" style="width: 98%; min-width: 200px; margin-top: 10px; margin-bottom: 10px;">
+                        <div class="cover-done invisible-component" id="assumir-now" style="border-radius: 8px;">
+                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 11px; width: 100%; border-radius: 5px;">Assumir o Relacionamento agora</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="conta_pedida" id="uuid_user_assumir">
+                    <input type="hidden" name="tipo_relac" id="relationship-type-tassumir">
+                    <input type="hidden" name="name_page" id="name-invited-page-home">
+                    <input type="hidden" id="">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <input type="checkbox" name="" id="target-alert-post-denied" class="invisible">
 <div class="pop-up" id="alert-denied-post">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 210px; overflow: hidden;">

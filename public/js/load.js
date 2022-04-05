@@ -1,7 +1,8 @@
 $(document).ready(function () {
 	let length = $('#host').val().split('/').length;
 	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[length - 2];
-	let src;
+	let any_class, any_id, text, src, component;
+	let components = [];
 	$('#target-invited-relationship-id').click(function () {
 		$('#target-invited-relationship').removeAttr('checked');
 	});
@@ -22,18 +23,128 @@ $(document).ready(function () {
 			}
 		}
 	});
-	
+	function empty(class_name, components) {
+		for (var i = 0; i <= any_class.length - 1; i++) {
+			any_id = any_class[i].id.split('_')[1];
+			console.log(any_id);
+			$(components[0]).attr('id', 'assumir-item-' + i);
+			$(components[1]).attr('id', 'name-search-data-' + i);
+			$(components[2]).addClass('invisible-component');
+			$(components[2]).attr('id', 'a-result-search-' + i);
+			$(components[3]).attr('id', 'assumir-item-text-' + i);
+		}
+	}
 	$.ajax({
 		url: '/relationship/requests',
 		type: 'get',
 		data: {},
 		dataType: 'json',
 		success: function (response) {
-			console.log(response);
 			if (response.state) {
 				$('#relationship-requests').removeClass('invisible-component');	
 			} else {$('#relationship-requests').remove();}
 		}
+	});
+	$('#choose-type-relationship-id').click(function (e) {
+		if ($('#checked-load').val() != 1) {
+			$.ajax({
+				url: '/relationship/type',
+				type: 'get',
+				data: {},
+				dataType: 'json',
+				success: function (response) {
+					console.log(response[0]);
+					$.each(response[0], function(key, data) {
+						console.log(data.tipo_relacionamento);
+						component = '<label for="choose-type-relationship" id="choosed-type-relationship_' + data.tipo_relacionamento_id 
+						+ '" class="choosed-type-relationship" style="display: block;"><h1 class="relationship-type-item" id="choosed-type-relationship-text_' + data.tipo_relacionamento_id + '">' + data.tipo_relacionamento + '</h1></label>';
+						$('#tipo_relac_id').append(component);
+					});
+					$('#checked-load').val(1); 
+				}
+			});
+		}
+	});
+	$('.assumir-relationship-user').click(function (e) {
+		e.preventDefault();
+		any_id = e.target.id.split('_')[1];
+		$('#uuid_user_assumir').val(any_id);
+		$('#search-person-assumir').val('');
+		$('#name-search-data-selected').text($('#name-search-data_' + any_id).text());
+		$('#selected-user-assumir').removeClass('invisible-component');
+		any_class = document.getElementsByClassName('a-result-search');
+		components = [
+			'#assumir-item_' + any_id, 
+			'#name-search-data_' + any_id,
+			'#a-result-search_' + any_id,
+			'#assumir-item-text_' + any_id
+		];
+		empty(any_class, components);
+		$('#choose-type-relationship-id').removeClass('invisible-component');
+		$('#search-container-user-assumir').addClass('invisible-component');
+	});
+	$('#name-page-text-choosed').keyup(function() {
+		if ($('#name-page-text-choosed').val() != '' 
+			&& $('#name-page-text-choosed').val() != ' '
+			&& $('#name-page-text-choosed').val() != '  '
+			&& $('#name-page-text-choosed').val() != '   '
+			&& $('#name-page-text-choosed').val() != '    '
+			&& $('#name-page-text-choosed').val() != '     '
+			&& $('#name-page-text-choosed').val() != '      '
+			&& $('#name-page-text-choosed').val() != '       '
+			&& $('#name-page-text-choosed').val() != '        ') {
+			$('#assumir-now').removeClass('invisible-component');
+			$('#name-invited-page-home').val($('#name-page-text-choosed').val());
+		} else {
+			$('#assumir-now').addClass('invisible-component');
+		}
+	});
+	$('.choosed-type-relationship').click(function (e) {
+		any_id = e.target.id.split('_')[1];
+		$('#type-data-selected').text($('#choosed-type-relationship-text_' + any_id).text());
+		$('#selected-relationship-assumir').removeClass('invisible-component');
+		$('#choose-type-relationship-id').addClass('invisible-component');
+		$('#name-page-container').removeClass('invisible-component');
+		$('#relationship-type-tassumir').val(any_id);
+		$('#checked-load').val(1);
+	});
+	$('#assumir-item-text-selected').click(function(){
+		$('#name-search-data-selected').text('');
+		$('#choose-type-relationship-id').addClass('invisible-component');
+		$('#selected-user-assumir').addClass('invisible-component');
+		$('#search-container-user-assumir').removeClass('invisible-component');
+	});
+	$('#search-person-assumir').keyup(function(){
+		text = $('#search-person-assumir').val();
+		$.ajax({
+			url: '/relationship/user/search',
+			type: 'get',
+			data: {'text' : text},
+			dataType: 'json',
+			success: function (response) {
+				console.log(response);
+				any_class = document.getElementsByClassName('a-result-search');
+				components = [
+					'#assumir-item_' + any_id, 
+					'#name-search-data_' + any_id,
+					'#a-result-search_' + any_id,
+					'#assumir-item-text_' + any_id
+				];
+				empty(any_class, components);
+				if (response.state) {
+					$.each(response.search, function(key, data){
+						console.log(data.nome);
+						$('#name-search-data-' + key).text(data.nome + ' ' + data.apelido);
+						$('#name-search-data-' + key).attr('id', 'name-search-data_' + data.uuid);
+						$('#assumir-item-' + key).attr('id', 'assumir-item_' + data.uuid);
+						$('#a-result-search-' + key).removeClass('invisible-component');
+						$('#assumir-item-text-' + key).attr('id', 'assumir-item-text_' + data.uuid);
+						$('#a-result-search-' + key).addClass('a-result-search');
+						$('#a-result-search-' + key).attr('id', 'a-result-search_' + data.uuid);
+					});					
+				}
+			}
+		});
 	});
 	$.ajax({
         url: '/user_data',
@@ -186,9 +297,9 @@ $(document).ready(function () {
 		    	$('#post-cover-post-index-' + key).addClass('invisible-component');
 		    	$('#m_post-' + key).addClass('getvideo');
 		    	$('#video_' + key).attr('type', 'video/' + data.file.split('.')[data.file.split('.').length - 1]);
+		    	$('#vid-' + key).val(route + "/storage/video/page/" + data.file);
 		    	if (key == 0) {$('#video_' + key).attr('src', route + "/storage/video/page/" + data.file);}
 		    	//$('#video-post-link-' + key).attr('src', route + "/storage/video/page/" + data.file);
-		    	$('#vid-' + key).val(route + "/storage/video/page/" + data.file);
 		    	$('#video-post-link-' + key).attr('id', 'video-post-link_' + data.uuid);
 			    $('#video-post-' + key).attr('id', 'video-post_' + data.uuid);
 		   		$('#video_' + key).attr('id', 'video_' + data.uuid);
@@ -533,19 +644,14 @@ $(document).ready(function () {
                     currentTime = document.getElementById('video_' + id).currentTime;
                     duration = document.getElementById('video_' + id).duration;
                     $('#video-post-time-' + id).val(currentTime);
-                    //console.log('currentTime de video_' + id + ' = ' + $('#video-post-time-' + id).val());
-                    console.log('currentTime de video_' + id + ' = ' + $('#video-post-time-' + id).val());
                     if (currentTime >= (duration / 2) && currentTime >= 30) {
                         watched_video = $('#watch-video-' + id).val();
-                        //console.log('entrou no video watch-video ' + watched_video);
-                        //add_view(watched_video);
                         $.ajax({
 						    url: '/view/',
 						    type: 'get',
 						    data: {'id' : id, 'video_add' : true},
 						    dataType: 'json',
 						    success:function(response){
-						    	console.log(response);
 						    }
 						});
                     }
@@ -610,7 +716,7 @@ $(document).ready(function () {
 		});
     	//alert();
     });
-  	let text = "";
+  	text = "";
     $('.comentar-a').click(function (e) {
     	e.preventDefault();
     	id = e.target.id.split('_')[1];
@@ -703,6 +809,14 @@ document.addEventListener('click', function (e) {
 		$('#header-title-alert').text('Tassumir Mensagens')
 		$('#alert-description').text('Brevemente você poderá interagir por mensagens no Tassumir... Quando estiver disponível, anunciaremos pra você. Estamos desenvolvendo com muito cuidado para poder proporcionar a você uma experiência melhor e mais PRIVADA no Tassumir. Por favor, AGUARDE...');
 		document.getElementById('target-alert-post-denied').checked = true;
+	}
+	if (e.target.className.indexOf('relationship-type-item') > -1) {
+		any_id = e.target.id.split('_')[1];
+		$('#type-data-selected').text($('#choosed-type-relationship-text_' + any_id).text());
+		$('#selected-relationship-assumir').removeClass('invisible-component');
+		$('#choose-type-relationship-id').addClass('invisible-component');
+		$('#name-page-container').removeClass('invisible-component');
+		$('#relationship-type-tassumir').val(any_id);
 	}
 	if (e.target.className.indexOf('nothing') > -1) {
 		e.preventDefault();

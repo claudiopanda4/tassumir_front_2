@@ -790,8 +790,9 @@
 	}
 	.stories-about-talking header h1 {
 	    font-size: 13px;
-	    padding: 0px 12px 5px;    
+	    padding: 0px 12px;    
 	    margin-top: 10px;
+	    font-weight: bolder;
 	}
 	.stories-about-talking nav ul li {
 	    width: 56px;
@@ -1235,8 +1236,9 @@
 	    font-size: 13px;
 	}
 	.seguir-a {
-	    font-size: 14px;
-    	margin-top: 1px;
+	    font-size: 15px;
+	    margin-top: 0;
+	    margin: 0;
 	}
 	.description-couple h2 {
 	    font-size: 12px;
@@ -1254,7 +1256,8 @@
 }
 @media screen and (max-width: 470px) {
 	.post header .first-component .page-identify h1 {
-	    font-size: 13px;
+	    font-size: 13.5px;
+	    margin-top: 9px;
 	}
 	.edit-profile-mobile {
 		font-size: 12px;
@@ -1279,6 +1282,15 @@
 		border: none;
 		border-radius: 0;
 		/*border-top: 1px solid #343a40;*/
+	}
+	.content-profile-photo {
+	    width: 75%;
+	}
+	.menu-footer-main ul {
+	    /*margin-top: 1px;*/
+	}
+	.profile-photo-container {
+		margin-left: 10px;
 	}
 	.component-card {
 		border-radius: 0;
