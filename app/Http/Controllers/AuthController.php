@@ -1537,7 +1537,7 @@ class AuthController extends Controller
                 return json_encode($post);
             }
 
-    public function index(Request $request){
+    public function index(){
         if (Auth::check() == true) {
             $page_current = 'home_index';
             return view('feed.index', compact('page_current'));

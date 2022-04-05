@@ -851,10 +851,13 @@ class PerfilController extends Controller
 
     public function engagement_proposal(Request $request)
     {
-        dd($request);
-        //$uuid_user_assumir = $request->uuid_user_assumir;
-        //$relationship_type_tassumir = $request->relationship_type_tassumir;
-        //$name_invited_page_home = $request->name_invited_page_home;
+        $auth = new AuthController();
+        $this->Pedido_relac($request);
+        if (Auth::check() == true) {
+            $page_current = 'home_index';
+            return redirect()->route('account.login.form');
+        }
+        return redirect()->route('account.login.form');
     }
 
     public function Pedido_relac(Request $request)
