@@ -48,6 +48,7 @@ $(document).ready(function () {
 	$('.assumir-relationship-user').click(function (e) {
 		e.preventDefault();
 		any_id = e.target.id.split('_')[1];
+		$('#uuid_user_assumir').val(any_id);
 		$('#search-person-assumir').val('');
 		$('#name-search-data-selected').text($('#name-search-data_' + any_id).text());
 		$('#selected-user-assumir').removeClass('invisible-component');
@@ -71,9 +72,12 @@ $(document).ready(function () {
 			&& $('#name-page-text-choosed').val() != '     '
 			&& $('#name-page-text-choosed').val() != '      '
 			&& $('#name-page-text-choosed').val() != '       '
-			&& $('#name-page-text-choosed').val() != '        ') 
-			{$('#assumir-now').removeClass('invisible-component');} 
-		else {$('#assumir-now').addClass('invisible-component');}
+			&& $('#name-page-text-choosed').val() != '        ') {
+			$('#assumir-now').removeClass('invisible-component');
+			$('#name-invited-page-home').val($('#name-page-text-choosed').val());
+		} else {
+			$('#assumir-now').addClass('invisible-component');
+		}
 	});
 	$('.choosed-type-relationship').click(function (e) {
 		any_id = e.target.id.split('_')[1];
@@ -81,6 +85,7 @@ $(document).ready(function () {
 		$('#selected-relationship-assumir').removeClass('invisible-component');
 		$('#choose-type-relationship-id').addClass('invisible-component');
 		$('#name-page-container').removeClass('invisible-component');
+		$('#relationship-type-tassumir').val(any_id);
 	});
 	$('#assumir-item-text-selected').click(function(){
 		$('#name-search-data-selected').text('');

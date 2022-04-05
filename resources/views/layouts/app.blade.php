@@ -316,6 +316,10 @@
                             <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 11px; width: 100%; border-radius: 5px;">Assumir o Relacionamento agora</button>
                         </div>
                     </div>
+                    <input type="hidden" id="uuid_user_assumir">
+                    <input type="hidden" id="relationship-type-tassumir">
+                    <input type="hidden" id="name-invited-page-home">
+                    <input type="hidden" id="">
                 </form>
             </div>
         </div>
