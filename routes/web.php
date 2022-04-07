@@ -53,6 +53,17 @@ Route::group(['middleware' => 'auth:web1'], function () {
 
     /*fim novas rotas perfil*/
 
+    /*novas rotas pages*/
+    Route::get('/qtd_de_publicacoes/', [App\Http\Controllers\PaginaCasalController::class, 'qtd_de_publicacoes'])->name('couple.qtd_de_publicacoes');
+    Route::get('/dados_page/', [App\Http\Controllers\PaginaCasalController::class, 'dados_page'])->name('couple.dados_page');
+    Route::get('/qtd_de_seguidores/', [App\Http\Controllers\PaginaCasalController::class, 'qtd_de_seguidores'])->name('couple.qtd_de_seguidores');
+    Route::get('/get_follow_me/', [App\Http\Controllers\PaginaCasalController::class, 'get_follow_me'])->name('couple.get_follow_me');
+    Route::get('/qtd_de_likes_page/', [App\Http\Controllers\PaginaCasalController::class, 'qtd_de_likes_page'])->name('couple.qtd_de_likes_page');
+    Route::get('/get_nine_text_page/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_text_page'])->name('couple.get_nine_text_page');
+    Route::get('/get_nine_images_page/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_images_page'])->name('couple.get_nine_images_page');
+    Route::get('/get_nine_videos_page/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_videos_page'])->name('couple.get_nine_videos_page');
+    /*fim novas rotas pages*/
+
     Route::get('/post_index/{id}', [App\Http\Controllers\AuthController::class, 'post_index'])->name('post_index');
 
     /* siene */
