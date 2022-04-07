@@ -339,7 +339,7 @@
 	}
 	.profile-name {
 		margin-top: 10px;
-	    font-size: 14px;
+	    font-size: 18px;
 	    width: 170px;
 	    padding-left: 10px;
 	    margin: 5px auto
@@ -771,6 +771,10 @@
 	#main-profile .card {
 	    flex-direction: column;
 	}
+	#main-profile #card-profile-option {
+		background-color: #18191a;
+		padding-top: 6px;
+	}
 	#card-profile-option {
 		margin-bottom: 0;
 	}
@@ -1016,6 +1020,7 @@
 		background-color: #18191a;
 		margin-top: 0;
 		border-radius: 0;
+		margin-bottom: 4px;
 	}
 	#main-search .card-p {
 	   margin-left: 10px;
@@ -1220,7 +1225,7 @@
 	    height: 30px;
 	}
 	.header-main-component {
-	    height: 43px;
+	    height: 45px;
 	}
 	.title h1 {
 	    margin-left: 0px;
@@ -1512,7 +1517,6 @@
 	.menu-header ul li.mobile-lg-notify {
 	    display: none;
 	}
-
 	.menu-header ul li.mobile-hidden-notify-icon {
 	    display: block;
 	}
@@ -1543,6 +1547,10 @@
 	.container-li-dest {
 	    width: 57px;
 	}
+	#option-btn-profile {
+	    font-size: 12px;
+	    font-weight: bolder;
+	}	
 	.name-page-dest {
 		display: block;
 	    width: 98%;

@@ -81,7 +81,7 @@
                 </div>
                 <div class="content-profile-photo l-5">
                     <h1 id="content-p-{{$key}}">O Tassumir ajuda casais a assumirem seus relacionamentos publicamente, aumentando a segurança e fidelidade nos relacionamentos e também ajuda casais a partilharem habilidades pessoais, e ganharem dinheiro com isso.</h1>
-                    <label for="target-alert-tassumir" id="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
+                    <label <?php if ($key == 2 || $key == 9){echo 'for="target-alert-tassumir"';}else{echo 'for="target-alert-info"';} ?> id="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
                         <div class="options-profile-btn options-profile-btn-center profile-item-center options-alert-btn-feed" id="options-profile-btn-couple">
                             <h3 class="edit-profile-mobile center" style="margin-top: 0;" id="btn-alert-info-{{$key}}">Assumir Relacionamento</h3>
                         </div>
@@ -181,7 +181,7 @@
                 <div class="card-post">
                     <div class="">
                         <p class="invisible-component" id="p-post-{{$key}}"></p>
-                        <div class="post-cover post-cover-post-index invisible-component" id="post-cover-post-index-{{$key}}">
+                        <div class="post-cover post-cover-imgless post-cover-post-index" id="post-cover-post-index-{{$key}}">
                             <img class="img-full" id="cover-post-index-{{$key}}">
                         </div>
                         <div class="video-post post-video invisible-component" id="video-post-{{$key}}">

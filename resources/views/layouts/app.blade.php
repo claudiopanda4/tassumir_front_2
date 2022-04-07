@@ -347,6 +347,32 @@
         </div>
     </div>
 </div>
+<input type="checkbox" name="" id="target-alert-info" class="invisible">
+<div class="pop-up" id="target-alert-info-container">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; overflow: hidden; max-height: 90%;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <div class="container-pop-up-component-header">
+                <label for="target-alert-info">
+                    <div class="cancel-box-component div-img">
+                        <i class="fas fa-times fa-14 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div class="clearfix l-5 alert-description-class" id="alert-description" style="width: 98%; padding: 5px; margin-top: 10px;">
+            <p class="alert-description-class" style="color: #fff; font-size: 13px;">Actualmente, o tassumir, é a rede social angolana que mais paga, por cada mil visualizações, chegando até mesmo a ser bem mais rentável do que plataformas como o Youtube, Facebook e Instagram para os Angolanos<br><br>
+                <span class="alert-description-class" style="text-transform: uppercase; font-size: 12px;">Mas como Ganhar com os seus conteúdos?<span id="elips-p">...</span></span><br><span style="color: #3490dc; font-weight: bolder; font-size: 13px;" id="alert-description-see-more" class="alert-description-class"> ver mais</span><br><br><span id="more-content-alert" class="invisible-component alert-description-class">Você precisa criar conteúdos em vídeos que sejam atrativos e que tem a ver com algum assunto interessante para relacionamentos. Quando o teu vídeo atingir até 1.000 visualizações, você começará a ganhar 1$ por cada 1.000 visualizações, ou seja, se tiverem 10 mil visualizações, você ganhará 10$. E se eu não gosto de vídeos e escrevo textos?<br><br>
+            Você poderá ganhar por cada 500 reacções na sua publicação.</span></p>
+            <label for="target-alert-info" class="label-full">
+                <div class="cover-done checker" id="cover-done-post">
+                    <h2 id="concluir_file_ok" style="padding: 10px; font-size: 11px; width: 100%;">Fechar</h2>
+                </div>
+            </label>
+            <input type="hidden" id="checked-load-all" value="0">
+        </div>
+    </div>
+</div>
 <input type="checkbox" name="" id="delete-page-target" class="invisible">
 <div class="pop-up" id="delete-page-container">
     <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">

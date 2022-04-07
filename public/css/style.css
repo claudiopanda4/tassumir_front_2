@@ -2850,7 +2850,7 @@ label[for="hugo"]{
     margin-top: 10px;
 }
 .post-page-container {
-    margin: 15px auto 0;
+    margin: 5px auto 0;
     width: 100%;
     background-color: #18191a;
 }
@@ -3900,4 +3900,14 @@ label[for="hugo"]{
     max-width: 220px;
     cursor: pointer;
     text-align: center;
+}
+.post-cover-imgless {
+    background-color: #3a3b3c;
+    height: 400px;
+}
+#options-profile-btn-edit-profile {
+    border-radius: 0;
+}
+#main-profile .more-options-profile-btn {
+    border-radius: 0;
 }

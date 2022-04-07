@@ -572,7 +572,8 @@
 #target-proof:checked ~ #cover-proof,
 #delete-page-target:checked ~ #delete-page-container,
 #target-alert-post-denied:checked ~ #alert-denied-post,
-#target-alert-tassumir:checked ~ #relationship-container-invited {
+#target-alert-tassumir:checked ~ #relationship-container-invited,
+#target-alert-info:checked ~ #target-alert-info-container {
 	opacity: 1;
     z-index: 1001;
 }

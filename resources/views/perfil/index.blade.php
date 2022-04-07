@@ -3,7 +3,7 @@
 @section('content')
 <div class="main" id="main-profile">
     <input type="hidden" id="profile-container-id" value=<?php echo md5('OK'); ?>>
-    <header class="card br-10 card-flex profile-card" id="">
+    <header class="card br-10 card-flex profile-card" id="profile-card-header">
         <div id="img-profile-container" class="circle">
             @if ($foto != null)
                 <img class="img-profile img-full circle invisible-component" src="{{asset('storage/img/users') . '/' . $foto}}" id="img-profile-component"> 
@@ -57,7 +57,7 @@
                                     <div class="more-options-profile-btn">
                                         <div class="more-options-component">
                                             <!--<i class="fas fa-caret-down center" style="font-size: 18px;"></i>-->
-                                            <img class="center img-26" src="{{asset('css/uicons/caret-down.png')}}">
+                                            <img class="center img-20" src="{{asset('css/uicons/caret-down.png')}}">
                                         </div>
                                     </div>
                                 </div>
@@ -110,11 +110,11 @@
 <div class="card br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">
                 <ul class="" id="ul-profile">
-                    <li>
+                    <li id="cover-posts-component">
                         <a href="?post-container-post=images">
                             <!--<i class="far fa-images fas-32 center icon-hover-option-profile " style="font-size: 22px;"></i>-->
                             <h1 class="menu-option-profile"></h1>
-                            <img class="center img-26" src="{{asset('css/uicons/images.png')}}">
+                            <img class="center img-26" id="img-profile-icon-profile" src="{{asset('css/uicons/images.png')}}">
                         </a>
                     </li>
                     <li>
@@ -122,14 +122,14 @@
                             <!--<i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 22px;"></i>-->
                             <h1 class="menu-option-profile">        
                             </h1>
-                            <img class="center img-26" src="{{asset('css/uicons/video_liked.png')}}">
+                            <img class="center img-26" id="video-profile-icon-profile" src="{{asset('css/uicons/video_liked.png')}}">
                         </a>
                     </li>
                     <li>
                         <a href="?post-container-post=post">
                             <!--<i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 22px;"></i>-->
                             <h1 class="menu-option-profile"></h1>
-                            <img class="center img-26" src="{{asset('css/uicons/text.png')}}">
+                            <img class="center img-26" id="text-profile-icon-profile" src="{{asset('css/uicons/text.png')}}">
                         </a>
                     </li>
                     <!--<li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 18px;"></i><h1 class="menu-option-profile"></h1></a></li>-->
@@ -138,11 +138,11 @@
             <div class="post-video-container-page post-page-container clearfix">
                 <?php $ver = 1; $key = 0; while ($key < 15) {?>
                     <a href="" id=<?php echo 'a-post-component-'.$key; ?>>
-                        <video <?php if (($ver % 3) == 0){echo "class='img-post-video-component img-post img-post-video-component-fl video-post-profile invisible-component'";}else{echo "class='img-post-video-component img-post video-post-profile invisible-component'";} ?> id="video-post-page-{{$key}}">
-                            <source src="http://192.168.43.19:8000/storage/video/page/1648393975_8e49cad1664ecfd238bee51691871d00.mp4" type="video/mp4">            
+                        <video preload="auto" <?php if (($ver % 3) == 0){echo "class='img-post-video-component img-post img-post-video-component-fl video-post-profile invisible-component'";}else{echo "class='img-post-video-component img-post video-post-profile invisible-component'";} ?> id="video-post-page-{{$key}}">
+                            <source src="" type="video/mp4">            
                         </video>
-                        <div <?php if (($ver % 3) == 0){echo "class='img-post img-post-video-component img-post-video-component-fl img-cover-video-component'";}else{echo "class='img-post img-post-video-component img-cover-video-component'";} ?> id="img-post-page-{{$key}}">
-                            <img class="" src="http://192.168.43.19:8000/storage/img/users/1648317239_33bce5986c94af8fb0033f11087b9cf2.jpg" id="img-post-page-container-{{$key}}">
+                        <div <?php if (($ver % 3) == 0){echo "class='img-post img-post-video-component img-post-video-component-fl img-cover-video-component invisible-component'";}else{echo "class='img-post img-post-video-component img-cover-video-component invisible-component'";} ?> id="img-post-page-{{$key}}">
+                            <img class="" src="" id="img-post-page-container-{{$key}}">
                         </div>                          
                     </a>
                 <?php $key++; $ver++; } ?>
