@@ -369,6 +369,9 @@
 	.statistics-profile h2 {
 	    font-size: 13.5px;
 	}
+	.statistics-profile h2.text-profile-statistics {
+	    font-size: 10px;
+	}
 	.profile-item-center {
 		width: 240px;
 		margin: auto;
@@ -1288,6 +1291,12 @@
 		border-radius: 0;
 		/*border-top: 1px solid #343a40;*/
 	}
+	#main-profile .component-card {
+	    margin-bottom: 4px;
+	}
+	.options-profile-btn-center .edit-profile-mobile {
+		font-weight: bolder;
+	}
 	.content-profile-photo {
 	    width: 75%;
 	}
@@ -1374,7 +1383,7 @@
 	}
 	.profile-options-button {
 	    width: 40%;
-	    border-radius: 3px;
+	    border-radius: 0px;
 	}
 	.options-component-profile {
 
@@ -1468,6 +1477,9 @@
 	    margin-top: 2px;
     	margin-bottom: -5px;
 	}
+	.button-default-tassumir {
+	    max-width: 220px;
+	}
 }
 @media screen and (max-width: 420px) {
 	.video-post video {
@@ -1488,6 +1500,10 @@
 	    margin: auto;
 	    max-height: 530px;
 	    overflow: hidden;
+	}
+	.post-cover.post-cover-post-index.post-cover-imgless {
+	    height: 275px;
+	    background-color: #343a40;
 	}
 	.post-cover-post-index img {
 	    height: auto;

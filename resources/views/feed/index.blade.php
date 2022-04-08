@@ -28,7 +28,7 @@
                                     <img class="img-full circle invisible" id="li-component-stories-img-profile-{{$i}}">
                                 </div>
                                 <img class="img-back-stories center invisible" id="li-component-stories-img-back-{{$i}}">
-                                <video controls class="video-post-dest invisible" id="li-component-stories-video-post-{{$i}}">
+                                <video preload='metadata' class="video-post-dest invisible" id="li-component-stories-video-post-{{$i}}">
                                     <source src="" type="video/mp4">
                                 </video> 
                                 <div  id="li-component-stories-cover-video-container-{{$i}}">
@@ -182,13 +182,13 @@
                     <div class="">
                         <p class="invisible-component" id="p-post-{{$key}}"></p>
                         <div class="post-cover post-cover-imgless post-cover-post-index" id="post-cover-post-index-{{$key}}">
-                            <img class="img-full" id="cover-post-index-{{$key}}">
+                            <img class="img-full invisible-component" id="cover-post-index-{{$key}}">
                         </div>
                         <div class="video-post post-video invisible-component" id="video-post-{{$key}}">
                             <img class="play_button center invisible-component" src="{{asset('css/uicons/play_button.png')}}" id="play_button_{{$key}}">
                             <img class="loader_button center" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">
                             <img class="loader_icon center" src="{{asset('css/uicons/loading.gif')}}" id="loader_icon_{{$key}}">
-                            <video class="video-post-video" id="video_{{$key}}">
+                            <video preload="metadata" class="video-post-video" id="video_{{$key}}">
                                 <source id="video-post-link-{{$key}}">
                                 Your browser does not support the video tag.
                             </video>
@@ -198,6 +198,7 @@
                             <input type="hidden" name="" id="has-video-{{$key}}">
                             <input type="hidden" name="" id="video-post-time-{{$key}}">
                             <input type="hidden" name="" id="video-post-time-all-{{$key}}">
+                            <input type="hidden" name="" id="cover-post-load-{{$key}}">
                         </div>
                     </div>
                 </div>

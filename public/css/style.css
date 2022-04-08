@@ -3835,7 +3835,6 @@ label[for="hugo"]{
     background-color: #800080;
     border-radius: 5px;
     margin-top: 10px;
-    max-width: 220px;
 }
 #main-profile .button-default-tassumir {
     height: 37px;
@@ -3902,12 +3901,32 @@ label[for="hugo"]{
     text-align: center;
 }
 .post-cover-imgless {
-    background-color: #3a3b3c;
-    height: 400px;
+    height: 275px;
+    background-color: #343a40;
 }
 #options-profile-btn-edit-profile {
     border-radius: 0;
 }
 #main-profile .more-options-profile-btn {
     border-radius: 0;
+}
+.statistics-profile h2.text-profile-statistics {
+    justify-content: center;
+    font-size: 10px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+.text-profile-statistics-number {
+    justify-content: center; 
+    font-weight: bolder; 
+    font-size: 14px; 
+    width: 100%; 
+    margin-bottom: 7px;
+}
+.request-option-active#options-profile-mobile-user-log {
+    width: 100%;
+}
+.options-profile-btn {
+    margin-right: 1%;
+    margin-left: 1%;
 }

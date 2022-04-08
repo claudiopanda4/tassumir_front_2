@@ -40,7 +40,9 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/app/notifications/numbers', [App\Http\Controllers\PerfilController::class, 'notificacoes_number'])->name('app.notifications.numbers');
     Route::get('/updatenot', [App\Http\Controllers\AuthController::class, 'updatenot'])->name('updatenot');
     Route::get('/reject_relationship', [App\Http\Controllers\PaginaCasalController::class, 'reject_relationship'])->name('reject_relationship');
+    Route::get('/relationship/cancel/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'cancel_request_relationship'])->name('cancel.request.relationship');
     Route::get('/tconfirm', [App\Http\Controllers\PaginaCasalController::class, 'tconfirm'])->name('tconfirm');
+    Route::get('/relationship/confirm/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'relationship_accept'])->name('relationship.accept');
     Route::get('/seguir', [App\Http\Controllers\AuthController::class, 'seguir'])->name('seguir');
     Route::get('/oque_estao_falando', [App\Http\Controllouplcers\AuthController::class, 'oque_estao_falando'])->name('oque_estao_falando');
     Route::get('/delete_post', [App\Http\Controllers\AuthController::class, 'delete_post'])->name('delete_post');
@@ -87,6 +89,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/request_relationship/', [App\Http\Controllers\PaginaCasalController::class, 'request_relationship'])->name('relationship.page');
     Route::get('/request_relationship1/{id}', [App\Http\Controllers\PaginaCasalController::class, 'request_relationship1'])->name('relationship.page1');
     Route::post('/conf_PR/', [App\Http\Controllers\PaginaCasalController::class, 'conf_PR'])->name('conf_PR');
+    Route::get('/relationship/accept/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'accepted_relationship'])->name('relationship.accept');
     Route::post('/Outra_pessoa/', [App\Http\Controllers\PaginaCasalController::class, 'Outra_pessoa'])->name('Outra_pessoa');
     Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
 

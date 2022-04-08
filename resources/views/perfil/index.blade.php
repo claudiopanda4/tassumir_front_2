@@ -28,16 +28,18 @@
             </div>
             <ul class="profile-follow profile-item-center">
                 <li class="statistics-profile">
-                  <a href=""><h2 style="justify-content: center; font-weight: bolder; font-size: 14px; width: 100%; margin-bottom: 0;" id="data-profile-0"></h2></a>
-                    <a href="" style="margin-top: -5px;  text-align: center;"><h2 style="justify-content: center; font-size: 11.5px; text-align: center;">Seguindo</h2></a>
+                    <!--<a href="">-->
+                        <h2 class="text-profile-statistics-number" id="data-profile-0"></h2>
+                        <h2 class="text-profile-statistics">Seguindo</h2>
+                    <!--</a>-->
                 </li>
                 <li class="statistics-profile">
-                    <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;" id="data-profile-1"> </h2>
-                    <h2 style="justify-content: center; font-size: 11.5px;">Curtiu</h2>
+                    <h2 class="text-profile-statistics-number" id="data-profile-1"> </h2>
+                    <h2 class="text-profile-statistics">Curtiu</h2>
                 </li>
                 <li class="statistics-profile">
-                    <h2 style="justify-content: center; font-weight: bolder; font-size: 14px;" id="data-profile-2"> </h2>
-                    <h2 style="justify-content: center; font-size: 11.5px;">Guardados</h2>
+                    <h2 class="text-profile-statistics-number" id="data-profile-2"> </h2>
+                    <h2 class="text-profile-statistics">Guardados</h2>
                 </li>
             </ul>
             <div id="option-profile-no-own">
@@ -46,10 +48,10 @@
                             <a class="target-relationship-assumir" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="option-btn-profile"></h3></a>
                         </div>
                         <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button profile-options-accept invisible-component" id="profile-options-button-1">
-                            <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="btn-request-profile"></h3></a>
+                            <a class="" id="btn-profile-redirect-1" href=""><h3 class="edit-profile-mobile center" id="btn-request-profile"></h3></a>
                         </div>
                         <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button invisible-component" id="profile-options-button-2">
-                            <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="button-request-profile"></h3></a>
+                            <a class="" id="btn-profile-redirect-2" href=""><h3 class="edit-profile-mobile center" id="button-request-profile"></h3></a>
                         </div>
                         <div class="l-5 options-profile-btn more-options-profile-bt">
                             <label for="more-option-target-profile" class="target-options-profile">
@@ -75,14 +77,6 @@
                                 </div>
                             </label>
                         </div>
-                </div>
-                <div class="options-component-profile clearfix invisible-component" id="options-component-profile-request">
-                    <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button profile-options-accept" id="profile-options-accept-button">
-                        <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="btn-request-profile"></h3></a>
-                    </div>
-                    <div class="options-profile-btn options-profile-btn-center profile-item-center options-profile-btn l-5 profile-options-button">
-                        <a class="" id="btn-profile-redirect" href=""><h3 class="edit-profile-mobile center" id="button-request-profile">Rejeitar</h3></a>
-                    </div>
                 </div>
                 <div class="inform-profile">
                     <h3 id="civil-state"><span id="relationship-selected-type-profile"></span><a id="spouse-profile" href="" class="a-link-detail-profile"></a></h3>
@@ -110,14 +104,14 @@
 <div class="card br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">
                 <ul class="" id="ul-profile">
-                    <li id="cover-posts-component">
+                    <li class="posts-content-filter" id="cover-posts-component">
                         <a href="?post-container-post=images">
                             <!--<i class="far fa-images fas-32 center icon-hover-option-profile " style="font-size: 22px;"></i>-->
                             <h1 class="menu-option-profile"></h1>
                             <img class="center img-26" id="img-profile-icon-profile" src="{{asset('css/uicons/images.png')}}">
                         </a>
                     </li>
-                    <li>
+                    <li class="posts-content-filter" id="video-posts-component">
                         <a href="?post-container-post=video">
                             <!--<i class="far fa-play-circle center icon-hover-option-profile" style="font-size: 22px;"></i>-->
                             <h1 class="menu-option-profile">        
@@ -125,7 +119,7 @@
                             <img class="center img-26" id="video-profile-icon-profile" src="{{asset('css/uicons/video_liked.png')}}">
                         </a>
                     </li>
-                    <li>
+                    <li class="posts-content-filter" id="text-posts-component">
                         <a href="?post-container-post=post">
                             <!--<i class="fas fa-newspaper center icon-hover-option-profile" style="font-size: 22px;"></i>-->
                             <h1 class="menu-option-profile"></h1>
@@ -138,13 +132,19 @@
             <div class="post-video-container-page post-page-container clearfix">
                 <?php $ver = 1; $key = 0; while ($key < 15) {?>
                     <a href="" id=<?php echo 'a-post-component-'.$key; ?>>
-                        <video preload="auto" <?php if (($ver % 3) == 0){echo "class='img-post-video-component img-post img-post-video-component-fl video-post-profile invisible-component'";}else{echo "class='img-post-video-component img-post video-post-profile invisible-component'";} ?> id="video-post-page-{{$key}}">
+                        <video preload="metadata" <?php if (($ver % 3) == 0){echo "class='img-post-video-component img-post img-post-video-component-fl video-post-profile invisible-component'";}else{echo "class='img-post-video-component img-post video-post-profile invisible-component'";} ?> id="video-post-page-{{$key}}">
                             <source src="" type="video/mp4">            
                         </video>
+                    </a>
+                    <a href="" id="a-post-component-cover-{{$key}}">
                         <div <?php if (($ver % 3) == 0){echo "class='img-post img-post-video-component img-post-video-component-fl img-cover-video-component invisible-component'";}else{echo "class='img-post img-post-video-component img-cover-video-component invisible-component'";} ?> id="img-post-page-{{$key}}">
                             <img class="" src="" id="img-post-page-container-{{$key}}">
                         </div>                          
                     </a>
+                    <input type="hidden" id="cover-loaded-profile-read" value="0">
+                    <input type="hidden" id="text-loaded-profile-read" value="0">
+                    <input type="hidden" id="video-loaded-profile-read" value="0">
+                    <input type="hidden" id="component-loaded-profile-read" value="0">
                 <?php $key++; $ver++; } ?>
             </div>
 </div>

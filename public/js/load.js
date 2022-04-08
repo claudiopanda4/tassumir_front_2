@@ -6,10 +6,67 @@ $(document).ready(function () {
 	$('#target-invited-relationship-id').click(function () {
 		$('#target-invited-relationship').removeAttr('checked');
 	});
+	function profile_content_filter(class_name, filter){
+		for (var i = 0; i <= class_name.length - 1; i++) {
+			if (filter == 1) {
+				$('#' + any_class[i].id).addClass('invisible-component');
+			} else if (filter == 2) {
+				$('#' + any_class[i].id).addClass('invisible-component');
+			}
+		}
+	}
 	$('#cover-posts-component').click(function (e) {
 		e.preventDefault();
 		$('#img-profile-icon-profile').attr('src', route + '/css/uicons/image_liked_profile.png');
 		$('#video-profile-icon-profile').attr('src', route + '/css/uicons/video_liked.png');
+		any_class = document.getElementsByClassName('video-page-component');
+		profile_content_filter(any_class, 1);
+		if ($('#cover-loaded-profile-read').val() == 0) {
+			$.ajax({
+				url: '/get_nine_images_perfil',
+				type: 'get',
+				data: {'id' : 0},
+				dataType: 'json',
+				success:function(response){
+					console.log(response);
+					$.each(response, function(key, data){
+						if (data.formato_id == 2) {
+							$('#img-post-page-container-' + key).attr('src', route + '/storage/img/page/' + data.file);
+							$('#video-post-page-' + key).addClass('invisible-component');
+							$('#img-post-page-' + key).addClass('cover-page-component');
+							$('#img-post-page-' + key).removeClass('invisible-component');
+						}
+						$('#a-post-component-cover-' + key).attr('href', route + '/post_index/' + data.uuid);
+						$('#a-post-component-cover-' + key).attr('id', 'a-post-component-cover_' + data.uuid);
+					});
+					$('#cover-loaded-profile-read').val(1);
+					$('#component-loaded-profile-read').val(1);
+				}
+			});			
+		}
+		any_class = document.getElementsByClassName('cover-page-component');
+		for (var i = 0; i <= any_class.length - 1; i++) {
+			$('#' + any_class[i].id).removeClass('invisible-component');
+		}
+	});
+	$('.posts-content-filter').click(function (e) {
+		e.preventDefault();
+	});
+	$('#video-posts-component').click(function(){
+		//any_class = document.getElementsByClassName('video-page-component');
+		//profile_content_filter(any_class, 2);
+		$('#img-profile-icon-profile').attr('src', route + '/css/uicons/images.png');
+		$('#video-profile-icon-profile').attr('src', route + '/css/uicons/video_profile_liked.png');
+		$('#component-loaded-profile-read').val(2);
+		any_class = document.getElementsByClassName('video-page-component');
+		for (var i = 0; i <= any_class.length - 1; i++) {
+			$('#' + any_class[i].id).removeClass('invisible-component');
+		}
+
+		any_class = document.getElementsByClassName('cover-page-component');
+		for (var i = 0; i <= any_class.length - 1; i++) {
+			$('#' + any_class[i].id).addClass('invisible-component');
+		}
 	});
 	if($('#profile-container-id').val()){
 		$.ajax({
@@ -21,12 +78,16 @@ $(document).ready(function () {
 				console.log(response);
 				$.each(response, function(key, data){
 					if (data.formato_id == 1) {
-						$('#img-post-page-' + key).remove();
-						$('#video-post-page-' + key).attr('src', route + '/storage/video/page/' + data.file);
+						$('#img-post-page-' + key).addClass('invisible-component');
+						document.getElementById('video-post-page-' + key).preload = 'metadata';
+						$('#video-post-page-' + key).attr('src', route + '/storage/video/page/' + data.file + '#t=5,10');
 						$('#video-post-page-' + key).removeClass('invisible-component');
+						$('#video-post-page-' + key).addClass('video-page-component');
 					}
 					$('#a-post-component-' + key).attr('href', route + '/post_index/' + data.uuid);
+					$('#a-post-component-' + key).attr('id', 'a-post-component_' + data.uuid);
 				});
+				$('#video-loaded-profile-read').val(1);
 				if (true) {
 					$('#video-profile-icon-profile').attr('src', route + '/css/uicons/video_profile_liked.png');
 				}
@@ -243,6 +304,7 @@ $(document).ready(function () {
 					data: {'id': $('#ident-profile-id').val(), 'genre' : $('#ident-genre').val()},
 					dataType: 'json',
 					success: function (response) {
+						console.log(response);
 						$('#btn-profile-redirect').removeClass(response.addClass);
 						$('#option-btn-profile').addClass(response.addClass);
 						if (response.my_profile) {
@@ -261,6 +323,9 @@ $(document).ready(function () {
 							$('#add-edit-profile-owner').remove();
 						}
 						console.log(response);
+						if (response.reject) {
+							$('#btn-profile-redirect').attr('href', route + '' + response.reject);
+						}
 						if (response.relationship) {
 							$('#relationship-selected-type-profile').text(response[0].relationship + ' ');
 							$('#spouse-profile').text(response[0].spouse_name + ' ' + response[0].spouse_apelido);
@@ -270,6 +335,9 @@ $(document).ready(function () {
 							$('#btn-request-profile').text('Aceitar Pedido');
 							$('#button-request-profile').text('Rejeitar');	
 							$('#options-profile-mobile-user-log').addClass('request-option-active');
+							$('#btn-profile-redirect-2').attr('href', route + '' + response.reject);
+							$('#btn-profile-redirect-1').attr('href', route + '' + response.accept);
+							$('#btn-profile-redirect-1').addClass('nothing');
 							$('#options-profile-btn-edit-profile').remove();
 							$('#profile-options-button-1').removeClass('invisible-component');
 							$('#profile-options-button-2').removeClass('invisible-component');			
@@ -315,7 +383,8 @@ $(document).ready(function () {
 		    				if (data.page_foto != null) {
 				    			$('#li-component-stories-cover-video-' + key).attr('src', route + "/storage/img/page/" + data.page_foto);
 				    		}
-				    		if (window.innerWidth > 540) {
+				    		if (window.innerWidth > 540 && key < 5) {
+				    			document.getElementById('li-component-stories-video-post-' + key).preload = 'metadata';
 				    			$('#li-component-stories-video-post-' + key).attr('src', route + "/storage/video/page/" + data.file);
 				    		}
 
@@ -350,18 +419,18 @@ $(document).ready(function () {
 		   		$('#p-post-' + key).removeClass('invisible-component');
 		    }
 		    $('#loader_button_' + key).addClass('invisible-component');
+			$('#has-video-' + key).attr('id', 'has-video_' + data.uuid);
 		    if (data.formato_id == 1) {
 		    	$('#video-post-' + key).removeClass('invisible-component');
 		    	$('#post-cover-post-index-' + key).addClass('invisible-component');
 		    	$('#m_post-' + key).addClass('getvideo');
 		    	$('#video_' + key).attr('type', 'video/' + data.file.split('.')[data.file.split('.').length - 1]);
 		    	$('#vid-' + key).val(route + "/storage/video/page/" + data.file);
-		    	if (key == 0) {$('#video_' + key).attr('src', route + "/storage/video/page/" + data.file);}
+		    	//if (key == 0) {$('#video_' + key).attr('src', route + "/storage/video/page/" + data.file);}
 		    	//$('#video-post-link-' + key).attr('src', route + "/storage/video/page/" + data.file);
 		    	$('#video-post-link-' + key).attr('id', 'video-post-link_' + data.uuid);
 			    $('#video-post-' + key).attr('id', 'video-post_' + data.uuid);
 		   		$('#video_' + key).attr('id', 'video_' + data.uuid);
-				$('#has-video-' + key).attr('id', 'has-video_' + data.uuid);
 			    $('#vid-' + key).attr('id', 'vid_' + data.uuid);
 		    	$('#play_button_' + key).removeClass('invisible-component');
 		    	$('#loader_button_' + key).attr('id', 'loader_button_' + data.uuid);
@@ -370,9 +439,13 @@ $(document).ready(function () {
 		    	$('#video-post-time-all-' + key).attr('id', 'video-post-time-all-' + data.uuid);
 		    }
 		    if (data.formato_id == 2) {
-		   		$('#post-cover-post-index-' + key).removeClass('post-cover-imgless');
+		   		$('#post-cover-post-index-' + key).addClass('post-cover-imgless');
 		    	$('#video-post-' + key).addClass('invisible-component');
-		    	$('#cover-post-index-' + key).attr('src', route + "/storage/img/page/" + data.file);
+		    	//$('#cover-post-index-' + key).attr('src', route + "/storage/img/page/" + data.file);
+				$('#cover-post-load-' + key).val(route + "/storage/img/page/" + data.file);
+				$('#cover-post-load-' + key).attr('id', 'cover-post-load_' + data.uuid);
+		    	$('#m_post-' + key).addClass('getcover');
+		    	$('#cover-post-index-' + key).addClass('invisible-component');
 		    }
 
 		    //console.log('uuid ' + data.uuid);
@@ -632,6 +705,25 @@ $(document).ready(function () {
 				$('#loader_button_' + id).addClass('invisible-component');	
 			}
 	    }
+	    getcover = document.getElementsByClassName('getcover');
+	    for (var i = 0; i <= getcover.length - 1; i++) {
+		    id = getcover[i].id.split('_')[2];
+		    if (window.innerHeight > 680) {
+	    		if ($('#m_post_' + id).offset().top < 775 && $('#has-video_' + id).val() != 'ok') {
+		    		$('#cover-post-index_' + id).attr('src', $('#cover-post-load_' + id).val());
+		    		$('#post-cover-post-index_' + id).removeClass('post-cover-imgless');
+		    		$('#cover-post-index_' + id).removeClass('invisible-component');
+		    		$('#has-video_' + id).val('ok');
+		    	}
+	    	} else {
+				if ($('#m_post_' + id).offset().top < 410 && $('#has-video_' + id).val() != 'ok') {
+					$('#cover-post-index_' + id).attr('src', $('#cover-post-load_' + id).val());
+		    		$('#post-cover-post-index_' + id).removeClass('post-cover-imgless');
+		    		$('#cover-post-index_' + id).removeClass('invisible-component');
+					$('#has-video_' + id).val('ok');
+				}
+	    	}
+	    }
     }, 10);
     setInterval(function (e) {
     	let main = $('.main-container').offset();
@@ -683,6 +775,7 @@ $(document).ready(function () {
 	    		if (window.innerHeight > 680) {
 	    			if ($('#m_post_' + id).offset().top < 300 && $('#has-video_' + id).val() != 'ok') {
 		    			$('#video-post-link_' + id).attr('src', link_video);
+		    			document.getElementById('video_' + id).preload = 'metadata';
 		    			$('#video_' + id).attr('src', link_video);
 		    			$('#has-video_' + id).val('ok');
 		    			videos(id);
@@ -859,8 +952,15 @@ window.addEventListener('load', function () {
 });
 document.addEventListener('click', function (e) {
 	if (e.target.className.indexOf('target-relationship-assumir') > -1) {
-		document.getElementById('target-invited-relationship').checked = true;
+		//document.getElementById('target-invited-relationship').checked = true;
 		e.preventDefault();
+		document.getElementById('target-alert-tassumir').checked = true;
+		$('#uuid_user_assumir').val($('#ident-profile-id').val());
+		$('#search-container-user-assumir').addClass('invisible-component');
+		$('#choose-type-relationship-id').removeClass('invisible-component');
+		$('#assumir-relationship-user-desfazer').addClass('invisible-component');
+		$('#name-search-data-selected').text($('#profille-name').text());
+		$('#selected-user-assumir').removeClass('invisible-component');
 	}
 	if (e.target.className.indexOf('target-message-alert') > -1) {
 		$('#concluir_file_ok').addClass('invisible-component');

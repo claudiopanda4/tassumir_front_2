@@ -176,9 +176,7 @@ class PaginaCasalController extends Controller
 
       $controll = new AuthController;
       $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
-       $dates = $controll->default_();
-
-
+      $dates = $controll->default_();
 
       $account_name = $dates['account_name'];
       $checkUserStatus = $dates['checkUserStatus'];
@@ -210,12 +208,13 @@ class PaginaCasalController extends Controller
       return view('pagina.couple_page', compact('account_name','v','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'paginasSeguidas', 'dadosSeguida', 'paginasNaoSeguidas', 'allPosts', 'sugerir','casalPageName', 'pagenaoseguidas'));
     }
 
-    public function conf_PR(Request $request)
+    public function accepted_relationship(Request $request, $uuid)
       {
         $controll = new AuthController;
-        DB::table('pedido_relacionamentos')->where('uuid',$request->accept_relacd)
+        DB::table('pedido_relacionamentos')->where('uuid',$uuid)
         ->update(['estado_pedido_relac_id' => 2, 'updated_at' => $controll->dat_create_update()]);
-       $aux= DB::select('select pr.conta_id_pedida,pr.conta_id_pedinte,pr.pedido_relacionamento_id,pr.uuid,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)as pedido_relac_idtf,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte)as conta_pedinte_idtf,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida)as conta_pedida_idtf  from pedido_relacionamentos as pr where pr.uuid=?', [$request->accept_relacd]);
+       $aux= DB::select('select pr.conta_id_pedida,pr.conta_id_pedinte,pr.pedido_relacionamento_id,pr.uuid,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)as pedido_relac_idtf,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte)as conta_pedinte_idtf,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida)as conta_pedida_idtf  from pedido_relacionamentos as pr where pr.uuid=?', [$uuid]);
+       //dd($aux);
        if (sizeof($aux)>0) {
          DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedida)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedida)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->delete();
          DB::table('pedido_relacionamentos')->where('conta_id_pedida', $aux[0]->conta_id_pedinte)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->orwhere('conta_id_pedinte', $aux[0]->conta_id_pedinte)->where('pedido_relacionamento_id','<>',$aux[0]->pedido_relacionamento_id)->delete();
@@ -234,11 +233,11 @@ class PaginaCasalController extends Controller
                   ]);
                 }
 
-        return redirect()->route('account.home.feed');
+        return back();
       }
-      public function tconfirm(Request $request){
+      public function relationship_accept(Request $request, $uuid){
 
-        $tipo=DB::select('select (select nome from contas where conta_id = pr.conta_id_pedinte)as nome,(select apelido from contas where conta_id = pr.conta_id_pedinte)as apelid,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = pr.tipo_relacionamento_id )as tipo_relacionamento from pedido_relacionamentos as pr where uuid = ?', [$request->id1]);
+        $tipo=DB::select('select (select nome from contas where conta_id = pr.conta_id_pedinte)as nome,(select apelido from contas where conta_id = pr.conta_id_pedinte) as apelido,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = pr.tipo_relacionamento_id ) as tipo_relacionamento from pedido_relacionamentos as pr where uuid = ?', [$uuid]);
         $resposta='Ao clicar em "Sim, Aceito", você concorda com o que os termos dizem sobre o ';
         $resposta.=$tipo[0]->tipo_relacionamento;
         $resposta.='. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes. Aceita Assumir o(a)  ';
@@ -247,11 +246,29 @@ class PaginaCasalController extends Controller
         $resposta.= $tipo[0]->apelido;
         $resposta.= '?';
 
-        return response()->json($resposta);
+        return /*response()->json($resposta);*/ back();
+      }
+
+      public function cancel_request_relationship($uuid){
+        
+        $control = DB::select('select pr.pedido_relacionamento_id,(select n.notification_id from notifications as n where n.id_action_notification=4 and  n.identificador_id_causador=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte) and n.identificador_id_receptor=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida) and n.identificador_id_destino=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)) as id_not, (select identificador_id from identificadors where id= pr.pedido_relacionamento_id and tipo_identificador_id=5) as identify from pedido_relacionamentos as pr where uuid = ?', [$uuid]);
+
+        $resposta = 0;
+
+        if (sizeof($control)>0) {
+            DB::table('identificadors')->where('identificador_id',$control[0]->identify)
+            ->delete();
+            DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$control[0]->pedido_relacionamento_id)
+            ->delete();
+            DB::table('notifications')->where('notification_id',$control[0]->id_not)
+            ->delete();
+            $resposta = 1;        
+        }
+        return back();
       }
 
       public function reject_relationship(Request $request){
-        $control=DB::select('select pr.pedido_relacionamento_id,(select n.notification_id from notifications as n where n.id_action_notification=4 and  n.identificador_id_causador=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte) and n.identificador_id_receptor=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida) and n.identificador_id_destino=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)) as id_not (select identificador_id from identificadors where id= pr.pedido_relacionamento_id and tipo_identificador_id=5) as identify from pedido_relacionamentos as pr where uuid = ?', [$request->id1]);
+        $control=DB::select('select pr.pedido_relacionamento_id,(select n.notification_id from notifications as n where n.id_action_notification=4 and  n.identificador_id_causador=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte) and n.identificador_id_receptor=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida) and n.identificador_id_destino=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)) as id_not, (select identificador_id from identificadors where id= pr.pedido_relacionamento_id and tipo_identificador_id=5) as identify from pedido_relacionamentos as pr where uuid = ?', [$request->id1]);
         $resposta= 0;
 
         if (sizeof($control)>0) {

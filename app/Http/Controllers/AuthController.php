@@ -49,6 +49,63 @@ class AuthController extends Controller
         }
     }
 
+    
+    public function paginasNaoSeguidasIndex(){
+        try {
+          $paginasNaoSeguidas = array();
+          $pagenaoPage = array();
+          $account_name = $this->defaultDate();
+        $dadosPage = DB::table('pages')->get();
+        $dadosSeguida = DB::table('seguidors')
+               ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+               ->select('seguidors.*', 'identificadors.id')
+               ->get();
+        $parada = 0;
+        $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+      foreach($dadosPage as $key => $Paginas){
+                 $conta_page = 0;
+                 $verifica1 = 'A';
+                 $verifica = 'B';
+                 $seguidors = 0;
+                 $tamanho = sizeof($dadosSeguida);
+
+          foreach ($dadosSeguida as $Seguida){
+                 if ($Paginas->page_id == $Seguida->id){
+                    if ($dadosSgndo[0]->identificador_id == $Seguida->identificador_id_seguindo){
+                            $verifica1 = $Paginas->nome;
+                    }else{
+                            $verifica = $Paginas->nome;
+                        }
+                }else{
+                      $conta_page += 1;
+                    }
+          }
+          if ($verifica1 != $verifica){
+
+               if ($verifica != 'B'){
+                 $paginasNaoSeguidas[$key] = $Paginas;
+               }
+          }
+          if ($conta_page == $tamanho){
+                  $paginasNaoSeguidas[$key] = $Paginas;
+          }
+        }
+         foreach ($paginasNaoSeguidas as $key => $valuePage) {
+
+          if ($parada > 7) {
+              break;
+            }
+            $pagenaoPage[$key] = $valuePage;
+
+            $parada = $parada + 1;
+         }
+              return $pagenaoPage;
+        } catch (Exception $e) {
+
+        }
+    }
+
     public function relationship_type(){
         $result = DB::select('select tipo_relacionamento_id, uuid, tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id <> 1');
         return response()->json([
