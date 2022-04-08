@@ -144,7 +144,7 @@ class PaginaCasalController extends Controller
 
     public function dados_page($uuid)
     {
-      $dados_page=DB::select('Select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,tipo_relacionamento, if(genero_conta_b='Masculino',nome_conta_b,nome_conta_a)as nome_conta_homem, if(genero_conta_b='Masculino',apelido_conta_b,apelido_conta_a)as apeltido_conta_homem, if(genero_conta_b='Masculino',nome_conta_a,nome_conta_b)as nome_conta_mulher, if(genero_conta_b='Masculino',apelido_conta_a,apelido_conta_b)as apeltido_conta_mulher from(select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,(select tr.descricao from tipo_relacionamentos as tr where tr.tipo_relacionamento_id=pg.tipo_relacionamento_id) as tipo_relacionamento,(select c.genero from contas as c where c.conta_id=pg.conta_id_a)as genero_conta_a,(select c.genero from contas as c where c.conta_id=pg.conta_id_b)as genero_conta_b,(select c.nome from contas as c where c.conta_id=pg.conta_id_a)as nome_conta_a,(select c.apelido from contas as c where c.conta_id=pg.conta_id_a)as apelido_conta_a,(select c.nome from contas as c where c.conta_id=pg.conta_id_b)as nome_conta_b,(select c.apelido from contas as c where c.conta_id=pg.conta_id_b)as apelido_conta_b from pages as pg where pg.uuid=?) as pg',[$uuid]);
+      $dados_page=DB::select('Select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,tipo_relacionamento, if(genero_conta_b=\'Masculino\',nome_conta_b,nome_conta_a)as nome_conta_homem, if(genero_conta_b=\'Masculino\',apelido_conta_b,apelido_conta_a)as apeltido_conta_homem, if(genero_conta_b=\'Masculino\',nome_conta_a,nome_conta_b)as nome_conta_mulher, if(genero_conta_b=\'Masculino\',apelido_conta_a,apelido_conta_b)as apeltido_conta_mulher from(select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,(select tr.descricao from tipo_relacionamentos as tr where tr.tipo_relacionamento_id=pg.tipo_relacionamento_id) as tipo_relacionamento,(select c.genero from contas as c where c.conta_id=pg.conta_id_a)as genero_conta_a,(select c.genero from contas as c where c.conta_id=pg.conta_id_b)as genero_conta_b,(select c.nome from contas as c where c.conta_id=pg.conta_id_a)as nome_conta_a,(select c.apelido from contas as c where c.conta_id=pg.conta_id_a)as apelido_conta_a,(select c.nome from contas as c where c.conta_id=pg.conta_id_b)as nome_conta_b,(select c.apelido from contas as c where c.conta_id=pg.conta_id_b)as apelido_conta_b from pages as pg where pg.uuid=?) as pg',[$uuid]);
     }
     public function qtd_de_seguidores(Request $request)
     {
@@ -777,7 +777,17 @@ class PaginaCasalController extends Controller
 
                 if ( Self::check_image_extension($request->imgOrVideo->extension()) )
                 {
-                    $path = $request->file('imgOrVideo')->storeAs('public/img/page', $file_name);
+                    $extension = ($request->imgOrVideo->extension());
+                    $format = '';
+                    if (!$this->confirm_extension($extension)) {
+                      /*Mudar o formato de imagem, o formato de mudança por defeito é o jpg*/
+                      $file_name = Self::convertImage_and_storeTo_storage($request, 'app/public/img/page/', 'imgOrVideo');
+
+                    } else {
+
+                      $path = $request->file('imgOrVideo')->storeAs('public/img/page', $file_name);  
+                    }
+
                     $this->store($request->message, $file_name, $page_id, $this->formato_id('Imagem'));
 
                 } else if ( $this->check_video_extension($request->imgOrVideo->extension()) ) {
@@ -927,6 +937,20 @@ class PaginaCasalController extends Controller
             dd($e);
         }
     }
+
+/*siene*/
+    public static function confirm_extension($extension) {
+      return $extension === 'jpg' || $extension === 'jpeg';
+    }
+
+    public static function convertImage_and_storeTo_storage($request, $path, $file, $format = "jpg") {
+      $image = $request->file($file);
+      $file_name = time() . '_' . md5($request->file($file)->getClientOriginalName()) . '.' . $format;
+
+      Image::make($image)->encode($format, 65)->save(storage_path($path . $file_name));
+      return $file_name;
+    }
+
 
     public static function check_image_extension( $extension )
     {
