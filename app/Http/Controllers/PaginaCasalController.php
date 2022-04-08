@@ -129,6 +129,92 @@ class PaginaCasalController extends Controller
         return view('pagina.who_follows_me', compact('account_name','who_follows_me','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir', 'pagenaoseguidas'));
     }
 
+    //-----------------------começou aqui as funções otimizadas (DomingosDS)
+
+    public function qtd_de_publicacoes(Request $request)
+    {
+      try {
+        $qtd_de_publicacoes=DB::select('select count (*) from posts where page_id=(select page_id from pages where uuid=?) and estado_post_id=1',[$request->page_uuid]);
+        return $qtd_de_publicacoes;
+      } catch (\Exception $e) {
+
+      }
+
+    }
+
+    public function dados_page($uuid)
+    {
+      $dados_page=DB::select('Select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,tipo_relacionamento, if(genero_conta_b='Masculino',nome_conta_b,nome_conta_a)as nome_conta_homem, if(genero_conta_b='Masculino',apelido_conta_b,apelido_conta_a)as apeltido_conta_homem, if(genero_conta_b='Masculino',nome_conta_a,nome_conta_b)as nome_conta_mulher, if(genero_conta_b='Masculino',apelido_conta_a,apelido_conta_b)as apeltido_conta_mulher from(select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,(select tr.descricao from tipo_relacionamentos as tr where tr.tipo_relacionamento_id=pg.tipo_relacionamento_id) as tipo_relacionamento,(select c.genero from contas as c where c.conta_id=pg.conta_id_a)as genero_conta_a,(select c.genero from contas as c where c.conta_id=pg.conta_id_b)as genero_conta_b,(select c.nome from contas as c where c.conta_id=pg.conta_id_a)as nome_conta_a,(select c.apelido from contas as c where c.conta_id=pg.conta_id_a)as apelido_conta_a,(select c.nome from contas as c where c.conta_id=pg.conta_id_b)as nome_conta_b,(select c.apelido from contas as c where c.conta_id=pg.conta_id_b)as apelido_conta_b from pages as pg where pg.uuid=?) as pg',[$uuid]);
+    }
+    public function qtd_de_seguidores(Request $request)
+    {
+      try {
+        $qtd_de_seguidores=DB::select('select count (*) from seguidors as s where s.identificador_id_seguida=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=2 and i.id=(select page_id from pages where uuid=?))',[$request->page_uuid]);
+        return $qtd_de_seguidores;
+      } catch (\Exception $e) {
+      }
+
+    }
+
+    public function get_follow_me(Request $request)
+  {
+    try {
+      $result=DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto from(select s.identificador_id_seguindo from seguidors as s where s.identificador_id_seguida=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=2 and i.id=(select page_id from pages where uuid=?))) as p inner join contas as c on c.conta_id=(select id from identificadors where identificador_id=p.identificador_id_seguindo)',[$request->page_uuid]);
+      return $result;
+    } catch (\Exception $e) {
+    }
+  }
+
+  public function qtd_de_likes_page(Request $request)
+  {
+    try {
+      $qtd_de_likes_page=DB::select('select count(*) from post_reactions as pr inner join posts as  p on p.page_id=(select page_id from pages where uuid=?) where pr.post_id = p.post_id',[$request->page_uuid]);
+      return $qtd_de_likes_page;
+    } catch (\Exception $e) {
+    }
+
+  }
+
+  public function get_nine_text_page(Request $request)
+  {
+    try {
+    if ($request->id==0) {
+      $text=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=3 order by p.post_id desc limit 9',[$request->uuid]);
+    }else {
+      $text=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=3 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
+    }
+    return response()->json($text);
+
+  } catch (\Exception $e) {
+  }
+  }
+  public function get_nine_images_page(Request $request)
+  {
+    try {
+      if ($request->id==0) {
+        $img=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=2 order by p.post_id desc limit 9',[$request->uuid]);
+      }else {
+        $img=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=2 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
+      }
+    return response()->json($img);
+  } catch (\Exception $e) {
+
+  }
+  }
+  public function get_nine_videos_page(Request $request)
+  {
+    try {
+    if ($request->id==0) {
+      $video=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=1 order by p.post_id desc limit 9',[$request->uuid]);
+    }else {
+      $video=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=1 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
+    }
+    return response()->json($video);
+  } catch (\Exception $e) {
+  }
+  }
+
+//------------------- fim das funções otomizadas (DomingosDS)
     public function page_update(Request $request)
     {
     try {
