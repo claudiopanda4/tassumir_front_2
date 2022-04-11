@@ -222,22 +222,20 @@ Route::post('/gerarNovamente', [App\Http\Controllers\AuthController::class, 'gen
 
 /* here */
 Route::post('/sendTo',[App\Http\Controllers\AuthController::class, 'sendPhoneEmailRecover'])->name('account.sendToPhoneEmail');
-
 Route::post('/codeVerification',[App\Http\Controllers\AuthController::class, 'verifyToRecoverPass'])->name('account.verifyToRecoverPass');
-
-
 Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updatePassword'])->name('account.newPasswordSave');
-
 Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updatePassword2'])->name('account.newPasswordSave2');
-
 /* end here */
-
-
-
     Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
-
-
-
 Route::get('/allNotifications', [App\Http\Controllers\AuthController::class, 'seeAllNotifications'])->name('account.all.notifications');
 Route::get('/delete/page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'delete_page'])->name('account.delete.page');
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');
+/*init termo view*/
+    Route::get('index/termo_politica',[App\Http\Controllers\HelpSupport::class, 'index_termo'])->name('term.home');
+    Route::get('termos',[App\Http\Controllers\HelpSupport::class, 'call_terms'])->name('termos');
+
+    Route::get('privacidade',[App\Http\Controllers\HelpSupport::class, 'call_privacy'])->name('privacidade');
+    Route::get('comerciais',[App\Http\Controllers\HelpSupport::class, 'call_term_service'])->name('comercio');
+    Route::get('comunidade',[App\Http\Controllers\HelpSupport::class, 'comunidade'])->name('comunidade');
+    Route::get('publicidade',[App\Http\Controllers\HelpSupport::class, 'publicidade'])->name('publicidade');
+/*end termo view*/
