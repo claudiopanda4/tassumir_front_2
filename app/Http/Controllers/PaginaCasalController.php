@@ -787,7 +787,7 @@ class PaginaCasalController extends Controller
 
                     } else {
 
-                      $path = $request->file('imgOrVideo')->storeAs('public/img/page', $file_name);  
+                      $path = $request->file('imgOrVideo')->storeAs('public/img/page', $file_name);
                     }
 
                     $this->store($request->message, $file_name, $page_id, $this->formato_id('Imagem'));
@@ -871,39 +871,36 @@ class PaginaCasalController extends Controller
           DB::table('pages')->where('uuid',$request->uuidPage)
         ->update(['estado_pagina_id' => 1, 'updated_at' =>$controll->dat_create_update()]);
 
-        $aux = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador,identificador_id_destino) = (?, ?, ?)', [11, $request->identifyCausador, $request->identifyPage]);
-        $aux12 = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador,identificador_id_destino) = (?, ?, ?)', [12, $request->identifyOutraC, $request->identifyPage]);
-         for ($i=sizeof($aux12); $i > 0; $i--) {
-           DB::table('notifications')->where(
-             'notification_id', $aux12[$i-1]->notification_id)->delete();
-         }
-        DB::table('notifications')->where(
-          'notification_id', $aux[1]->notification_id)->delete();
+        $get=DB::select('select identifyPage,if(identify_conta_a=?,identify_conta_b,identify_conta_a)as outra_conta from (select (select i.identificador_id from identificadors as i where i.tipo_identificador_id=2 and i.id=pg.page_id) as identifyPage,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pg.conta_id_a) as identify_conta_a,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pg.conta_id_b) as identify_conta_b from pages as pg where pg.uuid=?)', [$request->identifyCausador,$request->uuidPage]);
 
-          DB::table('notifications')->where(
-            'notification_id', $aux[0]->notification_id)->delete();
+    $aux = DB::select('select notification_id from notifications where id_action_notification=11 and identificador_id_causador=? and identificador_id_destino=? || id_action_notification=12 and identificador_id_causador=? and identificador_id_destino=?', [$request->identifyCausador, $get[0]->identifyPage, $get[0]->outra_conta, $get[0]->identifyPage]);
 
-            DB::table('notifications')->insert([
-                    'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                    'id_state_notification' => 2,
-                    'id_action_notification' => 13,
-                    'identificador_id_causador'=>$request->identifyCausador,
-                    'identificador_id_destino'=>$request->identifyPage,
-                    'identificador_id_receptor'=>$request->identifyOutraC,
-                    'created_at'=> $controll->dat_create_update(),
-                    ]);
+    foreach ($aux as $key) {
+      DB::table('notifications')->where('notification_id', $key->notification_id)->delete();
+    }
 
-                    DB::table('notifications')->insert([
-                            'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                            'id_state_notification' => 2,
-                            'id_action_notification' => 13,
-                            'identificador_id_causador'=>$request->identifyCausador,
-                            'identificador_id_destino'=>$request->identifyPage,
-                            'identificador_id_receptor'=>$request->identifyCausador,
-                            'created_at'=> $controll->dat_create_update(),
-                            ]);
+        DB::table('notifications')->insert([
+          [
+                'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                'id_state_notification' => 2,
+                'id_action_notification' => 13,
+                'identificador_id_causador'=>$request->identifyCausador,
+                'identificador_id_destino'=>$get[0]->identifyPage,
+                'identificador_id_receptor'=>$get[0]->outra_conta,
+                'created_at'=> $controll->dat_create_update(),],
+                [
+                        'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                        'id_state_notification' => 2,
+                        'id_action_notification' => 13,
+                        'identificador_id_causador'=>$request->identifyCausador,
+                        'identificador_id_destino'=>$get[0]->identifyPage,
+                        'identificador_id_receptor'=>$request->identifyCausador,
+                        'created_at'=> $controll->dat_create_update(),]
+                        ]);
 
-                            return redirect()->route('account.home.feed');
+
+
+                        return redirect()->route('account.home.feed');
 
         } catch (Exception $e) {
             dd($e);
