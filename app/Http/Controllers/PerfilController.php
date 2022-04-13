@@ -918,53 +918,70 @@ class PerfilController extends Controller
 
 
     public function add_picture(Request $request)
-    {
-        try
         {
-            if ($request->hasFile('pagePicture') && PaginaCasalController::check_image_extension($request->pagePicture->extension()))
+            try
             {
-                $file_name = time() . '_' . md5($request->file('pagePicture')->getClientOriginalName()) . '.' . $request->pagePicture->extension();
-
-                $request->file('pagePicture')->storeAs('public/img/page', $file_name);
-                AuthController::updatePageProfilePicture($file_name, $request->uuidPage);
-            }
-
-            else if ($request->hasFile('profilePicture'))
-            {
-                if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
+                if ($request->hasFile('pagePicture') && PaginaCasalController::check_image_extension($request->pagePicture->extension()))
                 {
-                    $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
+                    $file_name = time() . '_' . md5($request->file('pagePicture')->getClientOriginalName()) . '.' . $request->pagePicture->extension();
+                    /* siene */
+                    $extension = ($request->pagePicture->extension());
+                    if (!PaginaCasalController::confirm_extension($extension)) {
+                      /*Mudar o formato de imagem*/
+                      $file_name = PaginaCasalController::convertImage_and_storeTo_storage($request, "app/public/img/page/", 'pagePicture');
 
-                    $request->file('profilePicture')->storeAs('public/img/users', $file_name);
-                    AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]->conta_id);
+                    } else {
+                      $request->file('pagePicture')->storeAs('public/img/page', $file_name);
+                    } /* end siene */
+
+
+                    AuthController::updatePageProfilePicture($file_name, $request->uuidPage);
                 }
+
+                else if ($request->hasFile('profilePicture'))
+                {
+                    if ($request->hasFile('profilePicture') && PaginaCasalController::check_image_extension($request->profilePicture->extension()))
+                    {
+                        $file_name = time() . '_' . md5($request->file('profilePicture')->getClientOriginalName()) . '.' . $request->profilePicture->extension();
+                      /* siene */
+                        $extension = ($request->profilePicture->extension());
+                        if (!PaginaCasalController::confirm_extension($extension)) {
+                          /*Mudar o formato de imagem*/
+                          $file_name = PaginaCasalController::convertImage_and_storeTo_storage($request, "app/public/img/users/", 'profilePicture');
+
+                        } else {
+                          $request->file('profilePicture')->storeAs('public/img/users', $file_name);
+                        } /* end siene */
+
+                        AuthController::updateUserProfilePicture($file_name, $this->auth->defaultDate()[0]->conta_id);
+                    }
+                }
+
+                else if ($request->hasFile('imgOrVideo'))
+                {
+
+                    $file_name = time() . '_' . md5($request->file('imgOrVideo')->getClientOriginalName()) . '.' . $request->imgOrVideo->extension();
+                    $request->file('imgOrVideo')->storeAs('public/img/comprovativos', $file_name);
+
+                    DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id', $request->Comprovativo)
+                    ->update(['file'=> $file_name]);
+                    DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id', $request->Comprovativo)
+                    ->update(['estado_pedido_relac_id'=> 4]);
+                    DB::table('notifications')->where('notification_id',$request->notificacao)
+                    ->update(['id_state_notification' => 3]);
+
+                    return redirect()->route('account.home.feed');
+
+
+                }
+
+
+                return back();
+
+            } catch (Exception $e) {
+                dd('erro');
             }
-
-            else if ($request->hasFile('imgOrVideo'))
-            {
-
-                $file_name = time() . '_' . md5($request->file('imgOrVideo')->getClientOriginalName()) . '.' . $request->imgOrVideo->extension();
-                $request->file('imgOrVideo')->storeAs('public/img/comprovativos', $file_name);
-
-                DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id', $request->Comprovativo)
-                ->update(['file'=> $file_name]);
-                DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id', $request->Comprovativo)
-                ->update(['estado_pedido_relac_id'=> 4]);
-                DB::table('notifications')->where('notification_id',$request->notificacao)
-                ->update(['id_state_notification' => 3]);
-
-                return redirect()->route('account.home.feed');
-
-
-            }
-
-
-            return back();
-
-        } catch (Exception $e) {
-            dd('erro');
         }
-    }
 
 
     public static function profile_picture($account_id)

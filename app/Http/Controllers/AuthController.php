@@ -2858,7 +2858,7 @@ public function dados_comment($key){
         $sexo = $request->receivedGenero;
         $password = $request->password;
 
-        if($input_code === $decryp_code_confi){
+        if($input_code == $decryp_code_confi){
 
             $conta = new Conta();
             $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
