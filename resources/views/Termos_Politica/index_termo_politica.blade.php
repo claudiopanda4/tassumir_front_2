@@ -9,12 +9,12 @@
     <link href="{{ asset('css/uicons-straight/css/uicons-regular-straight.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
-
-    
 	 <link href="{{ asset('css/media.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/checked.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
+
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
 
    	<title>Termos e Politica</title>
    </head>
@@ -139,57 +139,54 @@
 		</div>
 	</div>
 
+	<div >
+
+		<img id="btn" src="{{ asset('css/uicons/caret-down.png') }}" style=" 
+		  position: fixed;
+		  bottom: 20px;
+		  right: 30px;
+		  z-index: 9999;
+		  border: none;
+		  outline: #800080;
+		  background-color: #800080;
+		  color: #800080;
+		  cursor: pointer;
+		  padding: 10px;
+		  border-radius: 25px;
+		  width: 48px;
+		  height: 48px;
+		 
+" >
+
+	</div>
+
 	<footer class="mt-5 footer content-fluid" >
 	 <div class="title clearfix" style="justify-content:center;align-items: center;text-align: center;">
                     <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
       </div>
-		<!--<div class="div-1">
-
-			<div class="tassumir-footer">
-				<h4 class="the-font color-white">Tassumir</h4>
-			</div>
-
-		<div class="div-1-infos">
-			<a href="#" class="div-a">
-			<h5 class="the-font pass-to-white color-orange">Termos de Serviço</h5>
-			</a>
-		</div>
-		<div class="div-1-info">
-			<a href="#" class="div-a">
-			<h5  class="the-font color-white">Politica de Dados</h5>
-			</a>
-		</div>
-		<div class=" div-1-info">
-			<a href="#" class="div-a">
-			<h5 class="the-font pass-to-white color-orange">Padrões da Comunidade</h5>
-			</a>
-		</div>
-
-	</div>
-
-		<div class="div-2">
-			
-		<div class="footer-div2">
-			<a href="#" class="div-a">
-			<h5 class="the-font pass-to-white color-orange">Termos Comerciais</h5>
-			</a>
-		</div>
-		<div class="footer-div2">
-			<a href="#" class="div-a">
-			<h5  class="the-font color-white">Politica de Publicidade</h5>
-			</a>
-		</div>
-		<div class="footer-div2">
-			<a href="#" class="div-a">
-			<h5 class="the-font pass-to-white color-orange">Politica de Eventos</h5>
-			</a>
-		</div>
-		
-	</div>-->
 	</footer>
 </div>
    </body>
    </html>
+
+ <script>
+
+ 	$('#btn').on('click',function() {
+
+ 		alert("teste");
+
+ 	  	let tm = $("body").scrollTop();
+
+ 	  	if(tm > 0){
+ 	  		alert("tamanho maior");
+ 	  	}else{
+ 	  		alert("menor");
+ 	  	}
+ 	
+
+ 	});
+   	
+</script>
 
 
 
