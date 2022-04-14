@@ -3,10 +3,31 @@
 @section('content')
 <div class="main" id="main-profile">
     <input type="hidden" id="profile-container-id" value=<?php echo md5('OK'); ?>>
+    <div class="refresh-profile-photo clearfix component-card invisible-component" id="relationship-requests-payment">
+        <div class="profile-photo-container alert-component-card l-5">
+            <img class="img-30 center" src="{{asset('css/uicons/flag.png')}}">
+        </div>
+        <div class="content-profile-photo l-5">
+            <h1>O Pagamento que você fez para que o seu <span style="font-weight: bolder;">RELACIONAMENTO</span> com <span id="name-requested"></span> seja registrado, está processando. Aguarde até 24 para a confirmação</h1>
+        </div>
+    </div>
+    <div class="refresh-profile-photo clearfix component-card invisible-component" id="relationship-requests">
+            <div class="profile-photo-container alert-component-card l-5">
+                <img class="img-30 center" src="{{asset('css/uicons/fire_in_my_heart.png')}}">
+            </div>
+            <div class="content-profile-photo l-5">
+                <h1>Tens pedidos de <span style="font-weight: bolder;">RELACIONAMENTOS</span> por responder. Aceite ou rejeite</h1>
+                <a href="">
+                    <div class="button-default-tassumir">
+                        <h3 class="button-default-tassumir-text" style="margin-top: 0; font-weight: bolder;">Ver Pedidos</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
     <header class="card br-10 card-flex profile-card" id="profile-card-header">
         <div id="img-profile-container" class="circle">
             @if ($foto != null)
-                <img class="img-profile img-full circle invisible-component" src="{{asset('storage/img/users') . '/' . $foto}}" id="img-profile-component"> 
+                <img class="img-profile has-img-profile img-full circle invisible-component" src="{{asset('storage/img/users') . '/' . $foto}}" id="img-profile-component"> 
             @else:
                 <img class="img-profile img-full circle invisible-component" src="{{asset('css/uicons/user.png')}}" id="img-profile-component">                            
             @endif
@@ -35,7 +56,7 @@
                 </li>
                 <li class="statistics-profile">
                     <h2 class="text-profile-statistics-number" id="data-profile-1"> </h2>
-                    <h2 class="text-profile-statistics">Curtiu</h2>
+                    <h2 class="text-profile-statistics">Curtidas</h2>
                 </li>
                 <li class="statistics-profile">
                     <h2 class="text-profile-statistics-number" id="data-profile-2"> </h2>
@@ -88,19 +109,6 @@
                 </div>
             </div>
     </header>
-    <div class="refresh-profile-photo clearfix component-card invisible-component" id="relationship-requests">
-            <div class="profile-photo-container alert-component-card l-5">
-                <img class="img-30 center" src="{{asset('css/uicons/fire_in_my_heart.png')}}">
-            </div>
-            <div class="content-profile-photo l-5">
-                <h1>Tens pedidos de <span style="font-weight: bolder;">RELACIONAMENTOS</span> por responder. Aceite ou rejeite</h1>
-                <a href="">
-                    <div class="button-default-tassumir">
-                        <h3 class="button-default-tassumir-text" style="margin-top: 0; font-weight: bolder;">Ver Pedidos</h3>
-                    </div>
-                </a>
-            </div>
-        </div>
 <div class="card br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">
                 <ul class="" id="ul-profile">
@@ -130,10 +138,14 @@
                 </ul>
             </nav>
             <div class="post-video-container-page post-page-container clearfix">
-                <?php $ver = 1; $key = 0; while ($key < 15) {?>
+                <?php $ver = 1; $key = 0; while ($key < 126) {?>
                     <a href="" id=<?php echo 'a-post-component-'.$key; ?>>
                         <video preload="metadata" <?php if (($ver % 3) == 0){echo "class='img-post-video-component img-post img-post-video-component-fl video-post-profile invisible-component'";}else{echo "class='img-post-video-component img-post video-post-profile invisible-component'";} ?> id="video-post-page-{{$key}}">
-                            <source src="" type="video/mp4">            
+                            <source src="" type="video/mp4"> 
+                            <div class="clearfix content-video-some-details">
+                                <img class="l-5 img-20" style="" src="{{asset('css/uicons/video_liked.png')}}">
+                                <h1 class="l-5" style="font-size: 9px; text-transform: uppercase; color: #fff;">115</h1>
+                            </div>           
                         </video>
                     </a>
                     <a href="" id="a-post-component-cover-{{$key}}">
@@ -162,6 +174,7 @@
                 </label>
             </div>
         </header>
+        <input type="hidden" id="uuid_has_relationship" name="">
         <div class="clearfix content-more" style="margin-top: 0px; margin-bottom: 10px;">
             <nav>
                 <ul class="" id="more-option-target-profile-details">

@@ -15,143 +15,89 @@ class PaginaCasalController extends Controller
     private $current_page_uuid;
     private static $uuid = '';
 
-
-
-
-    public function paginas_que_sigo($id){
-      $controll = new AuthController;
-      $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
-       $dates = $controll->default_();
-      $account_name = $dates['account_name'];
-      $checkUserStatus = $dates['checkUserStatus'];
-      $profile_picture = $dates['profile_picture'];
-      $isUserHost = $dates['isUserHost'];
-      $hasUserManyPages = $dates['hasUserManyPages'];
-      $allUserPages = $dates['allUserPages'];
-      $page_content = $dates['page_content'];
-      $conta_logada = $dates['conta_logada'];
-      $notificacoes = $dates['notificacoes'];
-      $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
-      $paginasSeguidas = $dates['paginasSeguidas'];
-      $dadosSeguida = $dates['dadosSeguida'];
-      $notificacoes_count = $dates['notificacoes_count'];
-
-
-      /*siene*/ //$casalPageName = $this->get_casalPage_name($uuid);
-
-      $page_current = 'page';
-      if (sizeof($page_content)>0) {
-
-      $seguidores = Self::seguidores($page_content[0]->page_id);
-      $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
-      $publicacoes = $this->get_all_post($page_content[0]->page_id);
-      $this->current_page_id = $page_content[0]->page_id;
-      $sugerir = $this->suggest_pages($page_content[0]->page_id);
-      $allPosts = $this->get_post_types($page_content[0]->page_id);
-    }else {
-      $seguidores =array();
-      $tipo_relac = array();
-      $publicacoes = array();
-      $this->current_page_id = array();
-      $sugerir = array();
-      $allPosts = array();
-    }
-     $PS=array();
-     $a=0;
-     $page=DB::table('pages')->get();
-     $conta = DB::select('select * from contas where uuid = ?', [$id]);
-     $aux = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
-     foreach ($page as $key ) {
-
-       $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$key->page_id, 2 ]);
-       //dd($aux1[0]->identificador_id);
-       //dd($aux[0]->identificador_id);
-       if(sizeof($aux1)>0){
-       $aux2 = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [$aux1[0]->identificador_id, $aux[0]->identificador_id]);
-       //$aux2 = DB::select('select * from seguidors where (identificador_id_seguida, identificador_id_seguindo) = (?, ?)', [1, 31]);
-       if (sizeof($aux2)>0) {
-         $PS[$a]['foto']=$key->foto;
-         $PS[$a]['uuid']=$key->uuid;
-         $PS[$a]['nome']=$key->nome;
-         $aux3 = DB::select('select * from seguidors where identificador_id_seguida = ?', [$aux1[0]->identificador_id]);
-         $PS[$a]['qtdseg']=sizeof($aux3);
-         $a++;
-        }
-       }
-
-       $v[0]['id']=$conta[0]->conta_id;
-
-     }
-
-        return view('pagina.couple_page_following', compact('account_name','v','PS','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir', 'pagenaoseguidas'));
-    }
-
-    public function who_follows_me($id){
-      $controll = new AuthController;
-      $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
-       $dates = $controll->default_();
-      $account_name = $dates['account_name'];
-      $checkUserStatus = $dates['checkUserStatus'];
-      $profile_picture = $dates['profile_picture'];
-      $isUserHost = $dates['isUserHost'];
-      $hasUserManyPages = $dates['hasUserManyPages'];
-      $allUserPages = $dates['allUserPages'];
-      $page_content = $dates['page_content'];
-      $conta_logada = $dates['conta_logada'];
-      $notificacoes = $dates['notificacoes'];
-      $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
-      $paginasSeguidas = $dates['paginasSeguidas'];
-      $dadosSeguida = $dates['dadosSeguida'];
-      $notificacoes_count = $dates['notificacoes_count'];
-
-
-      /*siene*/ //$casalPageName = $this->get_casalPage_name($uuid);
-
-      $page_current = 'page';
-      if (sizeof($page_content)>0) {
-
-      $seguidores = Self::seguidores($page_content[0]->page_id);
-      $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
-      $publicacoes = $this->get_all_post($page_content[0]->page_id);
-      $this->current_page_id = $page_content[0]->page_id;
-      $sugerir = $this->suggest_pages($page_content[0]->page_id);
-      $allPosts = $this->get_post_types($page_content[0]->page_id);
-    }else {
-      $seguidores =array();
-      $tipo_relac = array();
-      $publicacoes = array();
-      $this->current_page_id = array();
-      $sugerir = array();
-      $allPosts = array();
-    }
-      $who_follows_me=DB::select('select c.uuid,c.nome,c.apelido,c.foto from (select s.identificador_id_seguindo, (select i.id from identificadors as i where i.identificador_id=s.identificador_id_seguindo)as id from seguidors as s where s.identificador_id_seguida = (select i.identificador_id from identificadors as i where i.tipo_identificador_id = 2 and i.id= (select pa.page_id from pages as pa where pa.uuid=?)))  as al inner join contas as c on c.conta_id = id order by c.nome, c.apelido ',[$id]);
-
-        return view('pagina.who_follows_me', compact('account_name','who_follows_me','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir', 'pagenaoseguidas'));
-    }
-
     //-----------------------começou aqui as funções otimizadas (DomingosDS)
 
-    public function qtd_de_publicacoes(Request $request)
+    public function qtd_de_publicacoes(Request $request, $uuid)
     {
       try {
-        $qtd_de_publicacoes=DB::select('select count (*) from posts where page_id=(select page_id from pages where uuid=?) and estado_post_id=1',[$request->page_uuid]);
-        return $qtd_de_publicacoes;
-      } catch (\Exception $e) {
+        $qtd_de_publicacoes=DB::select('select count(*) as qtd from posts where page_id=(select page_id from pages where uuid=?) and estado_post_id=1',[$uuid]);
+        return json_encode(['qtd' => $qtd_de_publicacoes[0]->qtd]);
+      } catch (Exception $e) {
 
       }
 
     }
 
+    public function get_relationship(Request $request){
+      try {
+        $data = DB::select('select tipo_relacionamento, preco from tipo_relacionamentos where tipo_relacionamento_id=?',[$request->ident]);
+        return response()->json([
+          'type' => $data[0]->tipo_relacionamento,
+          'preco' => $data[0]->preco,
+        ]);
+      } catch (Exception $e) {
+
+      }      
+    }
+
     public function dados_page($uuid)
     {
-      $dados_page=DB::select('Select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,tipo_relacionamento, if(genero_conta_b='Masculino',nome_conta_b,nome_conta_a)as nome_conta_homem, if(genero_conta_b='Masculino',apelido_conta_b,apelido_conta_a)as apeltido_conta_homem, if(genero_conta_b='Masculino',nome_conta_a,nome_conta_b)as nome_conta_mulher, if(genero_conta_b='Masculino',apelido_conta_a,apelido_conta_b)as apeltido_conta_mulher from(select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,(select tr.descricao from tipo_relacionamentos as tr where tr.tipo_relacionamento_id=pg.tipo_relacionamento_id) as tipo_relacionamento,(select c.genero from contas as c where c.conta_id=pg.conta_id_a)as genero_conta_a,(select c.genero from contas as c where c.conta_id=pg.conta_id_b)as genero_conta_b,(select c.nome from contas as c where c.conta_id=pg.conta_id_a)as nome_conta_a,(select c.apelido from contas as c where c.conta_id=pg.conta_id_a)as apelido_conta_a,(select c.nome from contas as c where c.conta_id=pg.conta_id_b)as nome_conta_b,(select c.apelido from contas as c where c.conta_id=pg.conta_id_b)as apelido_conta_b from pages as pg where pg.uuid=?) as pg',[$uuid]);
+      $dados_page=DB::select("Select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,tipo_relacionamento, if(genero_conta_b='Masculino',nome_conta_b,nome_conta_a)as nome_conta_homem, if(genero_conta_b='Masculino',apelido_conta_b,apelido_conta_a)as apeltido_conta_homem, if(genero_conta_b='Masculino',nome_conta_a,nome_conta_b)as nome_conta_mulher, if(genero_conta_b='Masculino',apelido_conta_a,apelido_conta_b)as apeltido_conta_mulher from(select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,(select tr.descricao from tipo_relacionamentos as tr where tr.tipo_relacionamento_id=pg.tipo_relacionamento_id) as tipo_relacionamento,(select c.genero from contas as c where c.conta_id=pg.conta_id_a)as genero_conta_a,(select c.genero from contas as c where c.conta_id=pg.conta_id_b)as genero_conta_b,(select c.nome from contas as c where c.conta_id=pg.conta_id_a)as nome_conta_a,(select c.apelido from contas as c where c.conta_id=pg.conta_id_a)as apelido_conta_a,(select c.nome from contas as c where c.conta_id=pg.conta_id_b)as nome_conta_b,(select c.apelido from contas as c where c.conta_id=pg.conta_id_b)as apelido_conta_b from pages as pg where pg.uuid=?) as pg",[$uuid]);
+    }
+
+    public function spouse_names(Request $request)
+    {
+      //return $request->id;
+
+      $data = DB::select("select (select tipo_relacionamento from tipo_relacionamentos WHERE tipo_relacionamento_id = page.tipo_relacionamento_id) as relacionamento, if(page.tipo_page_id <> 2, true, false) as nativo, if((select genero from contas where conta_id = page.conta_id_a) = 'Masculino', (select nome from contas where conta_id = page.conta_id_a), (select nome from contas where conta_id = page.conta_id_b)) as homem_nome, if((select genero from contas where conta_id = page.conta_id_a) = 'Masculino', (select apelido from contas where conta_id = page.conta_id_a), (select apelido from contas where conta_id = page.conta_id_b)) as homem_sobrenome, if((select genero from contas where conta_id = page.conta_id_b) = 'Feminino', (select nome from contas where conta_id = page.conta_id_b), (select nome from contas where conta_id = page.conta_id_a)) as mulher_nome, if((select genero from contas where conta_id = page.conta_id_b) = 'Feminino', (select apelido from contas where conta_id = page.conta_id_b), (select apelido from contas where conta_id = page.conta_id_a)) as mulher_sobrenome from pages as page where page.uuid = ?",[$request->id])[0];
+      return response()->json([
+        'homem' => $data->homem_nome . " " . $data->homem_sobrenome,
+        'mulher' => $data->mulher_nome . " " . $data->mulher_sobrenome,
+        'state' => $data->nativo,
+        'relacionamento' => $data->relacionamento
+      ]);
+    }
+
+    public function description_page($uuid)
+    {
+      $data = DB::select("select descricao from pages where uuid = ?",[$uuid])[0];
+      return response()->json(['description' => $data->descricao]);
     }
     public function qtd_de_seguidores(Request $request)
     {
       try {
-        $qtd_de_seguidores=DB::select('select count (*) from seguidors as s where s.identificador_id_seguida=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=2 and i.id=(select page_id from pages where uuid=?))',[$request->page_uuid]);
-        return $qtd_de_seguidores;
-      } catch (\Exception $e) {
+        $qtd_de_seguidores=DB::select('select count(*) as qtd from seguidors as s where s.identificador_id_seguida=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=2 and i.id=(select page_id from pages where uuid=?))',[$request->ident]);
+        return json_encode(['qtd' => $qtd_de_seguidores[0]->qtd]);
+      } catch (Exception $e) {
+      }
+
+    }
+    public function ami_following(Request $request)
+    {
+      try {
+        $conta_id = Auth::user()->conta_id;
+        $ami_following=DB::select("select if(count(*) > 0,'Não Seguir', 'Seguir') as qtd, (select conta_id_a from pages where uuid = ?) as conta_id_a, (select conta_id_b from pages where uuid = ?) as conta_id_b from seguidors as s where s.identificador_id_seguida=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=2 and i.id=(select page_id from pages where uuid=?) and s.identificador_id_seguindo = (select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id= ?))",[$request->ident, $request->ident, $request->ident, $conta_id]);
+        $icon = 'message.png';
+        $owner_page = false;
+        $class = ['nothing', 'seguir-page'];
+        if ($ami_following[0]->conta_id_a == $conta_id || $ami_following[0]->conta_id_b == $conta_id) {
+            $ami_following[0]->qtd = 'Editar';
+            $owner_page = true;
+            $icon = 'add_post.png';
+            $class = ['edit-page'];
+        }
+        $state = false;
+        if ($ami_following[0]->qtd == 'Não Seguir') {
+          $state = true;
+        }
+        return json_encode([
+          'qtd' => $ami_following[0]->qtd, 
+          'icon' => $icon, 
+          'owner' => $owner_page,
+          'class' => $class,
+          'state' => $state
+        ]);
+      } catch (Exception $e) {
       }
 
     }
@@ -168,8 +114,8 @@ class PaginaCasalController extends Controller
   public function qtd_de_likes_page(Request $request)
   {
     try {
-      $qtd_de_likes_page=DB::select('select count(*) from post_reactions as pr inner join posts as  p on p.page_id=(select page_id from pages where uuid=?) where pr.post_id = p.post_id',[$request->page_uuid]);
-      return $qtd_de_likes_page;
+      $qtd_de_likes_page = DB::select('select count(*) as qtd from post_reactions as pr inner join posts as  p on p.page_id=(select page_id from pages where uuid=?) where pr.post_id = p.post_id',[$request->ident]);
+      return json_encode(['qtd' => $qtd_de_likes_page[0]->qtd]);
     } catch (\Exception $e) {
     }
 
@@ -254,49 +200,18 @@ class PaginaCasalController extends Controller
         return $conta_seguinte;
     }
 
-    public function index(){
-
-
-      $page_couple = new AuthController();
-      $dates = $page_couple->default_();
-
-      $controll = new AuthController;
-      $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
-      $dates = $controll->default_();
-
-      $account_name = $dates['account_name'];
-      $checkUserStatus = $dates['checkUserStatus'];
-      $profile_picture = $dates['profile_picture'];
-      $isUserHost = $dates['isUserHost'];
-      $hasUserManyPages = $dates['hasUserManyPages'];
-      $allUserPages = $dates['allUserPages'];
-      $page_content = $dates['page_content'];
-      $conta_logada = $dates['conta_logada'];
-      $notificacoes = $dates['notificacoes'];
-      $paginasSeguidas = $dates['paginasSeguidas'];
-      $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
-      $dadosSeguida = $dates['dadosSeguida'];
-      $notificacoes_count = $dates['notificacoes_count'];
-
-
-      /*siene*/ //$casalPageName = $this->get_casalPage_name($uuid);
-
+    public function index($uuid){
       $page_current = 'page';
-      $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-      $seguidores = Self::seguidores($page_content[0]->page_id);
-      $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
-      $publicacoes = $this->get_all_post($page_content[0]->page_id);
-      $this->current_page_id = $page_content[0]->page_id;
-      $sugerir = $this->suggest_pages($page_content[0]->page_id);
-      $allPosts = $this->get_post_types($page_content[0]->page_id);
-      $v=1;
-      $casalPageName = $this->get_casalPage_name($page_content);
-      return view('pagina.couple_page', compact('account_name','v','notificacoes_count','notificacoes','conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'paginasSeguidas', 'dadosSeguida', 'paginasNaoSeguidas', 'allPosts', 'sugerir','casalPageName', 'pagenaoseguidas'));
+      $dados = DB::select('select uuid, nome, foto from pages where uuid = ?', [$uuid]);
+      //dd($result);
+      return view('pagina.couple_page', compact('page_current','dados'));
     }
 
-    public function accepted_relationship(Request $request, $uuid)
+    public function accepted_relationship(Request $request)
       {
         $controll = new AuthController;
+        $uuid = $request->uuid_accept;
+        //dd($uuid);
         DB::table('pedido_relacionamentos')->where('uuid',$uuid)
         ->update(['estado_pedido_relac_id' => 2, 'updated_at' => $controll->dat_create_update()]);
        $aux= DB::select('select pr.conta_id_pedida,pr.conta_id_pedinte,pr.pedido_relacionamento_id,pr.uuid,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)as pedido_relac_idtf,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte)as conta_pedinte_idtf,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida)as conta_pedida_idtf  from pedido_relacionamentos as pr where pr.uuid=?', [$uuid]);
@@ -332,7 +247,7 @@ class PaginaCasalController extends Controller
         $resposta.= $tipo[0]->apelido;
         $resposta.= '?';
 
-        return /*response()->json($resposta);*/ back();
+        return response()->json(['answer' => $resposta]);
       }
 
       public function cancel_request_relationship($uuid){

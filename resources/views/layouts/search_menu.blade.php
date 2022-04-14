@@ -23,9 +23,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
-
 <body class="container-main">
 <div class="body-pop-up content-full-scroll">
+    <input type="hidden" id="search-checked" value=<?php echo "OK"; ?>>
   <header class="header-main-n header-main-component-n clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">

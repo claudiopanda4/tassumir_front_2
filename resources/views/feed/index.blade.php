@@ -74,16 +74,16 @@
         </div>
     <div class="" id="div_father_post" name="div_father_post">
         <?php $key = 0; while($key < 146){ ?>
-        <?php if ($key == 2 || $key == 5 || $key == 9): ?>
+        <?php if ($key == 1 || $key == 5 || $key == 9): ?>
             <div class="refresh-profile-photo clearfix invisible-component alert-info-about-us" id="alert-info-about-us-{{$key}}">
                 <div class="profile-photo-container l-5">
                     <img class="img-28 center" src="{{asset('css/uicons/info_tassumir.png')}}">
                 </div>
                 <div class="content-profile-photo l-5">
-                    <h1 id="content-p-{{$key}}">O Tassumir ajuda casais a assumirem seus relacionamentos publicamente, aumentando a segurança e fidelidade nos relacionamentos e também ajuda casais a partilharem habilidades pessoais, e ganharem dinheiro com isso.</h1>
-                    <label <?php if ($key == 2 || $key == 9){echo 'for="target-alert-tassumir"';}else{echo 'for="target-alert-info"';} ?> id="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
+                    <h1 id="content-p-{{$key}}">No Tassumir você regista o seu relacionamento publicamente, ganha dinheiro, segurança e aumenta a fidelidade no casal. Assuma agora o seu relacionamento e comece a ganhar.</h1>
+                    <label <?php if ($key == 1 || $key == 9){echo 'for="target-alert-tassumir"';}else{echo 'for="target-alert-info"';} ?> id="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
                         <div class="options-profile-btn options-profile-btn-center profile-item-center options-alert-btn-feed" id="options-profile-btn-couple">
-                            <h3 class="edit-profile-mobile center" style="margin-top: 0;" id="btn-alert-info-{{$key}}">Assumir Relacionamento</h3>
+                            <h3 class="edit-profile-mobile center" style="margin-top: 0;" id="btn-alert-info-{{$key}}">Assumir Agora o Relacionamento</h3>
                         </div>
                     </label>
                 </div>
@@ -157,26 +157,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="last-component clearfix r-5">
+                    <label for="target-option-post" class="target-options" id="target-option-post-{{$key}}">
+                        <i class="fas fa-ellipsis-h fa-14 fa-option" id="target-option-post-i-{{$key}}"></i>
+                    </label>
+                    <!--<div class="last-component clearfix r-5">
                         <label for="more-option-{{$key}}">
                             <i class="fas fa-ellipsis-h fa-14 fa-option"></i>
                         </label>
                         <input type="checkbox" name="" id="more-option-{{$key}}" class="hidden">
-                        <ul class="clearfix more-option-post" id="more-option-post-{{$key}}">
-                            <li>
-                                <a href="" class="edit-option" id="edit-option|ca504ca7-0475-4dd3-936d-56b5d05b612b">Editar</a>
-                            </li>
-                            <li>
-                                <a href="" class="delete_post" id="delete_post-{{$key}}">Apagar Publicação</a>
-                            </li>
-                                                        <li>
-                                <a href="">Denunciar</a>
-                            </li>
-                            <li>
-                                <a href="">Copiar Link</a>
-                            </li>
-                        </ul>
-                    </div>
+                        
+                    </div>-->
                 </header>
                 <div class="card-post">
                     <div class="">
@@ -445,6 +435,41 @@
         </div>
         <div>
         </div>
+</div>
+<input type="checkbox" name="" id="target-option-post" class="invisible">
+<div class="pop-up pop-up-option" id="option-post-full-container">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; max-height: 90%; height: auto; width: 280px;">
+        <div>
+            <div class="">
+                <ul class="clearfix more-option-post" id="more-option-post-{{$key}}">
+                    <li>
+                        <a href="" class="edit-option" id="edit-option-{{$key}}">Editar</a>
+                    </li>
+                    <li>
+                        <a href="" class="edit-option options-special" id="edit-option">Não seguir</a>
+                    </li>
+                    <li>
+                        <a href="" class="delete_post options-special" id="">Apagar publicação</a>
+                    </li>
+                    <li>
+                        <a href="" class="delete_post options-special" id="">Ocultar publicação</a>
+                    </li>
+                    <li>
+                        <a href="">Denunciar</a>
+                    </li>
+                    <li>
+                        <a href="">Copiar link</a>
+                    </li>
+                    <label for="target-option-post" id="target-option-post-ident">
+                        <li id="cancel-options">
+                            Cancelar
+                        </li>
+                    </label>
+                </ul>
+                <input type="hidden" id="selected-option-post">
+            </div>
+        </div>
+    </div>
 </div>
         <script type="text/javascript">
         $(document).ready(function(){
@@ -784,7 +809,7 @@ function gostar(id){
                                     if ($('#vid-load_' + id).val() == 'ready') {
                                     }
                                 }
-                                if(offset_video.top < 190 && offset_video.top > -300){
+                                if(offset_video.top < 490 && offset_video.top > -200){
                                     if ($('#has-video_' + id).val() != "ok") {
                                     } else {
                                         $('#video-post-time-all-' + id).val(document.getElementById('video_' + id).duration / 2);
