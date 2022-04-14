@@ -72,6 +72,16 @@ class PaginaCasalController extends Controller
       }
 
     }
+
+
+    /*public function dados_page($uuid)
+    {
+
+      $dados_page=DB::select('Select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,tipo_relacionamento, if(genero_conta_b="Masculino",nome_conta_b,nome_conta_a)as nome_conta_homem, if(genero_conta_b="Masculino",apelido_conta_b,apelido_conta_a)as apeltido_conta_homem, if(genero_conta_b="Masculino",nome_conta_a,nome_conta_b)as nome_conta_mulher, if(genero_conta_b="Masculino",apelido_conta_a,apelido_conta_b)as apeltido_conta_mulher from(select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,(select tr.descricao from tipo_relacionamentos as tr where tr.tipo_relacionamento_id=pg.tipo_relacionamento_id) as tipo_relacionamento,(select c.genero from contas as c where c.conta_id=pg.conta_id_a)as genero_conta_a,(select c.genero from contas as c where c.conta_id=pg.conta_id_b)as genero_conta_b,(select c.nome from contas as c where c.conta_id=pg.conta_id_a)as nome_conta_a,(select c.apelido from contas as c where c.conta_id=pg.conta_id_a)as apelido_conta_a,(select c.nome from contas as c where c.conta_id=pg.conta_id_b)as nome_conta_b,(select c.apelido from contas as c where c.conta_id=pg.conta_id_b)as apelido_conta_b from pages as pg where pg.uuid=?) as pg',[$uuid]);
+
+    }
+  public function qtd_de_seguidores(Request $request)*/
+
     public function ami_following(Request $request)
     {
       try {
@@ -137,27 +147,27 @@ class PaginaCasalController extends Controller
   public function get_nine_images_page(Request $request)
   {
     try {
-      if ($request->id==0) {
-        $img=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=2 order by p.post_id desc limit 9',[$request->uuid]);
-      }else {
-        $img=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=2 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
+      if ($request->id == 0) {
+        $img=DB::select('select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=2 order by p.post_id desc limit 9',[$request->uuid]);
+      } else {
+        $img=DB::select('select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=2 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
       }
-    return response()->json($img);
-  } catch (\Exception $e) {
+      return response()->json($img);
+    } catch (Exception $e) {
 
-  }
+    }
   }
   public function get_nine_videos_page(Request $request)
   {
     try {
-    if ($request->id==0) {
-      $video=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=1 order by p.post_id desc limit 9',[$request->uuid]);
-    }else {
-      $video=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=1 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
+      if ($request->id==0) {
+        $video=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=1 order by p.post_id desc limit 9',[$request->uuid]);
+      } else {
+        $video=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=1 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
+      }
+      return response()->json($video);
+    } catch (Exception $e) {
     }
-    return response()->json($video);
-  } catch (\Exception $e) {
-  }
   }
 
 //------------------- fim das funções otomizadas (DomingosDS)
@@ -709,7 +719,17 @@ class PaginaCasalController extends Controller
 
                 if ( Self::check_image_extension($request->imgOrVideo->extension()) )
                 {
-                    $path = $request->file('imgOrVideo')->storeAs('public/img/page', $file_name);
+                    $extension = ($request->imgOrVideo->extension());
+                    $format = '';
+                    if (!$this->confirm_extension($extension)) {
+                      /*Mudar o formato de imagem, o formato de mudança por defeito é o jpg*/
+                      $file_name = Self::convertImage_and_storeTo_storage($request, 'app/public/img/page/', 'imgOrVideo');
+
+                    } else {
+
+                      $path = $request->file('imgOrVideo')->storeAs('public/img/page', $file_name);
+                    }
+
                     $this->store($request->message, $file_name, $page_id, $this->formato_id('Imagem'));
 
                 } else if ( $this->check_video_extension($request->imgOrVideo->extension()) ) {
@@ -791,39 +811,36 @@ class PaginaCasalController extends Controller
           DB::table('pages')->where('uuid',$request->uuidPage)
         ->update(['estado_pagina_id' => 1, 'updated_at' =>$controll->dat_create_update()]);
 
-        $aux = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador,identificador_id_destino) = (?, ?, ?)', [11, $request->identifyCausador, $request->identifyPage]);
-        $aux12 = DB::select('select notification_id from notifications where (id_action_notification,identificador_id_causador,identificador_id_destino) = (?, ?, ?)', [12, $request->identifyOutraC, $request->identifyPage]);
-         for ($i=sizeof($aux12); $i > 0; $i--) {
-           DB::table('notifications')->where(
-             'notification_id', $aux12[$i-1]->notification_id)->delete();
-         }
-        DB::table('notifications')->where(
-          'notification_id', $aux[1]->notification_id)->delete();
+        $get=DB::select('select identifyPage,if(identify_conta_a=?,identify_conta_b,identify_conta_a)as outra_conta from (select (select i.identificador_id from identificadors as i where i.tipo_identificador_id=2 and i.id=pg.page_id) as identifyPage,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pg.conta_id_a) as identify_conta_a,(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pg.conta_id_b) as identify_conta_b from pages as pg where pg.uuid=?)', [$request->identifyCausador,$request->uuidPage]);
 
-          DB::table('notifications')->where(
-            'notification_id', $aux[0]->notification_id)->delete();
+    $aux = DB::select('select notification_id from notifications where id_action_notification=11 and identificador_id_causador=? and identificador_id_destino=? || id_action_notification=12 and identificador_id_causador=? and identificador_id_destino=?', [$request->identifyCausador, $get[0]->identifyPage, $get[0]->outra_conta, $get[0]->identifyPage]);
 
-            DB::table('notifications')->insert([
-                    'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                    'id_state_notification' => 2,
-                    'id_action_notification' => 13,
-                    'identificador_id_causador'=>$request->identifyCausador,
-                    'identificador_id_destino'=>$request->identifyPage,
-                    'identificador_id_receptor'=>$request->identifyOutraC,
-                    'created_at'=> $controll->dat_create_update(),
-                    ]);
+    foreach ($aux as $key) {
+      DB::table('notifications')->where('notification_id', $key->notification_id)->delete();
+    }
 
-                    DB::table('notifications')->insert([
-                            'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                            'id_state_notification' => 2,
-                            'id_action_notification' => 13,
-                            'identificador_id_causador'=>$request->identifyCausador,
-                            'identificador_id_destino'=>$request->identifyPage,
-                            'identificador_id_receptor'=>$request->identifyCausador,
-                            'created_at'=> $controll->dat_create_update(),
-                            ]);
+        DB::table('notifications')->insert([
+          [
+                'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                'id_state_notification' => 2,
+                'id_action_notification' => 13,
+                'identificador_id_causador'=>$request->identifyCausador,
+                'identificador_id_destino'=>$get[0]->identifyPage,
+                'identificador_id_receptor'=>$get[0]->outra_conta,
+                'created_at'=> $controll->dat_create_update(),],
+                [
+                        'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                        'id_state_notification' => 2,
+                        'id_action_notification' => 13,
+                        'identificador_id_causador'=>$request->identifyCausador,
+                        'identificador_id_destino'=>$get[0]->identifyPage,
+                        'identificador_id_receptor'=>$request->identifyCausador,
+                        'created_at'=> $controll->dat_create_update(),]
+                        ]);
 
-                            return redirect()->route('account.home.feed');
+
+
+                        return redirect()->route('account.home.feed');
 
         } catch (Exception $e) {
             dd($e);
@@ -859,6 +876,20 @@ class PaginaCasalController extends Controller
             dd($e);
         }
     }
+
+/*siene*/
+    public static function confirm_extension($extension) {
+      return $extension === 'jpg' || $extension === 'jpeg';
+    }
+
+    public static function convertImage_and_storeTo_storage($request, $path, $file, $format = "jpg") {
+      $image = $request->file($file);
+      $file_name = time() . '_' . md5($request->file($file)->getClientOriginalName()) . '.' . $format;
+
+      Image::make($image)->encode($format, 65)->save(storage_path($path . $file_name));
+      return $file_name;
+    }
+
 
     public static function check_image_extension( $extension )
     {

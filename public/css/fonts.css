@@ -8,10 +8,25 @@
 	font-family: aremat;
 	src: url('fonts/aremat/aremat-font.ttf');
 }
+
+@font-face{
+	font-family: montserrat;
+	src: url('fonts/Montserrat/static/Montserrat-Light.ttf');
+}
+@font-face{
+	font-family: poirot;
+	src: url('fonts/Poiret_One/PoiretOne-Regular.ttf');
+}
 * {
 	font-family: nunito;
 }
 .title h1,
 .title h1 .title-final {
     font-family: aremat;
+}
+.span-text{
+	font-family: montserrat ;
+}
+.the-font{
+	font-family: poirot;
 }

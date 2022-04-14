@@ -1009,15 +1009,21 @@
 	}
 	.img-post {
 		position: relative;
-	    width: 33.3%;
+	    width: 100%;
 	    height: 110px;
 	    border: 1px solid #2f3338;
 	    border-left: 0;
 	    border-bottom: 0;
 	    border-top: none;
 	}
+	.post-page-container {
+	    height: 110px;
+	}
+	#main-profile .img-post {
+		width: 33.3%;
+	}
 	.video-post-profile {
-	    height: 150px;
+	    height: 110px;
 	}
 	.img-post-video-component-fl {
 	    border-right: 0;
@@ -1310,7 +1316,7 @@
 
 	}
 	.statistics-profile-page-component h2 {
-	    font-size: 13px;
+	    font-size: 12px;
 	    /*text-transform: uppercase;
 	    font-weight: bolder;*/
 	}
@@ -1367,6 +1373,8 @@
 	}
 	#button-options-page .more-options-profile-btn {
 		height: 34px;
+		background-color: transparent;
+	    border: 1px solid #747474;
 	}
 	.statistics-profile-page-identify {
 	    margin-top: 2px;
@@ -1737,14 +1745,16 @@
 	    border-bottom: 1px solid #2f3338;
 	}
 	.post-page-container {
-	    margin: 0px;
-	    width: 100%;
+	    margin-left: 0%;
 	    background-color: #18191a;
 	}
 	#main-profile header.card.profile-card,
 	#main-profile #card-profile-option,
 	.post-page-container {
 		background-color: transparent;
+	}
+	#main-profile .post-page-container {
+		width: 100%;
 	}
 	.alert-info-about-us{
 	    width: 100%;

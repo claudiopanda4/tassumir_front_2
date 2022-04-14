@@ -76,7 +76,6 @@
         </div>
 
             </div>
-        </div>
         <!--<div>
             <div class="clearfix l-5 data-statistics">
                 <a href="">
@@ -196,21 +195,25 @@
                     </li>
                 </ul>
             </nav>
-            <div>
-                <?php $key = 0; while($key < 200){ ?>
-                    <div class="post-img-container-page post-page-container invisible-component">
+            <div class="clearfix">
+                <?php $key = 0; while($key < 207){ ?>
+                    <div class="post-img-container-page post-page-container invisible-component" id="post-img-container-page-{{$key}}">
                         <a href="">
                             <div class="img-post">
-                                <img src="" class="img-full">
+                                <img id="post-img-post-container-page-{{$key}}" src="" class="img-full">
                             </div>
                         </a>
                     </div>
-                    <div class="post-video-container-page post-page-container invisible-component">
-                        <a href="">
+                    <div class="post-video-container-page post-page-container invisible-component" id="post-video-container-page-{{$key}}">
+                        <a href="" id="a-video-page-target-{{$key}}">
                             <div class="img-post">
-                                <video>
+                                <video id="post-video-container-page-video-{{$key}}">
                                     <source type="video/mp4">
                                 </video>
+                            </div>
+                            <div class="clearfix content-video-some-details">
+                                <img class="l-5 img-20" style="" src="{{asset('css/uicons/play_video_button.png')}}">
+                                <h1 class="l-5 target-content-video-page">115</h1>
                             </div>
                         </a>
                     </div>
@@ -218,7 +221,8 @@
             </div>
         </div>
     </div>
-</div>
+<!--</div>
+</div>-->
 <input type="hidden" id="page_ident" name="page_u" value="{{ $dados[0]->uuid }}">
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">

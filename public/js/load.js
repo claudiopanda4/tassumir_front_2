@@ -772,15 +772,25 @@ $(document).ready(function () {
 			suggest_page();
 			$('#sugest_index_page').removeClass('invisible-component');
 		}
-		/*$.ajax({
-			url: '/page/spouse',
+		$.ajax({
+			url: 'page/content/videos/',
 			type: 'get',
-			data: {'id' : $('#ident-id').val()},
+			data: {'id' : 0, 'uuid' : $('#page_ident').val()},
 			dataType: 'json',
 			success: function (response) {
+				console.log(response);
+				$.each(response, function(key, data){
+					$('#a-video-page-target-' + key).attr('href', route + '/post_index/' + data.uuid);
+					$('#a-video-page-target-' + key).attr('id', 'a-video-page-target_' + data.uuid);
+					$('#post-video-container-page-video-' + key).attr('src', route + '/storage/video/page/' + data.file);
+					$('#post-video-container-page-' + key).removeClass('invisible-component');
+					$('#post-video-container-page-' + key).addClass('get-page-video');
+					$('#post-video-container-page-' + key).attr('id', 'post-video-container-page_' + data.uuid);
+					$('#post-video-container-page-video-' + key).attr('id', 'post-video-container-page-video_' + data.uuid);
+				});
 				
 			}
-		});*/
+		});
 		//alert($('#page_ident').val());
 		$.ajax({
 			url: '/page/spouses/name',
