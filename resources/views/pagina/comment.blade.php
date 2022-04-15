@@ -28,30 +28,6 @@
                         <label for="more-option-1">
                             <i class="fas fa-ellipsis-h fa-15 fa-option"></i>
                         </label>
-                        <input type="checkbox" name="" id="more-option-1" class="hidden">
-                        <ul class="clearfix more-option-post">
-                          <?php if ($dados[0]['dono_da_pag'] == 1): ?>
-                            <li>
-                                <a href="">Editar</a>
-                            </li>
-                            <?php endif; ?>
-                            <?php if ($dados[0]['dono_da_pag'] != 1): ?>
-                            <li>
-                                <a href="" class="ocultar_post" id="ocultar_post-{{$dados[0]['post_id']}}">Ocultar Publicação</a>
-                            </li>
-                            <?php endif; ?>
-                            <?php if ($dados[0]['dono_da_pag'] == 1): ?>
-                            <li>
-                                <a href="" class="delete_post" id="delete_post-{{$dados[0]['post_id']}}">Apagar Publicação</a>
-                            </li>
-                            <?php endif; ?>
-                            <li>
-                                <a href="">Denunciar</a>
-                            </li>
-                            <li>
-                                <a href="">Copiar Link</a>
-                            </li>
-                        </ul>
                     </div>
                 </header>
                 <div class="card-post">

@@ -243,7 +243,7 @@ body {
 .input-login {
     background-color: #242526;
     margin-top: 5px;
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 7px
 }
 .input-login-h {
@@ -1500,6 +1500,16 @@ label[for="hugo"]{
 }
 .more-option-post li {
     text-align: center;
+    color: #efefef;
+    padding: 10px;
+    border-bottom: 1px solid #2d2d2c;
+}
+.more-option-post {
+    box-shadow: none;
+    padding: 0;
+}
+#target-option-post-ident {
+    width: 100%;
 }
 .last-component {
     position: relative;
@@ -1515,7 +1525,7 @@ label[for="hugo"]{
     display: none;
 }
 .interaction-numbers {
-    padding-top: 5px;
+    padding-top: 0px;
 }
 .interaction-numbers ul {
     padding-right: 30px;
@@ -1671,7 +1681,7 @@ label[for="hugo"]{
 .video-post {
     width: 100%;
     height: 498px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     position: relative;
 }
 .video-post video {
@@ -1827,7 +1837,8 @@ label[for="hugo"]{
     border-radius: 5px;
     padding: 5px;
     margin-left: 0;
-    background-color: #2f3134;
+    background-color: #000000;
+    border: 1px solid #222629;
 }
 .more-info-about-profile h1,
 .more-info-about-profile h2 {
@@ -2316,7 +2327,7 @@ label[for="hugo"]{
 }
 #options-profile-mobile-user-log {
     width: 75%;
-    min-width: 240px;
+    min-width: 295px;
     margin: 5px auto;
 }
 #options-profile-mobile-user-log-pages  {
@@ -2507,6 +2518,8 @@ label[for="hugo"]{
 }
 .statistics-profile-page-component {
     margin-right: 15px;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 .statistics-profile-page-component h1,
 .statistics-profile-page-component h2 {
@@ -2516,7 +2529,7 @@ label[for="hugo"]{
 }
 .statistics-profile-page-component h1 {
     font-weight: bolder;
-    font-size: 16px;
+    font-size: 13px;
     margin-bottom: 2px;
 }
 .statistics-profile-page-identify {
@@ -2539,7 +2552,7 @@ label[for="hugo"]{
     background-color: #800080;
 }
 .follwing-btn-container {
-    margin: 10px auto 10px;
+    margin: 0px auto 10px;
     width: 80%;
 }
 .card-page {
@@ -2611,6 +2624,7 @@ label[for="hugo"]{
 }
 .add-post-label {
     cursor: pointer;
+    position: absolute;
 }
 #card-profile-option {
     margin-top: 0px;
@@ -2750,8 +2764,8 @@ label[for="hugo"]{
 .options-profile-btn {
     position: relative;
     display: block;
-    width: 48%;
-    height: 37px;
+    width: 60%;
+    height: 42px;
 }
 #options-profile-btn-edit-profile {
     background-color: #800080;
@@ -2955,13 +2969,16 @@ label[for="hugo"]{
     margin-top: 10px;
 }
 .post-page-container {
-    margin: 5px auto 0;
-    width: 100%;
+    /* margin: 5px auto 0; */
+    width: 33%;
+    height: 165px;
+    float: left;
     background-color: #18191a;
+    overflow-y: hidden;
 }
 .img-post {
     position: relative;
-    width: 32%;
+    width: 100%;
     height: 170px;
     display: inline-block;
     margin-top: 0px;
@@ -2969,8 +2986,13 @@ label[for="hugo"]{
 }
 .img-post video {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: fill;
+    min-height: 100%;
+}
+#main-profile .post-page-container {
+    width: 100%;
+    height: 100%;
 }
 .liked {
     color: red;
@@ -3072,7 +3094,7 @@ label[for="hugo"]{
 }
 .alert-accept {
     color: #fff;
-    padding: 5px;
+    padding: 0 10px;
     font-size: 13px;
 }
 .options-invited .accept {
@@ -3173,6 +3195,11 @@ label[for="hugo"]{
     display: inline-block;
     padding: 8px 10px 4px;
     font-size: 13px;
+    background-color: #9e9e9e;
+    margin: 5px 1px;
+    border-radius: 5px;
+    margin-right: 0;
+    margin-left: 6px;
 }
 #main-direct {
     display: block;
@@ -3337,7 +3364,7 @@ label[for="hugo"]{
 #password_login_id #eye {
     position: absolute;
     right: 15px;
-    top: 36px;
+    top: 39px;
 }
 #password_login_id-h {
     position: relative;
@@ -3571,11 +3598,14 @@ label[for="hugo"]{
 .profile-photo-container img {
     /*border-radius: 50%;*/
 }
+#name-requested {
+    font-weight: bolder;
+}
 .content-profile-photo {
     width: 70%;
 }
 .content-profile-photo h1 {
-    font-size: 12px;
+    font-size: 13px;
     color: #efefef;
     margin-top: 5px;
 }
@@ -3731,7 +3761,7 @@ label[for="hugo"]{
     border-radius: 10px;
 }
 .profile-alert-tassumir {
-    width: 90%;
+    width: 100%;
 }
 .suggest-slide a div.sugest_component_div {
     background-color: transparent;
@@ -3743,7 +3773,7 @@ label[for="hugo"]{
 .more-options-profile-btn {
     position: relative;
     width: 100%;
-    height: 38px;
+    height: 42px;
     border-radius: 2px;
     background-color: #2f3338;
 }
@@ -3852,7 +3882,7 @@ label[for="hugo"]{
 }
 .options-alert-btn-feed {
     position: relative;
-    border-radius: 7px;
+    border-radius: 5px;
     cursor: pointer;
     background-color: #800080;
 }
@@ -3921,6 +3951,7 @@ label[for="hugo"]{
     height: 200px;
 }
 .img-post-video-component {
+    position: relative;
     overflow-y: hidden;
 }
 .component-card {
@@ -3940,18 +3971,19 @@ label[for="hugo"]{
     background-color: #800080;
     border-radius: 5px;
     margin-top: 10px;
-    max-width: 220px;
 }
 #main-profile .button-default-tassumir {
     height: 37px;
 }
 #main-profile .more-options-profile-btn {
     max-width: 42px;
+    background-color: transparent;
+    border: 1px solid #757575;
 }
 #options-profile-btn-edit-profile,
 #main-profile .more-options-profile-btn,
 #main-profile .button-default-tassumir {
-    border-radius: 6px;
+    border-radius: 4px;
 }
 .alert-component-card {
     background-color: #a42191;
@@ -4007,12 +4039,198 @@ label[for="hugo"]{
     text-align: center;
 }
 .post-cover-imgless {
-    background-color: #3a3b3c;
-    height: 400px;
+    height: 275px;
+    background-color: #343a40;
 }
 #options-profile-btn-edit-profile {
-    border-radius: 0;
+    border-radius: 1;
 }
 #main-profile .more-options-profile-btn {
+    border-radius: 1;
+}
+.statistics-profile h2.text-profile-statistics {
+    justify-content: center;
+    font-weight: normal;
+    /*text-transform: uppercase;*/
+}
+.text-profile-statistics-number {
+    justify-content: center; 
+    font-weight: bolder; 
+    font-size: 14px; 
+    width: 100%; 
+    margin-bottom: 7px;
+}
+.spouse-item {
+    color: #efefef;
+}
+#spouse-masc,
+#spouse-fem {
+    font-weight: bolder;
+    color: #3490dc; 
+}
+.request-option-active#options-profile-mobile-user-log {
+    width: 100%;
+}
+.options-profile-btn {
+    margin-right: 1%;
+    margin-left: 1%;
+}
+#button-options-page {
+    width: 100%;
+    margin-top: 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+    max-width: 500px;
+    margin: auto;
+}
+.alert-message {
+    font-size: 12px;
+    padding: 0 10px;
+    text-align: center;
+    color: #efefef;
+}
+#price-type-relationship {
+    font-weight: bolder;
+    color: #3490dc;
+}
+#type-relationship-choosed {
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+#btn_follwing {
+    width: 77%;
+}
+#btn_follwing_container {
+    width: 43%;
+}
+#btn_seguir {
+    border-radius: 1px;
+    padding: 7px;
+    font-size: 12px;
+    min-height: 38px;
+}
+/*.data-statistics {
+    width: 100%;
+}*/
+#main-container-page {
+    margin-bottom: 0;
+}
+.data-statistics {
+    width: 100%;
+    background-color: transparent;
+    padding: 7px 0 0;
+    margin: 0px 0 10px;
+    margin-bottom: 10px;
+}
+#statistics-profile-page-main {
+    width: 68%;
+}
+#more-description-page {
+    background-color: #18191a;
     border-radius: 0;
+    padding: 5px 0;
+    margin: auto;
+    max-width: 500px;
+}
+#see-more-description {
+    color: #3490dc;
+    font-weight: bolder;
+}
+.statistics-profile-page-component h2 {
+    color: #fff;
+    font-size: 12.5px;
+    text-align: center;
+    text-transform: none;
+}
+.statistics-profile-page-component h2.line-header-couple,
+.statistics-profile-page-component h1.line-header-couple {
+        /*display: inline-flex;*/
+    padding: 0;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+#mobile-options-page {
+    display: none;
+}
+.no-following {
+    background-color: #2f3338;
+}
+#profile-cover-full {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    max-height: 100%;
+}
+#target-profile-cover-full-ident {
+    z-index: 3; position: absolute; right: 0px;
+}
+#target-profile-cover-full-ident .cancel-box-component {
+    background-color: #2f3338;
+}
+.more-option-post {
+    background-color: transparent;
+    display: block;
+    width: 100%;
+    position: relative;
+    left: 0;
+    margin-bottom: 0;
+}
+#cancel-options {
+    border-bottom: none;
+    padding-bottom: 4px;
+}
+.more-option-post a.options-special {
+    color: #f515f5;
+    text-align: center;
+    font-weight: bolder;
+}
+.target-options {
+    margin-bottom: 0px;
+    margin-top: 10px;
+    position: absolute;
+    right: 10px;
+}
+.content-video-some-details {
+    position: absolute;
+    bottom: 6px;
+    z-index: 2;
+}
+.close-pop-up-btn {
+    background-color: #606060;
+    padding: 8px 10px;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 13px;
+    width: 100px;
+    text-align: center;
+}
+#cover-done-component-accept {
+    width: 50%;
+}
+#cover-done-marriage button#relationship-confirm-pop-up-button {
+    background-color: #3490dc;
+    padding: 5px;
+    font-size: 13px;
+    border-radius: 4px;
+    font-weight: bolder;
+}
+.mobile-300 {
+    max-width: 300px;
+}
+#load_accpet {
+    position: relative;
+}
+.post-video-container-page {
+    position: relative;
+}
+.target-content-video-page {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-top: 10px;
+}
+#main-profile .post-page-container {
+    width: 100%;
+}
+#main-profile .inform-profile p {
+    text-align: center;
+    padding: 5px;
 }

@@ -6,11 +6,210 @@ $(document).ready(function () {
 	$('#target-invited-relationship-id').click(function () {
 		$('#target-invited-relationship').removeAttr('checked');
 	});
+	$('.accept-confirm').click(function(){
+		$('#options-invited-pop-up').attr('checked', true);
+	});
+	$('.seguir-page').click(function (e) {
+		
+		//seguir_page($('#page_ident').val(), e, 2);
+	});
+	$('.relationship-type-item').click(function(e){
+		alert('oi');
+	});
+	$('.choosed-type-relationship').click(function(e){
+		/*alert('oi');
+		any_id = e.target.id.split('_')[1];
+		$.ajax({
+			url : '/relationship/paymment/',
+			type : 'post',
+			data : {'ident' : any_id},
+			dataType : 'json',
+			success: function (response) {
+				console.log(response);
+				$('#price-type-relationship').text('Kz ' + response.price + ',00');
+			}
+		});*/
+	});
+	function profile_content_filter(class_name, filter){
+		for (var i = 0; i <= class_name.length - 1; i++) {
+			if (filter == 1) {
+				$('#' + any_class[i].id).addClass('invisible-component');
+			} else if (filter == 2) {
+				$('#' + any_class[i].id).addClass('invisible-component');
+			}
+		}
+	}
+	$('.has-img-profile').click(function (e) {
+		document.getElementById('target-profile-cover-full').checked = true;
+		//alert(document.getElementById('img-profile-component').src);
+		document.getElementById('profile-cover-full').src = document.getElementById('img-profile-component').src;
+	});
 	$('#cover-posts-component').click(function (e) {
 		e.preventDefault();
 		$('#img-profile-icon-profile').attr('src', route + '/css/uicons/image_liked_profile.png');
 		$('#video-profile-icon-profile').attr('src', route + '/css/uicons/video_liked.png');
+		any_class = document.getElementsByClassName('video-page-component');
+		profile_content_filter(any_class, 1);
+		if ($('#cover-loaded-profile-read').val() == 0) {
+			$.ajax({
+				url: '/get_nine_images_perfil',
+				type: 'get',
+				data: {'id' : 0},
+				dataType: 'json',
+				success:function(response){
+					console.log(response);
+					$.each(response, function(key, data){
+						if (data.formato_id == 2) {
+							$('#img-post-page-container-' + key).attr('src', route + '/storage/img/page/' + data.file);
+							$('#video-post-page-' + key).addClass('invisible-component');
+							$('#img-post-page-' + key).addClass('cover-page-component');
+							$('#img-post-page-' + key).removeClass('invisible-component');
+						}
+						$('#a-post-component-cover-' + key).attr('href', route + '/post_index/' + data.uuid);
+						$('#a-post-component-cover-' + key).attr('id', 'a-post-component-cover_' + data.uuid);
+					});
+					$('#cover-loaded-profile-read').val(1);
+					$('#component-loaded-profile-read').val(1);
+				}
+			});			
+		}
+		any_class = document.getElementsByClassName('cover-page-component');
+		for (var i = 0; i <= any_class.length - 1; i++) {
+			$('#' + any_class[i].id).removeClass('invisible-component');
+		}
 	});
+	$('.posts-content-filter').click(function (e) {
+		e.preventDefault();
+	});
+	$('#video-posts-component').click(function(){
+		//any_class = document.getElementsByClassName('video-page-component');
+		//profile_content_filter(any_class, 2);
+		$('#img-profile-icon-profile').attr('src', route + '/css/uicons/images.png');
+		$('#video-profile-icon-profile').attr('src', route + '/css/uicons/video_profile_liked.png');
+		$('#component-loaded-profile-read').val(2);
+		any_class = document.getElementsByClassName('video-page-component');
+		for (var i = 0; i <= any_class.length - 1; i++) {
+			$('#' + any_class[i].id).removeClass('invisible-component');
+		}
+
+		any_class = document.getElementsByClassName('cover-page-component');
+		for (var i = 0; i <= any_class.length - 1; i++) {
+			$('#' + any_class[i].id).addClass('invisible-component');
+		}
+	});
+	$('#see-more-description').click(function (e) {
+		e.preventDefault();
+		$('#see-more-description').addClass('invisible-component');
+		$('#more-text-description').removeClass('invisible-component');
+		$('#p-description-couple-all-container').addClass('full-text-p-couple');
+		$('#p-description-couple-all').addClass('full-text-p-couple');
+	});
+	if($('#page_couple').val()){
+		$('#p-description-couple-all-container').click(function (e) {
+			any_class = e.target.className;
+			if ($('#more-text-description').text().length > 0) {
+				if (any_class.indexOf('full-text-p-couple') >= 0) {
+					$('#see-more-description').removeClass('invisible-component');
+					$('#more-text-description').addClass('invisible-component');
+					$('#text-ellips-description').removeClass('invisible-component');
+					$('#p-description-couple-all-container').removeClass('full-text-p-couple');
+					$('#more-text-description').removeClass('full-text-p-couple');
+					$('#see-more-description').removeClass('full-text-p-couple');
+				    $('#p-description-couple-all').removeClass('full-text-p-couple');
+				    $('#text-ellips-description').removeClass('full-text-p-couple');
+				    $('#part-text').removeClass('full-text-p-couple');
+				} else {
+					$('#see-more-description').addClass('invisible-component');
+					$('#more-text-description').removeClass('invisible-component');
+					$('#p-description-couple-all-container').addClass('full-text-p-couple');
+					$('#more-text-description').addClass('full-text-p-couple');
+					$('#see-more-description').addClass('full-text-p-couple');
+					$('#p-description-couple-all').addClass('full-text-p-couple');
+				    $('#part-text').addClass('full-text-p-couple');
+				    $('#text-ellips-description').addClass('invisible-component');
+				    $('#text-ellips-description').addClass('full-text-p-couple');
+				}			
+			}
+
+			});	
+		$.ajax({
+			url: '/page/description/' + $('#page_ident').val(),
+			type: 'get',
+			data: {},
+			dataType: 'json',
+			success:function(response){
+				console.log(response);
+				text = "";
+				if (response.description.length > 80) {
+					for (var i = 0; i < 80; i++) {
+						if (response.description[i] == '\n') {
+							text = text + '<br>' + response.description[i];
+						} else {
+							text = text + '' + response.description[i];
+						}
+					}
+					$('#part-text').html(text);
+					$('#text-ellips-description').removeClass('invisible-component');
+					text = '';
+					for (var i = 80; i < response.description.length; i++) {
+						text = text + '' + response.description[i];
+					}
+					$('#more-text-description').html(text);
+					$('#see-more-description').removeClass('invisible-component');
+				} else {
+					$('#part-text').html(response.description);
+				}
+			}
+		});
+		data_page('/page/posts/numbers/' + $('#page_ident').val(), 1);
+		data_page('/page/posts/reactions/', 2);
+		data_page('/page/posts/followers/', 3);
+		data_page('/page/following/ami', 4);
+
+		function data_page(routing, ident) {
+			$.ajax({
+				url: routing,
+				type: 'get',
+				data: {'ident' : $('#page_ident').val()},
+				dataType: 'json',
+				success:function(response){
+					if (ident == 1) {
+						$('#qtd-posts').text(response.qtd);
+					}
+					if (ident == 3) {
+						console.log(response.qtd);
+						$('#qtd-followers').text(response.qtd);
+					}
+					if (ident == 2) {
+						$('#qtd-reactions').text(response.qtd);
+					}
+					if (ident == 4) {
+						$('#btn_seguir').text(response.qtd);
+						$('#more-option-btn-page').attr('src', route + '/css/uicons/' + response.icon);
+						$('#more-option-btn-page').removeClass('invisible-component');
+						if (response.owner) {
+							$('#add-post-label-ident').removeClass('invisible-component');
+							$('#add-cover').removeClass('invisible-component');
+						} else {
+							$('#add-post-label-ident').remove();
+							$('#add-cover').remove();
+						}
+						if (response.state) {
+							$('#btn_seguir').addClass('no-following');
+						} else {
+							$('#btn_seguir').removeClass('no-following');
+						}
+						$.each(response.class, function(key, data) {
+							//$('#a-btn-flw-edt').addClass(data);
+							$('#btn_seguir').addClass(data);
+							//$('#btn_follwing_container').addClass(data);
+						});
+					}
+				}
+			});	
+		}	
+	}
+
 	if($('#profile-container-id').val()){
 		$.ajax({
 			url: '/get_nine_videos_perfil',
@@ -21,12 +220,16 @@ $(document).ready(function () {
 				console.log(response);
 				$.each(response, function(key, data){
 					if (data.formato_id == 1) {
-						$('#img-post-page-' + key).remove();
-						$('#video-post-page-' + key).attr('src', route + '/storage/video/page/' + data.file);
+						$('#img-post-page-' + key).addClass('invisible-component');
+						document.getElementById('video-post-page-' + key).preload = 'metadata';
+						$('#video-post-page-' + key).attr('src', route + '/storage/video/page/' + data.file + '#t=5,10');
 						$('#video-post-page-' + key).removeClass('invisible-component');
+						$('#video-post-page-' + key).addClass('video-page-component');
 					}
 					$('#a-post-component-' + key).attr('href', route + '/post_index/' + data.uuid);
+					$('#a-post-component-' + key).attr('id', 'a-post-component_' + data.uuid);
 				});
+				$('#video-loaded-profile-read').val(1);
 				if (true) {
 					$('#video-profile-icon-profile').attr('src', route + '/css/uicons/video_profile_liked.png');
 				}
@@ -82,7 +285,7 @@ $(document).ready(function () {
 			console.log(response);
 			if (!response.state) {
 			} else {
-				$('#alert-info-about-us-2').remove();
+				$('#alert-info-about-us-1').remove();
 				$('#alert-info-about-us-9').remove();
 			}
 		}
@@ -110,7 +313,7 @@ $(document).ready(function () {
 					$.each(response[0], function(key, data) {
 						console.log(data.tipo_relacionamento);
 						component = '<label for="choose-type-relationship" id="choosed-type-relationship_' + data.tipo_relacionamento_id 
-						+ '" class="choosed-type-relationship" style="display: block;"><h1 class="relationship-type-item" id="choosed-type-relationship-text_' + data.tipo_relacionamento_id + '">' + data.tipo_relacionamento + '</h1></label>';
+						+ '" class="choosed-type-relationship relationship-type-item-selected" style="display: block;"><h1 class="relationship-type-item relationship-type-item-selected" id="choosed-type-relationship-text_' + data.tipo_relacionamento_id + '">' + data.tipo_relacionamento + '</h1></label>';
 						$('#tipo_relac_id').append(component);
 					});
 					$('#checked-load').val(1); 
@@ -243,6 +446,14 @@ $(document).ready(function () {
 					data: {'id': $('#ident-profile-id').val(), 'genre' : $('#ident-genre').val()},
 					dataType: 'json',
 					success: function (response) {
+						//console.log(response);
+						if (response.payment) {
+							$('#relationship-requests').remove();
+							$('#name-requested').text($('#profille-name').text())
+							$('#relationship-requests-payment').removeClass('invisible-component');
+						} else {
+							$('#relationship-requests-payment').remove();
+						}
 						$('#btn-profile-redirect').removeClass(response.addClass);
 						$('#option-btn-profile').addClass(response.addClass);
 						if (response.my_profile) {
@@ -261,20 +472,32 @@ $(document).ready(function () {
 							$('#add-edit-profile-owner').remove();
 						}
 						console.log(response);
+						if (response.reject) {
+							$('#btn-profile-redirect').attr('href', route + '' + response.reject);
+						}
 						if (response.relationship) {
 							$('#relationship-selected-type-profile').text(response[0].relationship + ' ');
 							$('#spouse-profile').text(response[0].spouse_name + ' ' + response[0].spouse_apelido);
 							$('#spouse-profile').attr('href', route + '/profile/' + response[0].spouse_uuid);							
 						}
 						if (response.relationship_request) {
+							$('#btn-request-profile').addClass('accept-confirm');
+							$('#uuid_has_relationship').val(response.reject.split('/')[3]);
 							$('#btn-request-profile').text('Aceitar Pedido');
 							$('#button-request-profile').text('Rejeitar');	
 							$('#options-profile-mobile-user-log').addClass('request-option-active');
+							$('#btn-profile-redirect-2').attr('href', route + '' + response.reject);
+							//$('#btn-profile-redirect-1').attr('href', route + '' + response.accept);
+							$('#btn-profile-redirect-1').addClass('nothing');
 							$('#options-profile-btn-edit-profile').remove();
 							$('#profile-options-button-1').removeClass('invisible-component');
 							$('#profile-options-button-2').removeClass('invisible-component');			
 						} else {
-								
+							$('#uuid_has_relationship').remove();
+						}
+						if (response.relationship_ident) {
+							$('#proof-file-send').val(response.relationship_ident);
+							$('#notificacao').val(response.notification);
 						}
 					}
 				});
@@ -283,8 +506,15 @@ $(document).ready(function () {
         }
     });
     let id;
+    if ($('#search-checked').val()) {
+    	$('#search-icon-footer').attr('src', route + '/css/uicons/search_focus.png');
+    };
 	page_no_following();
+    if ($('#notification-checked').val()) {
+    	$('#notify-icon-footer').attr('src', route + '/css/uicons/notification_checked.png');
+    };
     if ($('#home-page-checked').val()) {
+    	$('#home-icon-footer').attr('src', route + '/css/uicons/home_focus.png');
     	$.ajax({
 		    url: '/home/destaques',
 		    type: 'get',
@@ -315,7 +545,8 @@ $(document).ready(function () {
 		    				if (data.page_foto != null) {
 				    			$('#li-component-stories-cover-video-' + key).attr('src', route + "/storage/img/page/" + data.page_foto);
 				    		}
-				    		if (window.innerWidth > 540) {
+				    		if (window.innerWidth > 540 && key < 5) {
+				    			document.getElementById('li-component-stories-video-post-' + key).preload = 'metadata';
 				    			$('#li-component-stories-video-post-' + key).attr('src', route + "/storage/video/page/" + data.file);
 				    		}
 
@@ -350,18 +581,18 @@ $(document).ready(function () {
 		   		$('#p-post-' + key).removeClass('invisible-component');
 		    }
 		    $('#loader_button_' + key).addClass('invisible-component');
+			$('#has-video-' + key).attr('id', 'has-video_' + data.uuid);
 		    if (data.formato_id == 1) {
 		    	$('#video-post-' + key).removeClass('invisible-component');
 		    	$('#post-cover-post-index-' + key).addClass('invisible-component');
 		    	$('#m_post-' + key).addClass('getvideo');
 		    	$('#video_' + key).attr('type', 'video/' + data.file.split('.')[data.file.split('.').length - 1]);
 		    	$('#vid-' + key).val(route + "/storage/video/page/" + data.file);
-		    	if (key == 0) {$('#video_' + key).attr('src', route + "/storage/video/page/" + data.file);}
+		    	//if (key == 0) {$('#video_' + key).attr('src', route + "/storage/video/page/" + data.file);}
 		    	//$('#video-post-link-' + key).attr('src', route + "/storage/video/page/" + data.file);
 		    	$('#video-post-link-' + key).attr('id', 'video-post-link_' + data.uuid);
 			    $('#video-post-' + key).attr('id', 'video-post_' + data.uuid);
 		   		$('#video_' + key).attr('id', 'video_' + data.uuid);
-				$('#has-video-' + key).attr('id', 'has-video_' + data.uuid);
 			    $('#vid-' + key).attr('id', 'vid_' + data.uuid);
 		    	$('#play_button_' + key).removeClass('invisible-component');
 		    	$('#loader_button_' + key).attr('id', 'loader_button_' + data.uuid);
@@ -370,12 +601,18 @@ $(document).ready(function () {
 		    	$('#video-post-time-all-' + key).attr('id', 'video-post-time-all-' + data.uuid);
 		    }
 		    if (data.formato_id == 2) {
-		   		$('#post-cover-post-index-' + key).removeClass('post-cover-imgless');
+		   		$('#post-cover-post-index-' + key).addClass('post-cover-imgless');
 		    	$('#video-post-' + key).addClass('invisible-component');
-		    	$('#cover-post-index-' + key).attr('src', route + "/storage/img/page/" + data.file);
+		    	//$('#cover-post-index-' + key).attr('src', route + "/storage/img/page/" + data.file);
+				$('#cover-post-load-' + key).val(route + "/storage/img/page/" + data.file);
+				$('#cover-post-load-' + key).attr('id', 'cover-post-load_' + data.uuid);
+		    	$('#m_post-' + key).addClass('getcover');
+		    	$('#cover-post-index-' + key).addClass('invisible-component');
 		    }
 
 		    //console.log('uuid ' + data.uuid);
+		    $('#target-option-post-i-' + key).attr('id', 'target-option-post-i_' + data.uuid);
+		    $('#target-option-post-' + key).attr('id', 'target-option-post_' + data.uuid);
 		    $('#page-name-post-' + key).text(data.page_nome);
 		    $('#time-posted-' + key).text(data.created_at);
 		    $('#a-page-name-post-' + key).attr('href', route + '/couple_page/' + data.page_uuid);
@@ -434,13 +671,13 @@ $(document).ready(function () {
 		  	}
 		  	$('#comment-send-profile-' + key).attr('src', (document.getElementById('user-account-container-img-id').src));
     		
-			if (key >= 2) {
-				$('#alert-info-about-us-2').removeClass('invisible-component');
+			if (key >= 1) {
+				$('#alert-info-about-us-1').removeClass('invisible-component');
 			}
 			if (key >= 5) {
 				$('#alert-info-about-us-5').removeClass('invisible-component');
 				$('#btn-alert-info-5').text('Saber mais');
-			    $('#content-p-5').text('Como ganhar dinheiro usando o tassumir? Veja algumas dicas importantes pra si.')
+			    $('#content-p-5').text('Como ganhar dinheiro usando o tassumir?')
 			}
 			if (key >= 9) {
 				$('#alert-info-about-us-9').removeClass('invisible-component');
@@ -535,6 +772,42 @@ $(document).ready(function () {
 			suggest_page();
 			$('#sugest_index_page').removeClass('invisible-component');
 		}
+		$.ajax({
+			url: 'page/content/videos/',
+			type: 'get',
+			data: {'id' : 0, 'uuid' : $('#page_ident').val()},
+			dataType: 'json',
+			success: function (response) {
+				console.log(response);
+				$.each(response, function(key, data){
+					$('#a-video-page-target-' + key).attr('href', route + '/post_index/' + data.uuid);
+					$('#a-video-page-target-' + key).attr('id', 'a-video-page-target_' + data.uuid);
+					$('#post-video-container-page-video-' + key).attr('src', route + '/storage/video/page/' + data.file);
+					$('#post-video-container-page-' + key).removeClass('invisible-component');
+					$('#post-video-container-page-' + key).addClass('get-page-video');
+					$('#post-video-container-page-' + key).attr('id', 'post-video-container-page_' + data.uuid);
+					$('#post-video-container-page-video-' + key).attr('id', 'post-video-container-page-video_' + data.uuid);
+				});
+				
+			}
+		});
+		//alert($('#page_ident').val());
+		$.ajax({
+			url: '/page/spouses/name',
+			type: 'get',
+			data: {'id' : $('#page_ident').val()},
+			dataType: 'json',
+			success: function (response) {
+				console.log('spouses');
+				console.log(response);
+				if (response.state) {
+					$('#spouse-masc').text(response.homem);
+					$('#spouse-fem').text(response.mulher);
+					$('#relationship-type-spouse').text(' - ' + response.relacionamento);
+					$('#spouses-component').removeClass('invisible-component');
+				}
+			}
+		});
 	}
     $('.sugest_component_div').click(function (e) {
     	id = e.target.id.split('-')[4];
@@ -632,6 +905,25 @@ $(document).ready(function () {
 				$('#loader_button_' + id).addClass('invisible-component');	
 			}
 	    }
+	    getcover = document.getElementsByClassName('getcover');
+	    for (var i = 0; i <= getcover.length - 1; i++) {
+		    id = getcover[i].id.split('_')[2];
+		    if (window.innerHeight > 680) {
+	    		if ($('#m_post_' + id).offset().top < 775 && $('#has-video_' + id).val() != 'ok') {
+		    		$('#cover-post-index_' + id).attr('src', $('#cover-post-load_' + id).val());
+		    		$('#post-cover-post-index_' + id).removeClass('post-cover-imgless');
+		    		$('#cover-post-index_' + id).removeClass('invisible-component');
+		    		$('#has-video_' + id).val('ok');
+		    	}
+	    	} else {
+				if ($('#m_post_' + id).offset().top < 410 && $('#has-video_' + id).val() != 'ok') {
+					$('#cover-post-index_' + id).attr('src', $('#cover-post-load_' + id).val());
+		    		$('#post-cover-post-index_' + id).removeClass('post-cover-imgless');
+		    		$('#cover-post-index_' + id).removeClass('invisible-component');
+					$('#has-video_' + id).val('ok');
+				}
+	    	}
+	    }
     }, 10);
     setInterval(function (e) {
     	let main = $('.main-container').offset();
@@ -683,6 +975,7 @@ $(document).ready(function () {
 	    		if (window.innerHeight > 680) {
 	    			if ($('#m_post_' + id).offset().top < 300 && $('#has-video_' + id).val() != 'ok') {
 		    			$('#video-post-link_' + id).attr('src', link_video);
+		    			document.getElementById('video_' + id).preload = 'metadata';
 		    			$('#video_' + id).attr('src', link_video);
 		    			$('#has-video_' + id).val('ok');
 		    			videos(id);
@@ -748,13 +1041,7 @@ $(document).ready(function () {
     		
 		});
     })
-    let class_name;
-    $('.seguir-a').click(function (e) {
-    	e.preventDefault();
-    	id = e.target.id.split('_')[1];
-    	$('#loader-id-icon-post_' + id).removeClass('invisible-component');
-    	$('#loader-id-icon-post-index_' + id).removeClass('invisible-component');
-    	//alert(id);
+    function seguir_page(id, e, type){
     	$.ajax({
 		    url: '/page/follow',
 		    type: 'get',
@@ -762,16 +1049,30 @@ $(document).ready(function () {
 		    dataType: 'json',
 		    success:function(response){
 		    	console.log(response);
-		    	class_name = "seguir-a-class_" + e.target.id.split('_')[1];
-		    	seguir_a = document.getElementsByClassName("seguir-a-class_" + id).length;
-		    	for (var i = document.getElementsByClassName(class_name).length - 1; i >= 0; i--) {
-		    		document.getElementsByClassName(class_name)[i].classList.add('invisible-component');
+		    	if (type == 1) {
+			    	class_name = "seguir-a-class_" + e.target.id.split('_')[1];
+			    	seguir_a = document.getElementsByClassName("seguir-a-class_" + id).length;
+			    	for (var i = document.getElementsByClassName(class_name).length - 1; i >= 0; i--) {
+			    		document.getElementsByClassName(class_name)[i].classList.add('invisible-component');
+			    	}
+			    	$('#loader-id-icon-post_' + response.uuid).addClass('invisible-component');
+	    			$('#loader-id-icon-post-index_' + response.uuid).addClass('invisible-component');		    		
 		    	}
-		    	$('#loader-id-icon-post_' + response.uuid).addClass('invisible-component');
-    			$('#loader-id-icon-post-index_' + response.uuid).addClass('invisible-component');
+		    	if (type == 2) {
+		    		alert('entrou');	    		
+		    	}
 		    }
     		
 		});
+    }
+    let class_name;
+    $('.seguir-a').click(function (e) {
+    	e.preventDefault();
+    	id = e.target.id.split('_')[1];
+    	$('#loader-id-icon-post_' + id).removeClass('invisible-component');
+    	$('#loader-id-icon-post-index_' + id).removeClass('invisible-component');
+    	//alert(id);
+    	seguir_page(id, e, 1);
     	//alert();
     });
   	text = "";
@@ -852,15 +1153,42 @@ $(document).ready(function () {
 			}
 		});
     });
+    $('#target-options').click(function () {
+    	
+    });
     //$('#reaction-id-a-')
 });
 window.addEventListener('load', function () {
 	//alert('oiii');
 });
 document.addEventListener('click', function (e) {
+	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[$('#host').val().split('/').length - 2];
+	if (e.target.className.indexOf('relationship-type-item-selected') > -1) {
+		any_id = e.target.id.split('_')[1];
+		$.ajax({
+			url : '/relationship/paymment/',
+			type : 'get',
+			data : {'ident' : any_id},
+			dataType : 'json',
+			success: function (response) {
+				console.log(response);
+				$('#price-type-relationship').text('Kz ' + response.preco + ',00');
+			}
+		});
+	}
+	if (e.target.className.indexOf('paymment-to-do') > -1) {
+		$('#target-proof').attr('checked', true);
+	}
 	if (e.target.className.indexOf('target-relationship-assumir') > -1) {
-		document.getElementById('target-invited-relationship').checked = true;
+		//document.getElementById('target-invited-relationship').checked = true;
 		e.preventDefault();
+		document.getElementById('target-alert-tassumir').checked = true;
+		$('#uuid_user_assumir').val($('#ident-profile-id').val());
+		$('#search-container-user-assumir').addClass('invisible-component');
+		$('#choose-type-relationship-id').removeClass('invisible-component');
+		$('#assumir-relationship-user-desfazer').addClass('invisible-component');
+		$('#name-search-data-selected').text($('#profille-name').text());
+		$('#selected-user-assumir').removeClass('invisible-component');
 	}
 	if (e.target.className.indexOf('target-message-alert') > -1) {
 		$('#concluir_file_ok').addClass('invisible-component');
@@ -868,13 +1196,59 @@ document.addEventListener('click', function (e) {
 		$('#alert-description').text('Brevemente você poderá interagir por mensagens no Tassumir... Quando estiver disponível, anunciaremos pra você. Estamos desenvolvendo com muito cuidado para poder proporcionar a você uma experiência melhor e mais PRIVADA no Tassumir. Por favor, AGUARDE...');
 		document.getElementById('target-alert-post-denied').checked = true;
 	}
+	if (e.target.className.indexOf('accept-confirm') > -1) {
+		e.preventDefault();
+		document.getElementById('options-invited-pop-up').checked = true;
+		any_id = $('#uuid_has_relationship').val();
+		$.ajax({
+		    url: '/relationship/confirm/' + any_id,
+		    type: 'get',
+		    data: {'uuid' : any_id},
+		    dataType: 'json',
+		    success:function(response){
+		    	console.log('responda ' + response.answer);
+		    	$('#textr').text(response.answer);
+		    	$('#accept_relacd_ident').val(any_id);
+		    	$('#load_accpet').addClass('invisible-component');
+		    	document.getElementById('accept_form').setAttribute('action', route + '/relationship/accept/');
+		    }
+		});
+	}
+	function seguir_page(id){
+    	$.ajax({
+		    url: '/page/follow',
+		    type: 'get',
+		    data: {'uuid' : id},
+		    dataType: 'json',
+		    success:function(response){
+		    	console.log(response);
+		    	$('#btn_seguir').text(response.text);
+		    	if (response.state) {
+		    		$('#btn_seguir').removeClass('no-following');
+		    	} else {
+		    		$('#btn_seguir').addClass('no-following');
+		    	}
+		    }
+    		
+		});
+    }
+	if (e.target.className.indexOf('seguir-page') > -1) {
+		e.preventDefault();
+		$('#btn_seguir').text('...');
+		seguir_page($('#page_ident').val());
+	}
 	if (e.target.className.indexOf('relationship-type-item') > -1) {
 		any_id = e.target.id.split('_')[1];
 		$('#type-data-selected').text($('#choosed-type-relationship-text_' + any_id).text());
+		$('#type-relationship-choosed').text($('#choosed-type-relationship-text_' + any_id).text());
 		$('#selected-relationship-assumir').removeClass('invisible-component');
 		$('#choose-type-relationship-id').addClass('invisible-component');
 		$('#name-page-container').removeClass('invisible-component');
 		$('#relationship-type-tassumir').val(any_id);
+	}
+	if (e.target.className.indexOf('pop-up-option') > -1) {
+		e.preventDefault();
+		document.getElementById('target-option-post').checked = false;
 	}
 	if (e.target.className.indexOf('nothing') > -1) {
 		e.preventDefault();

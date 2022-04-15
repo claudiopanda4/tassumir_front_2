@@ -54,6 +54,18 @@ class SeguidorController extends Controller
                     'identificador_id_seguindo' =>  $identificador_id_seguindo,
                     'created_at'=> $auth->dat_create_update(),
                 ]);
+            } else {
+                DB::table('seguidors')->where([
+                  ['identificador_id_seguida', '=', $identificador_id_seguida],
+                  ['identificador_id_seguindo', '=', $identificador_id_seguindo]
+              ])->delete();
+                DB::commit(); 
+                return response()->json([
+                    'state' => true, 
+                    'identificador_id_seguida' => $identificador_id_seguida, 
+                    'identificador_id_seguindo' => $identificador_id_seguindo,
+                    'text' => 'Seguir',
+                ]);
             }
             
             DB::commit();  
@@ -65,6 +77,7 @@ class SeguidorController extends Controller
                 //'sql' => $sql,
                 'id' => $id,
                 'seguir' => $seguir,
+                'text' => 'Não Seguir',
             ]);        
         } catch (Exception $e) {
             DB::beginTransaction();
