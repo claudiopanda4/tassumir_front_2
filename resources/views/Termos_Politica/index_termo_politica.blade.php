@@ -18,7 +18,7 @@
 
    	<title>Termos e Politica</title>
    </head>
-   <body class="container-main">
+   <body class="container-main-t" >
    		
 <div class="body-pop-up content-full-scroll" >
 	<header class="header-main header-main-component clearfix" >
@@ -90,18 +90,11 @@
 				</a>
 
 			</div>
-			<!--<div class="div-1-info">
-
-				<a href="#" class="div-a">
-				<h3 class="the-font color-orange">Politica de Eventos</h3>
-				<span class="text-white span-text">Informações publicações</span>
-				</a>
-
-			</div>-->
+		
 		</div>
 		<div class="col-md-4 text-white card-right-column" style="border-left: 2px solid #800080;">
 			<span class="justify-content-start span-text text-white span-subtitle" >
-				Seja bem vindo à Tássumir produto da Be Able, lda.</span><br/><br/>
+				Seja bem vindo à Tassumir produto da Be Able, lda.</span><br/><br/>
 
 					<span class="span-text text-white" style="font-size: 11pt;">
 
@@ -118,7 +111,7 @@
 				
 					<span class="span-text text-white" style="font-size: 11pt;">
 								
-						Não cobramos pelo acesso às consultas de informações no Tássumir. Em vez disso, cobramos no registo de relacionamentos conjugais e pessoas singulares ou colectivas também pagam para mostrarmos anúncios de seus produtos e serviços. Ao usar Tássumir, você concorda que podemos mostrar anúncios dessas pessoas.
+						Não cobramos pelo acesso às consultas de informações no Tassumir. Em vez disso, cobramos no registo de relacionamentos conjugais e pessoas singulares ou colectivas também pagam para mostrarmos anúncios de seus produtos e serviços. Ao usar Tassumir, você concorda que podemos mostrar anúncios dessas pessoas.
 					</span>
 				
 
@@ -139,24 +132,9 @@
 		</div>
 	</div>
 
-	<div >
+	<div>
 
-		<img id="btn" src="{{ asset('css/uicons/caret-down.png') }}" style=" 
-		  position: fixed;
-		  bottom: 20px;
-		  right: 30px;
-		  z-index: 9999;
-		  border: none;
-		  outline: #800080;
-		  background-color: #800080;
-		  color: #800080;
-		  cursor: pointer;
-		  padding: 10px;
-		  border-radius: 25px;
-		  width: 48px;
-		  height: 48px;
-		 
-" >
+		<img id="btn" src="{{ asset('css/uicons/ios-arrow-up-8-16.png') }}" class="btn-sroll-up" class="btn">
 
 	</div>
 
@@ -171,17 +149,33 @@
 
  <script>
 
+ 	$(document).ready(function(){
+		
+		$(window).scroll(function (){
+
+			if($(this).scrollTop(40)){
+
+						$('#btn').fadeIn();
+
+					}else{
+
+						$('#btn').fadeOut();
+					}
+
+		});
+
+ 		/*window.onload = function(){
+
+ 			alert("hr");
+ 		}*/
+
  	$('#btn').on('click',function() {
 
- 		alert("teste");
-
- 	  	let tm = $("body").scrollTop();
-
- 	  	if(tm > 0){
- 	  		alert("tamanho maior");
- 	  	}else{
- 	  		alert("menor");
- 	  	}
+ 		$('html,body').animate({
+ 			scrollTop:0
+ 		},800);
+ 		 	alert("oi");
+ 	});
  	
 
  	});
