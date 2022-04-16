@@ -25,7 +25,7 @@
             </ul>
 		</header>
 		
-		<aside class="aside aside-left mt-2" >
+		<!--<aside class="aside aside-left mt-2" >
 			<nav>
 				<ul class="clearfix" >
 				<li class="li-component-aside">
@@ -41,7 +41,7 @@
 				</li>
 			</ul>	
 			</nav>
-		</aside>
+		</aside>-->
 
 		<div class="main" style="margin-top:10%;">
 			

@@ -90,48 +90,6 @@ body {
     padding: 20px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #body-login,
 #body-reg {
     background-color: #3b3b3b;  
@@ -446,6 +404,14 @@ body {
     width: 100vw;
     height: auto;
     overflow: hidden;
+}
+.container-main-t {
+    background-color: #343a40;
+    background-color: #18191a;
+    width: 100vw;
+    height: auto;
+  
+    
 }
 ::-webkit-scrollbar {
     width: 8px;
@@ -4129,10 +4095,27 @@ label[for="hugo"]{
 #more-description-page {
     background-color: #18191a;
     border-radius: 0;
-    padding: 5px 0;
-    margin: auto;
-    max-width: 500px;
+
 }
+.btn-sroll-up{
+
+      position: fixed;
+          bottom: 20px;
+          right: 30px;
+          z-index: 9999;
+          border: none;
+          outline: #800080;
+          background-color: #800080;
+          color: #fff;
+          cursor: pointer;
+          padding: 10px;
+          border-radius: 25px;
+          width: 48px;
+          height: 48px;
+          display: none;
+}
+
+ 
 #see-more-description {
     color: #3490dc;
     font-weight: bolder;
