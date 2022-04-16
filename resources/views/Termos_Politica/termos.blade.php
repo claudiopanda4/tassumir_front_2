@@ -25,7 +25,7 @@
             </ul>
 		</header>
 		
-		<aside class="aside aside-left mt-2" >
+		<!--<aside class="aside aside-left mt-2" >
 			<nav>
 				<ul class="clearfix" >
 				<li class="li-component-aside">
@@ -41,18 +41,18 @@
 				</li>
 			</ul>	
 			</nav>
-		</aside>
+		</aside>-->
 
 		<div class="main" style="margin-top:10%;">
 			
 			<h3 class="the-font color-orange">Termos de Serviço</h3>
 			<span class="span-text color-white" style="justify-content:flex-start;">
 				
-				O Tassumir é um conjunto de tecnologias e serviços desenvolvidas pela Be Able, lda para que as pessoas possam se conectar umas às outras, criar comunidades e expandir seus negócios. Estes Termos regem efectivamente o uso do Tássumir.
+				O Tassumir é um conjunto de tecnologias e serviços desenvolvidas pela Be Able, lda para que as pessoas possam se conectar umas às outras, criar comunidades e expandir seus negócios. Estes Termos regem efectivamente o uso do Tassumir.
 				
 			</span>
 			<span class="span-text color-white" style="justify-content:flex-start;">
-				Não cobramos pelo acesso às consultas de informações no Tassumir. Em vez disso, cobramos no registo de relacionamentos conjugais e pessoas singulares ou colectivas também pagam para mostrarmos anúncios de seus produtos e serviços. Ao usar Tássumir, você concorda que podemos mostrar anúncios dessas pessoas.
+				Não cobramos pelo acesso às consultas de informações no Tassumir. Em vez disso, cobramos no registo de relacionamentos conjugais e pessoas singulares ou colectivas também pagam para mostrarmos anúncios de seus produtos e serviços. Ao usar Tassumir, você concorda que podemos mostrar anúncios dessas pessoas.
 			</span>
 
 			<ul style="">

@@ -410,7 +410,7 @@ body {
     background-color: #18191a;
     width: 100vw;
     height: auto;
-    overflow: scroll;
+  
     
 }
 ::-webkit-scrollbar {

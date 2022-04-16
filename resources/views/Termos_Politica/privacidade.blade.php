@@ -25,7 +25,7 @@
             </ul>
 		</header>
 		
-		<aside class="aside aside-left mt-2" >
+		<!--<aside class="aside aside-left mt-2" >
 			<nav>
 				<ul class="clearfix" >
 				<li class="li-component-aside">
@@ -41,14 +41,14 @@
 				</li>
 			</ul>	
 			</nav>
-		</aside>
+		</aside>-->
 
 		<div class="main" style="margin-top:10%;">
 			
 			<h3 class="the-font color-orange">Política de Dados</h3>
 			<span class="span-text color-white" style="justify-content:flex-start;">
 				
-				Esta política descreve as informações que tratamos para suportar o Tássumirr e outras funcionalidades e produtos oferecidos pela Be Able, Lda.
+				Esta política descreve as informações que tratamos para suportar o Tassumirr e outras funcionalidades e produtos oferecidos pela Be Able, Lda.
 				
 			</span>
 		

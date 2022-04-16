@@ -153,12 +153,12 @@
 		
 		$(window).scroll(function (){
 
-			if($(this).scrollTop(40)){
+			if($(this).scrollTop()>15){
 
 						$('#btn').fadeIn();
 
 					}else{
-
+							alert("hei");
 						$('#btn').fadeOut();
 					}
 
@@ -171,7 +171,7 @@
 
  	$('#btn').on('click',function() {
 
- 		$('html,body').animate({
+ 		$(window).animate({
  			scrollTop:0
  		},800);
  		 	alert("oi");
