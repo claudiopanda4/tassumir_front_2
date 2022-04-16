@@ -20,6 +20,38 @@ class PostController extends Controller
         $posts = $this->posts();
     }
 
+    public function prototype_view(Request $request){
+        $page_current = 'none';
+        return view('pagina.prototype', compact('page_current'));
+    }
+
+    public function thumbnail(Request $request){
+        $page_current = 'none';
+        //dd($_FILES['file']['tmp_name'][0]);
+        //dd($_FILES['file']['name']);
+        //foreach ($_FILES['file']['name'] as $key => $value) {
+            $path = "";
+            $path = $path . basename($_FILES['file']['name'][0]);
+            //dd(file_exists($_FILES['file']['tmp_name'][0]));
+            //dd($path);
+            if (move_uploaded_file($_FILES['file']['tmp_name'][0], $path)) {
+                echo "The file ".basename($_FILES['file']['name'][0]).' has been updated';
+            } else {
+                echo "There was an error uploading the file, please try again";
+            }
+
+            $data = $request->thumb;
+            $path_thumbs = $request->path;
+            //dd($path_thumbs);
+            //$file = 'thumbs/thumb'.time().'.png';
+            $file = 'file'.time().'.png';
+            $uri = substr($data, strpos($data, ',') + 1);
+            file_put_contents($file, base64_decode($uri));
+        //}
+        //$request->file('pagePicture')->storeAs('public/img/page', $file_name);
+        //return view('pagina.prototype', compact('page_current'));
+    }
+
     public function posts(Request $request) {
 
         $init = 0;
@@ -403,13 +435,12 @@ class PostController extends Controller
 
             $post = DB::select('select * from posts where uuid = ?', [$post_uuid]);
             $view = DB::select('select * from views where post_id = ? AND conta_id = ?', [$post[0]->post_id, $conta_id]);
-            if (sizeof($view) == 0) {
+            $save_video = false;
+            if (sizeof($view) < 1) {
               /**/
                 $result = DB::insert('insert into views(uuid, post_id, ip_view, conta_id, state_views_id, created_at) values(?, ?, ?, ?, ?, ?)',
                 [$uuid, $post[0]->post_id, "", $conta_id, 2, $controll->dat_create_update()]);
-            }
-            $save_video = false;
-            if ($request->video_add) {
+            } elseif ($request->video_add && $view[0]->state_views_id != 3) {
                 if (sizeof($view) == 1) {
                     DB::table('views')
                         ->where('view_id', $view[0]->view_id)

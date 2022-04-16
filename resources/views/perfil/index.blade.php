@@ -99,10 +99,10 @@
                             </label>
                         </div>
                 </div>
-                <div class="inform-profile">
+                <div class="inform-profile" id="inform-profile-detail-couple">
                     <h3 id="civil-state"><span id="relationship-selected-type-profile"></span><a id="spouse-profile" href="" class="a-link-detail-profile"></a></h3>
                 </div>
-                <div class="inform-profile">
+                <div class="inform-profile" id="inform-profile-detail-description">
                     <p class="description-couple" style="width: 100%;">
                         <span id="description-prof-">{{$descricao}}</span><a href="" id="see-more-description-profile" class="a-link-detail-profile invisible">ver mais</a></p>
                         <input type="hidden" id="description-all" name="">
@@ -137,6 +137,7 @@
                     <!--<li><a href="?post-container-post=saved"><i class="far fa-bookmark center icon-hover-option-profile" style="font-size: 18px;"></i><h1 class="menu-option-profile"></h1></a></li>-->
                 </ul>
             </nav>
+            
             <div class="post-video-container-page post-page-container clearfix">
                 <?php $ver = 1; $key = 0; while ($key < 126) {?>
                     <a href="" id=<?php echo 'a-post-component-'.$key; ?>>
