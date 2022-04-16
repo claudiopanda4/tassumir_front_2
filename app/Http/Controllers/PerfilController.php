@@ -242,20 +242,40 @@ class PerfilController extends Controller
             dd('erro');
         }
     }
+    public function get_genre()
+    {
+        try {
+          $page_current = 'profile';
+          $uuid = $id;
+          $user = DB::select('select uuid, descricao, apelido, nome, genero, foto from contas where uuid = ?', [$id]);
+          $descricao = $user[0]->descricao;
+          $foto = $user[0]->foto;
+          $genero = $user[0]->genero;
+          $nome_completo = $user[0]->nome . ' ' . $user[0]->apelido;
+          return view('perfil.index', compact('page_current', 'genero', 'descricao', 'uuid', 'nome_completo', 'foto'));
+        } catch (Exception $e) {
+            dd('erro');
+        }
+    }
 
     public function marital_status(Request $request){
         $conta_id = Auth::user()->conta_id;
         $uuid = $request->id;
-        $result = DB::select("select (select conta_id from contas where uuid = ?) as id, (select genero from contas where uuid = ?) as genre, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select conta_id from contas where conta_id = pages.conta_id_a), (select conta_id from contas where conta_id = pages.conta_id_b)) as conta_id, if(count(pages.tipo_page_id) > 0, (select tipo from tipo_pages where tipo_page_id = pages.tipo_page_id), 'not') as relationship, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select uuid from contas where conta_id = pages.conta_id_b), (select uuid from contas where conta_id = pages.conta_id_a)) as spouse_uuid, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select nome from contas where conta_id = pages.conta_id_b), (select nome from contas where conta_id = pages.conta_id_a)) as spouse_name, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select apelido from contas where conta_id = pages.conta_id_b), (select apelido from contas where conta_id = pages.conta_id_a)) as spouse_apelido from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?) or pages.conta_id_b = (select conta_id from contas where uuid = ?) limit 1", [$uuid, $uuid, $uuid, $uuid, $uuid, $uuid, $uuid, $uuid]);
+        $result = DB::select("select (select count(*) from pages where conta_id_a = ? || conta_id_b = ?) as has_page, (select conta_id from contas where uuid = ?) as id, (select genero from contas where conta_id = ?) as genre_owner, (select genero from contas where uuid = ?) as genre, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select conta_id from contas where conta_id = pages.conta_id_a), (select conta_id from contas where conta_id = pages.conta_id_b)) as conta_id, if(count(pages.tipo_page_id) > 0, (select tipo from tipo_pages where tipo_page_id = pages.tipo_page_id), 'not') as relationship, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select uuid from contas where conta_id = pages.conta_id_b), (select uuid from contas where conta_id = pages.conta_id_a)) as spouse_uuid, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select nome from contas where conta_id = pages.conta_id_b), (select nome from contas where conta_id = pages.conta_id_a)) as spouse_name, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select apelido from contas where conta_id = pages.conta_id_b), (select apelido from contas where conta_id = pages.conta_id_a)) as spouse_apelido from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?) or pages.conta_id_b = (select conta_id from contas where uuid = ?) limit 1", [$conta_id, $conta_id, $uuid, $conta_id, $uuid, $uuid, $uuid, $uuid, $uuid, $uuid, $uuid]);
 
         $state_marital = $result[0]->relationship;
         $state = 'Editar Perfil';
         $my_profile = false;
         $rel_request = false;
+        $reject = false;
+        $accept = false;
+        $payment = false;
+        $notification = false;
+        
         if ($result[0]->id == $conta_id) {
           $my_profile = true;
         }
-
+        $relationship_request_id = false;
         $addClass = "";
         if ($state_marital == 'Nativa') {
           $state_marital = 'Tem um relacionamento com ';
@@ -275,8 +295,10 @@ class PerfilController extends Controller
             if ($result[0]->relationship == 'not') {
               $state = 'Solteiro';
               $addClass = "nothing";
-              if ($request->genre != $result[0]->genre) {
-                $state = 'Assumir';
+              if ($result[0]->genre_owner != $result[0]->genre) {
+                if ($result[0]->has_page < 1) {
+                  $state = 'Assumir';
+                }
                 $addClass = "target-relationship-assumir";
               } else {
                 if ($result[0]->genre != 'Masculino') {
@@ -286,10 +308,37 @@ class PerfilController extends Controller
             }
             if ($relationship_request->pedido) {
                 $state = 'Cancelar Pedido';
+                $addClass = "target-cancel-assumir";
+                $reject = '/relationship/cancel/' . $relationship_request->uuid;
+                $accept = '/relationship/accept/' . $relationship_request->uuid;
+                if ($relationship_request->estado_pedido == 2) {
+                  $state = 'Ver Resposta';
+                  $answer = '/relationship/cancel/' . $relationship_request->uuid;
+                }
             } else {
               $relationship_request = $this->relationship_request($conta_id, $result[0]->id);
-              if ($relationship_request->pedido) {
+              if ($relationship_request->pedido) {     
+                  $accept = '/relationship/accept/' . $relationship_request->uuid;             
+                  $reject = '/relationship/cancel/' . $relationship_request->uuid;
                   $rel_request = true;
+                  if ($relationship_request->estado_pedido == 2) {
+                    $rel_request = false;
+                    $state = 'Ver Resposta';
+                    if ($result[0]->id != $conta_id) {
+                      $state = 'Fazer Pagamento';
+                      $relationship_request_id = $relationship_request->id;
+                      $notification = $this->get_ident_notification( $relationship_request->id);
+                      $addClass = 'nothing paymment-to-do';
+                    }
+                  }
+                  if ($relationship_request->estado_pedido == 4) {
+                    $rel_request = false;
+                    $payment = true;
+                    if ($result[0]->id != $conta_id) {
+                      $state = 'Pagamento em Análise';
+                      $addClass = 'nothing';
+                    }
+                  }
               }
             }
 
@@ -307,31 +356,43 @@ class PerfilController extends Controller
           'relationship' => $relationship_details,
           'addClass' => $addClass,
           'auth' => $conta_id,
-          'auth 1' => $result[0]->conta_id,
+          'accept' => $accept,
+          'reject' => $reject,
           'relationship_request' => $rel_request,
+          'relationship_ident' => $relationship_request_id,
+          'notification' => $notification,
+          'payment' => $payment,
         ]);
     }
 
     public function relationship_request($id_pedida, $id_pedinte){
-      $result = DB::select('select uuid, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedida = ? and pedido_relacionamentos.conta_id_pedinte = ?', [$id_pedida, $id_pedinte]);
+      $result = DB::select('select uuid, pedido_relacionamento_id as id, estado_pedido_relac_id as estado_pedido, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedida = ? and pedido_relacionamentos.conta_id_pedinte = ?', [$id_pedida, $id_pedinte]);
       return $result[0];
     }
 
     public function relationship_requests(){
       $id_pedida = Auth::user()->conta_id;
-      $result = DB::select('select uuid, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedida = ?', [$id_pedida]);
+      $result = DB::select('select uuid, estado_pedido_relac_id, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedida = ? and estado_pedido_relac_id = 1', [$id_pedida]);
       $sizeof = sizeof($result) > 0 ? true : false;
       return response()->json([
         'state' => $result[0]->pedido,
+        'estado_pedido' => $result[0]->estado_pedido_relac_id,
       ]);
     }
 
     public function relationship_requests_pedinte(){
       $id_pedinte = Auth::user()->conta_id;
-      $result = DB::select('select uuid, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedinte = ?', [$id_pedinte]);
+      $result = DB::select('select uuid, (select tipo_contas_id from contas where conta_id = ?) as tipo_conta, if((select count(*) from pages where conta_id_a = ? || conta_id_b = ?) > 0, true, false) as relationship, estado_pedido_relac_id, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedinte = ?', [$id_pedinte, $id_pedinte, $id_pedinte, $id_pedinte]);
       $sizeof = sizeof($result) > 0 ? true : false;
+      if ($sizeof) {
+        $sizeof = $result[0]->pedido;
+        if (!$result[0]->pedido) {
+          $sizeof = $result[0]->relationship == true ? true : false;
+        }
+      }
       return response()->json([
-        'state' => $result[0]->pedido,
+        'state' => $sizeof,
+        'estado_pedido' => $result[0]->estado_pedido_relac_id,
       ]);
     }
 
@@ -669,6 +730,11 @@ class PerfilController extends Controller
         }
     }
 
+    public function get_ident_notification($id){
+      $id = DB::select('select notification_id from notifications where identificador_id_destino = (select identificador_id from identificadors where id = ? and tipo_identificador_id = 5)', [$id])[0]->notification_id;
+      return $id;
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -862,11 +928,7 @@ class PerfilController extends Controller
     {
         $auth = new AuthController();
         $this->Pedido_relac($request);
-        if (Auth::check() == true) {
-            $page_current = 'home_index';
-            return redirect()->route('home.index');
-        }
-        return redirect()->route('account.login.form');
+        return back();
     }
 
     public function Pedido_relac(Request $request)
@@ -971,8 +1033,6 @@ class PerfilController extends Controller
                     ->update(['id_state_notification' => 3]);
 
                     return redirect()->route('account.home.feed');
-
-
                 }
 
 

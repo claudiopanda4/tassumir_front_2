@@ -179,13 +179,13 @@
             <a href="{{route('account.home.feed')}}">
                 <li>
                     <!--<i class="fi-rr-home fa-20 f-footer"></i>-->
-                    <img src="{{asset('/css/uicons/home.png')}}" class="center img-26">
+                    <img id="home-icon-footer" src="{{asset('/css/uicons/home.png')}}" class="center img-26">
                 </li>
             </a>
             <a href="{{route('account.all.notifications')}}">
                 <li class="li-footer-menu">
                     <!--<i class="fi-rs-bell fa-20 f-footer"></i>-->
-                    <img src="{{asset('/css/uicons/notification.png')}}" class="center img-26">
+                    <img id="notify-icon-footer" src="{{asset('/css/uicons/notification.png')}}" class="center img-26">
                     <!--<h1 class="descript">Notificações</h1>-->
                     <div class="number-notification invisible-component br-10" id="number-notification-component-footer">
                         <div class="" id="number-notification-id-footer"></div>
@@ -207,17 +207,32 @@
             <a href="{{route('allSearch1.page')}}">
                 <li class="li-footer-menu">
                     <!--<i class="fi-rr-search fa-20 f-footer"></i>-->
-                    <img src="{{asset('/css/uicons/search.png')}}" class="center img-26">
+                    <img id="search-icon-footer" src="{{asset('/css/uicons/search.png')}}" class="center img-26">
                 </li>
             </a>
         </ul>
     </footer>
     </div>
 </body>
+<input type="checkbox" name="" id="target-profile-cover-full" class="invisible">
+<div class="pop-up" id="cover-profile-full-container">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; max-height: 90%; height: auto; margin: auto;">
+        <div>
+            <label for="target-profile-cover-full" id="target-profile-cover-full-ident">
+                <div class="cancel-box-component div-img">
+                    <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                </div>
+            </label>
+            <div class="">
+                <img id="profile-cover-full">
+            </div>
+        </div>
+    </div>
+</div>
 <input type="checkbox" name="" id="choose-type-relationship" class="invisible">
 <div class="pop-up" id="relationship-assumir-type-container">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto;">
-        <header class="pop-up-component-header pop-up-component-header-default header-height">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; max-width: 300px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height" style=" max-width: 298px;">
             <h1>Tipos de Relacionamentos</h1>
             <div class="container-pop-up-component-header">
                 <label for="choose-type-relationship">
@@ -238,8 +253,8 @@
 </div>
 <input type="checkbox" id="target-alert-tassumir">
 <div class="pop-up" id="relationship-container-invited">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; max-height: 90%; min-height: 220px;">
-        <header class="pop-up-component-header pop-up-component-header-default header-height">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; max-height: 90%; min-height: 220px; max-width: 300px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height" style="max-width: 295px;">
             <h1>Assumir o Relacionamento</h1>
             <div class="container-pop-up-component-header">
                 <label for="target-alert-tassumir">
@@ -295,7 +310,10 @@
                             <label for="choose-type-relationship" class="button-component inline-perc-1-r" style="margin-top: 10px; display: block;">
                                 <h1 id="assumir-item-type-relationship-selected" class="text-button-component button-assumir" style="font-size: 8px; text-transform: uppercase; min-width: 60px; text-align: center; font-weight: bolder;">mudar</h1>                                   
                             </label>
-                        </div>                        
+                        </div> 
+                        <div>
+                            <h1 class="alert-message">O valor a pagar para que o seu <span id="type-relationship-choosed">namoro</span> seja registrado e começar a ganhar dinheiro com os seus conteúdos é de <span id="price-type-relationship"></span></h1>
+                        </div>                       
                     </div>
                 </div>
                 <div id="choose-type-relationship-id" class=" invisible-component clearfix l-5" style="width: 98%; margin-top: 10px; margin-bottom: 10px;">
@@ -361,8 +379,8 @@
         </header>
         <div class="header-height"></div>
         <div class="clearfix l-5 alert-description-class" id="alert-description" style="width: 98%; padding: 5px; margin-top: 10px;">
-            <p class="alert-description-class" style="color: #fff; font-size: 13px;">Actualmente, o tassumir, é a rede social angolana que mais paga, por cada mil visualizações, chegando até mesmo a ser bem mais rentável do que plataformas como o Youtube, Facebook e Instagram para os Angolanos<br><br>
-                <span class="alert-description-class" style="text-transform: uppercase; font-size: 12px;">Mas como Ganhar com os seus conteúdos?<span id="elips-p">...</span></span><br><span style="color: #3490dc; font-weight: bolder; font-size: 13px;" id="alert-description-see-more" class="alert-description-class"> ver mais</span><br><br><span id="more-content-alert" class="invisible-component alert-description-class">Você precisa criar conteúdos em vídeos que sejam atrativos e que tem a ver com algum assunto interessante para relacionamentos. Quando o teu vídeo atingir até 1.000 visualizações, você começará a ganhar 1$ por cada 1.000 visualizações, ou seja, se tiverem 10 mil visualizações, você ganhará 10$. E se eu não gosto de vídeos e escrevo textos?<br><br>
+            <p class="alert-description-class" style="color: #fff; font-size: 14px;">Actualmente, o TASSUMIR, é a rede social que mehor paga, por cada mil visualizações em vídeo ou por cada 500 reacções em texto ou imagens, podendo ser mais rentável do que plataformas como o Youtube, Facebook e Instagram em países como Angola<br><br>
+                <span class="alert-description-class" style="text-transform: uppercase; font-size: 12px;">Mas como Ganhar com os seus conteúdos?<span id="elips-p">...</span></span><br><span style="color: #3490dc; font-weight: bolder; font-size: 14px;" id="alert-description-see-more" class="alert-description-class"> ver mais</span><br><span id="more-content-alert" class="invisible-component alert-description-class">Você precisa criar conteúdos em vídeos que sejam atrativos e que tem a ver com algum assunto interessante para relacionamentos. Quando o teu vídeo atingir até 1.000 visualizações, você começará a ganhar o equivalente a 1 U$D, ou seja, se tiverem 10 mil visualizações, você ganhará 10 U$D. E se eu não gosto de vídeos e escrevo textos?<br><br>
             Você poderá ganhar por cada 500 reacções na sua publicação.</span></p>
             <label for="target-alert-info" class="label-full">
                 <div class="cover-done checker" id="cover-done-post">
@@ -410,77 +428,6 @@
 <?php if (true): ?>
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
-@if(sizeof($page_content)>0)
-<input type="hidden" name="page_u" value="{{ $page_content[0]->uuid }}">
-@endif
-<input type="checkbox" name="" id="add-post-target" class="invisible">
-<div class="pop-up" id="add-post-container">
-    <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
-        <header class="pop-up-component-header pop-up-component-header-default header-height">
-            <h1>Criar Publicação</h1>
-            <div class="container-pop-up-component-header">
-                <label for="target-profile-cover">
-                    <div class="cancel-box div-img">
-                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
-                    </div>
-                </label>
-            </div>
-        </header>
-       <!-- <form enctype="multipart/form-data">-->
-            <div class="header-height"></div>
-            <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
-                <div class="first-component clearfix l-5">
-                </div>
-                <div class="textarea-container l-5" style="width:100%;">
-                    <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
-                </div>
-                <div class="l-5" style="width: 100%;">
-                    <div class="preview-image" id="preview-image-id">
-
-                    </div>
-                </div>
-                <script type="text/javascript">
-                    document.addEventListener('DOMContentLoaded', function(){
-                        let input = document.getElementById('testeVid');
-                        input.addEventListener('change', function () {
-                            const reader = new FileReader();
-                            reader.onload = function () {
-                                const img = new Image();
-                                img.src = reader.result;
-                                img.classList.add('img-full');
-                                document.getElementById('preview-image-id').append(img);
-                            }
-                            document.getElementById('preview-image-id').style.display = 'block';
-                            reader.readAsDataURL(input.files[0]);
-                        });
-                        $('.add-file-element').click(function(){
-                            input.click();
-                        });
-                    });
-                </script>
-                <nav class="add-file l-5 clearfix" style="margin-bottom: 0;">
-                    <ul style="width: 160px;" class="r-5">
-                        <!--<label for="target-profile-cover-post">-->
-                            <li class="circle add-file-element" id="target-profile-cover-post-id">
-                                <i class="far fa-images fa-20 center"></i>
-                            </li>
-                        <!--</label>-->
-                        <!--<label for="target-profile-cover-post">-->
-                            <li class="circle add-file-element">
-                                <i class="far fa-play-circle fa-20 center"></i>
-                            </li>
-                        <!--</label>-->
-                    </ul>
-                </nav>
-            </div>
-            <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
-                <div class="" id="cover-done">
-                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Publicar</button>
-                </div>
-            </div>
-        <!-- </form> -->
-    </div>
-</div>
 <input type="checkbox" name="" id="target-profile-cover-post" class="invisible">
 <div class="pop-up" id="cover-profile-post">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
@@ -515,39 +462,6 @@
     </div>
 </div>
 </form>
-<input type="checkbox" name="" id="target-profile-cover-page" class="invisible">
-<div class="pop-up" id="cover-profile-page">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
-        <header class="pop-up-component-header pop-up-component-header-default header-height">
-            <h1>Adicionar Foto da Página</h1>
-            <div class="container-pop-up-component-header">
-                <label for="target-profile-cover">
-                    <div class="cancel-box div-img">
-                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
-                    </div>
-                </label>
-            </div>
-        </header>
-        <div class="header-height"></div>
-        <div style="margin-top: 15px; margin-bottom: 10px;">
-            <div class="">
-                <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <?php if (sizeof($page_content)): ?>
-                        <input type="hidden" name="uuidPage" value="{{$page_content[0]->uuid}}">
-                    <?php endif ?>
-                    <input class="file" type="file" name="pagePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
-                    <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-                        <div class="cover-done" id="cover-done">
-                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Concluido</button>
-
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 <?php endif ?>
 @endif
 <?php if (true): ?>
@@ -602,14 +516,13 @@
             <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                   <input class="file" type="file" name="imgOrVideo" id="imgOrVideo" style="width: 250px; margin-left: 10px; color: #fff;">
-                  <input type="hidden" name="Comprovativo" id="Comprovativo">
+                  <input type="hidden" id="proof-file-send" name="Comprovativo" id="Comprovativo">
                   <input type="hidden" name="notificacao" id="notificacao">
 
                 <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
                     <label for="target-profile-cover-post" class="label-full">
                         <div class="cover-done" id="">
                           <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Concluido</button>
-                          <button type="button" name="button">aaaaa</button>
                         </div>
                     </label>
                 </div>
@@ -682,8 +595,8 @@
 <?php if (true): ?>
 <input type="checkbox" name="" id="options-invited-pop-up" class="invisible">
 <div class="pop-up" id="invited-relationship-response">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 320px;">
-        <header class="pop-up-component-header pop-up-component-header-default header-height">
+    <div class="pop-up-component full-component-mobile center mobile-300" style="position: absolute; height: 320px;">
+        <!--<header class="pop-up-component-header pop-up-component-header-default header-height">
             <h1>Pedido de Relacionamento</h1>
             <div class="container-pop-up-component-header">
                 <label for="target-invited-relationship">
@@ -693,27 +606,36 @@
                 </label>
             </div>
         </header>
-        <div class="header-height"></div>
+        <div class="header-height"></div>-->
         <div style="margin-top: 15px; margin-bottom: 10px; overflow-y: auto;">
             <div>
+                <div id="load_accpet">
+                    <img class="img-30 center" src="{{asset('css/uicons/aguarde1.gif')}}">
+                </div>
                 <p class="alert-accept" id="textr">  </p>
             </div>
             <div>
-                <label class="terms-use-alert" for="">Ler termos e responsabilidades sobre Noivado</label>
+                <label class="terms-use-alert" for="">Ler termos e responsabilidades sobre RELACIONAMENTOS</label>
             </div>
-            <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-                <div class="cover-done" id="cover-done-marriage">
-                  <form class="needs-validation" action="{{ route('conf_PR') }}" method="POST" novalidate>
-                  @csrf
-
-                    <button type="submit" name="button" style="padding: 10px; font-size: 14px;" >
-                        Sim, Aceito
-                    </button>
-                    <input type="hidden" name="accept_relacd" id="accept_relacd">
-                    <input type="hidden" name="id_notification" id="id_notification">
-                </form>
+            <div class="clearfix">
+                <div class="clearfix l-5" id="cover-done-component-accept">
+                    <div class="cover-done" id="cover-done-marriage">
+                      <form class="needs-validation" id="accept_form" method="POST" novalidate>
+                      @csrf
+                        <button class="relationship-accept-pop-up-button" id="relationship-confirm-pop-up-button" type="submit" name="button">
+                            Sim, Aceito
+                        </button>
+                        <input type="hidden" name="accept_relacd" id="accept_relacd">
+                        <input type="hidden" name="uuid_accept" id="accept_relacd_ident">
+                        <input type="hidden" name="id_notification" id="id_notification">
+                    </form>
+                    </div>
                 </div>
+                <label for="options-invited-pop-up">
+                    <h1 class="close-pop-up-btn l-5">Fechar</h1>
+                </label>                
             </div>
+
         </div>
     </div>
 </div>

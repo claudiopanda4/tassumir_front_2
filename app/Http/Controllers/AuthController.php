@@ -49,6 +49,63 @@ class AuthController extends Controller
         }
     }
 
+    
+    public function paginasNaoSeguidasIndex(){
+        try {
+          $paginasNaoSeguidas = array();
+          $pagenaoPage = array();
+          $account_name = $this->defaultDate();
+        $dadosPage = DB::table('pages')->get();
+        $dadosSeguida = DB::table('seguidors')
+               ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
+               ->select('seguidors.*', 'identificadors.id')
+               ->get();
+        $parada = 0;
+        $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
+      foreach($dadosPage as $key => $Paginas){
+                 $conta_page = 0;
+                 $verifica1 = 'A';
+                 $verifica = 'B';
+                 $seguidors = 0;
+                 $tamanho = sizeof($dadosSeguida);
+
+          foreach ($dadosSeguida as $Seguida){
+                 if ($Paginas->page_id == $Seguida->id){
+                    if ($dadosSgndo[0]->identificador_id == $Seguida->identificador_id_seguindo){
+                            $verifica1 = $Paginas->nome;
+                    }else{
+                            $verifica = $Paginas->nome;
+                        }
+                }else{
+                      $conta_page += 1;
+                    }
+          }
+          if ($verifica1 != $verifica){
+
+               if ($verifica != 'B'){
+                 $paginasNaoSeguidas[$key] = $Paginas;
+               }
+          }
+          if ($conta_page == $tamanho){
+                  $paginasNaoSeguidas[$key] = $Paginas;
+          }
+        }
+         foreach ($paginasNaoSeguidas as $key => $valuePage) {
+
+          if ($parada > 7) {
+              break;
+            }
+            $pagenaoPage[$key] = $valuePage;
+
+            $parada = $parada + 1;
+         }
+              return $pagenaoPage;
+        } catch (Exception $e) {
+
+        }
+    }
+
     public function relationship_type(){
         $result = DB::select('select tipo_relacionamento_id, uuid, tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id <> 1');
         return response()->json([
@@ -1575,14 +1632,14 @@ class AuthController extends Controller
 
      public function paginasquenaoSigo(){
         $id = Auth::user()->conta_id;
-        $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 limit 3', [$id]);
+        $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 ORDER BY RAND() limit 3', [$id]);
 
         return response()->json($pagequesigo);
     }
 
     public function paginasquenaoSigoIndex(){
         $id = Auth::user()->conta_id;
-        $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 limit 10', [$id]);
+        $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 ORDER BY RAND() limit 10', [$id]);
 
         return response()->json($pagequesigo);
     }

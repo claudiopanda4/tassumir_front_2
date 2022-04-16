@@ -573,7 +573,9 @@
 #delete-page-target:checked ~ #delete-page-container,
 #target-alert-post-denied:checked ~ #alert-denied-post,
 #target-alert-tassumir:checked ~ #relationship-container-invited,
-#target-alert-info:checked ~ #target-alert-info-container {
+#target-alert-info:checked ~ #target-alert-info-container,
+#target-profile-cover-full:checked ~ #cover-profile-full-container,
+#target-option-post:checked ~ #option-post-full-container {
 	opacity: 1;
     z-index: 1001;
 }
