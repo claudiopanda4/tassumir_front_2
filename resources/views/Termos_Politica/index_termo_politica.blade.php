@@ -19,8 +19,8 @@
    	<title>Termos e Politica</title>
    </head>
    <body class="container-main-t" >
-   		
-<div class="body-pop-up content-full-scroll" >
+   	
+<div class="body-pop-up content-full-scroll-t" >
 	<header class="header-main header-main-component clearfix" >
 			  <ul class="ul-left clearfix">
                 <li class="title clearfix">
@@ -134,14 +134,16 @@
 
 	<div>
 
-		<img id="btn" src="{{ asset('css/uicons/ios-arrow-up-8-16.png') }}" class="btn-sroll-up" class="btn">
+		<img id="btn" src="{{ asset('css/uicons/ios-arrow-up-8-16.png') }}" class="btn-sroll-up">
 
 	</div>
 
 	<footer class="mt-5 footer content-fluid" >
-	 <div class="title clearfix" style="justify-content:center;align-items: center;text-align: center;">
-                    <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
-      </div>
+	 	<div class="title clearfix" style="justify-content:center;align-items: center;text-align: center;">
+	       <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}">
+	       	<h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1>
+	       </a>
+     	</div>
 	</footer>
 </div>
    </body>
@@ -153,14 +155,14 @@
 		
 		$(window).scroll(function (){
 
-			if($(this).scrollTop()>15){
+			if($(this).scrollTop() > 200){
 
-						$('#btn').fadeIn();
+				$('#btn').fadeIn();
 
-					}else{
-							alert("hei");
-						$('#btn').fadeOut();
-					}
+			}else{
+
+				$('#btn').fadeOut();
+			}
 
 		});
 
@@ -171,10 +173,11 @@
 
  	$('#btn').on('click',function() {
 
- 		$(window).animate({
- 			scrollTop:0
- 		},800);
- 		 	alert("oi");
+ 		$('html,body').animate({
+ 			
+ 			scrollTop:0,
+ 		},1000);
+ 		 	
  	});
  	
 

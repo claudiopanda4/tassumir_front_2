@@ -405,13 +405,12 @@ body {
     height: auto;
     overflow: hidden;
 }
+
 .container-main-t {
     background-color: #343a40;
     background-color: #18191a;
-    width: 100vw;
+    width: 100%;
     height: auto;
-  
-    
 }
 ::-webkit-scrollbar {
     width: 8px;
@@ -2369,9 +2368,21 @@ label[for="hugo"]{
     overflow-y: auto;
     background-color: var(--background-main);
 }
+.body-pop-up-t {
+    z-index: 105;
+    background-color: var(--background-main);
+
+    overflow: hidden;
+    overflow-y: auto;
+}
 .content-full-scroll {
     width: 100vw;
     height: 100vh;
+}
+.content-full-scroll-t{
+     width: 100%;
+     height: 100%;
+    /*overflow: hidden;*/
 }
 .pop-up {
     position: absolute;
@@ -4098,24 +4109,21 @@ label[for="hugo"]{
 
 }
 .btn-sroll-up{
-
       position: fixed;
-          bottom: 20px;
-          right: 30px;
-          z-index: 9999;
-          border: none;
-          outline: #800080;
-          background-color: #800080;
-          color: #fff;
-          cursor: pointer;
-          padding: 10px;
-          border-radius: 25px;
-          width: 48px;
-          height: 48px;
-          display: none;
+      bottom: 20px;
+      right: 30px;
+      z-index: 9999;
+      border: none;
+      outline: #800080;
+      background-color: #800080;
+      color: #fff;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 25px;
+      width: 48px;
+      height: 48px;
+     display: none;
 }
-
- 
 #see-more-description {
     color: #3490dc;
     font-weight: bolder;

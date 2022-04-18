@@ -12,11 +12,13 @@
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/checked.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
+
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
 	<title>Termos Tassumir</title>
 </head>
-<body  class="container-main">
+<body  class="container-main-t">
 
-	<div class="body-pop-up content-full-scroll">
+	<div class="body-pop-up content-full-scroll-t">
 			<header class="header-main header-main-component clearfix" >
 			  <ul class="ul-left clearfix">
                 <li class="title clearfix">
@@ -81,5 +83,39 @@
 		
 	</div>
 
+	<div>
+
+		<img id="btn" src="{{ asset('css/uicons/ios-arrow-up-8-16.png') }}" class="btn-sroll-up">
+
+	</div>
+
 </body>
 </html>
+
+<script>
+		$(document).ready(function(){
+		
+		$(window).scroll(function (){
+
+			if($(this).scrollTop() > 200){
+
+				$('#btn').fadeIn();
+
+			}else{
+
+				$('#btn').fadeOut();
+			}
+
+		});
+
+ 	$('#btn').on('click',function() {
+
+ 		$('html,body').animate({
+ 			scrollTop:0,
+ 		},1000);
+ 		 	
+ 	});
+ 	
+
+ 	});
+</script>

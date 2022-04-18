@@ -2800,6 +2800,14 @@ public function dados_comment($key){
 
   public function joinAndSave(Request $request){
 
+    $validator = Validator::make($request->all(), [
+            'nome' => 'required',
+            'apelido'=>'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
           try{
 
             //========== variaveis request ======
