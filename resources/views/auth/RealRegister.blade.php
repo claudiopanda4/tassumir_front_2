@@ -243,8 +243,7 @@
       if (dia < 0) {
         dia+=30;
       }
-      if (idade < 18 || idade >100) {
-        
+      if (idade < 18 ) {
          $("#verify-dados2").html("<p class='text-danger' id='v-f-d'>Não é permitida a idade de: "+idade+" anos </p>");
       }
      
@@ -431,6 +430,8 @@
     })();
 
   });
+
+
 
 
 </script>

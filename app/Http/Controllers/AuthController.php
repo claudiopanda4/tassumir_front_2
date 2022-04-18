@@ -2885,7 +2885,7 @@ public function dados_comment($key){
 
           }catch(\Exception $e){
 
-            //echo "O Erro é: " .$e;
+            echo "O Erro é: " .$e;
           }
     }
 
@@ -2972,7 +2972,6 @@ public function dados_comment($key){
 
            $response = $this->return_view_on_error($phoneReceived,$emailReceived,$nome,$apelido,$data_nascimento,$nacional,$sexo,$password);
             return $response;
-
         }
 
         }catch(\Exception $error){
@@ -3078,7 +3077,7 @@ public function dados_comment($key){
         $sexo = $request->receivedGenero;
         $password=$request->password;
 
-      if($decryp_code_confi === $code_digitado){
+      if($decryp_code_confi == $code_digitado){
 
                 $conta = new Conta();
 

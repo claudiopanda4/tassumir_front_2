@@ -41,6 +41,7 @@
                     </div>
                 </header>
 
+         @include('flash')
                 <form action="{{route('account.generateAgain.enter')}}" method="POST">
                     @csrf
 
