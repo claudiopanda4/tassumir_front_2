@@ -98,6 +98,52 @@
 </html>
 
 <script>
+    
+    window.onload = function() {
+
+        verify_the_browser();
+
+    };
+
+    function verify_the_browser(){
+
+      let userAgent = navigator.userAgent;
+         let browserName;
+         if(userAgent.match(/chrome|chromium|crios/i)){
+
+             browserName = "chrome";
+
+             /*$("#browser-info").text(browserName).fadeIn();
+              $("#browser-info").fadeOut(6000);*/
+
+           }else if(userAgent.match(/firefox|fxios/i)){
+
+             browserName = "firefox";
+
+           }  else if(userAgent.match(/safari/i)){
+
+             browserName = "safari";
+
+           }else if(userAgent.match(/opr\//i)){
+
+             browserName = "opera";
+
+           } else if(userAgent.match(/edg/i)){
+
+             browserName = "edge";
+
+           }
+
+           /*else if((userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) {
+                return 'IE';//crap
+            }*/
+           else{
+
+             $("#browser-info").text("Notamos que está a usar um Browser não compatível com o Tassumir, sugerimos o uso de outro Browser para ter a melhor experiência com a plataforma ").fadeIn();
+              $("#browser-info").fadeOut(10000);
+           }
+
+    }
  var myForm = $("#my-form");
   myForm.submit(function(){
     myForm.submit(function(){

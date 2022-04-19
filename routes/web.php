@@ -201,6 +201,7 @@ Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController
 
 
 //posts
+Route::get('/ten_comments', [App\Http\Controllers\PageController::class, 'ten_comments'])->name('ten_comments');
 Route::get('/view', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
 Route::get('/ismyne/', [App\Http\Controllers\PaginaCasalController::class, 'isPageMine'])->name('page.confirm.mine');
 Route::get('/edit_option', [App\Http\Controllers\PostController::class, 'edit_option'])->name('edit_option');

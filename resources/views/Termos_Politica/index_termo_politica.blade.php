@@ -19,8 +19,8 @@
    	<title>Termos e Politica</title>
    </head>
    <body class="container-main-t" >
-   		
-<div class="body-pop-up content-full-scroll" >
+   	
+<div class="body-pop-up content-full-scroll-t" >
 	<header class="header-main header-main-component clearfix" >
 			  <ul class="ul-left clearfix">
                 <li class="title clearfix">
@@ -92,7 +92,7 @@
 			</div>
 		
 		</div>
-		<div class="col-md-4 text-white card-right-column" style="border-left: 2px solid #800080;">
+		<div class="col-md-4 text-white card-right-column" style="border-left: 2px solid #800080;text-align: justify;">
 			<span class="justify-content-start span-text text-white span-subtitle" >
 				Seja bem vindo à Tassumir produto da Be Able, lda.</span><br/><br/>
 
@@ -107,7 +107,7 @@
 	<div class="row ">
 		
 		<div class="col-md-4 card-termos" style="
-    border-right: 2px solid #800080;">
+    border-right: 2px solid #800080;text-align: justify;">
 				
 					<span class="span-text text-white" style="font-size: 11pt;">
 								
@@ -117,14 +117,14 @@
 
 		</div>
 
-		<div class="col-md-4 ">
+		<div class="col-md-4 " style="text-align: justify;">
 				<span class="span-text text-white" style="font-size: 11pt;">
 				Não vendemos seus dados pessoais para anunciantes e não partilhamos informações de identificação pessoal (como nome, endereço de email ou outras informações de contacto) com os anunciantes, a menos que tenhamos sua permissão específica. Em vez disso, os anunciantes nos informam os tipos de público que desejam que vejam os anúncios, e nós mostramos esses anúncios para pessoas que podem estar interessadas. Oferecemos aos anunciantes relatórios numéricos sobre o desempenho dos anúncios para ajudá-los a entender como as pessoas estão interagindo com o conteúdo. 
 			</span>
 			
 		</div>
 
-		<div class="col-md-4 card-termos" style="border-left: 2px solid #800080;">
+		<div class="col-md-4 card-termos" style="border-left: 2px solid #800080;text-align: justify;">
 				<span class="span-text text-white" style="font-size: 11pt;">
 				Nossa Política de Dados explica como colectamos e usamos seus dados pessoais para determinar alguns dos anúncios que serão exibidos e fornecer todos os outros serviços descritos abaixo. Você também pode ir para as suas Configurações a qualquer momento para analisar as escolhas de privacidade sobre como usamos seus dados.
 			</span>
@@ -134,14 +134,16 @@
 
 	<div>
 
-		<img id="btn" src="{{ asset('css/uicons/ios-arrow-up-8-16.png') }}" class="btn-sroll-up" class="btn">
+		<img id="btn" src="{{ asset('css/uicons/ios-arrow-up-8-16.png') }}" class="btn-sroll-up">
 
 	</div>
 
 	<footer class="mt-5 footer content-fluid" >
-	 <div class="title clearfix" style="justify-content:center;align-items: center;text-align: center;">
-                    <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
-      </div>
+	 	<div class="title clearfix" style="justify-content:center;align-items: center;text-align: center;">
+	       <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}">
+	       	<h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1>
+	       </a>
+     	</div>
 	</footer>
 </div>
    </body>
@@ -153,14 +155,14 @@
 		
 		$(window).scroll(function (){
 
-			if($(this).scrollTop()>15){
+			if($(this).scrollTop() > 200){
 
-						$('#btn').fadeIn();
+				$('#btn').fadeIn();
 
-					}else{
-							alert("hei");
-						$('#btn').fadeOut();
-					}
+			}else{
+
+				$('#btn').fadeOut();
+			}
 
 		});
 
@@ -171,10 +173,11 @@
 
  	$('#btn').on('click',function() {
 
- 		$(window).animate({
- 			scrollTop:0
- 		},800);
- 		 	alert("oi");
+ 		$('html,body').animate({
+ 			
+ 			scrollTop:0,
+ 		},1000);
+ 		 	
  	});
  	
 

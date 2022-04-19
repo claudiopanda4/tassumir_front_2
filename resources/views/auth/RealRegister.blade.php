@@ -87,7 +87,7 @@
             <span class="hidden" style="color:red;" id="erroNome"> Insira o teu  Nome</span>
             <input type="text" name="apelido" class="input-text-default input-full input-login" placeholder="Apelido" id="apelido-id" required />
 
-            <div id=verify-dados>
+            <div id="verify-dados">
               
             </div>
             <span class="hidden" style="color:red;" id="erroApelido"> Insira o teu Apelido</span>
@@ -96,7 +96,7 @@
 
             <input type="text" name="dat" class="input-text-default input-full input-login" id="dataNas" placeholder="Data de Nascimento" onfocus="(this.type='date')">
          
-            <div id=verify-dados2>
+            <div id="verify-dados2">
               
             </div>
 
@@ -238,13 +238,13 @@
         idade--;
       }
       if (mes < 0) {
+
         mes +=12;
       }
       if (dia < 0) {
         dia+=30;
       }
-      if (idade < 18 || idade >100) {
-        
+      if (idade < 18 ) {
          $("#verify-dados2").html("<p class='text-danger' id='v-f-d'>Não é permitida a idade de: "+idade+" anos </p>");
       }
      
@@ -431,6 +431,8 @@
     })();
 
   });
+
+
 
 
 </script>
