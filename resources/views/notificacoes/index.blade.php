@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="main" style="margin-bottom: 15px;">
-    <div class="card br-10 " style="height:auto; margin: 15px auto 25px;">
+    <div class="card br-10 " id="notificacoes-component">
     <input type="hidden" id="notification-checked" value=<?php echo md5('OK'); ?>>
     <header class="noti-flex-1">
             <div class="noti-div-title">

@@ -24,6 +24,8 @@
                 </a>
             </div>
         </div>
+    <input type="hidden" id="control-state-posts" value="0">
+    <input type="hidden" id="control-type-state-posts-checked" value="0">
     <header class="card br-10 card-flex profile-card" id="profile-card-header">
         <div id="img-profile-container" class="circle">
             @if ($foto != null)

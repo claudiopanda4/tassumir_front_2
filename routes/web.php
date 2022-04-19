@@ -70,7 +70,9 @@ Route::group(['middleware' => 'auth:web1'], function () {
     /*novas rotas tassumirvideo*/
     Route::get('/tassumirvideos_final/{id}', [App\Http\Controllers\PostController::class, 'tassumirvideos_final'])->name('post.tassumir.video_final');
     /*fim das novas rotas tassumirvideo*/
-    Route::get('/post_index/{id}', [App\Http\Controllers\AuthController::class, 'post_index'])->name('post_index');
+    Route::get('/post_index_old/{id}', [App\Http\Controllers\AuthController::class, 'post_index'])->name('post_index');
+    Route::get('/post_index/{id}', [App\Http\Controllers\PostController::class, 'index'])->name('post_index');
+    Route::get('posts/get/index/{id}', [App\Http\Controllers\PostController::class, 'statistics'])->name('posts.get.index');
 
     /* siene */
     Route::get('/get_only_post/', [App\Http\Controllers\AuthController::class, 'get_only_post'])->name('get_post');
@@ -200,8 +202,9 @@ Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController
 
 //posts
 Route::get('/view', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
+Route::get('/ismyne/', [App\Http\Controllers\PaginaCasalController::class, 'isPageMine'])->name('page.confirm.mine');
 Route::get('/edit_option', [App\Http\Controllers\PostController::class, 'edit_option'])->name('edit_option');
-Route::post('/edit_post', [App\Http\Controllers\PostController::class, 'edit_post'])->name('edit_post');
+Route::get('/edit_post', [App\Http\Controllers\PostController::class, 'edit_post'])->name('edit_post');
 Route::get('/getvideo/', [App\Http\Controllers\PostController::class, 'get_video'])->name('post.video.get');
 Route::get('/tassumirvideo/{id}', [App\Http\Controllers\PostController::class, 'tassumirvideos'])->name('post.tassumir.video');
 Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])->name('post.get');

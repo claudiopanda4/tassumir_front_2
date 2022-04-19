@@ -15,9 +15,30 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = $this->posts();
+        /*$posts = $this->posts();*/
+        $ident_page = $request->id;
+        $page_current = 'post_index';
+        $post = DB::select('select uuid, (select uuid from pages where page_id = posts.page_id) as page_uuid, (select foto from pages where page_id = posts.page_id) as page_cover, (select nome from pages where page_id = posts.page_id) as page_name, file, descricao, created_at as data, formato_id from posts where uuid = ?', [$ident_page])[0];
+        //dd($post);
+        return view('pagina.index', compact('ident_page', 'page_current', 'post'));
+    }
+
+    public function statistics(Request $request, $id){
+        $conta_id = Auth::user()->conta_id;
+        $post = DB::select('select (select count(*) from post_reactions where post_id = posts.post_id) as qtd_likes, (select count(*) from comments where post_id = posts.post_id) as qtd_comments, (select count(*) from post_reactions where identificador_id = (select identificador_id from identificadors where id = ? and tipo_identificador_id = 1) and post_id = posts.post_id) as liked from posts where uuid = ?', [$conta_id, $id])[0];
+        $qtd_comment = $post->qtd_comments;
+        $qtd_likes = $post->qtd_likes;
+        $add = $post->liked >= 1 ? 'fas liked': 'far unliked';
+        $remove = $post->liked < 1 ? 'fas liked': 'far unliked';
+        return response()->json([
+            'comment' => $qtd_comment,
+            'likes' => $qtd_likes,
+            'id' => $id,
+            'add' => $add,
+            'remove' => $remove,
+        ]);
     }
 
     public function prototype_view(Request $request){
@@ -403,18 +424,19 @@ class PostController extends Controller
               return response()->json($resposta);
             }
 
-            public function edit_post(Request $request){
-              $controll = new AuthController();
-              if ($request->message!= NULL) {
+        public function edit_post(Request $request){
+            $controll = new AuthController();
+            if ($request->message != NULL) {
                 DB::table('posts')
-                      ->where('uuid', $request->pass_post_uuid)
-                      ->update([
-                        'descricao' => $request->message,
-                        'updated_at' => $controll->dat_create_update()
-              ]);}
+                    ->where('uuid', $request->uuid)
+                    ->update([
+                    'descricao' => $request->message,
+                    'updated_at' => $controll->dat_create_update()
+                ]);
+            }
 
-                 return redirect()->route('account.home.feed');
-                    }
+            return response()->json(['saved' => true, 'description' => $request->message]);
+        }
 
     public function destaques($limit, $init){
         $posts = DB::select('select * from posts where post_id > ? order by post_id desc limit ?', [$init, $limit]);

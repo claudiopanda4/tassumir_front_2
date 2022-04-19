@@ -1336,7 +1336,7 @@ label[for="hugo"]{
     margin-left: 0;
     margin-bottom: 0;
     margin-top: 10px;
-    width: 212px;
+    width: 210px;
 }
 .follow_page_post {
     margin: 0;
@@ -1388,7 +1388,8 @@ label[for="hugo"]{
     padding: 10px;
     padding-top: 0;
     font-size: 14px;
-    margin-left: 50px;
+    margin-left: 0;
+    margin-bottom: 0;
 }
 .fa-option {
     cursor: pointer;
@@ -1916,7 +1917,7 @@ label[for="hugo"]{
     padding: 0px;   
 }
 .noti-span{
-    font-size:13px;
+    font-size: 14px;
     color: #fff;
 }
 .noti-div-name{
@@ -2551,13 +2552,13 @@ label[for="hugo"]{
     right: 10px;
 }
 .description-couple {
-    width: 343px;
+    width: 100%;
     margin-left: 0;
 }
 .description-couple p {
     color: #ffff;
     font-size: 13px;
-    width: 340px;
+    width: 100%;
     padding: 10px;
     margin-bottom: 0;
 }
@@ -2646,6 +2647,7 @@ label[for="hugo"]{
     resize: none;
     border-radius: 10px;
     padding: 10px;
+    font-size: 14px;
 }
 .textarea-container textarea::-webkit-scrollbar {
     width: 3px;
@@ -3463,9 +3465,10 @@ label[for="hugo"]{
     height: auto;
 }
 #edit-pop-up .page-identify h1 {
-    font-size: 12px;
+    font-size: 14px;
     color: #fff;
     margin-top: 10px;
+    font-weight: bolder;
 }
 .message-for-user-component {
     width: 83%;
@@ -3894,6 +3897,7 @@ label[for="hugo"]{
     text-align: center;
     color: #fff;
     font-size: 11px;
+    font-weight: bolder;
     padding: 2px 5px;
 }
 .number-notification-container {
@@ -4095,7 +4099,9 @@ label[for="hugo"]{
 #more-description-page {
     background-color: #18191a;
     border-radius: 0;
-
+    max-width: 500px;
+    margin: auto;
+    width: 100%;
 }
 .btn-sroll-up{
 
@@ -4244,4 +4250,22 @@ label[for="hugo"]{
     width: 300px;
     height: 200px;
     border: 1px solid #efefef;
+}
+#notificacoes-component {
+    height:auto; margin: 15px auto 25px;
+}
+#name-descript-place {
+    padding: 0;
+    padding-left: 0px;
+    font-size: 14px;
+}
+.img-profile-page {
+    margin-left: 0;
+    margin-bottom: 0;
+}
+.more-options-profile-btn {
+    height: 38px;
+}
+.description-couple p {
+    padding: 10px 0;
 }

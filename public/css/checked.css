@@ -575,7 +575,8 @@
 #target-alert-tassumir:checked ~ #relationship-container-invited,
 #target-alert-info:checked ~ #target-alert-info-container,
 #target-profile-cover-full:checked ~ #cover-profile-full-container,
-#target-option-post:checked ~ #option-post-full-container {
+#target-option-post:checked ~ #option-post-full-container,
+#options-edit-pop-up:checked ~ #edit-pop-up {
 	opacity: 1;
     z-index: 1001;
 }

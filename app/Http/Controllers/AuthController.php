@@ -2557,7 +2557,7 @@ public function dados_comment($key){
                                             'created_at'=> $this->dat_create_update(),
 
                                             ]
-                                          ]);
+                                ]);
 
                               }
 

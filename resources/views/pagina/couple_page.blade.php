@@ -98,13 +98,18 @@
             <h1>{{$dados[0]->nome}}</h1>
             <h2 class="lg-invisible-user-name">@<span></span>destacados</h2>
         </div>--> 
+        <input type="hidden" id="control-state-posts" value="0">
+        <input type="hidden" id="control-type-state-posts-checked" value="0">
+        <input type="hidden" id="component-key-page-img" value="0">
+        <input type="hidden" id="component-key-page-video" value="0">
+        <input type="hidden" id="last-post-page-video" value="0">
+        <input type="hidden" id="last-post-page-img" value="0">
         <div class="clearfix page-card-header" id="more-description-page">
-
-            <!--<div class="description-couple">
-                <h2 class="mobile-user-name">@<span></span>
-                    <?php echo strtolower('destacados'); ?>
-                </h2>
-            </div>-->
+            <div class="statistics-profile-page clearfix">
+                    <div class="statistics-profile-page-identify">
+                        <h1 id="name-descript-place">{{$dados[0]->nome}}</h1>
+                    </div>
+            </div>
             <div class="description-couple" id="p-description-couple-all-container">
                 <p id="p-description-couple-all"><span id="part-text"></span><span class="invisible-component" id="text-ellips-description">...</span><a id="see-more-description"href="" class="invisible-component"><span class="">Ver Mais</span></a><span id="more-text-description" class="invisible-component"></span></p>
             </div>

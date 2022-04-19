@@ -436,41 +436,6 @@
         <div>
         </div>
 </div>
-<input type="checkbox" name="" id="target-option-post" class="invisible">
-<div class="pop-up pop-up-option" id="option-post-full-container">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; max-height: 90%; height: auto; width: 280px;">
-        <div>
-            <div class="">
-                <ul class="clearfix more-option-post" id="more-option-post-{{$key}}">
-                    <li>
-                        <a href="" class="edit-option" id="edit-option-{{$key}}">Editar</a>
-                    </li>
-                    <li>
-                        <a href="" class="edit-option options-special" id="edit-option">Não seguir</a>
-                    </li>
-                    <li>
-                        <a href="" class="delete_post options-special" id="">Apagar publicação</a>
-                    </li>
-                    <li>
-                        <a href="" class="delete_post options-special" id="">Ocultar publicação</a>
-                    </li>
-                    <li>
-                        <a href="">Denunciar</a>
-                    </li>
-                    <li>
-                        <a href="">Copiar link</a>
-                    </li>
-                    <label for="target-option-post" id="target-option-post-ident">
-                        <li id="cancel-options">
-                            Cancelar
-                        </li>
-                    </label>
-                </ul>
-                <input type="hidden" id="selected-option-post">
-            </div>
-        </div>
-    </div>
-</div>
         <script type="text/javascript">
         $(document).ready(function(){
             $('.reload-component').css({

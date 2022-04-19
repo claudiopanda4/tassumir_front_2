@@ -88,7 +88,7 @@
                         </div>
                     </div>
                 <div class="clearfix" style="padding: 10px;">
-                    <span class="alert-login">Ao clicar em criar uma nova conta, você aceita o Contrato de Utilizador, a Política de Privacidade e a Política de Cookies do Tassumir</span><br>
+                    <!--<span class="alert-login">Ao clicar em criar uma nova conta, você aceita o Contrato de Utilizador, a Política de Privacidade e a Política de Cookies do Tassumir</span><br>-->
                     <a href="{{route('term.home')}}" class="politic-privacy">Política de Privacidade e a Política de Cookies do Tassumir</a>
                 </div>
             </div>

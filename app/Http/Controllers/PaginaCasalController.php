@@ -158,6 +158,22 @@ class PaginaCasalController extends Controller
 
     }
   }
+
+  public function isPageMine(Request $request)
+  {
+    try {
+      $conta_id = Auth::user()->conta_id;
+      $result = DB::select('select (select conta_id_a from pages where page_id = posts.page_id ) as conta_id_a, (select conta_id_b from pages where page_id = posts.page_id) as conta_id_b from posts where uuid = ?', [$request->uuid])[0];
+      $state = false;
+      if ($result->conta_id_a == $conta_id || $result->conta_id_b == $conta_id) {
+        $state = true;
+      }
+      return response()->json(['state' => $state]);
+    } catch (Exception $e) {
+
+    }
+  }
+
   public function get_nine_videos_page(Request $request)
   {
     try {

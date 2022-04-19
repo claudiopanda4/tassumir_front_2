@@ -646,7 +646,7 @@
     }
     .input-login {
 	    background-color: #3b3b3b;
-	    font-size: 12px;
+	    font-size: 13px;
 	}
 	.input-emai-log {
 		margin-top: 10px;
@@ -756,6 +756,10 @@
 	.interaction-numbers {
 	    border-bottom: none;
 	}
+	.post header.header-post-page {
+		margin-top: 0px;
+	}
+	
 	.interaction-user ul.ul-interaction-user li {
 	    margin: 0;
 	}
@@ -878,6 +882,9 @@
 		width: 100%;
 		margin-bottom: 8px;
 	}
+	.card#card-post-id-index {
+		margin: 0;
+	}
 }
 @media screen and (max-width: 500px) {
 
@@ -951,6 +958,9 @@
 	}
 	.follwing-btn-container {
     	width: 210px;
+	}
+	.noti-div-name {
+	    max-width: 200px;
 	}
 }
 @media screen and (max-width: 650px) {
@@ -1076,7 +1086,7 @@
 	    font-size: 15px;
 	}
 	#main-login {
-	    width: 220px;
+	    width: 245px;
 	}
 	.video-post {
 	    height: 328px;
@@ -1272,14 +1282,14 @@
 	    font-size: 12px;
 	}
 	.card-post p {
-	    font-size: 12px;
+	    font-size: 13px;
 	}
 	.comment-user-comment.comment-user-comment-feed p {
 	    font-size: 11px;
 	    max-width: 160px;
 	}
 	.interaction-numbers li a {
-	    font-size: 13.5px;
+	    font-size: 13px;
 	}
 }
 @media screen and (max-width: 470px) {
@@ -1326,7 +1336,7 @@
 	}
 	.card-page {
 	    margin-top: 0;
-	    margin-bottom: 5px;
+	    margin-bottom: 0px;
 	}
 	.statistics-profile-page {
 	    width: 95%;
@@ -1370,7 +1380,7 @@
 	}
 	#button-options-page {
 		width: 90%;
-		margin: auto;
+		margin: 5px auto;
 	}
 	.description-couple p {
 		font-size: 13px;
@@ -1582,6 +1592,20 @@
 	    margin-top: 2px;
     	margin-bottom: -5px;
 	}
+	.card-post p {
+	    padding: 0px 10px 10px;
+	    margin-bottom: 5px;
+	}
+	#notificacoes-component {
+	    height:auto; 
+	    margin: 0px auto 5px;
+	}
+	.noti-flex-1 {
+	    padding: 10px 0px;
+	}
+	#spouse-masc {
+		margin-left: 21px;
+	}
 	.button-default-tassumir {
 	    max-width: 220px;
 	}
@@ -1621,6 +1645,9 @@
 	    height: 275px;
 	    background-color: #343a40;
 	}
+	.post-cover.post-cover-imgless.post-cover-post-index.post-cover-post-index-post {
+		height: auto;
+	}
 	.post-cover-post-index img {
 	    height: auto;
 	    position: relative;
@@ -1658,7 +1685,7 @@
 		display: block;
 	}
 	.option-profile-menu {
-	    background-color: #242526;
+	    /*background-color: #242526;*/
     	border-radius: 5px;
 	}
 }
@@ -1742,6 +1769,13 @@
 	.invisible-component {
 		display: none;
 	}
+	.card-post p {
+	}
+	#more-description-page .statistics-profile-page {
+		max-width: 324px;
+	    margin: 5px auto;
+	    width: 100%;
+	}
 	.option-profile-menu ul {
 	    /* background-color: #242526; */
 	    padding: 10px 0;
@@ -1808,7 +1842,14 @@
 @media screen and (max-width: 330px){
 	.video-post video {
 	    max-height: 90vh;
+	}
+	#more-description-page .statistics-profile-page {
+	    max-width: 288px;
+	    margin: 5px auto 10px;
 	}	
+	.description-couple p {
+	    padding: 0px 16px;
+	}
 }
 @media screen and (max-height: 490px){
 	.video-post video {

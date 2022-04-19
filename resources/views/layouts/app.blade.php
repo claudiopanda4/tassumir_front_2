@@ -101,6 +101,7 @@
                         </ul>
                     </div>
                 </li>
+                <input type="hidden" id="ident-key" name="">
                 <li class="user-tassumir clearfix l-5">
                     <a href="{{route('account.profile')}}">
                         <div class="l-5 user-account-container-img">
@@ -367,7 +368,7 @@
 </div>
 <input type="checkbox" name="" id="target-alert-info" class="invisible">
 <div class="pop-up" id="target-alert-info-container">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; overflow: hidden; max-height: 90%;">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; overflow: hidden; max-height: 90%; margin: auto;">
         <!--<header class="pop-up-component-header pop-up-component-header-default header-height">
             <div class="container-pop-up-component-header">
                 <label for="target-alert-info">
@@ -593,6 +594,43 @@
 </div>
 <?php endif ?>
 <?php if (true): ?>
+<input type="checkbox" name="" id="target-option-post" class="invisible">
+<div class="pop-up pop-up-option" id="option-post-full-container">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; max-height: 90%; height: auto; width: 280px;">
+        <div>
+            <div class="">
+                <ul class="clearfix more-option-post" id="more-option-post-{{$key}}">
+                    <li class="edit-option-component invisible-component" id="edit-option-component-id">
+                        <a href="" class="edit-option" id="edit-option-edit-component"></a>
+                    </li>
+                    <li>
+                        <a href="" class="edit-option options-special" id="edit-option">Não seguir</a>
+                    </li>
+                    <li class="invisible-component" id="delete-option-component">
+                        <a href="" class="delete_post options-special" id="delete-option-component-id"></a>
+                    </li>
+                    <li class="hidden-post">
+                        <a href="" class="delete_post options-special hidden-post" id="hidden-post-component">Ocultar publicação</a>
+                    </li>
+                    <li>
+                        <a href="">Denunciar</a>
+                    </li>
+                    <li>
+                        <a href="">Copiar link</a>
+                    </li>
+                    <label for="target-option-post" id="target-option-post-ident">
+                        <li id="cancel-options">
+                            Cancelar
+                        </li>
+                    </label>
+                </ul>
+                <input type="hidden" id="selected-option-post">
+            </div>
+        </div>
+    </div>
+</div>    
+<?php endif ?>
+<?php if (true): ?>
 <input type="checkbox" name="" id="options-invited-pop-up" class="invisible">
 <div class="pop-up" id="invited-relationship-response">
     <div class="pop-up-component full-component-mobile center mobile-300" style="position: absolute; height: 320px;">
@@ -647,9 +685,9 @@
         <header class="pop-up-component-header pop-up-component-header-default header-height">
             <h1>Editar Publicação</h1>
             <div class="container-pop-up-component-header">
-                <label for="target-invited-relationship">
-                    <div class="cancel-box div-img" id="target-invited-relationship-id">
-                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                <label for="options-edit-pop-up">
+                    <div class="cancel-box-component div-img" id="target-invited-relationship-id-close">
+                        <i class="fas fa-times fa-16 center target-invited-relationship-close" style="color: #fff;"></i>
                     </div>
                 </label>
             </div>
@@ -657,24 +695,24 @@
         <div class="header-height"></div>
         <div class="clearfix content-details-post" style="margin-top: 5px; margin-bottom: 5px;">
                 <div class="first-component clearfix l-5">
-                    <div class="page-cover circle l-5" name="foto_edit">
+                    <div class="page-cover circle l-5" id="foto-edit_id" name="foto_edit">
                     </div>
                     <div class="page-identify l-5 clearfix">
                         <h1 class="text-ellips" id="name_page_edit_post" name="name_page_edit_post"></h1>
                     </div>
                 </div>
-                <form action="{{ route('edit_post') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+                <!--<form action="{{ route('edit_post') }}" method="POST" enctype="multipart/form-data">
+                @csrf-->
                 <input type="hidden" name="pass_post_uuid" id="pass_post_uuid" >
                 <div class="textarea-container l-5" style="width:100%;">
                     <textarea name="message" id="message"></textarea>
                 </div>
             </div>
             <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
-                <div class="" id="cover-done">
+                <div class="cover-done-edit" id="cover-done">
                     <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Editar</button>
                 </div>
-                </form>
+                <!--</form>-->
             </div>
     </div>
 </div>
@@ -1005,39 +1043,6 @@
         }
       });
 
-      $('.edit-option').click(function(evt){
-        let id = evt.target.id;
-        let id1= id.split('|')[1];
-
-        $.ajax({
-          url: "{{ route('edit_option')}}",
-          type: 'get',
-          data: {'id1': id1},
-          dataType: 'json',
-          success:function(response){
-            let src1 = '{{ asset("storage/img/page/") }}';
-            var nome = '';
-            if( !(response.foto_page == null) ){
-             nome +='  <img  class="img-full circle" src=' + src1 + '/' + response.foto_page + '>'
-             }else{
-               nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}">'
-             }
-
-            //console.log(response);
-            $('div[name=foto_edit]').append(nome);
-            $("#name_page_edit_post").text(response.nome_pag);
-           $("#message").val(response.post);
-          $("#pass_post_uuid").val(id1);
-            }
-          });
-
-
-            evt.preventDefault();
-            $('#edit-pop-up').css({
-                zIndex: 1000,
-                opacity : 1
-            });
-      });
       $('.video-post-video').click(function(e){
         let id = e.target.id;
         //let state_video = document.getElementById(id).play();

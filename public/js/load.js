@@ -1,7 +1,7 @@
 $(document).ready(function () {
 	let length = $('#host').val().split('/').length;
 	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[length - 2];
-	let any_class, any_id, text, src, component;
+	let any_class, any_id, text, src, component, url, type, cont;
 	let components = [];
 	$('#target-invited-relationship-id').click(function () {
 		$('#target-invited-relationship').removeAttr('checked');
@@ -12,6 +12,9 @@ $(document).ready(function () {
 	$('.seguir-page').click(function (e) {
 		
 		//seguir_page($('#page_ident').val(), e, 2);
+	});
+	$('.edit-option').click(function () {
+		document.getElementById('target-option-post').checked = false;
 	});
 	$('.relationship-type-item').click(function(e){
 		alert('oi');
@@ -30,6 +33,36 @@ $(document).ready(function () {
 			}
 		});*/
 	});
+	if($('#ident-post-page').val()){
+		any_id = document.getElementById('a-page-name-post_' + $('#ident-post-page').val()).href;
+		any_id = any_id.split('/')[any_id.split('/').length - 1];
+		$('#a-page-name-post_' + $('#ident-post-page').val()).attr('href', route + '/couple_page/' + any_id);
+		$.ajax({
+			url: '/posts/get/index/' + $('#ident-post-page').val(),
+			type: 'get',
+			data: {'id' : 0},
+			dataType: 'json',
+			success:function(response){
+				console.log(response);
+				any_id = 'reacções';
+				if (response.qtd_likes == 1) {
+					$('#likes-qtd_' + response.id).text(response.likes + ' reacção');
+				} else {
+					$('#likes-qtd_' + response.id).text(response.likes + ' reacções');
+				}
+				
+
+				if (response.qtd_likes == 1) {
+					$('#comment_-post_' + response.id).text(response.comment + ' comentário');
+				} else {
+					$('#comment_-post_' + response.id).text(response.comment + ' comentários');
+				}
+				
+				$('#off-id-i_' + $('#ident-post-page').val()).addClass(response.add);
+				$('#off-id-i_' + $('#ident-post-page').val()).removeClass(response.remove);
+			}
+		});	
+	}
 	function profile_content_filter(class_name, filter){
 		for (var i = 0; i <= class_name.length - 1; i++) {
 			if (filter == 1) {
@@ -57,7 +90,7 @@ $(document).ready(function () {
 				data: {'id' : 0},
 				dataType: 'json',
 				success:function(response){
-					console.log(response);
+					//console.log(response);
 					$.each(response, function(key, data){
 						if (data.formato_id == 2) {
 							$('#img-post-page-container-' + key).attr('src', route + '/storage/img/page/' + data.file);
@@ -138,7 +171,7 @@ $(document).ready(function () {
 			data: {},
 			dataType: 'json',
 			success:function(response){
-				console.log(response);
+				//console.log(response);
 				text = "";
 				if (response.description) {
 					if (response.description.length > 80) {
@@ -175,12 +208,12 @@ $(document).ready(function () {
 				data: {'ident' : $('#page_ident').val()},
 				dataType: 'json',
 				success:function(response){
-					console.log(response);
+					//console.log(response);
 					if (ident == 1) {
 						$('#qtd-posts').text(response.qtd);
 					}
 					if (ident == 3) {
-						console.log(response.qtd);
+						//console.log(response.qtd);
 						$('#qtd-followers').text(response.qtd);
 					}
 					if (ident == 2) {
@@ -220,7 +253,7 @@ $(document).ready(function () {
 			data: {'id' : 0},
 			dataType: 'json',
 			success:function(response){
-				console.log(response);
+				//console.log(response);
 				$.each(response, function(key, data){
 					if (data.formato_id == 1) {
 						$('#img-post-page-' + key).addClass('invisible-component');
@@ -240,6 +273,7 @@ $(document).ready(function () {
 		});
 	}
 	$('.cover-posts-component-page').click(function (e) {
+		$('#control-state-posts').val(0);
 		any_class = document.getElementsByClassName('get-page-video');
 		for (var i = 0; i <= any_class.length - 1; i++) {
 			$('#'+ any_class[i].id).addClass('invisible-component');
@@ -254,9 +288,10 @@ $(document).ready(function () {
 			data: {'id' : 0, 'uuid' : $('#page_ident').val()},
 			dataType: 'json',
 			success:function(response){
-				console.log('hipocrisia');
-				console.log(response);
+				//console.log('hipocrisia');
+				//console.log(response);
 				$.each(response, function(key, data){
+					$('#last-post-page-img').val(data.post_id);
 					$('#post-img-post-container-page-' + key).attr('src', route + '/storage/img/page/' + data.file)
 					$('#post-img-post-container-page-' + key).attr('id', 'post-img-post-container-page_' + data.uuid);
 					$('#post-img-container-page-link-' + key).attr('href', route + '/post_index/' + data.uuid)
@@ -264,12 +299,16 @@ $(document).ready(function () {
 					$('#post-img-container-page-' + key).removeClass('invisible-component');
 					$('#post-img-container-page-' + key).addClass('get-page-img');
 					$('#post-img-container-page-' + key).attr('id', 'post-img-container-page_' + data.uuid);
-
+					
+					$('#component-key-page-img').val(key + 1);
 				});
+				$('#control-state-posts').val(1);
 			}
-		});		
+		});	
+		$('#control-type-state-posts-checked').val(1);	
 	});
 	$('.video-posts-component-page').click(function (e) {
+		$('#control-state-posts').val(1);
 		any_class = document.getElementsByClassName('get-page-img');
 		for (var i = 0; i <= any_class.length - 1; i++) {
 			$('#'+ any_class[i].id).addClass('invisible-component');
@@ -294,10 +333,12 @@ $(document).ready(function () {
 					$('#post-img-container-page-' + key).removeClass('invisible-component');
 					$('#post-img-container-page-' + key).addClass('get-page-img');
 					$('#post-img-container-page-' + key).attr('id', 'post-img-container-page_' + data.uuid);
-
+					$('#last-post-page-video').val(data.post_id);
 				});
 			}
 		});	*/	
+
+		$('#control-type-state-posts-checked').val(0);
 	});
 	$.ajax({
 		url: '/app/notifications/numbers',
@@ -305,7 +346,7 @@ $(document).ready(function () {
 		data: {},
 		dataType: 'json',
 		success:function(response){
-			console.log(response);
+			//console.log(response);
 			if (response.not_numbers > 0) {
 				//alert(response.not_numbers);
 				$('#number-notification-component').removeClass('invisible-component');
@@ -317,7 +358,7 @@ $(document).ready(function () {
 	});
 
 	$('#alert-description').click(function(){
-	   	alert('oi');
+	   	//alert('oi');
 		if (e.target.className.indexOf('alert-description-class') > -1) {
 		   	if ($('#checked-load-all').val() == 0) {
 		    	$('#more-content-alert').removeClass('invisible-component');
@@ -347,7 +388,7 @@ $(document).ready(function () {
 		data: {},
 		dataType: 'json',
 		success: function (response) {
-			console.log(response);
+			//console.log(response);
 			if (!response.state) {
 			} else {
 				$('#alert-info-about-us-0').remove();
@@ -831,7 +872,19 @@ $(document).ready(function () {
 		   	$('#m_post-144').addClass('invisible-component');
     	}
     }
-
+    $('.hidden-post').click(function(){
+    	$('#m_post_' + $('#ident-key').val()).remove();
+    	$.ajax({
+		    url: '/view/',
+		    type: 'get',
+		    data: {'id' : $('#ident-key').val(), 'video_add' : false},
+		    dataType: 'json',
+		    success:function(response){
+		    	//console.log(response);
+		    }
+		});
+    	document.getElementById('target-option-post').checked = false;
+    });
 	if ($('#page_couple').val()) {
 		if (window.innerWidth <= 720){
 			suggest_page();
@@ -843,8 +896,9 @@ $(document).ready(function () {
 			data: {'id' : 0, 'uuid' : $('#page_ident').val()},
 			dataType: 'json',
 			success: function (response) {
-				console.log(response);
+				//console.log(response);
 				$.each(response, function(key, data){
+					$('#last-post-page-video').val(data.post_id);
 					$('#a-video-page-target-' + key).attr('href', route + '/post_index/' + data.uuid);
 					$('#a-video-page-target-' + key).attr('id', 'a-video-page-target_' + data.uuid);
 					$('#post-video-container-page-video-' + key).attr('src', route + '/storage/video/page/' + data.file);
@@ -852,6 +906,8 @@ $(document).ready(function () {
 					$('#post-video-container-page-' + key).addClass('get-page-video');
 					$('#post-video-container-page-' + key).attr('id', 'post-video-container-page_' + data.uuid);
 					$('#post-video-container-page-video-' + key).attr('id', 'post-video-container-page-video_' + data.uuid);
+					$('#control-state-posts').val(1);
+					$('#component-key-page-video').val(key + 1);
 				});
 				
 			}
@@ -863,8 +919,8 @@ $(document).ready(function () {
 			data: {'id' : $('#page_ident').val()},
 			dataType: 'json',
 			success: function (response) {
-				console.log('spouses');
-				console.log(response);
+				//console.log('spouses');
+				//console.log(response);
 				if (response.state) {
 					$('#spouse-masc').text(response.homem);
 					$('#spouse-fem').text(response.mulher);
@@ -949,7 +1005,7 @@ $(document).ready(function () {
 		    });
 	    }    	
     }
-    let cont = 0;
+    cont = 0;
     var top_video;
     let id_video;
     let link_video;
@@ -973,8 +1029,9 @@ $(document).ready(function () {
 	    getcover = document.getElementsByClassName('getcover');
 	    for (var i = 0; i <= getcover.length - 1; i++) {
 		    id = getcover[i].id.split('_')[2];
-		    if (window.innerHeight > 680) {
-	    		if ($('#m_post_' + id).offset().top < 775 && $('#has-video_' + id).val() != 'ok') {
+		    if (window.innerHeight > 650) {
+		    	//console.log($('#m_post_' + id).offset().top);
+	    		if ($('#m_post_' + id).offset().top < 720 && $('#has-video_' + id).val() != 'ok') {
 		    		$('#cover-post-index_' + id).attr('src', $('#cover-post-load_' + id).val());
 		    		$('#post-cover-post-index_' + id).removeClass('post-cover-imgless');
 		    		$('#cover-post-index_' + id).removeClass('invisible-component');
@@ -994,11 +1051,94 @@ $(document).ready(function () {
     	let main = $('.main-container').offset();
     	let document_height = $('#main-home').height();
     	let final = ($(window).height()) - main.top;
+    	let document_height_general = $('.main-container').height();
     	cont = parseInt($('#posts-following').val());
     	if ((final >= document_height) && (parseInt($('#loading-finished').val()) == 0)) {
     		$('#loading-finished').val('1');
     		//console.log('final');
     		home_posts_assync();
+    	}
+    	//console.log(final);
+    	//console.log(document_height_general);
+    	if (final >= document_height_general && $('#control-state-posts').val() == 1) {
+    		//console.log('final');
+    		$('#control-state-posts').val(0);
+    		if ($('#control-type-state-posts-checked').val() == 1) {
+				url = '/page/pictures/';
+				any_id = $('#last-post-page-img').val();
+				type = 0;
+				//console.log('component-key-page-img ' + $('#component-key-page-img').val());
+    		} else if ($('#control-type-state-posts-checked').val() == 0){
+				url = '/couple_page/page/content/videos/';
+				any_id = parseInt($('#last-post-page-video').val());
+				type = 1;
+				console.log('component-key-page-video ' + $('#component-key-page-video').val());
+    		} else if($('#control-type-state-posts-checked').val() == 3){
+				url = '/page/pictures/';
+				type = 2;
+    		}
+    		 //console.log(url + ' ' + any_id);
+    		$.ajax({
+			url: url,
+			type: 'get',
+			data: {'id' : any_id, 'uuid' : $('#page_ident').val()},
+			dataType: 'json',
+			success:function(response){
+				//console.log('hipocrisia');
+				//console.log(response);
+				$.each(response, function(key, data){
+					if (type == 0) {
+						$('#last-post-page-img').val(data.post_id);
+						cont = parseInt($('#component-key-page-img').val());
+						$('#post-img-post-container-page-' + cont).attr('src', route + '/storage/img/page/' + data.file)
+						$('#post-img-post-container-page-' + cont).attr('id', 'post-img-post-container-page_' + data.uuid);
+						$('#post-img-container-page-link-' + cont).attr('href', route + '/post_index/' + data.uuid)
+						$('#post-img-container-page-link-' + cont).attr('id', 'post-img-container-page-link_' + data.uuid);
+						$('#post-img-container-page-' + cont).removeClass('invisible-component');
+						$('#post-img-container-page-' + cont).addClass('get-page-img');
+						$('#post-img-container-page-' + cont).attr('id', 'post-img-container-page_' + data.uuid);	
+						cont++;
+						$('#component-key-page-img').val(cont);			
+					} else if (type == 1) {
+						cont = parseInt($('#component-key-page-video').val());
+						$('#last-post-page-video').val(data.post_id);
+						$('#a-video-page-target-' + cont).attr('href', route + '/post_index/' + data.uuid);
+						$('#a-video-page-target-' + cont).attr('id', 'a-video-page-target_' + data.uuid);
+						$('#post-video-container-page-video-' + cont).attr('src', route + '/storage/video/page/' + data.file);
+						$('#post-video-container-page-' + cont).removeClass('invisible-component');
+						$('#post-video-container-page-' + cont).addClass('get-page-video');
+						$('#post-video-container-page-' + cont).attr('id', 'post-video-container-page_' + data.uuid);
+						$('#post-video-container-page-video-' + cont).attr('id', 'post-video-container-page-video_' + data.uuid);
+						$('#control-state-posts').val(1);
+						$('#component-key-page-video').val(key + 1);
+						cont++;
+						$('#component-key-page-video').val(cont);
+					}
+
+					$('#control-state-posts').val(1);
+				});
+				/*if (type == 0) {
+					any_class = document.getElementsByClassName('get-page-video');
+					for (var i = 0; i <= any_class.length - 1; i++) {
+						$('#'+ any_class[i].id).addClass('invisible-component');
+					}
+					any_class = document.getElementsByClassName('get-page-img');
+					for (var i = 0; i <= any_class.length - 1; i++) {
+						$('#'+ any_class[i].id).removeClass('invisible-component');
+					}
+				}
+				if (type == 1) {
+					any_class = document.getElementsByClassName('get-page-video');
+					for (var i = 0; i <= any_class.length - 1; i++) {
+						$('#'+ any_class[i].id).removeClass('invisible-component');
+					}
+					any_class = document.getElementsByClassName('get-page-img');
+					for (var i = 0; i <= any_class.length - 1; i++) {
+						$('#'+ any_class[i].id).addClass('invisible-component');
+					}
+				}*/
+			}
+		});	
     	}
     	//alert('post_val ' + $('#posts').val());
     	if ($('#posts').val() == 1) {
@@ -1037,8 +1177,8 @@ $(document).ready(function () {
 					});
 	           	}
 
-	    		if (window.innerHeight > 680) {
-	    			if ($('#m_post_' + id).offset().top < 300 && $('#has-video_' + id).val() != 'ok') {
+	    		if (window.innerHeight > 650) {
+	    			if ($('#m_post_' + id).offset().top < 790 && $('#has-video_' + id).val() != 'ok') {
 		    			$('#video-post-link_' + id).attr('src', link_video);
 		    			document.getElementById('video_' + id).preload = 'metadata';
 		    			$('#video_' + id).attr('src', link_video);
@@ -1086,7 +1226,7 @@ $(document).ready(function () {
 		    data: {'id' : id},
 		    dataType: 'json',
 		    success:function(response){
-		    	console.log(response);
+		    	//console.log(response);
 		    	$.each(response.add, function(key, data) {
 		    		$('#' + e.target.id).addClass(data);
 		    	});
@@ -1113,7 +1253,7 @@ $(document).ready(function () {
 		    data: {'uuid' : id},
 		    dataType: 'json',
 		    success:function(response){
-		    	console.log(response);
+		    	//console.log(response);
 		    	if (type == 1) {
 			    	class_name = "seguir-a-class_" + e.target.id.split('_')[1];
 			    	seguir_a = document.getElementsByClassName("seguir-a-class_" + id).length;
@@ -1155,11 +1295,11 @@ $(document).ready(function () {
 		    data: {'id' : id, 'comment' : text, 'img_scr' : document.getElementById('page-cover-post_' + id).src},
 		    dataType: 'json',
 		    success: function(response){
-		    	console.log(response);
+		    	//console.log(response);
 		    	if (response.owner) {
 		    		document.getElementById('user-identify-comment-feed_' + response.id).src = response.img_scr;
 		    	}
-		    	console.log('#comment-post_' + response.id);
+		    	//console.log('#comment-post_' + response.id);
 		    	$('#comment-post_' + response.id).text(response.qtd + ' comentários');
 		    	if(response.qtd == 1){
 		    		$('#comment-post_' + response.id).text(response.qtd + ' comentário');
@@ -1214,12 +1354,90 @@ $(document).ready(function () {
 		    data: {'id' : id},
 		    dataType: 'json',
 		    success: function(response){
-				console.log(response);
+				//console.log(response);
 			}
 		});
     });
-    $('#target-options').click(function () {
-    	
+    $('.target-options').click(function (e) {
+    	any_id = e.target.id.split('_')[1];
+		$('#ident-key').val(any_id);
+    	$.ajax({
+		    url: '/ismyne/',
+		    type: 'get',
+		    data: {'uuid' : any_id},
+		    dataType: 'json',
+		    success: function(response){
+		    	//console.log(response);
+				if (response.state) {
+					$('#edit-option-component-id').removeClass('invisible-component');
+					$('#edit-option-component-id').addClass('edit-option-component');
+					$('#delete-option-component').removeClass('invisible-component');
+					$('#delete-option-component-id').removeClass('invisible-component');
+					$('#delete-option-component').addClass('delete-post-option-component');
+					$('#delete-option-component-id').text('Apagar publicação');
+					$('#edit-option-component-id').text('Editar');
+					$('#delete-option-component').attr('id', 'delete-option-component_' + any_id);
+					$('#delete-option-component-id').attr('id', 'delete-option-component-id_' + any_id);
+					$('#edit-option-component-id').attr('id', 'edit-option-component-id_' + any_id);
+					$('#edit-option-edit-component').attr('id', 'edit-option-edit-component_' + any_id);
+				} else {
+					$('#edit-option-component-id').removeClass('edit-option-component');
+					$('#edit-option-component-id').addClass('invisible-component');	
+					$('#delete-option-component').addClass('invisible-component');	
+					$('#delete-option-component-id').addClass('invisible-component');
+					$('#edit-option-component-id').text('');	
+					$('#delete-option-component-id').text('');
+				}
+			}
+		});
+    });
+    $('#cancel-options').click(function () { 
+    	alert($('#ident-key').val());  
+    	any_id = $('#ident-key').val(); 
+        $('#edit-option-component-id_' + any_id).attr('id', 'edit-option-component-id');
+    	$('#edit-option-edit-component_' + any_id).attr('id', 'edit-option-edit-component');
+		$('#delete-option-component_' + any_id).attr('id', 'delete-option-component');
+		$('#delete-option-component-id_' + any_id).attr('id', 'delete-option-component-id');	
+    });
+    $('.edit-option-component').click(function (e) {
+    	any_id = e.target.id.split('_')[1];
+    	//alert(any_id);
+    	$('#pass_post_uuid').val(any_id);
+    	document.getElementById('name_page_edit_post').innerText = $('#page-name-post_' + any_id).text();
+    	$('#message').text($('#p-post_' + any_id).text());
+    	any_id = document.getElementById('page-cover-post_' + any_id).src;
+    	component = document.createElement('img');
+    	component.setAttribute('src', any_id);
+    	component.classList.add('img-full');
+    	component.classList.add('circle');
+    	document.getElementById('foto-edit_id').append(component);
+    	//$('#edit-option-component-id_' + any_id).attr('id', 'edit-option-component-id');
+    	document.getElementById('target-option-post').checked = false;
+    	document.getElementById('options-edit-pop-up').checked = true;
+    	//alert(any_id);
+    });
+    $('.cover-done-edit').click(function(evt){
+        evt.preventDefault();
+        $.ajax({
+          url: "/edit_post",
+          type: 'get',
+          data: {'uuid': $('#pass_post_uuid').val(), 'message': $('#message').val()},
+          dataType: 'json',
+          success:function(response){
+          	$('#p-post_' + $('#pass_post_uuid').val()).text(response.description);
+			$('#edit-option-component-id_' + $('#pass_post_uuid').val()).addClass('invisible-component');
+			$('#edit-option-edit-component_' + $('#pass_post_uuid').val()).addClass('invisible-component');
+			$('#delete-option-component_' + $('#pass_post_uuid').val()).addClass('invisible-component');
+			$('#delete-option-component-id_' + $('#pass_post_uuid').val()).addClass('invisible-component');
+          	document.getElementById('options-edit-pop-up').checked = false;
+          	$('#p-post_' + $('#pass_post_uuid').val()).removeClass('invisible-component');
+          	$('#message').val('');
+          	$('#edit-option-component-id_' + $('#pass_post_uuid').val()).attr('id', 'edit-option-component-id');
+    		$('#edit-option-edit-component_' + $('#pass_post_uuid').val()).attr('id', 'edit-option-edit-component');
+			$('#delete-option-component_' + $('#pass_post_uuid').val()).attr('id', 'delete-option-component');
+			$('#delete-option-component-id_' + $('#pass_post_uuid').val()).attr('id', 'delete-option-component-id');
+          }
+        });
     });
     //$('#reaction-id-a-')
 });
@@ -1229,6 +1447,7 @@ window.addEventListener('load', function () {
 	}
 });
 document.addEventListener('click', function (e) {
+	let any_id;
 	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[$('#host').val().split('/').length - 2];
 	if (e.target.className.indexOf('relationship-type-item-selected') > -1) {
 		any_id = e.target.id.split('_')[1];
@@ -1238,7 +1457,7 @@ document.addEventListener('click', function (e) {
 			data : {'ident' : any_id},
 			dataType : 'json',
 			success: function (response) {
-				console.log(response);
+				//console.log(response);
 				$('#price-type-relationship').text('Kz ' + response.preco + ',00');
 			}
 		});
@@ -1273,7 +1492,7 @@ document.addEventListener('click', function (e) {
 		    data: {'uuid' : any_id},
 		    dataType: 'json',
 		    success:function(response){
-		    	console.log('responda ' + response.answer);
+		    	//console.log('responda ' + response.answer);
 		    	$('#textr').text(response.answer);
 		    	$('#accept_relacd_ident').val(any_id);
 		    	$('#load_accpet').addClass('invisible-component');
@@ -1288,7 +1507,7 @@ document.addEventListener('click', function (e) {
 		    data: {'uuid' : id},
 		    dataType: 'json',
 		    success:function(response){
-		    	console.log('chegou ' + response);
+		    	//console.log(response);
 		    	$('#btn_seguir').text(response.text);
 		    	if (response.state) {
 		    		$('#btn_seguir').removeClass('no-following');
@@ -1316,6 +1535,47 @@ document.addEventListener('click', function (e) {
 	if (e.target.className.indexOf('pop-up-option') > -1) {
 		e.preventDefault();
 		document.getElementById('target-option-post').checked = false;
+		any_id = $('#ident-key').val();
+		$('#edit-option-component-id_' + any_id).addClass('invisible-component');
+		$('#edit-option-edit-component_' + any_id).addClass('invisible-component');
+		$('#delete-option-component_' + any_id).addClass('invisible-component');
+		$('#delete-option-component-id_' + any_id).addClass('invisible-component');
+		$('#edit-option-component-id_' + any_id).attr('id', 'edit-option-component-id');
+		$('#edit-option-edit-component_' + any_id).attr('id', 'edit-option-edit-component');
+		$('#delete-option-component_' + any_id).attr('id', 'delete-option-component');
+		$('#delete-option-component-id_' + any_id).attr('id', 'delete-option-component-id');
+		$('#ident-key').val('');
+	}
+
+	if (e.target.className.indexOf('pop-up-option') > -1) {
+		e.preventDefault();
+		document.getElementById('target-option-post').checked = false;
+		any_id = $('#ident-key').val();
+		$('#edit-option-component-id_' + any_id).addClass('invisible-component');
+		$('#edit-option-edit-component_' + any_id).addClass('invisible-component');
+		$('#delete-option-component_' + any_id).addClass('invisible-component');
+		$('#delete-option-component-id_' + any_id).addClass('invisible-component');
+		$('#edit-option-component-id_' + any_id).attr('id', 'edit-option-component-id');
+		$('#edit-option-edit-component_' + any_id).attr('id', 'edit-option-edit-component');
+		$('#delete-option-component_' + any_id).attr('id', 'delete-option-component');
+		$('#delete-option-component-id_' + any_id).attr('id', 'delete-option-component-id');
+		$('#ident-key').val('');
+	}
+	if (e.target.className.indexOf('delete-post-option-component') > -1) {
+		e.preventDefault();
+		any_id = evt.target.id.split('_')[1];
+	}
+	if (e.target.className.indexOf('target-invited-relationship-close') > -1) {
+		any_id = $('#ident-key').val();
+		$('#edit-option-component-id_' + any_id).addClass('invisible-component');
+		$('#edit-option-edit-component_' + any_id).addClass('invisible-component');
+		$('#delete-option-component_' + any_id).addClass('invisible-component');
+		$('#delete-option-component-id_' + any_id).addClass('invisible-component');
+		$('#edit-option-component-id_' + any_id).attr('id', 'edit-option-component-id');
+		$('#edit-option-edit-component_' + any_id).attr('id', 'edit-option-edit-component');
+		$('#delete-option-component_' + any_id).attr('id', 'delete-option-component');
+		$('#delete-option-component-id_' + any_id).attr('id', 'delete-option-component-id');
+		$('#ident-key').val('');
 	}
 	if (e.target.className.indexOf('nothing') > -1) {
 		e.preventDefault();
