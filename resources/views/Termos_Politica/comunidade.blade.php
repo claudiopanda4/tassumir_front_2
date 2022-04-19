@@ -28,7 +28,7 @@
             </ul>
 		</header>
 
-		<div class="main " style="margin-top:10%;">
+		<div class="main " style="margin-top:10%;text-align: justify;">
 			
 			<h3 class="the-font color-orange">Padrões da Comunidade </h3>
 			<span class="span-text color-white" style="justify-content:flex-start;">
@@ -70,7 +70,7 @@
 
 					<li>
 
-						<span class="span-text color-orange" id="teste" >{{$resultw[$i]['cabecalho']}}</span><br/>
+						<span class="span-text color-orange" id="teste">{{$resultw[$i]['cabecalho']}}</span><br/>
 
 						<span class="span-text color-white" style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">{{$resultw[$i]['subtitulo']}}</span><br/>
 						<span class="span-text color-white"style="justify-content:flex-start">{{$resultw[$i]['corpo']}}</span>

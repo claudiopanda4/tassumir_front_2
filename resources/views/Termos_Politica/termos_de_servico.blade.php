@@ -45,7 +45,7 @@
 			</nav>
 		</aside>-->
 
-		<div class="main" style="margin-top:10%;">
+		<div class="main" style="margin-top:10%;text-align: justify;">
 			
 			<h3 class="the-font color-orange">Termos Comerciais da Be Able </h3>
 			<span class="span-text color-white" style="justify-content:flex-start;">
@@ -59,7 +59,7 @@
 			</span>
 		
 
-			<ul style="">
+			<ul style="" >
 				@for ($i=0; $i< sizeof($resultw); $i++)
 
 				@if($i < 25)
