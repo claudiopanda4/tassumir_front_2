@@ -2800,13 +2800,13 @@ public function dados_comment($key){
 
   public function joinAndSave(Request $request){
 
-    $validator = Validator::make($request->all(), [
+    /*$validator = Validator::make($request->all(), [
             'nome' => 'required',
             'apelido'=>'required',
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
-        }
+        }*/
 
           try{
 
@@ -2925,9 +2925,20 @@ public function dados_comment($key){
 
         if($input_code == $decryp_code_confi){
 
-            $conta = new Conta();
-            $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
-            $conta->nome = $nome;
+            $result_phone_email = DB::table('contas')
+                        ->where('telefone','=',$phoneReceived)
+                        ->orwhere('email','=',$emailReceived)
+                        ->get();
+
+            if(isset($result_phone_email) > 0){
+
+                return redirect()->route('account.login.form')->with("error","Email ou Telefone ja existente");
+
+            }else{
+ 
+                  $conta = new Conta();
+                  $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
+                  $conta->nome = $nome;
                   $conta->apelido = $apelido;
                   $conta->data_nasc = $data_nascimento;
                   $conta->genero = $sexo;
@@ -2944,36 +2955,50 @@ public function dados_comment($key){
 
                   $conta->save();
 
-              DB::table('identificadors')->insertGetId([
-                   'tipo_identificador_id' => 1,
-                   'id' => $conta->conta_id,
-                   'created_at'=> $this->dat_create_update(),
-              ]);
-              if(!$phoneReceived){
-                    $phoneReceived = NULL;
-                }
+                  DB::table('identificadors')->insertGetId([
+                       'tipo_identificador_id' => 1,
+                       'id' => $conta->conta_id,
+                       'created_at'=> $this->dat_create_update(),
+                  ]);
+                  if(!$phoneReceived){
+                        $phoneReceived = NULL;
+                    }
 
-              DB::table('logins')->insert([
+                  DB::table('logins')->insert([
 
-                  'email' => $emailReceived,
-                  'telefone' => $phoneReceived,
-                  'password' =>$password,
-                  'conta_id' => $conta->conta_id,
-                  'created_at'=> $this->dat_create_update(),
+                      'email' => $emailReceived,
+                      'telefone' => $phoneReceived,
+                      'password' =>$password,
+                      'conta_id' => $conta->conta_id,
+                      'created_at'=> $this->dat_create_update(),
 
-              ]);
-              DB::table('codigo_confirmacaos')->insert([
+                  ]);
+                  DB::table('codigo_confirmacaos')->insert([
 
-                  'codigoGerado' => $decryp_code_confi,
-                  'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                  'conta_id' => $conta->conta_id,
-                  'email' => $emailReceived,
-                  'telefone' => $phoneReceived,
-              ]);
+                      'codigoGerado' => $decryp_code_confi,
+                      'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                      'conta_id' => $conta->conta_id,
+                      'email' => $emailReceived,
+                      'telefone' => $phoneReceived,
+                  ]);
 
-               DB::commit();
+                    DB::commit();
 
-                return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
+                    return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
+
+            }
+
+            /*if (Auth::attempt(['email' =>$emailReceived, 'password' =>$password])) {
+                
+                $request->session()->regenerate();
+                return redirect()->route('account.home');
+
+            }else if(Auth::attempt(['telefone' => $phoneReceived, 'password' => $password])){
+
+                $request->session()->regenerate();
+                return redirect()->route('account.home');
+            }*/
+
         }else{
 
             DB::rollBack();
