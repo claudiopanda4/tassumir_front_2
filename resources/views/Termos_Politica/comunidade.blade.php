@@ -12,11 +12,13 @@
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/checked.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
+
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
 	<title>Termos Tassumir</title>
 </head>
-<body class="container-main">
+<body class="container-main-t">
 
-	<div class="body-pop-up content-full-scroll">
+	<div class="body-pop-up content-full-scroll-t">
 
 		<header class="header-main header-main-component clearfix" >
 			  <ul class="ul-left clearfix">
@@ -25,25 +27,8 @@
                 </li>
             </ul>
 		</header>
-		<aside class="aside aside-left mt-2" >
-			<nav>
-				<ul class="clearfix" >
-				<li class="li-component-aside">
-					<i class="fas fa-arrow-down">
-						
-					</i><a href="#teste">
-						<span class="span-text">Os Serviços que prestamos</span>
-					</a>
-				</li><li class="li-component-aside">
-					<i class="fas fa-arrow-down"></i><a href="#teste">
-						Financiamento
-					</a>
-				</li>
-			</ul>	
-			</nav>
-		</aside>
 
-		<div class="main " style="margin-top:10%;">
+		<div class="main " style="margin-top:10%;text-align: justify;">
 			
 			<h3 class="the-font color-orange">Padrões da Comunidade </h3>
 			<span class="span-text color-white" style="justify-content:flex-start;">
@@ -67,10 +52,10 @@
 			</span>
 			<span class="span-text color-white" style="justify-content:flex-start;">
 				O nosso compromisso com a expressão é fundamental, mas reconhecemos que a Internet cria cada vez mais oportunidades novas de abuso. Por estes motivos, quando limitamos a expressão, fazemo-lo ao serviço de um ou mais dos seguintes valores:<br/>
-				<span  style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">a) Autenticidade - </span> Queremos garantir que os conteúdos que as pessoas estão a ver no Tássumir são autênticos. Acreditamos que a autenticidade cria um melhor ambiente de partilha e é por isso que não queremos que as pessoas utilizem o Tássumir para representar falsamente quem são ou o que estão a fazer.<br/>
+				<span  style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">a) Autenticidade - </span> Queremos garantir que os conteúdos que as pessoas estão a ver no Tassumir são autênticos. Acreditamos que a autenticidade cria um melhor ambiente de partilha e é por isso que não queremos que as pessoas utilizem o Tassumir para representar falsamente quem são ou o que estão a fazer.<br/>
 				<span style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">b) Dignidade - </span>Acreditamos que todas as pessoas são iguais em termos de dignidade e direitos. Esperamos que as pessoas respeitem a dignidade umas das outras, sem assediar nem rebaixar ninguém.<br/>
-				<span style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">c) Privacidade - </span>Estamos empenhados em proteger a privacidade e as informações pessoais. A privacidade dá às pessoas a liberdade de ser elas próprias, escolher como e quando partilham no Tássumir e estar em contacto mais facilmente.<br/>
-				<span style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">d) Segurança - </span>Estamos empenhados em tornar o Tássumir um local seguro salvo situações alheias a nosa vontade como ataques ciberneticos, etc. Conteúdos que ameaçam as pessoas têm o potencial de intimidar, excluir ou silenciar e isso não é permitido no Tássumir.<br/>
+				<span style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">c) Privacidade - </span>Estamos empenhados em proteger a privacidade e as informações pessoais. A privacidade dá às pessoas a liberdade de ser elas próprias, escolher como e quando partilham no Tassumir e estar em contacto mais facilmente.<br/>
+				<span style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">d) Segurança - </span>Estamos empenhados em tornar o Tassumir um local seguro salvo situações alheias a nosa vontade como ataques ciberneticos, etc. Conteúdos que ameaçam as pessoas têm o potencial de intimidar, excluir ou silenciar e isso não é permitido no Tassumir.<br/>
 				Os nossos Padrões da Comunidade aplicam-se a todos, em todo o mundo e a todos os tipos de conteúdos. Explicamos previamente, por forma a darmos um enquadramento lógico, os conteúdos de cada secção dos nossos Padrões da Comunidade de forma a estabelecer os objectivos da política que passam por:<br/>
 				<span style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">a) Conteúdos que não são permitidos</span><br/>
 				<span style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">b) Conteúdos que exigem informações ou contexto adicionais para ser implementados</span><br/>
@@ -85,7 +70,7 @@
 
 					<li>
 
-						<span class="span-text color-orange" id="teste" >{{$resultw[$i]['cabecalho']}}</span><br/>
+						<span class="span-text color-orange" id="teste">{{$resultw[$i]['cabecalho']}}</span><br/>
 
 						<span class="span-text color-white" style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">{{$resultw[$i]['subtitulo']}}</span><br/>
 						<span class="span-text color-white"style="justify-content:flex-start">{{$resultw[$i]['corpo']}}</span>
@@ -102,5 +87,38 @@
 		
 	</div>
 
+	<div>
+
+		<img id="btn" src="{{ asset('css/uicons/ios-arrow-up-8-16.png') }}" class="btn-sroll-up">
+
+	</div>
 </body>
 </html>
+
+<script>
+		$(document).ready(function(){
+		
+		$(window).scroll(function (){
+
+			if($(this).scrollTop() > 200){
+
+				$('#btn').fadeIn();
+
+			}else{
+
+				$('#btn').fadeOut();
+			}
+
+		});
+
+ 	$('#btn').on('click',function() {
+
+ 		$('html,body').animate({
+ 			scrollTop:0,
+ 		},1000);
+ 		 	
+ 	});
+ 	
+
+ 	});
+</script>

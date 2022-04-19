@@ -44,7 +44,7 @@
                         <h2 class="text-ellips">Curtidas</h2>
                     </div>                    
                 </div>   
-                <div class="clearfix l-5" id="button-options-page">
+                <!--<div class="clearfix l-5" id="button-options-page">
                         <a href="" id="a-btn-flw-edt">
                             <div id="btn_follwing_container" class="follwing-btn-container l-5">
                                 <button type="submit" class="follwing-btn" id="btn_seguir">
@@ -70,7 +70,7 @@
                                 </div>
                             </label>
                         </div>                    
-                    </div>             
+                    </div>-->           
             </div>
 
         </div>
@@ -97,7 +97,7 @@
         <!--<div class="statistics-profile-page-identify">
             <h1>{{$dados[0]->nome}}</h1>
             <h2 class="lg-invisible-user-name">@<span></span>destacados</h2>
-        </div>-->
+        </div>--> 
         <div class="clearfix page-card-header" id="more-description-page">
 
             <!--<div class="description-couple">
@@ -108,14 +108,14 @@
             <div class="description-couple" id="p-description-couple-all-container">
                 <p id="p-description-couple-all"><span id="part-text"></span><span class="invisible-component" id="text-ellips-description">...</span><a id="see-more-description"href="" class="invisible-component"><span class="">Ver Mais</span></a><span id="more-text-description" class="invisible-component"></span></p>
             </div>
-            <div class="clearfix invisible-component" style="padding-left: 20px;" id="spouses-component">
+            <div class="clearfix invisible-component" id="spouses-component">
                 <a href="" class="l-5" id="spouse-masc"></a>
                 <span class="l-5 spouse-item">e</span>
                 <a href="" class="l-5" id="spouse-fem"></a>
                 <span class="l-5 spouse-item" id="relationship-type-spouse"></span>
             </div>
         </div>
-        <div id="mobile-options-page">
+        <!--<div id="mobile-options-page">
                 <div class="clearfix" id="button-options-page">
                         <a href="" id="a-btn-flw-edt">
                             <div id="btn_follwing" class="follwing-btn-container l-5">
@@ -143,8 +143,35 @@
                             </label>
                         </div>                    
                     </div>             
-        </div>
+        </div>-->
 
+        <div class="clearfix l-5" id="button-options-page">
+                        <a href="" id="a-btn-flw-edt">
+                            <div id="btn_follwing_container" class="follwing-btn-container l-5">
+                                <button type="submit" class="follwing-btn" id="btn_seguir">
+                                    
+                                </button>
+                            </div>                    
+                        </a>
+                        <div class="l-5 options-profile-btn more-options-profile-bt">
+                            <label for="more-option-target-profile" class="target-options-profile">
+                                <div class="">
+                                    <div class="more-options-profile-btn">
+                                        <div class="more-options-component"><img class="center img-24" id="more-option-btn-profile" src="{{asset('css/uicons/caret-down.png')}}"></div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>  
+                        <div class="l-5 options-profile-btn more-options-profile-bt">
+                            <label for="more-option-target-profile" class="target-options-profile">
+                                <div class="">
+                                    <div class="more-options-profile-btn">
+                                        <div class="more-options-component"><img class="invisible-component center img-24" id="more-option-btn-page"></div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>                    
+                    </div>
         <label for="add-post-target" class="add-post-label invisible-component" id="add-post-label-ident">
             <div class="add-post circle">
                 <i class="far fa-edit fas-20 center" style="font-size: 20px;"></i>
@@ -174,20 +201,20 @@
         <div class="br-10 card-page" id="card-profile-option">
             <nav class="option-profile-menu">
                 <ul class="" id="ul-profile">
-                    <li class="posts-content-filter" id="cover-posts-component">
+                    <li class="posts-content-filter cover-posts-component-page" id="cover-posts-component">
                         <a href="?post-container-post=images">
                             <h1 class="menu-option-profile"></h1>
                             <img class="center img-26" id="img-profile-icon-profile" src="{{asset('css/uicons/images.png')}}">
                         </a>
                     </li>
-                    <li class="posts-content-filter" id="video-posts-component">
+                    <li class="posts-content-filter video-posts-component-page" id="video-posts-component">
                         <a href="?post-container-post=video">
                             <h1 class="menu-option-profile">        
                             </h1>
                             <img class="center img-26" id="video-profile-icon-profile" src="{{asset('css/uicons/video_profile_liked.png')}}">
                         </a>
                     </li>
-                    <li class="posts-content-filter" id="text-posts-component">
+                    <li class="posts-content-filter text-posts-component-page" id="text-posts-component">
                         <a href="?post-container-post=post">
                             <h1 class="menu-option-profile"></h1>
                             <img class="center img-26" id="text-profile-icon-profile" src="{{asset('css/uicons/text.png')}}">
@@ -198,7 +225,7 @@
             <div class="clearfix">
                 <?php $key = 0; while($key < 207){ ?>
                     <div class="post-img-container-page post-page-container invisible-component" id="post-img-container-page-{{$key}}">
-                        <a href="">
+                        <a href="" id="post-img-container-page-link-{{$key}}">
                             <div class="img-post">
                                 <img id="post-img-post-container-page-{{$key}}" src="" class="img-full">
                             </div>
@@ -213,7 +240,7 @@
                             </div>
                             <div class="clearfix content-video-some-details">
                                 <img class="l-5 img-20" style="" src="{{asset('css/uicons/play_video_button.png')}}">
-                                <h1 class="l-5 target-content-video-page">115</h1>
+                                <!--<h1 class="l-5 target-content-video-page">115</h1>-->
                             </div>
                         </a>
                     </div>
@@ -223,6 +250,8 @@
     </div>
 <!--</div>
 </div>-->
+<form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
+@csrf
 <input type="hidden" id="page_ident" name="page_u" value="{{ $dados[0]->uuid }}">
 <input type="checkbox" name="" id="add-post-target" class="invisible">
 <div class="pop-up" id="add-post-container">
@@ -237,7 +266,7 @@
                 </label>
             </div>
         </header>
-       <!-- <form enctype="multipart/form-data">-->
+            <input type="hidden" name="page_u" value="{{$dados[0]->uuid}}">
             <div class="header-height"></div>
             <div class="clearfix content-details-post" style="margin-top: 15px; margin-bottom: 10px;">
                 <div class="first-component clearfix l-5">
@@ -289,9 +318,42 @@
                     <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Publicar</button>
                 </div>
             </div>
-        <!-- </form> -->
     </div>
 </div>
+<input type="checkbox" name="" id="target-profile-cover-post" class="invisible">
+<div class="pop-up" id="cover-profile-post">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height">
+            <h1 class="">Adicionar Imagem</h1>
+            <h1 class="invisible">Adicionar Video</h1>
+            <div class="container-pop-up-component-header">
+                <label for="target-profile-cover-post">
+                    <div class="cancel-box div-img" id="cancel-box-add-file-post">
+                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                    </div>
+                </label>
+            </div>
+        </header>
+        <div class="header-height"></div>
+        <div style="margin-top: 15px; margin-bottom: 10px;">
+            <div class="">
+                <input class="file" type="file" name="imgOrVideo" id="testeVid" style="width: 250px; margin-left: 10px; color: #fff;" onchange="checkDuration(this)" >
+                <input type="hidden" name="longVideo" id="putInfo" value="">
+                <video style="display: none;" id="vidAnalyzer">
+                  <source src="" type="">
+                </video>
+            </div>
+        </div>
+        <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+            <label for="target-profile-cover-post" class="label-full">
+                <div class="cover-done checker" id="cover-done-post">
+                    <h2 id="concluir_file" style="padding: 10px; font-size: 14px; width: 100%;">Concluido</h2>
+                </div>
+            </label>
+        </div>
+    </div>
+</div>
+</form>
 <input type="checkbox" name="" id="target-profile-cover-page" class="invisible">
 <div class="pop-up" id="cover-profile-page">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">

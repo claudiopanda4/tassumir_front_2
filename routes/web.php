@@ -62,8 +62,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/page/following/ami', [App\Http\Controllers\PaginaCasalController::class, 'ami_following'])->name('couple.qtd_de_seguidores');
     Route::get('/get_follow_me/', [App\Http\Controllers\PaginaCasalController::class, 'get_follow_me'])->name('couple.get_follow_me');
     Route::get('/page/posts/reactions/', [App\Http\Controllers\PaginaCasalController::class, 'qtd_de_likes_page'])->name('couple.qtd_de_likes_page');
-    Route::get('/get_nine_text_page/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_text_page'])->name('couple.get_nine_text_page');
-    Route::get('/get_nine_images_page/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_images_page'])->name('couple.get_nine_images_page');
+    Route::get('/page/text/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_text_page'])->name('couple.text');
+    Route::get('/page/pictures/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_images_page'])->name('couple.pictures');
     Route::get('/couple_page/page/content/videos/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_videos_page'])->name('page.couple.videos');
     /*fim novas rotas pages*/
 
@@ -135,6 +135,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/postpesquisa', [App\Http\Controllers\searchController::class, 'postpesquisa'])->name('post.pesquisa');
     Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home.feed');
     Route::get('/pegar_ultimocomment', [App\Http\Controllers\AuthController::class, 'pegar_ultimocomment'])->name('pegar_ultimocomment');
+    Route::get('/prototype/', [App\Http\Controllers\PostController::class, 'prototype_view'])->name('prototype');
+    Route::post('/thumbnail/save', [App\Http\Controllers\PostController::class, 'thumbnail'])->name('thumbnail.save');
 
     /*Rotas para requisições Ajax*/
     Route::get('/page/follow', [App\Http\Controllers\SeguidorController::class, 'follow'])->name('page.follow');

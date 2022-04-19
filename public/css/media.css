@@ -1007,6 +1007,10 @@
 	.noti-card-first {
 		display: none;
 	}
+	.inform-profile h3#civil-state, 
+	#main-profile .inform-profile p {
+	    text-align: center;
+	}
 	.img-post {
 		position: relative;
 	    width: 100%;
@@ -1313,7 +1317,7 @@
 		background-color: transparent;
 	}
 	#main-container-page .data-statistics {
-
+		padding: 0;
 	}
 	.statistics-profile-page-component h2 {
 	    font-size: 12px;
@@ -1365,7 +1369,7 @@
 	    height: 75px;
 	}
 	#button-options-page {
-		width: 95%;
+		width: 90%;
 		margin: auto;
 	}
 	.description-couple p {
@@ -1374,7 +1378,7 @@
 	#button-options-page .more-options-profile-btn {
 		height: 34px;
 		background-color: transparent;
-	    border: 1px solid #747474;
+	    border: 1px solid #222629;
 	}
 	.statistics-profile-page-identify {
 	    margin-top: 2px;
@@ -1779,7 +1783,8 @@
 	    margin-right: 0;
 	}
 	#btn_follwing_container {
-	    width: 60%;
+	    width: 62%;
+	    max-width: inherit;
 	}
 	.header-main-component-n {
 	    height: 45px;

@@ -18,9 +18,9 @@
 
    	<title>Termos e Politica</title>
    </head>
-   <body class="container-main">
-   		
-<div class="body-pop-up content-full-scroll" >
+   <body class="container-main-t" >
+   	
+<div class="body-pop-up content-full-scroll-t" >
 	<header class="header-main header-main-component clearfix" >
 			  <ul class="ul-left clearfix">
                 <li class="title clearfix">
@@ -90,18 +90,11 @@
 				</a>
 
 			</div>
-			<!--<div class="div-1-info">
-
-				<a href="#" class="div-a">
-				<h3 class="the-font color-orange">Politica de Eventos</h3>
-				<span class="text-white span-text">Informações publicações</span>
-				</a>
-
-			</div>-->
+		
 		</div>
-		<div class="col-md-4 text-white card-right-column" style="border-left: 2px solid #800080;">
+		<div class="col-md-4 text-white card-right-column" style="border-left: 2px solid #800080;text-align: justify;">
 			<span class="justify-content-start span-text text-white span-subtitle" >
-				Seja bem vindo à Tássumir produto da Be Able, lda.</span><br/><br/>
+				Seja bem vindo à Tassumir produto da Be Able, lda.</span><br/><br/>
 
 					<span class="span-text text-white" style="font-size: 11pt;">
 
@@ -114,24 +107,24 @@
 	<div class="row ">
 		
 		<div class="col-md-4 card-termos" style="
-    border-right: 2px solid #800080;">
+    border-right: 2px solid #800080;text-align: justify;">
 				
 					<span class="span-text text-white" style="font-size: 11pt;">
 								
-						Não cobramos pelo acesso às consultas de informações no Tássumir. Em vez disso, cobramos no registo de relacionamentos conjugais e pessoas singulares ou colectivas também pagam para mostrarmos anúncios de seus produtos e serviços. Ao usar Tássumir, você concorda que podemos mostrar anúncios dessas pessoas.
+						Não cobramos pelo acesso às consultas de informações no Tassumir. Em vez disso, cobramos no registo de relacionamentos conjugais e pessoas singulares ou colectivas também pagam para mostrarmos anúncios de seus produtos e serviços. Ao usar Tassumir, você concorda que podemos mostrar anúncios dessas pessoas.
 					</span>
 				
 
 		</div>
 
-		<div class="col-md-4 ">
+		<div class="col-md-4 " style="text-align: justify;">
 				<span class="span-text text-white" style="font-size: 11pt;">
 				Não vendemos seus dados pessoais para anunciantes e não partilhamos informações de identificação pessoal (como nome, endereço de email ou outras informações de contacto) com os anunciantes, a menos que tenhamos sua permissão específica. Em vez disso, os anunciantes nos informam os tipos de público que desejam que vejam os anúncios, e nós mostramos esses anúncios para pessoas que podem estar interessadas. Oferecemos aos anunciantes relatórios numéricos sobre o desempenho dos anúncios para ajudá-los a entender como as pessoas estão interagindo com o conteúdo. 
 			</span>
 			
 		</div>
 
-		<div class="col-md-4 card-termos" style="border-left: 2px solid #800080;">
+		<div class="col-md-4 card-termos" style="border-left: 2px solid #800080;text-align: justify;">
 				<span class="span-text text-white" style="font-size: 11pt;">
 				Nossa Política de Dados explica como colectamos e usamos seus dados pessoais para determinar alguns dos anúncios que serão exibidos e fornecer todos os outros serviços descritos abaixo. Você também pode ir para as suas Configurações a qualquer momento para analisar as escolhas de privacidade sobre como usamos seus dados.
 			</span>
@@ -139,31 +132,18 @@
 		</div>
 	</div>
 
-	<div >
+	<div>
 
-		<img id="btn" src="{{ asset('css/uicons/caret-down.png') }}" style=" 
-		  position: fixed;
-		  bottom: 20px;
-		  right: 30px;
-		  z-index: 9999;
-		  border: none;
-		  outline: #800080;
-		  background-color: #800080;
-		  color: #800080;
-		  cursor: pointer;
-		  padding: 10px;
-		  border-radius: 25px;
-		  width: 48px;
-		  height: 48px;
-		 
-" >
+		<img id="btn" src="{{ asset('css/uicons/ios-arrow-up-8-16.png') }}" class="btn-sroll-up">
 
 	</div>
 
 	<footer class="mt-5 footer content-fluid" >
-	 <div class="title clearfix" style="justify-content:center;align-items: center;text-align: center;">
-                    <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
-      </div>
+	 	<div class="title clearfix" style="justify-content:center;align-items: center;text-align: center;">
+	       <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}">
+	       	<h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1>
+	       </a>
+     	</div>
 	</footer>
 </div>
    </body>
@@ -171,17 +151,34 @@
 
  <script>
 
+ 	$(document).ready(function(){
+		
+		$(window).scroll(function (){
+
+			if($(this).scrollTop() > 200){
+
+				$('#btn').fadeIn();
+
+			}else{
+
+				$('#btn').fadeOut();
+			}
+
+		});
+
+ 		/*window.onload = function(){
+
+ 			alert("hr");
+ 		}*/
+
  	$('#btn').on('click',function() {
 
- 		alert("teste");
-
- 	  	let tm = $("body").scrollTop();
-
- 	  	if(tm > 0){
- 	  		alert("tamanho maior");
- 	  	}else{
- 	  		alert("menor");
- 	  	}
+ 		$('html,body').animate({
+ 			
+ 			scrollTop:0,
+ 		},1000);
+ 		 	
+ 	});
  	
 
  	});

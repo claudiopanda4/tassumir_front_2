@@ -12,11 +12,13 @@
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/checked.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
+
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
 	<title>Termos Tassumir</title>
 </head>
-<body  class="container-main">
+<body  class="container-main-t">
 
-	<div class="body-pop-up content-full-scroll">
+	<div class="body-pop-up content-full-scroll-t">
 		<header class="header-main header-main-component clearfix" >
 			  <ul class="ul-left clearfix">
                 <li class="title clearfix">
@@ -25,7 +27,7 @@
             </ul>
 		</header>
 		
-		<aside class="aside aside-left mt-2" >
+		<!--<aside class="aside aside-left mt-2" >
 			<nav>
 				<ul class="clearfix" >
 				<li class="li-component-aside">
@@ -41,18 +43,18 @@
 				</li>
 			</ul>	
 			</nav>
-		</aside>
+		</aside>-->
 
-		<div class="main" style="margin-top:10%;">
+		<div class="main" style="margin-top:10%;text-align: justify;">
 			
 			<h3 class="the-font color-orange">Termos de Serviço</h3>
 			<span class="span-text color-white" style="justify-content:flex-start;">
 				
-				O Tassumir é um conjunto de tecnologias e serviços desenvolvidas pela Be Able, lda para que as pessoas possam se conectar umas às outras, criar comunidades e expandir seus negócios. Estes Termos regem efectivamente o uso do Tássumir.
+				O Tassumir é um conjunto de tecnologias e serviços desenvolvidas pela Be Able, lda para que as pessoas possam se conectar umas às outras, criar comunidades e expandir seus negócios. Estes Termos regem efectivamente o uso do Tassumir.
 				
 			</span>
 			<span class="span-text color-white" style="justify-content:flex-start;">
-				Não cobramos pelo acesso às consultas de informações no Tassumir. Em vez disso, cobramos no registo de relacionamentos conjugais e pessoas singulares ou colectivas também pagam para mostrarmos anúncios de seus produtos e serviços. Ao usar Tássumir, você concorda que podemos mostrar anúncios dessas pessoas.
+				Não cobramos pelo acesso às consultas de informações no Tassumir. Em vez disso, cobramos no registo de relacionamentos conjugais e pessoas singulares ou colectivas também pagam para mostrarmos anúncios de seus produtos e serviços. Ao usar Tassumir, você concorda que podemos mostrar anúncios dessas pessoas.
 			</span>
 
 			<ul style="">
@@ -79,5 +81,37 @@
 		
 	</div>
 
+	<div>
+
+		<img id="btn" src="{{ asset('css/uicons/ios-arrow-up-8-16.png') }}" class="btn-sroll-up">
+
+	</div>
 </body>
 </html>
+<script>
+		$(document).ready(function(){
+		
+		$(window).scroll(function (){
+
+			if($(this).scrollTop() > 200){
+
+				$('#btn').fadeIn();
+
+			}else{
+
+				$('#btn').fadeOut();
+			}
+
+		});
+
+ 	$('#btn').on('click',function() {
+
+ 		$('html,body').animate({
+ 			scrollTop:0,
+ 		},1000);
+ 		 	
+ 	});
+ 	
+
+ 	});
+</script>

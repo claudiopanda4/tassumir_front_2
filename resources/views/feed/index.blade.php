@@ -74,7 +74,7 @@
         </div>
     <div class="" id="div_father_post" name="div_father_post">
         <?php $key = 0; while($key < 146){ ?>
-        <?php if ($key == 1 || $key == 5 || $key == 9): ?>
+        <?php if ($key == 0 || $key == 2 || $key == 9): ?>
             <div class="refresh-profile-photo clearfix invisible-component alert-info-about-us" id="alert-info-about-us-{{$key}}">
                 <div class="profile-photo-container l-5">
                     <img class="img-28 center" src="{{asset('css/uicons/info_tassumir.png')}}">

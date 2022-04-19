@@ -61,9 +61,9 @@
                     <div class="hidden-click-any-container last-component-n clearfix-n " id="notification-header-icon">
                         <label for="more-option-notify" class="hidden-click-any-container fa-option-mobile-hide"><!--<i class="hidden-click-any-container fi-rs-bell f-footer fa-24 fa-option notify-icon" size="7"></i>-->
                             <img src="{{asset('/css/uicons/notification.png')}}" class="center img-28">
-                            <div class="number-notification invisible-component br-10" id="number-notification-component-footer">
+                            <!--<div class="number-notification invisible-component br-10" id="number-notification-component-footer">
                                 <div class="" id="number-notification-id-footer"></div>
-                            </div>
+                            </div>-->
                         </label>
                         <a href="" class="hidden-click-any-container fa-option-mobile-lg-hide notify-icon">
                             <!--<i class="hidden-click-any-container fi-rs-bell f-footer fi- fa-24 fa-option" size="7"></i>-->
@@ -368,7 +368,7 @@
 <input type="checkbox" name="" id="target-alert-info" class="invisible">
 <div class="pop-up" id="target-alert-info-container">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; overflow: hidden; max-height: 90%;">
-        <header class="pop-up-component-header pop-up-component-header-default header-height">
+        <!--<header class="pop-up-component-header pop-up-component-header-default header-height">
             <div class="container-pop-up-component-header">
                 <label for="target-alert-info">
                     <div class="cancel-box-component div-img">
@@ -377,7 +377,7 @@
                 </label>
             </div>
         </header>
-        <div class="header-height"></div>
+        <div class="header-height"></div>-->
         <div class="clearfix l-5 alert-description-class" id="alert-description" style="width: 98%; padding: 5px; margin-top: 10px;">
             <p class="alert-description-class" style="color: #fff; font-size: 14px;">Actualmente, o TASSUMIR, é a rede social que mehor paga, por cada mil visualizações em vídeo ou por cada 500 reacções em texto ou imagens, podendo ser mais rentável do que plataformas como o Youtube, Facebook e Instagram em países como Angola<br><br>
                 <span class="alert-description-class" style="text-transform: uppercase; font-size: 12px;">Mas como Ganhar com os seus conteúdos?<span id="elips-p">...</span></span><br><span style="color: #3490dc; font-weight: bolder; font-size: 14px;" id="alert-description-see-more" class="alert-description-class"> ver mais</span><br><span id="more-content-alert" class="invisible-component alert-description-class">Você precisa criar conteúdos em vídeos que sejam atrativos e que tem a ver com algum assunto interessante para relacionamentos. Quando o teu vídeo atingir até 1.000 visualizações, você começará a ganhar o equivalente a 1 U$D, ou seja, se tiverem 10 mil visualizações, você ganhará 10 U$D. E se eu não gosto de vídeos e escrevo textos?<br><br>
