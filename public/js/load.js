@@ -16,6 +16,17 @@ $(document).ready(function () {
 	$('.edit-option').click(function () {
 		document.getElementById('target-option-post').checked = false;
 	});
+	$.ajax({
+		url : '/page/auth/',
+		type : 'get',
+		data : {},
+		dataType : 'json',
+		success: function (response) {
+			console.log(response);
+			$('#target-alert-post-denied-id').addClass(response.class);
+			$('#page_denied').val(response.page);
+		}
+	});
 	$('.relationship-type-item').click(function(e){
 		alert('oi');
 	});
@@ -1518,6 +1529,11 @@ window.addEventListener('load', function () {
 document.addEventListener('click', function (e) {
 	let any_id;
 	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[$('#host').val().split('/').length - 2];
+	
+	if (e.target.className.indexOf('page') > -1) {
+		document.location.href = route + '/couple_page/' + $('#page_denied').val() + '?add-post=true';
+	}
+
 	if (e.target.className.indexOf('relationship-type-item-selected') > -1) {
 		any_id = e.target.id.split('_')[1];
 		$.ajax({

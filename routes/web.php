@@ -81,6 +81,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
 
     Route::get('/posts/index/cover_commenter/{id}', [App\Http\Controllers\PostController::class, 'img_comment'])->name('posts.index.cover_commenter');
 
+    Route::get('/page/auth/', [App\Http\Controllers\AuthController::class, 'state_relationship'])->name('page.auth');
+
     Route::get('/posts/comments/{id}', [App\Http\Controllers\PageController::class, 'comments_post'])->name('comments.post');
     /* end siene  */
 

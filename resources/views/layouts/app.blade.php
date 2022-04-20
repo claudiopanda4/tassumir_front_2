@@ -193,10 +193,11 @@
                     </div>
                 </li>
             </a>
-            <label for="target-alert-post-denied">
+            <input type="hidden" id="page_denied">
+            <label>
                 <li id="add-post-target-pop-up">
                     <!--<i class="fi-rr-play fa-20 f-footer"></i>-->
-                    <img src="{{asset('/css/uicons/add.png')}}" class="center img-32">
+                    <img id="target-alert-post-denied-id" src="{{asset('/css/uicons/add.png')}}" class="center img-32">
                 </li>
             </label>
             <a href="{{route('post.tassumir.video', 'ma')}}">

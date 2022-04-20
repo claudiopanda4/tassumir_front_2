@@ -30,6 +30,21 @@ class AuthController extends Controller
         //$this->middleware('auth:web1');
         $this->casalPage = new PaginaCasalController();
     }
+
+    public function state_relationship () {
+        $conta_id = Auth::user()->conta_id;
+        $result = DB::select('select count(*) as count, (select uuid from pages where conta_id_a = ? or conta_id_b = ?) as uuid_page from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id])[0];
+
+        $class = 'nothing';
+        $page = $result->uuid_page;
+        if ($result->count == 1) {
+            $class = 'page';
+        } else if ($result->count > 1) {
+             $class = 'multi-page';
+        }
+        return response()->json(['class' => $class, 'page' => $page]);
+    }
+
     public function login_return (Request $request){
         if (Auth::check()) {
            return true;

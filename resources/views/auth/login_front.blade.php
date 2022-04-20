@@ -34,7 +34,7 @@
             <div style="height: 1px;"></div>
             <header class="logo-form" id="logo-login-form-lg" style="margin-left: 10px;">
                 <div class="title clearfix">
-                    <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
+                    <a href=""><!--<img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}">--><h1 class="l-5">tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                 </div>
             </header>
             <div class="cover-login" id="cover-login-id">
@@ -43,7 +43,7 @@
             <div class="" id="main-login">
                 <header class="logo-form" id="title-login">
                     <div class="title clearfix">
-                        <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}"><h1 class="l-5">ass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
+                        <a href=""><!--<img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}">--><h1 class="l-5">tass<span class="title-final" style="color: #fd09fd;">umir</span></h1></a>
                     </div>
                 </header>
                 
@@ -51,16 +51,16 @@
                 <form action="{{ route('account.login.enter') }}" method="POST" id="my-form">
                     @csrf
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Número ou Email</label>
-                        <input class="input-text-default input-full input-login" name="numero_ou_email" type="text" placeholder="email ou telefone" >
+                        <!--<label for="exampleInputPassword1">Número ou Email</label>-->
+                        <input class="input-text-default input-full input-login" name="numero_ou_email" type="text" placeholder="email ou telefone">
                         @error('numero_ou_email')
                             <span style="color: red;">{{$message}}</span>
                         @enderror
                     </div>
 
                     <div class="form-group" id="password_login_id">
-                        <label for="exampleInputPassword1">Palavra Passe</label>
-                        <input type="password" name="palavra_passe" class="input-text-default input-full input-login" id="exampleInputPassword1" placeholder="password" >
+                        <!--<label for="exampleInputPassword1">Palavra Passe</label>-->
+                        <input type="password" name="palavra_passe" class="input-text-default input-full input-login" id="exampleInputPassword1" placeholder="password">
                         <i class="fa fa-eye" id="eye"></i>
 
                         @error('palavra_passe')
@@ -87,7 +87,7 @@
                             
                         </div>
                     </div>
-                <div class="clearfix" style="padding: 10px;">
+                <div class="clearfix" style="padding: 10px; text-align: center;">
                     <!--<span class="alert-login">Ao clicar em criar uma nova conta, você aceita o Contrato de Utilizador, a Política de Privacidade e a Política de Cookies do Tassumir</span><br>-->
                     <a href="{{route('term.home')}}" class="politic-privacy">Política de Privacidade e a Política de Cookies do Tassumir</a>
                 </div>

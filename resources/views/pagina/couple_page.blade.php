@@ -258,18 +258,22 @@
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
 <input type="hidden" id="page_ident" name="page_u" value="{{ $dados[0]->uuid }}">
-<input type="checkbox" name="" id="add-post-target" class="invisible">
+<?php if (isset($_GET['add-post'])): ?>
+    <input type="checkbox" name="" id="add-post-target" class="invisible" checked>
+<?php else: ?>
+    <input type="checkbox" name="" id="add-post-target" class="invisible">
+<?php endif ?>
 <div class="pop-up" id="add-post-container">
-    <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
+    <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="overflow-x: hidden;">
         <header class="pop-up-component-header pop-up-component-header-default header-height">
             <h1>Criar Publicação</h1>
-            <div class="container-pop-up-component-header">
+            <!--<div class="container-pop-up-component-header">
                 <label for="target-profile-cover">
                     <div class="cancel-box div-img">
                         <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
                     </div>
                 </label>
-            </div>
+            </div>-->
         </header>
             <input type="hidden" name="page_u" value="{{$dados[0]->uuid}}">
             <div class="header-height"></div>
@@ -278,11 +282,6 @@
                 </div>
                 <div class="textarea-container l-5" style="width:100%;">
                     <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
-                </div>
-                <div class="l-5" style="width: 100%;">
-                    <div class="preview-image" id="preview-image-id">
-
-                    </div>
                 </div>
                 <script type="text/javascript">
                     document.addEventListener('DOMContentLoaded', function(){
@@ -304,7 +303,7 @@
                     });
                 </script>
                 <nav class="add-file l-5 clearfix" style="margin-bottom: 0;">
-                    <ul style="width: 160px;" class="r-5">
+                    <ul id="more-options-component-post" class="">
                         <!--<label for="target-profile-cover-post">-->
                             <li class="circle add-file-element" id="target-profile-cover-post-id">
                                 <i class="far fa-images fa-20 center"></i>
@@ -317,10 +316,20 @@
                         <!--</label>-->
                     </ul>
                 </nav>
+                <div class="clearfix l-5" id="" style="width: 59%; margin: 0px auto 10px;">
+                    <div class="cover-done cover-done-post l-5" id="cover-done-cancel">
+                        <label for="add-post-target" class="reset-margin">
+                            <h1 class="post-public reset-margin">Cancelar</h1>
+                        </label>
+                    </div>
+                    <div class="cover-done cover-done-post l-5" id="cover-done-final">
+                        <button type="submit" class="post-public" id="post-public-done">Publicar</button>
+                    </div>
+                </div>
             </div>
-            <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
-                <div class="" id="cover-done">
-                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Publicar</button>
+            <div class="l-5" style="width: 100%;">
+                <div class="preview-image" id="preview-image-id">
+
                 </div>
             </div>
     </div>

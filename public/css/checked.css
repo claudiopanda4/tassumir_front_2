@@ -548,7 +548,7 @@
 }
 #add-post-target:checked ~ #add-post-container {
 	opacity: 1;
-    z-index: 1000;
+    z-index: 1002;
 }
 #target-profile-cover-post:checked ~ #cover-profile-post {
 	opacity: 1;
