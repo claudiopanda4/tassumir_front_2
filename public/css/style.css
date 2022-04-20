@@ -2891,9 +2891,10 @@ label[for="hugo"]{
     padding: 7px;
     display: block;
     width: auto;
-    max-width: 170px;
+    max-width: 100%;
+    min-height: 25px;
     padding-top: 14px;
-    background-color: #343a40;
+    background-color: #3a3b3c;
     border-radius: 8px;
     padding-top: 5px;
 }
@@ -2999,7 +3000,7 @@ label[for="hugo"]{
 .comment-user-comment .user {
     font-size: 12px;
     color: #fff;
-    margin: 4px;
+    margin: 0 4px 5px;
 }
 .btn-message {
     position: relative;

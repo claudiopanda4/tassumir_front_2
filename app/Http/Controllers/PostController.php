@@ -25,6 +25,26 @@ class PostController extends Controller
         return view('pagina.index', compact('ident_page', 'page_current', 'post'));
     }
 
+    public function img_comment(Request $request, $id) {
+        $conta_id = Auth::user()->conta_id;
+        $result = DB::select('select (select foto from contas where conta_id = ?) as foto_user, (select conta_id_a from pages where page_id = posts.page_id) as conta_id_a, (select conta_id_b from pages where page_id = posts.page_id) as conta_id_b, (select foto from pages where page_id = posts.page_id) as foto_page from posts where uuid = ?', [$conta_id, $id])[0];
+
+        $foto = null;
+        if ($result->foto_user) {
+            $foto = '/storage/img/users/' . $result->foto_user;
+        }
+        $page_ower = false;
+        if ($result->conta_id_a == $conta_id || $result->conta_id_b == $conta_id) {
+            $foto = null;
+            if ($result->foto_page) {
+                $foto = '/storage/img/page/' . $result->foto_page;
+            }
+            $page_ower = true;
+        }
+
+        return response()->json(['foto' => $foto, 'state' => $page_ower]);
+    }
+
     public function statistics(Request $request, $id){
         $conta_id = Auth::user()->conta_id;
         $post = DB::select('select (select count(*) from post_reactions where post_id = posts.post_id) as qtd_likes, (select count(*) from comments where post_id = posts.post_id) as qtd_comments, (select count(*) from post_reactions where identificador_id = (select identificador_id from identificadors where id = ? and tipo_identificador_id = 1) and post_id = posts.post_id) as liked from posts where uuid = ?', [$conta_id, $id])[0];

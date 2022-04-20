@@ -1859,7 +1859,7 @@ class AuthController extends Controller
   }
 
   public function get_only_comments(Request $request) {
-    return DB::select('select * from comments where post_id = (select post_id from posts where uuid = ?)', [$request->id]);
+    return response()->json(DB::select('select * from comments where post_id = (select post_id from posts where uuid = ?)', [$request->id]));
   }
 
 /* EndSiene */

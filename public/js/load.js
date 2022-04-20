@@ -37,6 +37,7 @@ $(document).ready(function () {
 		any_id = document.getElementById('a-page-name-post_' + $('#ident-post-page').val()).href;
 		any_id = any_id.split('/')[any_id.split('/').length - 1];
 		$('#a-page-name-post_' + $('#ident-post-page').val()).attr('href', route + '/couple_page/' + any_id);
+		
 		$.ajax({
 			url: '/posts/get/index/' + $('#ident-post-page').val(),
 			type: 'get',
@@ -45,14 +46,18 @@ $(document).ready(function () {
 			success:function(response){
 				console.log(response);
 				any_id = 'reacções';
-				if (response.qtd_likes == 1) {
+				if (response.qtd_likes == 0) {
+					$('#likes-qtd_' + response.id).text('');
+				} else if (response.qtd_likes == 1) {
 					$('#likes-qtd_' + response.id).text(response.likes + ' reacção');
 				} else {
 					$('#likes-qtd_' + response.id).text(response.likes + ' reacções');
 				}
 				
 
-				if (response.qtd_likes == 1) {
+				if (response.qtd_likes == 0) {
+					$('#comment_-post_' + response.id).text('');
+				} else if (response.qtd_likes == 1) {
 					$('#comment_-post_' + response.id).text(response.comment + ' comentário');
 				} else {
 					$('#comment_-post_' + response.id).text(response.comment + ' comentários');
@@ -60,6 +65,53 @@ $(document).ready(function () {
 				
 				$('#off-id-i_' + $('#ident-post-page').val()).addClass(response.add);
 				$('#off-id-i_' + $('#ident-post-page').val()).removeClass(response.remove);
+			}
+		});	
+		//alert('oii');
+		$.ajax({
+			url: '/posts/comments/' + $('#ident-post-page').val(),
+			type: 'get',
+			data: {'since' : $('#post_comment-qtd').val()},
+			dataType: 'json',
+			success:function(response){
+				console.log(response);
+				$.each(response, function(key, data){
+					cont = $('#post_comment-qtd').val();
+					$('#comment-users-' + cont).removeClass('invisible-component');
+					$('#comment-users-' + cont).attr('id', 'comment-users_' + data.uuid);
+					$('#description-comment-' + cont).text(data.comment);
+					$('#description-comment-' + cont).attr('id', 'description-comment_' + data.uuid);
+					any_id = '';
+					if (data.apelido_comment != null) {
+						any_id = data.apelido_comment;
+					}
+					$('#link-ident-commenter-' + cont).attr('href', route + '/profile/' + data.uuid);
+					$('#link-ident-commenter-' + cont).attr('id', 'link-ident-commenter_' + data.uuid);
+					$('#user-commenter-' + cont).text(data.nome_comment + ' ' + any_id);
+					$('#user-commenter-' + cont).attr('id', 'user-commenter_' + data.uuid);
+					$('#profille-img-commenter-' + cont).attr('src', route + '/storage/img/page/' + data.foto_comment);
+					$('#profille-img-commenter-' + cont).attr('id', 'profille-img-commenter_' + data.uuid);
+					cont--;
+					$('#post_comment-qtd').val(cont);
+				});
+			}
+		});	
+		$.ajax({
+			url: '/posts/index/cover_commenter/' + $('#ident-post-page').val(),
+			type: 'get',
+			data: {},
+			dataType: 'json',
+			success:function(response){
+				console.log(response);
+				if (response.foto) {
+					$('#comment-send-profile_' + $('#ident-post-page').val()).addClass('img-full');
+					$('#comment-send-profile_' + $('#ident-post-page').val()).removeClass('img-24');
+					$('#comment-send-profile_' + $('#ident-post-page').val()).attr('src', route + response.foto);
+				} else {
+					$('#comment-send-profile_' + $('#ident-post-page').val()).attr('src', route + '/css/uicons/user.png')
+				}
+				
+				$('#comment-send-profile_' + $('#ident-post-page').val()).removeClass('invisible-component');
 			}
 		});	
 	}

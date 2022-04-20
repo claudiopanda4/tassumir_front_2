@@ -77,8 +77,11 @@ Route::group(['middleware' => 'auth:web1'], function () {
     /* siene */
     Route::get('/get_only_post/', [App\Http\Controllers\AuthController::class, 'get_only_post'])->name('get_post');
 
-
     Route::get('/get_only_comments/', [App\Http\Controllers\AuthController::class, 'get_only_comments'])->name('get_comments');
+
+    Route::get('/posts/index/cover_commenter/{id}', [App\Http\Controllers\PostController::class, 'img_comment'])->name('posts.index.cover_commenter');
+
+    Route::get('/posts/comments/{id}', [App\Http\Controllers\PageController::class, 'comments_post'])->name('comments.post');
     /* end siene  */
 
     Route::get('/verify_not', [App\Http\Controllers\AuthController::class, 'verify_not'])->name('verify_not');

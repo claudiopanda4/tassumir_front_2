@@ -9,7 +9,7 @@
                     <div class="first-component clearfix l-5">
                         <div class="page-cover circle l-5">
                             <?php if ($post->page_cover == null): ?>
-                                <img class="img-full circle" src="{{asset('css/uicons/page_icon.png')}}" id="page-cover-post_{{$ident_page}}">
+                                <img class="img-full circle" src="{{asset('css/uicons/page_icon.jpg')}}" id="page-cover-post_{{$ident_page}}">
                             <?php else: ?>
                                 <img class="img-full circle" src="{{asset('storage/img/page/') . '/' . $post->page_cover}}" id="page-cover-post_{{$ident_page}}">
                             <?php endif ?>
@@ -36,6 +36,7 @@
                                 <h1 class="center">p</h1>
                             </div>
                         <?php endif ?>
+                        <input type="hidden" id="post_comment-qtd" value="149">
                         <div class="page-identify l-5 clearfix">
                             <a href="{{$post->page_uuid}}" id="a-page-name-post_{{$ident_page}}"><h1 class="text-ellips" id="page-name-post_{{$ident_page}}">{{$post->page_name}}</h1></a>
                             <div class="info-post clearfix">
@@ -131,7 +132,7 @@
                 </nav>
                 <div class="comment-send clearfix" id="comment-send_{{$ident_page}}">
                     <div class="img-user-comment l-5 circle">
-                        <img class="img-24 center circle" id="comment-send-profile_{{$ident_page}}">
+                        <img class="img-24 center circle invisible-component" src="" id="comment-send-profile_{{$ident_page}}">
                     </div>
                     <div class="input-text comment-send-text l-5 clearfix">
                         <input type="text" class="" name="comentario" id="comentario_{{$ident_page}}" placeholder="O que você tem a dizer?">
@@ -183,6 +184,30 @@
                 <input type="hidden" id="id_click" value="none;0" name="">
             </div>
         </div> 
+        <?php $key = 0; while($key < 150){ ?>
+            <div class="comment-users comment-blade invisible-component" id="comment-users-{{$key}}">
+                <div class="comment-user-container">
+                    <div class="user-identify-comment">
+                        <a href="" id="link-profile-commenter">
+                            <div class="profille-img">
+                                <img class="img-full circle" id="profille-img-commenter-{{$key}}" src="">
+                            </div>
+                        </a>
+                        <div class="comment-user-comment">
+                            <a href="" id="link-ident-commenter-{{$key}}">
+                                <h1 class="user" id="user-commenter-{{$key}}"></h1>
+                            </a>
+                            <p class="" id="description-comment-{{$key}}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-user-container comment-user-container-react">
+                    <a href="" class="comment-like-a" id="comentario-reaction-post-{{$key}}">
+                        <i class="far fa-heart fa-12 unliked" id="reaction-id-comment-user-{{$key}}"></i>
+                    </a>
+                </div>
+            </div>
+        <?php $key++; } ?>
     </div>
 </div>
 @stop
