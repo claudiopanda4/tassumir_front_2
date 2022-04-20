@@ -169,6 +169,7 @@
 	}
 	.user-tassumir {
 	    margin-right: 0px;
+	    margin-left: 0;
 	}
 	.row {
 		/*margin-left: 0;
@@ -232,7 +233,10 @@
 	    font-size: 14px;
 	}
 	.stories-about-talking nav ul li:nth-child(1) {
-	    
+	    margin-left: 0;
+	}
+	.name-page-dest#name-page-dest_0 {
+		margin-left: 0;
 	}
 	.stories-about-talking nav ul li .img-back-stories {
 	        width: 100%;
@@ -556,6 +560,20 @@
 	.card-p{
 		background-color: transparent;
 		border: none;
+    }
+	.alert-info-about-us {
+	    border-radius: 0;
+	    margin: -5px auto 5px;
+	}
+    #poupar-data-id {
+    	color: #fff;
+	    background-color: #2196f3;
+	    font-size: 11px;
+	    padding: 0px;
+	    border: 0px solid #2196f3;
+	    padding: 5px 10px;
+	    border-radius: 4px;
+	    margin-top: 0;
     }
     #card-profile-option .option-profile-menu #ul-profile li {
 	    padding: 0;
@@ -1266,6 +1284,8 @@
 	}
 	.ul-left li {
 	    margin-top: 3px;
+	    margin-left: 0;
+	    margin: 0;
 	}
 	.number-notification span {
 	    font-size: 11px;
@@ -1770,7 +1790,7 @@
 		display: none;
 	}
 	.card-post p {
-	}
+	
 	#more-description-page .statistics-profile-page {
 		max-width: 324px;
 	    margin: 5px auto;

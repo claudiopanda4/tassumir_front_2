@@ -542,7 +542,8 @@
 	}
 }
 #target-profile-cover:checked ~ .pop-up#cover-profile,
-#more-option-target-profile:checked ~  #more-option-profile-component {
+#more-option-target-profile:checked ~  #more-option-profile-component,
+#target-alert-make-tassumir:checked ~ #alert-make-money-tassumir {
 	opacity: 1;
     z-index: 1001;
 }

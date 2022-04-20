@@ -2473,6 +2473,16 @@ label[for="hugo"]{
     cursor: pointer;
     margin: auto;
 }
+#cover-done {
+    width: 60%;
+    text-align: center;
+    color: #fff;
+    background-color: #800080;
+    padding: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: auto;
+}
 .btn-alert {
     width: 60%;
     text-align: center;
@@ -2835,7 +2845,6 @@ label[for="hugo"]{
     width: 67%;
     text-align: center;
     color: #fff;
-    background-color: transparent;
     padding: 0px;
     border-radius: 5px;
     cursor: pointer;
@@ -4309,4 +4318,27 @@ label[for="hugo"]{
 #cover-done-final {
     background-color: #800080;
     margin-left: 3px;
+}
+.p-alert {
+    font-size: 13px;
+    color: #fff;
+    padding: 10px;
+}
+.button-pop-up {
+    padding: 8px;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+    min-width: 100px;
+    border-radius: 4px;
+}
+.button-pop-up-reject-close {
+    background-color: #3a3b3c;
+}
+.component-button-alert-tassumir {
+    margin: auto;
+    width: 80%;
+}
+.button-pop-up-assumir {
+    background-color: #ad13ad;
 }

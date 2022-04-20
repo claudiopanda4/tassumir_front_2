@@ -1528,6 +1528,13 @@ window.addEventListener('load', function () {
 });
 document.addEventListener('click', function (e) {
 	let any_id;
+	if (e.target.className.indexOf('alert-assumir-make-money-now') > -1) {
+		document.getElementById('target-alert-make-tassumir').checked = true;
+	}
+	if (e.target.className.indexOf('assumir-now-pop-up') > -1) {
+		document.getElementById('target-alert-tassumir').checked = true;
+	}
+	
 	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[$('#host').val().split('/').length - 2];
 	
 	if (e.target.className.indexOf('page') > -1) {

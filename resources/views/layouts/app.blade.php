@@ -102,6 +102,7 @@
                     </div>
                 </li>
                 <input type="hidden" id="ident-key" name="">
+                <li class="poupar-data l-5 alert-assumir-make-money-now" id="poupar-data-id">Ganhar dinheiro agora</li>
                 <li class="user-tassumir clearfix l-5">
                     <a href="{{route('account.profile')}}">
                         <div class="l-5 user-account-container-img">
@@ -228,6 +229,22 @@
             <div class="">
                 <img id="profile-cover-full">
             </div>
+        </div>
+    </div>
+</div>
+<input type="checkbox" name="" id="target-alert-make-tassumir" class="invisible">
+<div class="pop-up" id="alert-make-money-tassumir">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; max-height: 90%; height: auto; margin: auto;">
+        <div>
+            <p class="p-alert">Para poder ganhar dinheiro com o tassumir (ou seja, o correspondente a 1 U$D por cada mil visualizações nos seus vídeos, ou por cada 500 reacções nos seus textos e imagens, caso não goste de aparecer), você precisa ter assumido o seu relacionamento na plataforma. Porquê? <br><br>Porque só é permitido publicar conteúdos no TASSUMIR, quem tem uma página e só pode ter uma página quem assumiu alguém dentro da PLATAFORMA.</p>
+        </div>
+        <div class="clearfix component-button-alert-tassumir">
+            <label for="target-alert-make-tassumir" class="">
+                <h1 class="button-pop-up l-5 button-pop-up-reject-close">Fechar</h1>
+            </label>
+            <label for="target-alert-make-tassumir" class="alert-make-money-tassumir-c" id="assumir-now">
+                <h1 class="l-5 button-pop-up button-pop-up-assumir assumir-now-pop-up">Assumir agora</h1>
+            </label>
         </div>
     </div>
 </div>

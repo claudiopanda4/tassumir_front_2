@@ -417,7 +417,7 @@ class PerfilController extends Controller
       $text = '%'.$request->text.'%';
       $result = [];
       if ($request->text != '' && $request->text != ' ') {
-        $result = DB::select("select foto, uuid, conta_id, nome, apelido from contas where genero <> (select genero from contas where conta_id = ?) and tipo_contas_id = (select tipo_contas_id from contas where tipo_contas_id <> 1 limit 1) and (nome like ? or apelido like ?) limit 5", [$id, $text, $text]);
+        $result = DB::select("select foto, uuid, conta_id, nome, apelido from contas where genero <> (select genero from contas where conta_id = ?) and tipo_contas_id = (select tipo_contas_id from contas where tipo_contas_id <> 1 limit 1) and (nome like ? or apelido like ?) and ((select count(*) as count from pages where conta_id_a = contas.conta_id) < 0 || (select count(*) as count from pages where conta_id_b = contas.conta_id) < 0) limit 5", [$id, $text, $text]);
       }
       
       $state = false;
