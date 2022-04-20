@@ -69,7 +69,7 @@
 				@if($i < 25)
 
 					<li>
-
+						
 						<span class="span-text color-orange" id="teste">{{$resultw[$i]['cabecalho']}}</span><br/>
 
 						<span class="span-text color-white" style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">{{$resultw[$i]['subtitulo']}}</span><br/>
