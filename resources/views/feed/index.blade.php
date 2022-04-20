@@ -443,9 +443,6 @@
                 'width' : '100%',
                 'height' : '100px',
             });
-            /*document.getElementById('refresh-profile-photo-id').style.display = 'block';
-            document.getElementById('refresh-profile-photo-id').style.width = 100 + '%';
-            document.getElementById('refresh-profile-photo-id').style.height = 100 + 'px';*/
 
             function gostar(id){
             $.ajax({

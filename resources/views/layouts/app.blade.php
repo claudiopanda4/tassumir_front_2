@@ -102,7 +102,7 @@
                     </div>
                 </li>
                 <input type="hidden" id="ident-key" name="">
-                <li class="poupar-data l-5 alert-assumir-make-money-now" id="poupar-data-id">Ganhar dinheiro agora</li>
+                <li class="poupar-data l-5 invisible-component" id="poupar-data-id"></li>
                 <li class="user-tassumir clearfix l-5">
                     <a href="{{route('account.profile')}}">
                         <div class="l-5 user-account-container-img">
@@ -111,6 +111,13 @@
                     </a>
                     <a href="" class="l-5"><h1 class="user-account"></h1></a>
                 </li>
+                <!--<li class="tassumir-logo-icon clearfix l-5">
+                    <a class="" href="{{route('account.profile')}}">
+                        <div class="l-5 user-account-container-img">
+                            <img class="img-full center" src="{{asset('css/uicons/tassumir.jpeg')}}" id="tt-logo-container-img-id">
+                        </div>
+                    </a>
+                </li>-->
             </nav>
     </header>
     <input type="hidden" id="host" value="{{route('account.data')}}" name="">
@@ -486,27 +493,38 @@
 <?php if (true): ?>
 <input type="checkbox" name="" id="target-profile-cover" class="invisible">
 <div class="pop-up" id="cover-profile">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
-        <header class="pop-up-component-header pop-up-component-header-default header-height">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; margin: auto;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height" id="add-cover-profile">
             <h1>Adicionar Foto de Perfil</h1>
             <div class="container-pop-up-component-header">
-                <label for="target-profile-cover">
-                    <div class="cancel-box div-img">
+                <!--<label for="target-profile-cover">
+                    <div class="cancel-box-component div-img">
                         <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
                     </div>
-                </label>
+                </label>-->
             </div>
         </header>
-        <div class="header-height"></div>
+        <div class="header-height" id="header-height-component-add-cover"></div>
+        <div id="foto-view" class="invisible-component">
+            <img id="foto-view-component" class="img-full">
+            <div class="cancel-box-component div-img" id="cancel-box-component-change">
+                <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+            </div>
+        </div>
         <div style="margin-top: 15px; margin-bottom: 10px;">
-            <div class="">
+            <div class="clearfix">
                 <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
+                    <input class="file invisible-component" type="file" id="file-id-profile" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
+                    <div class="cover-done-profile-cover-choose" id="cover-done-profile-cover-choose-container">
+                        <button type="button" id="cover-done-profile-cover-choose-id">Escolher foto de perfil</button>
+                    </div>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-                        <div class="cover-done" id="cover-done">
-                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 14px; width: 100%;">Concluido</button>
-
+                        <div class="cover-done cover-done-profile-post l-5" id="close-cover-post">
+                            <button type="button" class="cover-done-profile-cover" id="close-cover-post-button">Cancelar</button>
+                        </div>
+                        <div class="cover-done cover-done-profile-post l-5">
+                            <button type="submit" class="cover-done-profile-cover">Concluido</button>
                         </div>
                     </div>
                 </form>
@@ -1115,16 +1133,16 @@
           $('#genre-id').val($("input[name='genre']:checked").val());
       });
         $('.cancel-box').click(function(){
-            $('.pop-up').css({
+            /*$('.pop-up').css({
                 opacity: 0,
                 zIndex: -1
-            });
+            });*/
         });
         $('.add-edit-profile').click(function(){
-            $('#cover-profile').css({
+            /*$('#cover-profile').css({
                 opacity: 1,
                 zIndex: 1000
-            });
+            });*/
         });
         $('.add-post').click(function(){
             $('#add-post-container').css({
@@ -1149,14 +1167,14 @@
             });
         });
         $('#cover-done-post').click(function(){
-            $('#cover-profile-post').css({
+            /*$('#cover-profile-post').css({
                 opacity: 0,
                 zIndex: -1
             });
             $('#add-post-container').css({
                 opacity: 1,
                 zIndex: 1000
-            });
+            });*/
         });
         $('#target-invited-relationship-id').click(function(){
             $('#invited-relationship').css({});
