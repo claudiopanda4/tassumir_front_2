@@ -85,11 +85,28 @@ $(document).ready(function () {
 					if (data.apelido_comment != null) {
 						any_id = data.apelido_comment;
 					}
-					$('#link-ident-commenter-' + cont).attr('href', route + '/profile/' + data.uuid);
+					$('#profille-img-commenter-' + cont).attr('src', route + '/css/uicons/user.png');
+					$('#profille-img-commenter-' + cont).addClass('img-20 center');
+					$('#profille-img-commenter-' + cont).removeClass('img-full');
+					if (data.tipo_verify == 1) {
+						$('#link-ident-commenter-' + cont).attr('href', route + '/profile/' + data.uuid_dono_comment);
+						if (data.foto_comment) {
+							$('#profille-img-commenter-' + cont).attr('src', route + '/storage/img/users/' + data.foto_comment);
+							$('#profille-img-commenter-' + cont).removeClass('img-20');
+							$('#profille-img-commenter-' + cont).addClass('img-full');
+						}
+					} else if (data.tipo_verify == 2) {
+						$('#link-ident-commenter-' + cont).attr('href', route + '/couple_page/' + data.uuid_dono_comment);
+						if (data.foto_comment) {
+							$('#profille-img-commenter-' + cont).attr('src', route + '/storage/img/page/' + data.foto_comment);
+							$('#profille-img-commenter-' + cont).removeClass('img-20');
+							$('#profille-img-commenter-' + cont).addClass('img-full');
+						}
+					}
 					$('#link-ident-commenter-' + cont).attr('id', 'link-ident-commenter_' + data.uuid);
 					$('#user-commenter-' + cont).text(data.nome_comment + ' ' + any_id);
 					$('#user-commenter-' + cont).attr('id', 'user-commenter_' + data.uuid);
-					$('#profille-img-commenter-' + cont).attr('src', route + '/storage/img/page/' + data.foto_comment);
+					
 					$('#profille-img-commenter-' + cont).attr('id', 'profille-img-commenter_' + data.uuid);
 					cont--;
 					$('#post_comment-qtd').val(cont);

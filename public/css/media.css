@@ -1802,7 +1802,7 @@
 	    border-radius: 0;
 	}
 	.comment-send input[type="text"] {
-	    width: 75%;
+	    width: 80%;
 	}
 	.statistics-profile-page-identify h1 {
 	    font-size: 16px;
@@ -1825,6 +1825,9 @@
 	}
 	#img-profile-header-search {
 		margin-top: 0;
+	}
+	.options-profile-btn {
+	    height: 38px;
 	}
 	.header-main-component-n {
 	    background-color: #000000;
