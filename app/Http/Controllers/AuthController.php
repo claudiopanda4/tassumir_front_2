@@ -2959,7 +2959,7 @@ public function dados_comment($key){
                // return redirect()->route('auth.ErrorStatus');
             }
 
-          }catch(\Exception $e){
+          }catch(\Exception $e){    
 
             echo "O Erro é: " .$e;
           }
@@ -3070,8 +3070,6 @@ public function dados_comment($key){
 
                             }
 
-                            //para funcionar tens que tirar o hash da password
-
                             if(Auth::attempt(['email' => $emailReceived , 'password' => $decrypt_password])){
 
                                     //dd("entrei no email");
@@ -3080,7 +3078,7 @@ public function dados_comment($key){
 
                             }else if(Auth::attempt(['telefone' => $telephone_received,'password' =>$decrypt_password])){
 
-                                        dd("entrei no telefone");
+                                        //dd("entrei no telefone");
                                         $request->session()->regenerate();
                                         return redirect()->route('account.home');
                             }else{
