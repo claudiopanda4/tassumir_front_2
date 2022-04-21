@@ -43,6 +43,7 @@
                     </div>
                 </header>
 
+        @include('flash')
                 @if($takeEmail!=null)
 
                 <div class="row text-white justify-content-center">Enviamos um email para {{$takeEmail}} com o código de confirmação </div>
