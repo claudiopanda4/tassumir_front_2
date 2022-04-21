@@ -4400,3 +4400,17 @@ label[for="hugo"]{
 .tassumir-logo-icon {
     margin: 0;
 }
+#loader_icon_app {
+    width: 32px;
+    height: 32px;
+    z-index: 3;
+}
+#loader_app_text {
+    top: 58%;
+    color: #efefefef;
+    font-size: 14px;
+}
+#container-loading-app {
+    height: 100vh;
+    margin-top: 8px;
+}

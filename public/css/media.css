@@ -1509,7 +1509,7 @@
 	#refresh-profile-photo-id {
 	    display: block;
 	    background-color: #18191a;
-	    margin-top: 5px;
+	    margin-top: -5px;
 	    margin-bottom: 0px;
 	}
 	.video-container {
@@ -1838,6 +1838,9 @@
 	    background-color: #18191a;
 	    padding-top: 5px;
 	    border-radius: 0;
+	}
+	#alert-info-about-us-0.alert-info-about-us {
+		margin: 5px auto;
 	}
 	.comment-send input[type="text"] {
 	    width: 80%;

@@ -9,6 +9,9 @@ $(document).ready(function () {
 	$('.accept-confirm').click(function(){
 		$('#options-invited-pop-up').attr('checked', true);
 	});
+    $('#post-public-done').click(function () {
+    	document.getElementById('target-loading-app').checked = true;
+    });
 	$('.seguir-page').click(function (e) {
 		
 		//seguir_page($('#page_ident').val(), e, 2);

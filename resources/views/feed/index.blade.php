@@ -46,19 +46,6 @@
             </nav>
         </header>
         <input type="hidden" id="posts" name="" value="0">
-        <div class="refresh-profile-photo clearfix invisible-component" id="refresh-profile-photo-id">
-            <div class="profile-photo-container l-5">
-                <img class="img-28 center" src="{{asset('css/uicons/about_tips.png')}}">
-            </div>
-            <div class="content-profile-photo l-5">
-                <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
-                <label for="target-profile-cover" id="profile-cover-alert-no-img">
-                    <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
-                        <h3 class="edit-profile-mobile center" style="margin-top: 0;">Actualizar foto de Perfil</h3>
-                    </div>
-                </label>
-            </div>
-        </div>
         <div class="refresh-profile-photo clearfix component-card invisible-component" id="relationship-requests">
             <div class="profile-photo-container alert-component-card l-5">
                 <img class="img-30 center" src="{{asset('css/uicons/fire_in_my_heart.png')}}">
@@ -74,6 +61,21 @@
         </div>
     <div class="" id="div_father_post" name="div_father_post">
         <?php $key = 0; while($key < 146){ ?>
+        <?php if ($key == 1): ?>
+            <div class="refresh-profile-photo clearfix invisible-component" id="refresh-profile-photo-id">
+                <div class="profile-photo-container l-5">
+                    <img class="img-28 center" src="{{asset('css/uicons/about_tips.png')}}">
+                </div>
+                <div class="content-profile-photo l-5">
+                    <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
+                    <label for="target-profile-cover" id="profile-cover-alert-no-img">
+                        <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
+                            <h3 class="edit-profile-mobile center" style="margin-top: 0;">Actualizar foto de Perfil</h3>
+                        </div>
+                    </label>
+                </div>
+            </div>            
+        <?php endif ?>
         <?php if ($key == 0 || $key == 2 || $key == 9): ?>
             <div class="refresh-profile-photo clearfix invisible-component alert-info-about-us" id="alert-info-about-us-{{$key}}">
                 <div class="profile-photo-container l-5">
@@ -81,7 +83,7 @@
                 </div>
                 <div class="content-profile-photo l-5">
                     <h1 id="content-p-{{$key}}">No Tassumir você regista o seu relacionamento publicamente, ganha dinheiro, segurança e aumenta a fidelidade no casal. Assuma agora o seu relacionamento e comece a ganhar.</h1>
-                    <label <?php if ($key == 1 || $key == 9){echo 'for="target-alert-tassumir"';}else{echo 'for="target-alert-info"';} ?> id="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
+                    <label <?php if ($key == 0 || $key == 9){echo 'for="target-alert-tassumir"';}else{echo 'for="target-alert-info"';} ?> id="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
                         <div class="options-profile-btn options-profile-btn-center profile-item-center options-alert-btn-feed" id="options-profile-btn-couple">
                             <h3 class="edit-profile-mobile center" style="margin-top: 0;" id="btn-alert-info-{{$key}}">Assumir Agora o Relacionamento</h3>
                         </div>
