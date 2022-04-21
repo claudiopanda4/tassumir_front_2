@@ -154,6 +154,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/home/index', [App\Http\Controllers\AuthController::class, 'home'])->name('home.index');
     Route::get('/page/following', [App\Http\Controllers\AuthController::class, 'paginasqueSigo'])->name('page.que.sigo');
     Route::get('/page/following/index', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigoIndex'])->name('page.para.index');
+    Route::get('/header/button/', [App\Http\Controllers\AuthController::class, 'header_button'])->name('header.button');
     Route::get('/page/no_following', [App\Http\Controllers\AuthController::class, 'paginasquenaoSigo'])->name('page.que.nao.sigo');
     Route::get('/home/destaques', [App\Http\Controllers\AuthController::class, 'destaques'])->name('home.destaque');
     Route::get('/home/posts', [App\Http\Controllers\PageController::class, 'post_final1'])->name('home.posts');

@@ -70,6 +70,7 @@
 	}
 	.option-profile-menu ul {
 	    /*background-color: #242526;*/
+	    margin-bottom: 5px;
 	}
 	.card {
 		border: none;
@@ -563,7 +564,7 @@
     }
 	.alert-info-about-us {
 	    border-radius: 0;
-	    margin: -5px auto 5px;
+	    margin: -8px auto 5px;
 	}
     #poupar-data-id {
     	color: #fff;
@@ -1064,10 +1065,14 @@
 	    margin-top: 5px;
 	}
 	#main-profile header.card.profile-card {
-		background-color: #18191a;
+		/*background-color: #18191a;*/
 		margin-top: 0;
 		border-radius: 0;
 		margin-bottom: 4px;
+	}
+	#main-profile .card,
+	#main-profile #card-profile-option {
+		background-color: transparent;
 	}
 	#main-search .card-p {
 	   margin-left: 10px;

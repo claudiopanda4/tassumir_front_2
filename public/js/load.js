@@ -13,8 +13,45 @@ $(document).ready(function () {
 		
 		//seguir_page($('#page_ident').val(), e, 2);
 	});
+	$('#cancel-box-component-change').click(function(){
+		$('#cover-done-profile-cover-choose-container').removeClass('invisible-component');
+		$('#foto-view').addClass('invisible-component');
+	});
+	$('#close-cover-post-button').click(function(){
+		document.getElementById('target-profile-cover').checked = false;
+	});
+	$('#file-id-profile').change(function(){
+		any_id = document.getElementById('file-id-profile').src;
+		url = URL.createObjectURL(this.files[0]);
+		document.getElementById('foto-view-component').src = url;
+		$('#foto-view').removeClass('invisible-component');
+		$('#header-height-component-add-cover').addClass('invisible-component');
+		$('#add-cover-profile').addClass('invisible-component');
+		$('#cover-done-profile-cover-choose-container').addClass('invisible-component');
+		$('#foto-view').removeClass('invisible-component');
+		console.log(url);
+	});
+	$('#cover-done-profile-cover-choose-id').click(function(){
+		$('#file-id-profile').click();
+	});
 	$('.edit-option').click(function () {
 		document.getElementById('target-option-post').checked = false;
+	});
+	$.ajax({
+		url : '/header/button/',
+		type : 'get',
+		data : {},
+		dataType : 'json',
+		success: function (response) {
+			$('#poupar-data-id').addClass(response.add);
+			$('#poupar-data-id').text(response.text);
+			if (response.remove) {
+				$('#poupar-data-id').remove();
+			} else {
+				$('#poupar-data-id').removeClass(response.remove_class);
+			}
+			console.log(response);
+		}
 	});
 	$.ajax({
 		url : '/page/auth/',
@@ -600,11 +637,10 @@ $(document).ready(function () {
 				$('#user-account-container-img-id').attr('src', route + "/storage/img/users/" + response.foto);
 				$('.user-account-container-img').addClass('transparent-back');
 				$('#route_account').removeClass('invisible-component');
+				$('#refresh-profile-photo-id').remove();
         	} else {
 				$('#user-account-container-img-id').addClass('no-img');
-        		if (document.getElementById('refresh-profile-photo-id')) {
-        			document.getElementById('refresh-profile-photo-id').remove();
-        		}
+				$('#refresh-profile-photo-id').removeClass('invisible-component');
         	}
 
 			$('#complete_name_id').text(response.nome + ' ' + response.apelido);
@@ -1118,7 +1154,7 @@ $(document).ready(function () {
 		    		$('#has-video_' + id).val('ok');
 		    	}
 	    	} else {
-				if ($('#m_post_' + id).offset().top < 410 && $('#has-video_' + id).val() != 'ok') {
+				if ($('#m_post_' + id).offset().top < 510 && $('#has-video_' + id).val() != 'ok') {
 					$('#cover-post-index_' + id).attr('src', $('#cover-post-load_' + id).val());
 		    		$('#post-cover-post-index_' + id).removeClass('post-cover-imgless');
 		    		$('#cover-post-index_' + id).removeClass('invisible-component');
@@ -1257,7 +1293,7 @@ $(document).ready(function () {
 					});
 	           	}
 
-	    		if (window.innerHeight > 650) {
+	    		if (window.innerHeight > 660) {
 	    			if ($('#m_post_' + id).offset().top < 790 && $('#has-video_' + id).val() != 'ok') {
 		    			$('#video-post-link_' + id).attr('src', link_video);
 		    			document.getElementById('video_' + id).preload = 'metadata';
@@ -1266,7 +1302,7 @@ $(document).ready(function () {
 		    			videos(id);
 		    		}
 	    		} else {
-					if ($('#m_post_' + id).offset().top < 210 && $('#has-video_' + id).val() != 'ok') {
+					if ($('#m_post_' + id).offset().top < 410 && $('#has-video_' + id).val() != 'ok') {
 		    			$('#video-post-link_' + id).attr('src', link_video);
 		    			$('#video_' + id).attr('src', link_video);
 		    			$('#has-video_' + id).val('ok');
@@ -1534,7 +1570,9 @@ document.addEventListener('click', function (e) {
 	if (e.target.className.indexOf('assumir-now-pop-up') > -1) {
 		document.getElementById('target-alert-tassumir').checked = true;
 	}
-	
+	if (e.target.className.indexOf('add-new-profile') > -1) {
+		document.getElementById('target-profile-cover').checked = true;
+	}
 	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[$('#host').val().split('/').length - 2];
 	
 	if (e.target.className.indexOf('page') > -1) {
