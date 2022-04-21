@@ -34,7 +34,7 @@
                 <header class="logo-form mb-4" id="title-login">
 
                     <div>
-                        <a href=""><i class="fas fa-link fa-32"></i><h1>Tass<span class="title-final">umir</span></h1></a>
+                        <a href=""><!--<i class="fas fa-link fa-32"></i>--><h1>tass<span class="title-final">umir</span></h1></a>
                     </div>
 
                 </header>

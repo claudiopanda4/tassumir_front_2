@@ -1575,10 +1575,17 @@ document.addEventListener('click', function (e) {
 	}
 	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[$('#host').val().split('/').length - 2];
 	
-	if (e.target.className.indexOf('page') > -1) {
+	if (e.target.className.indexOf('couple_page_redirect') > -1) {
+		alert('oi');
 		document.location.href = route + '/couple_page/' + $('#page_denied').val() + '?add-post=true';
 	}
-
+		
+	if (e.target.className.indexOf('a-btn-flw-edt') > -1) {
+		e.preventDefault();
+	}
+	if (e.target.className.indexOf('multi-page') > -1) {
+		document.location.href = route + '/my_pages/';
+	}
 	if (e.target.className.indexOf('relationship-type-item-selected') > -1) {
 		any_id = e.target.id.split('_')[1];
 		$.ajax({

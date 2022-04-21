@@ -63,8 +63,8 @@
       <div class="" id="main-reg">
         <header class="logo-form" id="title-login">
           <div class="title">
-            <a href=""><i class="fas fa-link fa-32"></i>
-              <h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1>
+            <a href=""><!--<i class="fas fa-link fa-32"></i>-->
+              <h1>tass<span class="title-final" style="color: #fd09fd;">umir</span></h1>
             </a>
           </div>
           <div class="row justify-content-center">

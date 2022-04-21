@@ -21,13 +21,13 @@
             </div>
             <div class="l-5" id="statistics-profile-page-main">
                 
-                <div class="statistics-profile-page l-5 clearfix">
+                <!--<div class="statistics-profile-page l-5 clearfix">
                     <div class="statistics-profile-page-identify">
                         <h1>{{$dados[0]->nome}}</h1>
-                        <!--<h2 class="lg-invisible-user-name">@<span></span>destacados</h2>-->
+                        <h2 class="lg-invisible-user-name">@<span></span>destacados</h2>
                     </div>
-                </div>
-                <div class="clearfix l-5 data-statistics">
+                </div>-->
+                <div class="clearfix data-statistics">
                     <a href="">
                         <!--class="line-header-couple"-->
                         <div class="statistics-profile-page-component l-5">
@@ -43,7 +43,33 @@
                         <h1 id="qtd-reactions">0</h1>
                         <h2 class="text-ellips">Curtidas</h2>
                     </div>                    
-                </div>   
+                </div> 
+                <div class="clearfix">
+                    <a href="" id="a-btn-flw-edt">
+                        <div id="btn_follwing_container" class="follwing-btn-container l-5">
+                            <button type="button" class="follwing-btn button_header-follow" id="btn_seguir">                        
+                            </button>
+                        </div>                    
+                    </a>
+                    <div class="l-5 options-profile-btn more-options-profile-bt">
+                        <label for="more-option-target-profile" class="target-options-profile">
+                            <div class="">
+                                <div class="more-options-profile-btn">
+                                    <div class="more-options-component"><img class="center img-24" id="more-option-btn-profile" src="{{asset('css/uicons/caret-down.png')}}"></div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="l-5 options-profile-btn more-options-profile-bt">
+                        <label for="more-option-target-profile" class="target-options-profile">
+                            <div class="">
+                                <div class="more-options-profile-btn">
+                                    <div class="more-options-component"><img class="invisible-component center img-24" id="more-option-btn-page"></div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>                    
+                </div>  
                 <!--<div class="clearfix l-5" id="button-options-page">
                         <a href="" id="a-btn-flw-edt">
                             <div id="btn_follwing_container" class="follwing-btn-container l-5">
@@ -60,16 +86,7 @@
                                     </div>
                                 </div>
                             </label>
-                        </div>  
-                        <div class="l-5 options-profile-btn more-options-profile-bt">
-                            <label for="more-option-target-profile" class="target-options-profile">
-                                <div class="">
-                                    <div class="more-options-profile-btn">
-                                        <div class="more-options-component"><img class="invisible-component center img-24" id="more-option-btn-page"></div>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>                    
+                        </div> 
                     </div>-->           
             </div>
 
@@ -106,9 +123,9 @@
         <input type="hidden" id="last-post-page-img" value="0">
         <div class="clearfix page-card-header" id="more-description-page">
             <div class="statistics-profile-page clearfix">
-                    <div class="statistics-profile-page-identify">
-                        <h1 id="name-descript-place">{{$dados[0]->nome}}</h1>
-                    </div>
+                <div class="statistics-profile-page-identify">
+                    <h1 id="name-descript-place">{{$dados[0]->nome}}</h1>
+                </div>
             </div>
             <div class="description-couple" id="p-description-couple-all-container">
                 <p id="p-description-couple-all"><span id="part-text"></span><span class="invisible-component" id="text-ellips-description">...</span><a id="see-more-description"href="" class="invisible-component"><span class="">Ver Mais</span></a><span id="more-text-description" class="invisible-component"></span></p>
@@ -150,7 +167,7 @@
                     </div>             
         </div>-->
 
-        <div class="clearfix l-5" id="button-options-page">
+        <!--<div class="clearfix l-5" id="button-options-page">
                         <a href="" id="a-btn-flw-edt">
                             <div id="btn_follwing_container" class="follwing-btn-container l-5">
                                 <button type="submit" class="follwing-btn" id="btn_seguir">
@@ -176,7 +193,7 @@
                                 </div>
                             </label>
                         </div>                    
-                    </div>
+                    </div>-->
         <label for="add-post-target" class="add-post-label invisible-component" id="add-post-label-ident">
             <div class="add-post circle">
                 <i class="far fa-edit fas-20 center" style="font-size: 20px;"></i>

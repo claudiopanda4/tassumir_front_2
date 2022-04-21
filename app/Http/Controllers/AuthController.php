@@ -62,12 +62,12 @@ class AuthController extends Controller
 
     public function state_relationship () {
         $conta_id = Auth::user()->conta_id;
-        $result = DB::select('select count(*) as count, (select uuid from pages where conta_id_a = ? or conta_id_b = ?) as uuid_page from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id])[0];
+        $result = DB::select('select count(*) as count, (select uuid from pages where conta_id_a = ? or conta_id_b = ? limit 1) as uuid_page from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id])[0];
 
         $class = 'nothing';
         $page = $result->uuid_page;
         if ($result->count == 1) {
-            $class = 'page';
+            $class = 'couple_page_redirect';
         } else if ($result->count > 1) {
              $class = 'multi-page';
         }

@@ -444,7 +444,7 @@
 	    font-size: 16px;
 	}
 	.description-couple {
-	    margin-left: 20px;
+	    /*margin-left: 20px;*/
 	}
 }
 @media screen and (max-width: 411px) {
@@ -462,8 +462,8 @@
 	    height: 70px;
 	}
 	.description-couple {
-	    width: 343px;
-		margin-left: 20px;
+	    /*width: 343px;
+		margin-left: 20px;*/
 	}
 	.statistics-profile-page-component h2 {
 	    font-size: 11.5px;
@@ -1346,6 +1346,9 @@
 		border-radius: 0;
 		/*border-top: 1px solid #343a40;*/
 	}
+	#more-description-page {
+		margin-left: 20px;
+	}
 	#main-container-page .card, 
 	#main-container-page .data-statistics,
 	#more-description-page {
@@ -1365,16 +1368,17 @@
 	}
 	.statistics-profile-page {
 	    width: 95%;
+	    /*margin: auto;*/
 	    margin-bottom: 0;
 	    margin-right: 0;
 	}
 	.description-couple p {
 	    margin-left: 0px;
-	    padding: 0 10px;
+	    padding: 0;
 	    /*text-align: center;*/
 	}
 	.description-couple {
-		margin: -7px auto 5px;
+		/*margin: -7px auto 5px;*/
 	}
 	#btn_seguir {
 	    max-height: 38px;
@@ -1393,6 +1397,10 @@
 	#btn_seguir, 
 	#main-container-page .more-options-profile-btn {
 		border-radius: 4px;
+	}
+	#main-container-page .data-statistics {
+		margin-bottom: 0;
+		margin-top: 5px;
 	}
 	.li-component-suggest div.sugest_component {
 	    width: 60px;
@@ -1430,6 +1438,10 @@
 	.img-profile-page {
 	    margin: 0;
 	    margin-left: 10px;
+	}
+	#btn_seguir.follwing-btn.button_header-follow,
+	#main-container-page .more-options-profile-btn {
+		height: 30px;
 	}
 	#main-profile .component-card {
 	    margin-bottom: 4px;
@@ -1629,7 +1641,7 @@
 	    padding: 10px 0px;
 	}
 	#spouse-masc {
-		margin-left: 21px;
+		/*margin-left: 21px;*/
 	}
 	.button-default-tassumir {
 	    max-width: 220px;
@@ -1640,6 +1652,7 @@
 	#options-profile-btn-edit-profile {
 	    width: 52%;    
 	    min-width: 151px;
+	    height: 37.5px;
 	}
 	#options-profile-mobile-user-log {
 	    min-width: 254px;
@@ -1794,11 +1807,11 @@
 	.invisible-component {
 		display: none;
 	}
-	.card-post p {
+	.card-post p {}
 	
 	#more-description-page .statistics-profile-page {
 		max-width: 324px;
-	    margin: 5px auto;
+	    margin: 0;
 	    width: 100%;
 	}
 	.option-profile-menu ul {
@@ -1842,7 +1855,8 @@
 	    margin-right: 0;
 	}
 	#btn_follwing_container {
-	    width: 62%;
+	    width: 56%;
+	    margin-left: 10px;
 	    max-width: inherit;
 	}
 	.header-main-component-n {
@@ -1873,10 +1887,10 @@
 	}
 	#more-description-page .statistics-profile-page {
 	    max-width: 288px;
-	    margin: 5px auto 10px;
+	    /*margin: 5px auto 10px;*/
 	}	
 	.description-couple p {
-	    padding: 0px 16px;
+	    /*padding: 0px 16px;*/
 	}
 }
 @media screen and (max-height: 490px){
@@ -1893,5 +1907,17 @@
 @media screen and (max-width: 328px) {
 	.statistics-profile-page-identify h1 {
 	    font-size: 15px;
+	}
+}
+@media screen and (max-width: 300px){
+	#statistics-profile-page-main {
+	    width: 64%;
+	}
+	.statistics-profile-page-component {
+	    margin-right: 3px;
+	}
+	#btn_follwing_container {
+	    width: 58%;
+	    max-width: inherit;
 	}
 }
