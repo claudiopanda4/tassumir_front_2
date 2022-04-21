@@ -303,11 +303,18 @@
   $("#email").keyup(function(){
     if(validateEmail()){
      
-      $("#emailMsg").html("<p class='text-success'>Email Válido</p>");
+          $("#emailMsg").remove();
+
+          $(".my-form").prop('disabled', false).css({
+            backgroundColor: "#2196f3"
+          });
 
     }else{
          
-           $("#emailMsg").html("<p class='text-danger'>Email Inválido</p>");
+          $("#emailMsg").html("<p class='text-danger'>Email Inválido</p>");
+           $(".my-form").prop('disabled', true).css({
+              backgroundColor: "#9e9e9e"
+          });
     }
 
   });
