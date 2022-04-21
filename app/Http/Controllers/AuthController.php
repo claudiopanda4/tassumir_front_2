@@ -33,19 +33,27 @@ class AuthController extends Controller
 
     public function header_button () {
         $conta_id = Auth::user()->conta_id;
-        $result = DB::select('select (select foto from contas where conta_id = ?) as foto, (select count(*) from pages where conta_id_a = ? or conta_id_b = ?) as page from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id, $conta_id])[0];
+        $result = DB::select('select (select foto from contas where conta_id = ?) as foto, (select count(*) from pages where conta_id_a = ? or conta_id_b = ?) as page from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id, $conta_id]);
 
         $addClass = '';
         $remove = true;
         $remove_class = '';
         $text = '';
-        if ($result->foto == null) {
-            $addClass = 'add-new-profile';
-            $text = 'Adicionar foto de perfil';
-            $remove_class = 'invisible-component';
-            $remove = false;
-        }
-        if ($result->page < 0) {
+        if (sizeof($result) > 0) {
+            $result = $result[0];
+            if ($result->foto == null) {
+                $addClass = 'add-new-profile';
+                $text = 'Adicionar foto de perfil';
+                $remove_class = 'invisible-component';
+                $remove = false;
+            }
+            if ($result->page < 1) {
+                $addClass = 'alert-assumir-make-money-now';
+                $text = 'Ganhar dinheiro agora';
+                $remove_class = 'invisible-component';
+                $remove = false;
+            }
+        } else {
             $addClass = 'alert-assumir-make-money-now';
             $text = 'Ganhar dinheiro agora';
             $remove_class = 'invisible-component';
@@ -62,12 +70,12 @@ class AuthController extends Controller
 
     public function state_relationship () {
         $conta_id = Auth::user()->conta_id;
-        $result = DB::select('select count(*) as count, (select uuid from pages where conta_id_a = ? or conta_id_b = ?) as uuid_page from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id])[0];
+        $result = DB::select('select count(*) as count, (select uuid from pages where conta_id_a = ? or conta_id_b = ? limit 1) as uuid_page from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id])[0];
 
         $class = 'nothing';
         $page = $result->uuid_page;
         if ($result->count == 1) {
-            $class = 'page';
+            $class = 'couple_page_redirect';
         } else if ($result->count > 1) {
              $class = 'multi-page';
         }

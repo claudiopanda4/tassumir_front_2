@@ -142,7 +142,8 @@ body {
     font-size: 11.5px;
 }
 #login-enter {
-    background-color: #2196f3;
+    background-color: #800080;
+    /*background-color: #2196f3;*/
     border: 0px solid #800080;
     width: 100%;
     padding: 8px 5px;
@@ -1168,6 +1169,10 @@ label[for="hugo"]{
     position: absolute;
     width: 100%;
     height: 100%;
+}
+.img-18 {
+    width: 18px;
+    height: 18px;
 }
 .img-20 {
     width: 20px;
@@ -3310,8 +3315,8 @@ label[for="hugo"]{
 }
 .play_button {
     position: absolute;
-    width: 65px;
-    height: 65px;
+    width: 85px;
+    height: 85px;
     z-index: 2;
 }
 .notify-icon {
@@ -3765,7 +3770,8 @@ label[for="hugo"]{
     width: 100%;
     height: 42px;
     border-radius: 2px;
-    background-color: #2f3338;
+    /*background-color: #2f3338;*/
+    border: 1px solid #2f3338;
 }
 .more-options-component {
     color: #ffff;
@@ -4092,7 +4098,7 @@ label[for="hugo"]{
     width: 77%;
 }
 #btn_follwing_container {
-    width: 43%;
+    width: 55%;
 }
 #btn_seguir {
     border-radius: 1px;
@@ -4393,4 +4399,18 @@ label[for="hugo"]{
 }
 .tassumir-logo-icon {
     margin: 0;
+}
+#loader_icon_app {
+    width: 32px;
+    height: 32px;
+    z-index: 3;
+}
+#loader_app_text {
+    top: 58%;
+    color: #efefefef;
+    font-size: 14px;
+}
+#container-loading-app {
+    height: 100vh;
+    margin-top: 8px;
 }

@@ -52,7 +52,7 @@
                     @csrf
                     <div class="form-group">
                         <!--<label for="exampleInputPassword1">Número ou Email</label>-->
-                        <input class="input-text-default input-full input-login" name="numero_ou_email" type="text" placeholder="email ou telefone">
+                        <input class="input-text-default input-full input-login" name="numero_ou_email" type="text" placeholder="Número de telefone ou email">
                         @error('numero_ou_email')
                             <span style="color: red;">{{$message}}</span>
                         @enderror
@@ -60,7 +60,7 @@
 
                     <div class="form-group" id="password_login_id">
                         <!--<label for="exampleInputPassword1">Palavra Passe</label>-->
-                        <input type="password" name="palavra_passe" class="input-text-default input-full input-login" id="exampleInputPassword1" placeholder="password">
+                        <input type="password" name="palavra_passe" class="input-text-default input-full input-login" id="exampleInputPassword1" placeholder="Palavra-passe">
                         <i class="fa fa-eye" id="eye"></i>
 
                         @error('palavra_passe')

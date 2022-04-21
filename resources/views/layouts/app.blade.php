@@ -629,6 +629,12 @@
     </div>
 </div>
 <?php endif ?>
+
+<input type="checkbox" name="" id="target-loading-app" class="invisible">
+<div class="pop-up pop-up-option" id="container-loading-app">
+    <img class="center" src="{{asset('css/uicons/loading.gif')}}" id="loader_icon_app" style="display: block;">
+    <h1 class="center" id="loader_app_text">Guardando...</h1>
+</div>  
 <?php if (true): ?>
 <input type="checkbox" name="" id="target-option-post" class="invisible">
 <div class="pop-up pop-up-option" id="option-post-full-container">
