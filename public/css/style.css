@@ -3315,8 +3315,8 @@ label[for="hugo"]{
 }
 .play_button {
     position: absolute;
-    width: 65px;
-    height: 65px;
+    width: 85px;
+    height: 85px;
     z-index: 2;
 }
 .notify-icon {
