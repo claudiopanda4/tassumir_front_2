@@ -179,6 +179,9 @@ Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->nam
 
 /* inicio get e post login*/
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('account.login.form');
+
+Route::get('/register',[App\Http\Controllers\AuthController::class,'firstForm'])->name('redirect.register.form');
+
 Route::get('/login/redirect', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
 

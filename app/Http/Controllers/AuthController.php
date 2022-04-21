@@ -2762,6 +2762,7 @@ public function dados_comment($key){
         return view('auth.login_front');
     }
 
+
     public function registrarUser(){
 
         return view('auth.registerUser');
@@ -2807,6 +2808,33 @@ public function dados_comment($key){
         return $decryp_code_confi;
    }
 
+   #Criptografia e decriptografia password teste
+
+   public function cript_password($plain_password){
+
+        $cifra = "AES-128-CTR";
+        $tmh_crypt = openssl_cipher_iv_length($cifra);
+
+        $encryption_iv = '1234567891011121';
+        $encryption_key = "tassumir";
+        $options = 0;
+        $encryp_password = openssl_encrypt(  $plain_password,$cifra, $encryption_key,$options,$encryption_iv);
+
+        return $encryp_password;
+   }
+   public function decript_password($password_criada){
+
+        $options = 0;
+        $cifra = "AES-128-CTR";
+        $decription_iv = '1234567891011121';
+        $decription_key = "tassumir";
+        $decryp_password=openssl_decrypt( $password_criada,  $cifra , $decription_key,$options,$decription_iv) ;
+        return $decryp_password;
+   }
+
+    #end cript e decript password teste
+
+
    public function sendMsgEmail($takeEmail,$get_verification_code){
 
      Mail::to($takeEmail)->send(new SendVerificationCode($get_verification_code));
@@ -2814,14 +2842,6 @@ public function dados_comment($key){
    }
 
   public function joinAndSave(Request $request){
-
-    /*$validator = Validator::make($request->all(), [
-            'nome' => 'required',
-            'apelido'=>'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }*/
 
           try{
 
@@ -2835,7 +2855,9 @@ public function dados_comment($key){
                 $takeEmail = $request->email;
                 $takePhone = str_replace("-","",$request->telefone);
 
-                $password = Hash::make($request->password);
+                //$password = Hash::make($request->password);
+
+                $password_clean = $request->password;
 
             //========== fim variaveis request ======
 
@@ -2859,10 +2881,11 @@ public function dados_comment($key){
 
                      $this->sendMsgEmail($takeEmail,$get_verification_code);
 
-                      //Criptografia do codigo de confirmacao
+                      //Criptografia do codigo de confirmacao e password
 
                         $plain_text_code = $code;
                         $encryp_conf_cod = $this->criptCode($plain_text_code);
+                        $password = $this->cript_password($password_clean);
 
                       //fim criptografia
 
@@ -2891,10 +2914,11 @@ public function dados_comment($key){
 
                      // ==== fim algoritmo para envio de msg para o telefone ====
 
-                    //Criptografia do codigo de confirmacao
+                    //Criptografia do codigo de confirmacao e password
 
                      $plain_text_code = $code;
                      $encryp_conf_cod = $this->criptCode($plain_text_code);
+                    $password = $this->cript_password($password_clean);
 
                       //fim criptografia
 
@@ -2922,12 +2946,15 @@ public function dados_comment($key){
         $input_code = $request->codeSent;
 
         $codigo_criado = $request->receivedCode;
+        $password = $request->password;
 
-        //decriptografia cod confirmacao
+        //decriptografia cod confirmacao e password
 
         $decryp_code_confi = $this->decriptCode($codigo_criado);
+        $decrypt_password = $this->decript_password($password);
 
         //fim decriptografia
+
 
         $phoneReceived = $request->telefone;
         $emailReceived = $request->email;
@@ -2936,21 +2963,22 @@ public function dados_comment($key){
         $data_nascimento = $request->receivedData_Nascimento;
         $nacional=$request->receivedNacio;
         $sexo = $request->receivedGenero;
-        $password = $request->password;
+        
 
         if($input_code == $decryp_code_confi){
 
-            $result_phone_email = DB::table('contas')
+            $result_phone_email = DB::table('contas') 
                         ->where('telefone','=',$phoneReceived)
                         ->orwhere('email','=',$emailReceived)
                         ->get();
 
-            if(isset($result_phone_email) > 0){
+            if(sizeof($result_phone_email) > 0){
 
-                return redirect()->route('account.login.form')->with("error","Email ou Telefone ja existente");
+
+                return redirect()->route('redirect.register.form')->with("error","Email ou Telefone ja existente na plataforma Tassumir");
 
             }else{
- 
+
                   $conta = new Conta();
                   $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
                   $conta->nome = $nome;
@@ -2979,11 +3007,11 @@ public function dados_comment($key){
                         $phoneReceived = NULL;
                     }
 
-                  DB::table('logins')->insert([
+                  $result = DB::table('logins')->insertGetId([
 
                       'email' => $emailReceived,
                       'telefone' => $phoneReceived,
-                      'password' =>$password,
+                      'password' =>Hash::make($decrypt_password),
                       'conta_id' => $conta->conta_id,
                       'created_at'=> $this->dat_create_update(),
 
@@ -2999,20 +3027,46 @@ public function dados_comment($key){
 
                     DB::commit();
 
-                    return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
+                    if($result){
 
+                        $retrieve_data = DB::table('logins')
+                                            ->select('email','telefone','password')
+                                            ->where('id',$result)
+                                            ->get();
+                            foreach($retrieve_data as $info){
+
+                                $email_received = $info->email;
+                                $telephone_received = $info->telefone;
+                                $password_received = $info->password;
+
+                            }
+
+                            //para funcionar tens que tirar o hash da password
+
+                            if(Auth::attempt(['email' => $emailReceived , 'password' => $decrypt_password])){
+
+                                    //dd("entrei no email");
+                                        $request->session()->regenerate();
+                                        return redirect()->route('account.home');
+
+                            }else if(Auth::attempt(['telefone' => $telephone_received,'password' =>$decrypt_password])){
+
+                                        dd("entrei no telefone");
+                                        $request->session()->regenerate();
+                                        return redirect()->route('account.home');
+                            }else{
+
+                                    dd("entrei no else auto login");
+                            }
+
+                    }else{
+
+                        dd("nao entrei");
+
+                    }
+
+                   // return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
             }
-
-            /*if (Auth::attempt(['email' =>$emailReceived, 'password' =>$password])) {
-                
-                $request->session()->regenerate();
-                return redirect()->route('account.home');
-
-            }else if(Auth::attempt(['telefone' => $phoneReceived, 'password' => $password])){
-
-                $request->session()->regenerate();
-                return redirect()->route('account.home');
-            }*/
 
         }else{
 
