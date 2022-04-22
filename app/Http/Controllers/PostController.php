@@ -524,6 +524,7 @@ class PostController extends Controller
             return json_encode([
                 'save' => true,
                 'save_video' => $save_video,
+                'ident' => $request->id,
             ]);
         } catch (Exception $e) {
             DB::rollback();

@@ -1087,8 +1087,6 @@
 
       $('.video-post-video').click(function(e){
         let id = e.target.id;
-        //let state_video = document.getElementById(id).play();
-        console.log($('.video-post-video'));
         if (document.getElementById(id).paused) {
             document.getElementById(id).play();
             document.getElementById('play_button_' + id.split('_')[1]).classList.add('invisible');
