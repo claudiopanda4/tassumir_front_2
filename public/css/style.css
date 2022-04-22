@@ -3718,7 +3718,7 @@ label[for="hugo"]{
 .loader_icon {
     width: 28px;
     height: 28px;
-    z-index: 3;
+    z-index: 4;
 }
 .loading-img {
     display: block;
