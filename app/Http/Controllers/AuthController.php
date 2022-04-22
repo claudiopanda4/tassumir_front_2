@@ -3003,18 +3003,16 @@ public function dados_comment($key){
 
         if($input_code == $decryp_code_confi){
 
-            $result_phone_email = DB::table('contas') 
+            /*$result_phone_email = DB::table('contas') 
                         ->where('telefone','=',$phoneReceived)
                         ->orwhere('email','=',$emailReceived)
                         ->get();
-
             if(sizeof($result_phone_email) > 0){
-
-
                 return redirect()->route('redirect.register.form')->with("error","Email ou Telefone ja existente na plataforma Tassumir, faça login");
 
             }else{
 
+            }*/
                   $conta = new Conta();
                   $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
                   $conta->nome = $nome;
@@ -3096,8 +3094,6 @@ public function dados_comment($key){
                     return redirect()->route('redirect.register.form')->with("error","Algo deu errado!");
 
                     }
-
-            }
 
         }else{
 
@@ -3614,6 +3610,7 @@ public function dados_comment($key){
     {
       $auth = new AuthController();
           $conta_logada = $auth->defaultDate();
+
         return count(DB::table('pages')
                     ->where('conta_id_a',  $conta_logada[0]->conta_id)
                     ->orwhere('conta_id_b',  $conta_logada[0]->conta_id)
