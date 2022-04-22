@@ -616,14 +616,24 @@ $(document).ready(function () {
 				if (response.state) {
 					$.each(response.search, function(key, data){
 						console.log(data.nome);
+
+						$('#assumir-item-' + key).removeClass('invisible-component');
 						$('#name-search-data-' + key).text(data.nome + ' ' + data.apelido);
+						$('#cover-result-search-component-' + key).removeClass('invisible-component');
 						$('#name-search-data-' + key).attr('id', 'name-search-data_' + data.uuid);
 						$('#assumir-item-' + key).attr('id', 'assumir-item_' + data.uuid);
 						$('#a-result-search-' + key).removeClass('invisible-component');
 						$('#assumir-item-text-' + key).attr('id', 'assumir-item-text_' + data.uuid);
+						$('#cover-result-search-component-' + key).attr('id', 'cover-result-search-component_' + data.uuid);
+						$('#cover-result-search-component-img-' + key).attr('id', 'cover-result-search-component-img_' + data.uuid);
 						$('#a-result-search-' + key).addClass('a-result-search');
 						$('#a-result-search-' + key).attr('id', 'a-result-search_' + data.uuid);
 					});					
+				} else {
+					$('#a-result-search-0').removeClass('invisible-component');
+					$('#cover-result-search-component-0').addClass('invisible-component');
+					$('#name-search-data-0').text('Parece que não existe um usuário semelhante a este nome ou apelido');
+					$('#assumir-item-0').addClass('invisible-component');
 				}
 			}
 		});
@@ -1595,6 +1605,9 @@ $(document).ready(function () {
           }
         });
     });
+    $('.target-relationship-alert-assumir-menu-footer').click(function(){
+    	document.getElementById('target-alert-tassumir').checked = true;
+    });
     //$('#reaction-id-a-')
 });
 window.addEventListener('load', function () {
@@ -1609,6 +1622,10 @@ document.addEventListener('click', function (e) {
 	}
 	if (e.target.className.indexOf('assumir-now-pop-up') > -1) {
 		document.getElementById('target-alert-tassumir').checked = true;
+	}
+	if (e.target.className.indexOf('no-pages-post') > -1) {
+		e.preventDefault();
+		document.getElementById('target-alert-post-denied').checked = true;
 	}
 	if (e.target.className.indexOf('see-full-text-post') > -1) {
 		/*alert($('#p-post-more_' + e.target.id.split('_')[1]).val());

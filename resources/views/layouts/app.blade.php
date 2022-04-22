@@ -301,8 +301,8 @@
                     <?php $key = 0; while($key < 5){ ?>
                         <div id="a-result-search-{{$key}}" class="invisible-component">
                             <div class="result-search-component clearfix">
-                                <div class="cover-result-search-component inline-perc-1 circle">
-                                    <img class="img-26 center" src="{{asset('css/uicons/user.png')}}">
+                                <div class="cover-result-search-component inline-perc-1 circle" id="cover-result-search-component-{{$key}}">
+                                    <img id="cover-result-search-component-img-{{$key}}" class="img-26 center" src="{{asset('css/uicons/user.png')}}">
                                 </div>
                                 <div class="text-component inline-perc-1" style="margin-top: 10px;">
                                     <h1 class="text-component-text" id="name-search-data-{{$key}}"></h1>
@@ -369,7 +369,7 @@
 </div>
 <input type="checkbox" name="" id="target-alert-post-denied" class="invisible">
 <div class="pop-up" id="alert-denied-post">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 210px; overflow: hidden;">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 250px; overflow: hidden;">
         <header class="pop-up-component-header pop-up-component-header-default header-height">
             <h1 class="" id="header-title-alert">Publicar um POST</h1>
             <div class="container-pop-up-component-header">
@@ -382,10 +382,10 @@
         </header>
         <div class="header-height"></div>
         <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-            <p style="color: #fff; font-size: 13px;" id="alert-description" >Só é permitido fazer um post quem tem assumido um relacionamento no Tassumir. Assuma agora mesmo o seu relacionamento, se torne um criador de conteúdo e ganhe dinheiro com seus posts.</p>
+            <p style="color: #fff; font-size: 13px; padding: 10px;" id="alert-description" >Só é permitido fazer um post quem tem assumido um relacionamento no Tassumir. Assuma agora mesmo o seu relacionamento, se torne um criador de conteúdo e ganhe dinheiro com seus posts.</p>
             <label for="target-alert-post-denied" class="label-full">
-                <div class="cover-done checker" id="cover-done-post">
-                    <h2 id="concluir_file_ok" style="padding: 10px; font-size: 11px; width: 100%;">Assumir Meu relacionamento</h2>
+                <div class="cover-done checker target-relationship-alert-assumir-menu-footer" id="cover-done-post">
+                    <h2 class="target-relationship-alert-assumir-menu-footer" style="padding: 10px; font-size: 11px; width: 100%;">Assumir Meu relacionamento</h2>
                 </div>
             </label>
         </div>
