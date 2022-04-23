@@ -290,10 +290,7 @@ public function index1(){
       }
 
       /*pesquisa otimizada*/
-      /*             $conta = DB::select('select c.conta_id,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" || c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" limit 4');
 
-               $page= DB::select('select pg.nome, pg.page_id, pg.foto,pg.descricao, (select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui from pages as pg where pg.estado_pagina_id =1 and pg.nome like "%'.$request->dados.'%" || pg.estado_pagina_id =1 and pg.descricao like "%'.$request->dados.'%" limit 4',[$conta_logada_identify]);
-  */
       public function people_search_final(Request $request) {
         try {
           if($request->ajax()){
@@ -314,18 +311,18 @@ public function index1(){
           }
 
       public function page_search_final(Request $request){
-        try {
-          if($request->ajax()){
-            $id = Auth::user()->conta_id;
+          try {
+            if($request->ajax()){
+              $id = Auth::user()->conta_id;
 
-            if($request->v==1){
-              $pages= DB::select('select pg.nome,pg.uuid, pg.page_id, pg.foto,pg.descricao, (select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id from identificadors where id=? and tipo_identificador_id = 1)) as segui from pages as pg where pg.estado_pagina_id =1 and pg.nome like "%'.$request->dados.'%" || pg.estado_pagina_id =1 and pg.descricao like "%'.$request->dados.'%" limit 4',[$id]);
-              }else {
-                $pages= DB::table('pages')->where('nome','like','%'.$request->dados.'%')->where('estado_pagina_id', 1)->limit(10)->get();
-              }
+              if($request->v==1){
+                $pages= DB::select('select pg.nome,pg.uuid, pg.page_id, pg.foto,pg.descricao, (select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id from identificadors where id=? and tipo_identificador_id = 1)) as segui from pages as pg where pg.estado_pagina_id =1 and pg.nome like "%'.$request->dados.'%" || pg.estado_pagina_id =1 and pg.descricao like "%'.$request->dados.'%" limit 4',[$id]);
+                }else {
+                  $pages= DB::select('select pg.nome,pg.uuid, pg.page_id, pg.foto,pg.descricao, (select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id from identificadors where id=? and tipo_identificador_id = 1)) as segui from pages as pg where pg.estado_pagina_id =1 and pg.nome like "%'.$request->dados.'%" and page_id>? || pg.estado_pagina_id =1 and pg.descricao like "%'.$request->dados.'%" and page_id>? limit 10',[$id,$request->page_id]);
+                }
 
-           return response()->json($pages);
-          }
+             return response()->json($pages);
+            }
 
 
         } catch (\Exception $e) {
@@ -335,37 +332,23 @@ public function index1(){
 
           }
 
-      public function postpesquisa(Request $request){
+      public function post_search_final(Request $request){
+        try {
 
-          if($request->ajax()){
-            if($request->v==1){
-              $data1= DB::table('posts')->where('descricao','like','%'.$request->dados.'%')->where('estado_post_id', 1)->limit(4)
-              ->get();
-            }else {
-              $data1= DB::table('posts')->where('descricao','like','%'.$request->dados.'%')->where('estado_post_id', 1)->limit(10)
-              ->get();
-              }
+                    if($request->ajax()){
+                      $id = Auth::user()->conta_id;
+                      if($request->v==1){
+                        $posts= DB::select('select p.post_id,p.uuid,p.descriscao,p.file,p.formato_id,p.created_at,pg.uuid as page_uuid, pg.nome,pg.foto,(select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id from identificadors where id=? and tipo_identificador_id = 1)) as segui from posts as p inner join pages as pg on p.page_id=pg.page_id where  pg.estado_pagina_id=1 and  p.estado_post_id = 1 and p.descricao like "%'.$request->dados.'%" ', [$id]);
+                      }else {
+                        $posts= DB::select('select p.post_id,p.uuid,p.descriscao,p.file,p.formato_id,p.created_at,pg.uuid as page_uuid, pg.nome,pg.foto,(select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id from identificadors where id=? and tipo_identificador_id = 1)) as segui from posts as p inner join pages as pg on p.page_id=pg.page_id where  pg.estado_pagina_id=1 and  p.estado_post_id = 1 and p.descricao like "%'.$request->dados.'%" and p.post_id>? ', [$id,$request->post_id]);
+                        }
 
+                        return response()->json($posts);
+                      }
 
-              for ($i=0; $i < sizeof($data1); $i++) {
-                $data2=  DB::select('select * from pages where page_id = ?', [$data1[$i]->page_id]);
-                $data[$i]['post_id']=$data1[$i]->post_id ;
-                $data[$i]['post']=$data1[$i]->descricao ;
-                $data[$i]['nome_page']=$data2[0]->nome ;
-                $data[$i]['page_foto']=$data2[0]->foto ;
-                $data[$i]['post_foto']=$data1[$i]->file ;
-                $data[$i]['formato']=$data1[$i]->formato_id;
+        } catch (\Exception $e) {
 
-              }
-
-              if(count($data)>0){
-                $output['valor']=$data;
-              }else{
-                $output['valor']='Sem Resultado';
-              }
-
-              return response()->json($output);
-            }
+        }
 
           }
 
