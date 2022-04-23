@@ -68,10 +68,7 @@ class PostController extends Controller
 
     public function thumbnail($thumb, $file_name){
         try {
-            $page_current = 'none';
-
             $folderPath = "storage/img/thumbs/";
-            //dd($request);
             $image_parts = explode(";base64,", $thumb);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];

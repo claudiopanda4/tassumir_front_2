@@ -543,15 +543,18 @@
 }
 #target-profile-cover:checked ~ .pop-up#cover-profile,
 #more-option-target-profile:checked ~  #more-option-profile-component,
-#target-alert-make-tassumir:checked ~ #alert-make-money-tassumir,
-#target-loading-app:checked ~ #container-loading-app {
+#target-alert-make-tassumir:checked ~ #alert-make-money-tassumir {
 	opacity: 1;
     z-index: 1001;
 }
-#add-post-target:checked ~ #add-post-container,
-#target-loading-app-load:checked ~ #container-loading-app-load {
+#add-post-target:checked ~ #add-post-container {
 	opacity: 1;
-    z-index: 1003;
+    z-index: 1006;
+}
+#target-loading-app-load:checked ~ #container-loading-app-load,
+#target-loading-app:checked ~ #container-loading-app {
+	opacity: 1;
+    z-index: 1007;
 }
 #target-profile-cover-post:checked ~ #cover-profile-post {
 	opacity: 1;

@@ -834,21 +834,21 @@ $(document).ready(function () {
 		    		if (data.file != null) {
 		    			if (data.formato_id == 2) {
 		    				$('#li-component-stories-img-back-' + key).attr('src', route + "/storage/img/page/" + data.file);
-		    				$('#li-component-stories-img-back-' + key).removeClass('invisible');
-		    			}
-		    			if (data.formato_id == 1) {
-		    				$('#li-component-stories-cover-video-' + key).attr('src', route + "/css/uicons/casal_amor.jpg");
-		    				if (data.page_foto != null) {
+		    			} else if (data.formato_id == 1) {
+		    				//$('#li-component-stories-cover-video-' + key).attr('src', route + "/storage/img/thumbs/" + data.thumbnail);
+		    				$('#li-component-stories-img-back-' + key).attr('src', route + "/storage/img/thumbs/" + data.thumbnail);
+		    				/*if (data.page_foto != null) {
 				    			$('#li-component-stories-cover-video-' + key).attr('src', route + "/storage/img/page/" + data.page_foto);
 				    		}
 				    		if (window.innerWidth > 540 && key < 5) {
 				    			document.getElementById('li-component-stories-video-post-' + key).preload = 'metadata';
 				    			$('#li-component-stories-video-post-' + key).attr('src', route + "/storage/video/page/" + data.file);
-				    		}
+				    		}*/
 
 		    				$('#li-component-stories-video-post-' + key).removeClass('invisible');
 		    				$('#li-component-stories-cover-video-' + key).removeClass('invisible-component');
-		    			}	
+		    			}
+		    			$('#li-component-stories-img-back-' + key).removeClass('invisible');	
 		    		}
 		    		$('#headline-stories-' + key).text(data.descricao);
 		    		$('#li-component-stories-img-profile-' + key).removeClass('invisible');
@@ -906,6 +906,10 @@ $(document).ready(function () {
 		    $('#loader_button_' + key).addClass('invisible-component');
 			$('#has-video-' + key).attr('id', 'has-video_' + data.uuid);
 		    if (data.formato_id == 1) {
+		    	$('#thumb_' + key).attr('src', route + '/storage/img/thumbs/' + data.thumbnail);
+		    	$('#thumb_' + key).attr('id', 'thumb_' + data.uuid);
+		    	$('#vid-cover-load-' + key).val(route + '/storage/img/thumbs/' + data.thumbnail);
+		    	$('#vid-cover-load-' + key).attr('id', route + 'vid-cover-load_' + data.uuid);
 		    	$('#video-post-' + key).removeClass('invisible-component');
 		    	$('#post-cover-post-index-' + key).addClass('invisible-component');
 		    	$('#m_post-' + key).addClass('getvideo');
@@ -917,9 +921,11 @@ $(document).ready(function () {
 			    $('#video-post-' + key).attr('id', 'video-post_' + data.uuid);
 		   		$('#video_' + key).attr('id', 'video_' + data.uuid);
 			    $('#vid-' + key).attr('id', 'vid_' + data.uuid);
+			    $('#video-post-video-cover-container-' + key).attr('id', 'video-post-video-cover-container_' + data.uuid);
 		    	$('#play_button_' + key).removeClass('invisible-component');
 		    	$('#loader_button_' + key).attr('id', 'loader_button_' + data.uuid);
 		    	$('#play_button_' + key).attr('id', 'play_button_' + data.uuid);
+		    	$('#video-just-clicked-' + key).attr('id', 'video-just-clicked_' + data.uuid);
 		    	$('#video-post-time-' + key).attr('id', 'video-post-time-' + data.uuid);
 		    	$('#video-post-time-all-' + key).attr('id', 'video-post-time-all-' + data.uuid);
 		    	$('#insert-video-' + key).attr('id', 'insert-video_' + data.uuid);
@@ -1385,8 +1391,10 @@ $(document).ready(function () {
 	    		id = getvideo[i].id.split('_')[2];
     			//console.log('vid_' + id);
 	    		link_video = document.getElementById('vid_' + id).value;
+		    			//$('#video-post-link_' + id).attr('src', link_video);
+		    			//document.getElementById('video_' + id).preload = 'metadata';
 
-		    	document.getElementById('video_' + id).oncanplay = function() {
+		    	/*document.getElementById('video_' + id).oncanplay = function() {
 		           	$.ajax({
 					    url: '/return/id',
 					    type: 'get',
@@ -1396,20 +1404,20 @@ $(document).ready(function () {
 						    //$("#loading-finished-video").val(response.id);
 					    }
 					});
-	           	}
+	           	}*/
 
 	    		if (window.innerHeight > 660) {
 	    			if ($('#m_post_' + id).offset().top < 790 && $('#has-video_' + id).val() != 'ok') {
-		    			$('#video-post-link_' + id).attr('src', link_video);
-		    			document.getElementById('video_' + id).preload = 'metadata';
-		    			$('#video_' + id).attr('src', link_video);
+		    			//$('#video-post-link_' + id).attr('src', link_video);
+		    			//document.getElementById('video_' + id).preload = 'metadata';
+		    			//$('#video_' + id).attr('src', link_video);
 		    			$('#has-video_' + id).val('ok');
 		    			videos(id);
 		    		}
 	    		} else {
 					if ($('#m_post_' + id).offset().top < 410 && $('#has-video_' + id).val() != 'ok') {
-		    			$('#video-post-link_' + id).attr('src', link_video);
-		    			$('#video_' + id).attr('src', link_video);
+		    			//$('#video-post-link_' + id).attr('src', link_video);
+		    			//$('#video_' + id).attr('src', link_video);
 		    			$('#has-video_' + id).val('ok');
 		    			videos(id);
 						//console.log(("id = #" + id));
@@ -1508,6 +1516,34 @@ $(document).ready(function () {
     	seguir_page(id, e, 1);
     	//alert();
     });
+    $('.video-post-video').click(function (e) {
+    	any_id = e.target.id.split('_')[1];
+    	play_now(any_id);
+    });
+    $('.play_button').click(function (e) {
+    	any_id = e.target.id.split('_')[2];
+    	play_now(any_id);
+    });
+    function play_now(any_id) {
+    	if ($('#video-just-clicked_' + any_id).val() != any_id) {
+	    	link_video = document.getElementById('vid_' + any_id).value;
+			$('#video-post-link_' + any_id).attr('src', link_video);
+			document.getElementById('video_' + any_id).preload = 'metadata';
+	    	$('#video_' + any_id).attr('src', link_video);
+			$('#video_' + any_id).removeClass('invisible-component');
+	    	$('#video-post-video-cover-container_' + any_id).addClass('invisible-component');
+	    	$('#video-just-clicked_' + any_id).val(any_id);    		
+    	}
+    	if (document.getElementById('video_' + any_id).paused) {
+			document.getElementById('video_' + any_id).play();
+            document.getElementById('play_button_' + id).classList.add('invisible-component');
+    	} else {
+			document.getElementById('video_' + any_id).pause();
+            document.getElementById('play_button_' + id).classList.remove('invisible-component');
+    	}
+	    
+    	 $('#current-video-id').val('video_' + any_id);
+    }
   	text = "";
     $('.comentar-a').click(function (e) {
     	e.preventDefault();

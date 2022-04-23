@@ -240,8 +240,8 @@
 		margin-left: 0;
 	}
 	.stories-about-talking nav ul li .img-back-stories {
-	        width: 100%;
-		    height: 100%;
+	        width: 130%;
+		    height: auto;
 		    border: 2px solid #18191a;
 		    border-radius: 50%;
 	}
@@ -770,7 +770,7 @@
 	    background-color: var(--background-main-dark);
 	}
 	.post header {
-		margin-top: 5px;
+		margin-top: 2px;
 	}
 	.interaction-numbers {
 	    border-bottom: none;
@@ -786,6 +786,7 @@
 		background-color: #18191a;
 		border: none;
 	}
+
 	#main-container-profile .card {
 		background-color: transparent;
 	}
@@ -902,7 +903,7 @@
 @media screen and (max-width: 501px) {
 	.card {
 		width: 100%;
-		margin-bottom: 8px;
+		margin-bottom: 5px;
 	}
 	.card#card-post-id-index {
 		margin: 0;
@@ -1633,8 +1634,8 @@
     	margin-bottom: -5px;
 	}
 	.card-post p {
-	    padding: 0px 10px 10px;
-	    margin-bottom: 5px;
+	    padding: 0px 5px;
+	    margin-bottom: 0px;
 	}
 	#notificacoes-component {
 	    height:auto; 
@@ -1928,5 +1929,21 @@
 	#btn_follwing_container {
 	    width: 58%;
 	    max-width: inherit;
+	}
+}
+@media screen and (max-width: 720px){
+	.alert-info-about-us,
+	.card, .header-stories, 
+	.stories-about-talking nav, .stories-about-talking nav ul{
+	    background-color: #000;
+	}
+	.post {
+	    border-top: 1px solid #343a40;
+	}
+	.alert-info-about-us {
+	    background-color: #18191a;
+	}
+	.fa-16 {
+	    font-size: 15px;
 	}
 }

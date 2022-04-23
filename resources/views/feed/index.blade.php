@@ -27,10 +27,7 @@
                                 <div class="identify-cover circle">
                                     <img class="img-full circle invisible" id="li-component-stories-img-profile-{{$i}}">
                                 </div>
-                                <img class="img-back-stories center invisible" id="li-component-stories-img-back-{{$i}}">
-                                <video preload='metadata' class="video-post-dest invisible" id="li-component-stories-video-post-{{$i}}">
-                                    <source src="" type="video/mp4">
-                                </video> 
+                                <img class="img-back-stories center invisible" id="li-component-stories-img-back-{{$i}}"> 
                                 <div  id="li-component-stories-cover-video-container-{{$i}}">
                                    <img  id="li-component-stories-cover-video-{{$i}}" class="img-full circle foto-page-video invisible-component"> 
                                 </div>
@@ -180,20 +177,25 @@
                         <div class="video-post post-video invisible-component" id="video-post-{{$key}}">
                             <img class="play_button center invisible-component" src="{{asset('css/uicons/play_button.png')}}" id="play_button_{{$key}}">
                             <!--<img class="loader_button center" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">-->
-                            <img class="loader_button center" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">
+                            <img class="loader_button center invisible-component" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">
                             <img class="loader_icon center" src="{{asset('css/uicons/loading_blue.gif')}}" id="loader_icon_{{$key}}">
-                            <video preload="metadata" class="video-post-video" id="video_{{$key}}">
+                            <video preload="metadata" class="video-post-video invisible-component" id="video_{{$key}}">
                                 <source id="video-post-link-{{$key}}">
                                 Your browser does not support the video tag.
                             </video>
+                            <div class="video-post-video-cover-container" id="video-post-video-cover-container-{{$key}}">
+                                <img src="" class="video-post-video" id="thumb_{{$key}}">
+                            </div>
                             <input type="hidden" name="" value="post_view_" id="watch-video-{{$key}}">
                             <input type="hidden" name="" id="vid-{{$key}}">
                             <input type="hidden" name="" id="vid-load-{{$key}}">
+                            <input type="hidden" name="" id="vid-cover-load-{{$key}}">
                             <input type="hidden" name="" id="has-video-{{$key}}">
                             <input type="hidden" name="" id="video-post-time-{{$key}}">
                             <input type="hidden" name="" id="video-post-time-all-{{$key}}">
                             <input type="hidden" name="" id="cover-post-load-{{$key}}">
                             <input type="hidden" name="" id="insert-video-{{$key}}">
+                            <input type="hidden" name="" id="video-just-clicked-{{$key}}" value="none">
                         </div>
                     </div>
                 </div>
@@ -707,7 +709,7 @@ function gostar(id){
                                 offset_video = $('#video_' + id).offset();
                                 video_post_time = $('#video-post-time-' + id);
                                 if (document.getElementById('video_' + id).src == '') {
-                                    $("#loader_button_" + id).removeClass('invisible-component');
+                                    //$("#loader_button_" + id).removeClass('invisible-component');
                                 } else {
                                     if ($('#vid-load_' + id).val() == 'ready') {
                                     }

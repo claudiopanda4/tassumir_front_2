@@ -143,7 +143,7 @@ body {
 }
 #login-enter {
     background-color: #800080;
-    /*background-color: #2196f3;*/
+    background-color: #2196f3;
     border: 0px solid #800080;
     width: 100%;
     padding: 8px 5px;
@@ -1508,7 +1508,7 @@ label[for="hugo"]{
     margin-bottom: 5px;
     justify-content: space-between;
     padding-left: 10px;
-    margin: auto;
+    margin: 3px auto 0;
 }
 .interaction-numbers li {
     /*display: inline-flex;*/
@@ -1616,7 +1616,7 @@ label[for="hugo"]{
 }
 .post-cover {
     position: relative;
-    margin-top: -10px;
+    margin-top: 0px;
     margin-bottom: 10px;
     height: auto;
 }
@@ -1755,7 +1755,7 @@ label[for="hugo"]{
 }
 .stories-about-talking nav ul li .img-back-stories {
     width: 200px;
-    height:200px;
+    height:auto;
 }
 .stories-about-talking header h1 {
     color: #fff;
@@ -2993,7 +2993,7 @@ label[for="hugo"]{
     height: 100%;
 }
 .liked {
-    color: red;
+    color: #fd09fd;
 }
 .unliked {
 
@@ -4348,9 +4348,16 @@ label[for="hugo"]{
     font-size: 13px; 
     width: 100%;
 }
+#cover-done-cancel.cover-done .reset-margin h1{
+    background-color: transparent;
+    border: 1px solid #606060;
+}
 .cover-done.cover-done-post {
     width: 48%;
     margin-right: 2px;
+}
+#cover-done-cancel.cover-done {
+    background-color: transparent;
 }
 .reset-margin {
     margin-bottom: 0;
@@ -4458,7 +4465,7 @@ label[for="hugo"]{
 }
 #container-loading-app {
     height: 100vh;
-    margin-top: 8px;
+    margin-top: 0px;
 }
 .pop-up-loading-component {
     background-color: #000;
@@ -4474,5 +4481,14 @@ label[for="hugo"]{
     position: relative;
 }
 .img-post img {
+    width: 100%;
+}
+.video-post-video-cover-container {
+    min-height: 200px;
+    max-height: 80vh;
+    position: relative;
+    overflow: hidden;
+}
+.video-post-video-cover-container > img{
     width: 100%;
 }
