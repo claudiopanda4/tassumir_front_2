@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthController;
+
 
 class searchController extends Controller
 {
@@ -65,6 +68,7 @@ public function index1(){
         return view('Pesquisas.pages', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
 
     }
+
 
   public function publicationsSearch($val){
     $controll = new AuthController();
@@ -285,4 +289,85 @@ public function index1(){
 
       }
 
+      /*pesquisa otimizada*/
+      /*             $conta = DB::select('select c.conta_id,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" || c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" limit 4');
+
+               $page= DB::select('select pg.nome, pg.page_id, pg.foto,pg.descricao, (select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = ?) as segui from pages as pg where pg.estado_pagina_id =1 and pg.nome like "%'.$request->dados.'%" || pg.estado_pagina_id =1 and pg.descricao like "%'.$request->dados.'%" limit 4',[$conta_logada_identify]);
+  */
+      public function people_search_final(Request $request) {
+        try {
+          if($request->ajax()){
+              $conta =[];
+
+              if($request->v==1){
+                $conta =  DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" || c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" limit 4');
+              }else {
+                $conta =  DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" and conta_id > ?|| c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" and conta_id > ? limit 10',[$request->id]);
+              }
+
+              return response()->json($conta);
+
+          }
+        } catch (\Exception $e) {
+
+        }
+          }
+
+      public function page_search_final(Request $request){
+        try {
+          if($request->ajax()){
+            $id = Auth::user()->conta_id;
+
+            if($request->v==1){
+              $pages= DB::select('select pg.nome,pg.uuid, pg.page_id, pg.foto,pg.descricao, (select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id from identificadors where id=? and tipo_identificador_id = 1)) as segui from pages as pg where pg.estado_pagina_id =1 and pg.nome like "%'.$request->dados.'%" || pg.estado_pagina_id =1 and pg.descricao like "%'.$request->dados.'%" limit 4',[$id]);
+              }else {
+                $pages= DB::table('pages')->where('nome','like','%'.$request->dados.'%')->where('estado_pagina_id', 1)->limit(10)->get();
+              }
+
+           return response()->json($pages);
+          }
+
+
+        } catch (\Exception $e) {
+
+        }
+
+
+          }
+
+      public function postpesquisa(Request $request){
+
+          if($request->ajax()){
+            if($request->v==1){
+              $data1= DB::table('posts')->where('descricao','like','%'.$request->dados.'%')->where('estado_post_id', 1)->limit(4)
+              ->get();
+            }else {
+              $data1= DB::table('posts')->where('descricao','like','%'.$request->dados.'%')->where('estado_post_id', 1)->limit(10)
+              ->get();
+              }
+
+
+              for ($i=0; $i < sizeof($data1); $i++) {
+                $data2=  DB::select('select * from pages where page_id = ?', [$data1[$i]->page_id]);
+                $data[$i]['post_id']=$data1[$i]->post_id ;
+                $data[$i]['post']=$data1[$i]->descricao ;
+                $data[$i]['nome_page']=$data2[0]->nome ;
+                $data[$i]['page_foto']=$data2[0]->foto ;
+                $data[$i]['post_foto']=$data1[$i]->file ;
+                $data[$i]['formato']=$data1[$i]->formato_id;
+
+              }
+
+              if(count($data)>0){
+                $output['valor']=$data;
+              }else{
+                $output['valor']='Sem Resultado';
+              }
+
+              return response()->json($output);
+            }
+
+          }
+
+      /*fim da pesquisa otimizada*/
 }
