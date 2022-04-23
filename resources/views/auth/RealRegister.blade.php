@@ -63,8 +63,8 @@
       <div class="" id="main-reg">
         <header class="logo-form" id="title-login">
           <div class="title">
-            <a href=""><i class="fas fa-link fa-32"></i>
-              <h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1>
+            <a href=""><!--<i class="fas fa-link fa-32"></i>-->
+              <h1>tass<span class="title-final" style="color: #fd09fd;">umir</span></h1>
             </a>
           </div>
           <div class="row justify-content-center">
@@ -303,11 +303,18 @@
   $("#email").keyup(function(){
     if(validateEmail()){
      
-      $("#emailMsg").html("<p class='text-success'>Email Válido</p>");
+          $("#emailMsg").remove();
+
+          $(".my-form").prop('disabled', false).css({
+            backgroundColor: "#2196f3"
+          });
 
     }else{
          
-           $("#emailMsg").html("<p class='text-danger'>Email Inválido</p>");
+          $("#emailMsg").html("<p class='text-danger'>Email Inválido</p>");
+           $(".my-form").prop('disabled', true).css({
+              backgroundColor: "#9e9e9e"
+          });
     }
 
   });

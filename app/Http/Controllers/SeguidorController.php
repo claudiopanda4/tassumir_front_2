@@ -37,14 +37,17 @@ class SeguidorController extends Controller
         try {
             $uuid = $request->uuid;
             $id = Auth::user()->conta_id;
-            $identificadors = DB::select("select identificador_id_seguida, identificador_id_seguindo, (select count(seguidors.seguidor_id) from seguidors where seguidors.identificador_id_seguida = s.identificador_id_seguida and seguidors.identificador_id_seguindo = s.identificador_id_seguindo) as seguir from (select (select identificadors.identificador_id from identificadors where id = (select pages.page_id from pages where uuid = ?) and tipo_identificador_id = 2) as identificador_id_seguida, (select identificador_id as identificador_id_seguindo from identificadors where id = (select contas.conta_id from contas where conta_id = ?) and tipo_identificador_id = 1) as identificador_id_seguindo from seguidors) as s LIMIT 1", [$uuid, $id]);
+            $identificadors = DB::select("select identificador_id_seguida, identificador_id_seguindo, (select count(seguidors.seguidor_id) from seguidors where seguidors.identificador_id_seguida = s.identificador_id_seguida and seguidors.identificador_id_seguindo = s.identificador_id_seguindo) as seguir, (select identificador_id from identificadors where identificadors.id = (select conta_id_a from pages where uuid = ?) and tipo_identificador_id = 1) as identificador_id_receptor_1, (select identificador_id from identificadors where identificadors.id = (select conta_id_b from pages where uuid = ?) and tipo_identificador_id = 1) as identificador_id_receptor_2 from (select (select identificadors.identificador_id from identificadors where id = (select pages.page_id from pages where uuid = ?) and tipo_identificador_id = 2) as identificador_id_seguida, (select identificador_id as identificador_id_seguindo from identificadors where id = (select contas.conta_id from contas where conta_id = ?) and tipo_identificador_id = 1) as identificador_id_seguindo from seguidors) as s LIMIT 1", [$uuid, $uuid, $uuid, $id]);
 
             $identificador_id_seguida = $identificadors[0]->identificador_id_seguida;
             $identificador_id_seguindo = $identificadors[0]->identificador_id_seguindo;
+            $identificador_id_receptor_1 = $identificadors[0]->identificador_id_receptor_1;
+            $identificador_id_receptor_2 = $identificadors[0]->identificador_id_receptor_2;
             $seguir = $identificadors[0]->seguir;
 
             $auth = new AuthController();
             $id = 0;
+            $notification = 0;
             if ($seguir == 0) {
                 $id = DB::table('seguidors')->insertGetId([
                     'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -52,16 +55,61 @@ class SeguidorController extends Controller
                     'identificador_id_seguindo' =>  $identificador_id_seguindo,
                     'created_at'=> $auth->dat_create_update(),
                 ]);
+                $notification = DB::table('notifications')->insert([
+                    [
+                        'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                        'id_state_notification' => 2,
+                        'id_action_notification' => 5,
+                        'identificador_id_causador'=> $identificador_id_seguindo,
+                        'identificador_id_destino'=> $identificador_id_seguida,
+                        'identificador_id_receptor'=> $identificador_id_receptor_1,
+                        'created_at'=> $auth->dat_create_update()
+                    ],
+                    [
+                        'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                        'id_state_notification' => 2,
+                        'id_action_notification' => 5,
+                        'identificador_id_causador'=> $identificador_id_seguindo,
+                        'identificador_id_destino'=> $identificador_id_seguida,
+                        'identificador_id_receptor'=> $identificador_id_receptor_1,
+                        'created_at'=> $auth->dat_create_update()
+                    ],
+                ]);
+                $notification = DB::table('notifications')->insert([
+                        'uuid' => \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                        'id_state_notification' => 2,
+                        'id_action_notification' => 5,
+                        'identificador_id_causador'=> $identificador_id_seguindo,
+                        'identificador_id_destino'=> $identificador_id_seguida,
+                        'identificador_id_receptor'=> $identificador_id_receptor_2,
+                        'created_at'=> $auth->dat_create_update()
+                ]);
             } else {
                 DB::table('seguidors')->where([
                   ['identificador_id_seguida', '=', $identificador_id_seguida],
                   ['identificador_id_seguindo', '=', $identificador_id_seguindo]
+              ])->delete();
+                DB::table('notifications')->where([
+                  ['identificador_id_causador', '=', $identificador_id_seguindo],
+                  ['identificador_id_receptor', '=', $identificador_id_receptor_2],
+                  ['id_state_notification', '=', 2],
+                  ['id_action_notification', '=', 5],
+              ])->delete();
+                DB::table('notifications')->where([
+                  ['identificador_id_causador', '=', $identificador_id_seguindo],
+                  ['identificador_id_receptor', '=', $identificador_id_receptor_1],
+                  ['id_state_notification', '=', 2],
+                  ['id_action_notification', '=', 5],
               ])->delete();
                 DB::commit(); 
                 return response()->json([
                     'state' => true, 
                     'identificador_id_seguida' => $identificador_id_seguida, 
                     'identificador_id_seguindo' => $identificador_id_seguindo,
+                    'identificador_id_receptor_2'=> $identificador_id_receptor_2,
+                    'identificador_id_receptor_1'=> $identificador_id_receptor_1,
+                    'id' => $id,
+                    'notification' => $notification,
                     'text' => 'Seguir',
                 ]);
             }
@@ -71,9 +119,12 @@ class SeguidorController extends Controller
             return json_encode([
                 'identificador_id_seguida' => $identificador_id_seguida,
                 'identificador_id_seguindo' => $identificador_id_seguindo,
+                'identificador_id_receptor_1' => $identificador_id_receptor_1,
+                'identificador_id_receptor_2' => $identificador_id_receptor_2,
                 'uuid' => $uuid,
                 //'sql' => $sql,
                 'id' => $id,
+                'notification' => $notification,
                 'seguir' => $seguir,
                 'text' => 'Não Seguir',
             ]);        

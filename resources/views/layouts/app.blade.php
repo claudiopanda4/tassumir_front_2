@@ -101,6 +101,8 @@
                         </ul>
                     </div>
                 </li>
+                <input type="hidden" id="ident-key" name="">
+                <li class="poupar-data l-5 invisible-component" id="poupar-data-id"></li>
                 <li class="user-tassumir clearfix l-5">
                     <a href="{{route('account.profile')}}">
                         <div class="l-5 user-account-container-img">
@@ -109,6 +111,13 @@
                     </a>
                     <a href="" class="l-5"><h1 class="user-account"></h1></a>
                 </li>
+                <!--<li class="tassumir-logo-icon clearfix l-5">
+                    <a class="" href="{{route('account.profile')}}">
+                        <div class="l-5 user-account-container-img">
+                            <img class="img-full center" src="{{asset('css/uicons/tassumir.jpeg')}}" id="tt-logo-container-img-id">
+                        </div>
+                    </a>
+                </li>-->
             </nav>
     </header>
     <input type="hidden" id="host" value="{{route('account.data')}}" name="">
@@ -192,10 +201,11 @@
                     </div>
                 </li>
             </a>
-            <label for="target-alert-post-denied">
+            <input type="hidden" id="page_denied">
+            <label>
                 <li id="add-post-target-pop-up">
                     <!--<i class="fi-rr-play fa-20 f-footer"></i>-->
-                    <img src="{{asset('/css/uicons/add.png')}}" class="center img-32">
+                    <img id="target-alert-post-denied-id" src="{{asset('/css/uicons/add.png')}}" class="center img-32">
                 </li>
             </label>
             <a href="{{route('post.tassumir.video', 'ma')}}">
@@ -226,6 +236,22 @@
             <div class="">
                 <img id="profile-cover-full">
             </div>
+        </div>
+    </div>
+</div>
+<input type="checkbox" name="" id="target-alert-make-tassumir" class="invisible">
+<div class="pop-up" id="alert-make-money-tassumir">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; max-height: 90%; height: auto; margin: auto;">
+        <div>
+            <p class="p-alert">Para poder ganhar dinheiro com o tassumir (ou seja, o correspondente a 1 U$D por cada mil visualizações nos seus vídeos, ou por cada 500 reacções nos seus textos e imagens, caso não goste de aparecer), você precisa ter assumido o seu relacionamento na plataforma. Porquê? <br><br>Porque só é permitido publicar conteúdos no TASSUMIR, quem tem uma página e só pode ter uma página quem assumiu alguém dentro da PLATAFORMA.</p>
+        </div>
+        <div class="clearfix component-button-alert-tassumir">
+            <label for="target-alert-make-tassumir" class="">
+                <h1 class="button-pop-up l-5 button-pop-up-reject-close">Fechar</h1>
+            </label>
+            <label for="target-alert-make-tassumir" class="alert-make-money-tassumir-c" id="assumir-now">
+                <h1 class="l-5 button-pop-up button-pop-up-assumir assumir-now-pop-up">Assumir agora</h1>
+            </label>
         </div>
     </div>
 </div>
@@ -367,7 +393,7 @@
 </div>
 <input type="checkbox" name="" id="target-alert-info" class="invisible">
 <div class="pop-up" id="target-alert-info-container">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; overflow: hidden; max-height: 90%;">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; overflow: hidden; max-height: 90%; margin: auto;">
         <!--<header class="pop-up-component-header pop-up-component-header-default header-height">
             <div class="container-pop-up-component-header">
                 <label for="target-alert-info">
@@ -467,27 +493,38 @@
 <?php if (true): ?>
 <input type="checkbox" name="" id="target-profile-cover" class="invisible">
 <div class="pop-up" id="cover-profile">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: 190px;">
-        <header class="pop-up-component-header pop-up-component-header-default header-height">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; margin: auto;">
+        <header class="pop-up-component-header pop-up-component-header-default header-height" id="add-cover-profile">
             <h1>Adicionar Foto de Perfil</h1>
             <div class="container-pop-up-component-header">
-                <label for="target-profile-cover">
-                    <div class="cancel-box div-img">
+                <!--<label for="target-profile-cover">
+                    <div class="cancel-box-component div-img">
                         <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
                     </div>
-                </label>
+                </label>-->
             </div>
         </header>
-        <div class="header-height"></div>
+        <div class="header-height" id="header-height-component-add-cover"></div>
+        <div id="foto-view" class="invisible-component">
+            <img id="foto-view-component" class="img-full">
+            <div class="cancel-box-component div-img" id="cancel-box-component-change">
+                <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+            </div>
+        </div>
         <div style="margin-top: 15px; margin-bottom: 10px;">
-            <div class="">
+            <div class="clearfix">
                 <form action="{{ route('account.profile.pic') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <input class="file" type="file" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
+                    <input class="file invisible-component" type="file" id="file-id-profile" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
+                    <div class="cover-done-profile-cover-choose" id="cover-done-profile-cover-choose-container">
+                        <button type="button" id="cover-done-profile-cover-choose-id">Escolher foto de perfil</button>
+                    </div>
                     <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
-                        <div class="cover-done" id="cover-done">
-                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 14px; width: 100%;">Concluido</button>
-
+                        <div class="cover-done cover-done-profile-post l-5" id="close-cover-post">
+                            <button type="button" class="cover-done-profile-cover" id="close-cover-post-button">Cancelar</button>
+                        </div>
+                        <div class="cover-done cover-done-profile-post l-5">
+                            <button type="submit" class="cover-done-profile-cover">Concluido</button>
                         </div>
                     </div>
                 </form>
@@ -592,6 +629,49 @@
     </div>
 </div>
 <?php endif ?>
+
+<input type="checkbox" name="" id="target-loading-app" class="invisible">
+<div class="pop-up pop-up-option" id="container-loading-app">
+    <img class="center" src="{{asset('css/uicons/loading.gif')}}" id="loader_icon_app" style="display: block;">
+    <h1 class="center" id="loader_app_text">Guardando...</h1>
+</div>  
+<?php if (true): ?>
+<input type="checkbox" name="" id="target-option-post" class="invisible">
+<div class="pop-up pop-up-option" id="option-post-full-container">
+    <div class="pop-up-component full-component-mobile center" style="position: absolute; max-height: 90%; height: auto; width: 280px;">
+        <div>
+            <div class="">
+                <ul class="clearfix more-option-post" id="more-option-post-{{$key}}">
+                    <li class="edit-option-component invisible-component" id="edit-option-component-id">
+                        <a href="" class="edit-option" id="edit-option-edit-component"></a>
+                    </li>
+                    <li>
+                        <a href="" class="edit-option options-special" id="edit-option">Não seguir</a>
+                    </li>
+                    <li class="invisible-component" id="delete-option-component">
+                        <a href="" class="delete_post options-special" id="delete-option-component-id"></a>
+                    </li>
+                    <li class="hidden-post">
+                        <a href="" class="delete_post options-special hidden-post" id="hidden-post-component">Ocultar publicação</a>
+                    </li>
+                    <li>
+                        <a href="">Denunciar</a>
+                    </li>
+                    <li>
+                        <a href="">Copiar link</a>
+                    </li>
+                    <label for="target-option-post" id="target-option-post-ident">
+                        <li id="cancel-options">
+                            Cancelar
+                        </li>
+                    </label>
+                </ul>
+                <input type="hidden" id="selected-option-post">
+            </div>
+        </div>
+    </div>
+</div>    
+<?php endif ?>
 <?php if (true): ?>
 <input type="checkbox" name="" id="options-invited-pop-up" class="invisible">
 <div class="pop-up" id="invited-relationship-response">
@@ -647,9 +727,9 @@
         <header class="pop-up-component-header pop-up-component-header-default header-height">
             <h1>Editar Publicação</h1>
             <div class="container-pop-up-component-header">
-                <label for="target-invited-relationship">
-                    <div class="cancel-box div-img" id="target-invited-relationship-id">
-                        <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+                <label for="options-edit-pop-up">
+                    <div class="cancel-box-component div-img" id="target-invited-relationship-id-close">
+                        <i class="fas fa-times fa-16 center target-invited-relationship-close" style="color: #fff;"></i>
                     </div>
                 </label>
             </div>
@@ -657,24 +737,24 @@
         <div class="header-height"></div>
         <div class="clearfix content-details-post" style="margin-top: 5px; margin-bottom: 5px;">
                 <div class="first-component clearfix l-5">
-                    <div class="page-cover circle l-5" name="foto_edit">
+                    <div class="page-cover circle l-5" id="foto-edit_id" name="foto_edit">
                     </div>
                     <div class="page-identify l-5 clearfix">
                         <h1 class="text-ellips" id="name_page_edit_post" name="name_page_edit_post"></h1>
                     </div>
                 </div>
-                <form action="{{ route('edit_post') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+                <!--<form action="{{ route('edit_post') }}" method="POST" enctype="multipart/form-data">
+                @csrf-->
                 <input type="hidden" name="pass_post_uuid" id="pass_post_uuid" >
                 <div class="textarea-container l-5" style="width:100%;">
                     <textarea name="message" id="message"></textarea>
                 </div>
             </div>
             <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
-                <div class="" id="cover-done">
+                <div class="cover-done-edit" id="cover-done">
                     <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px;">Editar</button>
                 </div>
-                </form>
+                <!--</form>-->
             </div>
     </div>
 </div>
@@ -1005,43 +1085,8 @@
         }
       });
 
-      $('.edit-option').click(function(evt){
-        let id = evt.target.id;
-        let id1= id.split('|')[1];
-
-        $.ajax({
-          url: "{{ route('edit_option')}}",
-          type: 'get',
-          data: {'id1': id1},
-          dataType: 'json',
-          success:function(response){
-            let src1 = '{{ asset("storage/img/page/") }}';
-            var nome = '';
-            if( !(response.foto_page == null) ){
-             nome +='  <img  class="img-full circle" src=' + src1 + '/' + response.foto_page + '>'
-             }else{
-               nome +='<img class="img-full circle" src="{{asset("storage/img/page/unnamed.jpg")}}">'
-             }
-
-            //console.log(response);
-            $('div[name=foto_edit]').append(nome);
-            $("#name_page_edit_post").text(response.nome_pag);
-           $("#message").val(response.post);
-          $("#pass_post_uuid").val(id1);
-            }
-          });
-
-
-            evt.preventDefault();
-            $('#edit-pop-up').css({
-                zIndex: 1000,
-                opacity : 1
-            });
-      });
       $('.video-post-video').click(function(e){
         let id = e.target.id;
-        //let state_video = document.getElementById(id).play();
-        console.log($('.video-post-video'));
         if (document.getElementById(id).paused) {
             document.getElementById(id).play();
             document.getElementById('play_button_' + id.split('_')[1]).classList.add('invisible');
@@ -1092,16 +1137,16 @@
           $('#genre-id').val($("input[name='genre']:checked").val());
       });
         $('.cancel-box').click(function(){
-            $('.pop-up').css({
+            /*$('.pop-up').css({
                 opacity: 0,
                 zIndex: -1
-            });
+            });*/
         });
         $('.add-edit-profile').click(function(){
-            $('#cover-profile').css({
+            /*$('#cover-profile').css({
                 opacity: 1,
                 zIndex: 1000
-            });
+            });*/
         });
         $('.add-post').click(function(){
             $('#add-post-container').css({
@@ -1126,14 +1171,14 @@
             });
         });
         $('#cover-done-post').click(function(){
-            $('#cover-profile-post').css({
+            /*$('#cover-profile-post').css({
                 opacity: 0,
                 zIndex: -1
             });
             $('#add-post-container').css({
                 opacity: 1,
                 zIndex: 1000
-            });
+            });*/
         });
         $('#target-invited-relationship-id').click(function(){
             $('#invited-relationship').css({});

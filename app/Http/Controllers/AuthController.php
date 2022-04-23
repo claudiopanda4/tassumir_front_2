@@ -30,6 +30,58 @@ class AuthController extends Controller
         //$this->middleware('auth:web1');
         $this->casalPage = new PaginaCasalController();
     }
+
+    public function header_button () {
+        $conta_id = Auth::user()->conta_id;
+        $result = DB::select('select (select foto from contas where conta_id = ?) as foto, (select count(*) from pages where conta_id_a = ? or conta_id_b = ?) as page from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id, $conta_id]);
+
+        $addClass = '';
+        $remove = true;
+        $remove_class = '';
+        $text = '';
+        if (sizeof($result) > 0) {
+            $result = $result[0];
+            if ($result->foto == null) {
+                $addClass = 'add-new-profile';
+                $text = 'Adicionar foto de perfil';
+                $remove_class = 'invisible-component';
+                $remove = false;
+            }
+            if ($result->page < 1) {
+                $addClass = 'alert-assumir-make-money-now';
+                $text = 'Ganhar dinheiro agora';
+                $remove_class = 'invisible-component';
+                $remove = false;
+            }
+        } else {
+            $addClass = 'alert-assumir-make-money-now';
+            $text = 'Ganhar dinheiro agora';
+            $remove_class = 'invisible-component';
+            $remove = false;
+        }
+
+        return response()->json([
+            'add' => $addClass,
+            'text' => $text,
+            'remove_class' => $remove_class,
+            'remove' => $remove,
+        ]);
+    }
+
+    public function state_relationship () {
+        $conta_id = Auth::user()->conta_id;
+        $result = DB::select('select count(*) as count, (select uuid from pages where conta_id_a = ? or conta_id_b = ? limit 1) as uuid_page from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id])[0];
+
+        $class = 'nothing';
+        $page = $result->uuid_page;
+        if ($result->count == 1) {
+            $class = 'couple_page_redirect';
+        } else if ($result->count > 1) {
+             $class = 'multi-page';
+        }
+        return response()->json(['class' => $class, 'page' => $page]);
+    }
+
     public function login_return (Request $request){
         if (Auth::check()) {
            return true;
@@ -1859,7 +1911,7 @@ class AuthController extends Controller
   }
 
   public function get_only_comments(Request $request) {
-    return DB::select('select * from comments where post_id = (select post_id from posts where uuid = ?)', [$request->id]);
+    return response()->json(DB::select('select * from comments where post_id = (select post_id from posts where uuid = ?)', [$request->id]));
   }
 
 /* EndSiene */
@@ -2557,7 +2609,7 @@ public function dados_comment($key){
                                             'created_at'=> $this->dat_create_update(),
 
                                             ]
-                                          ]);
+                                ]);
 
                               }
 
@@ -2747,6 +2799,7 @@ public function dados_comment($key){
         return view('auth.login_front');
     }
 
+
     public function registrarUser(){
 
         return view('auth.registerUser');
@@ -2792,6 +2845,33 @@ public function dados_comment($key){
         return $decryp_code_confi;
    }
 
+   #Criptografia e decriptografia password teste
+
+   public function cript_password($plain_password){
+
+        $cifra = "AES-128-CTR";
+        $tmh_crypt = openssl_cipher_iv_length($cifra);
+
+        $encryption_iv = '1234567891011121';
+        $encryption_key = "tassumir";
+        $options = 0;
+        $encryp_password = openssl_encrypt(  $plain_password,$cifra, $encryption_key,$options,$encryption_iv);
+
+        return $encryp_password;
+   }
+   public function decript_password($password_criada){
+
+        $options = 0;
+        $cifra = "AES-128-CTR";
+        $decription_iv = '1234567891011121';
+        $decription_key = "tassumir";
+        $decryp_password=openssl_decrypt( $password_criada,  $cifra , $decription_key,$options,$decription_iv) ;
+        return $decryp_password;
+   }
+
+    #end cript e decript password teste
+
+
    public function sendMsgEmail($takeEmail,$get_verification_code){
 
      Mail::to($takeEmail)->send(new SendVerificationCode($get_verification_code));
@@ -2799,14 +2879,6 @@ public function dados_comment($key){
    }
 
   public function joinAndSave(Request $request){
-
-    /*$validator = Validator::make($request->all(), [
-            'nome' => 'required',
-            'apelido'=>'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }*/
 
           try{
 
@@ -2820,7 +2892,9 @@ public function dados_comment($key){
                 $takeEmail = $request->email;
                 $takePhone = str_replace("-","",$request->telefone);
 
-                $password = Hash::make($request->password);
+                //$password = Hash::make($request->password);
+
+                $password_clean = $request->password;
 
             //========== fim variaveis request ======
 
@@ -2844,10 +2918,11 @@ public function dados_comment($key){
 
                      $this->sendMsgEmail($takeEmail,$get_verification_code);
 
-                      //Criptografia do codigo de confirmacao
+                      //Criptografia do codigo de confirmacao e password
 
                         $plain_text_code = $code;
                         $encryp_conf_cod = $this->criptCode($plain_text_code);
+                        $password = $this->cript_password($password_clean);
 
                       //fim criptografia
 
@@ -2876,24 +2951,24 @@ public function dados_comment($key){
 
                      // ==== fim algoritmo para envio de msg para o telefone ====
 
-                    //Criptografia do codigo de confirmacao
+                    //Criptografia do codigo de confirmacao e password
 
                      $plain_text_code = $code;
                      $encryp_conf_cod = $this->criptCode($plain_text_code);
+                    $password = $this->cript_password($password_clean);
 
                       //fim criptografia
 
                     return view('auth.codigoRecebidoRegister',compact('nome','apelido','data_nascimento','genero','nacionalidade','encryp_conf_cod','takePhone','takeEmail','password'));
-
                  }
 
             }else{
-               // return redirect()->route('auth.ErrorStatus');
+                    return back()->with('error',"Escolha pelo menos uma opção de contacto");
             }
 
-          }catch(\Exception $e){
+          }catch(\Exception $e){    
 
-            echo "O Erro é: " .$e;
+            return view('auth.errors.500');
           }
     }
 
@@ -2907,12 +2982,15 @@ public function dados_comment($key){
         $input_code = $request->codeSent;
 
         $codigo_criado = $request->receivedCode;
+        $password = $request->password;
 
-        //decriptografia cod confirmacao
+        //decriptografia cod confirmacao e password
 
         $decryp_code_confi = $this->decriptCode($codigo_criado);
+        $decrypt_password = $this->decript_password($password);
 
         //fim decriptografia
+
 
         $phoneReceived = $request->telefone;
         $emailReceived = $request->email;
@@ -2921,21 +2999,20 @@ public function dados_comment($key){
         $data_nascimento = $request->receivedData_Nascimento;
         $nacional=$request->receivedNacio;
         $sexo = $request->receivedGenero;
-        $password = $request->password;
+        
 
         if($input_code == $decryp_code_confi){
 
-            $result_phone_email = DB::table('contas')
+            /*$result_phone_email = DB::table('contas') 
                         ->where('telefone','=',$phoneReceived)
                         ->orwhere('email','=',$emailReceived)
                         ->get();
-
-            if(isset($result_phone_email) > 0){
-
-                return redirect()->route('account.login.form')->with("error","Email ou Telefone ja existente");
+            if(sizeof($result_phone_email) > 0){
+                return redirect()->route('redirect.register.form')->with("error","Email ou Telefone ja existente na plataforma Tassumir, faça login");
 
             }else{
- 
+
+            }*/
                   $conta = new Conta();
                   $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
                   $conta->nome = $nome;
@@ -2964,11 +3041,11 @@ public function dados_comment($key){
                         $phoneReceived = NULL;
                     }
 
-                  DB::table('logins')->insert([
+                  $result = DB::table('logins')->insertGetId([
 
                       'email' => $emailReceived,
                       'telefone' => $phoneReceived,
-                      'password' =>$password,
+                      'password' =>Hash::make($decrypt_password),
                       'conta_id' => $conta->conta_id,
                       'created_at'=> $this->dat_create_update(),
 
@@ -2984,20 +3061,39 @@ public function dados_comment($key){
 
                     DB::commit();
 
-                    return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
+                    if($result){
 
-            }
+                        $retrieve_data = DB::table('logins')
+                                            ->select('email','telefone','password')
+                                            ->where('id',$result)
+                                            ->get();
+                            foreach($retrieve_data as $info){
 
-            /*if (Auth::attempt(['email' =>$emailReceived, 'password' =>$password])) {
-                
-                $request->session()->regenerate();
-                return redirect()->route('account.home');
+                                $email_received = $info->email;
+                                $telephone_received = $info->telefone;
+                                $password_received = $info->password;
 
-            }else if(Auth::attempt(['telefone' => $phoneReceived, 'password' => $password])){
+                            }
 
-                $request->session()->regenerate();
-                return redirect()->route('account.home');
-            }*/
+                            if(Auth::attempt(['email' => $emailReceived , 'password' => $decrypt_password])){
+
+                                        $request->session()->regenerate();
+                                        return redirect()->route('account.home');
+
+                            }else if(Auth::attempt(['telefone' => $telephone_received,'password' =>$decrypt_password])){
+
+                                        $request->session()->regenerate();
+                                        return redirect()->route('account.home');
+                            }else{
+
+                            return redirect()->route('redirect.register.form')->with("error","Algo deu errado!");
+                            }
+
+                    }else{
+
+                    return redirect()->route('redirect.register.form')->with("error","Algo deu errado!");
+
+                    }
 
         }else{
 
@@ -3009,7 +3105,8 @@ public function dados_comment($key){
 
         }catch(\Exception $error){
                DB::rollBack();
-                dd($error);
+                
+            return view('auth.ErrorStatus');
         }
     }
 
@@ -3017,7 +3114,7 @@ public function dados_comment($key){
         return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
     }
 
-    //nao recebi o codigo
+    #nao recebi o codigo
 
     public function didnotReceived(Request $request){
 
@@ -3031,21 +3128,21 @@ public function dados_comment($key){
         $nacional=$request->receivedNacio;
         $sexo = $request->sexo;
         $password = $request->password;
+
             return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
 
         }catch(\Exception $e){
 
-            dd($e);
+            return view('error.something_went_wrong');
 
         }
-
-
     }
-    //fim nao recebi o codigo
+
+    #fim nao recebi o codigo
 
     public function generateAgain(Request $request){
 
-        try{
+    try{
 
         $phoneReceived = $request->telefone;
         $emailReceived = $request->email;
@@ -3054,38 +3151,37 @@ public function dados_comment($key){
         $data_nascimento = $request->receivedData_Nascimento;
         $nacional=$request->receivedNacio;
         $sexo = $request->sexo;
+        
         $password=$request->password;
 
        if($phoneReceived != null){
 
             $code2 = random_int(100000,900000);
 
-                    $this->sendMsgToPhone($phoneReceived,$code2);
+            $this->sendMsgToPhone($phoneReceived,$code2);
 
-                   $plain_text_code = $code2;
+            $plain_text_code = $code2;
+            $encryp_conf_cod = $this->criptCode($plain_text_code);
 
-                        $encryp_conf_cod = $this->criptCode($plain_text_code);
-
- return view('auth.codigoRecebidoNovaConfirmation',compact('phoneReceived','encryp_conf_cod','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
+            return view('auth.codigoRecebidoNovaConfirmation',compact('phoneReceived','encryp_conf_cod','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
 
        }else if($emailReceived != null) {
 
-             $code2 = random_int(100000,900000);
-                      $get_verification_code = $code2;
+              $code2 = random_int(100000,900000);
+              $get_verification_code = $code2;
+              $this->sendMsgEmail($emailReceived,$get_verification_code);
 
-                      $this->sendMsgEmail($emailReceived,$get_verification_code);
-                      //Criptografia do codigo de confirmacao
-                    $plain_text_code = $code2;
-                        $encryp_conf_cod = $this->criptCode($plain_text_code);
+              //Criptografia do codigo de confirmacao
 
-                       return view('auth.codigoRecebidoNovaConfirmation',compact('phoneReceived','encryp_conf_cod','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
-       }else{
+                $plain_text_code = $code2;
+                $encryp_conf_cod = $this->criptCode($plain_text_code);
 
-            dd("Telefone ou Email Vazio");
+            return view('auth.codigoRecebidoNovaConfirmation',compact('phoneReceived','encryp_conf_cod','emailReceived','nome','apelido','data_nascimento','nacional','sexo','password'));
        }
 
-        }catch(\Exception $error){
-                dd($error);
+    }catch(\Exception $error){
+
+            return view('error.something_went_wrong');
 
         }
 
@@ -3097,8 +3193,14 @@ public function dados_comment($key){
         $codeSent = $request->codeReceived;
         $code_digitado = $request->codeReceived1;
 
+        $password=$request->password;
+
         //decriptografia cod confirmacao
+
         $decryp_code_confi = $this->decriptCode($codeSent);
+
+        $decrypt_password = $this->decript_password($password);
+
         //fim decriptografia
 
         $phoneReceived = $request->telefone;
@@ -3108,7 +3210,8 @@ public function dados_comment($key){
         $data_nascimento = $request->receivedData_Nascimento;
         $nacional=$request->receivedNacio;
         $sexo = $request->receivedGenero;
-        $password=$request->password;
+
+
 
       if($decryp_code_confi == $code_digitado){
 
@@ -3142,11 +3245,11 @@ public function dados_comment($key){
                     $phoneReceived = NULL;
                 }
 
-              DB::table('logins')->insert([
+              $result = DB::table('logins')->insertGetId([
 
                   'email' => $emailReceived,
                   'telefone' => $phoneReceived,
-                  'password' =>$password,
+                  'password' =>Hash::make($decrypt_password),
                   'conta_id' => $saveRetriveId,
                   'created_at'=> $this->dat_create_update(),
 
@@ -3159,16 +3262,47 @@ public function dados_comment($key){
                   'email' => $emailReceived,
                   'telefone' => $phoneReceived,
               ]);
+            if($result){
 
-                return redirect()->route('account.login.form')->with("success","Conta criada com Sucesso");
+                $retrieve_data = DB::table('logins')
+                                    ->select('email','telefone','password')
+                                    ->where('id',$result)
+                                    ->get();
+                    foreach($retrieve_data as $info){
 
-      }else{
+                        $email_received = $info->email;
+                        $telephone_received = $info->telefone;
+                        $password_received = $info->password;
+
+                    }
+
+                    if(Auth::attempt(['email' => $emailReceived , 'password' => $decrypt_password])){
+
+                                $request->session()->regenerate();
+                                return redirect()->route('account.home');
+
+                    }else if(Auth::attempt(['telefone' => $phoneReceived,'password' =>$decrypt_password])){
+
+                                $request->session()->regenerate();
+                                return redirect()->route('account.home');
+                    }else{
+
+                            return redirect()->route('redirect.register.form')->with("error","Algo deu errado!");
+                    }
+
+                }else{
+
+                    return redirect()->route('redirect.register.form')->with("error","Algo deu errado!");
+
+                }
+
+        }else{
 
             return view('auth.codigoRecebidoActualizar',compact('phoneReceived','emailReceived ','nome','apelido','data_nascimento','nacional','sexo','password'));
-      }
+        }
 
         }catch(\Exception $error){
-            dd($error);
+            return view('auth.ErrorStatus');
         }
 
     }
@@ -3235,23 +3369,23 @@ public function dados_comment($key){
                     $codeToSend = random_int(100000,900000);
                      $get_verification_code = $codeToSend;
 
-         $this->sendMsgEmail($email,$get_verification_code);
+                $this->sendMsgEmail($email,$get_verification_code);
                        DB::table('codigo_confirmacaos')
                                   ->where('conta_id', $foundedId)
                                   ->update(['codigoGerado' => $codeToSend]);
 
                         return view('auth.codigoRecebido',compact('foundedId','codeToSend','phone','email'));
                 }
-          }
+            }
 
          return back()->with('error',"Email  invalido");
-   }
+        }
 
-     return back()->with('error',"Email ou Telefone invalidos");
-
-      }catch(\Exception $error){
-            dd($error);
-            //return view('auth.ErrorStatus');
+        return back()->with('error',"Email ou Telefone invalidos");
+        
+    }catch(\Exception $error){
+            
+            return view('error.something_went_wrong'); 
       }
   }
 
@@ -3274,21 +3408,18 @@ public function dados_comment($key){
 
             }
 
-                if($takeCode == $codeSent && $takeId == $id){
-
+            if($takeCode == $codeSent && $takeId == $id){
                      return view('auth.newCode',compact('takeId'));
-                }
+            }
         }
             return view('auth.codeRecover')->with('error','Código de confirmação invalido');
 
-    }catch(\Exception $error){
+        }catch(\Exception $error){
 
-            //return view('auth.ErrorStatus');
-            dd($error);
-    }
+               return view('error.something_went_wrong');
+        }
 
   }
-
   public function updatePassword(Request $request){
 
      try{
@@ -3313,7 +3444,8 @@ public function dados_comment($key){
           return view('auth.newCode2',compact('idToCompare'));
       }
      }catch(\Exception $error){
-        dd($error);
+        
+            return view('error.something_went_wrong');
      }
   }
 
@@ -3478,6 +3610,7 @@ public function dados_comment($key){
     {
       $auth = new AuthController();
           $conta_logada = $auth->defaultDate();
+
         return count(DB::table('pages')
                     ->where('conta_id_a',  $conta_logada[0]->conta_id)
                     ->orwhere('conta_id_b',  $conta_logada[0]->conta_id)

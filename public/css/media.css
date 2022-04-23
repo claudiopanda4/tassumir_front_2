@@ -70,6 +70,7 @@
 	}
 	.option-profile-menu ul {
 	    /*background-color: #242526;*/
+	    margin-bottom: 5px;
 	}
 	.card {
 		border: none;
@@ -169,6 +170,7 @@
 	}
 	.user-tassumir {
 	    margin-right: 0px;
+	    margin-left: 0;
 	}
 	.row {
 		/*margin-left: 0;
@@ -232,7 +234,10 @@
 	    font-size: 14px;
 	}
 	.stories-about-talking nav ul li:nth-child(1) {
-	    
+	    margin-left: 0;
+	}
+	.name-page-dest#name-page-dest_0 {
+		margin-left: 0;
 	}
 	.stories-about-talking nav ul li .img-back-stories {
 	        width: 100%;
@@ -439,7 +444,7 @@
 	    font-size: 16px;
 	}
 	.description-couple {
-	    margin-left: 20px;
+	    /*margin-left: 20px;*/
 	}
 }
 @media screen and (max-width: 411px) {
@@ -457,8 +462,8 @@
 	    height: 70px;
 	}
 	.description-couple {
-	    width: 343px;
-		margin-left: 20px;
+	    /*width: 343px;
+		margin-left: 20px;*/
 	}
 	.statistics-profile-page-component h2 {
 	    font-size: 11.5px;
@@ -557,6 +562,20 @@
 		background-color: transparent;
 		border: none;
     }
+	.alert-info-about-us {
+	    border-radius: 0;
+	    margin: -8px auto 5px;
+	}
+    #poupar-data-id {
+    	color: #fff;
+	    background-color: #2196f3;
+	    font-size: 11px;
+	    padding: 0px;
+	    border: 0px solid #2196f3;
+	    padding: 5px 10px;
+	    border-radius: 4px;
+	    margin-top: 0;
+    }
     #card-profile-option .option-profile-menu #ul-profile li {
 	    padding: 0;
 	}
@@ -646,7 +665,7 @@
     }
     .input-login {
 	    background-color: #3b3b3b;
-	    font-size: 12px;
+	    font-size: 13px;
 	}
 	.input-emai-log {
 		margin-top: 10px;
@@ -756,6 +775,10 @@
 	.interaction-numbers {
 	    border-bottom: none;
 	}
+	.post header.header-post-page {
+		margin-top: 0px;
+	}
+	
 	.interaction-user ul.ul-interaction-user li {
 	    margin: 0;
 	}
@@ -878,6 +901,9 @@
 		width: 100%;
 		margin-bottom: 8px;
 	}
+	.card#card-post-id-index {
+		margin: 0;
+	}
 }
 @media screen and (max-width: 500px) {
 
@@ -951,6 +977,9 @@
 	}
 	.follwing-btn-container {
     	width: 210px;
+	}
+	.noti-div-name {
+	    max-width: 200px;
 	}
 }
 @media screen and (max-width: 650px) {
@@ -1036,10 +1065,14 @@
 	    margin-top: 5px;
 	}
 	#main-profile header.card.profile-card {
-		background-color: #18191a;
+		/*background-color: #18191a;*/
 		margin-top: 0;
 		border-radius: 0;
 		margin-bottom: 4px;
+	}
+	#main-profile .card,
+	#main-profile #card-profile-option {
+		background-color: transparent;
 	}
 	#main-search .card-p {
 	   margin-left: 10px;
@@ -1076,7 +1109,7 @@
 	    font-size: 15px;
 	}
 	#main-login {
-	    width: 220px;
+	    width: 245px;
 	}
 	.video-post {
 	    height: 328px;
@@ -1256,6 +1289,8 @@
 	}
 	.ul-left li {
 	    margin-top: 3px;
+	    margin-left: 0;
+	    margin: 0;
 	}
 	.number-notification span {
 	    font-size: 11px;
@@ -1272,14 +1307,14 @@
 	    font-size: 12px;
 	}
 	.card-post p {
-	    font-size: 12px;
+	    font-size: 13px;
 	}
 	.comment-user-comment.comment-user-comment-feed p {
 	    font-size: 11px;
 	    max-width: 160px;
 	}
 	.interaction-numbers li a {
-	    font-size: 13.5px;
+	    font-size: 13px;
 	}
 }
 @media screen and (max-width: 470px) {
@@ -1311,6 +1346,9 @@
 		border-radius: 0;
 		/*border-top: 1px solid #343a40;*/
 	}
+	#more-description-page {
+		margin-left: 20px;
+	}
 	#main-container-page .card, 
 	#main-container-page .data-statistics,
 	#more-description-page {
@@ -1326,20 +1364,21 @@
 	}
 	.card-page {
 	    margin-top: 0;
-	    margin-bottom: 5px;
+	    margin-bottom: 0px;
 	}
 	.statistics-profile-page {
 	    width: 95%;
+	    /*margin: auto;*/
 	    margin-bottom: 0;
 	    margin-right: 0;
 	}
 	.description-couple p {
 	    margin-left: 0px;
-	    padding: 0 10px;
+	    padding: 0;
 	    /*text-align: center;*/
 	}
 	.description-couple {
-		margin: -7px auto 5px;
+		/*margin: -7px auto 5px;*/
 	}
 	#btn_seguir {
 	    max-height: 38px;
@@ -1359,6 +1398,10 @@
 	#main-container-page .more-options-profile-btn {
 		border-radius: 4px;
 	}
+	#main-container-page .data-statistics {
+		margin-bottom: 0;
+		margin-top: 5px;
+	}
 	.li-component-suggest div.sugest_component {
 	    width: 60px;
 	    height: 60px;
@@ -1370,7 +1413,7 @@
 	}
 	#button-options-page {
 		width: 90%;
-		margin: auto;
+		margin: 5px auto;
 	}
 	.description-couple p {
 		font-size: 13px;
@@ -1395,6 +1438,10 @@
 	.img-profile-page {
 	    margin: 0;
 	    margin-left: 10px;
+	}
+	#btn_seguir.follwing-btn.button_header-follow,
+	#main-container-page .more-options-profile-btn {
+		height: 30px;
 	}
 	#main-profile .component-card {
 	    margin-bottom: 4px;
@@ -1462,7 +1509,7 @@
 	#refresh-profile-photo-id {
 	    display: block;
 	    background-color: #18191a;
-	    margin-top: 5px;
+	    margin-top: -5px;
 	    margin-bottom: 0px;
 	}
 	.video-container {
@@ -1582,6 +1629,20 @@
 	    margin-top: 2px;
     	margin-bottom: -5px;
 	}
+	.card-post p {
+	    padding: 0px 10px 10px;
+	    margin-bottom: 5px;
+	}
+	#notificacoes-component {
+	    height:auto; 
+	    margin: 0px auto 5px;
+	}
+	.noti-flex-1 {
+	    padding: 10px 0px;
+	}
+	#spouse-masc {
+		/*margin-left: 21px;*/
+	}
 	.button-default-tassumir {
 	    max-width: 220px;
 	}
@@ -1591,6 +1652,7 @@
 	#options-profile-btn-edit-profile {
 	    width: 52%;    
 	    min-width: 151px;
+	    height: 37.5px;
 	}
 	#options-profile-mobile-user-log {
 	    min-width: 254px;
@@ -1620,6 +1682,9 @@
 	.post-cover.post-cover-post-index.post-cover-imgless {
 	    height: 275px;
 	    background-color: #343a40;
+	}
+	.post-cover.post-cover-imgless.post-cover-post-index.post-cover-post-index-post {
+		height: auto;
 	}
 	.post-cover-post-index img {
 	    height: auto;
@@ -1658,7 +1723,7 @@
 		display: block;
 	}
 	.option-profile-menu {
-	    background-color: #242526;
+	    /*background-color: #242526;*/
     	border-radius: 5px;
 	}
 }
@@ -1742,6 +1807,13 @@
 	.invisible-component {
 		display: none;
 	}
+	.card-post p {}
+	
+	#more-description-page .statistics-profile-page {
+		max-width: 324px;
+	    margin: 0;
+	    width: 100%;
+	}
 	.option-profile-menu ul {
 	    /* background-color: #242526; */
 	    padding: 10px 0;
@@ -1767,8 +1839,11 @@
 	    padding-top: 5px;
 	    border-radius: 0;
 	}
+	#alert-info-about-us-0.alert-info-about-us {
+		margin: 5px auto;
+	}
 	.comment-send input[type="text"] {
-	    width: 75%;
+	    width: 80%;
 	}
 	.statistics-profile-page-identify h1 {
 	    font-size: 16px;
@@ -1783,7 +1858,8 @@
 	    margin-right: 0;
 	}
 	#btn_follwing_container {
-	    width: 62%;
+	    width: 56%;
+	    margin-left: 10px;
 	    max-width: inherit;
 	}
 	.header-main-component-n {
@@ -1791,6 +1867,9 @@
 	}
 	#img-profile-header-search {
 		margin-top: 0;
+	}
+	.options-profile-btn {
+	    height: 38px;
 	}
 	.header-main-component-n {
 	    background-color: #000000;
@@ -1808,7 +1887,14 @@
 @media screen and (max-width: 330px){
 	.video-post video {
 	    max-height: 90vh;
+	}
+	#more-description-page .statistics-profile-page {
+	    max-width: 288px;
+	    /*margin: 5px auto 10px;*/
 	}	
+	.description-couple p {
+	    /*padding: 0px 16px;*/
+	}
 }
 @media screen and (max-height: 490px){
 	.video-post video {
@@ -1824,5 +1910,17 @@
 @media screen and (max-width: 328px) {
 	.statistics-profile-page-identify h1 {
 	    font-size: 15px;
+	}
+}
+@media screen and (max-width: 300px){
+	#statistics-profile-page-main {
+	    width: 64%;
+	}
+	.statistics-profile-page-component {
+	    margin-right: 3px;
+	}
+	#btn_follwing_container {
+	    width: 58%;
+	    max-width: inherit;
 	}
 }

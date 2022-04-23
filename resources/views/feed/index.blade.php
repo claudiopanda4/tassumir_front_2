@@ -46,19 +46,6 @@
             </nav>
         </header>
         <input type="hidden" id="posts" name="" value="0">
-        <div class="refresh-profile-photo clearfix invisible-component" id="refresh-profile-photo-id">
-            <div class="profile-photo-container l-5">
-                <img class="img-28 center" src="{{asset('css/uicons/about_tips.png')}}">
-            </div>
-            <div class="content-profile-photo l-5">
-                <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
-                <label for="target-profile-cover" id="profile-cover-alert-no-img">
-                    <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
-                        <h3 class="edit-profile-mobile center" style="margin-top: 0;">Actualizar foto de Perfil</h3>
-                    </div>
-                </label>
-            </div>
-        </div>
         <div class="refresh-profile-photo clearfix component-card invisible-component" id="relationship-requests">
             <div class="profile-photo-container alert-component-card l-5">
                 <img class="img-30 center" src="{{asset('css/uicons/fire_in_my_heart.png')}}">
@@ -74,6 +61,21 @@
         </div>
     <div class="" id="div_father_post" name="div_father_post">
         <?php $key = 0; while($key < 146){ ?>
+        <?php if ($key == 1): ?>
+            <div class="refresh-profile-photo clearfix invisible-component" id="refresh-profile-photo-id">
+                <div class="profile-photo-container l-5">
+                    <img class="img-28 center" src="{{asset('css/uicons/about_tips.png')}}">
+                </div>
+                <div class="content-profile-photo l-5">
+                    <h1>Ajude as pessoas a conhecerem mais você. Adicione uma foto de perfil</h1>
+                    <label for="target-profile-cover" id="profile-cover-alert-no-img">
+                        <div class="options-profile-btn options-profile-btn-center profile-item-center" id="options-profile-btn-profile">
+                            <h3 class="edit-profile-mobile center" style="margin-top: 0;">Actualizar foto de Perfil</h3>
+                        </div>
+                    </label>
+                </div>
+            </div>            
+        <?php endif ?>
         <?php if ($key == 0 || $key == 2 || $key == 9): ?>
             <div class="refresh-profile-photo clearfix invisible-component alert-info-about-us" id="alert-info-about-us-{{$key}}">
                 <div class="profile-photo-container l-5">
@@ -81,7 +83,7 @@
                 </div>
                 <div class="content-profile-photo l-5">
                     <h1 id="content-p-{{$key}}">No Tassumir você regista o seu relacionamento publicamente, ganha dinheiro, segurança e aumenta a fidelidade no casal. Assuma agora o seu relacionamento e comece a ganhar.</h1>
-                    <label <?php if ($key == 1 || $key == 9){echo 'for="target-alert-tassumir"';}else{echo 'for="target-alert-info"';} ?> id="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
+                    <label <?php if ($key == 0 || $key == 9){echo 'for="target-alert-tassumir"';}else{echo 'for="target-alert-info"';} ?> id="target-alert-tassumir-{{$key}}" class="profile-alert-tassumir">
                         <div class="options-profile-btn options-profile-btn-center profile-item-center options-alert-btn-feed" id="options-profile-btn-couple">
                             <h3 class="edit-profile-mobile center" style="margin-top: 0;" id="btn-alert-info-{{$key}}">Assumir Agora o Relacionamento</h3>
                         </div>
@@ -171,11 +173,13 @@
                 <div class="card-post">
                     <div class="">
                         <p class="invisible-component" id="p-post-{{$key}}"></p>
+                        <input type="hidden" id="p-post-more-{{$key}}" name="">
                         <div class="post-cover post-cover-imgless post-cover-post-index" id="post-cover-post-index-{{$key}}">
                             <img class="img-full invisible-component" id="cover-post-index-{{$key}}">
                         </div>
                         <div class="video-post post-video invisible-component" id="video-post-{{$key}}">
                             <img class="play_button center invisible-component" src="{{asset('css/uicons/play_button.png')}}" id="play_button_{{$key}}">
+                            <!--<img class="loader_button center" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">-->
                             <img class="loader_button center" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">
                             <img class="loader_icon center" src="{{asset('css/uicons/loading.gif')}}" id="loader_icon_{{$key}}">
                             <video preload="metadata" class="video-post-video" id="video_{{$key}}">
@@ -189,6 +193,7 @@
                             <input type="hidden" name="" id="video-post-time-{{$key}}">
                             <input type="hidden" name="" id="video-post-time-all-{{$key}}">
                             <input type="hidden" name="" id="cover-post-load-{{$key}}">
+                            <input type="hidden" name="" id="insert-video-{{$key}}">
                         </div>
                     </div>
                 </div>
@@ -436,41 +441,6 @@
         <div>
         </div>
 </div>
-<input type="checkbox" name="" id="target-option-post" class="invisible">
-<div class="pop-up pop-up-option" id="option-post-full-container">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; max-height: 90%; height: auto; width: 280px;">
-        <div>
-            <div class="">
-                <ul class="clearfix more-option-post" id="more-option-post-{{$key}}">
-                    <li>
-                        <a href="" class="edit-option" id="edit-option-{{$key}}">Editar</a>
-                    </li>
-                    <li>
-                        <a href="" class="edit-option options-special" id="edit-option">Não seguir</a>
-                    </li>
-                    <li>
-                        <a href="" class="delete_post options-special" id="">Apagar publicação</a>
-                    </li>
-                    <li>
-                        <a href="" class="delete_post options-special" id="">Ocultar publicação</a>
-                    </li>
-                    <li>
-                        <a href="">Denunciar</a>
-                    </li>
-                    <li>
-                        <a href="">Copiar link</a>
-                    </li>
-                    <label for="target-option-post" id="target-option-post-ident">
-                        <li id="cancel-options">
-                            Cancelar
-                        </li>
-                    </label>
-                </ul>
-                <input type="hidden" id="selected-option-post">
-            </div>
-        </div>
-    </div>
-</div>
         <script type="text/javascript">
         $(document).ready(function(){
             $('.reload-component').css({
@@ -478,9 +448,6 @@
                 'width' : '100%',
                 'height' : '100px',
             });
-            /*document.getElementById('refresh-profile-photo-id').style.display = 'block';
-            document.getElementById('refresh-profile-photo-id').style.width = 100 + '%';
-            document.getElementById('refresh-profile-photo-id').style.height = 100 + 'px';*/
 
             function gostar(id){
             $.ajax({
@@ -647,81 +614,6 @@ function gostar(id){
               });
             }
 
-    $(document).ready(function () {
-        $(".loader_icon").hide();
-      document.getElementById("route_feed").classList.add('li-component-aside-active');
-
-            $('.seguir_index').click(function(e){
-            e.preventDefault();
-            var valor_pagina_id = e.target.id;
-            var valor_idconta = $('#conta_id').val();
-            var an = $('.seguir_index').text();
-
-            if (($('.sugest_page').eq(7).attr("id")) == null) {
-                if (($('#last_page').val()) != 0) {
-                    var id_last_page = $('#last_page').val();
-                }else{
-                    var id_last_page = 0;
-                }
-            }else{
-               var id_last_page = $('.sugest_page').eq(7).attr("id").split('-')[3];
-            }            //$('#' + valor_pagina_id).empty();
-            $.ajax({
-                url: "{{route('seguir.seguindo')}}",
-                type: 'get',
-                data: {'seguindo': valor_idconta, 'seguida': valor_pagina_id, 'last_page': id_last_page},
-                dataType: 'json',
-                success: function(response){
-                  //console.log(response);
-                  $('#li-component-suggest-' + valor_pagina_id).remove();
-                  $('#li-component-suggest-' + valor_pagina_id).remove();
-                  $('#li-component-sugest-' + valor_pagina_id).remove();
-                  $('.seguir-' + valor_pagina_id).hide();
-                  if (response.page != 'Vazio') {
-                  $.each(response.page, function(key, value){
-                    $('#last_page').val(value.page_id);
-                    let url_link = "{{ route('couple.page1', 0) }}";
-                        url_array = url_link.split('/');
-                        url_link = url_array[0] + "/" + url_array[1] + "/" + url_array[2] + "/" + url_array[3] + "/" + value.uuid;
-                    if (value.foto != null) {
-                    let src = "{{asset('storage/img/page/')}}" + "/" + value.foto;
-                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
-                    }else{
-                        let src = "{{asset('css/uicons/info_tassumir.png')}}";
-                        $('#sugest_index').append("<li class='li-component-suggest clearfix l-5' id='li-component-suggest-'"+value.page_id+"><div class='clearfix sugest_component_div'><div class='sugest_component circle clearfix'><a href="+url_link+"><img class='img-full circle' src="+src+"></a></div></div><a href="+url_link+"><h1 class='name-suggest text-ellips'>"+value.nome+"</h1></a><a href='' class='seguir_index' ><div id="+value.page_id+">seguir</div></a><input type='hidden' id='conta_id' value="+response.id_user+" name=''></li>");
-                    }
-                });
-                }
-                }
-              });
-             });
-            });
-
-          /*  function home_index(){
-              $.ajax({
-                url: "{{route('account.home.feed')}}",
-                type: 'get',
-                dataType: 'json',
-                data: { init: $('#last_post').val(), checked: true, dest_init: $('#last_post_dest').val() },
-                success:function(response){
-                      console.log('last_post ' + $('#last_post').val() + ' last_post_dest ' + $('#last_post_dest').val());
-                      console.log('yes');
-                      console.log(response);
-                  }
-                });
-            }*/
-
-            function add_view(data) {
-                $.ajax({
-                    url: "{{route('post.view.save')}}",
-                    type: 'get',
-                    data: {'data': data},
-                    dataType: 'json',
-                    success: function(response){
-                        //console.log(response);
-                    }
-                });
-            }
 
                     let contar = 0;
 
@@ -744,20 +636,24 @@ function gostar(id){
                                 }
 
                             }
-
-                            //console.log('paused ' + $("#video_" + id_video_final)[0].paused);
-                            //console.log('.HAVE_FUTURE_DATA ' + $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA);
-                            //console.log('readyState ' + $("#video_" + id_video_final)[0].readyState);
-                            //console.log('seeking ' + $("#video_" + id_video_final)[0].seeking);
-                            //console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);
+                            /*let state_ = $("#video_" + id_video_final)[0].paused != true &&
+                                !$("#video_" + id_video_final)[0].seeking &&
+                                 $("#video_" + id_video_final)[0].currentTime > 0 &&
+                                 $("#video_" + id_video_final)[0].readyState >= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA;
+                            console.log(id_video_final + ' ' + state_);
+                            console.log('paused ' + $("#video_" + id_video_final)[0].paused);
+                            console.log('.HAVE_FUTURE_DATA ' + $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA);
+                            console.log('readyState ' + $("#video_" + id_video_final)[0].readyState);
+                            console.log('seeking ' + $("#video_" + id_video_final)[0].seeking);
+                            console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);*/
                             if ($("#video_" + id_video_final)[0].paused != true &&
                                 !$("#video_" + id_video_final)[0].seeking &&
                                  $("#video_" + id_video_final)[0].currentTime > 0 &&
                                  $("#video_" + id_video_final)[0].readyState >= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA) {
-                                    $("#loader_icon_" + id_video_final).hide();
+                                    $("#loader_icon_" + id_video_final).addClass('invisible-component');
                             } else {
                                 if ($("#video_" + id_video_final)[0].readyState <= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA){
-                                    $("#loader_icon_" + id_video_final).show();
+                                    $("#loader_icon_" + id_video_final).removeClass('invisible-component');
                                 }
                             }
                         }
@@ -868,37 +764,9 @@ function gostar(id){
                             }
                         }
                         document.get
-                    }, 2000);
+                    }, 1000);
                     function getVideo(post, id){
-                        let storage_video, video, type_file, source;
-                        //alert(id);
-                        $("#video_" + id).attr('src', );
-                        $("#video-post-link-" + id).attr('src', );
-                        //document.getElementById('video_' + id).setAttribute('src', storage_video);
-                        $('#has-video-' + id).val('ok');
-                        //document.getElementById('video_' + id).play();
-                        /*$.ajax({
-                            url: "{{route('post.video.get')}}",
-                            type: 'get',
-                            data: {'data': post},
-                            dataType: 'json',
-                            success: function(response){
-                                //////console.log('Respondeu...');
-                                //////console.log(response);
-                                video = response.video;
-                                type_file = response.type_file;
-                                storage_video = "{{asset('storage/video/page/') . '/'}}" + video;
-                                ////console.log(storage_video);
-                                source = document.createElement('source');
-                                source.setAttribute('src', storage_video);
-                                source.setAttribute('type', type_file);
-                                source.setAttribute('autoload', 'true');
-                                document.getElementById('video_' + id).setAttribute('src', storage_video);
-                                document.getElementById('video_' + id).setAttribute('autoload', 'true');
-                                document.getElementById('video_' + id).append(source);
-                                $('#has-video-' + id).val('ok');
-                            }
-                        });*/
+                        
                     }
 
 

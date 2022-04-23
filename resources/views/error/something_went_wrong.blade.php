@@ -33,26 +33,23 @@
    
     <main class="main" id="main-register-container" style="">
 
-
         <div id="main-reg" style="margin-top: 20%;margin-left: 20%;margin-right: 20%;">
-                <header class="logo-form mb-4" id="title-login">
 
-                     <div class="title">
-            <a href=""><i class="fas fa-link fa-32"></i>
-              <h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1>
-            </a>
-          </div>
+            <header class="logo-form mb-4" id="title-login">
 
+                 <div class="title">
+                    <a href=""><i class="fas fa-link fa-32"></i>
+                      <h1>Tass<span class="title-final" style="color: #fd09fd;">umir</span></h1>
+                    </a>
+                 </div>
             </header>
-
-                <div class="card">
-
+             <div class="card">
                     <h1 style="padding:20px;text-align: center;justify-content: center;"><span style="color:white">Oo</span><span  style=" color: #800080;">ps!</span></h1>
 
                     <span style="color:white;padding: 20px;text-align: center;justify-content: center;">Ocorreu um erro!</span><br/>
 
                     <span style="color:white;text-align: center;justify-content: center;">Falha ao executar o processo, retroceda para página anterior!</span>
-                <form action="{{ route('first.form') }}" method="GET" style="text-align:center;justify-content: center;padding: 8px;">
+                <form action="{{ route('account.login.form')}}" method="GET" style="text-align:center;justify-content: center;padding: 8px;">
 
                     <button id="login-register" type="submit" style="width: 20%;" ><span class="enter-login" >Retroceder</button>
                 </form>

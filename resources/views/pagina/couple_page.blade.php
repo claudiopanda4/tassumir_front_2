@@ -21,13 +21,13 @@
             </div>
             <div class="l-5" id="statistics-profile-page-main">
                 
-                <div class="statistics-profile-page l-5 clearfix">
+                <!--<div class="statistics-profile-page l-5 clearfix">
                     <div class="statistics-profile-page-identify">
                         <h1>{{$dados[0]->nome}}</h1>
-                        <!--<h2 class="lg-invisible-user-name">@<span></span>destacados</h2>-->
+                        <h2 class="lg-invisible-user-name">@<span></span>destacados</h2>
                     </div>
-                </div>
-                <div class="clearfix l-5 data-statistics">
+                </div>-->
+                <div class="clearfix data-statistics">
                     <a href="">
                         <!--class="line-header-couple"-->
                         <div class="statistics-profile-page-component l-5">
@@ -43,7 +43,33 @@
                         <h1 id="qtd-reactions">0</h1>
                         <h2 class="text-ellips">Curtidas</h2>
                     </div>                    
-                </div>   
+                </div> 
+                <div class="clearfix">
+                    <a href="" id="a-btn-flw-edt">
+                        <div id="btn_follwing_container" class="follwing-btn-container l-5">
+                            <button type="button" class="follwing-btn button_header-follow" id="btn_seguir">                        
+                            </button>
+                        </div>                    
+                    </a>
+                    <div class="l-5 options-profile-btn more-options-profile-bt">
+                        <label for="more-option-target-profile" class="target-options-profile">
+                            <div class="">
+                                <div class="more-options-profile-btn">
+                                    <div class="more-options-component"><img class="center img-24" id="more-option-btn-profile" src="{{asset('css/uicons/caret-down.png')}}"></div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="l-5 options-profile-btn more-options-profile-bt">
+                        <label for="more-option-target-profile" class="target-options-profile">
+                            <div class="">
+                                <div class="more-options-profile-btn">
+                                    <div class="more-options-component"><img class="invisible-component center img-24" id="more-option-btn-page"></div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>                    
+                </div>  
                 <!--<div class="clearfix l-5" id="button-options-page">
                         <a href="" id="a-btn-flw-edt">
                             <div id="btn_follwing_container" class="follwing-btn-container l-5">
@@ -60,16 +86,7 @@
                                     </div>
                                 </div>
                             </label>
-                        </div>  
-                        <div class="l-5 options-profile-btn more-options-profile-bt">
-                            <label for="more-option-target-profile" class="target-options-profile">
-                                <div class="">
-                                    <div class="more-options-profile-btn">
-                                        <div class="more-options-component"><img class="invisible-component center img-24" id="more-option-btn-page"></div>
-                                    </div>
-                                </div>
-                            </label>
-                        </div>                    
+                        </div> 
                     </div>-->           
             </div>
 
@@ -98,13 +115,18 @@
             <h1>{{$dados[0]->nome}}</h1>
             <h2 class="lg-invisible-user-name">@<span></span>destacados</h2>
         </div>--> 
+        <input type="hidden" id="control-state-posts" value="0">
+        <input type="hidden" id="control-type-state-posts-checked" value="0">
+        <input type="hidden" id="component-key-page-img" value="0">
+        <input type="hidden" id="component-key-page-video" value="0">
+        <input type="hidden" id="last-post-page-video" value="0">
+        <input type="hidden" id="last-post-page-img" value="0">
         <div class="clearfix page-card-header" id="more-description-page">
-
-            <!--<div class="description-couple">
-                <h2 class="mobile-user-name">@<span></span>
-                    <?php echo strtolower('destacados'); ?>
-                </h2>
-            </div>-->
+            <div class="statistics-profile-page clearfix">
+                <div class="statistics-profile-page-identify">
+                    <h1 id="name-descript-place">{{$dados[0]->nome}}</h1>
+                </div>
+            </div>
             <div class="description-couple" id="p-description-couple-all-container">
                 <p id="p-description-couple-all"><span id="part-text"></span><span class="invisible-component" id="text-ellips-description">...</span><a id="see-more-description"href="" class="invisible-component"><span class="">Ver Mais</span></a><span id="more-text-description" class="invisible-component"></span></p>
             </div>
@@ -145,7 +167,7 @@
                     </div>             
         </div>-->
 
-        <div class="clearfix l-5" id="button-options-page">
+        <!--<div class="clearfix l-5" id="button-options-page">
                         <a href="" id="a-btn-flw-edt">
                             <div id="btn_follwing_container" class="follwing-btn-container l-5">
                                 <button type="submit" class="follwing-btn" id="btn_seguir">
@@ -171,7 +193,7 @@
                                 </div>
                             </label>
                         </div>                    
-                    </div>
+                    </div>-->
         <label for="add-post-target" class="add-post-label invisible-component" id="add-post-label-ident">
             <div class="add-post circle">
                 <i class="far fa-edit fas-20 center" style="font-size: 20px;"></i>
@@ -253,18 +275,22 @@
 <form action="{{ route('post_couple.page') }}" method="POST" enctype="multipart/form-data">
 @csrf
 <input type="hidden" id="page_ident" name="page_u" value="{{ $dados[0]->uuid }}">
-<input type="checkbox" name="" id="add-post-target" class="invisible">
+<?php if (isset($_GET['add-post'])): ?>
+    <input type="checkbox" name="" id="add-post-target" class="invisible" checked>
+<?php else: ?>
+    <input type="checkbox" name="" id="add-post-target" class="invisible">
+<?php endif ?>
 <div class="pop-up" id="add-post-container">
-    <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="">
+    <div class="pop-up-component full-component-mobile center" id="pop-up-component-create-post" style="overflow-x: hidden;">
         <header class="pop-up-component-header pop-up-component-header-default header-height">
             <h1>Criar Publicação</h1>
-            <div class="container-pop-up-component-header">
+            <!--<div class="container-pop-up-component-header">
                 <label for="target-profile-cover">
                     <div class="cancel-box div-img">
                         <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
                     </div>
                 </label>
-            </div>
+            </div>-->
         </header>
             <input type="hidden" name="page_u" value="{{$dados[0]->uuid}}">
             <div class="header-height"></div>
@@ -273,11 +299,6 @@
                 </div>
                 <div class="textarea-container l-5" style="width:100%;">
                     <textarea name="message" placeholder="O que deseja que as pessoas saibam?"></textarea>
-                </div>
-                <div class="l-5" style="width: 100%;">
-                    <div class="preview-image" id="preview-image-id">
-
-                    </div>
                 </div>
                 <script type="text/javascript">
                     document.addEventListener('DOMContentLoaded', function(){
@@ -299,7 +320,7 @@
                     });
                 </script>
                 <nav class="add-file l-5 clearfix" style="margin-bottom: 0;">
-                    <ul style="width: 160px;" class="r-5">
+                    <ul id="more-options-component-post" class="">
                         <!--<label for="target-profile-cover-post">-->
                             <li class="circle add-file-element" id="target-profile-cover-post-id">
                                 <i class="far fa-images fa-20 center"></i>
@@ -312,10 +333,20 @@
                         <!--</label>-->
                     </ul>
                 </nav>
+                <div class="clearfix l-5" id="" style="width: 59%; margin: 0px auto 10px;">
+                    <div class="cover-done cover-done-post l-5" id="cover-done-cancel">
+                        <label for="add-post-target" class="reset-margin">
+                            <h1 class="post-public reset-margin">Cancelar</h1>
+                        </label>
+                    </div>
+                    <div class="cover-done cover-done-post l-5" id="cover-done-final">
+                        <button type="submit" class="post-public" id="post-public-done">Publicar</button>
+                    </div>
+                </div>
             </div>
-            <div class="clearfix l-5" id="" style="width: 98%; margin: 0px auto 10px;">
-                <div class="" id="cover-done">
-                    <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 10px; font-size: 14px; width: 100%;">Publicar</button>
+            <div class="l-5" style="width: 100%;">
+                <div class="preview-image" id="preview-image-id">
+
                 </div>
             </div>
     </div>

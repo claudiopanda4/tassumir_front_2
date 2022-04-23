@@ -542,13 +542,15 @@
 	}
 }
 #target-profile-cover:checked ~ .pop-up#cover-profile,
-#more-option-target-profile:checked ~  #more-option-profile-component {
+#more-option-target-profile:checked ~  #more-option-profile-component,
+#target-alert-make-tassumir:checked ~ #alert-make-money-tassumir,
+#target-loading-app:checked ~ #container-loading-app {
 	opacity: 1;
     z-index: 1001;
 }
 #add-post-target:checked ~ #add-post-container {
 	opacity: 1;
-    z-index: 1000;
+    z-index: 1002;
 }
 #target-profile-cover-post:checked ~ #cover-profile-post {
 	opacity: 1;
@@ -575,7 +577,8 @@
 #target-alert-tassumir:checked ~ #relationship-container-invited,
 #target-alert-info:checked ~ #target-alert-info-container,
 #target-profile-cover-full:checked ~ #cover-profile-full-container,
-#target-option-post:checked ~ #option-post-full-container {
+#target-option-post:checked ~ #option-post-full-container,
+#options-edit-pop-up:checked ~ #edit-pop-up {
 	opacity: 1;
     z-index: 1001;
 }
