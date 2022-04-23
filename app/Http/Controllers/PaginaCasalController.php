@@ -38,7 +38,7 @@ class PaginaCasalController extends Controller
         ]);
       } catch (Exception $e) {
 
-      }      
+      }
     }
 
     public function dados_page($uuid)
@@ -102,8 +102,8 @@ class PaginaCasalController extends Controller
           $state = true;
         }
         return json_encode([
-          'qtd' => $ami_following[0]->qtd, 
-          'icon' => $icon, 
+          'qtd' => $ami_following[0]->qtd,
+          'icon' => $icon,
           'owner' => $owner_page,
           'class' => $class,
           'state' => $state
@@ -278,7 +278,7 @@ class PaginaCasalController extends Controller
       }
 
       public function cancel_request_relationship($uuid){
-        
+
         $control = DB::select('select pr.pedido_relacionamento_id,(select n.notification_id from notifications as n where n.id_action_notification=4 and  n.identificador_id_causador=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte) and n.identificador_id_receptor=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida) and n.identificador_id_destino=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)) as id_not, (select identificador_id from identificadors where id= pr.pedido_relacionamento_id and tipo_identificador_id=5) as identify from pedido_relacionamentos as pr where uuid = ?', [$uuid]);
 
         $resposta = 0;
@@ -290,7 +290,7 @@ class PaginaCasalController extends Controller
             ->delete();
             DB::table('notifications')->where('notification_id',$control[0]->id_not)
             ->delete();
-            $resposta = 1;        
+            $resposta = 1;
         }
         return back();
       }
@@ -660,12 +660,18 @@ class PaginaCasalController extends Controller
 
     public function editar_pagina(Request $request)
 {
-    $pages = DB::table('pages')->where(['page_id'=>$request->id])->update([
-     'nome' => $request->nome,
-     'descricao' => $request->descricao,
-     'categoria_id' => $request->categoria
- ]);
-}
+    try {
+      if ($request->nome== null && $request->descricao== null) {
+        $pages = DB::table('pages')->where(['page_id'=>$request->id])->update([
+         'nome' => $request->nome,
+         'descricao' => $request->descricao,
+         'categoria_id' => $request->categoria
+     ]);
+      }
+    } catch (\Exception $e) {
+
+    }
+    }
 
 
     /*

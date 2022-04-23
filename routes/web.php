@@ -115,6 +115,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::post('/relationship/accept/', [App\Http\Controllers\PaginaCasalController::class, 'accepted_relationship'])->name('relationship.accept');
     Route::post('/Outra_pessoa/', [App\Http\Controllers\PaginaCasalController::class, 'Outra_pessoa'])->name('Outra_pessoa');
     Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
+    Route::get('/edit_page', [App\Http\Controllers\PaginaCasalController::class, 'editar_pagina'])->name('edit_page');
+
 
     Route::get('/couple_page_show/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple_page.show');
 
@@ -162,6 +164,13 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/home/posts_page_no_follow', [App\Http\Controllers\PageController::class, 'post_final2'])->name('home.posts.no_follow');
     Route::get('/relationship/requests', [App\Http\Controllers\PerfilController::class, 'relationship_requests'])->name('relationship.requests');
     Route::get('/relationship/requests/pedinte', [App\Http\Controllers\PerfilController::class, 'relationship_requests_pedinte'])->name('relationship.requests.pedinte');
+
+        /*rotas de pesquisa optimizadas*/
+        Route::get('/people_search_final', [App\Http\Controllers\searchController::class, 'people_search_final'])->name('people.search');
+        Route::get('/page_search_final', [App\Http\Controllers\searchController::class, 'page_search_final'])->name('page.search');
+        Route::get('/post_search_final', [App\Http\Controllers\searchController::class, 'post_search_final'])->name('post.search');
+        /*fim das rotas de pesquisa optimizadas*/
+
     /*Fim rotas para Ajax*/
 
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');
