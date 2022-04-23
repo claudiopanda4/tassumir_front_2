@@ -181,7 +181,7 @@
                             <img class="play_button center invisible-component" src="{{asset('css/uicons/play_button.png')}}" id="play_button_{{$key}}">
                             <!--<img class="loader_button center" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">-->
                             <img class="loader_button center" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">
-                            <img class="loader_icon center" src="{{asset('css/uicons/loading.gif')}}" id="loader_icon_{{$key}}">
+                            <img class="loader_icon center" src="{{asset('css/uicons/loading_blue.gif')}}" id="loader_icon_{{$key}}">
                             <video preload="metadata" class="video-post-video" id="video_{{$key}}">
                                 <source id="video-post-link-{{$key}}">
                                 Your browser does not support the video tag.
@@ -254,7 +254,7 @@
                         <input type="text" class="" name="comentario" id="comentario-{{$key}}" placeholder="O que você tem a dizer?">
                         <div class="r-5 ">
                             <a href="" class="comentar-a" id="comentario-a-{{$key}}">
-                                <i class="far fa-paper-plane fa-20 fa-img-comment" id="comentario-i-{{$key}}"></i>
+                                <i class="fas fa-paper-plane fa-20 fa-img-comment" id="comentario-i-{{$key}}"></i>
                             </a>
                         </div>
                     </div>
@@ -440,6 +440,13 @@
         </div>
         <div>
         </div>
+</div>
+
+<input type="checkbox" checked name="" id="target-loading-app-load" class="invisible">
+<div class="pop-up pop-up-option pop-up-loading-component" id="container-loading-app-load">
+    <img class="center" src="{{asset('css/uicons/loading_blue.gif')}}" id="loader_icon_app" style="display: block; display: block; width: 130px; height: auto;">
+    <img class="center" src="{{asset('css/uicons/tassumir.jpeg')}}" id="loader_icon_app" style="display: block; top: 40%; width: 70px; height: auto;">
+    <h1 class="center" id="loader_app_text">Publicações Novas...</h1>
 </div>
         <script type="text/javascript">
         $(document).ready(function(){

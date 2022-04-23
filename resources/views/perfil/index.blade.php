@@ -104,11 +104,13 @@
                 <div class="inform-profile" id="inform-profile-detail-couple">
                     <h3 id="civil-state"><span id="relationship-selected-type-profile"></span><a id="spouse-profile" href="" class="a-link-detail-profile"></a></h3>
                 </div>
-                <div class="inform-profile" id="inform-profile-detail-description">
-                    <p class="description-couple" style="width: 100%;">
-                        <span id="description-prof-">{{$descricao}}</span><a href="" id="see-more-description-profile" class="a-link-detail-profile invisible">ver mais</a></p>
-                        <input type="hidden" id="description-all" name="">
-                </div>
+                <?php if ($descricao != null): ?>
+                    <div class="inform-profile" id="inform-profile-detail-description">
+                        <p class="description-couple" style="width: 100%;">
+                            <span id="description-prof-">{{$descricao}}</span><a href="" id="see-more-description-profile" class="a-link-detail-profile invisible">ver mais</a></p>
+                            <input type="hidden" id="description-all" name="">
+                    </div>                    
+                <?php endif ?>
             </div>
     </header>
 <div class="card br-10 card-page" id="card-profile-option">

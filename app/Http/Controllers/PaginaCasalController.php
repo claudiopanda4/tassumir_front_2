@@ -135,21 +135,21 @@ class PaginaCasalController extends Controller
   public function get_nine_text_page(Request $request)
   {
     try {
-    if ($request->id==0) {
-      $text=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=3 order by p.post_id desc limit 9',[$request->uuid]);
-    }else {
-      $text=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=3 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
-    }
-    return response()->json($text);
+      if ($request->id==0) {
+        $text=DB::select('select p.uuid,(select nome from pages where page_id = p.page_id) as nome,(select foto from pages where page_id = p.page_id) as foto,(select uuid from pages where page_id = p.page_id) as uuid_page,p.formato_id,p.post_id,p.descricao,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=3 order by p.post_id desc limit 9',[$request->uuid]);
+      }else {
+        $text=DB::select('select p.uuid,(select nome from pages where page_id = p.page_id) as nome,(select foto from pages where page_id = p.page_id) as foto,(select uuid from pages where page_id = p.page_id) as uuid_page,p.formato_id,p.post_id,p.descricao,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=3 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
+      }
+      return response()->json($text);
 
-  } catch (\Exception $e) {
-  }
+    } catch (Exception $e) {
+    }
   }
   public function get_nine_images_page(Request $request)
   {
     try {
       if ($request->id == 0) {
-        $img=DB::select('select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=2 order by p.post_id desc limit 9',[$request->uuid]);
+        $img=DB::select('select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid = ?) and p.formato_id=2 order by p.post_id desc limit 9',[$request->uuid]);
       } else {
         $img=DB::select('select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=2 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
       }
@@ -178,9 +178,9 @@ class PaginaCasalController extends Controller
   {
     try {
       if ($request->id==0) {
-        $video=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=1 order by p.post_id desc limit 9',[$request->uuid]);
+        $video=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.thumbnail,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=1 order by p.post_id desc limit 9',[$request->uuid]);
       } else {
-        $video=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=1 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
+        $video=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.thumbnail,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=1 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
       }
       return response()->json($video);
     } catch (Exception $e) {
@@ -747,7 +747,7 @@ class PaginaCasalController extends Controller
                       $path = $request->file('imgOrVideo')->storeAs('public/img/page', $file_name);
                     }
 
-                    $this->store($request->message, $file_name, $page_id, $this->formato_id('Imagem'));
+                    $this->store($request->message, $file_name, $page_id, $this->formato_id('Imagem'), false);
 
                 } else if ( $this->check_video_extension($request->imgOrVideo->extension()) ) {
 
@@ -758,7 +758,7 @@ class PaginaCasalController extends Controller
                         return back();
                      }
 
-                    $this->store($request->message, $file_name, $page_id, $this->formato_id('Video'));
+                    $this->store($request->message, $file_name, $page_id, $this->formato_id('Video'), $request->thumb);
                 }
 
             }
@@ -767,7 +767,7 @@ class PaginaCasalController extends Controller
                 if ($request->longVideo) {
                   return back();
                 }
-                $this->store($request->message, null, $page_id, $this->formato_id('Textos'));
+                $this->store($request->message, null, $page_id, $this->formato_id('Textos'), false);
             }
 
             return back();
@@ -866,7 +866,7 @@ class PaginaCasalController extends Controller
 
 
 
-    private function store($description, $file_name = null, $id, $format)
+    private function store($description, $file_name = null, $id, $format, $thumb)
     {
         try {
           $controll = new AuthController;
@@ -879,10 +879,15 @@ class PaginaCasalController extends Controller
             }
           /*  DB::insert('insert into posts(uuid, descricao, file, page_id,reactions, comments, total_reactions_comments, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [$uuid, $description, $file_name, $id, 0, 0, 0, $format, 1, $controll->dat_create_update()]);*/
+                
+                $thumbnail = null;
+                if ($thumb != false) {
+                  $post = new PostController();
+                  $thumbnail = $post->thumbnail($thumb, explode('.', $file_name)[0]);  
+                }
 
-                DB::insert('insert into posts(uuid, descricao, file, page_id, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?)',
-                    [$uuid, $description, $file_name, $id, $format, 1, $controll->dat_create_update()]);
-
+                DB::insert('insert into posts(uuid, descricao, file, thumbnail, page_id, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?, ?)',
+                    [$uuid, $description, $file_name, $thumbnail, $id, $format, 1, $controll->dat_create_update()]);
 
                 DB::table('identificadors')->insert([
               'tipo_identificador_id' => 3,

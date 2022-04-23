@@ -3,6 +3,9 @@ $(document).ready(function () {
 	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[length - 2];
 	let any_class, any_id, text, src, component, url, type, cont;
 	let components = [];
+	$('#login-enter').click(function () {
+		document.getElementById('target-loading-app-load').checked = true;
+	});
 	$('#target-invited-relationship-id').click(function () {
 		$('#target-invited-relationship').removeAttr('checked');
 	});
@@ -68,7 +71,6 @@ $(document).ready(function () {
 		}
 	});
 	$('.relationship-type-item').click(function(e){
-		alert('oi');
 	});
 	$('.choosed-type-relationship').click(function(e){
 		/*alert('oi');
@@ -201,6 +203,7 @@ $(document).ready(function () {
 		e.preventDefault();
 		$('#img-profile-icon-profile').attr('src', route + '/css/uicons/image_liked_profile.png');
 		$('#video-profile-icon-profile').attr('src', route + '/css/uicons/video_liked.png');
+		$('#text-profile-icon-profile').attr('src', route + '/css/uicons/text.png');
 		any_class = document.getElementsByClassName('video-page-component');
 		profile_content_filter(any_class, 1);
 		if ($('#cover-loaded-profile-read').val() == 0) {
@@ -239,16 +242,21 @@ $(document).ready(function () {
 		//profile_content_filter(any_class, 2);
 		$('#img-profile-icon-profile').attr('src', route + '/css/uicons/images.png');
 		$('#video-profile-icon-profile').attr('src', route + '/css/uicons/video_profile_liked.png');
+		$('#text-profile-icon-profile').attr('src', route + '/css/uicons/text.png');
 		$('#component-loaded-profile-read').val(2);
+		any_class = document.getElementsByClassName('cover-page-component');
+		for (var i = 0; i <= any_class.length - 1; i++) {
+			$('#' + any_class[i].id).addClass('invisible-component');
+		}
+		any_class = document.getElementsByClassName('get-page-text');
+		for (var i = 0; i <= any_class.length - 1; i++) {
+			$('#' + any_class[i].id).addClass('invisible-component');
+		}
 		any_class = document.getElementsByClassName('video-page-component');
 		for (var i = 0; i <= any_class.length - 1; i++) {
 			$('#' + any_class[i].id).removeClass('invisible-component');
 		}
 
-		any_class = document.getElementsByClassName('cover-page-component');
-		for (var i = 0; i <= any_class.length - 1; i++) {
-			$('#' + any_class[i].id).addClass('invisible-component');
-		}
 	});
 	$('#see-more-description').click(function (e) {
 		e.preventDefault();
@@ -398,9 +406,13 @@ $(document).ready(function () {
 		for (var i = 0; i <= any_class.length - 1; i++) {
 			$('#'+ any_class[i].id).addClass('invisible-component');
 		}
-		any_class = document.getElementsByClassName('get-page-img');
+		any_class = document.getElementsByClassName('get-page-video');
 		for (var i = 0; i <= any_class.length - 1; i++) {
-			$('#'+ any_class[i].id).removeClass('invisible-component');
+			$('#'+ any_class[i].id).addClass('invisible-component');
+		}
+		any_class = document.getElementsByClassName('get-page-text');
+		for (var i = 0; i <= any_class.length - 1; i++) {
+			$('#'+ any_class[i].id).addClass('invisible-component');
 		}
 		$.ajax({
 			url: '/page/pictures/',
@@ -476,7 +488,54 @@ $(document).ready(function () {
 			}
 		}
 	});
+	$('#text-posts-component').click(function () {
+		$('#control-state-posts').val(3);
+		$('#text-profile-icon-profile').attr('src', route + '/css/uicons/text_checked.png');
+		$('#img-profile-icon-profile').attr('src', route + '/css/uicons/images.png');
+		$('#video-profile-icon-profile').attr('src', route + '/css/uicons/video_liked.png');
 
+		for (var i = 0; i <= document.getElementsByClassName('get-page-video').length - 1; i++) {
+			document.getElementsByClassName('get-page-video')[i].classList.add('invisible-component');
+		}
+
+		for (var i = 0; i <= document.getElementsByClassName('get-page-img').length - 1; i++) {
+			document.getElementsByClassName('get-page-img')[i].classList.add('invisible-component');
+		}
+
+		for (var i = 0; i <= document.getElementsByClassName('get-page-text').length - 1; i++) {
+			document.getElementsByClassName('get-page-text')[i].classList.remove('invisible-component');
+		}
+		$.ajax({
+			url: '/page/text/',
+			type: 'get',
+			data: {'uuid' : $('#page_ident').val(), 'id' : 0},
+			dataType: 'json',
+			success:function(response){
+				console.log(response);
+				$.each(response, function(key, data) {
+					$('#page-post-content-page-p-' + key).text(data.descricao);
+					$('#text-posts-component-' + key).removeClass('invisible-component');
+					$('#text-posts-component-' + key).addClass('get-page-text');
+					$('#page-post-content-page-name-' + key).text(data.nome);
+					$('#page-post-content-page-name-a-' + key).attr('href', route + '/couple_page/' + data.uuid_page);
+					if (data.foto) {
+						$('#page-cover-post-cover-img-' + key).attr('src', route + '/storage/page/' + data.foto);
+					} else {
+						$('#page-cover-post-cover-img-' + key).attr('src', route + '/css/uicons/page_icon.jpg');
+					}
+					$('#page-post-content-page-date-' + key).text(data.created_at);
+					$('#text-posts-component-a-' + key).attr('href', route + '/post_index/' + data.uuid);
+					$('#text-posts-component-' + key).attr('id', 'text-posts-component_' + data.uuid);
+					$('#text-posts-component-a-' + key).attr('id', 'text-posts-component-a_' + data.uuid);
+					$('#page-post-content-page-date-' + key).attr('id', 'page-post-content-page-date_' + data.uuid);
+					$('#page-cover-post-cover-img-' + key).attr('id', 'page-cover-post-cover-img_' + data.uuid);
+					$('#page-post-content-page-name-a-' + key).attr('id', 'page-post-content-page-name-a_' + data.uuid);
+					$('#text-posts-component-' + key).attr('id', 'text-posts-component_' + data.uuid);
+					$('#page-post-content-page-p-' + key).attr('id', 'page-post-content-page-p_' + data.uuid);
+				});
+			}
+		});	
+	});
 	$('#alert-description').click(function(){
 	   	//alert('oi');
 		if (e.target.className.indexOf('alert-description-class') > -1) {
@@ -714,6 +773,8 @@ $(document).ready(function () {
 							$('#relationship-selected-type-profile').text(response[0].relationship + ' ');
 							$('#spouse-profile').text(response[0].spouse_name + ' ' + response[0].spouse_apelido);
 							$('#spouse-profile').attr('href', route + '/profile/' + response[0].spouse_uuid);							
+						} else {
+							$('#inform-profile-detail-couple').addClass('invisible-component');
 						}
 						if (response.relationship_request) {
 							$('#btn-request-profile').addClass('accept-confirm');
@@ -1029,6 +1090,7 @@ $(document).ready(function () {
 			$('#posts').val(1);
 			$('#m_post-145').addClass('invisible-component');
 		   	$('#m_post-144').addClass('invisible-component');
+		   	document.getElementById('target-loading-app-load').checked = false;
     	}
     }
     $('.hidden-post').click(function(){
@@ -1060,7 +1122,7 @@ $(document).ready(function () {
 					$('#last-post-page-video').val(data.post_id);
 					$('#a-video-page-target-' + key).attr('href', route + '/post_index/' + data.uuid);
 					$('#a-video-page-target-' + key).attr('id', 'a-video-page-target_' + data.uuid);
-					$('#post-video-container-page-video-' + key).attr('src', route + '/storage/video/page/' + data.file);
+					$('#post-video-container-page-video-' + key).attr('src', route + '/storage/img/thumbs/' + data.thumbnail);
 					$('#post-video-container-page-' + key).removeClass('invisible-component');
 					$('#post-video-container-page-' + key).addClass('get-page-video');
 					$('#post-video-container-page-' + key).attr('id', 'post-video-container-page_' + data.uuid);
@@ -1263,7 +1325,7 @@ $(document).ready(function () {
 						$('#last-post-page-video').val(data.post_id);
 						$('#a-video-page-target-' + cont).attr('href', route + '/post_index/' + data.uuid);
 						$('#a-video-page-target-' + cont).attr('id', 'a-video-page-target_' + data.uuid);
-						$('#post-video-container-page-video-' + cont).attr('src', route + '/storage/video/page/' + data.file);
+						$('#post-video-container-page-video-' + cont).attr('src', route + '/storage/img/thumbs/' + data.thumbnail);
 						$('#post-video-container-page-' + cont).removeClass('invisible-component');
 						$('#post-video-container-page-' + cont).addClass('get-page-video');
 						$('#post-video-container-page-' + cont).attr('id', 'post-video-container-page_' + data.uuid);
@@ -1617,6 +1679,10 @@ window.addEventListener('load', function () {
 });
 document.addEventListener('click', function (e) {
 	let any_id;
+	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[$('#host').val().split('/').length - 2];
+	if (e.target.className.indexOf('get-page-text-a') > -1) {
+		document.location.href = route + '/post_index/' + e.target.id.split('_')[1];
+	}
 	if (e.target.className.indexOf('alert-assumir-make-money-now') > -1) {
 		document.getElementById('target-alert-make-tassumir').checked = true;
 	}
@@ -1638,7 +1704,6 @@ document.addEventListener('click', function (e) {
 	if (e.target.className.indexOf('add-new-profile') > -1) {
 		document.getElementById('target-profile-cover').checked = true;
 	}
-	let route = $('#host').val().split('/')[0] + '//' + $('#host').val().split('/')[$('#host').val().split('/').length - 2];
 	
 	if (e.target.className.indexOf('couple_page_redirect') > -1) {
 		alert('oi');
@@ -1660,7 +1725,7 @@ document.addEventListener('click', function (e) {
 			dataType : 'json',
 			success: function (response) {
 				//console.log(response);
-				$('#price-type-relationship').text('Kz ' + response.preco + ',00');
+				$('#price-type-relationship').text('Kz ' + response.preco);
 			}
 		});
 	}
@@ -1680,7 +1745,8 @@ document.addEventListener('click', function (e) {
 	}
 	if (e.target.className.indexOf('target-message-alert') > -1) {
 		$('#concluir_file_ok').addClass('invisible-component');
-		$('#header-title-alert').text('Tassumir Mensagens')
+		$('#header-title-alert').text('Tassumir Mensagens');
+		document.getElementsByClassName('target-relationship-alert-assumir-menu-footer')[0].classList.add('invisible-component');
 		$('#alert-description').text('Brevemente você poderá interagir por mensagens no Tassumir... Quando estiver disponível, anunciaremos pra você. Estamos desenvolvendo com muito cuidado para poder proporcionar a você uma experiência melhor e mais PRIVADA no Tassumir. Por favor, AGUARDE...');
 		document.getElementById('target-alert-post-denied').checked = true;
 	}

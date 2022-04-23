@@ -739,7 +739,7 @@
 		display: none;
 	}
 	#imgless {
-		margin-top: 10px;
+		margin-top: 5px;
 	}
 	.user-identify-comment {
 	    margin-left: 0;
@@ -853,6 +853,9 @@
 	.statistics-profile-page-component h1, 
 	.statistics-profile-page-component h2 {
 	    font-size: 12px;
+	}
+	#inform-profile-detail-description {	    
+		max-width: 260px;
 	}
 	#genre-id-container {
 	    margin-right: 10px;
@@ -1743,6 +1746,9 @@
 	#login-register {
 	    background-color: #3b3b3b;
 	    border: 1px solid #3b3b3b;
+	}
+	.filter-main-search-mobile {
+		background-color: transparent;
 	}
 	.header-main {
 	    border-bottom: 1px solid #18191a;

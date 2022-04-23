@@ -66,31 +66,25 @@ class PostController extends Controller
         return view('pagina.prototype', compact('page_current'));
     }
 
-    public function thumbnail(Request $request){
-        $page_current = 'none';
-        //dd($_FILES['file']['tmp_name'][0]);
-        //dd($_FILES['file']['name']);
-        //foreach ($_FILES['file']['name'] as $key => $value) {
-            $path = "";
-            $path = $path . basename($_FILES['file']['name'][0]);
-            //dd(file_exists($_FILES['file']['tmp_name'][0]));
-            //dd($path);
-            if (move_uploaded_file($_FILES['file']['tmp_name'][0], $path)) {
-                echo "The file ".basename($_FILES['file']['name'][0]).' has been updated';
-            } else {
-                echo "There was an error uploading the file, please try again";
-            }
+    public function thumbnail($thumb, $file_name){
+        try {
+            $page_current = 'none';
 
-            $data = $request->thumb;
-            $path_thumbs = $request->path;
-            //dd($path_thumbs);
-            //$file = 'thumbs/thumb'.time().'.png';
-            $file = 'file'.time().'.png';
-            $uri = substr($data, strpos($data, ',') + 1);
-            file_put_contents($file, base64_decode($uri));
-        //}
-        //$request->file('pagePicture')->storeAs('public/img/page', $file_name);
-        //return view('pagina.prototype', compact('page_current'));
+            $folderPath = "storage/img/thumbs/";
+            //dd($request);
+            $image_parts = explode(";base64,", $thumb);
+            $image_type_aux = explode("image/", $image_parts[0]);
+            $image_type = $image_type_aux[1];
+            $image_base64 = base64_decode($image_parts[1]);
+            $file = $folderPath . '' . $file_name . '.'.$image_type;
+
+            file_put_contents($file, $image_base64);  
+
+            return $file_name. '.'.$image_type;;
+        } catch (Exception $e) {
+            
+        }
+
     }
 
     public function posts(Request $request) {

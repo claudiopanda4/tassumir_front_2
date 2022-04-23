@@ -1725,10 +1725,14 @@ label[for="hugo"]{
 }
 .comment-send .fa-img-comment.fa-paper-plane {
     display: block;
-    font-size: 17px;
+    font-size: 20px;
+    color: #fd09fd;
 }
 .stories-about-talking nav {
     
+}
+.pop-up-loading-component {
+    background-color: #000;
 }
 .stories-about-talking nav ul {
     position: relative;
@@ -3189,8 +3193,8 @@ label[for="hugo"]{
     display: inline-block;
     padding: 8px 10px 4px;
     font-size: 13px;
-    background-color: #9e9e9e;
-    margin: 5px 1px;
+    background-color: #3a3b3c;
+    margin: 0px 1px 5px;
     border-radius: 5px;
     margin-right: 0;
     margin-left: 6px;
@@ -3716,9 +3720,51 @@ label[for="hugo"]{
     border-radius: 50%;
 }
 .loader_icon {
-    width: 28px;
-    height: 28px;
+    width: 140px;
+    height: auto;
     z-index: 4;
+}
+.page-cover-post {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: #343a40;
+    margin-right: 0;
+    margin-left: 10px;
+}
+.content-file-post {
+    border-radius: 10px;
+    height: 300px;
+    max-width: 350px;
+    background-color: #343a40;
+}
+.page-post-content {
+    width: 75%;
+}
+.page-post-content-page-name {
+    font-size: 14px;
+    color: #fff;
+    margin-top: 3px;
+    font-weight: bolder;
+    margin-bottom: 2px;
+    max-width: 180px;
+}
+.page-post-content-page-p {
+    font-size: 13px;
+    color: #efefef;
+    margin-bottom: 3px;
+    display: block;
+    overflow-wrap: break-word;
+}
+.btn-follow-post {
+    background-color: #3490dc;
+    font-size: 11px;
+    color: #fff;
+    padding: 2px 5px;
+    margin-top: 0;
+    min-width: 70px;
+    border-radius: 4px;
+    text-align: center;
 }
 .loading-img {
     display: block;
@@ -4117,7 +4163,7 @@ label[for="hugo"]{
     width: 100%;
     background-color: transparent;
     padding: 7px 0 0;
-    margin: 0px 0 10px;
+    margin: 10px 0 10px;
     margin-bottom: 10px;
 }
 #statistics-profile-page-main {
@@ -4413,4 +4459,20 @@ label[for="hugo"]{
 #container-loading-app {
     height: 100vh;
     margin-top: 8px;
+}
+.pop-up-loading-component {
+    background-color: #000;
+}
+.page-post-content-page-date {
+    font-size: 10px;
+    color: #6e6d6d;
+    margin-bottom: 2px;
+}
+.img-context {
+    width: 100px;
+    height: 100px;
+    position: relative;
+}
+.img-post img {
+    width: 100%;
 }

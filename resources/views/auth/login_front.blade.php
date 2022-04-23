@@ -22,6 +22,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/checked.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
@@ -31,6 +32,7 @@
 <body id="body-login">
     <div id="app-log-reg" style="" class="clearfix">
         <main class="main" id="main-login-container">
+            <input type="hidden" id="host" value="{{route('account.data')}}" name="">
             <div style="height: 1px;"></div>
             <header class="logo-form" id="logo-login-form-lg" style="margin-left: 10px;">
                 <div class="title clearfix">
@@ -69,7 +71,7 @@
                         @enderror
 
                     </div>
-                    <button id="login-enter" type="submit" class=""><span class="enter-login">Ent</span>rar</button>
+                    <button id="login-enter" type="submit" class="login-enter-class"><span class="enter-login">Ent</span>rar</button>
                     <div class="risk">
                         <h2 class="center">ou</h2>
                     </div>
@@ -95,6 +97,12 @@
         </main>
     </div>
 </body>
+<input type="checkbox" name="" id="target-loading-app-load" class="invisible">
+<div class="pop-up pop-up-option pop-up-loading-component" id="container-loading-app-load">
+    <img class="center" src="{{asset('css/uicons/loading_blue.gif')}}" id="loader_icon_app" style="display: block; display: block; width: 130px; height: auto;">
+    <img class="center" src="{{asset('css/uicons/tassumir.jpeg')}}" id="loader_icon_app" style="display: block; top: 40%; width: 70px; height: auto;">
+    <h1 class="center" id="loader_app_text">Entrando...</h1>
+</div>
 </html>
 
 <script>
@@ -171,7 +179,11 @@
 
 
     });
-
+    document.addEventListener('click', function(e){
+        if (e.target.className.indexOf('login-enter-class') > -1) {
+            document.getElementById('target-loading-app-load').checked = true;
+        }
+    });
 </script>
 
 

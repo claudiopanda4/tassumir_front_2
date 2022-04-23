@@ -1,6 +1,14 @@
 @extends('layouts.search_menu')
 @section('content')
 <div class="main" id="main-search">
+	<div>
+		<div class="search-mobile">
+			<div class="input-search">
+				<i class="fas fa-search fa-16 fa-search-main"></i>
+				<input type="search" id="table_search_mobile" name="table_search" placeholder="O que está procurando?" class="input-text">
+			</div>
+		</div>
+	</div>	
 	<nav class="filter-main-search-mobile">
 		<ul>
 			<li>
@@ -24,14 +32,6 @@
 			</li>
 		</ul>
 	</nav>
-	<div>
-		<div class="search-mobile">
-			<div class="input-search">
-				<i class="fas fa-search fa-16 fa-search-main"></i>
-				<input type="search" id="table_search_mobile" name="table_search" placeholder="O que está procurando?" class="input-text">
-			</div>
-		</div>
-	</div>
 	<input type="hidden" name="passa" id="passa" value="{{$val}}">
 	<div name="pessoa">
 	</div>

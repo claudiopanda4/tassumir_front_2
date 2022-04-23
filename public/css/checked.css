@@ -548,9 +548,10 @@
 	opacity: 1;
     z-index: 1001;
 }
-#add-post-target:checked ~ #add-post-container {
+#add-post-target:checked ~ #add-post-container,
+#target-loading-app-load:checked ~ #container-loading-app-load {
 	opacity: 1;
-    z-index: 1002;
+    z-index: 1003;
 }
 #target-profile-cover-post:checked ~ #cover-profile-post {
 	opacity: 1;
