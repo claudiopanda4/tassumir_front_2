@@ -1721,7 +1721,7 @@ label[for="hugo"]{
 .comment-send .fa-img-comment {
     display: none;
     margin-right: 10px;
-    margin-top: 8px;    
+    margin-top: 5px;    
 }
 .comment-send .fa-img-comment.fa-paper-plane {
     display: block;
@@ -3380,6 +3380,7 @@ label[for="hugo"]{
     height: 40px;
     position: relative;
     margin-left: 10px;
+    background-color: #333333;
 }
 .identify-video a h1 {
     font-size: 12px;
@@ -3740,6 +3741,7 @@ label[for="hugo"]{
 }
 .page-post-content {
     width: 75%;
+    margin-left: 10px;
 }
 .page-post-content-page-name {
     font-size: 14px;
@@ -4102,7 +4104,7 @@ label[for="hugo"]{
     font-weight: bolder; 
     font-size: 14px; 
     width: 100%; 
-    margin-bottom: 7px;
+    margin-bottom: 4px;
 }
 .spouse-item {
     color: #efefef;
@@ -4334,7 +4336,7 @@ label[for="hugo"]{
     margin-bottom: 0;
 }
 .more-options-profile-btn {
-    height: 38px;
+    height: 36px;
 }
 .description-couple p {
     padding: 10px 0;
@@ -4384,11 +4386,11 @@ label[for="hugo"]{
     padding: 10px;
 }
 .button-pop-up {
-    padding: 8px;
+    padding: 10px;
     font-size: 12px;
     text-align: center;
     color: #fff;
-    min-width: 100px;
+    min-width: 230px;
     border-radius: 4px;
 }
 .button-pop-up-reject-close {
@@ -4420,35 +4422,37 @@ label[for="hugo"]{
     height: auto;
 }
 .cover-done.cover-done-profile-post {
-    width: 47%;
-    margin-left: 5px;
-    background-color: #2196f3;
+    width: 100%;
+    background-color: transparent;
 }
 .cover-done-profile-cover {
-    outline: none; 
-    border: none; 
-    background: transparent; 
-    color: white; 
-    padding: 7px; 
-    font-size: 14px; 
+    outline: none;
+    border: none;
+    background: transparent;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
     width: 100%;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #343a40;
 }
 .cover-done-profile-cover-choose button {
     width: 100%;
-    padding: 6px;
+    padding: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 0;
     color: #fff;
     font-size: 13px;
     background-color: transparent;
-    border: 1px solid #efefef;
+    border: none;
+    border-bottom: 1px solid #343a40;
 }
 .cover-done-profile-cover-choose {
     width: 65%;
     margin: 10px auto;
 }
 #close-cover-post {
-    background-color: #3a3b3c;
+    background-color: transparent;
 }
 .tassumir-logo-icon {
     margin: 0;
@@ -4491,4 +4495,23 @@ label[for="hugo"]{
 }
 .video-post-video-cover-container > img{
     width: 100%;
+}
+.fa-bookmark.fas {
+    color: #fd09fd;
+}
+#add-cover-profile.pop-up-component-header-default {
+    border: none;
+}
+.profile-cover-pop-up {
+    position: absolute;
+    max-height: 100%;
+    height: auto;
+    margin: auto;
+    width: auto;
+    border-radius: 0;
+    border: none;
+}
+.img-post-video-component img.video_liked-icon {
+    width: 20px;
+    height: 20px;
 }

@@ -57,7 +57,7 @@
             </div>
         </div>
     <div class="" id="div_father_post" name="div_father_post">
-        <?php $key = 0; while($key < 146){ ?>
+        <?php $key = 0; while($key < 78){ ?>
         <?php if ($key == 1): ?>
             <div class="refresh-profile-photo clearfix invisible-component" id="refresh-profile-photo-id">
                 <div class="profile-photo-container l-5">
@@ -159,13 +159,6 @@
                     <label for="target-option-post" class="target-options" id="target-option-post-{{$key}}">
                         <i class="fas fa-ellipsis-h fa-14 fa-option" id="target-option-post-i-{{$key}}"></i>
                     </label>
-                    <!--<div class="last-component clearfix r-5">
-                        <label for="more-option-{{$key}}">
-                            <i class="fas fa-ellipsis-h fa-14 fa-option"></i>
-                        </label>
-                        <input type="checkbox" name="" id="more-option-{{$key}}" class="hidden">
-                        
-                    </div>-->
                 </header>
                 <div class="card-post">
                     <div class="">
@@ -177,7 +170,7 @@
                         <div class="video-post post-video invisible-component" id="video-post-{{$key}}">
                             <img class="play_button center invisible-component" src="{{asset('css/uicons/play_button.png')}}" id="play_button_{{$key}}">
                             <!--<img class="loader_button center" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">-->
-                            <img class="loader_button center invisible-component" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">
+                            <!--<img class="loader_button center invisible-component" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">-->
                             <img class="loader_icon center" src="{{asset('css/uicons/loading_blue.gif')}}" id="loader_icon_{{$key}}">
                             <video preload="metadata" class="video-post-video invisible-component" id="video_{{$key}}">
                                 <source id="video-post-link-{{$key}}">
@@ -448,7 +441,7 @@
 <div class="pop-up pop-up-option pop-up-loading-component" id="container-loading-app-load">
     <img class="center" src="{{asset('css/uicons/loading_blue.gif')}}" id="loader_icon_app" style="display: block; display: block; width: 130px; height: auto;">
     <img class="center" src="{{asset('css/uicons/tassumir.jpeg')}}" id="loader_icon_app" style="display: block; top: 40%; width: 70px; height: auto;">
-    <h1 class="center" id="loader_app_text">Publicações Novas...</h1>
+    <h1 class="center" id="loader_app_text"></h1>
 </div>
         <script type="text/javascript">
         $(document).ready(function(){
@@ -632,7 +625,7 @@ function gostar(id){
                             if (control_.top <= $(document).height()) {
                             }
                         }
-                        if ($('#current-video-id').val() != '') {
+                        /*if ($('#current-video-id').val() != '') {
                             let id_video = $('#current-video-id').val().split('_');
                             //alert(id_video);
                             let size_id_video = id_video.length;
@@ -654,7 +647,7 @@ function gostar(id){
                             console.log('.HAVE_FUTURE_DATA ' + $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA);
                             console.log('readyState ' + $("#video_" + id_video_final)[0].readyState);
                             console.log('seeking ' + $("#video_" + id_video_final)[0].seeking);
-                            console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);*/
+                            console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);
                             if ($("#video_" + id_video_final)[0].paused != true &&
                                 !$("#video_" + id_video_final)[0].seeking &&
                                  $("#video_" + id_video_final)[0].currentTime > 0 &&
@@ -665,7 +658,7 @@ function gostar(id){
                                     $("#loader_icon_" + id_video_final).removeClass('invisible-component');
                                 }
                             }
-                        }
+                        }*/
 
                         let margin_stories = $('.main-container').offset();
                         let margin_s = $('.main').offset();

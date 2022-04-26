@@ -240,10 +240,11 @@
 		margin-left: 0;
 	}
 	.stories-about-talking nav ul li .img-back-stories {
-	        width: 130%;
-		    height: auto;
-		    border: 2px solid #18191a;
-		    border-radius: 50%;
+	    width: 130%;
+		height: auto;
+		border: 2px solid #18191a;
+		border-radius: 50%;
+		min-height: 100px;
 	}
 	#img-profile-container {
 	    width: 80px;
@@ -344,7 +345,7 @@
 	}
 	.profile-name {
 		margin-top: 10px;
-	    font-size: 18px;
+	    font-size: 16px;
 	    width: 170px;
 	    padding-left: 10px;
 	    margin: 5px auto
@@ -372,10 +373,10 @@
 	    width: 75px;
 	}
 	.statistics-profile h2 {
-	    font-size: 13.5px;
+	    font-size: 12.5px;
 	}
 	.statistics-profile h2.text-profile-statistics {
-	    font-size: 13px;
+	    font-size: 12px;
 	}
 	.profile-item-center {
 		width: 240px;
@@ -903,6 +904,7 @@
 @media screen and (max-width: 501px) {
 	.card {
 		width: 100%;
+		margin-top: 0;
 		margin-bottom: 5px;
 	}
 	.card#card-post-id-index {
@@ -1054,7 +1056,7 @@
 	    border-top: none;
 	}
 	.post-page-container {
-	    height: 110px;
+	    height: 105px;
 	}
 	#main-profile .img-post {
 		width: 33.3%;
@@ -1350,6 +1352,9 @@
 		border-radius: 0;
 		/*border-top: 1px solid #343a40;*/
 	}
+	.pop-up-component.profile-cover-pop-up {
+		width: 100%;
+	}
 	#more-description-page {
 		margin-left: 20px;
 	}
@@ -1396,7 +1401,7 @@
 	.suggest-slide a div {
 	    border-radius: 2px;
 	    font-size: 13px;
-	    width: 56%;
+	    width: 75%;
 	}
 	#btn_seguir, 
 	#main-container-page .more-options-profile-btn {
@@ -1633,6 +1638,9 @@
 	    margin-top: 2px;
     	margin-bottom: -5px;
 	}
+	.profile-cover-pop-up {
+	    width: 100%;
+	}
 	.card-post p {
 	    padding: 0px 5px;
 	    margin-bottom: 0px;
@@ -1656,7 +1664,7 @@
 	#options-profile-btn-edit-profile {
 	    width: 52%;    
 	    min-width: 151px;
-	    height: 37.5px;
+	    height: 35.5px;
 	}
 	#options-profile-mobile-user-log {
 	    min-width: 254px;
@@ -1756,6 +1764,7 @@
 	}
 	.container-li-dest {
 	    width: 57px;
+	    margin-top: 0;
 	}
 	#option-btn-profile {
 	    font-size: 12px;
@@ -1841,7 +1850,7 @@
 	}
 	.alert-info-about-us{
 	    width: 100%;
-	    margin: -10px auto 10px;
+	    margin: -10px auto 0px;
 	    background-color: #18191a;
 	    padding-top: 5px;
 	    border-radius: 0;
@@ -1902,6 +1911,9 @@
 	.description-couple p {
 	    /*padding: 0px 16px;*/
 	}
+	.content-profile-photo h1 {
+	    font-size: 12px;
+	}
 }
 @media screen and (max-height: 490px){
 	.video-post video {
@@ -1945,5 +1957,8 @@
 	}
 	.fa-16 {
 	    font-size: 15px;
+	}
+	.stories-about-talking header h1 {
+		margin-bottom: 0;
 	}
 }

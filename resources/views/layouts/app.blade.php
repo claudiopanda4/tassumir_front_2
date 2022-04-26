@@ -225,14 +225,14 @@
     </div>
 </body>
 <input type="checkbox" name="" id="target-profile-cover-full" class="invisible">
-<div class="pop-up" id="cover-profile-full-container">
-    <div class="pop-up-component full-component-mobile center" style="position: absolute; max-height: 90%; height: auto; margin: auto;">
+<div class="pop-up" id="cover-profile-full-container" style="background-color: #000;">
+    <label for="target-profile-cover-full" id="target-profile-cover-full-ident">
+        <div class="cancel-box-component div-img" style="background: transparent;">
+            <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
+        </div>
+    </label>
+    <div class="pop-up-component full-component-mobile center profile-cover-pop-up">
         <div>
-            <label for="target-profile-cover-full" id="target-profile-cover-full-ident">
-                <div class="cancel-box-component div-img">
-                    <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
-                </div>
-            </label>
             <div class="">
                 <img id="profile-cover-full">
             </div>
@@ -494,17 +494,17 @@
 <input type="checkbox" name="" id="target-profile-cover" class="invisible">
 <div class="pop-up" id="cover-profile">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; height: auto; margin: auto;">
-        <header class="pop-up-component-header pop-up-component-header-default header-height" id="add-cover-profile">
-            <h1>Adicionar Foto de Perfil</h1>
+        <!--<header class="pop-up-component-header pop-up-component-header-default header-height" id="add-cover-profile">
+            <h1>Adicionar foto de perfil</h1>
             <div class="container-pop-up-component-header">
-                <!--<label for="target-profile-cover">
+                <label for="target-profile-cover">
                     <div class="cancel-box-component div-img">
                         <i class="fas fa-times fa-16 center" style="color: #fff;"></i>
                     </div>
-                </label>-->
+                </label>
             </div>
         </header>
-        <div class="header-height" id="header-height-component-add-cover"></div>
+        <div class="header-height" id="header-height-component-add-cover"></div>-->
         <div id="foto-view" class="invisible-component">
             <img id="foto-view-component" class="img-full">
             <div class="cancel-box-component div-img" id="cancel-box-component-change">
@@ -517,9 +517,9 @@
                     @csrf
                     <input class="file invisible-component" type="file" id="file-id-profile" name="profilePicture" style="width: 250px; margin-left: 10px; color: #fff;" required>
                     <div class="cover-done-profile-cover-choose" id="cover-done-profile-cover-choose-container">
-                        <button type="button" id="cover-done-profile-cover-choose-id">Escolher foto de perfil</button>
+                        <button type="button" id="cover-done-profile-cover-choose-id">Carregar foto</button>
                     </div>
-                    <div class="clearfix l-5" id="" style="width: 98%; margin-top: 10px;">
+                    <div class="clearfix l-5" id="" style="width: 65%; margin: auto; float: inherit;">
                         <div class="cover-done cover-done-profile-post l-5" id="close-cover-post">
                             <button type="button" class="cover-done-profile-cover" id="close-cover-post-button">Cancelar</button>
                         </div>
