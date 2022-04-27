@@ -277,4 +277,6 @@ Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('ac
     Route::get('comerciais',[App\Http\Controllers\HelpSupport::class, 'call_term_service'])->name('comercio');
     Route::get('comunidade',[App\Http\Controllers\HelpSupport::class, 'comunidade'])->name('comunidade');
     Route::get('publicidade',[App\Http\Controllers\HelpSupport::class, 'publicidade'])->name('publicidade');
+
+
 /*end termo view*/

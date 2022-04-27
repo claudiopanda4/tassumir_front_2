@@ -50,7 +50,7 @@
 
                  @endif
 
-                <form action="{{ route('account.verifyAgainCode.enter') }}" method="POST" class="needs-validation" novalidate>
+                <form action="{{ route('account.verifyAgainCode.enter') }}" method="POST" class="needs-validation" novalidate id="first-form">
                     @csrf
                     <input type="text" name="receivedNome" class="hidden" value="{{$nome}}">
                     <input type="text" name="password" class="hidden" value="{{$password}}">
@@ -75,7 +75,7 @@
                     <button type="submit" id="login-enter" class="alerta">Validar código</button>
                     
                 </form>
-<form action="{{ route('account.again.sendCode') }}" method="POST">
+<form action="{{ route('account.again.sendCode') }}" method="POST" id="second-form">
                                         @csrf
                         
                     <!-- inicio dados de cadastro-->
@@ -106,6 +106,29 @@
 </html>
 <script>
     
+  $('#first-form').submit(function (event) {
+    
+        if ($(this).hasClass('submitted')) {
+            event.preventDefault();
+        }
+
+        else {
+            $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
+            $(this).addClass('submitted');
+        }
+    });
+  $('#second-form').submit(function(event){
+    if ($(this).hasClass('submitted')) {
+            event.preventDefault();
+        }
+
+        else {
+            $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
+            $(this).addClass('submitted');
+        }
+
+  });
+
     $("#codeReceived").bind('keydown', function(e) {
 
       var codTecla = e.which;
