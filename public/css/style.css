@@ -605,8 +605,8 @@ label[for="hugo"]{
 }
 .page-cover {
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     background-color: #343a40;
     border-radius: 50%;
 }
@@ -1325,8 +1325,8 @@ label[for="hugo"]{
 }
 .post header .first-component .page-cover {
     position: relative;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
 }
 .post header .first-component .page-identify h1 {
     font-size: 14px;
@@ -1339,7 +1339,7 @@ label[for="hugo"]{
 .page-identify {
     margin-left: 0;
     margin-bottom: 0;
-    margin-top: 10px;
+    margin-top: 2px;
     width: 210px;
 }
 .follow_page_post {
@@ -2616,7 +2616,7 @@ label[for="hugo"]{
     position: absolute;
     top: 86px;
     right: 10px;
-    z-index: 3;
+    z-index: 1005;
     background-color: #800080;
 }
 .add-post-label {
@@ -3533,7 +3533,7 @@ label[for="hugo"]{
     margin: 10px auto;
 }
 .page-card-header {
-    background-color: #242526;
+    background-color: transparent;
     margin-bottom: 10px;
     border-radius: 10px;
 }
@@ -4390,7 +4390,7 @@ label[for="hugo"]{
     font-size: 12px;
     text-align: center;
     color: #fff;
-    min-width: 230px;
+    min-width: 280px;
     border-radius: 4px;
 }
 .button-pop-up-reject-close {
@@ -4486,6 +4486,7 @@ label[for="hugo"]{
 }
 .img-post img {
     width: 100%;
+    height: auto;
 }
 .video-post-video-cover-container {
     min-height: 200px;

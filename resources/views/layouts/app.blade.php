@@ -354,8 +354,8 @@
                 <form action="{{route('engagement.proposal')}}" method="POST" enctype="multipart/form-data" id="done-btn-assumir">
                     @csrf
                     <div class="clearfix l-5" style="width: 98%; min-width: 200px; margin-top: 10px; margin-bottom: 10px;">
-                        <div class="cover-done invisible-component" id="assumir-now" style="border-radius: 8px;">
-                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 11px; width: 100%; border-radius: 5px;">Assumir o Relacionamento agora</button>
+                        <div class="cover-done invisible-component" id="assumir-now-relationship" style="border-radius: 4px; width: 98%;">
+                            <button type="submit" style="outline: none; border: none; background: transparent; color: white; padding: 8px; font-size: 12px; width: 100%; border-radius: 5px;">Assumir o Relacionamento agora</button>
                         </div>
                     </div>
                     <input type="hidden" name="conta_pedida" id="uuid_user_assumir">

@@ -626,6 +626,7 @@ $(document).ready(function () {
 		$('#search-container-user-assumir').addClass('invisible-component');
 	});
 	$('#name-page-text-choosed').keyup(function() {
+		console.log($('#name-page-text-choosed').val());
 		if ($('#name-page-text-choosed').val() != '' 
 			&& $('#name-page-text-choosed').val() != ' '
 			&& $('#name-page-text-choosed').val() != '  '
@@ -634,11 +635,12 @@ $(document).ready(function () {
 			&& $('#name-page-text-choosed').val() != '     '
 			&& $('#name-page-text-choosed').val() != '      '
 			&& $('#name-page-text-choosed').val() != '       '
-			&& $('#name-page-text-choosed').val() != '        ') {
-			$('#assumir-now').removeClass('invisible-component');
+			&& $('#name-page-text-choosed').val() != '        '
+			&& $('#name-page-text-choosed').val().length > 1) {
+			document.getElementById('assumir-now-relationship').classList.remove('invisible-component');
 			$('#name-invited-page-home').val($('#name-page-text-choosed').val());
 		} else {
-			$('#assumir-now').addClass('invisible-component');
+			$('#assumir-now-relationship').addClass('invisible-component');
 		}
 	});
 	$('.choosed-type-relationship').click(function (e) {
@@ -666,17 +668,17 @@ $(document).ready(function () {
 			success: function (response) {
 				console.log(response);
 				any_class = document.getElementsByClassName('a-result-search');
-				components = [
-					'#assumir-item_' + any_id, 
-					'#name-search-data_' + any_id,
-					'#a-result-search_' + any_id,
-					'#assumir-item-text_' + any_id
-				];
-				empty(any_class, components);
 				if (response.state) {
 					$.each(response.search, function(key, data){
 						console.log(data.nome);
-
+						any_id = data.uuid;
+						components = [
+							'#assumir-item_' + any_id, 
+							'#name-search-data_' + any_id,
+							'#a-result-search_' + any_id,
+							'#assumir-item-text_' + any_id
+						];
+						empty(any_class, components);
 						$('#assumir-item-' + key).removeClass('invisible-component');
 						$('#name-search-data-' + key).text(data.nome + ' ' + data.apelido);
 						$('#cover-result-search-component-' + key).removeClass('invisible-component');
