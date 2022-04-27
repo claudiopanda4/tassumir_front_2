@@ -179,16 +179,16 @@
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script>
 
-$('form').submit(function (event) {
+  $('form').submit(function (event) {
         if ($(this).hasClass('submitted')) {
             event.preventDefault();
         }
+
         else {
             $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
             $(this).addClass('submitted');
         }
     });
-
 
   const pass = $("#password");
   $('#nome-id').on('keyup', function(e){

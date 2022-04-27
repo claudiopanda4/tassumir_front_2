@@ -2925,7 +2925,7 @@ public function dados_comment($key){
                         $password = $this->cript_password($password_clean);
 
                       //fim criptografia
-
+                        
 
                      return view('auth.codigoRecebidoRegister',compact('nome','apelido','data_nascimento','genero','nacionalidade','encryp_conf_cod','takePhone','takeEmail','password'));
 
