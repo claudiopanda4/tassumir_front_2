@@ -28,6 +28,8 @@
   <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
   <meta name="viewport" content="width=device-width-width, initial-scale=1,0">
   <meta http-equiv="UA-X-Compatible" content="ie=edge">
+
+
   <style>
     .form-section {
       padding-top: 10px;
@@ -58,7 +60,6 @@
 
 <body id="body-reg">
   <div id="app-log-reg">
-   
     <main class="main" id="main-register-container" style="">
       <div class="" id="main-reg">
         <header class="logo-form" id="title-login">
@@ -75,13 +76,11 @@
         <div class="row justify-content-center" style="text-align: center; margin-bottom: 5px;">
           <span class="text-white">Seja Bem Vindo(a) a maior plataforma de relacionamento.</span>
         </div>
-
         <div class="row justify-content-center mb-2">
           <span class="text-white">Agora vamos conhecer-te</span>
         </div>
-        <form action="{{route('account.save')}}" method="POST" class="tassumir-form needs-validation" novalidate id="my-form">
-          @csrf
-
+        <form action="{{route('account.save')}}" method="POST" class="tassumir-form needs-validation" novalidate id="my-form" name="form-reg">
+         @csrf
           <div class="form-section">
             <input type="text" class="input-text-default input-full input-login" name="nome" placeholder="Nome" id="nome-id" required />
             <span class="hidden" style="color:red;" id="erroNome"> Insira o teu  Nome</span>
@@ -162,7 +161,7 @@
           <div class="hugo-btn">
             <button type="button" id="login-enter" class="next">Seguinte</button>
             <button type="button" id="login-enter" class="recuar">Voltar</button>
-            <button type="submit" id="login-enter" class="my-form" >Criar Conta</button>
+            <button type="submit" id="login-enter" class="my-form">Criar Conta</button>
           </div>
           <div class="clearfix">
             <div id="forget-password" class="l-5">
@@ -180,14 +179,16 @@
 <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
 <script>
 
-  var take_age = 0;
-
-  var myForm = $(".my-form");
-  myForm.submit(function(){
-    myForm.submit(function(){
-        return false;
+$('form').submit(function (event) {
+        if ($(this).hasClass('submitted')) {
+            event.preventDefault();
+        }
+        else {
+            $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
+            $(this).addClass('submitted');
+        }
     });
-  });
+
 
   const pass = $("#password");
   $('#nome-id').on('keyup', function(e){
@@ -373,6 +374,8 @@
       if (nome && apelido && data_nas && idade >=18) {
 
         navigateTo(curIndex() + 1);
+
+         
         $('#erroNome').fadeOut();
         $('#erroApelido').fadeOut();
         $('#erroData').fadeOut();

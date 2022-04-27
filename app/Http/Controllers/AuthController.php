@@ -2926,6 +2926,7 @@ public function dados_comment($key){
 
                       //fim criptografia
 
+
                      return view('auth.codigoRecebidoRegister',compact('nome','apelido','data_nascimento','genero','nacionalidade','encryp_conf_cod','takePhone','takeEmail','password'));
 
                 }
@@ -2955,11 +2956,12 @@ public function dados_comment($key){
 
                      $plain_text_code = $code;
                      $encryp_conf_cod = $this->criptCode($plain_text_code);
-                    $password = $this->cript_password($password_clean);
+                     $password = $this->cript_password($password_clean);
 
                       //fim criptografia
 
-                    return view('auth.codigoRecebidoRegister',compact('nome','apelido','data_nascimento','genero','nacionalidade','encryp_conf_cod','takePhone','takeEmail','password'));
+                     return view('auth.codigoRecebidoRegister',compact('nome','apelido','data_nascimento','genero','nacionalidade','encryp_conf_cod','takePhone','takeEmail','password'));
+
                  }
 
             }else{
@@ -2968,12 +2970,14 @@ public function dados_comment($key){
 
           }catch(\Exception $e){    
 
-            return view('auth.errors.500');
+            //return view('auth.errors.500');
+           // return view('auth.ErrorStatus');
+            dd($e);
+
           }
     }
 
     public function verifyCodeSent(Request $request){
-
 
         try{
 
