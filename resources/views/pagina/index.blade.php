@@ -138,7 +138,7 @@
                         <input type="text" class="" name="comentario" id="comentario_{{$ident_page}}" placeholder="O que você tem a dizer?">
                         <div class="r-5 ">
                             <a href="" class="comentar-a" id="comentario-a_{{$ident_page}}">
-                                <i class="far fa-paper-plane fa-20 fa-img-comment" id="comentario-i_{{$ident_page}}"></i>
+                                <i class="fas fa-paper-plane fa-20 fa-img-comment" id="comentario-i_{{$ident_page}}"></i>
                             </a>
                         </div>
                     </div>

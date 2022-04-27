@@ -26,189 +26,82 @@
             </a>
         </ul>
     </nav>
+    <?php $key = 0; while($key < 24) { ?>
     <div class="video-container-component">
         <div>
-            <?php
-            $videos = [[],[]];
-            foreach ($dados as $key => $value): ?>
             <div class="video-container clearfix">
                 <div class="identify-video mb-video-lg clearfix" id="mb-video-lg-none">
                     <div class="header-img-post-video circle l-5">
-                      @if( !($dados[$key]['foto_page'] == null) )
-
-                              <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_page'] }}">
-                      @else
-                              <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                      @endif
-                                        </div>
-                                        <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
+                        <img class="img-full circle">
+                    </div>
+                    <a href="" id="a-page-name-post-video-">
+                        <h1 class="text-ellips">Curiosidades do Casamento</h1>
+                    </a>
                     <div class="last-component clearfix r-5">
-                            <label for=<?php echo "more-option-0"; ?>>
-                                <i class="fas fa-ellipsis-h fa-14 fa-option"></i>
-                            </label>
-                            <input type="checkbox" name="" id=<?php echo "more-option-"; ?> class="hidden">
-                            <ul class="clearfix more-option-post">
-                              <?php if ($dados[$key]['dono_da_pag'] == 1): ?>
-                                <li>
-                                    <a href="">Editar</a>
-                                </li>
-                                <?php endif ?>
-                                <?php if ($dados[$key]['dono_da_pag'] != 1): ?>
-                                <li>
-                                    <a href="" class="ocultar_post" id="ocultar_post-{{$dados[$key]['post_id']}}">Ocultar Publicação</a>
-                                </li>
-                                <?php endif ?>
-                                <?php if ($dados[$key]['dono_da_pag'] == 1): ?>
-                                <li>
-                                    <a href="" class="delete_post" id="delete_post-{{$dados[$key]['post_id']}}">Apagar Publicação</a>
-                                </li>
-                                <?php endif ?>
-                                <li>
-                                    <a href="">Denunciar</a>
-                                </li>
-                                <li>
-                                    <a href="">Copiar Link</a>
-                                </li>
-                            </ul>
-                        </div>
+                        <label for="more-option-0">
+                            <i class="fas fa-ellipsis-h fa-14 fa-option"></i>
+                        </label>
+                    </div>
                 </div>
                 <div class="text-video-container" id="text-video-container-mobile">
-                  @if($dados[$key]['post'] == "" || $dados[$key]['post'] == null
-                  || $dados[$key]['post'] == " " || $dados[$key]['post'] == "null")
-                      <p class="untext"></p>
-                  @else
-                      <p>{{$dados[$key]['post']}}</p>
-                  @endif                </div>
+                    <p class=""></p>
+                </div>
                 <div class="l-5 tv-video-cont">
-                    <video class="center" controls src="{{asset('storage/video/page/'). '/' . $dados[$key]['file']}}">
-                      <img class="play_button center" src="{{asset('storage/icons/play_button.png')}}" id=<?php echo "play_button_".$key ?>>
-                      <img class="loader_button center" src="{{asset('storage/icons/aguarde.gif')}}" id=<?php echo "loader_button_".$key ?>>
-
-                        <!--<source src="{{asset('storage/video/page/1638350765_f3f75e8dcf710b46e0db5e85e0dd5cba.mp4')}}" type="type/mp4">-->
+                    <video class="center" controls="">
+                      <img class="play_button center" id="play_button_0">
+                      <img class="loader_button center" id="loader_button_0">
                     </video>
                 </div>
                 <div class="l-5" id="mb-video-lg-display">
                     <div class="identify-video mb-video-lg clearfix">
                         <div class="header-img-post-video circle l-5">
-                          @if( !($dados[$key]['foto_page'] == null) )
-                                  <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_page'] }}">
-                          @else
-                                  <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
-                          @endif
-                                                </div>
-                          <a href="{{route('couple.page1', $dados[$key]['page_uuid']) }}"><h1 class="text-ellips">{{$dados[$key]['nome_pag']}}</h1></a>
+                            <img class="img-full circle">
+                        </div>
+                        <a href=""><h1 class="text-ellips">Curiosidades do Casamento</h1></a>
                         <div class="last-component clearfix r-5">
-                            <label for=<?php echo "more-option-0"; ?>>
+                            <label for="more-option-0">
                                 <i class="fas fa-ellipsis-h fa-14 fa-option"></i>
                             </label>
-                            <input type="checkbox" name="" id=<?php echo "more-option-"; ?> class="hidden">
-                            <ul class="clearfix more-option-post">
-                              <?php if ($dados[$key]['dono_da_pag'] == 1): ?>
-                                <li>
-                                    <a href="">Editar</a>
-                                </li>
-                                <?php endif ?>
-                                <?php if ($dados[$key]['dono_da_pag'] != 1): ?>
-                                <li>
-                                    <a href="" class="ocultar_post" id="ocultar_post-{{$dados[$key]['post_id']}}">Ocultar Publicação</a>
-                                </li>
-                                <?php endif ?>
-                                <?php if ($dados[$key]['dono_da_pag'] == 1): ?>
-                                <li>
-                                    <a href="" class="delete_post" id="delete_post-{{$dados[$key]['post_id']}}">Apagar Publicação</a>
-                                </li>
-                                <?php endif ?>
-                                <li>
-                                    <a href="">Denunciar</a>
-                                </li>
-                                <li>
-                                    <a href="">Copiar Link</a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                     <div class="content-video-tass">
                         <div>
                             <div class="text-video-container" id="text-video-container-lg">
-                              @if($dados[$key]['post'] == "" || $dados[$key]['post'] == null
-                              || $dados[$key]['post'] == " " || $dados[$key]['post'] == "null")
-                                  <p class="untext"></p>
-                              @else
-                                  <p>{{$dados[$key]['post']}}</p>
-                              @endif
-                                                        </div>
-                  <?php if ($dados[$key]['qtd_comment']>0): ?>
-                    <div class="" name="div_pai_commnet">
+                                <p class="untext"></p>
+                            </div>
+                            <div class="" name="div_pai_commnet">
                             <div class="comment-users-tass">
-                                <div class="comment-users" id="comment-users-2">
-                                    <div class="comment-user-container">
-                                      <div class="user-identify-comment">
-                                        @if( $dados[$key]['foto_ver']==1 )
-                                          @if( !($dados[$key]['foto_conta'] == null) )
-                                          <div class="profille-img">
-                                              <img  class="img-full circle" src="{{ asset('storage/img/users') . '/' . $dados[$key]['foto_conta'] }}">
+                                <?php //if ($key < 3): ?>
+                                    <?php $i = 0; while($i < 20){ ?>
+                                    <div class="comment-users" id="comment-users-2">
+                                        <div class="comment-user-container">
+                                          <div class="user-identify-comment">
+                                            <div class="profille-img">
+                                                <img class="img-full circle">
+                                            </div>
+                                            <div class="comment-user-comment">
+                                                <h1 class="user">Curiosidades do Casamento</h1>
+                                                <p class="">A Música do fundo (-_-)</p>
+                                            </div>
                                           </div>
-                                          @else
-                                          <div class="profille-img">
-                                                <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
-                                          </div>
-                                      @endif
-                                    @elseif( $dados[$key]['foto_ver']==2 )
-                                      @if( !($dados[$key]['foto_conta'] == null) )
-                                        <div class="profille-img">
-                                          <img class="img-full circle" src="{{ asset('storage/img/page/') . '/' . $dados[$key]['foto_conta'] }}">
                                         </div>
-                                      @else
-                                        <div class="profille-img">
-                                          <img class="img-full circle" src="{{asset('storage/img/page/unnamed.jpg')}}">
+                                        <div class="comment-user-container comment-user-container-react">
+                                          <a href="" class="comment-like-a" id="on|5"></a>
                                         </div>
-                                        @endif
-                                    @endif
-                                        <div class="comment-user-comment">
-                                            <h1 class="user">{{$dados[$key]['nome_comment']}}</h1>
-                                            <p class="">{{$dados[$key]['comment']}}</p>
-                                        </div>
-                                      </div>
                                     </div>
-                                    <div class="comment-user-container comment-user-container-react">
-                                      <a href="" class="comment-like-a" id="on|{{$dados[$key]['comment_id']}}">
-                                        <?php if (false): ?>
-                                            
-                                        <?php endif ?>
-                                          @if($dados[$key]['comment_S_N'] > 0)
-                                              <i class="fas fa-heart fa-12 liked" id="on|{{$dados[$key]['comment_id']}}|i"></i>
-                                          @else
-                                              <i class="fas fa-heart fa-12 unliked" id="off|{{$dados[$key]['comment_id']}}|i"></i>
-                                          @endif
-                                        </a>
-                                    </div>
-                                </div>
+                                    <?php $i++; } ?>                                    
+                                <?php //endif ?>
+
                               </div>
                             </div>
-                          <?php else: ?>
-                          <div class="" name="div_pai_commnet">
-                            <div class="comment-users-tass">
-                                <div class="comment-users" id="comment-users-2">
-                                    <div class="comment-user-container">
-                                      <div class="user-identify-comment">
-                                        <div class="comment-user-comment">
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="comment-user-container comment-user-container-react">
-                                    </div>
-                                </div>
-                            </div>
-                          </div>
-                            <?php endif ?>
                         </div>
                         <nav class="row interaction-numbers">
                             <ul class="">
                                 <li>
-                                  <a href="" id="likes-qtd-{{$dados[$key]['post_uuid']}}">{{$dados[$key]['qtd_likes']}} reacções</a>
+                                  <a href="" id="">1 reacções</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('post_index', $dados[$key]['post_uuid'])}}" id="comment-qtd-{{$dados[$key]['post_id']}}">{{$dados[$key]['qtd_comment']}} comentários</a>
+                                    <a href="" id="comment-qtd-37">1 comentários</a>
                                 </li>
                             </ul>
                         </nav>
@@ -216,21 +109,16 @@
                             <ul class="row clearfix ul-interaction-user">
                                 <li class="l-5">
                                     <div class="content-button">
-                                      <a href="" class="like-a" id="on|{{$dados[$key]['post_uuid']}}">
-                                          @if($dados[$key]['reagir_S_N'] > 0)
-                                          <i class="fas fa-heart center fa-16 liked" id="on|{{$dados[$key]['post_uuid']}}|i"></i>
-                                          <h2 id="on|{{$dados[$key]['post_uuid']}}|h2">Like</h2>
-                                          @else
-                                          <i class="far fa-heart center fa-16 unliked" id="off|{{$dados[$key]['post_uuid']}}|i"></i>
-                                          <h2 id="off|{{$dados[$key]['post_uuid']}}|h2">Like</h2>
-                                          @endif
-                                      </a>
+                                      <a href="" class="like-a" id="on|c53d803b-738c-435a-8044-0e98416a47c9">
+                                            <i class="far fa-heart center fa-16 unliked" id=""></i>
+                                          <h2 id="off|c53d803b-738c-435a-8044-0e98416a47c9|h2">Like</h2>
+                                        </a>
                                     </div>
                                 </li>
                                 <li class="l-5">
-                                  <div class="content-button comment-send-post" id="comment-{{$dados[$key]['post_id']}}">
-                                      <a href="{{route('post_index', $dados[$key]['post_uuid'])}}" id="comment_a-{{$dados[$key]['post_id']}}">
-                                          <i class="far fa-comment-alt center fa-16" id="comment_i-{{$dados[$key]['post_id']}}"></i>
+                                  <div class="content-button comment-send-post" id="comment-37">
+                                      <a href="" id="comment_a-37">
+                                          <i class="far fa-comment-alt center fa-16" id="comment_i-37"></i>
                                           <h2>Comentar</h2>
                                       </a>
                                   </div>
@@ -243,44 +131,35 @@
                                         </a>
                                     </div>
                                 </li>
-                                <?php if ($dados[$key]['guardado']==0): ?>
-                                <li class="r-5" id="savepost-{{$dados[$key]['post_id']}}">
+                                <li class="r-5" id="savepost-37">
                                     <div class="content-button">
-                                        <a href="" class="savepost" id="savepost-{{$dados[$key]['post_id']}}">
-                                            <i class="far fa-bookmark center fa-16" id="savepost-{{$dados[$key]['post_id']}}"></i>
-                                            <h2 id="savepost-{{$dados[$key]['post_id']}}">Guardar</h2>
+                                        <a href="" class="savepost" id="savepost-37">
+                                            <i class="far fa-bookmark center fa-16" id="savepost-37"></i>
+                                            <h2 id="savepost-37">Guardar</h2>
                                         </a>
                                     </div>
                                 </li>
-                                  <?php endif ?>
-                                                                                      </ul>
                         </nav>
                         <div class="comment-send clearfix" id="comment-send-1">
-                          @if( !($conta_logada[0]->foto == null) )
                             <div class="img-user-comment l-5">
-                                <img class="img-full circle" src="{{ asset('storage/img/users') . '/' . $conta_logada[0]->foto }}">
+                                <img class="img-full circle">
                             </div>
-                            @else
-                            <div class="img-user-comment l-5">
-                                <i class="fas fa-user center" style="font-size: 20px; color: #ccc;"></i>
-                            </div>
-                              @endif
                             <div class="input-text comment-send-text l-5 clearfix">
-                              <input type="text" class="" name="comentario" id="comentario-{{$dados[$key]['post_id']}}" placeholder="O que você tem a dizer?">
+                              <input type="text" class="" name="comentario" id="comentario-37" placeholder="O que você tem a dizer?">
                               <div class="r-5 ">
-                                  <a href="" class="comentar-a" id="{{$dados[$key]['post_id']}}">
-                                      <i class="far fa-paper-plane fa-20 fa-img-comment" id="{{$dados[$key]['post_id']}}"></i>
+                                  <a href="" class="comentar-a" id="37">
+                                      <i class="far fa-paper-plane fa-20 fa-img-comment" id="37"></i>
                                   </a>
                               </div>
 
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
-            <?php endforeach ?>
-
         </div>
+        <?php $key++; } ?>
     </div>
 
 </div>

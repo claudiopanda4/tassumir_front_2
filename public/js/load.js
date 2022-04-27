@@ -386,12 +386,13 @@ $(document).ready(function () {
 					if (data.formato_id == 1) {
 						$('#img-post-page-' + key).addClass('invisible-component');
 						document.getElementById('video-post-page-' + key).preload = 'metadata';
-						$('#video-post-page-' + key).attr('src', route + '/storage/video/page/' + data.file + '#t=5,10');
+						$('#img-post-video-component-cover-' + key).attr('src', route + '/storage/img/thumbs/' + data.thumbnail);
 						$('#video-post-page-' + key).removeClass('invisible-component');
 						$('#video-post-page-' + key).addClass('video-page-component');
 					}
 					$('#a-post-component-' + key).attr('href', route + '/post_index/' + data.uuid);
 					$('#a-post-component-' + key).attr('id', 'a-post-component_' + data.uuid);
+					$('#img-post-video-component-cover-' + key).attr('id', 'img-post-video-component-cover_' + data.uuid);
 				});
 				$('#video-loaded-profile-read').val(1);
 				if (true) {
@@ -1242,6 +1243,41 @@ $(document).ready(function () {
     function videos(id){
     }
     setInterval(function (e) {
+    	if ($('#home-page-checked').val()) {
+	    	if ($('#current-video-id').val() != '') {
+	            let id_video = $('#current-video-id').val().split('_');
+	            let size_id_video = id_video.length;
+	            let id_video_final = id_video[size_id_video - 1];
+	            if (document.getElementById('video_' + id_video_final).paused) {
+	                if (document.getElementById('play_button_' + id_video_final)) {
+	                    document.getElementById('play_button_' + id_video_final).classList.remove('invisible-component');
+	            	} else if (document.getElementById('playbutton_' + id_video_final)) {
+	                    document.getElementById('playbutton_' + id_video_final).classList.remove('invisible-component');
+	                }
+	            }
+	           /*let state_ = $("#video_" + id_video_final)[0].paused != true &&
+	            !$("#video_" + id_video_final)[0].seeking &&
+	            $("#video_" + id_video_final)[0].currentTime > 0 &&
+	            $("#video_" + id_video_final)[0].readyState >= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA;
+	            console.log(id_video_final + ' ' + state_);
+	            console.log('paused ' + $("#video_" + id_video_final)[0].paused);
+	            console.log('.HAVE_FUTURE_DATA ' + $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA);
+	            console.log('readyState ' + $("#video_" + id_video_final)[0].readyState);
+	            console.log('seeking ' + $("#video_" + id_video_final)[0].seeking);
+	            console.log('currentTime ' + $("#video_" + id_video_final)[0].currentTime);*/
+	            if ($("#video_" + id_video_final)[0].paused != true &&
+	                !$("#video_" + id_video_final)[0].seeking &&
+	                $("#video_" + id_video_final)[0].currentTime > 0 &&
+	                $("#video_" + id_video_final)[0].readyState >= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA) {
+	                    $("#loader_icon_" + id_video_final).addClass('invisible-component');
+	            	} else {
+	                    if ($("#video_" + id_video_final)[0].readyState <= $("#video_" + id_video_final)[0].HAVE_FUTURE_DATA){
+	                        $("#loader_icon_" + id_video_final).removeClass('invisible-component');
+	                    }
+	                }
+	        }
+    	}
+
 	    getvideo = document.getElementsByClassName('getvideo');
 	    for (var i = 0; i <= getvideo.length - 1; i++) {
 		    id = getvideo[i].id.split('_')[2];
@@ -1273,6 +1309,7 @@ $(document).ready(function () {
 				}
 	    	}
 	    }
+
     }, 10);
     setInterval(function (e) {
     	let main = $('.main-container').offset();
@@ -1536,10 +1573,10 @@ $(document).ready(function () {
     	}
     	if (document.getElementById('video_' + any_id).paused) {
 			document.getElementById('video_' + any_id).play();
-            document.getElementById('play_button_' + id).classList.add('invisible-component');
+            document.getElementById('play_button_' + any_id).classList.add('invisible-component');
     	} else {
 			document.getElementById('video_' + any_id).pause();
-            document.getElementById('play_button_' + id).classList.remove('invisible-component');
+            document.getElementById('play_button_' + any_id).classList.remove('invisible-component');
     	}
 	    
     	 $('#current-video-id').val('video_' + any_id);

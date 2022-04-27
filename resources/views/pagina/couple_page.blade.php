@@ -256,7 +256,7 @@
                         </label>
                     </div>
                     <div class="cover-done cover-done-post l-5" id="cover-done-final">
-                        <button type="button" class="post-public" id="post-public-done">Publicar</button>
+                        <button type="submit" class="post-public" id="post-public-done">Publicar</button>
                     </div>
                 </div>
             </div>

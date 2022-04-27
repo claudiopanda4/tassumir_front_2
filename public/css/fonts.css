@@ -2,7 +2,7 @@
 
 @font-face {
 	font-family: nunito;
-	src: url('fonts/Nunito/Nunito-Regular.ttf');
+	/*src: url('fonts/Nunito/Nunito-Regular.ttf');*/
 }
 @font-face {
 	font-family: aremat;
@@ -11,11 +11,11 @@
 
 @font-face{
 	font-family: montserrat;
-	src: url('fonts/Montserrat/static/Montserrat-Light.ttf');
+	/*src: url('fonts/Montserrat/static/Montserrat-Light.ttf');*/
 }
 @font-face{
 	font-family: poirot;
-	src: url('fonts/Poiret_One/PoiretOne-Regular.ttf');
+	/*src: url('fonts/Poiret_One/PoiretOne-Regular.ttf');*/
 }
 * {
 	font-family: nunito;

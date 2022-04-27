@@ -145,13 +145,13 @@
             <div class="post-video-container-page post-page-container clearfix">
                 <?php $ver = 1; $key = 0; while ($key < 126) {?>
                     <a href="" id=<?php echo 'a-post-component-'.$key; ?>>
-                        <video preload="metadata" <?php if (($ver % 3) == 0){echo "class='img-post-video-component img-post img-post-video-component-fl video-post-profile invisible-component'";}else{echo "class='img-post-video-component img-post video-post-profile invisible-component'";} ?> id="video-post-page-{{$key}}">
-                            <source src="" type="video/mp4"> 
+                        <div preload="metadata" <?php if (($ver % 3) == 0){echo "class='img-post-video-component img-post img-post-video-component-fl video-post-profile invisible-component'";}else{echo "class='img-post-video-component img-post video-post-profile invisible-component'";} ?> id="video-post-page-{{$key}}">
+                            <img class="img-full" id="img-post-video-component-cover-{{$key}}"> 
                             <div class="clearfix content-video-some-details">
-                                <img class="l-5 img-20" style="" src="{{asset('css/uicons/video_liked.png')}}">
-                                <h1 class="l-5" style="font-size: 9px; text-transform: uppercase; color: #fff;">115</h1>
+                                <img class="l-5 img-20 video_liked-icon" style="" src="{{asset('css/uicons/play_video_button.png')}}">
+                                <h1 class="l-5" style="font-size: 9px; text-transform: uppercase; color: #fff;"></h1>
                             </div>           
-                        </video>
+                        </div>
                     </a>
                     <a href="" id="a-post-component-cover-{{$key}}">
                         <div <?php if (($ver % 3) == 0){echo "class='img-post img-post-video-component img-post-video-component-fl img-cover-video-component invisible-component'";}else{echo "class='img-post img-post-video-component img-cover-video-component invisible-component'";} ?> id="img-post-page-{{$key}}">
