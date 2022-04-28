@@ -35,7 +35,7 @@ $(document).ready(function () {
 		$('#add-cover-profile').addClass('invisible-component');
 		$('#cover-done-profile-cover-choose-container').addClass('invisible-component');
 		$('#foto-view').removeClass('invisible-component');
-		console.log(url);
+		//console.log(url);
 	});
 	$('#cover-done-profile-cover-choose-id').click(function(){
 		$('#file-id-profile').click();
@@ -56,7 +56,7 @@ $(document).ready(function () {
 			} else {
 				$('#poupar-data-id').removeClass(response.remove_class);
 			}
-			console.log(response);
+			//console.log(response);
 		}
 	});
 	$.ajax({
@@ -65,7 +65,7 @@ $(document).ready(function () {
 		data : {},
 		dataType : 'json',
 		success: function (response) {
-			console.log(response);
+			//console.log(response);
 			$('#target-alert-post-denied-id').addClass(response.class);
 			$('#page_denied').val(response.page);
 		}
@@ -97,7 +97,7 @@ $(document).ready(function () {
 			data: {'id' : 0},
 			dataType: 'json',
 			success:function(response){
-				console.log(response);
+				//console.log(response);
 				any_id = 'reacções';
 				if (response.qtd_likes == 0) {
 					$('#likes-qtd_' + response.id).text('');
@@ -127,7 +127,7 @@ $(document).ready(function () {
 			data: {'since' : $('#post_comment-qtd').val()},
 			dataType: 'json',
 			success:function(response){
-				console.log(response);
+				//console.log(response);
 				$.each(response, function(key, data){
 					cont = $('#post_comment-qtd').val();
 					$('#comment-users-' + cont).removeClass('invisible-component');
@@ -172,7 +172,7 @@ $(document).ready(function () {
 			data: {},
 			dataType: 'json',
 			success:function(response){
-				console.log(response);
+				//console.log(response);
 				if (response.foto) {
 					$('#comment-send-profile_' + $('#ident-post-page').val()).addClass('img-full');
 					$('#comment-send-profile_' + $('#ident-post-page').val()).removeClass('img-24');
@@ -666,11 +666,11 @@ $(document).ready(function () {
 			data: {'text' : text},
 			dataType: 'json',
 			success: function (response) {
-				console.log(response);
+				//console.log(response);
 				any_class = document.getElementsByClassName('a-result-search');
 				if (response.state) {
 					$.each(response.search, function(key, data){
-						console.log(data.nome);
+						//console.log(data.nome);
 						any_id = data.uuid;
 						components = [
 							'#assumir-item_' + any_id, 
@@ -732,7 +732,7 @@ $(document).ready(function () {
 						data: {'type': i, 'id' : $('#ident-profile-id').val()},
 						dataType: 'json',
 						success: function (response) {
-							console.log(response);
+							//console.log(response);
 							$('#data-profile-' + i).text(response.data);
 						}
 					});
@@ -743,7 +743,7 @@ $(document).ready(function () {
 					data: {'id': $('#ident-profile-id').val(), 'genre' : $('#ident-genre').val()},
 					dataType: 'json',
 					success: function (response) {
-						console.log(response);
+						//console.log(response);
 						if (response.payment) {
 							$('#relationship-requests').remove();
 							$('#name-requested').text($('#profille-name').text())
@@ -768,7 +768,7 @@ $(document).ready(function () {
 							$('#more-option-btn-profile').removeClass('invisible');
 							$('#add-edit-profile-owner').remove();
 						}
-						console.log(response);
+						//console.log(response);
 						if (response.reject) {
 							$('#btn-profile-redirect').attr('href', route + '' + response.reject);
 						}
@@ -1338,7 +1338,7 @@ $(document).ready(function () {
 				url = '/couple_page/page/content/videos/';
 				any_id = parseInt($('#last-post-page-video').val());
 				type = 1;
-				console.log('component-key-page-video ' + $('#component-key-page-video').val());
+				//console.log('component-key-page-video ' + $('#component-key-page-video').val());
     		} else if($('#control-type-state-posts-checked').val() == 3){
 				url = '/page/pictures/';
 				type = 2;
@@ -1479,8 +1479,8 @@ $(document).ready(function () {
 							    data: {'id' : id, 'video_add' : true},
 							    dataType: 'json',
 							    success:function(response){
-							    	console.log('insert-video_' + response.ident);
-							    	//document.getElementById('insert-video_' + response.ident).value = 'saved';
+							    	//console.log('insert-video_' + response.ident);
+							    	document.getElementById('insert-video_' + response.ident).value = 'saved';
 							    	//console.log('saved true ' + response.ident);
 							    }
 							});

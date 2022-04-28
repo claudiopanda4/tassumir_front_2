@@ -4523,3 +4523,25 @@ label[for="hugo"]{
     width: 20px;
     height: 20px;
 }
+.video-component-tv {
+    width: 300px;
+    height: 450px;
+    border-radius: 10px;
+    background-color: #3a3b3c;
+}
+.li-tv-icon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
+    background-color: #ccc;
+}
+.nav-tv {
+    bottom: 15%;
+    position: absolute;
+    right: 0;
+}
+.video-tv-container {
+    width: 320px;
+    margin: 10px auto;
+}

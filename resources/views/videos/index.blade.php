@@ -9,7 +9,7 @@
         </li>
     </ul>
 </header>
-<div>
+<!--<div>
     <nav class="nav-video-option">
         <ul>
             <a href="">
@@ -162,6 +162,57 @@
         <?php $key++; } ?>
     </div>
 
+</div>-->
+<div>
+    <nav class="nav-video-option">
+        <ul>
+            <a href="">
+                <li>Mais Assistidos</li>
+            </a>
+            <a href="">
+                <li>Mais Curtidos</li>
+            </a>
+            <a href="">
+                <li>Mais Recentes</li>
+            </a>
+            <a href="">
+                <li>Guardados</li>
+            </a>
+        </ul>
+    </nav>
+    <div>
+        <div class="video-tv-container clearfix">
+            <div class="thumbnail-video video-component-tv l-5">
+                
+            </div>
+            <video class="invisible-component video-component-tv l-5">
+                
+            </video> 
+            <nav class="l-5 nav-tv">
+                <a href="">
+                    <li class="li-tv-icon circle">
+                        <img class="img-30 center" src="{{asset('css/uicons/love_tv.png')}}">
+                    </li>
+                </a>
+                <a href="">
+                    <li class="li-tv-icon circle">
+                        <img class="img-30 center" src="{{asset('css/uicons/comment_tv.png')}}">
+                    </li>
+                </a>
+                <a href="">
+                    <li class="li-tv-icon circle">
+                        <img class="img-30 center" src="{{asset('css/uicons/share_tv.png')}}">
+                    </li>
+                </a>
+                <a href="">
+                    <li class="li-tv-icon circle">
+                        <img class="img-30 center" src="{{asset('css/uicons/bookmark_tv.png')}}">
+                    </li>
+                </a>
+            </nav>           
+        </div>
+
+    </div>
 </div>
 <script>
 function gostar(id){
