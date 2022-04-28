@@ -1900,7 +1900,10 @@ label[for="hugo"]{
     font-size: 12px;
 }
 .img-profile {
+    position: absolute;
     border: 0px solid #000;
+    min-height: 96px;
+    height: auto;
 }
 .card-flex {
     justify-content: space-between;
@@ -2635,6 +2638,10 @@ label[for="hugo"]{
 }
 #img-profile-container.transparent-back {
     background-color: transparent;
+}
+#img-profile-container {
+    position: relative;
+    overflow: hidden;
 }
 #card-profile-option .option-profile-menu li:hover > a .icon-hover-option-profile{
     color: #800080;

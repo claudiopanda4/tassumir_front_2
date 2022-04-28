@@ -29,9 +29,9 @@
     <header class="card br-10 card-flex profile-card" id="profile-card-header">
         <div id="img-profile-container" class="circle">
             @if ($foto != null)
-                <img class="img-profile has-img-profile img-full circle invisible-component" src="{{asset('storage/img/users') . '/' . $foto}}" id="img-profile-component"> 
+                <img class="img-profile has-img-profile img-full invisible-component" src="{{asset('storage/img/users') . '/' . $foto}}" id="img-profile-component"> 
             @else:
-                <img class="img-profile img-full circle invisible-component" src="{{asset('css/uicons/user.png')}}" id="img-profile-component">                            
+                <img class="img-profile img-full invisible-component" src="{{asset('css/uicons/user.png')}}" id="img-profile-component">                            
             @endif
 
             <label for="target-profile-cover">
