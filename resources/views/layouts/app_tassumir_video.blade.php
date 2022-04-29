@@ -7,6 +7,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/scripts.js') }}" defer></script>
 
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     <script src="{{ asset('js/jquery/jquery-3.5.1/jquery-3.5.1.js') }}"></script>
@@ -31,7 +32,7 @@
     <header class="header-main header-main-component clearfix">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
-                    <a href=""><!--<i class="fas fa-link fa-24"></i>--><h1>tass<span class="title-final">umir</span></h1></a>
+                    <a href="{{route('account.home.feed')}}"><!--<i class="fas fa-link fa-24"></i>--><h1>tass<span class="title-final">umir</span></h1></a>
                 </li>
                 <li class="search-lg mobile-hidden" style="margin-left:48px;">
                     <div class="input-search">
@@ -123,7 +124,7 @@
         </nav>
     </aside>
     <div class="header-main-component"></div>
-    <main class="main-container">
+    <main class="main-container" id="main-container-video">
         @yield('content');
     </main>
     </div>

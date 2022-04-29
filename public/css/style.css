@@ -4525,23 +4525,57 @@ label[for="hugo"]{
 }
 .video-component-tv {
     width: 300px;
-    height: 450px;
+    height: 75vh;
     border-radius: 10px;
     background-color: #3a3b3c;
+    background-color: #000;
 }
 .li-tv-icon {
     position: relative;
     width: 40px;
     height: 40px;
     margin-top: 10px;
-    background-color: #ccc;
+    background-color: #3a3b3c;
 }
 .nav-tv {
-    bottom: 15%;
+    bottom: 10%;
     position: absolute;
     right: 0;
 }
 .video-tv-container {
-    width: 320px;
+    position: relative;
+    width: 365px;
     margin: 10px auto;
+}
+.text-li-tv-icon {
+    font-size: 12px;
+    text-align: center;
+    color: #efefef;
+    margin-top: 5px;
+    font-weight: bolder;
+}
+.thumbnail-video img.thumb-video {
+    position: relative;
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    height: auto;
+    min-height: 100%;
+    border-radius: 10px;
+}
+#main-container-video {
+    margin-top: 0;
+}
+.thumbnail-video {
+    overflow-y: hidden;
+}
+.play_button_tv {
+    z-index: 3;
+    width: 70px;
+    height: 70px;
+}
+.video_component-video {
+    position: absolute;
+    height: 100%;
+    left: 0;
 }
