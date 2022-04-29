@@ -68,7 +68,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     /*fim novas rotas pages*/
 
     /*novas rotas tassumirvideo*/
-    Route::get('/tassumirvideos_final/{id}', [App\Http\Controllers\PostController::class, 'tassumirvideos_final'])->name('post.tassumir.video_final');
+    Route::get('/tv/{id}', [App\Http\Controllers\PostController::class, 'tassumirvideos_final'])->name('post.tassumir.video_final');
     /*fim das novas rotas tassumirvideo*/
     Route::get('/post_index_old/{id}', [App\Http\Controllers\AuthController::class, 'post_index'])->name('post_index');
     Route::get('/post_index/{id}', [App\Http\Controllers\PostController::class, 'index'])->name('post_index');

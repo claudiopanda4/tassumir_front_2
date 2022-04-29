@@ -37,6 +37,29 @@
 	#statistics-profile-page-component-container-lg-1 {
 		width: 254px;
 	}
+	.video-tv-container {
+		width: 100%;
+		margin-top: 0;
+		margin-bottom: 5px;
+		height: 90vh;
+	}
+	.nav-video-option li {
+	    padding: 8px 10px;
+	    font-size: 12px;
+	}
+	.video-component-tv {
+		width: 100%;
+	    height: 100%;
+	    max-height: inherit;
+	    margin: auto;
+	    border-radius: 0;
+	}
+	.li-tv-icon {
+		background-color: transparent;
+	}
+	.thumbnail-video img.thumb-video {
+		border-radius: 0;
+	}
 	.card-post p {
 		margin-left: 0;
 	}
@@ -508,6 +531,21 @@
 	    /*top: 330px;*/
 	}
 	
+}
+@media screen and (max-width: 375px)
+{
+	.video-tv-container {
+	    height: 100vh;
+	}
+	.video-component-tv {
+	    height: auto;
+	    overflow: hidden;
+	    max-height: 100%;
+	}
+	.video-component-tv.video-play {
+		max-height: inherit;
+		position: relative;
+	}
 }
 @media screen and (max-width: 375px) {
 	.description-couple {
@@ -1355,6 +1393,14 @@
 		border-radius: 0;
 		/*border-top: 1px solid #343a40;*/
 	}
+	.li-tv-icon > .img-26 {
+	    width: 35px;
+	    height: 35px;
+	}
+	#main-component-main-tv-id.main-component-main-tv-hidden {
+		overflow: hidden;
+		height: 100vh;
+	}
 	.pop-up-component.profile-cover-pop-up {
 		width: 100%;
 	}
@@ -1644,6 +1690,9 @@
 	    margin-top: 2px;
     	margin-bottom: -5px;
 	}
+	.height-minim-video-tv {
+		height: 100%;
+	}
 	.profile-cover-pop-up {
 	    width: 100%;
 	}
@@ -1850,6 +1899,14 @@
 	.invisible-component {
 		display: none;
 	}
+	.header-main-component.fixed-header-two,
+	.header-main.fixed-header-two {
+		position: fixed;
+		background-color: transparent;
+		border: none;
+		height: 0;
+	}
+
 	.card-post p {}
 	
 	#more-description-page .statistics-profile-page {
@@ -1883,7 +1940,7 @@
 	    border-radius: 0;
 	}
 	#alert-info-about-us-0.alert-info-about-us {
-		margin: 5px auto;
+		margin: 15px auto 5px;
 	}
 	.comment-send input[type="text"] {
 	    width: 80%;

@@ -29,7 +29,7 @@
 
 <body class="container-main" id="container-main-tv">
     <div class="body-pop-up content-full-scroll">
-    <header class="header-main header-main-component clearfix">
+    <header class="header-main header-main-component clearfix" id="header-main-component-1-tv">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
                     <a href="{{route('account.home.feed')}}"><!--<i class="fas fa-link fa-24"></i>--><h1>tass<span class="title-final">umir</span></h1></a>
@@ -123,9 +123,9 @@
             </ul>
         </nav>
     </aside>
-    <div class="header-main-component"></div>
+    <div class="header-main-component" id="header-main-component-2-tv"></div>
     <main class="main-container" id="main-container-video">
-        @yield('content');
+        @yield('content')
     </main>
     </div>
 </body>

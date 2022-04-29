@@ -247,7 +247,7 @@
 
 
     <main>
-        @yield('content');
+        @yield('content')
     </main>
 </div>
  <script type="text/javascript">

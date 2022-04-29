@@ -1,7 +1,7 @@
 @extends('layouts.app_tassumir_video')
 
 @section('content')
-<div class="main">
+<div class="main" style="margin-bottom: 0;">
 <header class="card more-following" id="card-more-following">
     <ul>
         <li>
@@ -9,8 +9,8 @@
         </li>
     </ul>
 </header>
-<div>
-    <nav class="nav-video-option">
+<div class="main-component-main-tv" id="main-component-main-tv-id">
+    <nav class="nav-video-option" id="nav-video-option-id">
         <ul>
             <a href="">
                 <li>Mais Assistidos</li>
@@ -26,17 +26,24 @@
             </a>
         </ul>
     </nav>
-    <div>
-        <div class="video-tv-container clearfix">
+    <input type="hidden" id="last-component-id-tv" value="0">
+    <input type="hidden" id="last-post-id-tv" value="0">
+    <input type="hidden" id="loaded-post-id-tv" value="0">
+    <input type="hidden" id="loaded-video-play-tv" value="none">
+    <input type="hidden" id="margin-video-play-tv" value="0">
+    <input type="hidden" id="margin-video-play-x-y" value="down">
+    <div class="main-container-video" id="main-container-video-component">
+        <?php $key = 0; while ($key < 70){ ?>
+        <div class="video-tv-container clearfix invisible-component" id="video-tv-container_{{$key}}">
             <div class="thumbnail-video video-component-tv l-5">
-                <img class="img-32 center play_button_tv" id="play-button-tv_1" src="{{asset('css/uicons/play_button.png')}}">
-                <img class="thumb-video" src="{{asset('storage/img/thumbs/1650719375_499c39a36b4c4215d87cd591c5c3301e.jpeg')}}" id="thumb-video-tv_1">
+                <img class="img-32 center play_button_tv" id="play-button-tv_{{$key}}" src="{{asset('css/uicons/play_button.png')}}">
+                <img class="thumb-video" id="thumb-video-tv_{{$key}}">
             </div>
-            <video class="video-component-tv video_component-video l-5 invisible-component" id="video-component-video_1" src="" controls>
+            <video class="video-component-tv video_component-video l-5 invisible-component height-minim-video-tv" id="video-component-video_{{$key}}" src="" controls>
                 
             </video>
-            <input type="hidden" id="video-tv-source_1" value="{{asset('storage/video/page/1650719375_499c39a36b4c4215d87cd591c5c3301e.mp4')}}">
-            <input type="hidden" id="video-tv-clicked_1" value="0"> 
+            <input type="hidden" id="video-tv-source_{{$key}}">
+            <input type="hidden" id="video-tv-clicked_{{$key}}" value="0"> 
             <nav class="l-5 nav-tv">
                 <a href="">
                     <li class="li-tv-icon circle">
@@ -54,16 +61,17 @@
                     <li class="li-tv-icon circle">
                         <img class="img-26 center" src="{{asset('css/uicons/share_tv.png')}}">
                     </li>
-                    <h1 class="text-li-tv-icon">111</h1>
+                    <h1 class="text-li-tv-icon text-li-tv-icon-description">PARTILHAR</h1>
                 </a>
                 <a href="">
                     <li class="li-tv-icon circle">
                         <img class="img-26 center" src="{{asset('css/uicons/bookmark_tv.png')}}">
                     </li>
-                    <h1 class="text-li-tv-icon">111</h1>
+                    <h1 class="text-li-tv-icon text-li-tv-icon-description">GUARDAR</h1>
                 </a>
             </nav>           
         </div>
+        <?php $key++; } ?>
 
     </div>
 </div>

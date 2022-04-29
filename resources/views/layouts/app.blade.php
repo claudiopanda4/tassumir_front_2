@@ -178,7 +178,7 @@
     </aside>
     @endif
     <main class="main-container">
-        @yield('content');
+        @yield('content')
     </main>
     <div class="menu-footer">
 
