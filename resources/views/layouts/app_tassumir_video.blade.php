@@ -100,10 +100,10 @@
                     </div>
                 </li>
                 <input type="hidden" id="ident-key" name="">
-                <li class="poupar-data l-5 alert-assumir-make-money-now" id="poupar-data-id"></li>
+                <li class="poupar-data l-5 alert-assumir-make-money-now invisible-component" id="poupar-data-id"></li>
                 <li class="user-tassumir clearfix l-5">
-                    <a href="">
-                        <div class="l-5 user-account-container-img">
+                    <a href="{{route('account.profile')}}">
+                        <div class="l-5 user-account-container-img" id="user-account-container-img-container">
                             <img class="img-full center invisible-component" id="user-account-container-img-id">
                         </div>
                     </a>

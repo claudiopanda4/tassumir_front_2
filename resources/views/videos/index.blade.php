@@ -12,16 +12,16 @@
 <div class="main-component-main-tv" id="main-component-main-tv-id">
     <nav class="nav-video-option" id="nav-video-option-id">
         <ul>
-            <a href="">
+            <a href="{{route('post.tassumir.video','ma')}}">
                 <li>Mais Assistidos</li>
             </a>
-            <a href="">
+            <a href="{{route('post.tassumir.video','mc')}}">
                 <li>Mais Curtidos</li>
             </a>
-            <a href="">
+            <a href="{{route('post.tassumir.video','mr')}}">
                 <li>Mais Recentes</li>
             </a>
-            <a href="">
+            <a href="{{route('post.tassumir.video','mg')}}">
                 <li>Guardados</li>
             </a>
         </ul>
@@ -32,8 +32,11 @@
     <input type="hidden" id="loaded-video-play-tv" value="none">
     <input type="hidden" id="margin-video-play-tv" value="0">
     <input type="hidden" id="margin-video-play-x-y" value="down">
+    <input type="hidden" id="current-time-video-tv-clicked" value="0">
+    <input type="hidden" id="video-tv-clicked-now" value="0"> 
+    
     <div class="main-container-video" id="main-container-video-component">
-        <?php $key = 0; while ($key < 70){ ?>
+        <?php $key = 0; while ($key < 70) { ?>
         <div class="video-tv-container clearfix invisible-component" id="video-tv-container_{{$key}}">
             <div class="thumbnail-video video-component-tv l-5">
                 <img class="img-32 center play_button_tv" id="play-button-tv_{{$key}}" src="{{asset('css/uicons/play_button.png')}}">
@@ -44,18 +47,20 @@
             </video>
             <input type="hidden" id="video-tv-source_{{$key}}">
             <input type="hidden" id="video-tv-clicked_{{$key}}" value="0"> 
+            <input type="hidden" id="view-tv-save_{{$key}}" value="0"> 
+            <!--<input type="hidden" id="current-time-video-tv-clicked_{{$key}}" value="0">-->
             <nav class="l-5 nav-tv">
                 <a href="">
                     <li class="li-tv-icon circle">
                         <img class="img-26 center" src="{{asset('css/uicons/love_tv.png')}}">
                     </li>
-                    <h1 class="text-li-tv-icon">111</h1>
+                    <h1 class="text-li-tv-icon" id="text-li-tv-icon-like-{{$key}}"></h1>
                 </a>
                 <a href="">
                     <li class="li-tv-icon circle">
                         <img class="img-26 center" src="{{asset('css/uicons/comment_tv.png')}}">
                     </li>
-                    <h1 class="text-li-tv-icon">111</h1>
+                    <h1 class="text-li-tv-icon" id="text-li-tv-icon-comment-{{$key}}"></h1>
                 </a>
                 <a href="">
                     <li class="li-tv-icon circle">

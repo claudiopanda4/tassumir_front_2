@@ -4534,15 +4534,15 @@ label[for="hugo"]{
 }
 .li-tv-icon {
     position: relative;
-    width: 66px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     margin-top: 10px;
     background-color: #3a3b3c;
 }
 .nav-tv {
-    bottom: 10%;
+    bottom: 30%;
     position: absolute;
-    right: 0;
+    right: -30px;
 }
 .video-tv-container {
     position: relative;
@@ -4553,7 +4553,8 @@ label[for="hugo"]{
     font-size: 12px;
     text-align: center;
     color: #efefef;
-    margin-top: 5px;
+    margin-top: 0px;
+    margin-bottom: 0;
     font-weight: bolder;
 }
 .thumbnail-video img.thumb-video {
@@ -4590,4 +4591,7 @@ label[for="hugo"]{
 #container-main-tv .main-container.main-container-tv {
     height: 100vh;
     overflow-y: hidden;
+}
+#main-container-video-component {
+    transition: all 0.5s;
 }

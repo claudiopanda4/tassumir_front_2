@@ -1673,6 +1673,17 @@ class AuthController extends Controller
         $contas = DB::select('select foto, nome, apelido from contas where (conta_id) = (?)', [$id]);
         return $contas[0];
     }
+    public function user_photo(Request $request){
+        $id = Auth::user()->conta_id;
+        $contas = DB::select('select foto from contas where (conta_id) = (?)', [$id]);
+        $photo = '/storage/img/users/'.$contas[0]->foto;
+        $class = '';
+        if ($contas[0]->foto == null || $contas[0]->foto == 'null' || $contas[0]->foto == '') {
+            $photo = '/css/uicons/user.png';
+            $class = 'no-img';
+        }
+        return json_encode(['photo' => $photo, 'add' => $class]);
+    }
     /*Função para pegar os dados com ajax*/
 
     public function paginasqueSigo(){

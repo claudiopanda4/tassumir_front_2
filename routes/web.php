@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
         return view('feed.index');
     })->middleware('auth:web1');
     Route::get('/user_data', [App\Http\Controllers\AuthController::class, 'user_data'])->name('account.data');
+    Route::get('/user_photo', [App\Http\Controllers\AuthController::class, 'user_photo'])->name('account.data.photo');
     Route::get('/tip_of_relac_you', [App\Http\Controllers\AuthController::class, 'tip_of_relac_you'])->name('tip_of_relac_you');
     Route::get('/state_civil_and_descrition', [App\Http\Controllers\AuthController::class, 'state_civil_and_descrition'])->name('state_civil_and_descrition');
     Route::get('/post/like', [App\Http\Controllers\AuthController::class, 'like_final'])->name('like');

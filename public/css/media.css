@@ -545,6 +545,7 @@
 	.video-component-tv.video-play {
 		max-height: inherit;
 		position: relative;
+		height: 100vh;
 	}
 }
 @media screen and (max-width: 375px) {
@@ -1793,6 +1794,7 @@
 	    /*background-color: #242526;*/
     	border-radius: 5px;
 	}
+
 	.data-statistics {
 	    margin-top: 15px;
 	}
@@ -1898,6 +1900,19 @@
 @media screen and (max-width: 540px){
 	.invisible-component {
 		display: none;
+	}
+	.user-tassumir img.no-img {
+	    width: 24px;
+	    height: 24px;
+	}
+	.li-tv-icon {
+	    width: 66px;
+	    height: 40px;
+	    margin-top: 5px;
+	}
+	.nav-tv {
+	    bottom: 15%;
+	    right: 0;
 	}
 	.header-main-component.fixed-header-two,
 	.header-main.fixed-header-two {
@@ -2057,5 +2072,12 @@
 @media screen and (max-height: 600px){
 	#main-login {
 	    margin-top: 10%;
+	}
+}
+
+@media screen and (min-height: 670px)
+{
+	.video-tv-container {
+	    height: 100vh;
 	}
 }
