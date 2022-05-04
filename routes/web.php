@@ -201,13 +201,11 @@ Route::get('/recuperarSenha', [App\Http\Controllers\AuthController::class, 'recu
 Route::get('/recuperarSenha/code', [App\Http\Controllers\AuthController::class, 'codigoRecebido'])->name('code.received.form');
 Route::get('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'newCode'])->name('validate.newCode.form');
 Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'updatePassword'])->name('account.newPasswordSave');
-<<<<<<< HEAD
 
 //
 
 
 //api
-=======
 #POSTS
 Route::get('/ten_comments', [App\Http\Controllers\PageController::class, 'ten_comments'])->name('ten_comments');
 Route::get('/view', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
@@ -225,7 +223,6 @@ Route::get('/editpage/{id}', [App\Http\Controllers\PageController::class, 'show'
 Route::get('/couple_page/delete_page_view/{id}', [App\Http\Controllers\PageController::class, 'view_delete_couple_page'])->name('delete_couple.page_view');
 
 #API
->>>>>>> 4ab15ce41028b9ab78102b4266aa873054fc9bfe
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/api/login', [App\Http\Controllers\AuthController::class, 'login_return'])->name('api.login.get');
 });
