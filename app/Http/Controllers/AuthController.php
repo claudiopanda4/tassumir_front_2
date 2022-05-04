@@ -33,7 +33,7 @@ class AuthController extends Controller
 
     public function header_button () {
         $conta_id = Auth::user()->conta_id;
-        $result = DB::select('select (select foto from contas where conta_id = ?) as foto, (select count(*) from pages where conta_id_a = ? or conta_id_b = ?) as page from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id, $conta_id]);
+        $result = DB::select('select (select foto from contas where conta_id = ?) as foto, (select count(*) from pages where conta_id_a = ? or conta_id_b = ?) as page, (select count(*) from pedido_relacionamentos where conta_id_pedinte = ? || conta_id_pedida = ?) as pedinte from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id, $conta_id, $conta_id, $conta_id]);
 
         $addClass = '';
         $remove = true;
@@ -47,17 +47,33 @@ class AuthController extends Controller
                 $remove_class = 'invisible-component';
                 $remove = false;
             }
+
             if ($result->page < 1) {
                 $addClass = 'alert-assumir-make-money-now';
                 $text = 'Ganhar dinheiro agora';
                 $remove_class = 'invisible-component';
                 $remove = false;
             }
+            $result = DB::select('select count(*) as pedinte from pedido_relacionamentos where conta_id_pedinte = ?', [$conta_id])[0];
+            if ($result->pedinte) {
+                $addClass = '';
+                $text = "";
+                $remove = false;    
+            }
         } else {
-            $addClass = 'alert-assumir-make-money-now';
-            $text = 'Ganhar dinheiro agora';
-            $remove_class = 'invisible-component';
-            $remove = false;
+
+            $result = DB::select('select count(*) as pedinte from pedido_relacionamentos where conta_id_pedinte = ?', [$conta_id])[0];
+
+            if ($result->pedinte) {
+                $addClass = '';
+                $text = "";
+                $remove = false;    
+            } else {
+                $addClass = 'alert-assumir-make-money-now';
+                $text = 'Ganhar dinheiro agora';
+                $remove_class = 'invisible-component';
+                $remove = false;                
+            }
         }
 
         return response()->json([
@@ -297,7 +313,7 @@ class AuthController extends Controller
                         }
                         break;
                     case 8:
-                        $notificacoes[$a]['notificacao']=" A vossa pagina foi criada com sucesso ";
+                        $notificacoes[$a]['notificacao']="Pagamento confirmado. Pagina foi criada com sucesso ";
                         $notificacoes[$a]['tipo']=8;
                         $notificacoes[$a]['id']=$key->identificador_id_destino;
                         $aux_link = DB::select('select * from identificadors where identificador_id = ?', [$key->identificador_id_destino]);

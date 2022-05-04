@@ -167,8 +167,8 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/relationship/requests/pedinte', [App\Http\Controllers\PerfilController::class, 'relationship_requests_pedinte'])->name('relationship.requests.pedinte');
 
         /*rotas de pesquisa optimizadas*/
-        Route::get('/people_search_final', [App\Http\Controllers\searchController::class, 'people_search_final'])->name('people.search');
-        Route::get('/page_search_final', [App\Http\Controllers\searchController::class, 'page_search_final'])->name('page.search');
+        Route::get('/search/people/', [App\Http\Controllers\searchController::class, 'people_search_final'])->name('people.search');
+        Route::get('/search/page', [App\Http\Controllers\searchController::class, 'page_search_final'])->name('page.search');
         Route::get('/post_search_final', [App\Http\Controllers\searchController::class, 'post_search_final'])->name('post.search');
         /*fim das rotas de pesquisa optimizadas*/
 
@@ -185,6 +185,22 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/post/comment/reaction', [App\Http\Controllers\PostController::class, 'comment_reac_final'])->name('post.index.comment.reaction');
     Route::get('/mostrar/{uuid_remetente}/{uuid_destino}', [App\Http\Controllers\MessageController::class, 'mostrar_sms'])->name('message.mostrar');
     Route::get('/pesquisar/destinatario', [App\Http\Controllers\MessageController::class, 'pesquisar_destinatario'])->name('people.send.message');
+    Route::get('/tassumirvideo/{id}', [App\Http\Controllers\PostController::class, 'tassumirvideos'])->name('post.tassumir.video');
+    //posts
+Route::get('/ten_comments', [App\Http\Controllers\PageController::class, 'ten_comments'])->name('ten_comments');
+Route::get('/view', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
+Route::get('/ismyne/', [App\Http\Controllers\PaginaCasalController::class, 'isPageMine'])->name('page.confirm.mine');
+Route::get('/edit_option', [App\Http\Controllers\PostController::class, 'edit_option'])->name('edit_option');
+Route::get('/edit_post', [App\Http\Controllers\PostController::class, 'edit_post'])->name('edit_post');
+Route::get('/getvideo/', [App\Http\Controllers\PostController::class, 'get_video'])->name('post.video.get');
+Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])->name('post.get');
+Route::get('/getposts/destaques/{limit}', [App\Http\Controllers\PostController::class, 'destaques'])->name('post.get.destaques');
+//endposts
+
+//
+Route::get('/getfollow/', [App\Http\Controllers\PageController::class, 'index'])->name('following.get');
+Route::get('/editpage/{id}', [App\Http\Controllers\PageController::class, 'show'])->name('page.edit.get');
+Route::get('/couple_page/delete_page_view/{id}', [App\Http\Controllers\PageController::class, 'view_delete_couple_page'])->name('delete_couple.page_view');
 });
 Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->name('account.logout');
 
@@ -221,24 +237,6 @@ Route::get('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController:
 
 
 Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'updatePassword'])->name('account.newPasswordSave');
-
-
-//posts
-Route::get('/ten_comments', [App\Http\Controllers\PageController::class, 'ten_comments'])->name('ten_comments');
-Route::get('/view', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
-Route::get('/ismyne/', [App\Http\Controllers\PaginaCasalController::class, 'isPageMine'])->name('page.confirm.mine');
-Route::get('/edit_option', [App\Http\Controllers\PostController::class, 'edit_option'])->name('edit_option');
-Route::get('/edit_post', [App\Http\Controllers\PostController::class, 'edit_post'])->name('edit_post');
-Route::get('/getvideo/', [App\Http\Controllers\PostController::class, 'get_video'])->name('post.video.get');
-Route::get('/tassumirvideo/{id}', [App\Http\Controllers\PostController::class, 'tassumirvideos'])->name('post.tassumir.video');
-Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])->name('post.get');
-Route::get('/getposts/destaques/{limit}', [App\Http\Controllers\PostController::class, 'destaques'])->name('post.get.destaques');
-//endposts
-
-//
-Route::get('/getfollow/', [App\Http\Controllers\PageController::class, 'index'])->name('following.get');
-Route::get('/editpage/{id}', [App\Http\Controllers\PageController::class, 'show'])->name('page.edit.get');
-Route::get('/couple_page/delete_page_view/{id}', [App\Http\Controllers\PageController::class, 'view_delete_couple_page'])->name('delete_couple.page_view');
 
 //
 

@@ -294,16 +294,17 @@ public function index1(){
       public function people_search_final(Request $request) {
         try {
           if($request->ajax()){
-              $conta =[];
-
-              if($request->v==1){
-                $conta =  DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" || c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" limit 4');
-              }else {
-                $conta =  DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" and conta_id > ?|| c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" and conta_id > ? limit 10',[$request->id]);
+              $conta = [];
+              $request->dados = htmlspecialchars($request->dados);
+              if ($request->dados != '' || $request->dados != ' ') {
+                  $conta_id = Auth::user()->conta_id;
+                  if($request->v==1){
+                  $conta =  DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page, (select count(*) from pages as pg where pg.conta_id_a=? and pg.tipo_page_id=1 || pg.conta_id_b=? and pg.tipo_page_id=1)as relationship from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" || c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" limit 6', [$conta_id, $conta_id]);
+                }else {
+                  $conta =  DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" and conta_id > ?|| c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" and conta_id > ? limit 10',[$request->id]);
+                }
               }
-
               return response()->json($conta);
-
           }
         } catch (\Exception $e) {
 
@@ -314,18 +315,20 @@ public function index1(){
           try {
             if($request->ajax()){
               $id = Auth::user()->conta_id;
+              $pages = [];
+              $request->dados = htmlspecialchars($request->dados);
+              if ($request->dados != '' || $request->dados != ' ') {
+                if($request->v == 1){
+                  $pages = DB::select('select pg.nome,pg.uuid, pg.page_id, pg.foto,pg.descricao, (select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id from identificadors where id=? and tipo_identificador_id = 1)) as segui from pages as pg where pg.estado_pagina_id =1 and pg.nome like "%'.$request->dados.'%" || pg.estado_pagina_id =1 and pg.descricao like "%'.$request->dados.'%" limit 6',[$id]);
+                } else {
+                  $pages = DB::select('select pg.nome,pg.uuid, pg.page_id, pg.foto,pg.descricao, (select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id from identificadors where id=? and tipo_identificador_id = 1)) as segui from pages as pg where pg.estado_pagina_id =1 and pg.nome like "%'.$request->dados.'%" and page_id>? || pg.estado_pagina_id =1 and pg.descricao like "%'.$request->dados.'%" and page_id>? limit 10',[$id, $request->page_id]);
+                }                
+              }
 
-              if($request->v==1){
-                $pages= DB::select('select pg.nome,pg.uuid, pg.page_id, pg.foto,pg.descricao, (select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id from identificadors where id=? and tipo_identificador_id = 1)) as segui from pages as pg where pg.estado_pagina_id =1 and pg.nome like "%'.$request->dados.'%" || pg.estado_pagina_id =1 and pg.descricao like "%'.$request->dados.'%" limit 4',[$id]);
-                }else {
-                  $pages= DB::select('select pg.nome,pg.uuid, pg.page_id, pg.foto,pg.descricao, (select count(*) from seguidors where identificador_id_seguida = (select identificador_id from identificadors where id=pg.page_id and tipo_identificador_id = 2) and identificador_id_seguindo = (select identificador_id from identificadors where id=? and tipo_identificador_id = 1)) as segui from pages as pg where pg.estado_pagina_id =1 and pg.nome like "%'.$request->dados.'%" and page_id>? || pg.estado_pagina_id =1 and pg.descricao like "%'.$request->dados.'%" and page_id>? limit 10',[$id,$request->page_id]);
-                }
-
-             return response()->json($pages);
+              //return response()->json($request->dados);
+              return response()->json($pages);
             }
-
-
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
         }
 

@@ -547,12 +547,17 @@
 	opacity: 1;
     z-index: 1001;
 }
+#search-pop-up-check:checked ~ #search-pop-up {
+	opacity: 1;
+    z-index: 1002;
+}
 #add-post-target:checked ~ #add-post-container {
 	opacity: 1;
     z-index: 1006;
 }
 #target-loading-app-load:checked ~ #container-loading-app-load,
-#target-loading-app:checked ~ #container-loading-app {
+#target-loading-app:checked ~ #container-loading-app,
+#target-alert-tassumir:checked ~ #relationship-container-invited {
 	opacity: 1;
     z-index: 1007;
 }
@@ -578,7 +583,6 @@
 #target-proof:checked ~ #cover-proof,
 #delete-page-target:checked ~ #delete-page-container,
 #target-alert-post-denied:checked ~ #alert-denied-post,
-#target-alert-tassumir:checked ~ #relationship-container-invited,
 #target-alert-info:checked ~ #target-alert-info-container,
 #target-profile-cover-full:checked ~ #cover-profile-full-container,
 #target-option-post:checked ~ #option-post-full-container,
