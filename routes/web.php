@@ -28,7 +28,6 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/qtd_savesqtd_saves', [App\Http\Controllers\AuthController::class, 'qtd_saves'])->name('qtd_saves');
     Route::get('/qtd_pages_seg', [App\Http\Controllers\AuthController::class, 'qtd_pages_seg'])->name('qtd_pages_seg');
     Route::get('/qtd_like', [App\Http\Controllers\AuthController::class, 'qtd_like'])->name('lqtd_like');
-    //Route::get('/like', [App\Http\Controllers\AuthController::class, 'like'])->name('like');
     Route::get('/like_unlike', [App\Http\Controllers\AuthController::class, 'like_unlike'])->name('like_unlike');
     Route::get('/alert', [App\Http\Controllers\AuthController::class, 'alert'])->name('error.alert');
     Route::get('/definitions', [App\Http\Controllers\AuthController::class, 'alert'])->name('error.definitions');
@@ -49,14 +48,14 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/delete_post', [App\Http\Controllers\AuthController::class, 'delete_post'])->name('delete_post');
     Route::get('/pegar_mais_post', [App\Http\Controllers\AuthController::class, 'pegar_mais_post'])->name('pegar_mais_post');
     Route::get('/ocultar_post', [App\Http\Controllers\AuthController::class, 'ocultar_post'])->name('ocultar_post');
-    /*novas rotas perfil*/
+    
+    #PERFIL
     Route::get('/get_nine_videos_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_videos_perfil'])->name('get_nine_videos_perfil');
     Route::get('/get_nine_images_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_images_perfil'])->name('get_nine_images_perfil');
     Route::get('/get_nine_text_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_text_perfil'])->name('get_nine_text_perfil');
+    #End PERFIL
 
-    /*fim novas rotas perfil*/
-
-    /*novas rotas pages*/
+    #PAGES
     Route::get('/page/posts/numbers/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'qtd_de_publicacoes'])->name('couple.qtd_de_publicacoes');
     Route::get('/dados_page/', [App\Http\Controllers\PaginaCasalController::class, 'dados_page'])->name('couple.dados_page');
     Route::get('/page/posts/followers/', [App\Http\Controllers\PaginaCasalController::class, 'qtd_de_seguidores'])->name('couple.qtd_de_seguidores');
@@ -66,27 +65,21 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/page/text/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_text_page'])->name('couple.text');
     Route::get('/page/pictures/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_images_page'])->name('couple.pictures');
     Route::get('/couple_page/page/content/videos/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_videos_page'])->name('page.couple.videos');
-    /*fim novas rotas pages*/
-
-    /*novas rotas tassumirvideo*/
+    #End PAGES
+    
+    #Novas Rotas Tassumir Videos
     Route::get('/tv/{id}', [App\Http\Controllers\PostController::class, 'tassumirvideos_final'])->name('post.tassumir.video_final');
-    /*fim das novas rotas tassumirvideo*/
+    #End Rotas Tassumir Videos
     Route::get('/post_index_old/{id}', [App\Http\Controllers\AuthController::class, 'post_index'])->name('post_index');
     Route::get('/post_index/{id}', [App\Http\Controllers\PostController::class, 'index'])->name('post_index');
     Route::get('posts/get/index/{id}', [App\Http\Controllers\PostController::class, 'statistics'])->name('posts.get.index');
-
-    /* siene */
+    #SIENE
     Route::get('/get_only_post/', [App\Http\Controllers\AuthController::class, 'get_only_post'])->name('get_post');
-
     Route::get('/get_only_comments/', [App\Http\Controllers\AuthController::class, 'get_only_comments'])->name('get_comments');
-
     Route::get('/posts/index/cover_commenter/{id}', [App\Http\Controllers\PostController::class, 'img_comment'])->name('posts.index.cover_commenter');
-
     Route::get('/page/auth/', [App\Http\Controllers\AuthController::class, 'state_relationship'])->name('page.auth');
-
     Route::get('/posts/comments/{id}', [App\Http\Controllers\PageController::class, 'comments_post'])->name('comments.post');
-    /* end siene  */
-
+    # End SIENE
     Route::get('/verify_not', [App\Http\Controllers\AuthController::class, 'verify_not'])->name('verify_not');
     Route::get('/savepost', [App\Http\Controllers\AuthController::class, 'savepost'])->name('savepost');
     Route::get('/comentar', [App\Http\Controllers\AuthController::class, 'comentar'])->name('comentar');
@@ -94,15 +87,12 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::post('/engagement/proposal/', [App\Http\Controllers\PerfilController::class, 'engagement_proposal'])->name('engagement.proposal');
     Route::get('/profile/', [App\Http\Controllers\PerfilController::class, 'index'])->name('account.profile');
     Route::post('/profile/picture/', [App\Http\Controllers\PerfilController::class, 'add_picture'])->name('account.profile.pic');
-
     Route::post('/update/', [App\Http\Controllers\PerfilController::class, 'update'])->name('account.update');
     Route::get('/profile/{id}', [App\Http\Controllers\PerfilController::class, 'index_visit'])->name('account1.profile');
     Route::get('/profile/edit/{perfil}', [App\Http\Controllers\PerfilController::class, 'edit'])->name('account.profile.edit');
     Route::get('/page/description/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'description_page'])->name('page.description');
-
     Route::get('/paginas_que_sigo/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas_que_sigo'])->name('paginas_que_sigo.page');
     Route::get('/who_follows_me/{id}', [App\Http\Controllers\PaginaCasalController::class, 'who_follows_me'])->name('who_follows_me.page');
-
     Route::post('/page_update/', [App\Http\Controllers\PaginaCasalController::class, 'page_update'])->name('page_update');
     Route::get('/couple_page/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'index'])->name('couple.page');
     Route::get('/my_pages/', [App\Http\Controllers\PaginaCasalController::class, 'my_pages'])->name('couple.page.mine');
@@ -117,15 +107,11 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::post('/Outra_pessoa/', [App\Http\Controllers\PaginaCasalController::class, 'Outra_pessoa'])->name('Outra_pessoa');
     Route::get('/couple_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple.page1');
     Route::get('/edit_page', [App\Http\Controllers\PaginaCasalController::class, 'editar_pagina'])->name('edit_page');
-
-
     Route::get('/couple_page_show/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas'])->name('couple_page.show');
-
     Route::get('/couple_page/edit', [App\Http\Controllers\PaginaCasalController::class, 'edit_couple'])->name('edit_couple.page');
     Route::get('/couple_page/delete_page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'delete_couple_page'])->name('delete_couple.page');
     Route::get('/page_definition', [App\Http\Controllers\PageDefinition::class, 'index'])->name('page_definition.page');
     Route::get('/help_support', [App\Http\Controllers\HelpSupport::class, 'index'])->name('help_support.page');
-
     Route::get('/pesquisa/', [App\Http\Controllers\searchController::class, 'index1'])->name('allSearch1.page');
     Route::get('/pesquisa/pages/', [App\Http\Controllers\searchController::class, 'pagesSearch1']);
     Route::get('/pesquisa/publications/', [App\Http\Controllers\searchController::class, 'publicationsSearch1']);
@@ -134,13 +120,9 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/pesquisa/pages/{id}', [App\Http\Controllers\searchController::class, 'pagesSearch'])->name('pagesSearch.page');
     Route::get('/pesquisa/publications/{id}', [App\Http\Controllers\searchController::class, 'publicationsSearch'])->name('publicationsSearch.page');
     Route::get('/pesquisa/peoples/{id}', [App\Http\Controllers\searchController::class, 'peoplesSearch'])->name('peoplesSearch.page');
-
     Route::get('/pessoapesquisa', [\App\Http\Controllers\searchController::class, 'pessoapesquisa'])->name('pessoa.pesquisa');
-
     Route::get('/peoplepesquisa', [\App\Http\Controllers\searchController::class, 'peoplepesquisa'])->name('people.pesquisa');
-
     Route::get('/allpeoplepesquisa', [\App\Http\Controllers\searchController::class, 'allpagepesquisa'])->name('allpage.pesquisa');
-
     Route::get('/paginapesquisa', [App\Http\Controllers\searchController::class, 'paginapesquisa'])->name('pagina.pesquisa');
     Route::get('/postpesquisa', [App\Http\Controllers\searchController::class, 'postpesquisa'])->name('post.pesquisa');
     Route::get('/home', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home.feed');
@@ -148,7 +130,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/prototype/', [App\Http\Controllers\PostController::class, 'prototype_view'])->name('prototype');
     Route::post('/thumbnail/save', [App\Http\Controllers\PostController::class, 'thumbnail'])->name('thumbnail.save');
 
-    /*Rotas para requisições Ajax*/
+    #Requisicoes Ajax
     Route::get('/page/follow', [App\Http\Controllers\SeguidorController::class, 'follow'])->name('page.follow');
     Route::get('/page/spouse', [App\Http\Controllers\SeguidorController::class, 'spouse'])->name('page.spouse');
     Route::get('/page/spouses/name', [App\Http\Controllers\PaginaCasalController::class, 'spouse_names'])->name('page.spouse.name');
@@ -165,14 +147,14 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/home/posts_page_no_follow', [App\Http\Controllers\PageController::class, 'post_final2'])->name('home.posts.no_follow');
     Route::get('/relationship/requests', [App\Http\Controllers\PerfilController::class, 'relationship_requests'])->name('relationship.requests');
     Route::get('/relationship/requests/pedinte', [App\Http\Controllers\PerfilController::class, 'relationship_requests_pedinte'])->name('relationship.requests.pedinte');
-
         /*rotas de pesquisa optimizadas*/
-        Route::get('/people_search_final', [App\Http\Controllers\searchController::class, 'people_search_final'])->name('people.search');
-        Route::get('/page_search_final', [App\Http\Controllers\searchController::class, 'page_search_final'])->name('page.search');
-        Route::get('/post_search_final', [App\Http\Controllers\searchController::class, 'post_search_final'])->name('post.search');
-        /*fim das rotas de pesquisa optimizadas*/
+    #End Requisicoes Ajax
 
-    /*Fim rotas para Ajax*/
+    #Pesquisas Optimizadas        
+        Route::get('/search/people/', [App\Http\Controllers\searchController::class, 'people_search_final'])->name('people.search');
+        Route::get('/search/page', [App\Http\Controllers\searchController::class, 'page_search_final'])->name('page.search');
+        Route::get('/post_search_final', [App\Http\Controllers\searchController::class, 'post_search_final'])->name('post.search');
+    #End Pesquisas Optimizadas
 
     Route::get('/seguir/page', [App\Http\Controllers\SeguidorController::class, 'store'])->name('seguir.seguindo');
     Route::get('nao/seguir', [App\Http\Controllers\SeguidorController::class, 'destroy'])->name('nao.seguir.seguindo');
@@ -185,45 +167,46 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/post/comment/reaction', [App\Http\Controllers\PostController::class, 'comment_reac_final'])->name('post.index.comment.reaction');
     Route::get('/mostrar/{uuid_remetente}/{uuid_destino}', [App\Http\Controllers\MessageController::class, 'mostrar_sms'])->name('message.mostrar');
     Route::get('/pesquisar/destinatario', [App\Http\Controllers\MessageController::class, 'pesquisar_destinatario'])->name('people.send.message');
+    Route::get('/tassumirvideo/{id}', [App\Http\Controllers\PostController::class, 'tassumirvideos'])->name('post.tassumir.video');
+    //posts
+Route::get('/ten_comments', [App\Http\Controllers\PageController::class, 'ten_comments'])->name('ten_comments');
+Route::get('/view', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
+Route::get('/ismyne/', [App\Http\Controllers\PaginaCasalController::class, 'isPageMine'])->name('page.confirm.mine');
+Route::get('/edit_option', [App\Http\Controllers\PostController::class, 'edit_option'])->name('edit_option');
+Route::get('/edit_post', [App\Http\Controllers\PostController::class, 'edit_post'])->name('edit_post');
+Route::get('/getvideo/', [App\Http\Controllers\PostController::class, 'get_video'])->name('post.video.get');
+Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])->name('post.get');
+Route::get('/getposts/destaques/{limit}', [App\Http\Controllers\PostController::class, 'destaques'])->name('post.get.destaques');
+//endposts
+
+//
+Route::get('/getfollow/', [App\Http\Controllers\PageController::class, 'index'])->name('following.get');
+Route::get('/editpage/{id}', [App\Http\Controllers\PageController::class, 'show'])->name('page.edit.get');
+Route::get('/couple_page/delete_page_view/{id}', [App\Http\Controllers\PageController::class, 'view_delete_couple_page'])->name('delete_couple.page_view');
 });
 Route::get('/sair', [App\Http\Controllers\AuthController::class, 'logout'])->name('account.logout');
-
-/* inicio get e post login*/
 Route::get('/login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('account.login.form');
-
 Route::get('/register',[App\Http\Controllers\AuthController::class,'firstForm'])->name('redirect.register.form');
-
 Route::get('/login/redirect', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/requestlogin', [App\Http\Controllers\AuthController::class, 'login'])->name('account.login.enter');
-
-
-/*end get e post login*/
-
-/* registrar */
 Route::get('/registrar', [App\Http\Controllers\AuthController::class, 'registrarUser'])->name('account.register.form');
-
 Route::get('/buscar/pais', [App\Http\Controllers\PaisController::class, 'index'])->name('buscar.pais');
 Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
 Route::post('/dontReceived', [App\Http\Controllers\AuthController::class, 'didnotReceived'])->name('account.again.sendCode');
-
-    Route::get('/Register',[App\Http\Controllers\AuthController::class, 'firstForm'])->name('first.form');
-
-    Route::post('/InsertRegister',[App\Http\Controllers\AuthController::class, 'firstFormInsert'])->name('first.form.insert');
-    Route::get('/notFound',[App\Http\Controllers\AuthController::class, 'NotFound'])->name('first.not.found');
-
+Route::get('/Register',[App\Http\Controllers\AuthController::class, 'firstForm'])->name('first.form');
+Route::post('/InsertRegister',[App\Http\Controllers\AuthController::class, 'firstFormInsert'])->name('first.form.insert');
+Route::get('/notFound',[App\Http\Controllers\AuthController::class, 'NotFound'])->name('first.not.found');
 Route::get('/email', [App\Http\Controllers\AuthController::class, 'testandoEmail'])->name('email.test');
-
 Route::get('/recuperarSenha', [App\Http\Controllers\AuthController::class, 'recuperarSenha'])->name('account.code.form');
-
 Route::get('/recuperarSenha/code', [App\Http\Controllers\AuthController::class, 'codigoRecebido'])->name('code.received.form');
-
 Route::get('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'newCode'])->name('validate.newCode.form');
-
-
 Route::post('/recuperarSenha/code/saveNew', [App\Http\Controllers\AuthController::class, 'updatePassword'])->name('account.newPasswordSave');
 
+//
 
-//posts
+
+//api
+#POSTS
 Route::get('/ten_comments', [App\Http\Controllers\PageController::class, 'ten_comments'])->name('ten_comments');
 Route::get('/view', [App\Http\Controllers\PostController::class, 'view_post'])->name('post.view.save');
 Route::get('/ismyne/', [App\Http\Controllers\PaginaCasalController::class, 'isPageMine'])->name('page.confirm.mine');
@@ -233,44 +216,35 @@ Route::get('/getvideo/', [App\Http\Controllers\PostController::class, 'get_video
 Route::get('/tassumirvideo/{id}', [App\Http\Controllers\PostController::class, 'tassumirvideos'])->name('post.tassumir.video');
 Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])->name('post.get');
 Route::get('/getposts/destaques/{limit}', [App\Http\Controllers\PostController::class, 'destaques'])->name('post.get.destaques');
-//endposts
+//End POSTS
 
-//
 Route::get('/getfollow/', [App\Http\Controllers\PageController::class, 'index'])->name('following.get');
 Route::get('/editpage/{id}', [App\Http\Controllers\PageController::class, 'show'])->name('page.edit.get');
 Route::get('/couple_page/delete_page_view/{id}', [App\Http\Controllers\PageController::class, 'view_delete_couple_page'])->name('delete_couple.page_view');
 
-//
-
-
-//api
+#API
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/api/login', [App\Http\Controllers\AuthController::class, 'login_return'])->name('api.login.get');
 });
-//end-api
+#End API
 
 Route::get('/confirmarCodigo', [App\Http\Controllers\AuthController::class, 'codigoRecebidoRegisto'])->name('account.codeConfirmation.form');
 
 Route::post('/verificarCodigo', [App\Http\Controllers\AuthController::class, 'verifyCodeSent'])->name('account.verifyCode.enter');
-
-//Route::get('/verificarCodigo', [App\Http\Controllers\AuthController::class, 'verifyCodeSent'])->name('account.verifyCode.enter');
-
 Route::post('/verificarCodigo/Again', [App\Http\Controllers\AuthController::class, 'verifyAgainCodeSent'])->name('account.verifyAgainCode.enter');
-
-
 Route::post('/gerarNovamente', [App\Http\Controllers\AuthController::class, 'generateAgain'])->name('account.generateAgain.enter');
-
-/* here */
+#Email,Password and so on
 Route::post('/sendTo',[App\Http\Controllers\AuthController::class, 'sendPhoneEmailRecover'])->name('account.sendToPhoneEmail');
 Route::post('/codeVerification',[App\Http\Controllers\AuthController::class, 'verifyToRecoverPass'])->name('account.verifyToRecoverPass');
 Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updatePassword'])->name('account.newPasswordSave');
 Route::post('/newPassword',[App\Http\Controllers\AuthController::class, 'updatePassword2'])->name('account.newPasswordSave2');
-/* end here */
-    Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
+# End Email,Password and so on
+Route::post('/newAccount', [App\Http\Controllers\AuthController::class, 'joinAndSave'])->name('account.save');
 Route::get('/allNotifications', [App\Http\Controllers\AuthController::class, 'seeAllNotifications'])->name('account.all.notifications');
 Route::get('/delete/page/{id}', [App\Http\Controllers\PaginaCasalController::class, 'delete_page'])->name('account.delete.page');
 Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('account.home');
-/*init termo view*/
+
+#Terms
     Route::get('index/termo_politica',[App\Http\Controllers\HelpSupport::class, 'index_termo'])->name('term.home');
     Route::get('termos',[App\Http\Controllers\HelpSupport::class, 'call_terms'])->name('termos');
 
@@ -278,6 +252,6 @@ Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('ac
     Route::get('comerciais',[App\Http\Controllers\HelpSupport::class, 'call_term_service'])->name('comercio');
     Route::get('comunidade',[App\Http\Controllers\HelpSupport::class, 'comunidade'])->name('comunidade');
     Route::get('publicidade',[App\Http\Controllers\HelpSupport::class, 'publicidade'])->name('publicidade');
+# End Terms
 
 
-/*end termo view*/

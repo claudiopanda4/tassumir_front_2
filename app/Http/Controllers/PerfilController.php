@@ -281,21 +281,29 @@ class PerfilController extends Controller
         if ($state_marital == 'Nativa') {
           $state_marital = 'Tem um relacionamento com ';
           $state = 'Nativo';
-        } elseif ($state_marital == 'Noivado') {
-          $state = $result[0]->genre == 'Masculino' ? 'Noivo' : 'Noiva';
-          $state_marital = $result[0]->genre == 'Masculino' ? 'Noivo da' : 'Noiva do';
+        } elseif ($state_marital == 'Apresentação ou Bate Porta') {
+          $state = $result[0]->genre == 'Masculino' ? 'Apresentado' : 'Apresentada';
+          $state_marital = $result[0]->genre == 'Masculino' ? 'Apresentou a' : 'Apresentada pelo';
           $ver++; 
         }  elseif ($state_marital == 'Namoro') {
           $state = $result[0]->genre == 'Masculino' ? 'Namorando' : 'Namorando';
-          $state_marital = $result[0]->genre == 'Masculino' ? 'Namorando com ' : 'Namorando do';
+          $state_marital = $result[0]->genre == 'Masculino' ? 'Namorado da' : 'Namorada da';
           $ver++;
-        } elseif ($state_marital == 'Apresentação') {
+        } elseif ($state_marital == 'União de Facto ou Vivem Maritalmente'){
+          $state = $result[0]->genre == 'Masculino' ? 'Vive Maritalmente' : 'Vive Maritalmente';
+          $state_marital = $result[0]->genre == 'Masculino' ? 'Vive Maritalmente com' : 'Vive Maritalmente com';
+          $ver++;
+        }elseif ($state_marital == 'Alambamento ou Pedido') {
           $state = $result[0]->genre == 'Masculino' ? 'Apresentado' : 'Apresentada';
-          $state_marital = $result[0]->genre == 'Masculino' ? 'Apresentou a' : 'Apresentada pelo';
+          $state_marital = $result[0]->genre == 'Masculino' ? 'Noivo da' : 'Noiva do';
           $ver++;
-        } elseif ($state_marital == 'Casamento') {
+        } elseif ($state_marital == 'Casamento Civil' || $state_marital == 'Casamento Religioso') {
           $state = $result[0]->genre == 'Masculino' ? 'Casado' : 'Casada';
-          $state_marital = $result[0]->genre == 'Masculino' ? 'Casada com' : 'Casado com';
+          $state_marital = $result[0]->genre == 'Masculino' ? 'Casado com' : 'Casada com';
+          $ver++;
+        } elseif ($state_marital == 'Viuvo') {
+          $state = $result[0]->genre == 'Masculino' ? 'Viúvo' : 'Viúva';
+          $state_marital = $result[0]->genre == 'Masculino' ? 'Viúvo da' : 'Viúva do';
           $ver++;
         } else {
           if ($result[0]->id != $conta_id) {
@@ -398,7 +406,7 @@ class PerfilController extends Controller
 
     public function relationship_requests_pedinte(){
       $id_pedinte = Auth::user()->conta_id;
-      $result = DB::select('select uuid, (select tipo_contas_id from contas where conta_id = ?) as tipo_conta, if((select count(*) from pages where conta_id_a = ? || conta_id_b = ?) > 0, true, false) as relationship, estado_pedido_relac_id, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedinte = ?', [$id_pedinte, $id_pedinte, $id_pedinte, $id_pedinte]);
+      $result = DB::select('select uuid, (select tipo_contas_id from contas where conta_id = ?) as tipo_conta, if((select count(*) from pages where conta_id_a = ? || conta_id_b = ?) > 0, true, false) as relationship, estado_pedido_relac_id, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedinte = ? || pedido_relacionamentos.conta_id_pedida = ?', [$id_pedinte, $id_pedinte, $id_pedinte, $id_pedinte, $id_pedinte]);
       $sizeof = sizeof($result) > 0 ? true : false;
       if ($sizeof) {
         $sizeof = $result[0]->pedido;

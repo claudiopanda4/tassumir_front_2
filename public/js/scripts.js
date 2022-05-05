@@ -2,7 +2,7 @@ $(document).ready(function () {
 	let route = document.location.href.split('/');
 	let route_root = route[0] + '//' + route[1] + route[2];
 	//alert(route_root);
-	let id, cont, height, top, height_component, final, any_class;
+	var id, cont, height, top, height_component, final, any_class;
 	var initialY, clientY;
 	$('.play_button_tv').click(function (e) {
 		id = e.target.id.split('_')[1];
@@ -23,9 +23,11 @@ $(document).ready(function () {
 	function play_video (id) {
 		if ($('#video-tv-clicked_' + id).val() == 0) {
 			$('#video-component-video_' + id).attr('src', $('#video-tv-source_' + id).val());
-			if (document.getElementById('video-component-video_' + id).paused) {
-				document.getElementById('video-component-video_' + id).play();
-			}
+			document.getElementById('video-component-video_' + id).addEventListener('loadeddata', function () {
+				if (document.getElementById('video-component-video_' + id).paused) {
+					document.getElementById('video-component-video_' + id).play();
+				}
+			})
 			$('#video-component-video_' + id).removeClass('invisible-component');
 			$('#loaded-video-play-tv').val(id);
 			$('#play-button-tv_' + id).addClass('invisible-component');
@@ -83,7 +85,7 @@ $(document).ready(function () {
 			//console.log('top id = ' + id.split('_')[1] + " " + $('#' + id).offset().top + ' ' + $('#' + id).height());
 			//console.log('top = ' + (parseInt($('#' + id).offset().top) + parseInt($('#' + id).height())));
 			if (parseInt($('#' + id).offset().top) <= 0 && $('#view-tv-save_' + id.split('_')[1]).val() != 'on') {
-				console.log(' id entrou = ' + id.split('_')[1]);
+				//console.log(' id entrou = ' + id.split('_')[1]);
 				id = id.split('_')[1];
 				$.ajax({
 					url: '/view/',
@@ -104,7 +106,7 @@ $(document).ready(function () {
 			//console.log('top id = ' + id.split('_')[1] + " " + $('#' + id).offset().top + ' ' + $('#' + id).height());
 			//console.log('top = ' + (parseInt($('#' + id).offset().top) + parseInt($('#' + id).height())));
 			if (parseInt($('#' + id).offset().top) <= 0 && $('#view-tv-save_' + id.split('_')[1]).val() != 'on') {
-				console.log(' id entrou = ' + id.split('_')[1]);
+				//console.log(' id entrou = ' + id.split('_')[1]);
 				id = id.split('_')[1];
 				$.ajax({
 					url: '/view/',
@@ -257,7 +259,7 @@ $(document).ready(function () {
 					//console.log('top id = ' + id.split('_')[1] + " " + $('#' + id).offset().top + ' ' + $('#' + id).height());
 					//console.log('top = ' + (parseInt($('#' + id).offset().top) + parseInt($('#' + id).height())));
 					if (parseInt($('#' + id).offset().top) - $('#' + id).height() == 0) {
-						console.log(' id entrou = ' + id.split('_')[1]);
+						//console.log(' id entrou = ' + id.split('_')[1]);
 						id = id.split('_')[1];
 						play_video (id);
 						add_view (any_class, false);

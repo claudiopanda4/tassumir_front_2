@@ -15,6 +15,7 @@
             </header>
             <input type="hidden" id="home-page-checked" value=<?php echo md5("OKAY_HOME") ?>>
             <input type="hidden" id="post_loading" value=''>
+            <input type="hidden" id="restart" value='on'>
             <input type="hidden" id="posts-following" value="0">
             <input type="hidden" id="loading-finished" value="1">
             <input type="hidden" id="loading-finished-video" value="none">
@@ -441,7 +442,8 @@
 <div class="pop-up pop-up-option pop-up-loading-component" id="container-loading-app-load">
     <img class="center" src="{{asset('css/uicons/loading_blue.gif')}}" id="loader_icon_app" style="display: block; display: block; width: 130px; height: auto;">
     <img class="center" src="{{asset('css/uicons/tassumir.jpeg')}}" id="loader_icon_app" style="display: block; top: 40%; width: 70px; height: auto;">
-    <h1 class="center" id="loader_app_text"></h1>
+    <h1 class="center" id="" style="top: 80%;">from</h1>
+    <h1 class="center" id="loader_app_text" style="top: 84%;">Be Able</h1>
 </div>
         <script type="text/javascript">
         $(document).ready(function(){

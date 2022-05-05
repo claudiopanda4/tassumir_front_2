@@ -613,7 +613,7 @@ label[for="hugo"]{
 .page-cover ~ h2 {
     color: #6c757d;
     font-size: 12px;
-    width: 140px;
+    max-width: 120px;
 }
 .page-cover ~ a h1.name-page {
     color: #fff;
@@ -1356,7 +1356,7 @@ label[for="hugo"]{
 .card {
     background-color: #242526;
     margin-top: 20px;    
-    width: 500px;
+    width: 470px;
     margin: 10px auto 10px;
 }
 #stories-card {
@@ -1666,6 +1666,7 @@ label[for="hugo"]{
     width: 100%;
     height: auto;
     contain: content;
+    background-color: #000;
 }
 .img-user-comment {
     position: relative;
@@ -1888,8 +1889,8 @@ label[for="hugo"]{
     width: 110px;
     height: 110px;
     position: relative;
-    margin-top: 15px;
-    margin-left: 15px;
+    margin-top: 0px;
+    margin-left: 0px;
     background-color: #343a40;
 }
 .alert-login {
@@ -3804,7 +3805,7 @@ label[for="hugo"]{
 }
 .alert-info-about-us {
     width: 76%;
-    min-width: 500px;
+    max-width: 470px;
     margin: 5px auto 10px;
     background-color: #242526;
     padding-top: 5px;
@@ -4594,4 +4595,110 @@ label[for="hugo"]{
 }
 #main-container-video-component {
     transition: all 0.5s;
+}
+.container-img-profile {
+    position: relative;
+    width: 110px;
+    margin: auto;
+    height: auto;
+    max-height: 110px;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+.icon-component-line-input img {
+    margin-top: 10px;
+}
+#search-tass-item {
+    padding: 8px;
+}
+.component-input-search-container {
+    width: 80%;
+}
+.component-input-search-container input[type="search"] {
+    width: 100%;
+    margin-left: 0;
+}
+#search-pop-up label {
+    display: block;
+}
+#search-pop-up {
+    background-color: #000;
+}
+.title-component {
+    color: #fff;
+    font-weight: bolder;
+    font-size: 14px;
+    margin-left: 15px;
+    margin: 10px auto 10px 15px;
+}
+.search-item {
+    background-color: #3a3b3c;
+}
+.search-img-container {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-left: 25px;
+}
+.search-img-container img.null{
+    width: 24px;
+    height: 24px;
+}
+.search-context-text {
+    min-width: 120px;
+    min-height: 20px;
+    border-radius: 20px;
+    padding: 0 0px;
+    color: #efefef;
+    margin-top: 6px;
+    max-width: 190px;
+    font-size: 12px;
+}
+.search-context-text.search-item-action {
+    min-width: 90px;
+    float: right;
+    margin-right: 10px;
+}
+.search-container-general {
+    max-height: 91%;
+    overflow-y: auto;    
+}
+.transparent-back {
+    background-color: transparent;
+}
+.assumir-search-container {
+    background-color: #fd09fd;
+    text-align: center;
+    font-size: 10px;
+    min-height: inherit;
+    padding: 6px 6px 4px;
+    border-radius: 4px;
+    font-weight: bolder;
+}
+.search-info-people {
+    color: #909090;
+}
+.search-context-text-page {
+    margin-top: 13px;
+}
+.icon-container {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    margin: auto;
+}
+.ul-left li.title-container {
+    margin-top: 0px;
+    color: #efefef;
+    font-size: 13px;
+    font-weight: bolder;
+}
+.icon-back-container {
+    margin-top: 5px;
+    margin-right: 20px;
+}
+.statistics-component-page-profile {
+    font-size: 10px;
+    color: #909090;
 }

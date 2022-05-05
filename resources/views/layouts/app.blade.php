@@ -29,10 +29,10 @@
 
 <body class="container-main">
     <div class="body-pop-up content-full-scroll">
-        <header class="header-main header-main-component clearfix">
+        <header class="header-main header-main-component clearfix" id="header-main-container">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
-                    <a href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1>tass<span class="title-final">umir</span></h1></a>
+                    <a <?php if ($page_current == 'home_index'){ echo "class='logo-home'";}?> href="{{route('account.home')}}"><!--<i class="fas fa-link fa-24"></i>--><h1>tass<span class="title-final">umir</span></h1></a>
                 </li>
                 <li class="search-lg mobile-hidden" style="margin-left:48px;">
                     <div class="input-search">
@@ -104,7 +104,7 @@
                 <input type="hidden" id="ident-key" name="">
                 <li class="poupar-data l-5 invisible-component" id="poupar-data-id"></li>
                 <li class="user-tassumir clearfix l-5">
-                    <a href="{{route('account.profile')}}">
+                    <a class="go-profile" href="{{route('account.profile')}}">
                         <div class="l-5 user-account-container-img">
                             <img class="img-full invisible-component center" id="user-account-container-img-id">
                         </div>
@@ -120,6 +120,76 @@
                 </li>-->
             </nav>
     </header>
+    <?php $page = isset($_SERVER['PATH_INFO'])? explode('/', $_SERVER['PATH_INFO'])[1]: ''; if ($page == 'profile' || $page == 'couple_page' || $page == 'post_index'): ?>
+        <input type="hidden" id="control-component-page-profile" value="1">
+        <header class="header-main header-main-component clearfix" style="z-index: 1002; top: 0; background: #000000c4;" id="header-main-container-page-profile">
+            <ul class="ul-left clearfix">
+                <li class="l-5 clearfix component-back-container">
+                    <img class="img-20 icon-back-container" src="{{asset('css/uicons/back_component.png')}}">
+                </li>
+                <li class="title l-5 title-container">
+                    <div id="title-header-component">
+                        <?php if ($page == 'couple_page'): ?>
+                            {{$dados[0]->nome}}
+                        <?php else: ?>
+                            <?php if ($page == 'post_index'): ?>
+                            <?php else: ?>
+                                {{$nome_completo}}
+                            <?php endif ?>
+                        <?php endif ?>
+                    </div>
+                    <div class="statistics-component-page-profile" id="title-header-component-statistics">
+                        <?php if ($page == 'couple_page'): ?>
+                            0 seguidores
+                        <?php elseif($page == 'profile'): ?>
+                            0 curtidas
+                        <?php endif ?>
+                    </div>
+                    
+                </li>
+                <li class="search-lg mobile-hidden" style="margin-left:48px;">
+                    <div class="input-search">
+                        <label for="search-lg-home"><i class="fas fa-search fa-16 fa-search-main"></i></label>
+                        <input type="search" name="" placeholder="O que está procurando?" class="input-text" id="search-lg-home-id">
+                    </div>
+                    <input type="checkbox" name="" class="invisible" id="search-lg-home">
+                    <div class="container-search-home">
+                        <div class="input-search">
+                            <i class="fas fa-search fa-16 fa-search-main"></i>
+                            <input type="search" name="table_search" placeholder="O que está procurando?" class="input-text" id="table_search">
+                        </div>
+                        <div class="search-id-container">
+                          <div name="pessoa">
+                            </div>
+                            <div name="page">
+                            </div>
+                        </div>
+                        <div class="change-look mb-5" name="ver_td" style="display: flex;justify-content:center;align-items: center;width: 300px;padding:8px;">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <nav class="menu-header ">
+                <input type="hidden" id="ident-key" name="">
+                <li class="poupar-data l-5 invisible-component" id="poupar-data-id"></li>
+                <!--<li class="user-tassumir clearfix l-5">
+                    <a href="{{route('account.profile')}}">
+                        <div class="l-5 icon-container">
+                            <img class="img-24 center" id="user-account-container-img-id" src="{{asset('/css/uicons/notification.png')}}">
+                        </div>
+                    </a>
+                    <a href="" class="l-5"><h1 class="user-account"></h1></a>
+                </li>-->
+                <!--<li class="tassumir-logo-icon clearfix l-5">
+                    <a class="" href="{{route('account.profile')}}">
+                        <div class="l-5 user-account-container-img">
+                            <img class="img-full center" src="{{asset('css/uicons/tassumir.jpeg')}}" id="tt-logo-container-img-id">
+                        </div>
+                    </a>
+                </li>-->
+            </nav>
+    </header>  
+    <?php endif ?>
     <input type="hidden" id="host" value="{{route('account.data')}}" name="">
     <div class="header-main-component" id="header-height-component"></div>
     <aside class="aside aside-left">
@@ -134,7 +204,7 @@
                 <li class="li-component-aside" id="route_save"><i class="far fa-bookmark fa-20 fa-icon-aside-left"></i><a href="">Guardados</a></li>
                 <li class="li-component-aside invisible-component" id="route_couples_i_follow"><i class="fas fa-link fa-20 fa-icon-aside-left"></i><a href="">Casais que eu sigo</a></li>
                 <li class="li-component-aside" id="Earn_money"><i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i><a href="">Ganhar Dinheiro</a></li>
-                <li class="li-component-aside" id="route_Videos"><i class="far fa-play-circle fa-20 fa-icon-aside-left"></i><a href="">Tassumir Vídeos</a></li>
+                <li class="li-component-aside" id="route_Videos"><i class="far fa-play-circle fa-20 fa-icon-aside-left"></i><a href="{{route('post.tassumir.video','ma')}}">Tassumir Vídeos</a></li>
             </ul>
         </nav>
         <nav class="last-nav">
@@ -214,7 +284,7 @@
                     <img src="{{asset('/css/uicons/tv_show.png')}}" class="center img-26">
                 </li>
             </a>
-            <a href="{{route('allSearch1.page')}}">
+            <a class="search-icon-footer-a" href="{{route('allSearch1.page')}}">
                 <li class="li-footer-menu">
                     <!--<i class="fi-rr-search fa-20 f-footer"></i>-->
                     <img id="search-icon-footer" src="{{asset('/css/uicons/search.png')}}" class="center img-26">
@@ -644,18 +714,18 @@
                     <li class="edit-option-component invisible-component" id="edit-option-component-id">
                         <a href="" class="edit-option" id="edit-option-edit-component"></a>
                     </li>
-                    <li>
+                    <!--<li>
                         <a href="" class="edit-option options-special" id="edit-option">Não seguir</a>
-                    </li>
+                    </li>-->
                     <li class="invisible-component" id="delete-option-component">
                         <a href="" class="delete_post options-special" id="delete-option-component-id"></a>
                     </li>
                     <li class="hidden-post">
                         <a href="" class="delete_post options-special hidden-post" id="hidden-post-component">Ocultar publicação</a>
                     </li>
-                    <li>
+                    <!--<li>
                         <a href="">Denunciar</a>
-                    </li>
+                    </li>-->
                     <li>
                         <a href="">Copiar link</a>
                     </li>
@@ -719,6 +789,40 @@
     </div>
 </div>
 <?php endif ?>
+
+<input type="checkbox" name="" id="search-pop-up-check" class="invisible">
+<div class="pop-up" id="search-pop-up">
+    <header class="clearfix">
+        <label for="search-pop-up-check">
+            <div class="l-5 icon-component-line-input">
+                <img class="img-20" src="{{asset('css/uicons/back_component.png')}}">
+            </div>            
+        </label>
+        <div class="l-5 component-input-search-container">
+            <input class="input-search input-text" id="search-tass-item" type="search" placeholder="o que procura?" name="">
+        </div>
+        <div class="l-5 icon-component-line-input">
+            <img class="img-20" src="{{asset('css/uicons/search_component.png')}}">
+        </div>
+        <div>
+        </div>
+    </header>
+    <div class="search-container-general">
+        <input type="hidden" id="component_numbers">
+        <input type="hidden" id="component-read-search">
+        <input type="hidden" id="component-read-search-page">
+        <div class="">
+            <h1 class="title-component invisible-component" id="people-search">Pessoas</h1>
+            <div id="container-search-container">     
+            </div>  
+        </div>
+        <div>
+            <h1 class="title-component invisible-component" id="page-search">Páginas</h1>
+            <div id="container-search-container-page">     
+            </div>              
+        </div>
+    </div>
+</div>
 <?php if (true): ?>
 <input type="checkbox" name="" id="options-edit-pop-up" class="invisible">
 <div class="pop-up" id="edit-pop-up">
