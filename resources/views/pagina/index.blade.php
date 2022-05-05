@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="main">
+    <input type="hidden" id="comment_index" value=<?php echo md5("1"); ?>>
     <div class="card br-10" id="card-post-id-index">
         <div id="m_post_{{$ident_page}}" class='card br-10 post-video'>
             <div class="post post-view post-video" id="post_view_{{$ident_page}}">
@@ -36,7 +37,8 @@
                                 <h1 class="center">p</h1>
                             </div>
                         <?php endif ?>
-                        <input type="hidden" id="post_comment-qtd" value="149">
+                        <input type="hidden" id="post_comment-qtd" value="0">
+                        <input type="hidden" id="post_comment-verify" value="1">
                         <div class="page-identify l-5 clearfix">
                             <a href="{{$post->page_uuid}}" id="a-page-name-post_{{$ident_page}}"><h1 class="text-ellips" id="page-name-post_{{$ident_page}}">{{$post->page_name}}</h1></a>
                             <div class="info-post clearfix">

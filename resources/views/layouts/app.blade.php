@@ -128,7 +128,7 @@
                     <img class="img-20 icon-back-container" src="{{asset('css/uicons/back_component.png')}}">
                 </li>
                 <li class="title l-5 title-container">
-                    <div>
+                    <div id="title-header-component">
                         <?php if ($page == 'couple_page'): ?>
                             {{$dados[0]->nome}}
                         <?php else: ?>
@@ -138,7 +138,7 @@
                             <?php endif ?>
                         <?php endif ?>
                     </div>
-                    <div class="statistics-component-page-profile">
+                    <div class="statistics-component-page-profile" id="title-header-component-statistics">
                         <?php if ($page == 'couple_page'): ?>
                             0 seguidores
                         <?php elseif($page == 'profile'): ?>
