@@ -291,13 +291,24 @@ public function index1(){
 
       /*pesquisa otimizada*/
 
+      public function search_partner(Request $request)
+      {
+        $id = Auth::user()->conta_id;
+        $conta =[];
+
+        $conta =  DB::select('select r.* from (select c.conta_id,c.uuid,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page, (select count(*) from pedido_relacionamentos as pr where pr.conta_id_pedida=c.conta_id and pr.estado_pedido_relac_id <> 1 || pr.conta_id_pedinte=c.conta_id and pr.estado_pedido_relac_id <> 1) as p_acept from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" and conta_id > ?|| c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" and conta_id > ?) as r where r.verify_page = 0 and r.p_acept =0 and r.genero <> (select genero from contas where conta_id = ?) limit 10 ',[$request->id,$request->id,$id]);
+
+        return response()->json($conta);
+
+      }
+
       public function people_search_final(Request $request) {
         try {
           if($request->ajax()){
               $conta =[];
 
               if($request->v==1){
-                $conta =  DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" || c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" limit 4');
+                $conta =  DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page  from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" || c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" limit 4');
               }else {
                 $conta =  DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" and conta_id > ?|| c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" and conta_id > ? limit 10',[$request->id]);
               }
