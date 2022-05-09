@@ -3,6 +3,7 @@
 @section('content')
 <div class="main">
     <input type="hidden" id="comment_index" value=<?php echo md5("1"); ?>>
+    <input type="hidden" id="loaded-initial-comments" value="none">
     <div class="card br-10" id="card-post-id-index">
         <div id="m_post_{{$ident_page}}" class='card br-10 post-video'>
             <div class="post post-view post-video" id="post_view_{{$ident_page}}">
@@ -89,7 +90,7 @@
                             <a href="" id="likes-qtd_{{$ident_page}}">reacções</a>
                         </li>
                         <li>
-                            <a href="" id="comment_-post_{{$ident_page}}">comentários</a>
+                            <a class="comment-single-page-link" href="" id="comment-post_{{$ident_page}}">comentários</a>
                         </li>
                     </ul>
                 </nav>
@@ -204,9 +205,12 @@
                     </div>
                 </div>
                 <div class="comment-user-container comment-user-container-react">
-                    <a href="" class="comment-like-a" id="comentario-reaction-post-{{$key}}">
+                    <a href="" class="comment-like-a comment-a-react" id="comentario-reaction-post-{{$key}}">
                         <i class="far fa-heart fa-12 unliked" id="reaction-id-comment-user-{{$key}}"></i>
                     </a>
+                    <div class="reaction-comment-user-qtd" id="reaction-id-comment-user-qtd-{{$key}}">
+                        
+                    </div>
                 </div>
             </div>
         <?php $key++; } ?>

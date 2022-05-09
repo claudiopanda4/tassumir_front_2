@@ -8,6 +8,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/load.js') }}" defer></script>
+    <script src="{{ asset('js/components.js') }}" defer></script>
 
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     <script src="{{ asset('js/jquery/jquery-3.5.1/jquery-3.5.1.js') }}"></script>
@@ -22,12 +23,14 @@
     <link href="{{ asset('css/media.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/checked.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/components.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fontawesome.min.css') }}" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
 
 <body class="container-main">
+    <input type="hidden" id="loaded-component" value="none">
     <div class="body-pop-up content-full-scroll">
         <header class="header-main header-main-component clearfix" id="header-main-container">
             <ul class="ul-left clearfix">
@@ -255,12 +258,21 @@
     </div>
     <footer class="menu-footer menu-footer-main">
         <ul>
-            <a href="{{route('account.home.feed')}}">
-                <li>
-                    <!--<i class="fi-rr-home fa-20 f-footer"></i>-->
-                    <img id="home-icon-footer" src="{{asset('/css/uicons/home.png')}}" class="center img-26">
-                </li>
-            </a>
+            <?php if ($page_current == 'home_index'): ?>
+                <a id="home-icon-footer-a" class="logo-home" href="{{route('account.home.feed')}}">
+                    <li>
+                        <!--<i class="fi-rr-home fa-20 f-footer"></i>-->
+                        <img id="home-icon-footer" src="{{asset('/css/uicons/home.png')}}" class="center img-26 logo-home">
+                    </li>
+                </a>
+            <?php else: ?>
+                <a id="home-icon-footer-a" href="{{route('account.home.feed')}}">
+                    <li>
+                        <!--<i class="fi-rr-home fa-20 f-footer"></i>-->
+                        <img id="home-icon-footer" src="{{asset('/css/uicons/home.png')}}" class="center img-26">
+                    </li>
+                </a>                
+            <?php endif ?>
             <a href="{{route('account.all.notifications')}}">
                 <li class="li-footer-menu">
                     <!--<i class="fi-rs-bell fa-20 f-footer"></i>-->
@@ -307,6 +319,26 @@
                 <img id="profile-cover-full">
             </div>
         </div>
+    </div>
+</div>
+<input type="checkbox" name="" id="target-single-page-component" class="invisible">
+<div class="pop-up" id="single-page-container" style="background-color: #000;">
+    <ul class="clearfix header-component-single-page">
+        <label class="target-single-page-component" for="target-single-page-component">
+            <li class="l-5 clearfix">
+                <img class="img-20 icon-back-container icon-back-container-label" src="{{asset('css/uicons/back_component.png')}}">
+            </li>            
+        </label>
+        <li class="title l-5 title-container">
+            <div id="title-header-component" class="title-header-component-details">
+                Comentários     
+            </div>
+            <div class="statistics-component-page-profile">
+                        
+            </div>
+        </li>
+    </ul>
+    <div class="component-single-page" id="single-page-container-body">
     </div>
 </div>
 <input type="checkbox" name="" id="target-alert-make-tassumir" class="invisible">

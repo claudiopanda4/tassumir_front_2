@@ -199,7 +199,7 @@
                             <a href="" id="likes-qtd-{{$key}}">reacções</a>
                         </li>
                         <li>
-                            <a href="" id="comment_-post-{{$key}}">comentários</a>
+                            <a class="comment-single-page-link" href="" id="comment_-post-{{$key}}">comentários</a>
                         </li>
                     </ul>
                 </nav>
