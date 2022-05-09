@@ -20,9 +20,14 @@ class PostController extends Controller
         /*$posts = $this->posts();*/
         $ident_page = $request->id;
         $page_current = 'post_index';
-        $post = DB::select('select uuid, (select uuid from pages where page_id = posts.page_id) as page_uuid, (select foto from pages where page_id = posts.page_id) as page_cover, (select nome from pages where page_id = posts.page_id) as page_name, file, descricao, created_at as data, formato_id from posts where uuid = ?', [$ident_page])[0];
+        $post = DB::select('select uuid, estado_post_id, (select uuid from pages where page_id = posts.page_id) as page_uuid, (select foto from pages where page_id = posts.page_id) as page_cover, (select nome from pages where page_id = posts.page_id) as page_name, file, descricao, created_at as data, formato_id from posts where uuid = ?', [$ident_page])[0];
         //dd($post);
-        return view('pagina.index', compact('ident_page', 'page_current', 'post'));
+        if ($post->estado_post_id == 4) {
+            return view('pagina.postless', compact('ident_page', 'page_current', 'post'));
+        } else {
+            return view('pagina.index', compact('ident_page', 'page_current', 'post'));
+        }
+        
     }
 
     public function img_comment(Request $request, $id) {
@@ -424,14 +429,20 @@ class PostController extends Controller
                     }
 
                     $resposta = $control[0]->qtd_reactions + 1;
+                    $add = 'fas liked';
+                    $remove = ['far'];;
 
                   } else{
                     DB::table('reactions_comments')->where(['reaction_comment_id'=>$control[0]->id_ja_reagi])->delete();
                     $resposta= $control[0]->qtd_reactions - 1;
+                    $add = 'far';
+                    $remove = ['liked', 'fas'];
                   }
                   return response()->json([
                     'saved' => true,
                     'qtd_reactions' => $resposta,
+                    'add' => $add,
+                    'remove' => $remove 
                   ]);
                 }
 

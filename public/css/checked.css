@@ -555,6 +555,11 @@
 	opacity: 1;
     z-index: 1006;
 }
+#search-pop-up-check:checked ~ #search-pop-up,
+#target-single-page-component:checked ~ #single-page-container {
+	opacity: 1;
+    z-index: 1005;
+}
 #target-loading-app-load:checked ~ #container-loading-app-load,
 #target-loading-app:checked ~ #container-loading-app,
 #target-alert-tassumir:checked ~ #relationship-container-invited {
@@ -597,4 +602,8 @@
 #search-lg-home:checked ~ .container-search-home {
 	display: block;
 	
+}
+#target-profile-cover-full:checked ~ #cover-profile-full-container {
+    opacity: 1;
+    z-index: 1002;
 }

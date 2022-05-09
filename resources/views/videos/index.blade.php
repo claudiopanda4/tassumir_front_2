@@ -21,9 +21,9 @@
             <a href="{{route('post.tassumir.video','mr')}}">
                 <li>Mais Recentes</li>
             </a>
-            <a href="{{route('post.tassumir.video','mg')}}">
+            <!--<a href="{{route('post.tassumir.video','mg')}}">
                 <li>Guardados</li>
-            </a>
+            </a>-->
         </ul>
     </nav>
     <input type="hidden" id="last-component-id-tv" value="0">
@@ -50,9 +50,9 @@
             <input type="hidden" id="view-tv-save_{{$key}}" value="0"> 
             <!--<input type="hidden" id="current-time-video-tv-clicked_{{$key}}" value="0">-->
             <nav class="l-5 nav-tv">
-                <a href="">
+                <a href="" class="like-a">
                     <li class="li-tv-icon circle">
-                        <img class="img-26 center" src="{{asset('css/uicons/love_tv.png')}}">
+                        <img class="img-26 center" id="reaction-id-comment-user-{{$key}}" src="{{asset('css/uicons/love_tv.png')}}">
                     </li>
                     <h1 class="text-li-tv-icon" id="text-li-tv-icon-like-{{$key}}"></h1>
                 </a>

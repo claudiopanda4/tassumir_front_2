@@ -1840,7 +1840,8 @@ label[for="hugo"]{
 }
 .suggest-slide header h1 {
     color: #fff;
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: bolder;
     padding: 5px 10px;
     text-align: left;
     margin-bottom: 0;
@@ -2932,10 +2933,12 @@ label[for="hugo"]{
     margin-bottom: 0;
 }
 .comment-user-container {
-    display: flex;
+    display: block;
 }
 .comment-user-container-react {
     padding-right: 10px;
+    max-height: 48px;
+    position: relative;
 }
 .comment-user-container-react i {
     padding-top: 17px;
@@ -4115,12 +4118,14 @@ label[for="hugo"]{
     margin-bottom: 4px;
 }
 .spouse-item {
+    font-size: 12px;
     color: #efefef;
 }
 #spouse-masc,
 #spouse-fem {
     font-weight: bolder;
     color: #3490dc; 
+    font-size: 12px;
 }
 .request-option-active#options-profile-mobile-user-log {
     width: 100%;
@@ -4489,7 +4494,7 @@ label[for="hugo"]{
 }
 .img-context {
     width: 100px;
-    height: 100px;
+    height: auto;
     position: relative;
 }
 .img-post img {
@@ -4701,4 +4706,24 @@ label[for="hugo"]{
 .statistics-component-page-profile {
     font-size: 10px;
     color: #909090;
+}
+.inexistente {
+    font-size: 14px;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+.title-header-component-details {
+    margin-top: 6px;
+    color: #efefef;
+}
+.header-component-single-page {
+    min-height: 45px;
+    padding-left: 0;
+}
+.reaction-comment-user-qtd {
+    position: absolute;
+    color: #fff;
+    font-size: 10px;
+    bottom: 0;
 }

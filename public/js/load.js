@@ -13,6 +13,13 @@ $(document).ready(function () {
 			class_name[key].setAttribute('id', id_name + '_' + ident);
 		}
 	}
+	$('.comment-like-a').click(function(e){
+		any_id = e.target.id.split('_')[1];
+		console.log(any_id);
+	});
+	$('.delete-post-option-component').click(function (e) {
+		any_id = e.target.id.split('_')[1];
+	});
 	if($('#comment_index').val()){
 		$('#title-header-component').css({
 			marginTop : '5px',
@@ -89,16 +96,16 @@ $(document).ready(function () {
 					$('#search-context-text-top_' + components[i].uuid).text(text);
 					$('#search-context-text-top_' + components[i].uuid).addClass('transparent-back');
 					if (components[i].foto) {
-						$('#search-img-container-img_' + components[i].uuid).attr('src', '/storage/users/' + components[i].foto);
+						$('#search-img-container-img_' + components[i].uuid).attr('src', route + '/storage/users/' + components[i].foto);
 						if (type == 2) {
-							$('#search-img-container-img_' + components[i].uuid).attr('src', '/storage/img/page/' + components[i].foto);
+							$('#search-img-container-img_' + components[i].uuid).attr('src', route + '/storage/img/page/' + components[i].foto);
 						}
 					} else {
 						if (type == 2) {
-							$('#search-img-container-img_' + components[i].uuid).attr('src', '/css/uicons/page_icon.jpg');
+							$('#search-img-container-img_' + components[i].uuid).attr('src', route + '/css/uicons/page_icon.jpg');
 						}else {
 							$('#search-img-container-img_' + components[i].uuid).addClass('null');
-							$('#search-img-container-img_' + components[i].uuid).attr('src', '/css/uicons/user.png');
+							$('#search-img-container-img_' + components[i].uuid).attr('src', route + '/css/uicons/user.png');
 						}
 						
 					}
@@ -434,13 +441,24 @@ $(document).ready(function () {
 			data: {'since' : $('#post_comment-qtd').val()},
 			dataType: 'json',
 			success:function(response){
-				//console.log(response);
+				console.log(response);
 				$.each(response, function(key, data){
 					cont = $('#post_comment-qtd').val();
 					$('#comment-users-' + cont).removeClass('invisible-component');
 					$('#comment-users-' + cont).attr('id', 'comment-users_' + data.uuid);
 					$('#description-comment-' + cont).text(data.comment);
+					if (data.qtd_comment_reactions) {
+						$('#reaction-id-comment-user-qtd-' + cont).text(data.qtd_comment_reactions);
+					}
+					if (data.ja_comment_reactions) {
+						$('#reaction-id-comment-user-' + cont).addClass('fas');
+						$('#reaction-id-comment-user-' + cont).removeClass('far');
+						$('#reaction-id-comment-user-' + cont).addClass('liked');
+					}
+					$('#reaction-id-comment-user-qtd-' + cont).attr('id', 'reaction-id-comment-user-qtd_' + data.uuid);
 					$('#description-comment-' + cont).attr('id', 'description-comment_' + data.uuid);
+					$('#reaction-id-comment-user-' + cont).attr('id', 'reaction-id-comment-user_' + data.uuid);
+					$('#comentario-reaction-post-' + cont).attr('id', 'comentario-reaction-post_' + data.uuid);
 					any_id = '';
 					if (data.apelido_comment != null) {
 						any_id = data.apelido_comment;
@@ -474,6 +492,7 @@ $(document).ready(function () {
 						$('#post_comment-verify').val(null);
 					}
 				});
+				$('#loaded-initial-comments').val('ok');
 			}
 		});	
 		$.ajax({
@@ -653,6 +672,11 @@ $(document).ready(function () {
 					if (ident == 3) {
 						//console.log(response.qtd);
 						$('#qtd-followers').text(response.qtd);
+						if (response.qtd == 1) {
+							$('#title-header-component-statistics').text(response.qtd + ' seguidor');
+						} else {
+							$('#title-header-component-statistics').text(response.qtd + ' seguidores');
+						}
 					}
 					if (ident == 2) {
 						$('#qtd-reactions').text(response.qtd);
@@ -1044,6 +1068,13 @@ $(document).ready(function () {
 						success: function (response) {
 							//console.log(response);
 							$('#data-profile-' + i).text(response.data);
+							if (i == 1) {
+								if (response.data == 1) {
+									$('#title-header-component-statistics').text(response.data + ' reacção');
+								} else {
+									$('#title-header-component-statistics').text(response.data + ' reacções');
+								}
+							}
 						}
 					});
 				}
@@ -1123,7 +1154,9 @@ $(document).ready(function () {
     	$('#notify-icon-footer').attr('src', route + '/css/uicons/notification_checked.png');
     };
     if ($('#home-page-checked').val()) {
+    	$('#home-icon-footer-a').addClass('logo-home');
     	$('#home-icon-footer').attr('src', route + '/css/uicons/home_focus.png');
+    	$('#home-icon-footer').addClass('logo-home');
     	$.ajax({
 		    url: '/home/destaques',
 		    type: 'get',
@@ -1467,10 +1500,12 @@ $(document).ready(function () {
 			dataType: 'json',
 			success: function (response) {
 				//console.log('spouses');
-				//console.log(response);
+				console.log(response);
 				if (response.state) {
 					$('#spouse-masc').text(response.homem);
 					$('#spouse-fem').text(response.mulher);
+					$('#spouse-fem').attr('href', route + '/profile/' + response.woman_uuid);
+					$('#spouse-masc').attr('href', route + '/profile/' + response.man_uuid);
 					$('#relationship-type-spouse').text(' - ' + response.relacionamento);
 					$('#spouses-component').removeClass('invisible-component');
 				}
@@ -1654,8 +1689,8 @@ $(document).ready(function () {
     	//console.log('final ' + final + ' ' + document_height_general);
     	if (final >= document_height_general) {
     		
-    		if ($('#comment_index').val()) {
-    			console.log('final ' + $('#post_comment-qtd').val());
+    		if ($('#comment_index').val() && $('#loaded-initial-comments').val() == 'ok') {
+    			//console.log('final ' + $('#post_comment-qtd').val());
     			$.ajax({
 					url: '/posts/comments/' + $('#ident-post-page').val(),
 					type: 'get',
@@ -1672,6 +1707,9 @@ $(document).ready(function () {
 							$('#comment-users-' + cont).attr('id', 'comment-users_' + data.uuid);
 							$('#description-comment-' + cont).text(data.comment);
 							$('#description-comment-' + cont).attr('id', 'description-comment_' + data.uuid);
+							//console.log('#comentario-reaction-post-' + cont);
+							$('#reaction-id-comment-user-' + cont).attr('id', 'reaction-id-comment-user_' + data.uuid);
+							$('#comentario-reaction-post-' + cont).attr('id', 'comentario-reaction-post_' + data.uuid);
 							any_id = '';
 							if (data.apelido_comment != null) {
 								any_id = data.apelido_comment;
@@ -1902,7 +1940,7 @@ $(document).ready(function () {
 		    }
     		
 		});
-    })
+    });
     function seguir_page(id, e, type){
     	$.ajax({
 		    url: '/page/follow',
@@ -2040,6 +2078,12 @@ $(document).ready(function () {
 		    dataType: 'json',
 		    success: function(response){
 				//console.log(response);
+				$('#reaction-id-comment-user_' + id).addClass(response.add);
+				$('#reaction-id-comment-user-qtd_' + id).text(response.qtd_reactions);
+				$.each(response.remove, function(key, data) {
+					//console.log(data);
+					$('#reaction-id-comment-user_' + id).removeClass(data);
+				});
 			}
 		});
     });
@@ -2267,6 +2311,10 @@ document.addEventListener('click', function (e) {
 	}
 	if (e.target.className.indexOf('pop-up-option') > -1) {
 		e.preventDefault();
+		option_empty();
+	}
+
+	function option_empty(){
 		document.getElementById('target-option-post').checked = false;
 		any_id = $('#ident-key').val();
 		$('#edit-option-component-id_' + any_id).addClass('invisible-component');
@@ -2294,9 +2342,22 @@ document.addEventListener('click', function (e) {
 		$('#delete-option-component-id_' + any_id).attr('id', 'delete-option-component-id');
 		$('#ident-key').val('');
 	}
-	if (e.target.className.indexOf('delete-post-option-component') > -1) {
+	if (e.target.className.indexOf('delete-post-option-component') > -1 
+		|| e.target.className.indexOf('delete_post') > -1 ) {
 		e.preventDefault();
-		any_id = evt.target.id.split('_')[1];
+		any_id = e.target.id.split('_')[1];
+		//alert(any_id);
+		$.ajax({
+			url: '/post/delete',
+			type: 'get',
+			dataType: 'json', 
+			data: {id : any_id},
+			success: function(response) {
+				console.log(response);
+				$('#m_post_' + any_id).addClass('invisible-component');
+				option_empty();
+			}
+		});
 	}
 	if (e.target.className.indexOf('target-invited-relationship-close') > -1) {
 		any_id = $('#ident-key').val();
@@ -2325,5 +2386,8 @@ document.addEventListener('click', function (e) {
 	    	$('#elips-p').removeClass('invisible-component');
 			$('#checked-load-all').val(0);
 		}
+	}
+	if (e.target.className.indexOf('logo-home') > -1) {
+		e.preventDefault();
 	}
 });

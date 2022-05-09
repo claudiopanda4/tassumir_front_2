@@ -45,7 +45,8 @@
 	}
 	.nav-video-option li {
 	    padding: 8px 10px;
-	    font-size: 12px;
+	    font-size: 15px;
+	    font-weight: bolder;
 	}
 	.video-component-tv {
 		width: 100%;
@@ -537,15 +538,21 @@
 	.video-tv-container {
 	    height: 100vh;
 	}
+	/*.video-component-tv.video-play {
+		max-height: inherit;
+		position: relative;
+		height: 100vh;
+	}*/
 	.video-component-tv {
+		min-height: 100vh;
 	    height: auto;
 	    overflow: hidden;
 	    max-height: 100%;
 	}
 	.video-component-tv.video-play {
-		max-height: inherit;
-		position: relative;
-		height: 100vh;
+	    position: absolute;
+	    height: 100%;
+	    max-height: 100%;
 	}
 }
 @media screen and (max-width: 375px) {
@@ -1590,6 +1597,11 @@
 	.nav-video-option ul {
 	    width: 415px;
 	}
+	.nav-video-option ul {
+	    position: fixed;
+	    bottom: 10px;
+	    z-index: 222;
+	}
 	.nav-video-option::-webkit-scrollbar {
 	    width: 0;
 	    height: 0;
@@ -1701,6 +1713,13 @@
 	.profile-cover-pop-up {
 	    width: 100%;
 	}
+	.inexistente {
+	    font-size: 14px;
+	    color: #fff;
+	    padding: 10px;
+	    text-align: center;
+	    margin: 23px auto;
+	}
 	.card-post p {
 	    padding: 0px 10px;
 	    margin-bottom: 5px;
@@ -1740,6 +1759,9 @@
 @media screen and (min-width: 540px) {
 	.post-cover {
 	    height: 538px;
+	}
+	#header-main-container-page-profile {
+		display: none;
 	}
 	.seguir-a {
 	    margin-top: 3px;
@@ -1894,6 +1916,9 @@
 	    font-size: 11px;
 	    max-width: 140px;
 	}	
+	.statistics-profile-page-component h2 {
+	    font-size: 11px;
+	}
 }
 @media screen and (max-width: 470px){
 	.btn-a-default {
@@ -1911,6 +1936,9 @@
 	.user-tassumir img.no-img {
 	    width: 24px;
 	    height: 24px;
+	}
+	.foto-page-video {
+		display: none;
 	}
 	.li-tv-icon {
 	    width: 66px;
@@ -2091,5 +2119,10 @@
 {
 	.video-tv-container {
 	    height: 100vh;
+	}
+}
+@media screen and (max-height: 670px){
+	.video-post video {
+	    max-height: 83vh;
 	}
 }

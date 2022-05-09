@@ -18,7 +18,7 @@ class PageController extends Controller
     public function index()
     {
         dd($this->following(1, 1));
-        $dadosPage = Page::all();
+        //$dadosPage = Page::all();
         return view('feed.index', compact('dadosPage'));
     }
     public function identificador_id($tipo_identficador, $id){
@@ -124,6 +124,7 @@ class PageController extends Controller
 
     public function comments_post (Request $request, $id){
         $a = $request->since;
+        //return response()->json($_REQUEST);
         if ($a == 0) {
             $ten_comments=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,tipo_verify,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions, if(tipo_verify = 1, (select uuid from contas where conta_id = conta_identify ), (select uuid from pages where page_id = conta_identify ) ) as uuid_dono_comment, if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify from comments as c where c.post_id = (select post_id from posts where uuid = ?) and c.comment_id > ?) as c order by c.comment_id desc limit 10',[Auth::user()->conta_id, $id,$a]);
         }else {

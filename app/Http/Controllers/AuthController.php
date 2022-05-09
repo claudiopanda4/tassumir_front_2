@@ -2537,19 +2537,18 @@ public function dados_comment($key){
             }
 
             public function delete_post(Request $request){
-
-                  DB::table('posts')
-                        ->where('post_id', $request->id)
-                        ->update([
+                //return response()->json($request->id);
+                DB::table('posts')
+                    ->where('uuid', $request->id)
+                    ->update([
                           'estado_post_id' => 4,
                           'updated_at' => $this->dat_create_update()
-                      ]);
+                    ]);
 
-                      $resposta=1;
+                    $resposta = 1;
 
-
-                        return response()->json($resposta);
-                }
+                    return response()->json($resposta);
+            }
 
                 public function ocultar_post(Request $request){
 

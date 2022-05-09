@@ -1,0 +1,21 @@
+@charset 'utf-08';
+.profille-img-single-page-comment {
+	width: 32px;
+	height: 32px;
+	position: relative;
+}
+.target-single-page-component {
+	display: block;
+}
+.icon-back-container.icon-back-container-label {
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 0;
+}
+#single-page-container-body {
+	max-height: 90%;
+    overflow-y: auto;
+}
+.header-component-single-page {
+    margin-bottom: 0;
+}
