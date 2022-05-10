@@ -2131,7 +2131,7 @@ $(document).ready(function () {
 		});
     });
     $('#cancel-options').click(function () { 
-    	alert($('#ident-key').val());  
+    	//alert($('#ident-key').val());  
     	any_id = $('#ident-key').val(); 
         $('#edit-option-component-id_' + any_id).attr('id', 'edit-option-component-id');
     	$('#edit-option-edit-component_' + any_id).attr('id', 'edit-option-edit-component');
