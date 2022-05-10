@@ -285,7 +285,7 @@
         <div class="header-height"></div>
         <div style="margin-top: 15px; margin-bottom: 10px;">
             <div class="">
-                <input class="file" type="file" name="imgOrVideo" id="testeVid" style="width: 250px; margin-left: 10px; color: #fff;" >
+                <input class="file" type="file" name="imgOrVideo" id="testeVid" style="width: 250px; margin-left: 10px; color: #fff;" onchange="checkDuration(this);" >
                 <input type="hidden" name="longVideo" id="putInfo" value="">
                 <video style="display: none;" id="vidAnalyzer">
                   <source src="" type="">
@@ -337,6 +337,9 @@
     document.addEventListener('DOMContentLoaded', function(){
             let input = document.getElementById('testeVid');
             input.addEventListener('change', function () {
+                
+                checkDuration(this); // siene
+
                 const reader = new FileReader();
                 const url = URL.createObjectURL(input.files[0]);
                 var video = document.createElement('video');
@@ -359,6 +362,42 @@
                     thumbnail(); 
                     //document.getElementById('preview-image-id').appendChild(video);
                 }, false);
+
+
+
+                // siene coding
+
+                function checkDuration(file_control) {
+
+                  let fileType = file_control.files[0].type;
+
+                  if ( check_for_file_type(fileType) ) {
+
+                        window.URL = window.URL || window.webkitURL;
+                        var video = document.createElement('video');
+                        video.preload = 'metadata';
+
+                        video.onloadedmetadata = function () {
+                            window.URL.revokeObjectURL(video.src);
+                            let minutes = Math.floor((video.duration) / 60);
+
+                            if (minutes > 1) {
+                              var certificar = document.querySelector('#putInfo').value = 'long_video_duration';
+                              var esvaziar = document.querySelector('#testeVid').value = null;
+                              alert('video muito longo, troca: ' + esvaziar);
+                            }
+                        }
+                        video.src = URL.createObjectURL(file_control.files[0]);
+                      }
+
+                    }
+
+
+                    function check_for_file_type(fileType) {
+
+                      return fileType == 'video/mp4' || fileType == 'video/avi' || fileType =='video/ogg' || fileType =='video/mkv' || fileType =='video/3gp' || fileType =='video/wmv' || fileType =='video/flv';
+                    }
+                // end siene coding
 
 
                 function generateThumbnail() {
@@ -400,48 +439,16 @@
                 //reader.readAsDataURL(input.files[0]);
                 //console.log(document.getElementById('testando'));
             });
-            /* SIENE CODING  */
+            
+/*
+if (document.getElementById('#putInfo')) {
 
-/*if (document.getElementById('#putInfo')) {
     document.getElementById('testeVid').addEventListener('change', function(){
         alert('oiii');
         checkDuration(e.target);
     });
-  function checkDuration(file_control) {
-
-    let fileType = file_control.files[0].type;
-
-    if ( check_for_file_type(fileType) ) {
-
-          window.URL = window.URL || window.webkitURL;
-          var video = document.createElement('video');
-          video.preload = 'metadata';
-
-          video.onloadedmetadata = function () {
-              window.URL.revokeObjectURL(video.src);
-              let minutes = Math.floor((video.duration) / 60);
-
-              if (minutes > 1) {
-                var certificar = document.querySelector('#putInfo').value = 'long_video_duration';
-                var esvaziar = document.querySelector('#testeVid').value = null;
-                alert('video muito longo, troca: ' + esvaziar);
-              }
-          }
-          video.src = URL.createObjectURL(file_control.files[0]);
-        }
-
-      }
-
-
-      function check_for_file_type(fileType) {
-
-        return fileType == 'video/mp4' || fileType == 'video/avi' || fileType =='video/ogg' || fileType =='video/mkv' || fileType =='video/3gp' || fileType =='video/wmv' || fileType =='video/flv';
-      }
-    }*/
-
-
-
-    /* END SIENE CODING  */
+}*/
+    
     });
     $(document).ready(function () {
             $('.seguir_couple').click(function(e){

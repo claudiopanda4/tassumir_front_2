@@ -151,8 +151,9 @@
               </div>
             </div>
             <div id="password_login_id2">
-              <input type="password" class="input-text-default input-full input-login" name="password" placeholder="Password" value="" id="password" required>
+              <input type="password" class="input-text-default input-full input-login" name="password" placeholder="Password" value="" id="password" minlength="6" onKeyUp="verify_password_strength();" required>
               <i class="fa fa-eye" id="eye"></i>
+              <span id="senhaMsg"></span>
               <div class="invalid-feedback">
                 Insira uma Palavra Passe
               </div>
@@ -319,6 +320,46 @@
     }
 
   });
+ 
+  function verify_password_strength(){
+
+    var numeros = /([0-9])/;
+    var alfabeto = /([a-zA-Z])/;
+    var char_especiais = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
+
+    if($('#password').val().length < 6){
+
+     $('#senhaMsg').html("<span style='color:red'>Fraco, insira no mínimo 6 caracteres </span>");
+
+     $(".my-form").prop('disabled', true).css({
+
+              backgroundColor: "#9e9e9e"
+      });
+
+   }else{
+
+    if($('#password').val().match(numeros) && $('#password').val().match(alfabeto) && $('#password').val().match(char_especiais)){ 
+
+
+      $('#senhaMsg').html("<span style='color:green'><b>Forte</b></span>");
+
+
+      $(".my-form").prop('disabled', false).css({
+            backgroundColor: "#2196f3"
+          });
+
+    } else {
+
+      $('#senhaMsg').html("<span style='color:orange'>Médio</span>");
+
+      $(".my-form").prop('disabled', false).css({
+              backgroundColor: "#2196f3"
+          });
+    }
+
+   }
+
+  }
 
   function validateEmail(){
 

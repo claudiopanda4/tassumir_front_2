@@ -1671,7 +1671,7 @@ $.ajax({
 
 if (document.getElementById('#putInfo')) {
   function checkDuration(file_control) {
-
+    alert('hello world');
     let fileType = file_control.files[0].type;
 
     if ( check_for_file_type(fileType) ) {
