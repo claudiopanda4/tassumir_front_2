@@ -2139,7 +2139,6 @@ $(document).ready(function () {
     });
     $('.edit-option-component').click(function (e) {
     	any_id = e.target.id.split('_')[1];
-    	//alert(any_id);
     	$('#pass_post_uuid').val(any_id);
     	document.getElementById('name_page_edit_post').innerText = $('#page-name-post_' + any_id).text();
     	$('#message').text($('#p-post_' + any_id).text());
