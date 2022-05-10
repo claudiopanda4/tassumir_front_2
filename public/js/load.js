@@ -2130,8 +2130,7 @@ $(document).ready(function () {
 			}
 		});
     });
-    $('#cancel-options').click(function () { 
-    	//alert($('#ident-key').val());  
+    $('#cancel-options').click(function () {  
     	any_id = $('#ident-key').val(); 
         $('#edit-option-component-id_' + any_id).attr('id', 'edit-option-component-id');
     	$('#edit-option-edit-component_' + any_id).attr('id', 'edit-option-edit-component');
