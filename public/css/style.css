@@ -315,6 +315,9 @@ body {
 .clearfix ul li a{
     background-color: transparent;
 }
+.clearfix ul#more-option-target-profile-details li a{
+    font-size: 12px;
+}
 .clearfix-n::after {
     display: block;
     content: '.';
@@ -2466,8 +2469,8 @@ label[for="hugo"]{
     position: absolute;
     width: 32px;
     height: 32px;
-    top: 10px;
-    right: 10px;
+    top: 2px;
+    right: 5px;
     border-radius: 50%;
     background-color: #efefef;
     z-index: 2;
@@ -3030,6 +3033,7 @@ label[for="hugo"]{
     font-size: 12px;
     color: #fff;
     margin: 0 4px 5px;
+    font-weight: bolder;
 }
 .btn-message {
     position: relative;
@@ -4716,6 +4720,7 @@ label[for="hugo"]{
 .title-header-component-details {
     margin-top: 6px;
     color: #efefef;
+    font-weight: bolder;
 }
 .header-component-single-page {
     min-height: 45px;
@@ -4726,4 +4731,11 @@ label[for="hugo"]{
     color: #fff;
     font-size: 10px;
     bottom: 0;
+}
+#single-page-container-body {
+    max-width: 600px;
+    margin: auto;
+}
+.comment-single-page-comment {
+    margin-top: 0;
 }

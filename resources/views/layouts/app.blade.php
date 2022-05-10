@@ -321,8 +321,11 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="loaded-item-ident" value="0">
+<input type="hidden" id="id_clicked_component" value="0">
 <input type="checkbox" name="" id="target-single-page-component" class="invisible">
-<div class="pop-up" id="single-page-container" style="background-color: #000;">
+<div class="pop-up" id="single-page-container">
+    <input type="hidden" id="loaded-component-full" value="none" name="">
     <ul class="clearfix header-component-single-page">
         <label class="target-single-page-component" for="target-single-page-component">
             <li class="l-5 clearfix">
@@ -338,8 +341,11 @@
             </div>
         </li>
     </ul>
-    <div class="component-single-page" id="single-page-container-body">
+    <div id="single-page-container-body-container">
+        <div class="component-single-page" id="single-page-container-body">
+        </div>
     </div>
+    
 </div>
 <input type="checkbox" name="" id="target-alert-make-tassumir" class="invisible">
 <div class="pop-up" id="alert-make-money-tassumir">

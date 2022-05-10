@@ -190,6 +190,7 @@ $(document).ready(function () {
 				}
 				$('#video-tv-source_' + cont).val(route_root + '/storage/video/page/' + data.file);
 				$('#video-tv-source_' + cont).attr('id', 'video-tv-source_' + data.uuid);
+				$('#comment-tv-post-' + cont).attr('id', 'comment-tv-post_' + data.uuid);
 				$('#thumb-video-tv_' + cont).attr('src', route_root + '/storage/img/thumbs/' + data.thumbnail);
 				$('#thumb-video-tv_' + cont).attr('id', 'thumb-video-tv_' + data.uuid);
 				$('#play-button-tv_' + cont).attr('id', 'play-button-tv_' + data.uuid);
@@ -268,6 +269,7 @@ $(document).ready(function () {
 							$('#reaction-id-comment-user-' + cont).attr('id', 'reaction-id-comment-user_' + data.uuid);
 							$('#video-tv-source_' + cont).val(route_root + '/storage/video/page/' + data.file);
 							$('#video-tv-source_' + cont).attr('id', 'video-tv-source_' + data.uuid);
+							$('#comment-tv-post-' + cont).attr('id', 'comment-tv-post_' + data.uuid);
 							$('#thumb-video-tv_' + cont).attr('src', route_root + '/storage/img/thumbs/' + data.thumbnail);
 							$('#thumb-video-tv_' + cont).attr('id', 'thumb-video-tv_' + data.uuid);
 							$('#play-button-tv_' + cont).attr('id', 'play-button-tv_' + data.uuid);

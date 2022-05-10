@@ -8,6 +8,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/scripts.js') }}" defer></script>
+    <script src="{{ asset('js/components.js') }}" defer></script>
 
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     <script src="{{ asset('js/jquery/jquery-3.5.1/jquery-3.5.1.js') }}"></script>
@@ -18,6 +19,7 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/fonts.css') }}" rel="stylesheet">
     <link href="{{ asset('css/media.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/components.css') }}" rel="stylesheet">
     <link href="{{ asset('css/uicons/css/uicons-regular-rounded.css') }}" rel="stylesheet">
     <link href="{{ asset('css/uicons-straight/css/uicons-regular-straight.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
@@ -29,6 +31,7 @@
 
 <body class="container-main" id="container-main-tv">
     <div class="body-pop-up content-full-scroll">
+    <input type="hidden" id="loaded-component" value="none">
     <header class="header-main header-main-component clearfix" id="header-main-component-1-tv">
             <ul class="ul-left clearfix">
                 <li class="title clearfix">
@@ -335,3 +338,26 @@ $(document).ready(function () {
 });
 </script>
 </html>
+
+<input type="checkbox" name="" id="target-single-page-component" class="invisible">
+<div class="pop-up" id="single-page-container">
+    <ul class="clearfix header-component-single-page">
+        <label class="target-single-page-component" for="target-single-page-component">
+            <li class="l-5 clearfix">
+                <img class="img-20 icon-back-container icon-back-container-label" src="{{asset('css/uicons/back_component.png')}}">
+            </li>            
+        </label>
+        <li class="title l-5 title-container">
+            <div id="title-header-component" class="title-header-component-details">
+                Comentários     
+            </div>
+            <div class="statistics-component-page-profile">
+                        
+            </div>
+        </li>
+    </ul>
+    <div id="single-page-container-body-container">
+        <div class="component-single-page" id="single-page-container-body">
+        </div>
+    </div>
+</div>

@@ -173,7 +173,7 @@
                             <!--<img class="loader_button center" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">-->
                             <!--<img class="loader_button center invisible-component" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$key}}">-->
                             <img class="loader_icon center" src="{{asset('css/uicons/loading_blue.gif')}}" id="loader_icon_{{$key}}">
-                            <video preload="metadata" class="video-post-video invisible-component" id="video_{{$key}}">
+                            <video preload="metadata" class="video-post-video invisible-component" id="video_{{$key}}" loop>
                                 <source id="video-post-link-{{$key}}">
                                 Your browser does not support the video tag.
                             </video>
@@ -199,7 +199,7 @@
                             <a href="" id="likes-qtd-{{$key}}">reacções</a>
                         </li>
                         <li>
-                            <a class="comment-single-page-link" href="" id="comment_-post-{{$key}}">comentários</a>
+                            <a class="comment-single-page-link comment_tv-post" href="" id="comment_-post-{{$key}}">comentários</a>
                         </li>
                     </ul>
                 </nav>

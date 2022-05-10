@@ -187,23 +187,23 @@
             <nav>
                 <ul class="" id="more-option-target-profile-details">
                     <li class="li-component-aside">
-                        <i class="fas fa-sign-out-alt fa-20 fa-icon-aside-left"></i>
+                        <i class="fas fa-sign-out-alt fa-15 fa-icon-aside-left"></i>
                         <a href="{{route('account.logout')}}">Terminar Sessão</a>
                     </li>
                     <li class="li-component-aside">
-                        <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
+                        <i class="fas fa-dollar-sign fa-15 fa-icon-aside-left"></i>
                         <a href="" class="a-more-option-profile">Meus Ganhos</a>
                     </li>
                     <li class="li-component-aside">
-                        <i class="fas fa-rss fa-20 fa-icon-aside-left"></i>
+                        <i class="fas fa-rss fa-15 fa-icon-aside-left"></i>
                         <a href="" class="a-more-option-profile">Actualizações do Tassumir</a>
                     </li>
                     <li class="li-component-aside">
-                        <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
+                        <i class="fas fa-dollar-sign fa-15 fa-icon-aside-left"></i>
                         <a href="" class="a-more-option-profile">Dicas Para Ganhar Mais</a>
                     </li>
                     <li class="li-component-aside">
-                        <i class="fas fa-dollar-sign fa-20 fa-icon-aside-left"></i>
+                        <i class="fas fa-dollar-sign fa-15 fa-icon-aside-left"></i>
                         <a href="" class="a-more-option-profile">Explorar Melhor o Tassumir</a>
                     </li>
                 </ul>
