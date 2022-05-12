@@ -203,6 +203,8 @@ $(document).ready(function () {
 					$('#text-li-tv-icon-like-' + cont).text(data.qtd_reacoes);
 				}	
 				$('#reaction-id-comment-user-' + cont).attr('id', 'reaction-id-comment-user_' + data.uuid);
+				$('#comment_tv-post-vid-' + cont).attr('href', route_root + '/post_index/' + data.uuid);
+				$('#comment_tv-post-vid-' + cont).attr('id', 'comment_tv-post-vid_' + data.uuid);
 				$('#text-li-tv-icon-like-' + cont).attr('id', 'text-li-tv-icon-like_' + data.uuid);
 				if (data.qtd_comment > 0) {
 					$('#text-li-tv-icon-comment-' + cont).text(data.qtd_comment);
