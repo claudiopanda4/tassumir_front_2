@@ -1,7 +1,48 @@
 window.addEventListener('click', function (e) {
-	var read_file, key, containers, id, element, class_;
+	var read_file, key, containers, id, element, class_, xhr;
 	var route = window.location.href.split('/');
 	route = route[0] + '//' + route[2] + '/'; 
+	if (e.target.className.indexOf('denunciar-post') > -1) {
+		if (document.getElementById('loaded-component-denunc').value == 'none') {
+			element = component('denunciar-post.html');
+			document.getElementById('container-main-app').appendChild(element);
+			document.getElementById('loaded-component-denunc').value = 'ok';
+		} else {
+			document.getElementById('target-single-page-component-denunc').checked = true;
+		}
+	}
+	
+	if (e.target.className.indexOf('nudez-content-post') > -1) {
+		document.getElementById('list-pop-up-id').classList.add('invisible-component');
+		document.getElementById('response-denunc-pop-up-id-content-post').classList.remove('invisible-component');
+		document.getElementById('header-component-pop-up-react').classList.remove('invisible-component');
+	}
+	if (e.target.id.indexOf('back_component-pop-up-react-post') > -1) {
+		document.getElementById('list-pop-up-id').classList.remove('invisible-component');
+		document.getElementById('response-denunc-pop-up-id-content-post').classList.add('invisible-component');
+		document.getElementById('header-component-pop-up-react').classList.add('invisible-component');
+	}
+
+	if (e.target.id.indexOf('back_component-pop-up-react-denunc') > -1) {
+		document.getElementById('list-pop-up-id').classList.remove('invisible-component');
+		document.getElementById('response-denunc-pop-up-id-content-post').classList.add('invisible-component');
+		document.getElementById('header-component-pop-up-react').classList.add('invisible-component');
+		document.getElementById('target-single-page-component-denunc').checked = false;
+	}
+	function component(component){
+		xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function (response) {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				console.log(response.target.responseText);
+				element = document.createElement('div');
+				element.innerHTML = response.target.responseText;
+			}
+		}
+		xhr.open('GET', route + 'components/' + component, false);
+		xhr.setRequestHeader('Content-Type', 'text/plain; charset=utf-08');
+		xhr.send(null);
+		return element;
+	}
 	if (e.target.className.indexOf('comment-single-page-link') > -1) {
 		/*e.preventDefault();
 		id = e.target.id.split('_')[1];

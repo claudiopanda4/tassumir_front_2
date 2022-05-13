@@ -29,8 +29,9 @@
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
 
-<body class="container-main">
+<body class="container-main" id="container-main-app">
     <input type="hidden" id="loaded-component" value="none">
+    <input type="hidden" id="loaded-component-denunc" value="none">
     <div class="body-pop-up content-full-scroll">
         <header class="header-main header-main-component clearfix" id="header-main-container">
             <ul class="ul-left clearfix">
@@ -347,6 +348,7 @@
     </div>
     
 </div>
+<input type="hidden" id="id_clicked_component" value="0">
 <input type="checkbox" name="" id="target-alert-make-tassumir" class="invisible">
 <div class="pop-up" id="alert-make-money-tassumir">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; max-height: 90%; height: auto; margin: auto;">
@@ -761,9 +763,9 @@
                     <li class="hidden-post">
                         <a href="" class="delete_post options-special hidden-post" id="hidden-post-component">Ocultar publicação</a>
                     </li>
-                    <!--<li>
-                        <a href="">Denunciar</a>
-                    </li>-->
+                    <li class="denunciar-post">
+                        <a class="denunciar-post" href="">Denunciar</a>
+                    </li>
                     <li>
                         <a href="">Copiar link</a>
                     </li>
