@@ -221,17 +221,17 @@
         let description = $('#p-post_' + $('#ident-post-page').val()).text(), text;
         text = "";
         console.log(description);
-        /*for (var i = 0; i <= description.length - 1; i++) {
+        for (var i = 0; i <= description.length - 1; i++) {
             if (description[i] == '\n') {
                 text = text + '\n' + description[i];    
             } else {
                 text = text + '' + description[i];
             }
-        }*/
+        }
         console.log(description);
         alert('');
         $('#p-post_' + $('#ident-post-page').val()).text('');
-        $('#p-post_' + $('#ident-post-page').val()).html(description);    
+        $('#p-post_' + $('#ident-post-page').val()).html(text);    
     });
 </script>
 @stop
