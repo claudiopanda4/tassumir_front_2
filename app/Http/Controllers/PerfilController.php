@@ -147,9 +147,7 @@ class PerfilController extends Controller
                 if ($result[0]->has_page < 1) {
                   $state = 'Assumir';
                   $addClass = "target-relationship-assumir";
-                }
-
-                if ($result[0]->genre != 'Masculino') {
+                } else if ($result[0]->genre != 'Masculino') {
                   $state = 'Solteira';
                   $addClass = "nothing";
                 }
