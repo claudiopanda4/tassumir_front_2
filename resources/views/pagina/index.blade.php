@@ -228,6 +228,6 @@
         }
     }
     console.log(text);
-    $('#p-post_' + $('#ident-post-page').val()).text(text);
+    $('#p-post_' + $('#ident-post-page').val()).html(text);
 </script>
 @stop
