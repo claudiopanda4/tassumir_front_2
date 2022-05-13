@@ -2049,6 +2049,9 @@
 	.video-post video {
 	    max-height: 90vh;
 	}
+	.nav-video-option li {
+	    font-size: 13px;
+	}
 	.component-input-search-container {
 	    width: 75%;
 	}

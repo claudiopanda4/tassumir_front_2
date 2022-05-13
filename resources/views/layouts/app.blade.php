@@ -124,7 +124,7 @@
                 </li>-->
             </nav>
     </header>
-    <?php $page = isset($_SERVER['PATH_INFO'])? explode('/', $_SERVER['PATH_INFO'])[1]: ''; if ($page == 'profile' || $page == 'couple_page' || $page == 'post_index'): ?>
+    <?php $page = $page_current; if ($page == 'profile' || $page == 'page' || $page == 'post_index'): ?>
         <input type="hidden" id="control-component-page-profile" value="1">
         <header class="header-main header-main-component clearfix" style="z-index: 1002; top: 0; background: #000000c4;" id="header-main-container-page-profile">
             <ul class="ul-left clearfix">
@@ -133,7 +133,7 @@
                 </li>
                 <li class="title l-5 title-container">
                     <div id="title-header-component">
-                        <?php if ($page == 'couple_page'): ?>
+                        <?php if ($page == 'page'): ?>
                             {{$dados[0]->nome}}
                         <?php else: ?>
                             <?php if ($page == 'post_index'): ?>
@@ -763,9 +763,9 @@
                     <li class="hidden-post">
                         <a href="" class="delete_post options-special hidden-post" id="hidden-post-component">Ocultar publicação</a>
                     </li>
-                    <li class="denunciar-post">
+                    <!--<li class="denunciar-post">
                         <a class="denunciar-post" href="">Denunciar</a>
-                    </li>
+                    </li>-->
                     <li>
                         <a href="">Copiar link</a>
                     </li>

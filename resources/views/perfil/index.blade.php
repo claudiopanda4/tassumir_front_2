@@ -36,7 +36,7 @@
                 @endif
 
             </div>
-            <label for="target-profile-cover">
+            <label for="target-profile-cover-">
                 <div class="add-edit-profile circle invisible-component" id="add-edit-profile-owner">
                     <i class="fas fa-plus center" style="font-size: 10px;"></i>
                 </div>
@@ -82,7 +82,7 @@
                         <div class="l-5 options-profile-btn more-options-profile-bt">
                             <label for="more-option-target-profile" class="target-options-profile">
                                 <div class="">
-                                    <div class="more-options-profile-btn">
+                                    <div class="more-options-profile-btn" id="more-options-profile-btn-profile">
                                         <div class="more-options-component">
                                             <!--<i class="fas fa-caret-down center" style="font-size: 18px;"></i>-->
                                             <img class="center img-20" src="{{asset('css/uicons/caret-down.png')}}">
@@ -208,17 +208,17 @@
                     </li>
                 </ul>
                 <ul class="" id="more-option-visit-profile-details">
-                    <li class="li-component-aside more-info-about-profile">
+                    <!--<li class="li-component-aside more-info-about-profile">
                         <h1>Estado</h1>
                         <h2>Solteiro</h2>
-                    </li>
+                    </li>-->
                     <li class="li-component-aside more-info-about-profile">
                         <h1>Idade</h1>
-                        <h2>24 anos</h2>
+                        <h2 id="age-profile"></h2>
                     </li>
                     <li class="li-component-aside more-info-about-profile">
-                        <h1>Vive em</h1>
-                        <h2>Sem Endereço Actual</h2>
+                        <h1>Aderiu ao Tassumir em</h1>
+                        <h2 id="aderiu"></h2>
                     </li>
                 </ul>
             </nav>

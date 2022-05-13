@@ -47,13 +47,14 @@
       color: red;
     }
     #nationality {
-      padding: 10px;
+      padding: 8px;
       width: 100%;
       border-radius: 5px;
       background: #242526;
       border: none;
-      margin: 10px auto;
+      margin: 10px auto 0;
       color: #efefef;
+      font-size: 13px;
     }
   </style>
 </head>
