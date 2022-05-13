@@ -228,11 +228,7 @@
                 text = text + '' + description[i];
             }
         }
-        console.log(description);
-        //alert('');
-        $('#p-post_' + $('#ident-post-page').val()).text('');
-        document.getElementByClassName('p-post-class')[0].text(text);
-        //$('#p-post_' + $('#ident-post-page').val()).html(text);    
+        $('#p-post_' + $('#ident-post-page').val()).html(text); 
     });
 </script>
 @stop
