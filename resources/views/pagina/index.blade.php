@@ -219,6 +219,7 @@
 <script type="text/javascript">
     let description = $('#p-post_' + $('#ident-post-page').val()).text(), text;
     text = "";
+    console.log(description);
     for (var i = 0; i <= description.length - 1; i++) {
         if (description[i] == '\n') {
             text = text + '\n' + description[i];    
@@ -226,6 +227,7 @@
             text = text + '' + description[i];
         }
     }
+    console.log(text);
     $('#p-post_' + $('#ident-post-page').val()).text(text);
 </script>
 @stop
