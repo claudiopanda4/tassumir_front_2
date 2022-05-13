@@ -216,4 +216,16 @@
         <?php $key++; } ?>
     </div>
 </div>
+<script type="text/javascript">
+    let description = $('#p-post_' + $('#ident-post-page').val()).text(), text;
+    text = "";
+    for (var i = 0; i <= description.length - 1; i++) {
+        if (description[i] == '\n') {
+            text = text + '\n' + description[i];    
+        } else {
+            text = text + '' + description[i];
+        }
+    }
+    $('#p-post_' + $('#ident-post-page').val()).text(text);
+</script>
 @stop
