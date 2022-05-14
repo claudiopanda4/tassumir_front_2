@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/post/delete', [App\Http\Controllers\AuthController::class, 'delete_post'])->name('delete_post');
     Route::get('/pegar_mais_post', [App\Http\Controllers\AuthController::class, 'pegar_mais_post'])->name('pegar_mais_post');
     Route::get('/ocultar_post', [App\Http\Controllers\AuthController::class, 'ocultar_post'])->name('ocultar_post');
-    
+
     #PERFIL
     Route::get('/get_nine_videos_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_videos_perfil'])->name('get_nine_videos_perfil');
     Route::get('/get_nine_images_perfil', [App\Http\Controllers\PerfilController::class, 'get_nine_images_perfil'])->name('get_nine_images_perfil');
@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/page/pictures/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_images_page'])->name('couple.pictures');
     Route::get('/couple_page/page/content/videos/', [App\Http\Controllers\PaginaCasalController::class, 'get_nine_videos_page'])->name('page.couple.videos');
     #End PAGES
-    
+
     #Novas Rotas Tassumir Videos
     Route::get('/tv/{id}', [App\Http\Controllers\PostController::class, 'tassumirvideos_final'])->name('post.tassumir.video_final');
     #End Rotas Tassumir Videos
@@ -150,7 +150,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
         /*rotas de pesquisa optimizadas*/
     #End Requisicoes Ajax
 
-    #Pesquisas Optimizadas        
+    #Pesquisas Optimizadas
         Route::get('/search/people/', [App\Http\Controllers\searchController::class, 'people_search_final'])->name('people.search');
         Route::get('/search/page', [App\Http\Controllers\searchController::class, 'page_search_final'])->name('page.search');
         Route::get('/post_search_final', [App\Http\Controllers\searchController::class, 'post_search_final'])->name('post.search');
@@ -177,6 +177,8 @@ Route::get('/edit_post', [App\Http\Controllers\PostController::class, 'edit_post
 Route::get('/getvideo/', [App\Http\Controllers\PostController::class, 'get_video'])->name('post.video.get');
 Route::get('/getposts/', [App\Http\Controllers\PostController::class, 'index'])->name('post.get');
 Route::get('/getposts/destaques/{limit}', [App\Http\Controllers\PostController::class, 'destaques'])->name('post.get.destaques');
+Route::get('/people_comment_reaction/', [App\Http\Controllers\PostController::class, 'people_comment_reaction'])->name('post.people_comment_reaction');
+Route::get('/people_post_reaction/', [App\Http\Controllers\PostController::class, 'people_post_reaction'])->name('post.people_post_reaction');
 //endposts
 
 //
@@ -253,5 +255,3 @@ Route::get('/', [App\Http\Controllers\AuthController::class, 'index'])->name('ac
     Route::get('comunidade',[App\Http\Controllers\HelpSupport::class, 'comunidade'])->name('comunidade');
     Route::get('publicidade',[App\Http\Controllers\HelpSupport::class, 'publicidade'])->name('publicidade');
 # End Terms
-
-

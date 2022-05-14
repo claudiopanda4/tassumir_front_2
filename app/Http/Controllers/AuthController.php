@@ -58,7 +58,7 @@ class AuthController extends Controller
             if ($result->pedinte) {
                 $addClass = '';
                 $text = "";
-                $remove = false;    
+                $remove = false;
             }
         } else {
 
@@ -67,12 +67,12 @@ class AuthController extends Controller
             if ($result->pedinte) {
                 $addClass = '';
                 $text = "";
-                $remove = false;    
+                $remove = false;
             } else {
                 $addClass = 'alert-assumir-make-money-now';
                 $text = 'Ganhar dinheiro agora';
                 $remove_class = 'invisible-component';
-                $remove = false;                
+                $remove = false;
             }
         }
 
@@ -117,7 +117,7 @@ class AuthController extends Controller
         }
     }
 
-    
+
     public function paginasNaoSeguidasIndex(){
         try {
           $paginasNaoSeguidas = array();
@@ -2186,6 +2186,21 @@ public function dados_comment($key){
             return response()->json($resposta);
           }
 
+          public function people_post_reaction(Request $request)
+          {
+            $people_post_reaction= DB::select('select t.*, if(type=1,(select uuid from contas where conta_id=id),(select uuid from pages where page_id=id))as uuid,if(type=1,(select nome from contas where conta_id=id),(select nome from pages where page_id=id)) as nome,if(type=1,(select apelido from contas where conta_id=id),null) as apelido,if(type=1,(select foto from contas where conta_id=id),(select foto from pages where page_id=id)) as foto from (select (select i.tipo_identificador_id from identificadors as i where i.identificador_id= pr.identificador_id) as type,(select i.id from identificadors as i where i.identificador_id= pr.identificador_id) as id from post_reactions as pr where pr.post_id=?)as t', [$request->id]);
+
+            return response()->json($people_post_reaction);
+
+          }
+          public function people_comment_reaction(Request $request)
+          {
+            $people_comment_reaction= DB::select('select t.*, if(type=1,(select uuid from contas where conta_id=id),(select uuid from pages where page_id=id))as uuid,if(type=1,(select nome from contas where conta_id=id),(select nome from pages where page_id=id)) as nome,if(type=1,(select apelido from contas where conta_id=id),null) as apelido,if(type=1,(select foto from contas where conta_id=id),(select foto from pages where page_id=id)) as foto from (select (select i.tipo_identificador_id from identificadors as i where i.identificador_id= pr.identificador_id) as type,(select i.id from identificadors as i where i.identificador_id= pr.identificador_id) as id from reactions_comments as pr where pr.comment_id=?)as t', [$request->id]);
+
+            return response()->json($people_comment_reaction);
+
+          }
+
           public function like_final(Request $request){
 
                 $conta =Auth::user()->conta_id;
@@ -2951,7 +2966,7 @@ public function dados_comment($key){
                         $password = $this->cript_password($password_clean);
 
                       //fim criptografia
-                        
+
 
                      return view('auth.codigoRecebidoRegister',compact('nome','apelido','data_nascimento','genero','nacionalidade','encryp_conf_cod','takePhone','takeEmail','password'));
 
@@ -2994,7 +3009,7 @@ public function dados_comment($key){
                     return back()->with('error',"Escolha pelo menos uma opção de contacto");
             }
 
-          }catch(\Exception $e){    
+          }catch(\Exception $e){
 
             //return view('auth.errors.500');
            // return view('auth.ErrorStatus');
@@ -3029,11 +3044,11 @@ public function dados_comment($key){
         $data_nascimento = $request->receivedData_Nascimento;
         $nacional=$request->receivedNacio;
         $sexo = $request->receivedGenero;
-        
+
 
         if($input_code == $decryp_code_confi){
 
-            /*$result_phone_email = DB::table('contas') 
+            /*$result_phone_email = DB::table('contas')
                         ->where('telefone','=',$phoneReceived)
                         ->orwhere('email','=',$emailReceived)
                         ->get();
@@ -3135,7 +3150,7 @@ public function dados_comment($key){
 
         }catch(\Exception $error){
                DB::rollBack();
-                
+
             return view('auth.ErrorStatus');
         }
     }
@@ -3181,7 +3196,7 @@ public function dados_comment($key){
         $data_nascimento = $request->receivedData_Nascimento;
         $nacional=$request->receivedNacio;
         $sexo = $request->sexo;
-        
+
         $password=$request->password;
 
        if($phoneReceived != null){
@@ -3412,10 +3427,10 @@ public function dados_comment($key){
         }
 
         return back()->with('error',"Email ou Telefone invalidos");
-        
+
     }catch(\Exception $error){
-            
-            return view('error.something_went_wrong'); 
+
+            return view('error.something_went_wrong');
       }
   }
 
@@ -3474,7 +3489,7 @@ public function dados_comment($key){
           return view('auth.newCode2',compact('idToCompare'));
       }
      }catch(\Exception $error){
-        
+
             return view('error.something_went_wrong');
      }
   }
