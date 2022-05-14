@@ -60,7 +60,7 @@
                 <input type="hidden" id="ident-post-page" value='{{$ident_page}}'>
                 <div class="card-post">
                     <div class="">
-                        <p class="" id="p-post_{{$ident_page}}">{{$post->descricao}}</p>
+                        <p class="p-post-class" id="p-post_{{$ident_page}}">{{$post->descricao}}</p>
                         <?php if ($post->formato_id == 1): ?>
                             <div class="video-post post-video" id="video-post_{{$ident_page}}">
                                 <!--<img class="loader_button center" src="{{asset('css/uicons/aguarde.gif')}}" id="loader_button_{{$ident_page}}">
@@ -216,4 +216,19 @@
         <?php $key++; } ?>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        let description = $('#p-post_' + $('#ident-post-page').val()).text(), text;
+        text = "";
+        console.log(description);
+        for (var i = 0; i <= description.length - 1; i++) {
+            if (description[i] == '\n') {
+                text = text + '<br/>' + description[i];    
+            } else {
+                text = text + '' + description[i];
+            }
+        }
+        $('#p-post_' + $('#ident-post-page').val()).html(text); 
+    });
+</script>
 @stop

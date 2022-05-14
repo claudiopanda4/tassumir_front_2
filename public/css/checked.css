@@ -556,7 +556,8 @@
     z-index: 1006;
 }
 #search-pop-up-check:checked ~ #search-pop-up,
-#target-single-page-component:checked ~ #single-page-container {
+#target-single-page-component:checked ~ #single-page-container,
+#target-single-page-component-denunc:checked ~ #single-page-container-denunc {
 	opacity: 1;
     z-index: 1005;
 }

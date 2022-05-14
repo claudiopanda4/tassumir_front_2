@@ -1551,11 +1551,11 @@
 		font-size: 13px;
 	}
 	#more-option-profile-component-pop-up {
-		width: 94%;
+		width: 100%;
 	    height: 45%;
 	    position: absolute;
 	    margin: auto;
-	    bottom: 46px;
+	    bottom: 0px;
 	    border-radius: 0;
 	    left: 50%;
 	    -o-transform: translateX(-50%);
@@ -1706,6 +1706,14 @@
 	    background-color: #18191a;
 	    margin-top: 2px;
     	margin-bottom: -5px;
+	}
+	#options-profile-btn-edit-profile, 
+	#main-profile .more-options-profile-btn, 
+	#main-profile .button-default-tassumir {
+	    border-radius: 0px;
+	}
+	#single-page-container {
+		/*background-color: #000;*/
 	}
 	.height-minim-video-tv {
 		height: 100%;
@@ -1933,6 +1941,9 @@
 	.invisible-component {
 		display: none;
 	}
+	.li-component-aside, .li-component-aside a {
+	    padding: 8px;
+	}
 	.user-tassumir img.no-img {
 	    width: 24px;
 	    height: 24px;
@@ -2037,6 +2048,12 @@
 @media screen and (max-width: 330px){
 	.video-post video {
 	    max-height: 90vh;
+	}
+	.nav-video-option li {
+	    font-size: 13px;
+	}
+	.component-input-search-container {
+	    width: 75%;
 	}
 	#more-description-page .statistics-profile-page {
 	    max-width: 288px;

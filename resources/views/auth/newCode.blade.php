@@ -47,7 +47,7 @@
 
                     <div class="form-group" id="password_login_id2">
                         
-                        <input type="password" class="input-text-default input-full input-login" name="password" placeholder="Escreva a nova senha" required id="password">
+                        <input type="password" class="input-text-default input-full input-login" name="password" placeholder="Escreva a nova senha" required id="password" minlength="6" onKeyUp="verify_password_strength();">
 
                         <i class="fa fa-eye" id="eye"></i>
 
@@ -55,9 +55,10 @@
                             Insira a Password
                       </div>
 
-                      <label id="labelt" class="hidden">Insira pelo menos 9 caracteres ou os seus dados não serão guardados</label>
+                      <span id="senhaMsg"></span>
+                      <!--<label id="labelt" class="hidden">Insira pelo menos 9 caracteres ou os seus dados não serão guardados</label>
 
-                      <label id="labelAprovado" class="hidden">Password aceitável</label>
+                      <label id="labelAprovado" class="hidden">Password aceitável</label>-->
                     </div>
 
                     <div class="form-group" id="password_login_id2">
@@ -66,11 +67,12 @@
 
                         <i class="fa fa-eye" id="eye2"></i>
 
+                      <span id="senhaMsg_match">
                         <div class="invalid-feedback">
                             Confirme a Password
                       </div>
 
-                      <label id="labelC" class="hidden">As passswords não são iguais</label>
+                      <!--<label id="labelC" class="hidden">As passswords não são iguais</label>-->
                     </div>
 
 
@@ -133,7 +135,7 @@
 
     });
 
-$("#password").on('keyup',function(){
+/*$("#password").on('keyup',function(){
 
         let passwordValue = $("#password").val();
 
@@ -152,7 +154,7 @@ $("#password").on('keyup',function(){
 
                     $("#labelt").fadeOut();
 
-            },5000)*/
+            },5000)
 
         }else if(passwordLenght >= 9){
 
@@ -168,7 +170,7 @@ $("#password").on('keyup',function(){
                                    })
 
                                    $("#labelt").fadeOut(1000);
-            /*$("#labelt").fadeIn()
+            $("#labelt").fadeIn()
                 .text("Password aceitável")
                 .css({
 
@@ -178,11 +180,50 @@ $("#password").on('keyup',function(){
 
                     $("#labelt").fadeOut();
 
-            },5000)*/
+            },5000)
         }
 
-    });
+    });*/
 
+  function verify_password_strength(){
+
+    var numeros = /([0-9])/;
+    var alfabeto = /([a-zA-Z])/;
+    var char_especiais = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
+
+    if($('#password').val().length < 6){
+
+     $('#senhaMsg').html("<span style='color:red'>Fraco, insira no mínimo 6 caracteres </span>");
+
+     $(".alerta").prop('disabled', true).css({
+
+              backgroundColor: "#9e9e9e"
+      });
+
+   }else{
+
+    if($('#password').val().match(numeros) && $('#password').val().match(alfabeto) && $('#password').val().match(char_especiais)){ 
+
+
+      $('#senhaMsg').html("<span style='color:green'><b>Forte</b></span>");
+
+
+      $(".alerta").prop('disabled', false).css({
+            backgroundColor: "#2196f3"
+          });
+
+    } else {
+
+      $('#senhaMsg').html("<span style='color:orange'>Médio</span>");
+
+      $(".alerta").prop('disabled', false).css({
+              backgroundColor: "#2196f3"
+          });
+    }
+
+   }
+
+  }
     $("#confirmarPassword").on('keyup',function(){
 
         let password = $("#password").val();
@@ -193,35 +234,22 @@ $("#password").on('keyup',function(){
 
         if(password === confirmPassword && passwordLenght === confirmPasswordLenght ){
 
+            $("#senhaMsg_match").html("<span style='color:green'> As passswords são iguais </span>");
 
-
-            $("#labelC")
-                .fadeIn()
-                .text("As passswords são iguais")
-                .css({
-                color:'#fff',
+            $(".alerta").prop('disabled', false).css({
+              backgroundColor: "#2196f3"
             });
-            setTimeout(()=>{
-
-                    $("#labelC").fadeOut();
-
-            },4000)
 
         }else{
 
+              $("#senhaMsg_match").html("<span style='color:red'> As passswords não são iguais </span>");
 
-            $("#labelC").fadeIn()
-                .css({
-                color:'red',
+            $(".alerta").prop('disabled', true).css({
+
+              backgroundColor: "#9e9e9e"
+
             });
-            setTimeout(()=>{
-
-                    $("#labelC").fadeOut();
-
-            },4000)
-
         }
-
 
     });
 

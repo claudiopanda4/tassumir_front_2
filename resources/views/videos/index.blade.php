@@ -56,9 +56,9 @@
                     </li>
                     <h1 class="text-li-tv-icon" id="text-li-tv-icon-like-{{$key}}"></h1>
                 </a>
-                <a href="">
-                    <li class="li-tv-icon circle">
-                        <img class="img-26 center" src="{{asset('css/uicons/comment_tv.png')}}">
+                <a class="comment_tv-post" id="comment_tv-post-vid-{{$key}}" href="">
+                    <li class="li-tv-icon circle comment_tv-post">
+                        <img class="img-26 center comment_tv-post" id="comment-tv-post-{{$key}}" src="{{asset('css/uicons/comment_tv.png')}}">
                     </li>
                     <h1 class="text-li-tv-icon" id="text-li-tv-icon-comment-{{$key}}"></h1>
                 </a>

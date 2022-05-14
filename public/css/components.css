@@ -6,6 +6,7 @@
 }
 .target-single-page-component {
 	display: block;
+	margin-bottom: 0;
 }
 .icon-back-container.icon-back-container-label {
     margin-top: 5px;
@@ -13,9 +14,13 @@
     margin-right: 0;
 }
 #single-page-container-body {
-	max-height: 90%;
-    overflow-y: auto;
+}
+#single-page-container-body-container {
+	overflow-y: auto;
+	max-height: 93%;
 }
 .header-component-single-page {
     margin-bottom: 0;
+    max-width: 600px;
+    margin: auto;
 }

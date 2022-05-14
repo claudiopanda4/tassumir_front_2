@@ -315,6 +315,9 @@ body {
 .clearfix ul li a{
     background-color: transparent;
 }
+.clearfix ul#more-option-target-profile-details li a{
+    font-size: 12px;
+}
 .clearfix-n::after {
     display: block;
     content: '.';
@@ -2466,8 +2469,8 @@ label[for="hugo"]{
     position: absolute;
     width: 32px;
     height: 32px;
-    top: 10px;
-    right: 10px;
+    top: 2px;
+    right: 5px;
     border-radius: 50%;
     background-color: #efefef;
     z-index: 2;
@@ -3030,6 +3033,7 @@ label[for="hugo"]{
     font-size: 12px;
     color: #fff;
     margin: 0 4px 5px;
+    font-weight: bolder;
 }
 .btn-message {
     position: relative;
@@ -4716,6 +4720,7 @@ label[for="hugo"]{
 .title-header-component-details {
     margin-top: 6px;
     color: #efefef;
+    font-weight: bolder;
 }
 .header-component-single-page {
     min-height: 45px;
@@ -4726,4 +4731,70 @@ label[for="hugo"]{
     color: #fff;
     font-size: 10px;
     bottom: 0;
+}
+#single-page-container-body {
+    max-width: 600px;
+    margin: auto;
+}
+.comment-single-page-comment {
+    margin-top: 0;
+}
+.list-pop-up li {
+    width: 100%;
+    cursor: pointer;
+    margin: auto;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bolder;
+    border-bottom: 1px solid #3a3b3c;
+    padding: 10px;
+    color: #fff;
+}
+.list-pop-up ul {
+    padding: 0;
+}
+.list-pop-up {
+    width: 100%;
+    background-color: #242526;
+    bottom: 0;
+    position: absolute;
+    /* left: 38px; */
+    left: 50%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    transform: translateX(-50%);
+}
+.btn-send-denunc {
+    width: 90%;
+    font-size: 13px;
+    font-weight: bolder;
+    color: #fff;
+    background-color: #2374e1;
+    text-align: center;
+    border-radius: 4px;
+    padding: 7px;
+    margin: 0 auto 10px;
+    cursor: pointer;
+}
+p.alert-p {
+    color: #efefef;
+    padding: 10px;
+    font-size: 13px;
+}
+.response-denunc-pop-up {
+    padding: 10px 0;
+    margin: auto;
+    background-color: #242526;
+}
+.header-component-pop-up-react {
+    background-color: #242526;
+    margin: auto;
+}
+.back_component-pop-up-react {
+    margin-top: 8px;
+}
+.list-pop-up, p.alert-p,
+.header-component-pop-up-react,
+.response-denunc-pop-up {
+    max-width: 360px;
 }

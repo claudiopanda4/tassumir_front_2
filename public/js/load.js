@@ -17,6 +17,22 @@ $(document).ready(function () {
 		any_id = e.target.id.split('_')[1];
 		console.log(any_id);
 	});
+	$('#add-edit-profile-owner').click(function () {
+		$('#file-id-profile').click();
+	});
+	$('#more-options-profile-btn-profile').click(function(){
+		$.ajax({
+			url: route + '/profile/more/' + $('#ident-profile-id').val(),
+			type: 'GET',
+			dataType: 'json',
+			data: {},
+			success: function(response){
+				console.log(response);
+				$('#age-profile').text(response.age);
+				$('#aderiu').text(response.aderiu);
+			}
+		});
+	});
 	$('.delete-post-option-component').click(function (e) {
 		any_id = e.target.id.split('_')[1];
 	});
@@ -96,7 +112,7 @@ $(document).ready(function () {
 					$('#search-context-text-top_' + components[i].uuid).text(text);
 					$('#search-context-text-top_' + components[i].uuid).addClass('transparent-back');
 					if (components[i].foto) {
-						$('#search-img-container-img_' + components[i].uuid).attr('src', route + '/storage/users/' + components[i].foto);
+						$('#search-img-container-img_' + components[i].uuid).attr('src', route + '/storage/img/users/' + components[i].foto);
 						if (type == 2) {
 							$('#search-img-container-img_' + components[i].uuid).attr('src', route + '/storage/img/page/' + components[i].foto);
 						}
@@ -114,11 +130,13 @@ $(document).ready(function () {
 						$('#search-context-text-bottom_' + components[i].uuid).addClass('search-info-people');
 						if (!components[i].verify_page) {
 							if (!components[i].relationship) {
-								$('#search-item-action-person_' + components[i].uuid).html('ASSUMIR');
-								$('#search-item-action-person_' + components[i].uuid).addClass('transparent-back');
-								$('#search-item-action-person_' + components[i].uuid).addClass('assumir-search-container');
-								$('#search-item-action-person_' + components[i].uuid).addClass('target-relationship-assumir');
-								$('#search-item-action-person_' + components[i].uuid).removeClass('invisible-component');
+								if (!components[i].have_relationship && !components[i].equal_genre && !components[i].accept_request) {
+									$('#search-item-action-person_' + components[i].uuid).html('ASSUMIR');
+									$('#search-item-action-person_' + components[i].uuid).addClass('transparent-back');
+									$('#search-item-action-person_' + components[i].uuid).addClass('assumir-search-container');
+									$('#search-item-action-person_' + components[i].uuid).addClass('target-relationship-assumir');
+									$('#search-item-action-person_' + components[i].uuid).removeClass('invisible-component');	
+								}
 							}
 							$('#search-context-text-bottom_' + components[i].uuid).html('Sem relacionamento');
 						} else {
@@ -141,7 +159,7 @@ $(document).ready(function () {
 					data: {dados : text, v : 1},
 					dataType: 'json',
 					success:function(response){
-						//console.log(response);
+						console.log(response);
 						//console.log(response.length);
 						if (response.length) {
 							$('#people-search').removeClass('invisible-component');
@@ -336,6 +354,7 @@ $(document).ready(function () {
 	$('#cancel-box-component-change').click(function(){
 		$('#cover-done-profile-cover-choose-container').removeClass('invisible-component');
 		$('#foto-view').addClass('invisible-component');
+		document.getElementById('target-profile-cover').checked = false;
 	});
 	$('#close-cover-post-button').click(function(){
 		document.getElementById('target-profile-cover').checked = false;
@@ -349,6 +368,7 @@ $(document).ready(function () {
 		$('#add-cover-profile').addClass('invisible-component');
 		$('#cover-done-profile-cover-choose-container').addClass('invisible-component');
 		$('#foto-view').removeClass('invisible-component');
+		document.getElementById('target-profile-cover').checked = true;
 		//console.log(url);
 	});
 	$('#cover-done-profile-cover-choose-id').click(function(){
@@ -539,7 +559,7 @@ $(document).ready(function () {
 			$.ajax({
 				url: '/get_nine_images_perfil',
 				type: 'get',
-				data: {'id' : 0},
+				data: {'id' : 0, 'ident': $('#ident-profile-id').val()},
 				dataType: 'json',
 				success:function(response){
 					//console.log(response);
@@ -712,7 +732,7 @@ $(document).ready(function () {
 		$.ajax({
 			url: '/get_nine_videos_perfil',
 			type: 'get',
-			data: {'id' : 0},
+			data: {'id' : 0, 'ident': $('#ident-profile-id').val()},
 			dataType: 'json',
 			success:function(response){
 				//console.log(response);
@@ -1679,6 +1699,9 @@ $(document).ready(function () {
     	let final = ($(window).height()) - main.top;
     	let document_height_general = $('.main-container').height();
     	cont = parseInt($('#posts-following').val());
+    	
+    	//console.log($('#single-page-container-body').height() + " " + component_single_page + ' ' + document_height_general);
+
     	if ((final >= document_height) && (parseInt($('#loading-finished').val()) == 0)) {
     		$('#loading-finished').val('1');
     		
@@ -1686,6 +1709,7 @@ $(document).ready(function () {
     			home_posts_assync();
     		}
     	}
+
     	//console.log('final ' + final + ' ' + document_height_general);
     	if (final >= document_height_general) {
     		
@@ -1975,6 +1999,12 @@ $(document).ready(function () {
     	seguir_page(id, e, 1);
     	//alert();
     });
+    $('.icon-back-container-label').click(function(){
+    	//$('#loaded-item-ident').val('0');
+    	$('#loaded-item-ident').val(0);
+    	$('#loaded-initial-comments').val('none');
+    	$('#single-page-container-body').empty();
+    });
     $('.video-post-video').click(function (e) {
     	any_id = e.target.id.split('_')[1];
     	play_now(any_id);
@@ -2120,8 +2150,7 @@ $(document).ready(function () {
 			}
 		});
     });
-    $('#cancel-options').click(function () { 
-    	alert($('#ident-key').val());  
+    $('#cancel-options').click(function () {  
     	any_id = $('#ident-key').val(); 
         $('#edit-option-component-id_' + any_id).attr('id', 'edit-option-component-id');
     	$('#edit-option-edit-component_' + any_id).attr('id', 'edit-option-edit-component');
@@ -2130,7 +2159,6 @@ $(document).ready(function () {
     });
     $('.edit-option-component').click(function (e) {
     	any_id = e.target.id.split('_')[1];
-    	//alert(any_id);
     	$('#pass_post_uuid').val(any_id);
     	document.getElementById('name_page_edit_post').innerText = $('#page-name-post_' + any_id).text();
     	$('#message').text($('#p-post_' + any_id).text());

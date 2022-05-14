@@ -190,6 +190,7 @@ $(document).ready(function () {
 				}
 				$('#video-tv-source_' + cont).val(route_root + '/storage/video/page/' + data.file);
 				$('#video-tv-source_' + cont).attr('id', 'video-tv-source_' + data.uuid);
+				$('#comment-tv-post-' + cont).attr('id', 'comment-tv-post_' + data.uuid);
 				$('#thumb-video-tv_' + cont).attr('src', route_root + '/storage/img/thumbs/' + data.thumbnail);
 				$('#thumb-video-tv_' + cont).attr('id', 'thumb-video-tv_' + data.uuid);
 				$('#play-button-tv_' + cont).attr('id', 'play-button-tv_' + data.uuid);
@@ -202,6 +203,8 @@ $(document).ready(function () {
 					$('#text-li-tv-icon-like-' + cont).text(data.qtd_reacoes);
 				}	
 				$('#reaction-id-comment-user-' + cont).attr('id', 'reaction-id-comment-user_' + data.uuid);
+				$('#comment_tv-post-vid-' + cont).attr('href', route_root + '/post_index/' + data.uuid);
+				$('#comment_tv-post-vid-' + cont).attr('id', 'comment_tv-post-vid_' + data.uuid);
 				$('#text-li-tv-icon-like-' + cont).attr('id', 'text-li-tv-icon-like_' + data.uuid);
 				if (data.qtd_comment > 0) {
 					$('#text-li-tv-icon-comment-' + cont).text(data.qtd_comment);
@@ -268,6 +271,7 @@ $(document).ready(function () {
 							$('#reaction-id-comment-user-' + cont).attr('id', 'reaction-id-comment-user_' + data.uuid);
 							$('#video-tv-source_' + cont).val(route_root + '/storage/video/page/' + data.file);
 							$('#video-tv-source_' + cont).attr('id', 'video-tv-source_' + data.uuid);
+							$('#comment-tv-post-' + cont).attr('id', 'comment-tv-post_' + data.uuid);
 							$('#thumb-video-tv_' + cont).attr('src', route_root + '/storage/img/thumbs/' + data.thumbnail);
 							$('#thumb-video-tv_' + cont).attr('id', 'thumb-video-tv_' + data.uuid);
 							$('#play-button-tv_' + cont).attr('id', 'play-button-tv_' + data.uuid);

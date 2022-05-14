@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/post/like', [App\Http\Controllers\AuthController::class, 'like_final'])->name('like');
     Route::get('/post/index/comment', [App\Http\Controllers\AuthController::class, 'comentar_final'])->name('comentar.index');
     Route::get('/profile/maritalstatus', [App\Http\Controllers\PerfilController::class, 'marital_status'])->name('profile.marital.status');
+    Route::get('/profile/more/{id}', [App\Http\Controllers\PerfilController::class, 'more_information'])->name('profile.more.information');
     Route::get('/return/id', [App\Http\Controllers\AuthController::class, 'ident'])->name('like');
     Route::get('/qtd_savesqtd_saves', [App\Http\Controllers\AuthController::class, 'qtd_saves'])->name('qtd_saves');
     Route::get('/qtd_pages_seg', [App\Http\Controllers\AuthController::class, 'qtd_pages_seg'])->name('qtd_pages_seg');

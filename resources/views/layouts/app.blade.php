@@ -29,8 +29,9 @@
     <meta http-equiv="UA-X-Compatible" content="ie=edge">
 </head>
 
-<body class="container-main">
+<body class="container-main" id="container-main-app">
     <input type="hidden" id="loaded-component" value="none">
+    <input type="hidden" id="loaded-component-denunc" value="none">
     <div class="body-pop-up content-full-scroll">
         <header class="header-main header-main-component clearfix" id="header-main-container">
             <ul class="ul-left clearfix">
@@ -123,7 +124,7 @@
                 </li>-->
             </nav>
     </header>
-    <?php $page = isset($_SERVER['PATH_INFO'])? explode('/', $_SERVER['PATH_INFO'])[1]: ''; if ($page == 'profile' || $page == 'couple_page' || $page == 'post_index'): ?>
+    <?php $page = $page_current; if ($page == 'profile' || $page == 'page' || $page == 'post_index'): ?>
         <input type="hidden" id="control-component-page-profile" value="1">
         <header class="header-main header-main-component clearfix" style="z-index: 1002; top: 0; background: #000000c4;" id="header-main-container-page-profile">
             <ul class="ul-left clearfix">
@@ -132,7 +133,7 @@
                 </li>
                 <li class="title l-5 title-container">
                     <div id="title-header-component">
-                        <?php if ($page == 'couple_page'): ?>
+                        <?php if ($page == 'page'): ?>
                             {{$dados[0]->nome}}
                         <?php else: ?>
                             <?php if ($page == 'post_index'): ?>
@@ -321,8 +322,11 @@
         </div>
     </div>
 </div>
+<input type="hidden" id="loaded-item-ident" value="0">
+<input type="hidden" id="id_clicked_component" value="0">
 <input type="checkbox" name="" id="target-single-page-component" class="invisible">
-<div class="pop-up" id="single-page-container" style="background-color: #000;">
+<div class="pop-up" id="single-page-container">
+    <input type="hidden" id="loaded-component-full" value="none" name="">
     <ul class="clearfix header-component-single-page">
         <label class="target-single-page-component" for="target-single-page-component">
             <li class="l-5 clearfix">
@@ -338,9 +342,13 @@
             </div>
         </li>
     </ul>
-    <div class="component-single-page" id="single-page-container-body">
+    <div id="single-page-container-body-container">
+        <div class="component-single-page" id="single-page-container-body">
+        </div>
     </div>
+    
 </div>
+<input type="hidden" id="id_clicked_component" value="0">
 <input type="checkbox" name="" id="target-alert-make-tassumir" class="invisible">
 <div class="pop-up" id="alert-make-money-tassumir">
     <div class="pop-up-component full-component-mobile center" style="position: absolute; max-height: 90%; height: auto; margin: auto;">
@@ -755,8 +763,8 @@
                     <li class="hidden-post">
                         <a href="" class="delete_post options-special hidden-post" id="hidden-post-component">Ocultar publicação</a>
                     </li>
-                    <!--<li>
-                        <a href="">Denunciar</a>
+                    <!--<li class="denunciar-post">
+                        <a class="denunciar-post" href="">Denunciar</a>
                     </li>-->
                     <li>
                         <a href="">Copiar link</a>
