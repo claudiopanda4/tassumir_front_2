@@ -29,6 +29,40 @@ class PaginaCasalController extends Controller
 
     }
 
+    public function who_follows_me(Request $request)
+    {
+      try {
+        if ($request->controlador >0) {
+          $who_follows_me=DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto from (select s.identificador_id_seguindo, (select i.id from identificadors as i where i.identificador_id=s.identificador_id_seguindo)as id from seguidors as s where s.identificador_id_seguida = (select i.identificador_id from identificadors as i where i.tipo_identificador_id = 2 and i.id= (select pa.page_id from pages as pa where pa.uuid=?)))  as al inner join contas as c on c.conta_id = id and id> ? order by c.nome, c.apelido limit 10',[$request->uuid,$request->controlador]);
+        }else {
+            $who_follows_me=DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto from (select s.identificador_id_seguindo, (select i.id from identificadors as i where i.identificador_id=s.identificador_id_seguindo)as id from seguidors as s where s.identificador_id_seguida = (select i.identificador_id from identificadors as i where i.tipo_identificador_id = 2 and i.id= (select pa.page_id from pages as pa where pa.uuid=?)))  as al inner join contas as c on c.conta_id = id order by c.nome, c.apelido ',[$request->uuid]);
+        }
+
+
+        return response()->json($who_follows_me);
+
+      } catch (\Exception $e) {
+
+      }
+    }
+
+    public function pages_i_follow(Request $request)
+    {
+      try {
+        if ($request->controlador >0) {
+          $pages_i_follow=DB::select('select pg.page_id,pg.uuid,pg.nome,pg.foto from seguidors as s inner join pages as pg on pg.page_id=(select i.id from identificadors as i where i.identificador_id= s.identificador_id_seguida) where pg.estado_pagina_id=1 and s.identificador_id_seguindo=(select i.identificador_id from identificadors as i where i.id=(select c.conta_id from contas as c where c.uuid=?)) and pg.page_id>? limit 10',[$request->uuid,$request->controlador]);
+        }else {
+          $pages_i_follow=DB::select('select pg.page_id,pg.uuid,pg.nome,pg.foto from seguidors as s inner join pages as pg on pg.page_id=(select i.id from identificadors as i where i.identificador_id= s.identificador_id_seguida) where pg.estado_pagina_id=1 and s.identificador_id_seguindo=(select i.identificador_id from identificadors as i where i.id=(select c.conta_id from contas as c where c.uuid=?)) limit 10',[$request->uuid]);
+        }
+
+        return response()->json($pages_i_follow);
+
+      } catch (\Exception $e) {
+
+      }
+
+    }
+
     public function get_relationship(Request $request){
       try {
         $data = DB::select('select tipo_relacionamento, preco from tipo_relacionamentos where tipo_relacionamento_id=?',[$request->ident]);
@@ -43,7 +77,13 @@ class PaginaCasalController extends Controller
 
     public function dados_page($uuid)
     {
-      $dados_page=DB::select("Select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,tipo_relacionamento, if(genero_conta_b='Masculino',nome_conta_b,nome_conta_a)as nome_conta_homem, if(genero_conta_b='Masculino',apelido_conta_b,apelido_conta_a)as apeltido_conta_homem, if(genero_conta_b='Masculino',nome_conta_a,nome_conta_b)as nome_conta_mulher, if(genero_conta_b='Masculino',apelido_conta_a,apelido_conta_b)as apeltido_conta_mulher from(select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,(select tr.descricao from tipo_relacionamentos as tr where tr.tipo_relacionamento_id=pg.tipo_relacionamento_id) as tipo_relacionamento,(select c.genero from contas as c where c.conta_id=pg.conta_id_a)as genero_conta_a,(select c.genero from contas as c where c.conta_id=pg.conta_id_b)as genero_conta_b,(select c.nome from contas as c where c.conta_id=pg.conta_id_a)as nome_conta_a,(select c.apelido from contas as c where c.conta_id=pg.conta_id_a)as apelido_conta_a,(select c.nome from contas as c where c.conta_id=pg.conta_id_b)as nome_conta_b,(select c.apelido from contas as c where c.conta_id=pg.conta_id_b)as apelido_conta_b from pages as pg where pg.uuid=?) as pg",[$uuid]);
+      try {
+        $dados_page=DB::select("Select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,tipo_relacionamento, if(genero_conta_b='Masculino',nome_conta_b,nome_conta_a)as nome_conta_homem, if(genero_conta_b='Masculino',apelido_conta_b,apelido_conta_a)as apeltido_conta_homem, if(genero_conta_b='Masculino',nome_conta_a,nome_conta_b)as nome_conta_mulher, if(genero_conta_b='Masculino',apelido_conta_a,apelido_conta_b)as apeltido_conta_mulher from(select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,(select tr.descricao from tipo_relacionamentos as tr where tr.tipo_relacionamento_id=pg.tipo_relacionamento_id) as tipo_relacionamento,(select c.genero from contas as c where c.conta_id=pg.conta_id_a)as genero_conta_a,(select c.genero from contas as c where c.conta_id=pg.conta_id_b)as genero_conta_b,(select c.nome from contas as c where c.conta_id=pg.conta_id_a)as nome_conta_a,(select c.apelido from contas as c where c.conta_id=pg.conta_id_a)as apelido_conta_a,(select c.nome from contas as c where c.conta_id=pg.conta_id_b)as nome_conta_b,(select c.apelido from contas as c where c.conta_id=pg.conta_id_b)as apelido_conta_b from pages as pg where pg.uuid=?) as pg",[$uuid]);
+
+      } catch (\Exception $e) {
+
+      }
+
     }
 
     public function spouse_names(Request $request)
@@ -887,11 +927,11 @@ class PaginaCasalController extends Controller
             }
           /*  DB::insert('insert into posts(uuid, descricao, file, page_id,reactions, comments, total_reactions_comments, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 [$uuid, $description, $file_name, $id, 0, 0, 0, $format, 1, $controll->dat_create_update()]);*/
-                
+
                 $thumbnail = null;
                 if ($thumb != false) {
                   $post = new PostController();
-                  $thumbnail = $post->thumbnail($thumb, explode('.', $file_name)[0]);  
+                  $thumbnail = $post->thumbnail($thumb, explode('.', $file_name)[0]);
                 }
 
                 DB::insert('insert into posts(uuid, descricao, file, thumbnail, page_id, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?, ?)',
