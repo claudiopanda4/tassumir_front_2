@@ -874,7 +874,7 @@ $(document).ready(function () {
 					$('#page-post-content-page-name-' + key).text(data.nome);
 					$('#page-post-content-page-name-a-' + key).attr('href', route + '/couple_page/' + data.uuid_page);
 					if (data.foto) {
-						$('#page-cover-post-cover-img-' + key).attr('src', route + '/storage/page/' + data.foto);
+						$('#page-cover-post-cover-img-' + key).attr('src', route + '/storage/img/page/' + data.foto);
 					} else {
 						$('#page-cover-post-cover-img-' + key).attr('src', route + '/css/uicons/page_icon.jpg');
 					}
@@ -1702,7 +1702,7 @@ $(document).ready(function () {
     	
     	//console.log($('#single-page-container-body').height() + " " + component_single_page + ' ' + document_height_general);
 
-    	if ((final >= document_height) && (parseInt($('#loading-finished').val()) == 0)) {
+    	if ((final + 100 >= document_height) && (parseInt($('#loading-finished').val()) == 0)) {
     		$('#loading-finished').val('1');
     		
     		if ($('#restart').val() == 'on') {
@@ -1711,7 +1711,7 @@ $(document).ready(function () {
     	}
 
     	//console.log('final ' + final + ' ' + document_height_general);
-    	if (final >= document_height_general) {
+    	if (final + 70 >= document_height_general) {
     		
     		if ($('#comment_index').val() && $('#loaded-initial-comments').val() == 'ok') {
     			//console.log('final ' + $('#post_comment-qtd').val());
@@ -1770,7 +1770,7 @@ $(document).ready(function () {
     	}
     	//console.log(final);
     	//console.log(document_height_general);
-    	if (final >= document_height_general && $('#control-state-posts').val() == 1) {
+    	if (final + 110 >= document_height_general && $('#control-state-posts').val() == 1) {
     		//console.log('final');
     		$('#control-state-posts').val(0);
     		if ($('#control-type-state-posts-checked').val() == 1) {
