@@ -93,7 +93,7 @@ Route::group(['middleware' => 'auth:web1'], function () {
     Route::get('/profile/edit/{perfil}', [App\Http\Controllers\PerfilController::class, 'edit'])->name('account.profile.edit');
     Route::get('/page/description/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'description_page'])->name('page.description');
     Route::get('/paginas_que_sigo/{id}', [App\Http\Controllers\PaginaCasalController::class, 'paginas_que_sigo'])->name('paginas_que_sigo.page');
-    Route::get('/who_follows_me/{id}', [App\Http\Controllers\PaginaCasalController::class, 'who_follows_me'])->name('who_follows_me.page');
+    Route::get('/pages_i_follow/', [App\Http\Controllers\PaginaCasalController::class, 'pages_i_follow'])->name('pages_i_follow.page');
     Route::post('/page_update/', [App\Http\Controllers\PaginaCasalController::class, 'page_update'])->name('page_update');
     Route::get('/couple_page/{uuid}', [App\Http\Controllers\PaginaCasalController::class, 'index'])->name('couple.page');
     Route::get('/my_pages/', [App\Http\Controllers\PaginaCasalController::class, 'my_pages'])->name('couple.page.mine');
