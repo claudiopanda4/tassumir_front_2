@@ -1646,6 +1646,7 @@ label[for="hugo"]{
 }
 .post-cover-post-index {
     height: auto;
+    min-height: 120px;
 }
 .post-cover-post-index img {
     position: relative;
