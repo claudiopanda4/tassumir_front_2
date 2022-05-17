@@ -1211,7 +1211,8 @@ label[for="hugo"]{
 
 }
 .li-component-aside-right a {
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: bolder;
 }
 .name-page {
     width: 200px;
@@ -2813,6 +2814,9 @@ label[for="hugo"]{
     margin-top: 9px;
     font-size: 12px;
     width: 70%;
+}
+.suggest-slide a div.no-following {
+    background-color: transparent;
 }
 .relationship-type {
     padding: 8px;
@@ -4798,4 +4802,17 @@ p.alert-p {
 .header-component-pop-up-react,
 .response-denunc-pop-up {
     max-width: 360px;
+}
+#poupar-data-id {
+    color: #fff;
+    background-color: #2196f3;
+    font-size: 11px;
+    padding: 0px;
+    border: 0px solid #2196f3;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-top: 0;
+}
+.invisible {
+    display: none;
 }

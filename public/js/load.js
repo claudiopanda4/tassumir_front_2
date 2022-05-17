@@ -1536,6 +1536,11 @@ $(document).ready(function () {
     	id = e.target.id.split('-')[4];
    		document.location.href = $('#link_page_' + e.target.id.split('-')[4]).val();
    	});
+   	$('.seguir-page-a').click(function (e) {
+   		e.preventDefault();
+   		id = e.target.id.split('_')[1];
+   		seguir_page(id, e, 2);
+   	});
     function suggest_page(){
     	$.ajax({
 		    url: '/page/following/index',
@@ -1553,6 +1558,8 @@ $(document).ready(function () {
 		        		if (data.foto != null) {
 		        			$('#cover-suggest-index-page-' + key).attr('src', route + "/storage/img/page/" + data.foto);
 		        		}
+		        		$('#li-component-suggest-' + key).attr('id', 'li-component-suggest_' + data.uuid);
+		        		$('#seguir-index-mobile-' + key).attr('id', 'seguir-index-mobile_' + data.uuid);
 		        		$('#link_page_' + key).val(route + '/couple_page/' + data.uuid);
 		        		$('#loader-id-icon-post-index-' + key).addClass('loader-id-icon-post_' + data.uuid);
 		        		$('#loader-id-icon-post-index-' + key).attr('id', 'loader-id-icon-post-index_' + data.uuid);
@@ -1599,6 +1606,7 @@ $(document).ready(function () {
 		        		if (data.foto != null) {
 		        			$('#page-cover-suggest-id-' + key).attr('src', route + "/storage/img/page/" + data.foto);
 		        		}
+		        		$('#following-page-aside-' + key).attr('id', 'following-page-aside_' + data.uuid);
 		        		$('#li-component-sugest-' + key).addClass('seguir-a-class_' + data.uuid);
 		        		$('#li-component-sugest-' + key).removeClass('invisible-component');
 		        		$('#li-component-sugest-' + key).attr('id', 'li-component-sugest_' + data.uuid);
@@ -1983,7 +1991,13 @@ $(document).ready(function () {
 	    			$('#loader-id-icon-post-index_' + response.uuid).addClass('invisible-component');		    		
 		    	}
 		    	if (type == 2) {
-		    		//alert('entrou');	    		
+		    		if ($('#seguir-index-mobile_' + id).text() == "seguir") {
+		    			$('#seguir-index-mobile_' + id).text('não seguir');
+		    			$('#seguir-index-mobile_' + id).addClass('no-following');
+		    		} else {
+		    			$('#seguir-index-mobile_' + id).text('seguir');
+		    			$('#seguir-index-mobile_' + id).removeClass('no-following');
+		    		}    		
 		    	}
 		    }
     		
@@ -1993,6 +2007,7 @@ $(document).ready(function () {
     $('.seguir-a').click(function (e) {
     	e.preventDefault();
     	id = e.target.id.split('_')[1];
+    	alert(id);
     	$('#loader-id-icon-post_' + id).removeClass('invisible-component');
     	$('#loader-id-icon-post-index_' + id).removeClass('invisible-component');
     	//alert(id);
