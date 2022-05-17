@@ -147,9 +147,12 @@
         }
 
         else {
+
             $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
             $(this).addClass('submitted');
+
         }
+
     });
 
   $('#second-form').submit(function (event) {
