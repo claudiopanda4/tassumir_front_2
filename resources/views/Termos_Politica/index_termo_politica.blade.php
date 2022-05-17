@@ -44,7 +44,7 @@
 
 		<div  class="div-main-info">
 
-			<div class="div-1-infos">
+			<div class="div-1-info">
 
 				<a href="{{route('termos')}}" class="div-a">
 				<h3 class="the-font color-orange">Termos de Serviço</h3>

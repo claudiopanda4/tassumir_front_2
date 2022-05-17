@@ -3011,9 +3011,9 @@ public function dados_comment($key){
 
           }catch(\Exception $e){
 
-            //return view('auth.errors.500');
-           // return view('auth.ErrorStatus');
-            dd($e);
+            //dd($e);
+
+            return view('error.something_went_wrong');
 
           }
     }
@@ -3048,16 +3048,6 @@ public function dados_comment($key){
 
         if($input_code == $decryp_code_confi){
 
-            /*$result_phone_email = DB::table('contas')
-                        ->where('telefone','=',$phoneReceived)
-                        ->orwhere('email','=',$emailReceived)
-                        ->get();
-            if(sizeof($result_phone_email) > 0){
-                return redirect()->route('redirect.register.form')->with("error","Email ou Telefone ja existente na plataforma Tassumir, faça login");
-
-            }else{
-
-            }*/
                   $conta = new Conta();
                   $conta->uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
                   $conta->nome = $nome;
@@ -3374,29 +3364,31 @@ public function dados_comment($key){
             $email = $request->emailName;
             $phone = str_replace("-","",$request->phoneNumber);
 
-             if ($phone != null) {
+             if ($phone != null) { 
 
                 $takePhone = DB::table('contas')
                   ->select('telefone','conta_id')
                   ->where('telefone','=',$phone)
                   ->get();
 
-                  if (isset($takePhone)) {
+                  if (sizeof($takePhone) > 0) {
 
                       foreach($takePhone as $info){
                             $foundedId = $info->conta_id;
                             $foundedPhone = $info->telefone;
-                            $codeToSend = random_int(100000,900000);
-                             $this->sendMsgToPhone($phone,$codeToSend);
-
-                            DB::table('codigo_confirmacaos')
-                                          ->where('conta_id', $foundedId)
-                                          ->update(['codigoGerado' => $codeToSend]);
-                            return view('auth.codigoRecebido',compact('foundedId','codeToSend','phone','email'));
                     }
+
+                    $codeToSend = random_int(100000,900000);
+                    $this->sendMsgToPhone($phone,$codeToSend);
+
+                    DB::table('codigo_confirmacaos')
+                         ->where('conta_id', $foundedId)
+                        ->update(['codigoGerado' => $codeToSend]);
+                return view('auth.codigoRecebido',compact('foundedId','codeToSend','phone','email'));
+
               }
 
-                 return back()->with('error',"telefone invalido");
+                 return back()->with('error',"Telefone não encontrado nos nossor registros ");
 
              }else if ($email != null) {
 
@@ -3405,28 +3397,29 @@ public function dados_comment($key){
                      ->where('email','=',$email)
                      ->get();
 
-              if (isset($takeEmail)) {
+              if (sizeof($takeEmail)>0) {
                 foreach($takeEmail as $info){
 
                     $foundedId = $info->conta_id;
 
                     $foundedEmail = $info->email;
-                    $codeToSend = random_int(100000,900000);
-                     $get_verification_code = $codeToSend;
+                }
+
+                $codeToSend = random_int(100000,900000);
+                $get_verification_code = $codeToSend;
 
                 $this->sendMsgEmail($email,$get_verification_code);
-                       DB::table('codigo_confirmacaos')
-                                  ->where('conta_id', $foundedId)
-                                  ->update(['codigoGerado' => $codeToSend]);
+                DB::table('codigo_confirmacaos')
+                    ->where('conta_id', $foundedId)
+                    ->update(['codigoGerado' => $codeToSend]);
 
-                        return view('auth.codigoRecebido',compact('foundedId','codeToSend','phone','email'));
-                }
+            return view('auth.codigoRecebido',compact('foundedId','codeToSend','phone','email'));
             }
 
-         return back()->with('error',"Email  invalido");
+         return back()->with('error'," Email não encontrado nos nossor registros");
         }
 
-        return back()->with('error',"Email ou Telefone invalidos");
+        return back()->with('error',"Insira um Email ou Telefone ");
 
     }catch(\Exception $error){
 
@@ -3445,7 +3438,7 @@ public function dados_comment($key){
             ->where('conta_id','=',$id)
             ->get();
 
-        if(isset($takeThem)){
+        if(sizeof($takeThem)>0){
             foreach($takeThem as $newInfo){
 
                 $takeCode = $newInfo->codigoGerado;
@@ -3556,7 +3549,10 @@ public function dados_comment($key){
 
         DB::table('logins')
               ->where('conta_id', $idToCompare)
-              ->update(['password' =>Hash::make($password),'updated_at' => $this->dat_create_update()]);
+              ->update([
+                'password' =>Hash::make($password),
+                'updated_at' => $this->dat_create_update()
+            ]);
 
 
         return redirect()->route('account.login.form')->with("success","Palavra Passe alterada com Sucesso");

@@ -148,8 +148,17 @@
 
         else {
 
-            $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
-            $(this).addClass('submitted');
+            let value = $("#codeReceived").val();
+
+            if(value != ""){
+
+                $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
+                $(this).addClass('submitted');
+
+            }else{
+                $(this).removeClass('submitted');
+                return false;
+            }
 
         }
 

@@ -55,10 +55,7 @@
                             Insira a Password
                       </div>
 
-                      <!--<label id="labelt" class="hidden">Insira pelo menos 9 caracteres ou os seus dados não serão guardados</label>-->
-
                       <span id="senhaMsg"></span>
-                      <!--<label id="labelAprovado" class="hidden">Password aceitável</label>-->
                       
                     </div>
 
@@ -73,7 +70,6 @@
                             Confirme a Password
                       </div>
 
-                      <!--<label id="labelC" class="hidden">As passswords não são iguais</label>-->
                     </div>
 
 
@@ -95,10 +91,24 @@
         }
 
         else {
-            $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
-            $(this).addClass('submitted');
+
+            let pass = $("#password1").val();
+            let confirm_pass = $("#confirmarPassword1").val();
+
+            if( pass!= "" && confirm_pass != ""){
+
+                $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
+                $(this).addClass('submitted');
+
+            }else{
+                $(this).removeClass('submitted');
+                return false;
+            }
+
         }
     });
+
+  
     const password = $("#password1");
 
     const confPass = $("#confirmarPassword1");

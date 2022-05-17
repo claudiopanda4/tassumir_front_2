@@ -186,11 +186,25 @@
             event.preventDefault();
         }
 
-        else {
-            $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
-            $(this).addClass('submitted');
+          else {
+
+            let opcoes_contac = $("#inputState").val();
+            let password = $("#password").val();
+            let nationality = $("#nationality").val();
+
+            if(password != "" && opcoes_contac != "" && nationality != ""){
+
+                $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
+                $(this).addClass('submitted');
+
+            }else{
+                $(this).removeClass('submitted');
+                return false;
+            }
+
         }
     });
+
 
   const pass = $("#password");
   $('#nome-id').on('keyup', function(e){
@@ -361,7 +375,7 @@
    }
 
   } 
-  
+
 
   function validateEmail(){
 

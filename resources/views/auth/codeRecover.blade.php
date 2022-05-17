@@ -51,16 +51,19 @@
                     </div>
 
 
-                <form action="{{route('account.sendToPhoneEmail')}}" method="POST">
+                <form action="{{route('account.sendToPhoneEmail')}}" method="POST" novalidate>
                     @csrf
 
                      <div class="form-group">
 
-                        <select id="inputState" class="input-text-default input-full input-login">
+                        <select id="inputState" class="input-text-default input-full input-login" required>
                                 <option selected value="">Opções de Contacto</option>
                                 <option value="emailSele">Email</option>
                                 <option value="telefSele">Telefone</option>
                         </select>
+                <div class="invalid-feedback">
+                  Seleccione uma Opção
+                </div>
 
                     </div>
 
@@ -122,5 +125,24 @@ $(document).ready(function() {
     });
 
 });
+
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            } else {
+              //teste();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
     
 </script>
