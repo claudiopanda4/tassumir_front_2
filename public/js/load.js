@@ -1997,6 +1997,7 @@ $(document).ready(function () {
 		    		} else {
 		    			$('#seguir-index-mobile_' + id).text('seguir');
 		    			$('#seguir-index-mobile_' + id).removeClass('no-following');
+		    			$('#seguir-index-mobile_' + id).removeClass('no-following');
 		    		}    		
 		    	}
 		    }
