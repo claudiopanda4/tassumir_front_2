@@ -360,7 +360,8 @@
 
    }
 
-  }
+  } 
+  
 
   function validateEmail(){
 
@@ -416,8 +417,6 @@
       if (nome && apelido && data_nas && idade >=18) {
 
         navigateTo(curIndex() + 1);
-
-         
         $('#erroNome').fadeOut();
         $('#erroApelido').fadeOut();
         $('#erroData').fadeOut();
