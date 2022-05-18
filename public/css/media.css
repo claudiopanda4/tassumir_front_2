@@ -2143,7 +2143,6 @@
 	    max-height: 83vh;
 	}
 }
-
 @media only screen and (max-width: 768px) {
 .div-main-info{
 	flex-direction: column;
@@ -2165,7 +2164,6 @@
  	font-size: 16pt;
  }
  .text-white{
-
  	font-size: 12pt;
  }
  .div-1-info{
@@ -2183,7 +2181,6 @@
 	border-bottom: 2px solid #800080;
  	margin-bottom: 0%;
  	padding: 1px;
-
  }
  .card-termos{
  	margin-left: 2%;
