@@ -30,12 +30,12 @@
             </ul>
 		</header>
 
-	<div class="row title-final span-text div-termos" style="margin-top:10%;">TERMOS E POLÍTICAS
+	<div class="row title-final span-text div-termos">TERMOS E POLÍTICAS
 	</div>
-	<div class="row" style="margin-left: 20px;">
+	<div class="row f-info">
 		<h3 class="the-font color-orange" >Tudo o que precisas de saber num único local.</h3>
 	</div>
-	<div class="row mt-5 div-como-func">
+	<div class="row  div-como-func">
 
 		<h2 class="the-font color-white ">COMO FUNCIONAMOS</h2>
 	</div>

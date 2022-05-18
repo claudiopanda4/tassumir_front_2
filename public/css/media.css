@@ -2144,6 +2144,11 @@
 	}
 }
 @media only screen and (max-width: 768px) {
+	.div-termos{
+		margin-top: 15%;
+		font-size: 16pt;
+	}
+
 .div-main-info{
 	flex-direction: column;
 	width: 100%;
@@ -2153,12 +2158,21 @@
     align-items: center;
 }
 .div-como-func{
+	margin-top: 2%;
 	border-left: 2px solid #800080;padding: 5px;
 	width: 100%;
 	}
 .div-como-func h2{
     margin-left: 0px;
-    font-size: 18pt;
+    font-size: 14pt;
+}
+.f-info h3{
+	font-size: 14pt;
+
+}
+.f-info{
+	padding: 2px;
+	margin-right: 2%;
 }
  .div-1-info a h3{
  	font-size: 16pt;
@@ -2193,5 +2207,22 @@
  .margin-btt-second-div{
     margin-bottom:1%
 }
+
+.main-t h3{
+	margin-top:10%;
+	margin-left: 2%;
+}
+.main-t span{
+	margin-left: 2%;
+	margin-right: 2%;
+	padding: 2px;
+}
+
+.main-div-termos{
+    width: 100%;
+    padding: 5px;
+}
+
+
 }
 
