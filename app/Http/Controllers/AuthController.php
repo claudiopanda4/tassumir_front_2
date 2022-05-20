@@ -3027,12 +3027,24 @@ public function dados_comment($key){
 
           }catch(\Exception $e){
 
-            //dd($e);
+                $function_name = "joinAndSave";
+                $controller_name = "AuthController";
+
+
+                DB::table('errors')->insert([
+                    'uuid'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'nome_da_funcao'=>$function_name,
+                    'nome_do_controller'=>$controller_name,
+                    'descricao_do_erro'=> $e->getMessage(),
+                    
+                ]);
 
             return view('error.something_went_wrong');
 
           }
     }
+
+
 
     public function verifyCodeSent(Request $request){
 
