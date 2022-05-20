@@ -48,7 +48,7 @@
                 <div class="row text-white justify-content-center">Enviamos uma msg para o número {{$phone}} com o código de confirmação </div>
 
                  @endif
-                <form action="{{route('account.verifyToRecoverPass')}}" method="POST" class="needs-validation" novalidate>
+                <form action="{{route('account.verifyToRecoverPass')}}" method="POST" class="needs-validation" id="first-form" novalidate>
                     @csrf
                     <input type="text" name="Id" value="{{$foundedId}}" class="hidden">
 
@@ -74,17 +74,31 @@
 </html>
 <script>
     
-  $('form').submit(function (event) {
-    
+  $('#first-form').submit(function (event) {
+
         if ($(this).hasClass('submitted')) {
             event.preventDefault();
         }
 
         else {
-            $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
-            $(this).addClass('submitted');
+
+            let value = $("#codeReceived").val();
+
+            if(value != ""){
+
+                $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
+                $(this).addClass('submitted');
+
+            }else{
+                $(this).removeClass('submitted');
+                return false;
+            }
+
         }
+
     });
+
+
     $("#codeReceived").bind('keydown', function(e) {
 
       var codTecla = e.which;

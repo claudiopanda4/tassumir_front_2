@@ -617,14 +617,14 @@
 	    margin: -8px auto 5px;
 	}
     #poupar-data-id {
-    	color: #fff;
+    	/*color: #fff;
 	    background-color: #2196f3;
 	    font-size: 11px;
 	    padding: 0px;
 	    border: 0px solid #2196f3;
 	    padding: 5px 10px;
 	    border-radius: 4px;
-	    margin-top: 0;
+	    margin-top: 0;*/
     }
     #card-profile-option .option-profile-menu #ul-profile li {
 	    padding: 0;
@@ -2143,3 +2143,86 @@
 	    max-height: 83vh;
 	}
 }
+@media only screen and (max-width: 768px) {
+	.div-termos{
+		margin-top: 15%;
+		font-size: 16pt;
+	}
+
+.div-main-info{
+	flex-direction: column;
+	width: 100%;
+	margin-bottom: 2%;
+    margin-top: 2%;
+    justify-content: center;
+    align-items: center;
+}
+.div-como-func{
+	margin-top: 2%;
+	border-left: 2px solid #800080;padding: 5px;
+	width: 100%;
+	}
+.div-como-func h2{
+    margin-left: 0px;
+    font-size: 14pt;
+}
+.f-info h3{
+	font-size: 14pt;
+
+}
+.f-info{
+	padding: 2px;
+	margin-right: 2%;
+}
+ .div-1-info a h3{
+ 	font-size: 16pt;
+ }
+ .text-white{
+ 	font-size: 12pt;
+ }
+ .div-1-info{
+ 	padding: 2px;
+ }
+ .div-line{
+	flex-direction: column;
+ }
+.card-right-column{
+	margin-left:2%;
+	margin-right: 2%; 
+	border-top: 2px solid #800080;
+ }
+ .div-main-1{
+	border-bottom: 2px solid #800080;
+ 	margin-bottom: 0%;
+ 	padding: 1px;
+ }
+ .card-termos{
+ 	margin-left: 2%;
+ 	margin-right: 2%;
+ }
+ .card-solo{
+ 	margin-left: 2%;
+ 	margin-right: 2%;
+ }
+ .margin-btt-second-div{
+    margin-bottom:1%
+}
+
+.main-t h3{
+	margin-top:10%;
+	margin-left: 2%;
+}
+.main-t span{
+	margin-left: 2%;
+	margin-right: 2%;
+	padding: 2px;
+}
+
+.main-div-termos{
+    width: 100%;
+    padding: 5px;
+}
+
+
+}
+

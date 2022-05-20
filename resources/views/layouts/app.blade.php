@@ -145,7 +145,7 @@
                     <div class="statistics-component-page-profile" id="title-header-component-statistics">
                         <?php if ($page == 'couple_page'): ?>
                             0 seguidores
-                        <?php elseif($page == 'profile'): ?>
+                        <?php elseif ($page == 'profile'): ?>
                             0 curtidas
                         <?php endif ?>
                     </div>
@@ -242,7 +242,7 @@
                     </div>
                     <a id="a-suggest-id-aside-name-{{$key}}"><h1 class="l-5 name-page text-ellips" id="page-name-suggest-id-{{$key}}"></h1></a>
                     <h2 class="l-5 text-ellips" id="page-followers-suggest-id-{{$key}}">seguidores</h2>
-                    <a href="" class="seguir seguir-{{$key}}" id="follwing-{{$key}}">seguir</a>
+                    <a href="" class="seguir seguir-a seguir-{{$key}}" id="following-page-aside-{{$key}}">seguir</a>
                 </li>
             <?php $key++; } ?>
             <footer class="clearfix invisible-component">

@@ -3,6 +3,7 @@
    <html>
    <head>
    	<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/uicons/css/uicons-regular-rounded.css') }}" rel="stylesheet">
@@ -29,12 +30,12 @@
             </ul>
 		</header>
 
-	<div class="row title-final span-text div-termos" style="margin-top:10%;">TERMOS E POLÍTICAS
+	<div class="row title-final span-text div-termos">TERMOS E POLÍTICAS
 	</div>
-	<div class="row" style="margin-left: 20px;">
+	<div class="row f-info">
 		<h3 class="the-font color-orange" >Tudo o que precisas de saber num único local.</h3>
 	</div>
-	<div class="row mt-5 div-como-func">
+	<div class="row  div-como-func">
 
 		<h2 class="the-font color-white ">COMO FUNCIONAMOS</h2>
 	</div>
@@ -42,36 +43,29 @@
 	<div class="div-main-1" >
 
 		<div  class="div-main-info">
-
-			<div class="div-1-infos">
-
+			<div class="div-1-info">
 				<a href="{{route('termos')}}" class="div-a">
 				<h3 class="the-font color-orange">Termos de Serviço</h3>
-				<span class="text-white span-text" style="font-size: 11pt;">Termos com os quais concordas <br/>quando utilizas o Tassumir</span>
+				<span class="text-white span-text ">Termos com os quais <br/>concordas quando utilizas o Tassumir</span>
 				</a>
-
 			</div>
 
 			<div class="div-1-info">
-
 				<a href="{{route('privacidade')}}" class="div-a">
 				<h3  class="the-font color-orange">Politica de Dados</h3>
-				<span class="text-white span-text" style="font-size: 11pt;">Informações que recebemos e<br/> como são utilizados</span>
+				<span class="text-white span-text ">Informações que recebemos e <br/>como são utilizados</span>
 				</a>
-
 			</div>
 
 			<div class="div-1-info">
-
 				<a href="{{route('comunidade')}}" class="div-a">
 				<h3 class="the-font color-orange">Padrões da Comunidade</h3>
-				<span class="text-white span-text" style="font-size: 11pt;">O que não é permitido e <br/>como denunciar abusos</span>
+				<span class="text-white span-text ">O que não é permitido e <br/> como denunciar abusos</span>
 				</a>
-
 			</div>
 	</div>		
 	</div>
-	<div class="row" style="margin-bottom:10%">
+	<div class="row margin-btt-second-div">
 
 		<div class="col-md-7 div-line">
 
@@ -79,14 +73,14 @@
 
 				<a href="{{route('comercio')}}" class="div-a">
 				<h3  class="the-font color-orange">Termos Comerciais</h3>
-				<span class="text-white span-text" style="font-size: 11pt;">Informações sobre acordos comerciais entre o Tassumir e seus Anunciantes</span>
+				<span class="text-white span-text ">Informações sobre acordos comerciais <br/>entre o Tassumir e seus Anunciantes</span>
 				</a>
 
 			</div>
-				<div class="div-1-info">
+			<div class="div-1-info">
 				<a href="{{route('publicidade')}}" class="div-a">
 				<h3  class="the-font color-orange">Politica de Publicidade</h3>
-				<span class="text-white span-text" style="font-size: 11pt;">Informações sobre quais tipos de Publicidades são permitidas na Plataforma</span>
+				<span class="text-white span-text ">Informações sobre quais tipos <br/> de Publicidades são permitidas na Plataforma</span>
 				</a>
 
 			</div>
@@ -96,48 +90,32 @@
 			<span class="justify-content-start span-text text-white span-subtitle" >
 				Seja bem vindo à Tassumir produto da Be Able, lda.</span><br/><br/>
 
-					<span class="span-text text-white" style="font-size: 11pt;">
-
+					<span class="span-text text-white ">
 						O Tassumir é um conjunto de tecnologias e serviços desenvolvidas pela Be Able, lda para que as pessoas possam se conectar umas às outras, criar comunidades e expandir seus negócios. Estes Termos regem efectivamente o uso do Tassumir.
 
 				</span>
 		</div>
 	</div>
-
-	<div class="row ">
-		
-		<div class="col-md-4 card-termos" style="
-    border-right: 2px solid #800080;text-align: justify;">
-				
-					<span class="span-text text-white" style="font-size: 11pt;">
-								
+	<div class="row">
+		<div class="col-md-4 card-termos" style="border-right: 2px solid #800080;text-align: justify;">
+					<span class="span-text text-white ">	
 						Não cobramos pelo acesso às consultas de informações no Tassumir. Em vez disso, cobramos no registo de relacionamentos conjugais e pessoas singulares ou colectivas também pagam para mostrarmos anúncios de seus produtos e serviços. Ao usar Tassumir, você concorda que podemos mostrar anúncios dessas pessoas.
 					</span>
-				
-
 		</div>
-
-		<div class="col-md-4 " style="text-align: justify;">
-				<span class="span-text text-white" style="font-size: 11pt;">
+		<div class="col-md-4 card-solo" style="text-align: justify;">
+				<span class="span-text text-white ">
 				Não vendemos seus dados pessoais para anunciantes e não partilhamos informações de identificação pessoal (como nome, endereço de email ou outras informações de contacto) com os anunciantes, a menos que tenhamos sua permissão específica. Em vez disso, os anunciantes nos informam os tipos de público que desejam que vejam os anúncios, e nós mostramos esses anúncios para pessoas que podem estar interessadas. Oferecemos aos anunciantes relatórios numéricos sobre o desempenho dos anúncios para ajudá-los a entender como as pessoas estão interagindo com o conteúdo. 
 			</span>
-			
 		</div>
-
 		<div class="col-md-4 card-termos" style="border-left: 2px solid #800080;text-align: justify;">
-				<span class="span-text text-white" style="font-size: 11pt;">
+				<span class="span-text text-white ">
 				Nossa Política de Dados explica como colectamos e usamos seus dados pessoais para determinar alguns dos anúncios que serão exibidos e fornecer todos os outros serviços descritos abaixo. Você também pode ir para as suas Configurações a qualquer momento para analisar as escolhas de privacidade sobre como usamos seus dados.
 			</span>
-			
 		</div>
 	</div>
-
 	<div>
-
 		<img id="btn" src="{{ asset('css/uicons/ios-arrow-up-8-16.png') }}" class="btn-sroll-up">
-
 	</div>
-
 	<footer class="mt-5 footer content-fluid" >
 	 	<div class="title clearfix" style="justify-content:center;align-items: center;text-align: center;">
 	       <a href=""><img class="img-logo l-5" src="{{ asset('css/uicons/tassumir.jpeg') }}">
@@ -148,11 +126,8 @@
 </div>
    </body>
    </html>
-
  <script>
-
  	$(document).ready(function(){
-		
 		$(window).scroll(function (){
 
 			if($(this).scrollTop() > 200){
@@ -163,14 +138,7 @@
 
 				$('#btn').fadeOut();
 			}
-
 		});
-
- 		/*window.onload = function(){
-
- 			alert("hr");
- 		}*/
-
  	$('#btn').on('click',function() {
 
  		$('html,body').animate({
@@ -179,10 +147,7 @@
  		},1000);
  		 	
  	});
- 	
-
  	});
-   	
 </script>
 
 

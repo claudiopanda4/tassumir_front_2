@@ -97,7 +97,7 @@
                     <input type="text" name="receivedNacio" class="hidden" value="{{$nacional}}">
 
                     <!-- fim dados de cadastro -->
-                    <button id="login-register" type="submit" class=""><span class="enter-login">Não Recebeste o código?</button>
+                    <button id="login-register" type="submit" class="dont-received" style="display: none;"><span class="enter-login">Não Recebeste o código?</button>
                 </form>
             </div>
         </main>
@@ -105,18 +105,36 @@
 </body>
 </html>
 <script>
+window.onload = setTimeout(() => {
     
+        $(".dont-received").show();
+
+    },5000);
+  
   $('#first-form').submit(function (event) {
-    
+
         if ($(this).hasClass('submitted')) {
             event.preventDefault();
         }
 
         else {
-            $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
-            $(this).addClass('submitted');
+
+            let value = $("#codeReceived").val();
+
+            if(value != ""){
+
+                $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
+                $(this).addClass('submitted');
+
+            }else{
+                $(this).removeClass('submitted');
+                return false;
+            }
+
         }
+
     });
+
   $('#second-form').submit(function(event){
     if ($(this).hasClass('submitted')) {
             event.preventDefault();

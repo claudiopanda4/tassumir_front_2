@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <a href="" id="a-name-suggest-index-page-{{$key_}}"><h1 class="name-suggest text-ellips" id="name-suggest-index-page-{{$key_}}"></h1></a>
-                        <a href="" class="seguir_index"><div id="{{$key_}}">seguir</div></a>
+                        <a href="" class="seguir_index seguir-page-a"><div id="seguir-index-mobile-{{$key_}}">seguir</div></a>
                         <input type="hidden" id="link_page_{{$key_}}">
                     </li>
                 <?php $key_++; } ?>

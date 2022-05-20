@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/uicons/css/uicons-regular-rounded.css') }}" rel="stylesheet">
     <link href="{{ asset('css/uicons-straight/css/uicons-regular-straight.css') }}" rel="stylesheet">
@@ -26,26 +27,8 @@
                 </li>
             </ul>
 		</header>
-		
-		<!--<aside class="aside aside-left mt-2" >
-			<nav>
-				<ul class="clearfix" >
-				<li class="li-component-aside">
-					<i class="fas fa-arrow-down">
-						
-					</i><a href="#teste">
-						<span class="span-text">Os Serviços que prestamos</span>
-					</a>
-				</li><li class="li-component-aside">
-					<i class="fas fa-arrow-down"></i><a href="#teste">
-						Financiamento
-					</a>
-				</li>
-			</ul>	
-			</nav>
-		</aside>-->
-
-		<div class="main" style="margin-top:10%;text-align: justify;">
+	
+		<div class="main  main-t" style="margin-top:10%;text-align: justify;">
 			
 			<h3 class="the-font color-orange">Termos de Serviço</h3>
 			<span class="span-text color-white" style="justify-content:flex-start;">
@@ -57,24 +40,24 @@
 				Não cobramos pelo acesso às consultas de informações no Tassumir. Em vez disso, cobramos no registo de relacionamentos conjugais e pessoas singulares ou colectivas também pagam para mostrarmos anúncios de seus produtos e serviços. Ao usar Tassumir, você concorda que podemos mostrar anúncios dessas pessoas.
 			</span>
 
-			<ul style="">
-				@for ($i=0; $i< sizeof($resultw); $i++)
-
-				@if($i < 25)
-
-					<li>
-
-						<span class="span-text color-orange" id="teste" >{{$resultw[$i]['cabecalho']}}</span><br/>
-
-						<span class="span-text color-white" style="border-left: 4px solid #800080;padding: 5px;margin-top: 15px;margin-bottom: 15px;padding: 5px;margin-left: 5px">{{$resultw[$i]['subtitulo']}}</span><br/>
-						<span class="span-text color-white"style="justify-content:flex-start">{{$resultw[$i]['corpo']}}</span>
-					</li>
-
-
-				@endif
-				@endfor
+		<div class="main-div-termos">
 				
-			</ul>
+				<div class="incoming-info">
+					@for ($i=0; $i< sizeof($resultw); $i++)
+
+						@if($i < 25)
+
+						<span class="the-font color-orange" style="font-size:14pt;">{{$resultw[$i]['cabecalho']}}</span><br/>
+
+						<span class="span-text color-white subtitulo" style="border-left: 4px solid #800080;margin-top: 15px;margin-bottom: 15px;padding: 5px;">{{$resultw[$i]['subtitulo']}}</span><br/>
+
+						<span class="span-text color-white corpo"style="justify-content:flex-start">{{$resultw[$i]['corpo']}}</span><br/>
+
+						@endif
+						@endfor
+				</div>
+		
+			</div>
 		</div>
 
 		</div>
