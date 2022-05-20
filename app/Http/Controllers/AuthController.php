@@ -2188,16 +2188,32 @@ public function dados_comment($key){
 
           public function people_post_reaction(Request $request)
           {
-            $people_post_reaction= DB::select('select t.*, if(type=1,(select uuid from contas where conta_id=id),(select uuid from pages where page_id=id))as uuid,if(type=1,(select nome from contas where conta_id=id),(select nome from pages where page_id=id)) as nome,if(type=1,(select apelido from contas where conta_id=id),null) as apelido,if(type=1,(select foto from contas where conta_id=id),(select foto from pages where page_id=id)) as foto from (select (select i.tipo_identificador_id from identificadors as i where i.identificador_id= pr.identificador_id) as type,(select i.id from identificadors as i where i.identificador_id= pr.identificador_id) as id from post_reactions as pr where pr.post_id=?)as t', [$request->id]);
+            try {
+              if ($request->control==0) {
+                $people_post_reaction= DB::select('select t.*, if(type=1,(select uuid from contas where conta_id=id),(select uuid from pages where page_id=id))as uuid,if(type=1,(select nome from contas where conta_id=id),(select nome from pages where page_id=id)) as nome,if(type=1,(select apelido from contas where conta_id=id),null) as apelido,if(type=1,(select foto from contas where conta_id=id),(select foto from pages where page_id=id)) as foto from (select (select i.tipo_identificador_id from identificadors as i where i.identificador_id= pr.identificador_id) as type,(select i.id from identificadors as i where i.identificador_id= pr.identificador_id) as id from post_reactions as pr where pr.post_id=1)as t order by type desc,id limit 10', [$request->id]);
+              }else {
+                $people_post_reaction= DB::select('select t.*, if(type=1,(select uuid from contas where conta_id=id),(select uuid from pages where page_id=id))as uuid,if(type=1,(select nome from contas where conta_id=id),(select nome from pages where page_id=id)) as nome,if(type=1,(select apelido from contas where conta_id=id),null) as apelido,if(type=1,(select foto from contas where conta_id=id),(select foto from pages where page_id=id)) as foto from (select (select i.tipo_identificador_id from identificadors as i where i.identificador_id= pr.identificador_id) as type,(select i.id from identificadors as i where i.identificador_id= pr.identificador_id) as id from post_reactions as pr where pr.post_id=?)as t where id>? and type <>2 order by id limit 10', [$request->id,$request->control]);
+              }
+              return response()->json($people_post_reaction);
 
-            return response()->json($people_post_reaction);
+            } catch (\Exception $e) {
 
+            }
           }
           public function people_comment_reaction(Request $request)
           {
-            $people_comment_reaction= DB::select('select t.*, if(type=1,(select uuid from contas where conta_id=id),(select uuid from pages where page_id=id))as uuid,if(type=1,(select nome from contas where conta_id=id),(select nome from pages where page_id=id)) as nome,if(type=1,(select apelido from contas where conta_id=id),null) as apelido,if(type=1,(select foto from contas where conta_id=id),(select foto from pages where page_id=id)) as foto from (select (select i.tipo_identificador_id from identificadors as i where i.identificador_id= pr.identificador_id) as type,(select i.id from identificadors as i where i.identificador_id= pr.identificador_id) as id from reactions_comments as pr where pr.comment_id=?)as t', [$request->id]);
+            try {
+              if ($request->control==0) {
+                $people_comment_reaction= DB::select('select t.*, if(type=1,(select uuid from contas where conta_id=id),(select uuid from pages where page_id=id))as uuid,if(type=1,(select nome from contas where conta_id=id),(select nome from pages where page_id=id)) as nome,if(type=1,(select apelido from contas where conta_id=id),null) as apelido,if(type=1,(select foto from contas where conta_id=id),(select foto from pages where page_id=id)) as foto from (select (select i.tipo_identificador_id from identificadors as i where i.identificador_id= pr.identificador_id) as type,(select i.id from identificadors as i where i.identificador_id= pr.identificador_id) as id from reactions_comments as pr where pr.comment_id=?)as t order by type desc,id limit 10', [$request->id]);
+              }else {
+                $people_comment_reaction= DB::select('select t.*, if(type=1,(select uuid from contas where conta_id=id),(select uuid from pages where page_id=id))as uuid,if(type=1,(select nome from contas where conta_id=id),(select nome from pages where page_id=id)) as nome,if(type=1,(select apelido from contas where conta_id=id),null) as apelido,if(type=1,(select foto from contas where conta_id=id),(select foto from pages where page_id=id)) as foto from (select (select i.tipo_identificador_id from identificadors as i where i.identificador_id= pr.identificador_id) as type,(select i.id from identificadors as i where i.identificador_id= pr.identificador_id) as id from reactions_comments as pr where pr.comment_id=?)as t  where id>? and type <>2 order by id limit 10', [$request->id,$request->control]);
+              }
 
-            return response()->json($people_comment_reaction);
+              return response()->json($people_comment_reaction);
+
+            } catch (\Exception $e) {
+
+            }
 
           }
 
