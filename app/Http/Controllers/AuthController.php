@@ -15,24 +15,35 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Pais;
 use Illuminate\Support\Facades\Http;
 
-
 /* email */
-
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendVerificationCode;
-
 /* end email*/
 
 class AuthController extends Controller
 {
     private $casalPage;
     public function __construct(){
-        //$this->middleware('auth:web1');
-        $this->casalPage = new PaginaCasalController();
+
+        try{
+            $this->casalPage = new PaginaCasalController();
+
+        }catch(\Exception $e){
+
+                     $function_name = "__construct";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+        
     }
 
     public function header_button () {
-        $conta_id = Auth::user()->conta_id;
+       
+
+        try{
+             $conta_id = Auth::user()->conta_id;
         $result = DB::select('select (select foto from contas where conta_id = ?) as foto, (select count(*) from pages where conta_id_a = ? or conta_id_b = ?) as page, (select count(*) from pedido_relacionamentos where conta_id_pedinte = ? || conta_id_pedida = ?) as pedinte from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id, $conta_id, $conta_id, $conta_id]);
 
         $addClass = '';
@@ -82,10 +93,22 @@ class AuthController extends Controller
             'remove_class' => $remove_class,
             'remove' => $remove,
         ]);
+        }catch(\Exception $e){
+
+                     $function_name = "header_button";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+
     }
 
     public function state_relationship () {
-        $conta_id = Auth::user()->conta_id;
+        
+
+        try{
+            $conta_id = Auth::user()->conta_id;
         $result = DB::select('select count(*) as count, (select uuid from pages where conta_id_a = ? or conta_id_b = ? limit 1) as uuid_page from pages where conta_id_a = ? or conta_id_b = ?', [$conta_id, $conta_id, $conta_id, $conta_id])[0];
 
         $class = 'no-pages-post';
@@ -96,35 +119,51 @@ class AuthController extends Controller
              $class = 'multi-page';
         }
         return response()->json(['class' => $class, 'page' => $page]);
+
+        }catch(\Exception $e){
+
+                     $function_name = "state_relationship";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     public function login_return (Request $request){
-        if (Auth::check()) {
+       
+
+        try{
+             if (Auth::check()) {
            return true;
         } else {
             $numero = $request->telefone;
             $password = $request->password;
             $email = $request->email;
-
-            /*$numero = '913307387';
-            $password = '$2y$10$/V5ehJy26rLqc3Z.G2IJn.PzfNZNdR1Nb/qoirD/xCHqw.aSF407m';
-            $email = 'claudiopanda4@gmail.com';*/
-
             $result = DB::select('select * from logins where (telefone = ? && password = ?) OR (email = ? && password = ?)', [$numero, $password, $email, $password]);
             $return = sizeof($result) ? true: false;
             //dd($return);
             return $return;
+        }
+
+        }catch(\Exception $e){
+
+                     $function_name = "login_return";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
 
     public function paginasNaoSeguidasIndex(){
         try {
-          $paginasNaoSeguidas = array();
-          $pagenaoPage = array();
-          $account_name = $this->defaultDate();
-        $dadosPage = DB::table('pages')->get();
-        $dadosSeguida = DB::table('seguidors')
+            $paginasNaoSeguidas = array();
+            $pagenaoPage = array();
+            $account_name = $this->defaultDate();
+            $dadosPage = DB::table('pages')->get();
+            $dadosSeguida = DB::table('seguidors')
                ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
                ->select('seguidors.*', 'identificadors.id')
                ->get();
@@ -171,18 +210,37 @@ class AuthController extends Controller
               return $pagenaoPage;
         } catch (Exception $e) {
 
+                     $function_name = "paginasNaoSeguidasIndex";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
         }
     }
 
     public function relationship_type(){
-        $result = DB::select('select tipo_relacionamento_id, uuid, tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id <> 1');
-        return response()->json([
-            $result,
-        ]);
+
+       
+        try{
+             $result = DB::select('select tipo_relacionamento_id, uuid, tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id <> 1');
+                return response()->json([
+                    $result,
+                ]);
+        }catch(\Exception $e){
+
+                     $function_name = "relationship_type";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
    public function default_(){
-           $account_name = $this->defaultDate();
+           
+           try{
+            $account_name = $this->defaultDate();
            $checkUserStatus = Self::isCasal($account_name[0]->conta_id);
            $profile_picture = Self::profile_picture(Auth::user()->conta_id);
            $isUserHost =Self::isUserHost($account_name[0]->conta_id);
@@ -238,8 +296,6 @@ class AuthController extends Controller
                        $nome[1] =$page[0]->foto;
                        $nome[2] =2;
                    }
-                   //dd($key);
-
                    switch ($key->id_action_notification) {
                     case 1:
                        $notificacoes[$a]['notificacao']=$nome[0];
@@ -414,8 +470,6 @@ class AuthController extends Controller
                  }
            }
            }
-
-          //  dd($notificacoes);
               $dadosSeguida = DB::table('seguidors')
                ->join('identificadors', 'seguidors.identificador_id_seguida', '=', 'identificadors.identificador_id')
                ->select('seguidors.*', 'identificadors.id')
@@ -442,22 +496,40 @@ class AuthController extends Controller
                "conta_logada_identify"=> $conta_logada_identify,
            ];
            return $dates;
+           }catch(\Exception $e){
+
+                     $function_name = "default_";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+           }
        }
 
        public function dat_create_update(){
-         $get_date = getdate();
-         $date_create_update=date("Y");
-         $date_create_update.="-";
-         $date_create_update.=date("m");
-         $date_create_update.="-";
-         $date_create_update.=date("d");
-         $date_create_update.=" ";
-         $date_create_update.=$get_date['hours'];
-         $date_create_update.=":";
-         $date_create_update.=$get_date['minutes'];
-         $date_create_update.=":";
-         $date_create_update.=$get_date['seconds'];
-         return $date_create_update;
+    
+         try{
+                $get_date = getdate();
+                 $date_create_update=date("Y");
+                 $date_create_update.="-";
+                 $date_create_update.=date("m");
+                 $date_create_update.="-";
+                 $date_create_update.=date("d");
+                 $date_create_update.=" ";
+                 $date_create_update.=$get_date['hours'];
+                 $date_create_update.=":";
+                 $date_create_update.=$get_date['minutes'];
+                 $date_create_update.=":";
+                 $date_create_update.=$get_date['seconds'];
+                 return $date_create_update;
+         }catch(\Exception $e){
+
+                    $function_name = "dat_create_update";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+         }
        }
 
 
@@ -467,9 +539,8 @@ class AuthController extends Controller
           try {
 
                 $conta=Auth::user()->conta_id;
-                //  dd($conta->conta_id);
                 $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador, (select nome from pages where page_id = destino_id) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id, (select count(*) from notifications as nt where nt.identificador_id_receptor= conta_identify and nt.id_state_notification = 2) as qtd_notifications from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify and n.id_state_notification <> 3 and n.id_action_notification=1 ||  n.identificador_id_receptor= conta_identify and n.id_state_notification <> 3 and n.id_action_notification=2||  n.identificador_id_receptor= conta_identify and n.id_state_notification <> 3 and n.id_action_notification=3||  n.identificador_id_receptor= conta_identify and n.id_state_notification <> 3 and n.id_action_notification=5||  n.identificador_id_receptor= conta_identify and n.id_state_notification <> 3 and n.id_action_notification=6 order by n.notification_id desc limit 10', [$conta]);
-                //dd($control);$control[0]->
+               
                 $notificacoes=array();
                 $a=0;
                 $control_data=0;
@@ -496,11 +567,6 @@ class AuthController extends Controller
                         $control_data=2;
                         $notificacoes[$a]['barra_data']=2;
                         }
-
-
-
-                        //dd($key);
-
                         switch ($key->id_action_notification) {
                          case 1:
                             $notificacoes[$a]['notificacao']=$key->nome_causador;
@@ -548,7 +614,7 @@ class AuthController extends Controller
                            $notificacoes[$a]['link']=$key->link;
                              break;
 
-                                       }
+                        }
 
                        $notificacoes[$a]['foto']=$key->foto_causador;
                        $notificacoes[$a]['v']=$key->tipo_causador_identify;
@@ -564,15 +630,18 @@ class AuthController extends Controller
           }
           catch (\Exception $e) {
 
+                     $function_name = "Notifications_final";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
           }
         }
         public function Notifications_pedido_final()
         {
             try {
                 $conta=Auth::user()->conta_id;
-              //  dd($conta->conta_id);
                 $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id) as link_destino,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link_destino) as tipo_pedido_relac from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify and n.id_state_notification <> 3 and n.id_action_notification=4 order by n.notification_id desc limit 10', [$conta]);
-                //dd($control);$control[0]->
                 $not_pedido=array();
                 $a=0;
                 $control_data=0;
@@ -616,6 +685,11 @@ class AuthController extends Controller
                 return $not_pedido;
             } catch (\Exception $e) {
 
+                     $function_name = "Notifications_pedido_final";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
             }
 
         }
@@ -623,9 +697,8 @@ class AuthController extends Controller
         {
             try {
               $conta=Auth::user()->conta_id;
-            //  dd($conta->conta_id);
               $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id) as link_destino from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify and n.id_state_notification <> 3 and n.id_action_notification=7 order by n.notification_id desc limit 10', [$conta]);
-              //dd($control);$control[0]->
+              
               $not_resposta=array();
               $a=0;
               $control_data=0;
@@ -667,6 +740,11 @@ class AuthController extends Controller
               return $not_resposta;
             } catch (\Exception $e) {
 
+                     $function_name = "Notifications_request_response_final";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
             }
 
         }
@@ -674,9 +752,7 @@ class AuthController extends Controller
         {
             try {
               $conta=Auth::user()->conta_id;
-            //  dd($conta->conta_id);
               $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador, (select uuid from pages where page_id = destino_id) as link from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id, (select count(*) from notifications as nt where nt.identificador_id_receptor= conta_identify and nt.id_state_notification = 2) as qtd_notifications from notifications as n inner join contas as ct on ct.conta_id= 1) as n where n.identificador_id_receptor= conta_identify and n.id_state_notification <> 3 and n.id_action_notification=8 order by n.notification_id desc limit 10', [$conta]);
-              //dd($control);$control[0]->
               $not_creat_page=array();
               $a=0;
               $control_data=0;
@@ -716,16 +792,19 @@ class AuthController extends Controller
               dd($not_creat_page);
               return $not_creat_page;
             } catch (\Exception $e) {
+                     $function_name = "Notifications_page_creat_final";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
 
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
             }
 
         }
         public function Notifications_page_denied_final()
         {
-              $conta=Auth::user()->conta_id;
-            //  dd($conta->conta_id);
+              try{
+                $conta=Auth::user()->conta_id;
               $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
-              //dd($control);$control[0]->
               $notificacoes=array();
               $notificacoes_count=0;
               $a=0;
@@ -753,11 +832,6 @@ class AuthController extends Controller
                       $control_data=2;
                       $notificacoes[$a]['barra_data']=2;
                       }
-
-
-
-                      //dd($key);
-
                       switch ($key->id_action_notification) {
                        case 1:
                           $notificacoes[$a]['notificacao']=$key->nome_causador;
@@ -906,11 +980,21 @@ class AuthController extends Controller
               }
               dd($notificacoes);
               return $notificacoes;
+
+              }catch(\Exception $e){
+
+                     $function_name = "Notifications_page_denied_final";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+              }
         }
         public function Notifications_ask_to_cancel_delete_pagefinal()
         {
-                $conta=Auth::user()->conta_id;
-              //  dd($conta->conta_id);
+               
+                try{
+                     $conta=Auth::user()->conta_id;
                 $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
                 //dd($control);$control[0]->
                 $notificacoes=array();
@@ -940,11 +1024,6 @@ class AuthController extends Controller
                         $control_data=2;
                         $notificacoes[$a]['barra_data']=2;
                         }
-
-
-
-                        //dd($key);
-
                         switch ($key->id_action_notification) {
                          case 1:
                             $notificacoes[$a]['notificacao']=$key->nome_causador;
@@ -1093,13 +1172,23 @@ class AuthController extends Controller
                 }
                 dd($notificacoes);
                 return $notificacoes;
+                }catch(\Exception $e){
+
+                     $function_name = "Notifications_ask_to_cancel_delete_pagefinal";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+                }
         }
         public function Notifications_delete_page_final()
         {
-              $conta=Auth::user()->conta_id;
-            //  dd($conta->conta_id);
+            
+              try{
+                  $conta=Auth::user()->conta_id;
+          
               $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
-              //dd($control);$control[0]->
+             
               $notificacoes=array();
               $notificacoes_count=0;
               $a=0;
@@ -1127,11 +1216,6 @@ class AuthController extends Controller
                       $control_data=2;
                       $notificacoes[$a]['barra_data']=2;
                       }
-
-
-
-                      //dd($key);
-
                       switch ($key->id_action_notification) {
                        case 1:
                           $notificacoes[$a]['notificacao']=$key->nome_causador;
@@ -1280,13 +1364,25 @@ class AuthController extends Controller
               }
               dd($notificacoes);
               return $notificacoes;
+              }catch(\Exception $e){
+
+                     $function_name = "Notifications_delete_page_final";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
+              }
         }
         public function Notifications_ask_the_other_page_final()
         {
-              $conta=Auth::user()->conta_id;
-            //  dd($conta->conta_id);
+             
+
+              try{
+                 $conta=Auth::user()->conta_id;
+            
               $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
-              //dd($control);$control[0]->
+            
               $notificacoes=array();
               $notificacoes_count=0;
               $a=0;
@@ -1314,11 +1410,6 @@ class AuthController extends Controller
                       $control_data=2;
                       $notificacoes[$a]['barra_data']=2;
                       }
-
-
-
-                      //dd($key);
-
                       switch ($key->id_action_notification) {
                        case 1:
                           $notificacoes[$a]['notificacao']=$key->nome_causador;
@@ -1467,13 +1558,24 @@ class AuthController extends Controller
               }
               dd($notificacoes);
               return $notificacoes;
+
+              }catch(\Exception $e){
+
+                     $function_name = "Notifications_ask_the_other_page_final";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+              }
         }
         public function Notifications_cancel_delete_page_final()
         {
-              $conta=Auth::user()->conta_id;
-            //  dd($conta->conta_id);
+              
+              try{
+                $conta=Auth::user()->conta_id;
+           
               $control = DB::select('select n.*,if(tipo_causador_identify=1,(select nome from contas where conta_id = causador_id), (select nome from pages where page_id = causador_id)) as nome_causador,if(tipo_causador_identify=1,(select apelido from contas where conta_id = causador_id),null) as apelido_causador,if(tipo_causador_identify=1,(select foto from contas where conta_id = causador_id), (select foto from pages where page_id = causador_id)) as foto_causador,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6 ,null, (select nome from pages where page_id = destino_id)) as nome_destino,if(n.id_action_notification=1||n.id_action_notification=2 ||n.id_action_notification=3 ||n.id_action_notification=6,(select uuid from posts where post_id = destino_id), (select uuid from pages where page_id = destino_id)) as link,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select uuid from pedido_relacionamentos where pedido_relacionamento_id = destino_id),null) as link1_destino,if(n.id_action_notification=4||n.id_action_notification=7 ||n.id_action_notification=9 ||n.id_action_notification=10,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = link1_destino),null) as tipo_pedido_relac,if(n.id_action_notification=12,(select notification_id from notifications where id_action_notification= 11 and identificador_id_destino = n.identificador_id_destino and identificador_id_receptor = n.identificador_id_receptor),null) as notify_id_aux from (select n.*,ct.conta_id,ct.uuid as conta_uuid,ct.nome,ct.apelido,ct.foto,(select identificadors.identificador_id from identificadors where identificadors.id = ct.conta_id and identificadors.tipo_identificador_id = 1) as conta_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as tipo_causador_identify,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id = n.identificador_id_destino) as tipo_destino_identify, (select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_causador) as causador_id,(select identificadors.id from identificadors where identificadors.identificador_id = n.identificador_id_destino ) as destino_id from notifications as n inner join contas as ct on ct.conta_id= ?) as n where n.identificador_id_receptor= conta_identify order by n.notification_id desc limit 10', [$conta]);
-              //dd($control);$control[0]->
+             
               $notificacoes=array();
               $notificacoes_count=0;
               $a=0;
@@ -1501,10 +1603,6 @@ class AuthController extends Controller
                       $control_data=2;
                       $notificacoes[$a]['barra_data']=2;
                       }
-
-
-
-                      //dd($key);
 
                       switch ($key->id_action_notification) {
                        case 1:
@@ -1654,43 +1752,98 @@ class AuthController extends Controller
               }
               dd($notificacoes);
               return $notificacoes;
+
+              }catch(\Exception $e){
+
+                     $function_name = "Notifications_cancel_delete_page_final";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+              }
         }
 
           public function destaques(){
-              $post = DB::select('select AL.uuid,AL.descricao, AL.formato_id, AL.file, AL.page_uuid, AL.page_name, AL.page_foto, AL.thumbnail from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id, p.uuid,p.descricao,p.estado_post_id,p.thumbnail,p.formato_id,p.page_id,pa.uuid as page_uuid,pa.nome as page_name,pa.estado_pagina_id as estado_pagina_id,pa.foto as page_foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');
+           
+                try{
+                       $post = DB::select('select AL.uuid,AL.descricao, AL.formato_id, AL.file, AL.page_uuid, AL.page_name, AL.page_foto, AL.thumbnail from (select D.*, (QTD_REACOES+QTD_COMM) SOMA from (select p.created_at DATA_CRIACAO, p.post_id, p.uuid,p.descricao,p.estado_post_id,p.thumbnail,p.formato_id,p.page_id,pa.uuid as page_uuid,pa.nome as page_name,pa.estado_pagina_id as estado_pagina_id,pa.foto as page_foto,p.file, (select count(*) from post_reactions pr where pr.post_id = p.post_id) QTD_REACOES, (select count(*) from comments cm where cm.post_id = p.post_id) QTD_COMM from posts p inner join pages pa on p.page_id =pa.page_id ) as D) as AL ORDER BY SOMA DESC,AL.post_id DESC LIMIT 20');
 
                 return json_encode($post);
+                }catch(\Exception $e){
+
+                     $function_name = "destaques";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+                }
             }
 
     public function index(){
-        if (Auth::check() == true) {
-            $page_current = 'home_index';
-            return view('feed.index', compact('page_current'));
+    
+
+        try{
+            if (Auth::check() == true) {
+                $page_current = 'home_index';
+                return view('feed.index', compact('page_current'));
+            }
+            return redirect()->route('account.login.form');
+            $a++;
+
+        }catch(\Exception $e){
+
+             $function_name = "index";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
-        return redirect()->route('account.login.form');
-        $a++;
     }
     public function add_view_state(Request $request)
     {
-        $conta_id = Auth::user()->conta_id;
-        $mudar_estado_view = DB::table('views')->where('conta_id',$conta_logada[0]->conta_id)->where('state_views_id', 2)->limit(1)->get();
-        if (sizeof($mudar_estado_view)>0) {
-          DB::table('views')
-                ->where('conta_id', $conta_id)
-                ->where('post_id', $post_id)
-                ->where('state_views_id', 2)
-                ->delete();
+      
+        try{
+             $conta_id = Auth::user()->conta_id;
+            $mudar_estado_view = DB::table('views')->where('conta_id',$conta_logada[0]->conta_id)->where('state_views_id', 2)->limit(1)->get();
+            if (sizeof($mudar_estado_view)>0) {
+              DB::table('views')
+                    ->where('conta_id', $conta_id)
+                    ->where('post_id', $post_id)
+                    ->where('state_views_id', 2)
+                    ->delete();
+            }
+        }catch(\Exception $e){
+
+             $function_name = "add_view_state";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
 
     public function user_data(Request $request){
-        $id = Auth::user()->conta_id;
-        $contas = DB::select('select foto, nome, apelido from contas where (conta_id) = (?)', [$id]);
-        return $contas[0];
+    
+
+        try{
+            $id = Auth::user()->conta_id;
+            $contas = DB::select('select foto, nome, apelido from contas where (conta_id) = (?)', [$id]);
+            return $contas[0];
+
+        }catch(\Exception $e){
+             $function_name = "user_data";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
     public function user_photo(Request $request){
-        $id = Auth::user()->conta_id;
+       
+
+        try{
+             $id = Auth::user()->conta_id;
         $contas = DB::select('select foto from contas where (conta_id) = (?)', [$id]);
         $photo = '/storage/img/users/'.$contas[0]->foto;
         $class = '';
@@ -1699,28 +1852,71 @@ class AuthController extends Controller
             $class = 'no-img';
         }
         return json_encode(['photo' => $photo, 'add' => $class]);
+
+        }catch(\Exception $e){
+
+          $function_name = "user_photo";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg ); 
+        }
     }
     /*Função para pegar os dados com ajax*/
 
     public function paginasqueSigo(){
-        $conta_logada = Auth::user()->conta_id;
+    
+        try{
+               $conta_logada = Auth::user()->conta_id;
         $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 1 limit 3', [$conta_logada]);
 
         return response()->json($pagequesigo);
+        }catch(\Exception $e){
+
+          $function_name = "paginasqueSigo";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg ); 
+
+        }
     }
 
      public function paginasquenaoSigo(){
-        $id = Auth::user()->conta_id;
+
+        try{
+                $id = Auth::user()->conta_id;
         $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 ORDER BY RAND() limit 3', [$id]);
 
         return response()->json($pagequesigo);
+        }catch(\Exception $e){
+
+
+          $function_name = "paginasquenaoSigo";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg ); 
+
+        }
     }
 
     public function paginasquenaoSigoIndex(){
-        $id = Auth::user()->conta_id;
+     
+        try{
+            $id = Auth::user()->conta_id;
         $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 ORDER BY RAND() limit 10', [$id]);
 
         return response()->json($pagequesigo);
+
+        }catch(\Exception $e){
+
+          $function_name = "paginasquenaoSigoIndex";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg ); 
+        }
     }
     /*Fim função para pegar os dados com ajax*/
 
@@ -1763,6 +1959,11 @@ class AuthController extends Controller
               return $pagePage;
         } catch (Exception $e) {
 
+          $function_name = "paginasSeguidas";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg );   
         }
     }
 
@@ -1819,6 +2020,11 @@ class AuthController extends Controller
               return $pagenaoPage;
         } catch (Exception $e) {
 
+          $function_name = "paginasNaoSeguidas";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -1851,6 +2057,11 @@ class AuthController extends Controller
               return $paginasSeguidas;
         } catch (Exception $e) {
 
+          $function_name = "paSeguidas";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -1899,52 +2110,98 @@ class AuthController extends Controller
             return $paginasNaoSeguidas;
         } catch (Exception $e) {
 
+          $function_name = "NaoSeguidas";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
         }
     }
     /*Fim das Funções a não usar - Cumpra com o pedido para não dar buggs*/
   public function tipos(){
+;
+
+    try{
 
     $tipos=DB::table('tipo_relacionamentos')->get();
-    return response()->json($tipos);
+    return response()->json($tipos)
+    }catch(\Exception $e){
+
+          $function_name = "tipos";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+    }
   }
 
   public function pegar_mais_post(){
-    $post_controller = new PageController();
-    $array_aux=array();
-    $dados=array();
-    $post = $post_controller->PP(1);
-    $a=0;
-    //dd($post);
-    if (sizeof($post)>0) {
-      foreach ($post as $key) {
-        if ($key->estado_pagina_id == 1){
-          $dados[$a] = $this->DadosPost($key);
+    
+    try{
+        $post_controller = new PageController();
+        $array_aux=array();
+        $dados=array();
+        $post = $post_controller->PP(1);
+        $a=0;
+        
+        if (sizeof($post)>0) {
+          foreach ($post as $key) {
+            if ($key->estado_pagina_id == 1){
+              $dados[$a] = $this->DadosPost($key);
+            }
+            $a++;
+          }
         }
-        $a++;
-      }
-    }
-    //dd($dados);
+    
     return response()->json($dados);
+    }catch(\Exception $e){
+
+          $function_name = "pegar_mais_post";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+    }
   }
 
 
 /* Siene */
 
   public function get_only_post(Request $request) {
-    if ($request->ajax()) {
+
+    try{
+         if ($request->ajax()) {
         $data = DB::table('posts')->where('uuid', $request->id)->get();
         return response()->json($data);
+    }
+
+    }catch(\Exception $e){
+          $function_name = "get_only_post";
+            $controller_name = "AuthController";
+            $error_msg = $e->getMessage();
+
+            $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
     }
   }
 
   public function get_only_comments(Request $request) {
-    return response()->json(DB::select('select * from comments where post_id = (select post_id from posts where uuid = ?)', [$request->id]));
+ 
+    try{
+           return response()->json(DB::select('select * from comments where post_id = (select post_id from posts where uuid = ?)', [$request->id]));
+    }catch(\Exception $e){
+           $function_name = "get_only_comments";
+                    $controller_name = "AuthController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+    }
   }
 
 /* EndSiene */
 
   public function post_index($id){
-
+      try{
 
       $dates = $this->default_();
       $account_name = $dates['account_name'];
@@ -1969,45 +2226,28 @@ class AuthController extends Controller
                 $valor = $value->identificador_id;
             }
 
-
-
-
-
       $page_current = 'auth';
         $pass=$this->unic_post($id);
         $dados=$pass['dados'];
         $comment=$pass['comment'];
-        /*$dados[$a]['qtd_comment_reaction']=0;
-        for ($j=1; $j <= sizeof($comment) ; $j++) {
-            $reaction_comment = DB::select('select * from reactions_comments where comment_id = ?', [$j]);
-        if (sizeof($reaction_comment)>= $dados[$a]['qtd_comment_reaction']) {
-          $dados[$a]['qtd_comment_reaction']=sizeof($reaction_comment);
-          $dados[$a]['comment']=$comment[$j - 1]->comment;
-          $dados[$a]['comment_id']=$comment[$j - 1]->comment_id;
-
-          $aux2 = DB::select('select * from identificadors where identificador_id = ?', [$comment[$j-1]->identificador_id ]);
-          if ($aux2[0]->tipo_identificador_id == 1) {
-            $conta = DB::select('select * from contas where conta_id = ?', [$aux2[0]->id]);
-            $dados[$a]['nome_comment']=$conta[0]->nome;
-            $dados[$a]['nome_comment'].=" ";
-            $dados[$a]['nome_comment'].=$conta[0]->apelido;
-          }elseif ($aux2[0]->tipo_identificador_id == 2) {
-            $dados[$a]['nome_comment']=$page[$aux2[0]->id - 1]->nome;
-          }
-        }
-      }*/
-
-
-
-
-
       return view('pagina.comment', compact('account_name','notificacoes_count','notificacoes', 'dados','comment', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'paginasSeguidas', 'paginasNaoSeguidas', 'dadosSeguida', 'conta_logada'));
+
+      }catch(\Exception $e){
+          $function_name = "post_index";
+                        $controller_name = "AuthController";
+                        $error_msg = $e->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
 
     }
 
 
     public function unic_post($id){
-      $dates = $this->default_();
+      
+
+      try{
+        $dates = $this->default_();
       $account_name = $dates['account_name'];
       $conta_logada = $dates['conta_logada'];
       $post =  DB::select('select * from posts where uuid = ?', [$id]);
@@ -2030,7 +2270,6 @@ class AuthController extends Controller
 
         if (sizeof($aux1) > 0) {
             $ja_reagiu = DB::select('select * from post_reactions where (post_id, identificador_id) = (?, ?)', [$post[0]->post_id, $aux1[0]->identificador_id]);
-    //            $ja_reagiu1 = DB::select('select * from  reactions_comments where (comment_id , identificador_id) = (?, ?)', [$comment[$key->post_id-1]->comment_id, $aux1[0]->identificador_id]);
         } else {
             $ja_reagiu = array();
         }
@@ -2075,11 +2314,20 @@ class AuthController extends Controller
           "comment"=>$comment,
         ];
       return $variable;
+      }catch(\Exception $e){
+         $function_name = "unic_post";
+                        $controller_name = "AuthController";
+                        $error_msg = $e->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
 
 
     public function updatenot(Request $request){
-      DB::table('notifications')
+    
+        try{
+            DB::table('notifications')
             ->where('notification_id', $request->id1)
             ->update([
               'id_state_notification' => 1,
@@ -2087,10 +2335,20 @@ class AuthController extends Controller
           ]);
        $resposta=1;
             return response()->json($resposta);
+            }catch(\Exception $e){
+                  $function_name = "updatenot";
+                        $controller_name = "AuthController";
+                        $error_msg = $e->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+            }
           }
 
 public function dados_comment($key){
-  $dates = $this->default_();
+
+
+  try{
+      $dates = $this->default_();
   $account_name = $dates['account_name'];
   $conta_logada = $dates['conta_logada'];
   $aux1 = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
@@ -2122,10 +2380,22 @@ public function dados_comment($key){
     $dc['foto_ver']=2;
   }
   return $dc;
+
+  }catch(\Exception $e){
+       $function_name = "dados_comment";
+                        $controller_name = "AuthController";
+                        $error_msg = $e->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
+  }
 }
 
     public function like(Request $request){
-            $post=DB::select('select * from posts where uuid = ?', [$request->id]);
+           
+
+            try{
+                 $post=DB::select('select * from posts where uuid = ?', [$request->id]);
             $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
             $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
             $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
@@ -2141,13 +2411,6 @@ public function dados_comment($key){
                 'post_id' => $post[0]->post_id,
                 'created_at'=> $this->dat_create_update(),
               ]);
-                /*DB::table('posts')
-                ->where('post_id', $post[0]->post_id)
-                ->update([
-                  'reactions'=> $post[0]->reactions + 1,
-                  'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
-                  'updated_at' => $this->dat_create_update()
-                ]);*/
               if ($page[0]->conta_id_a != $conta[0]->conta_id && $page[0]->conta_id_b != $conta[0]->conta_id) {
               DB::table('notifications')->insert([
                     'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
@@ -2174,16 +2437,18 @@ public function dados_comment($key){
 
             } elseif (sizeof($likes_verificacao) == 1){
               DB::table('post_reactions')->where(['post_reaction_id'=>$likes_verificacao[0]->post_reaction_id])->delete();
-              /*DB::table('posts')
-              ->where('post_id', $post[0]->post_id)
-              ->update([
-                'reactions'=> $post[0]->reactions - 1,
-                'total_reactions_comments'=> $post[0]->total_reactions_comments - 1,
-                'updated_at' => $this->dat_create_update()
-              ]);*/
+           
               $resposta= 2;
             }
             return response()->json($resposta);
+
+            }catch(\Exception $e){
+                $function_name = "like";
+                        $controller_name = "AuthController";
+                        $error_msg = $e->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+            }
           }
 
           public function people_post_reaction(Request $request)
@@ -2197,6 +2462,11 @@ public function dados_comment($key){
               return response()->json($people_post_reaction);
 
             } catch (\Exception $e) {
+                  $function_name = "people_post_reaction";
+                        $controller_name = "AuthController";
+                        $error_msg = $e->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
 
             }
           }
@@ -2212,6 +2482,11 @@ public function dados_comment($key){
               return response()->json($people_comment_reaction);
 
             } catch (\Exception $e) {
+                  $function_name = "people_comment_reaction";
+                        $controller_name = "AuthController";
+                        $error_msg = $e->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
 
             }
 
@@ -2219,7 +2494,8 @@ public function dados_comment($key){
 
           public function like_final(Request $request){
 
-                $conta =Auth::user()->conta_id;
+                  try{
+                      $conta =Auth::user()->conta_id;
                 $control= DB::select('select p.post_id,(select identificadors.identificador_id from identificadors where identificadors.id = p.post_id and identificadors.tipo_identificador_id = 3) as post_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_logada_identify,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_logada_identify) as reagi,(select count(*) from post_reactions as prr where prr.post_id = p.post_id) as qtd_reactions,(select prr.post_reaction_id from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_logada_identify) as id_reagi,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_a and identificadors.tipo_identificador_id = 1) as conta_a_identify, (select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_b and identificadors.tipo_identificador_id = 1) as conta_b_identify, if(pa.conta_id_a = ?|| pa.conta_id_b = ?, 1, 0) as dono_page from posts as p  inner join pages as pa on p.page_id = pa.page_id where p.uuid = ?', [$conta,$conta,$conta,$request->id]);
 
                   if ($control[0]->reagi == 0) {
@@ -2287,16 +2563,35 @@ public function dados_comment($key){
                     ];
                   }
                   return json_encode($resposta);
+
+                  }catch(\Exception $error){
+                     $function_name = "like_final";
+                        $controller_name = "AuthController";
+                        $error_msg = $error->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+                  }
             }
 
             public function verify_not(Request $request)
             {
-              $resposta=DB::select('select pedido_relacionamento_id as verify from pedido_relacionamentos where uuid=?', [$request->id]);
+            
+              try{
+                  $resposta=DB::select('select pedido_relacionamento_id as verify from pedido_relacionamentos where uuid=?', [$request->id]);
               return response()->json($resposta);
+              }catch(\Exception $error){
+                  $function_name = "verify_not";
+                        $controller_name = "AuthController";
+                        $error_msg = $error->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+              }
             }
 
           public function like_unlike(Request $request){
-            $post=DB::select('select * from posts where uuid = ?', [$request->id]);
+           
+            try{
+                 $post=DB::select('select * from posts where uuid = ?', [$request->id]);
             $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
             $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
             $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
@@ -2370,10 +2665,22 @@ public function dados_comment($key){
               ];
             }
             return response()->json($resposta);
+
+            }catch(\Exception $error){
+
+                        $function_name = "like_unlike";
+                        $controller_name = "AuthController";
+                        $error_msg = $error->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+            }
           }
 
           public function comment_reac_final(Request $request){
-            $control=DB::select('select (select identificadors.identificador_id from identificadors where identificadors.id = c.comment_id and identificadors.tipo_identificador_id = 4) as comment_identify,(select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = conta_identify) as ja_reagi,(select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_reactions,(select r.reaction_comment_id from reactions_comments as r where r.comment_id = c.comment_id and r.identificador_id = conta_identify) as id_ja_reagi  from comments as c where c.comment_id = ?', [Auth::user()->conta_id,$request->id]);
+         
+
+                  try{
+                       $control=DB::select('select (select identificadors.identificador_id from identificadors where identificadors.id = c.comment_id and identificadors.tipo_identificador_id = 4) as comment_identify,(select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = conta_identify) as ja_reagi,(select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_reactions,(select r.reaction_comment_id from reactions_comments as r where r.comment_id = c.comment_id and r.identificador_id = conta_identify) as id_ja_reagi  from comments as c where c.comment_id = ?', [Auth::user()->conta_id,$request->id]);
                   $resposta = 0;
                   if ($control[0]->ja_reagi == 0) {
                     DB::table('reactions_comments')->insert([
@@ -2383,20 +2690,7 @@ public function dados_comment($key){
                       'created_at'=> $this->dat_create_update(),
 
                     ]);
-                  /*  DB::table('notifications')->insert([
-                          'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                          'id_state_notification' => 2,
-                          'id_action_notification' => 1,
-                          'identificador_id_causador'=> $aux[0]->identificador_id,
-                          'identificador_id_destino'=> $aux2[0]->identificador_id,
-                          ]);
-                        DB::table('notifications')->insert([
-                                'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                                'id_state_notification' => 2,
-                                'id_action_notification' => 1,
-                                'identificador_id_causador'=> $aux[0]->identificador_id,
-                                'identificador_id_destino'=> $aux3[0]->identificador_id,
-                              ]);*/
+            
 
                     $resposta= $control[0]->qtd_reactions + 1;
 
@@ -2405,14 +2699,23 @@ public function dados_comment($key){
                     $resposta= $control[0]->qtd_reactions - 1;
                   }
                   return response()->json($resposta);
+
+                  }catch(\Exception $error){
+
+                        $function_name = "comment_reac_final";
+                        $controller_name = "AuthController";
+                        $error_msg = $error->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+                  }
                 }
 
                 public function comment_reac(Request $request){
-                        $comment=DB::select('select * from comments where comment_id = ?', [$request->id]);
+                     
+                      
+                      try{
+                           $comment=DB::select('select * from comments where comment_id = ?', [$request->id]);
                         $post=DB::select('select * from posts where uuid = ?', [$comment[0]->post_id]);
-              //                $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
-              //                  $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
-            //                  $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
                         $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
                         $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
                         $comment_reac_v = DB::select('select reaction_comment_id from reactions_comments where (comment_id,identificador_id) = (?, ?)', [$request->id, $aux[0]->identificador_id]);
@@ -2425,21 +2728,7 @@ public function dados_comment($key){
                             'created_at'=> $this->dat_create_update(),
 
                           ]);
-                        /*  DB::table('notifications')->insert([
-                                'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                                'id_state_notification' => 2,
-                                'id_action_notification' => 1,
-                                'identificador_id_causador'=> $aux[0]->identificador_id,
-                                'identificador_id_destino'=> $aux2[0]->identificador_id,
-                                ]);
-                              DB::table('notifications')->insert([
-                                      'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                                      'id_state_notification' => 2,
-                                      'id_action_notification' => 1,
-                                      'identificador_id_causador'=> $aux[0]->identificador_id,
-                                      'identificador_id_destino'=> $aux3[0]->identificador_id,
-                                    ]);*/
-
+                    
                           $resposta= 1;
 
                         } elseif (sizeof($comment_reac_v) == 1){
@@ -2447,12 +2736,21 @@ public function dados_comment($key){
                           $resposta= 2;
                         }
                         return response()->json($resposta);
+                      }catch(\Exception $error){
+
+                        $function_name = "comment_reac";
+                        $controller_name = "AuthController";
+                        $error_msg = $error->getMessage();
+
+                        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
                       }
+                  }
 
     public function seguir(Request $request){
 
 
-          $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
+        try{
+            $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
           $aux = DB::select('select * from identificadors where (id, tipo_identificador_id) = (?, ?)', [$request->id, 2 ]);
           $aux1= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
           $page= DB::select('select * from pages where page_id = ?', [$request->id]);
@@ -2496,13 +2794,23 @@ public function dados_comment($key){
 
 
                 return response()->json($resposta);
+
+                }catch(\Exception $error){
+
+                    $function_name = "seguir";
+                    $controller_name = "AuthController";
+                    $error_msg = $error->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+                }
         }
 
         public function seguir_final(Request $request){
 
 
-              $conta =Auth::user()->conta_id;
-              $page= DB::select('select (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_logada_identify,(select count(*) from seguidors where 	identificador_id_seguida = page_identify and identificador_id_seguindo = conta_logada_identify) as segui, (select seguidor_id from seguidors where identificador_id_seguida = page_identify and identificador_id_seguindo = conta_logada_identify) as id_seguidors,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_a and identificadors.tipo_identificador_id = 1) as conta_a_identify, (select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_b and identificadors.tipo_identificador_id = 1) as conta_b_identify, if(pa.conta_id_a =? || pa.conta_id_b = ?  , 1, 0) as dono_page from pages as pa where page_id = ? ', [$conta,$conta,$conta,$request->id]);
+            try{
+                $conta =Auth::user()->conta_id;
+              $page= DB::select('select (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_logada_identify,(select count(*) from seguidors where   identificador_id_seguida = page_identify and identificador_id_seguindo = conta_logada_identify) as segui, (select seguidor_id from seguidors where identificador_id_seguida = page_identify and identificador_id_seguindo = conta_logada_identify) as id_seguidors,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_a and identificadors.tipo_identificador_id = 1) as conta_a_identify, (select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_b and identificadors.tipo_identificador_id = 1) as conta_b_identify, if(pa.conta_id_a =? || pa.conta_id_b = ?  , 1, 0) as dono_page from pages as pa where page_id = ? ', [$conta,$conta,$conta,$request->id]);
 
               if ($page[0]->segui==0) {
               DB::table('seguidors')->insert([
@@ -2546,30 +2854,49 @@ public function dados_comment($key){
 
 
                     return response()->json($resposta);
+
+                    }catch(\Exception $error){
+
+                    $function_name = "seguir_final";
+                    $controller_name = "AuthController";
+                    $error_msg = $error->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+                    }
             }
 
         public function savepost(Request $request){
 
-              $conta =Auth::user()->conta_id;
-              $aux = DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$request->id,  $conta]);
-         if (sizeof($aux)== 0) {
-           DB::table('saveds')->insert([
-               'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-               'conta_id' => $conta,
-               'post_id' => $request->id,
-               'created_at'=> $this->dat_create_update(),
-               ]);
-         }
+            try{
+                    $conta =Auth::user()->conta_id;
+                    $aux = DB::select('select * from saveds where (post_id,conta_id) = (?, ?)', [$request->id,  $conta]);
+                     if (sizeof($aux)== 0) {
+                       DB::table('saveds')->insert([
+                           'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                           'conta_id' => $conta,
+                           'post_id' => $request->id,
+                           'created_at'=> $this->dat_create_update(),
+                           ]);
+                     }
+                          $resposta=1;
+                            return response()->json($resposta);
 
-                  $resposta=1;
+                    }catch(\Exception $error){
 
+                    $function_name = "savepost";
+                    $controller_name = "AuthController";
+                    $error_msg = $error->getMessage();
 
-                    return response()->json($resposta);
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+                    }
             }
 
             public function delete_post(Request $request){
-                //return response()->json($request->id);
-                DB::table('posts')
+        
+              
+
+                    try{
+                          DB::table('posts')
                     ->where('uuid', $request->id)
                     ->update([
                           'estado_post_id' => 4,
@@ -2579,126 +2906,171 @@ public function dados_comment($key){
                     $resposta = 1;
 
                     return response()->json($resposta);
-            }
 
-                public function ocultar_post(Request $request){
+                    }catch(\Exception $error){
 
-                      DB::table('posts')
-                            ->where('post_id', $request->id)
-                            ->update([
-                              'estado_post_id' => 2,
-                              'updated_at' => $this->dat_create_update()
-                          ]);
+                    $function_name = "delete_post";
+                    $controller_name = "AuthController";
+                    $error_msg = $error->getMessage();
 
-                          $resposta=1;
-
-
-                            return response()->json($resposta);
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
                     }
 
+            }
 
-                    public function comentar_final(Request $request){
-                      $conta= Auth::user()->conta_id;
-                      $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
-                      $control= DB::select('select p.post_id,(select identificadors.identificador_id from identificadors where identificadors.id = p.post_id and identificadors.tipo_identificador_id = 3) as post_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_logada_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_a and identificadors.tipo_identificador_id = 1) as conta_a_identify, (select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_b and identificadors.tipo_identificador_id = 1) as conta_b_identify, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p  inner join pages as pa on p.page_id = pa.page_id where p.post_id = (select post_id from posts where uuid = ?)', [$conta,$conta,$conta,$request->id]);
+        public function ocultar_post(Request $request){
 
-                        $owner_page = false;
-                        $comment_qtd = 0;
-                        if ($control[0]->dono_page == 1) {
-                            $owner_page = true;
-                              $comment= DB::table('comments')->insertGetId([
+
+                try{
+
+              DB::table('posts')
+                    ->where('post_id', $request->id)
+                    ->update([
+                      'estado_post_id' => 2,
+                      'updated_at' => $this->dat_create_update()
+                  ]);
+
+                  $resposta=1;
+
+
+                    return response()->json($resposta);
+
+                    }catch(\Exception $error){
+
+                    $function_name = "ocultar_post";
+                    $controller_name = "AuthController";
+                    $error_msg = $error->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+                    }
+            }
+
+
+    public function comentar_final(Request $request){
+
+            try{
+             $conta= Auth::user()->conta_id;
+                  $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
+                  $control= DB::select('select p.post_id,(select identificadors.identificador_id from identificadors where identificadors.id = p.post_id and identificadors.tipo_identificador_id = 3) as post_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_logada_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_a and identificadors.tipo_identificador_id = 1) as conta_a_identify, (select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_b and identificadors.tipo_identificador_id = 1) as conta_b_identify, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p  inner join pages as pa on p.page_id = pa.page_id where p.post_id = (select post_id from posts where uuid = ?)', [$conta,$conta,$conta,$request->id]);
+
+                    $owner_page = false;
+                    $comment_qtd = 0;
+                    if ($control[0]->dono_page == 1) {
+                        $owner_page = true;
+                          $comment= DB::table('comments')->insertGetId([
+                            'uuid' => $uuid,
+                            'post_id' => $control[0]->post_id,
+                            'identificador_id' => $control[0]->page_identify,
+                            'tipo_estado_comment_id'=>1,
+                            'comment'=>$request->comment,
+                            'created_at'=> $this->dat_create_update(),
+                            ]);
+
+                        DB::table('identificadors')->insert([
+                              'tipo_identificador_id' => 4,
+                              'id' => $comment,
+                              'created_at'=> $this->dat_create_update(),
+                        ]);
+
+                        $last_comment=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions,(select count(*) from comments as c where c.post_id = ?) as qtd_comments , if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify   from comments as c where c.comment_id = ?) as c ',[$control[0]->post_id,$conta, $comment]);
+
+                            $comment_qtd = $last_comment[0]->qtd_comments;
+
+                          } else {
+                            $comment= DB::table('comments')->insertGetId([
                                 'uuid' => $uuid,
                                 'post_id' => $control[0]->post_id,
-                                'identificador_id' => $control[0]->page_identify,
+                                'identificador_id' => $control[0]->conta_logada_identify,
                                 'tipo_estado_comment_id'=>1,
                                 'comment'=>$request->comment,
                                 'created_at'=> $this->dat_create_update(),
-                                ]);
-
-                            DB::table('identificadors')->insert([
-                                  'tipo_identificador_id' => 4,
-                                  'id' => $comment,
-                                  'created_at'=> $this->dat_create_update(),
                             ]);
 
-                            $last_comment=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions,(select count(*) from comments as c where c.post_id = ?) as qtd_comments , if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify   from comments as c where c.comment_id = ?) as c ',[$control[0]->post_id,$conta, $comment]);
 
-                                $comment_qtd = $last_comment[0]->qtd_comments;
+                            $identificador=DB::table('identificadors')->insertGetId([
+                            'tipo_identificador_id' => 4,
+                            'id' => $comment,
+                            'created_at'=> $this->dat_create_update(),
+                            ]);
 
-                              } else {
-                                $comment= DB::table('comments')->insertGetId([
-                                    'uuid' => $uuid,
-                                    'post_id' => $control[0]->post_id,
-                                    'identificador_id' => $control[0]->conta_logada_identify,
-                                    'tipo_estado_comment_id'=>1,
-                                    'comment'=>$request->comment,
-                                    'created_at'=> $this->dat_create_update(),
-                                ]);
+                            $last_comment=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions,(select count(*) from comments as c where c.post_id = ?) as qtd_comments  , if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify   from comments as c where c.comment_id = ?) as c ',[$control[0]->post_id,$conta, $comment]);
+                                 $comment_qtd = $last_comment[0]->qtd_comments;
+
+                              DB::table('notifications')->insert([
+                                [
+                                  'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                                  'id_state_notification' => 2,
+                                  'id_action_notification' => 2,
+                                  'identificador_id_causador'=> $control[0]->conta_logada_identify,
+                                  'identificador_id_destino'=> $control[0]->post_identify,
+                                  'identificador_id_receptor'=> $control[0]->conta_a_identify,
+                                  'created_at'=> $this->dat_create_update(),
+
+                                ],
+                                [
+                                        'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
+                                        'id_state_notification' => 2,
+                                        'id_action_notification' => 2,
+                                        'identificador_id_causador'=> $control[0]->conta_logada_identify,
+                                        'identificador_id_destino'=> $control[0]->post_identify,
+                                        'identificador_id_receptor'=> $control[0]->conta_b_identify,
+                                        'created_at'=> $this->dat_create_update(),
+
+                                        ]
+                            ]);
+
+                          }
+
+                    return response()->json(
+                        [
+                            'id' => $request->id,
+                            'id_comment' => $uuid,
+                            'owner' => $owner_page,
+                            'loader' => 'loader_button_comment_'.$request->id,
+                            'img_scr' => $request->img_scr,
+                            'qtd' => $comment_qtd
+                        ]
+                    );
 
 
-                                $identificador=DB::table('identificadors')->insertGetId([
-                                'tipo_identificador_id' => 4,
-                                'id' => $comment,
-                                'created_at'=> $this->dat_create_update(),
-                                ]);
+            }catch(\Exception $error){
 
-                                $last_comment=DB::select('select c.comment_id, c.uuid, c.comment,qtd_comment_reactions,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = my_identify) as ja_comment_reactions,(select count(*) from comments as c where c.post_id = ?) as qtd_comments  , if(tipo_verify = 1, (select nome from contas where conta_id = conta_identify ), (select nome from pages where page_id = conta_identify ) ) as nome_comment, if(tipo_verify = 1, (select apelido from contas where conta_id = conta_identify ), null) as apelido_comment, if(tipo_verify = 1,(select foto from contas where conta_id = conta_identify ), (select foto from pages where page_id = conta_identify )) as foto_comment from (select c.*, (select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_comment_reactions, (select tipo_identificador_id from identificadors where  identificador_id = c.identificador_id) as tipo_verify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as my_identify, (select id from identificadors where  identificador_id = c.identificador_id) as conta_identify   from comments as c where c.comment_id = ?) as c ',[$control[0]->post_id,$conta, $comment]);
-                                     $comment_qtd = $last_comment[0]->qtd_comments;
+                $function_name = "comentar_final";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
 
-                                  DB::table('notifications')->insert([
-                                    [
-                                      'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                                      'id_state_notification' => 2,
-                                      'id_action_notification' => 2,
-                                      'identificador_id_causador'=> $control[0]->conta_logada_identify,
-                                      'identificador_id_destino'=> $control[0]->post_identify,
-                                      'identificador_id_receptor'=> $control[0]->conta_a_identify,
-                                      'created_at'=> $this->dat_create_update(),
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+            }
 
-                                    ],
-                                    [
-                                            'uuid' => $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString(),
-                                            'id_state_notification' => 2,
-                                            'id_action_notification' => 2,
-                                            'identificador_id_causador'=> $control[0]->conta_logada_identify,
-                                            'identificador_id_destino'=> $control[0]->post_identify,
-                                            'identificador_id_receptor'=> $control[0]->conta_b_identify,
-                                            'created_at'=> $this->dat_create_update(),
-
-                                            ]
-                                ]);
-
-                              }
-
-                        return response()->json(
-                            [
-                                'id' => $request->id,
-                                'id_comment' => $uuid,
-                                'owner' => $owner_page,
-                                'loader' => 'loader_button_comment_'.$request->id,
-                                'img_scr' => $request->img_scr,
-                                'qtd' => $comment_qtd
-                            ]
-                        );
-                      }
+    }
 
     public function ident(Request $request){
-        return response()->json([
+
+        try{
+             return response()->json([
             'id' => $request->id,
             'file' => $request->file
         ]);
-    }
+
+        }catch(\Exception $error){
+
+                $function_name = "ident";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+           }
     public function comentar(Request $request){
 
-      //$ordenar = ['nice'];
-
-      $post= DB::select('select * from posts where post_id = ?', [$request->id]);
+        try{
+                $post= DB::select('select * from posts where post_id = ?', [$request->id]);
       $page= DB::select('select * from pages where page_id = ?', [$post[0]->page_id]);
       $aux2= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_a, 1 ]);
       $aux3= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$page[0]->conta_id_b, 1 ]);
       $conta = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
       $aux= DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$conta[0]->conta_id, 1 ]);
-  //    dd($aux);
+  
       $resposta=array();
 
             if ($page[0]->conta_id_a == $conta[0]->conta_id || $page[0]->conta_id_b == $conta[0]->conta_id) {
@@ -2711,13 +3083,7 @@ public function dados_comment($key){
                 'comment'=>$request->comment,
                 'created_at'=> $this->dat_create_update(),
                 ]);
-                /*DB::table('posts')
-            ->where('post_id', $post[0]->post_id)
-            ->update([
-              'comments'=> $post[0]->comments + 1,
-              'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
-              'updated_at' => $this->dat_create_update()
-            ]);*/
+           
 
                 $variable=  DB::table('comments')->get();
                 foreach ($variable as $key) {
@@ -2775,15 +3141,6 @@ public function dados_comment($key){
                    }
                    $resposta[0]['comment']=$key->comment;
                 }
-
-
-                /*DB::table('posts')
-                  ->where('post_id', $post[0]->post_id)
-                  ->update([
-                    'comments'=> $post[0]->comments + 1,
-                    'total_reactions_comments'=> $post[0]->total_reactions_comments + 1,
-                    'updated_at' => $this->dat_create_update()
-                  ]);*/
                 DB::table('identificadors')->insert([
               'tipo_identificador_id' => 4,
               'id' => $resposta[0]['comment_id'],
@@ -2813,41 +3170,69 @@ public function dados_comment($key){
                             ]);
 
               }
-        //$data = 'Siene';
-        //$resposta
+      
        return response()->json($resposta);
+
+        }catch(\Exception $error){
+
+                $function_name = "comentar";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
      }
 
     public function defaultDate(){
-        $account_name = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
-        return $account_name;
+      
+        try{
+              $account_name = DB::select('select * from contas where conta_id = ?', [Auth::user()->conta_id]);
+                return $account_name;
+
+        }catch(\Exception $error){
+
+                $function_name = "defaultDate";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     public function seeAllNotifications(){
-      $dates = $this->default_();
-      $account_name = $dates['account_name'];
-      $checkUserStatus = $dates['checkUserStatus'];
-      $profile_picture = $dates['profile_picture'];
-      $isUserHost = $dates['isUserHost'];
-      $hasUserManyPages = $dates['hasUserManyPages'];
-      $allUserPages = $dates['allUserPages'];
-      $page_content = $dates['page_content'];
-      $conta_logada = $dates['conta_logada'];
-      $notificacoes = $dates['notificacoes'];
-      $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
-      $paginasSeguidas = $dates['paginasSeguidas'];
-      $dadosSeguida = $dates['dadosSeguida'];
-      $allUserPages = $dates['allUserPages'];
-      $notificacoes_count = $dates['notificacoes_count'];
+        try{
+             $dates = $this->default_();
+          $account_name = $dates['account_name'];
+          $checkUserStatus = $dates['checkUserStatus'];
+          $profile_picture = $dates['profile_picture'];
+          $isUserHost = $dates['isUserHost'];
+          $hasUserManyPages = $dates['hasUserManyPages'];
+          $allUserPages = $dates['allUserPages'];
+          $page_content = $dates['page_content'];
+          $conta_logada = $dates['conta_logada'];
+          $notificacoes = $dates['notificacoes'];
+          $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
+          $paginasSeguidas = $dates['paginasSeguidas'];
+          $dadosSeguida = $dates['dadosSeguida'];
+          $allUserPages = $dates['allUserPages'];
+          $notificacoes_count = $dates['notificacoes_count'];
 
-        $page_current = 'auth';
+            $page_current = 'auth';
 
-        //----------------------------------------------------------------
+            //----------------------------------------------------------------
 
-        //----------------------------------------------------------------
+            //----------------------------------------------------------------
 
 
-        return view('notificacoes.index', compact('profile_picture','notificacoes_count','notificacoes', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages', 'page_current', 'page_content', 'conta_logada', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
+            return view('notificacoes.index', compact('profile_picture','notificacoes_count','notificacoes', 'account_name', 'checkUserStatus', 'isUserHost', 'allUserPages', 'hasUserManyPages', 'page_current', 'page_content', 'conta_logada', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
+        }catch(\Exception $error){
+
+                $function_name = "seeAllNotifications";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
 
@@ -2870,60 +3255,113 @@ public function dados_comment($key){
 
    public function sendMsgToPhone($takePhone,$code){
 
-         $response = Http::post('http://52.30.114.86:8080/mimosms/v1/message/send?token=a80fed69fcde464b35cee02ae7a172aa918235239 ', [
+        try{
+
+             $response = Http::post('http://52.30.114.86:8080/mimosms/v1/message/send?token=a80fed69fcde464b35cee02ae7a172aa918235239 ', [
              'sender'=>'Tassumir',
              'recipients' => $takePhone,
              'text' => 'Codigo de Confirmação Tassumir :'.$code,
-        ]);
+            ]);
 
             $responseBody = $response->body();
+
+        }catch(\Exception $error){
+
+                $function_name = "sendMsgToPhone";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
 
    }
 
    public function criptCode($plain_text_code){
 
-        $cifra = "AES-128-CTR";
-        $tmh_crypt = openssl_cipher_iv_length($cifra);
 
-        $encryption_iv = '1234567891011121';
-        $encryption_key = "tassumir";
-        $options = 0;
-        $encryp_conf_cod = openssl_encrypt(  $plain_text_code,$cifra, $encryption_key,$options,$encryption_iv);
+        try{
+             $cifra = "AES-128-CTR";
+            $tmh_crypt = openssl_cipher_iv_length($cifra);
 
-        return $encryp_conf_cod;
+            $encryption_iv = '1234567891011121';
+            $encryption_key = "tassumir";
+            $options = 0;
+            $encryp_conf_cod = openssl_encrypt(  $plain_text_code,$cifra, $encryption_key,$options,$encryption_iv);
+
+            return $encryp_conf_cod;
+
+        }catch(\Exception $error){
+
+                $function_name = "criptCode";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
    }
    public function decriptCode($codigo_criado){
 
-        $options = 0;
-        $cifra = "AES-128-CTR";
-        $decription_iv = '1234567891011121';
-        $decription_key = "tassumir";
-        $decryp_code_confi=openssl_decrypt( $codigo_criado,  $cifra , $decription_key,$options,$decription_iv) ;
-        return $decryp_code_confi;
+       
+        try{
+
+             $options = 0;
+            $cifra = "AES-128-CTR";
+            $decription_iv = '1234567891011121';
+            $decription_key = "tassumir";
+            $decryp_code_confi=openssl_decrypt( $codigo_criado,  $cifra , $decription_key,$options,$decription_iv) ;
+            return $decryp_code_confi;
+        }catch(\Exception $error){
+
+                $function_name = "decriptCode";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
    }
 
    #Criptografia e decriptografia password teste
 
    public function cript_password($plain_password){
 
-        $cifra = "AES-128-CTR";
-        $tmh_crypt = openssl_cipher_iv_length($cifra);
+        try{
+                $cifra = "AES-128-CTR";
+                $tmh_crypt = openssl_cipher_iv_length($cifra);
 
-        $encryption_iv = '1234567891011121';
-        $encryption_key = "tassumir";
-        $options = 0;
-        $encryp_password = openssl_encrypt(  $plain_password,$cifra, $encryption_key,$options,$encryption_iv);
+                $encryption_iv = '1234567891011121';
+                $encryption_key = "tassumir";
+                $options = 0;
+                $encryp_password = openssl_encrypt(  $plain_password,$cifra, $encryption_key,$options,$encryption_iv);
 
-        return $encryp_password;
+                return $encryp_password;
+        }catch(\Exception $error){
+
+                $function_name = "cript_password";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
    }
    public function decript_password($password_criada){
 
-        $options = 0;
-        $cifra = "AES-128-CTR";
-        $decription_iv = '1234567891011121';
-        $decription_key = "tassumir";
-        $decryp_password=openssl_decrypt( $password_criada,  $cifra , $decription_key,$options,$decription_iv) ;
-        return $decryp_password;
+        try{
+             $options = 0;
+            $cifra = "AES-128-CTR";
+            $decription_iv = '1234567891011121';
+            $decription_key = "tassumir";
+            $decryp_password=openssl_decrypt( $password_criada,  $cifra , $decription_key,$options,$decription_iv) ;
+            return $decryp_password;
+
+        }catch(\Exception $error){
+
+                $function_name = "decript_password";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+       
    }
 
     #end cript e decript password teste
@@ -3029,21 +3467,27 @@ public function dados_comment($key){
 
                 $function_name = "joinAndSave";
                 $controller_name = "AuthController";
+                $error_msg = $e->getMessage();
 
-
-                DB::table('errors')->insert([
-                    'uuid'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
-                    'nome_da_funcao'=>$function_name,
-                    'nome_do_controller'=>$controller_name,
-                    'descricao_do_erro'=> $e->getMessage(),
-                    
-                ]);
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
 
             return view('error.something_went_wrong');
 
           }
     }
 
+    public function save_errors_on_database($function_name,$controller_name,$error_msg){
+
+
+                DB::table('errors')->insert([
+                    'uuid'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'nome_da_funcao'=>$function_name,
+                    'nome_do_controller'=>$controller_name,
+                    'descricao_do_erro'=> $error_msg,
+                    
+                ]);
+
+    }
 
 
     public function verifyCodeSent(Request $request){
@@ -3169,6 +3613,11 @@ public function dados_comment($key){
         }catch(\Exception $error){
                DB::rollBack();
 
+                $function_name = "verifyCodeSent";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
             return view('auth.ErrorStatus');
         }
     }
@@ -3196,6 +3645,11 @@ public function dados_comment($key){
 
         }catch(\Exception $e){
 
+                $function_name = "didnotReceived";
+                $controller_name = "AuthController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
             return view('error.something_went_wrong');
 
         }
@@ -3243,6 +3697,13 @@ public function dados_comment($key){
        }
 
     }catch(\Exception $error){
+
+
+                $function_name = "generateAgain";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
 
             return view('error.something_went_wrong');
 
@@ -3365,6 +3826,12 @@ public function dados_comment($key){
         }
 
         }catch(\Exception $error){
+
+                $function_name = "verifyAgainCodeSent";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
             return view('auth.ErrorStatus');
         }
 
@@ -3451,6 +3918,12 @@ public function dados_comment($key){
 
     }catch(\Exception $error){
 
+
+                $function_name = "sendPhoneEmailRecover";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
             return view('error.something_went_wrong');
       }
   }
@@ -3482,6 +3955,11 @@ public function dados_comment($key){
 
         }catch(\Exception $error){
 
+                $function_name = "verifyToRecoverPass";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
                return view('error.something_went_wrong');
         }
 
@@ -3511,6 +3989,11 @@ public function dados_comment($key){
       }
      }catch(\Exception $error){
 
+                $function_name = "updatePassword";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
             return view('error.something_went_wrong');
      }
   }
@@ -3522,6 +4005,12 @@ public function dados_comment($key){
      $qtd_like=DB::select('select count(*) from post_reactions as p where p.identificador_id = (select i.identificador_id from identificadors as i where i.tipo_identificador_id= 1 and i.id = ?)',[$request->id]);
       return $qtd_like;
     } catch (\Exception $error){
+
+                $function_name = "qtd_like";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       dd($error);
     }
   }
@@ -3531,6 +4020,12 @@ public function dados_comment($key){
       $qtd_pages=DB::select('select count(*) from seguidors as s where s.identificador_id_seguindo =(select i.identificador_id from identificadors as i where i.tipo_identificador_id= 1 and i.id = ?)',[$request->id]);
       return $qtd_pages;
     } catch (\Exception $error){
+
+                $function_name = "qtd_pages_seg";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       dd($error);
     }
   }
@@ -3540,6 +4035,12 @@ public function dados_comment($key){
       $qtd_saves=DB::select('select count(*) from saveds as s where s.conta_id =?',[$request->id]);
       return $qtd_saves;
        } catch (\Exception $error){
+
+                $function_name = "qtd_saves";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       dd($error);
     }
   }
@@ -3549,6 +4050,12 @@ public function dados_comment($key){
       $scad=DB::select('select count()',[$request->id]);
       return $scad;
     } catch (\Exception $error){
+
+                $function_name = "state_civil_and_descrition";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       dd($error);
     }
   }
@@ -3559,6 +4066,12 @@ public function dados_comment($key){
       $tory=DB::select('select al.*, if(id_conta_a=? ,(select ct.nome from contas as ct where ct.conta_id =id_conta_b),(select ct.nome from contas as ct where ct.conta_id =id_conta_a))as nome_outra_pessoa,if(id_conta_a=? ,(select ct.apelido from contas as ct where ct.conta_id =id_conta_b),(select ct.apelido from contas as ct where ct.conta_id =id_conta_a))as apelido_outra_pessoa from (select (select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page,(select pg.page_id from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1 limit 1)as page_id, (select pg.tipo_relacionamento_id from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 or pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as tipo_relac_id, (select p.conta_id_a from pages as p where p.page_id=page_id order by p.page_id desc limit 1)as id_conta_a, (select pa.conta_id_b from pages as pa where pa.page_id=page_id order by pa.page_id desc limit 1)as id_conta_b, (select tp.tipo_relacionamento from tipo_relacionamentos as tp where tp.tipo_relacionamento_id=tipo_relac_id)as tipo_relac from contas as c where c.conta_id=?) as al',[$request->id,$request->id,$request->id]);
       return $tory;
     } catch (\Exception $error){
+
+                $function_name = "tip_of_relac_you";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       dd($error);
     }
   }
@@ -3591,6 +4104,12 @@ public function dados_comment($key){
 
       }
   }catch(\Exception $error){
+
+                $function_name = "updatePassword2";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
     dd($error);
   }
 
@@ -3603,10 +4122,12 @@ public function dados_comment($key){
 
     public function login(Request $request){
 
-        $credentials = $request->validate([
-            'numero_ou_email' => ['required'],
-            'palavra_passe' => ['required'],
-        ]);
+        try{
+
+            $credentials = $request->validate([
+                'numero_ou_email' => ['required'],
+                'palavra_passe' => ['required'],
+            ]);
 
         if (Auth::attempt(['email' => $request->numero_ou_email, 'password' =>$request->palavra_passe])) {
             //dd("entrei");
@@ -3621,79 +4142,163 @@ public function dados_comment($key){
 
          return back()->with('error',"Email ou senha invalido");
 
+        }catch(\Exception $error){
+
+                $function_name = "login";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+
 
     }
     public function logout(Request $request)
     {
+        try{
+
+
         Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
+        }catch(\Exception $error){
+
+                $function_name = "logout";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     public static function isCasal($account_id)
     {
-        //dd($account_id);
-        $auth = new AuthController();
-            $conta_logada = $auth->defaultDate();
+        try{
 
-        return count(DB::table('pages')
-                ->where('conta_id_a', $conta_logada[0]->conta_id)
-                ->orwhere('conta_id_b', $conta_logada[0]->conta_id)
-                ->get()) > 0;
-        //return DB::select('select page_id from pages where conta_id_a = ? or conta_id_b = ? and tipo_page_id = ?', [$account_id, $account_id, 1]);
+            $auth = new AuthController();
+                $conta_logada = $auth->defaultDate();
+
+            return count(DB::table('pages')
+                    ->where('conta_id_a', $conta_logada[0]->conta_id)
+                    ->orwhere('conta_id_b', $conta_logada[0]->conta_id)
+                    ->get()) > 0;
+        }catch(\Exception $error){
+
+
+                $function_name = "isCasal";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     public static function profile_picture($account_id)
     {
+        try{
+
       $auth = new AuthController();
           $conta_logada = $auth->defaultDate();
 
         return DB::select('select foto from contas where conta_id = ?', [$conta_logada[0]->conta_id])[0]->foto;
+        }catch(\Exception $error){
+
+                $function_name = "profile_picture";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
-      /*  public static function post_files($post_id)
-      {
-          return DB::select('select files from posts where post_id = ?', [$post_id])[0]->files;
-        }*/
 
     public static function updateUserProfilePicture($picture, $account_id)
     {
+        try{
+
+
         $auth = new AuthController();
         $data = $auth->dat_create_update();
         DB::table('contas')->where('conta_id', $account_id)->update(['foto' => $picture,'updated_at' => $data]);
         return redirect()->route('account.profile');
+
+        }catch(\Exception $error){
+
+
+                $function_name = "updateUserProfilePicture";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     public static function updatePageProfilePicture($picture, $uuid)
     {
-        $auth = new AuthController();
-        $data = $auth->dat_create_update();
-        DB::table('pages')->where('uuid', $uuid)->update(['foto' => $picture, 'updated_at' => $data]);
-        return back();
+        try{
+
+
+            $auth = new AuthController();
+            $data = $auth->dat_create_update();
+            DB::table('pages')->where('uuid', $uuid)->update(['foto' => $picture, 'updated_at' => $data]);
+            return back();
+
+        }catch(\Exception $error){
+
+                $function_name = "updatePageProfilePicture";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
 
     public static function isUserHost($account_id)
     {
-      $auth = new AuthController();
-          $conta_logada = $auth->defaultDate();
+        try{
 
-        return count(DB::table('pages')
-                    ->where('conta_id_a',  $conta_logada[0]->conta_id)
-                    ->orwhere('conta_id_b',  $conta_logada[0]->conta_id)
-                    ->get()) > 0;
+
+          $auth = new AuthController();
+              $conta_logada = $auth->defaultDate();
+
+            return count(DB::table('pages')
+                        ->where('conta_id_a',  $conta_logada[0]->conta_id)
+                        ->orwhere('conta_id_b',  $conta_logada[0]->conta_id)
+                        ->get()) > 0;
+
+        }catch(\Exception $error){
+
+                $function_name = "isUserHost";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     public static function hasUserManyPages($account_id)
     {
-      $auth = new AuthController();
-          $conta_logada = $auth->defaultDate();
-        return count(DB::table('pages')
-                    ->where('conta_id_a', $conta_logada[0]->conta_id)
-                    ->orwhere('conta_id_b', $conta_logada[0]->conta_id)
-                    ->get()) > 1;
+        try{
+
+
+          $auth = new AuthController();
+              $conta_logada = $auth->defaultDate();
+            return count(DB::table('pages')
+                        ->where('conta_id_a', $conta_logada[0]->conta_id)
+                        ->orwhere('conta_id_b', $conta_logada[0]->conta_id)
+                        ->get()) > 1;
+        }catch(\Exception $error){
+
+                $function_name = "hasUserManyPages";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+
     }
 
     /**
@@ -3703,14 +4308,32 @@ public function dados_comment($key){
      */
    public function pegar_ultimocomment(Request $request)
     {
-      $comment=DB::table('comments')->where('post_id', '=', $request->id)->orderBy('comment_id', 'desc')->get();
-      $resposta=$this->dados_comment($comment[0]);
-      return response()->json($resposta);
+
+        try{
+
+
+          $comment=DB::table('comments')->where('post_id', '=', $request->id)->orderBy('comment_id', 'desc')->get();
+          $resposta=$this->dados_comment($comment[0]);
+          return response()->json($resposta);
+
+        }catch(\Exception $error){
+
+                $function_name = "hasUserManyPages";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+
+
+
     }
     public static function allUserPages($auth, $account_id)
     {
-        $page_data = array();
-        $index = 0;
+        try{
+
+             $page_data = array();
+            $index = 0;
 
         if ($auth->hasUserManyPages($account_id))
         {
@@ -3726,6 +4349,17 @@ public function dados_comment($key){
         }
 
         return $page_data;
+
+        }catch(\Exception $error){
+
+                $function_name = "allUserPages";
+                $controller_name = "AuthController";
+                $error_msg = $error->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+
+       
     }
     public function NotFound(){
         return view('auth.ErrorStatus');
