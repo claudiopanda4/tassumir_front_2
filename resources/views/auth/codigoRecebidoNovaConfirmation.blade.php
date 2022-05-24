@@ -105,11 +105,12 @@
 </body>
 </html>
 <script>
-window.onload = setTimeout(() => {
+    
+/*window.onload = setTimeout(() => {
     
         $(".dont-received").show();
 
-    },5000);
+    },5000);*/
   
   $('#first-form').submit(function (event) {
 
