@@ -2120,12 +2120,10 @@ class AuthController extends Controller
     }
     /*Fim das Funções a não usar - Cumpra com o pedido para não dar buggs*/
   public function tipos(){
-;
-
     try{
 
     $tipos=DB::table('tipo_relacionamentos')->get();
-    return response()->json($tipos)
+    return response()->json($tipos);
     }catch(\Exception $e){
 
           $function_name = "tipos";
