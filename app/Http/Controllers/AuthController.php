@@ -3713,7 +3713,8 @@ public function dados_comment($key){
         try{
 
         $codeSent = $request->codeReceived;
-        $code_digitado = $request->codeReceived1;
+
+        $code_digitado = str_replace(" ","",$request->codeReceived1);
 
         $password=$request->password;
 
@@ -3732,8 +3733,6 @@ public function dados_comment($key){
         $data_nascimento = $request->receivedData_Nascimento;
         $nacional=$request->receivedNacio;
         $sexo = $request->receivedGenero;
-
-
 
       if($decryp_code_confi == $code_digitado){
 
