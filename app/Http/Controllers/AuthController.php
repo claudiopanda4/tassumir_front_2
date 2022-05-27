@@ -3494,7 +3494,7 @@ public function dados_comment($key){
 
          DB::beginTransaction();
 
-        $input_code = $request->codeSent;
+        $input_code = str_replace(" ","",$request->codeSent);
 
         $codigo_criado = $request->receivedCode;
         $password = $request->password;

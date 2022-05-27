@@ -121,7 +121,7 @@
 
                     <input type="password" name="receivedCode" class="hidden" value="{{$encryp_conf_cod}}">
                     <!-- fim dados de cadastro -->
-                <button id="login-register" type="submit" class="dont-received" style="display: none;"><span class="enter-login">
+                <button id="login-register" type="submit" class="dont-received"><span class="enter-login">
                     Não Recebeste o código?
                 </button>
                 </form>
@@ -133,7 +133,7 @@
 </html>
 
 <script>
-
+//style="display: none;"
     /*window.onload = setTimeout(() => {
     
         $(".dont-received").show();
