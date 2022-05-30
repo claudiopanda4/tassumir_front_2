@@ -11,44 +11,90 @@ use App\Http\Controllers\AuthController;
 class searchController extends Controller
 {
 
+public function save_errors_on_database($function_name,$controller_name,$error_msg){
+
+
+                DB::table('errors')->insert([
+                    'uuid'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'nome_da_funcao'=>$function_name,
+                    'nome_do_controller'=>$controller_name,
+                    'descricao_do_erro'=> $error_msg,
+                    
+                ]);
+
+    }
 
 public function index($val){
-  $controll = new AuthController();
-   $dates = $controll->default_();  $profile_picture = $dates['profile_picture'];
-  $conta_logada = $dates['conta_logada'];
-  $notificacoes = $dates['notificacoes'];
-  $notificacoes_count = $dates['notificacoes_count'];
+  try{
+
+      $controll = new AuthController();
+      $dates = $controll->default_();  $profile_picture = $dates['profile_picture'];
+      $conta_logada = $dates['conta_logada'];
+      $notificacoes = $dates['notificacoes'];
+      $notificacoes_count = $dates['notificacoes_count'];
 
 
-    return view('Pesquisas.allSearch',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+      return view('Pesquisas.allSearch',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+
+  }catch(\Exception $e){
+
+        $function_name = "index";
+        $controller_name = "searchController";
+        $error_msg = $e->getMessage();
+
+        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+  }
 }
 
 
 public function index1(){
-  $val='';
-  $controll = new AuthController();
-   $dates = $controll->default_();  $profile_picture = $dates['profile_picture'];
-  $conta_logada = $dates['conta_logada'];
-  $notificacoes = $dates['notificacoes'];
-  $notificacoes_count = $dates['notificacoes_count'];
+  try{
+
+    $val='';
+    $controll = new AuthController();
+     $dates = $controll->default_();  $profile_picture = $dates['profile_picture'];
+    $conta_logada = $dates['conta_logada'];
+    $notificacoes = $dates['notificacoes'];
+    $notificacoes_count = $dates['notificacoes_count'];
 
 
-    return view('Pesquisas.allSearch',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+      return view('Pesquisas.allSearch',compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+  }catch(\Exception $e){
+
+        $function_name = "index1";
+        $controller_name = "searchController";
+        $error_msg = $e->getMessage();
+
+        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+  }
 }
 
 
 
   public function peoplesSearch($val){
-    $controll = new AuthController();
-     $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
-    $conta_logada = $dates['conta_logada'];
-    $notificacoes = $dates['notificacoes'];
-    $notificacoes_count = $dates['notificacoes_count'];
-        return view('Pesquisas.peoples', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+    try{
+
+      $controll = new AuthController();
+       $dates = $controll->default_();  
+       $profile_picture = $dates['profile_picture'];
+      $conta_logada = $dates['conta_logada'];
+      $notificacoes = $dates['notificacoes'];
+      $notificacoes_count = $dates['notificacoes_count'];
+          return view('Pesquisas.peoples', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+    }catch(\Exception $e){
+
+        $function_name = "peoplesSearch";
+        $controller_name = "searchController";
+        $error_msg = $e->getMessage();
+
+        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+    }
 
     }
 
     public function peoplesSearch1(){
+      try{
+
       $val='';
       $controll = new AuthController();
        $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
@@ -56,32 +102,21 @@ public function index1(){
       $notificacoes = $dates['notificacoes'];
       $notificacoes_count = $dates['notificacoes_count'];
           return view('Pesquisas.peoples', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+      }catch(\Exception $e){
+
+          $function_name = "peoplesSearch1";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
 
       }
 
   public function pagesSearch($val){
-    $controll = new AuthController();
-     $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
-    $conta_logada = $dates['conta_logada'];
-    $notificacoes = $dates['notificacoes'];
-    $notificacoes_count = $dates['notificacoes_count'];
-        return view('Pesquisas.pages', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
-
-    }
+    try{
 
 
-  public function publicationsSearch($val){
-    $controll = new AuthController();
-     $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
-    $conta_logada = $dates['conta_logada'];
-    $notificacoes = $dates['notificacoes'];
-    $notificacoes_count = $dates['notificacoes_count'];
-        return view('Pesquisas.publications', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
-
-    }
-
-    public function pagesSearch1(){
-      $val='';
       $controll = new AuthController();
        $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
       $conta_logada = $dates['conta_logada'];
@@ -89,16 +124,82 @@ public function index1(){
       $notificacoes_count = $dates['notificacoes_count'];
           return view('Pesquisas.pages', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
 
+    }catch(\Exception $e){
+
+          $function_name = "pagesSearch";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+    }
+
+    }
+
+
+  public function publicationsSearch($val){
+    try{
+
+
+    $controll = new AuthController();
+     $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
+    $conta_logada = $dates['conta_logada'];
+    $notificacoes = $dates['notificacoes'];
+    $notificacoes_count = $dates['notificacoes_count'];
+        return view('Pesquisas.publications', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+
+    }catch(\Exception $e){
+
+          $function_name = "publicationsSearch";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+    }
+
+    }
+
+    public function pagesSearch1(){
+      try{
+
+
+        $val='';
+        $controll = new AuthController();
+         $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
+        $conta_logada = $dates['conta_logada'];
+        $notificacoes = $dates['notificacoes'];
+        $notificacoes_count = $dates['notificacoes_count'];
+            return view('Pesquisas.pages', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+
+      }catch(\Exception $e){
+
+          $function_name = "pagesSearch1";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
+
       }
 
     public function publicationsSearch1(){
-      $val='';
-      $controll = new AuthController();
-       $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
-      $conta_logada = $dates['conta_logada'];
-      $notificacoes = $dates['notificacoes'];
-      $notificacoes_count = $dates['notificacoes_count'];
-          return view('Pesquisas.publications', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+      try{
+
+          $val='';
+          $controll = new AuthController();
+           $dates = $controll->default_();    $profile_picture = $dates['profile_picture'];
+          $conta_logada = $dates['conta_logada'];
+          $notificacoes = $dates['notificacoes'];
+          $notificacoes_count = $dates['notificacoes_count'];
+              return view('Pesquisas.publications', compact('val','notificacoes_count','notificacoes','conta_logada','profile_picture'));
+      }catch(\Exception $e){
+
+          $function_name = "publicationsSearch1";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
+   
 
       }
 
@@ -109,21 +210,32 @@ public function index1(){
     private static $ajaxErrorMsg = 'erro do ajax, verifica o código';
 
     public function allpagepesquisa(Request $r) {
-      if ($r->ajax()) {
-        $default = [];
-        $index = 0;
-       if ($r->v == 'pag') {
-         $pages = DB::table('pages')->where('nome','like','%'.$r->data.'%')->where('estado_pagina_id', 1)->limit(4)->get();
+      try{
 
-         foreach ($pages as $valor) {
-             $default[$index] = $valor;
-             $index++;
+        if ($r->ajax()) {
+          $default = [];
+          $index = 0;
+         if ($r->v == 'pag') {
+           $pages = DB::table('pages')->where('nome','like','%'.$r->data.'%')->where('estado_pagina_id', 1)->limit(4)->get();
+
+           foreach ($pages as $valor) {
+               $default[$index] = $valor;
+               $index++;
+           }
+          return response()->json($default);
+         } else {
+          return response()->json(Self::$ajaxErrorMsg);
          }
-        return response()->json($default);
-       } else {
-        return response()->json(Self::$ajaxErrorMsg);
-       }
+        }
+      }catch(\Exception $e){
+
+          $function_name = "allpagepesquisa";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       }
+    
     }
 
 
@@ -180,15 +292,31 @@ public function index1(){
           }
 
         }
-      } catch (Exception $ex) {
-        dd($ex);
+      } catch (\Exception $ex) {
+       
+          $function_name = "peoplepesquisa";
+          $controller_name = "searchController";
+          $error_msg = $ex->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       }
     }
 
 
     private static function checkAjaxValueType($v)
     {
+      try{
+
       return ($v == 'sol' || $v == 'cas' || $v == 'nam' || $v == 'pag' || $v == 'apr' || $v == 'vma') ? 'espec' : '';
+      }catch(\Exception $e){
+
+          $function_name = "checkAjaxValueType";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
+      }
     }
 
     private static function searchByEstado($r)
@@ -199,7 +327,10 @@ public function index1(){
     /* END SIENE COD */
 
   public function pessoapesquisa(Request $request) {
-        if($request->ajax()){
+     
+
+        try{
+             if($request->ajax()){
 
 
             if($request->v==1){
@@ -225,37 +356,52 @@ public function index1(){
             return response()->json($output);
 
         }
+        }catch(\Exception $e){
+
+          $function_name = "pessoapesquisa";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
       }
-
-
-
-
-
-
 
   public function paginapesquisa(Request $request){
 
-        if($request->ajax()){
+        try{
 
-          if($request->v==1){
-              $data= DB::table('pages')->where('nome','like','%'.$request->dados.'%')->where('estado_pagina_id', 1)->limit(4)->get();
-            }else {
-              $data= DB::table('pages')->where('nome','like','%'.$request->dados.'%')->where('estado_pagina_id', 1)->limit(10)->get();
-            }
 
-            if(count($data)>0){
-              $output['valor']=$data;
-            }else{
-              $output['valor']='Sem Resultado';
-            }
+          if($request->ajax()){
 
-         return response()->json($output);
+            if($request->v==1){
+                $data= DB::table('pages')->where('nome','like','%'.$request->dados.'%')->where('estado_pagina_id', 1)->limit(4)->get();
+              }else {
+                $data= DB::table('pages')->where('nome','like','%'.$request->dados.'%')->where('estado_pagina_id', 1)->limit(10)->get();
+              }
+
+              if(count($data)>0){
+                $output['valor']=$data;
+              }else{
+                $output['valor']='Sem Resultado';
+              }
+
+           return response()->json($output);
+          }
+        }catch(\Exception $e){
+
+          $function_name = "paginapesquisa";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
-
 
       }
 
   public function postpesquisa(Request $request){
+
+
+      try{
 
       if($request->ajax()){
         if($request->v==1){
@@ -286,6 +432,14 @@ public function index1(){
 
           return response()->json($output);
         }
+        }catch(\Exception $e){
+
+          $function_name = "postpesquisa";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
 
       }
 
@@ -293,12 +447,26 @@ public function index1(){
 
       public function search_partner(Request $request)
       {
+
+        try{
+
+
         $id = Auth::user()->conta_id;
         $conta =[];
 
         $conta =  DB::select('select r.* from (select c.conta_id,c.uuid,c.nome,c.apelido,c.foto,c.genero,(select count(*) from pages as pg where pg.conta_id_a=c.conta_id and pg.tipo_page_id=1 || pg.conta_id_b=c.conta_id and pg.tipo_page_id=1)as verify_page, (select count(*) from pedido_relacionamentos as pr where pr.conta_id_pedida=c.conta_id and pr.estado_pedido_relac_id <> 1 || pr.conta_id_pedinte=c.conta_id and pr.estado_pedido_relac_id <> 1) as p_acept from contas as c where  c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.nome LIKE "%'.$request->dados.'%" and conta_id > ?|| c.tipo_contas_id <> 1 and c.estado_conta_id = 1 and c.apelido LIKE "%'.$request->dados.'%" and conta_id > ?) as r where r.verify_page = 0 and r.p_acept =0 and r.genero <> (select genero from contas where conta_id = ?) limit 5',[$request->id,$request->id,$id]);
 
         return response()->json($conta);
+
+        }catch(\Exception $e){
+
+
+          $function_name = "search_partner";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
 
       }
 
@@ -320,6 +488,11 @@ public function index1(){
           }
         } catch (\Exception $e) {
 
+          $function_name = "people_search_final";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
           }
 
@@ -340,8 +513,13 @@ public function index1(){
               //return response()->json($request->dados);
               return response()->json($pages);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
+          $function_name = "page_search_final";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
 
 
@@ -362,7 +540,12 @@ public function index1(){
                       }
 
         } catch (\Exception $e) {
+            
+          $function_name = "post_search_final";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
 
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
 
           }

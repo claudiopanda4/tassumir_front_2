@@ -15,60 +15,120 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function save_errors_on_database($function_name,$controller_name,$error_msg){
+
+
+                DB::table('errors')->insert([
+                    'uuid'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'nome_da_funcao'=>$function_name,
+                    'nome_do_controller'=>$controller_name,
+                    'descricao_do_erro'=> $error_msg,
+                    
+                ]);
+
+    }
     public function index(Request $request)
     {
-        /*$posts = $this->posts();*/
-        $ident_page = $request->id;
-        $page_current = 'post_index';
-        $post = DB::select('select uuid, estado_post_id, (select uuid from pages where page_id = posts.page_id) as page_uuid, (select foto from pages where page_id = posts.page_id) as page_cover, (select nome from pages where page_id = posts.page_id) as page_name, file, descricao, created_at as data, formato_id from posts where uuid = ?', [$ident_page])[0];
-        //dd($post);
-        if ($post->estado_post_id == 4) {
-            return view('pagina.postless', compact('ident_page', 'page_current', 'post'));
-        } else {
-            return view('pagina.index', compact('ident_page', 'page_current', 'post'));
+        try{
+
+            $ident_page = $request->id;
+            $page_current = 'post_index';
+            $post = DB::select('select uuid, estado_post_id, (select uuid from pages where page_id = posts.page_id) as page_uuid, (select foto from pages where page_id = posts.page_id) as page_cover, (select nome from pages where page_id = posts.page_id) as page_name, file, descricao, created_at as data, formato_id from posts where uuid = ?', [$ident_page])[0];
+           
+            if ($post->estado_post_id == 4) {
+                return view('pagina.postless', compact('ident_page', 'page_current', 'post'));
+            } else {
+                return view('pagina.index', compact('ident_page', 'page_current', 'post'));
+            }
+
+        }catch(\Exception $e){
+
+                    $function_name = "index";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
+        
         
     }
 
     public function img_comment(Request $request, $id) {
-        $conta_id = Auth::user()->conta_id;
-        $result = DB::select('select (select foto from contas where conta_id = ?) as foto_user, (select conta_id_a from pages where page_id = posts.page_id) as conta_id_a, (select conta_id_b from pages where page_id = posts.page_id) as conta_id_b, (select foto from pages where page_id = posts.page_id) as foto_page from posts where uuid = ?', [$conta_id, $id])[0];
 
-        $foto = null;
-        if ($result->foto_user) {
-            $foto = '/storage/img/users/' . $result->foto_user;
-        }
-        $page_ower = false;
-        if ($result->conta_id_a == $conta_id || $result->conta_id_b == $conta_id) {
+        try{
+
+
+            $conta_id = Auth::user()->conta_id;
+            $result = DB::select('select (select foto from contas where conta_id = ?) as foto_user, (select conta_id_a from pages where page_id = posts.page_id) as conta_id_a, (select conta_id_b from pages where page_id = posts.page_id) as conta_id_b, (select foto from pages where page_id = posts.page_id) as foto_page from posts where uuid = ?', [$conta_id, $id])[0];
+
             $foto = null;
-            if ($result->foto_page) {
-                $foto = '/storage/img/page/' . $result->foto_page;
+            if ($result->foto_user) {
+                $foto = '/storage/img/users/' . $result->foto_user;
             }
-            $page_ower = true;
-        }
+            $page_ower = false;
+            if ($result->conta_id_a == $conta_id || $result->conta_id_b == $conta_id) {
+                $foto = null;
+                if ($result->foto_page) {
+                    $foto = '/storage/img/page/' . $result->foto_page;
+                }
+                $page_ower = true;
+            }
 
-        return response()->json(['foto' => $foto, 'state' => $page_ower]);
+            return response()->json(['foto' => $foto, 'state' => $page_ower]);
+
+        }catch(\Exception $e){
+
+                    $function_name = "img_comment";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     public function statistics(Request $request, $id){
-        $conta_id = Auth::user()->conta_id;
-        $post = DB::select('select (select count(*) from post_reactions where post_id = posts.post_id) as qtd_likes, (select count(*) from comments where post_id = posts.post_id) as qtd_comments, (select count(*) from post_reactions where identificador_id = (select identificador_id from identificadors where id = ? and tipo_identificador_id = 1) and post_id = posts.post_id) as liked from posts where uuid = ?', [$conta_id, $id])[0];
-        $qtd_comment = $post->qtd_comments;
-        $qtd_likes = $post->qtd_likes;
-        $add = $post->liked >= 1 ? 'fas liked': 'far unliked';
-        $remove = $post->liked < 1 ? 'fas liked': 'far unliked';
-        return response()->json([
-            'comment' => $qtd_comment,
-            'likes' => $qtd_likes,
-            'id' => $id,
-            'add' => $add,
-            'remove' => $remove,
-        ]);
+        try{
+
+            $conta_id = Auth::user()->conta_id;
+            $post = DB::select('select (select count(*) from post_reactions where post_id = posts.post_id) as qtd_likes, (select count(*) from comments where post_id = posts.post_id) as qtd_comments, (select count(*) from post_reactions where identificador_id = (select identificador_id from identificadors where id = ? and tipo_identificador_id = 1) and post_id = posts.post_id) as liked from posts where uuid = ?', [$conta_id, $id])[0];
+            $qtd_comment = $post->qtd_comments;
+            $qtd_likes = $post->qtd_likes;
+            $add = $post->liked >= 1 ? 'fas liked': 'far unliked';
+            $remove = $post->liked < 1 ? 'fas liked': 'far unliked';
+            return response()->json([
+                'comment' => $qtd_comment,
+                'likes' => $qtd_likes,
+                'id' => $id,
+                'add' => $add,
+                'remove' => $remove,
+            ]);
+
+        }catch(\Exception $e){
+
+                    $function_name = "statistics";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+        
     }
 
     public function prototype_view(Request $request){
-        $page_current = 'none';
-        return view('pagina.prototype', compact('page_current'));
+        try{
+
+            $page_current = 'none';
+            return view('pagina.prototype', compact('page_current'));
+
+        }catch(\Exception){
+
+                    $function_name = "prototype_view";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     public function thumbnail($thumb, $file_name){
@@ -83,7 +143,14 @@ class PostController extends Controller
             file_put_contents($file, $image_base64);  
 
             return $file_name. '.'.$image_type;;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
+
+
+                    $function_name = "thumbnail";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
             
         }
 
@@ -96,9 +163,20 @@ class PostController extends Controller
 
     }
     public function view($post_id, $account_id){
-        $post_views = DB::select('select post_id, conta_id from views where conta_id = ? AND post_id = ? limit 1', [$account_id, $post_id]);
-        $return = sizeof($post_views) > 0 ? true : false;
-        return $return;
+        try{
+
+            $post_views = DB::select('select post_id, conta_id from views where conta_id = ? AND post_id = ? limit 1', [$account_id, $post_id]);
+            $return = sizeof($post_views) > 0 ? true : false;
+            return $return;
+
+        }catch(\Exception $e){
+
+                    $function_name = "view";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
     /**
      * Show the form for creating a new resource.
@@ -122,78 +200,143 @@ class PostController extends Controller
             ];
             DB::commit();
             return $return_video;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
+
+                    $function_name = "get_video";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
     public function reactions_post($post_id){
-        $reactions_post = DB::select('select post_id from post_reactions where post_id = ?', [$post_id]);
-        $size = sizeof($reactions_post);
-        return $size;
+        try{
+
+
+            $reactions_post = DB::select('select post_id from post_reactions where post_id = ?', [$post_id]);
+            $size = sizeof($reactions_post);
+            return $size;
+        }catch(\Exception){
+
+                    $function_name = "reactions_post";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     public function tassumirvideos($id){
+        try{
+
             $page_current = 'video_home';
             return view('videos.index', compact('page_current'));
+
+        }catch(\Exception $e){
+
+                    $function_name = "tassumirvideos";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
         }
 
     public function tassumirvideos_final($id){
+
+        try{
+
       $videos=[];
-      //return response()->json($id);
+     
       $conta_logada = Auth::user()->conta_id;
        switch ($id) {
          case 'ma':
-           $videos=DB::select('select p.post_id, p.thumbnail, viram, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ?) as vi,(select count(*) from views as v where v.post_id = p.post_id) as viram, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where 	identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1 and p.formato_id=1) as p where p.vi = 0 and p.formato_id=1 order by  p.viram desc limit 3',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
+           $videos=DB::select('select p.post_id, p.thumbnail, viram, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ?) as vi,(select count(*) from views as v where v.post_id = p.post_id) as viram, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where  identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1 and p.formato_id=1) as p where p.vi = 0 and p.formato_id=1 order by  p.viram desc limit 3',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
           break;
          case 'mg':
-           $videos=DB::select('select p.post_id, p.thumbnail, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ?) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where 	identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1 and p.formato_id=1) as p where p.vi = 0 and p.formato_id=1 and p.guardado=1 order by  p.post_id desc limit 6',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
+           $videos=DB::select('select p.post_id, p.thumbnail, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ?) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where    identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1 and p.formato_id=1) as p where p.vi = 0 and p.formato_id=1 and p.guardado=1 order by  p.post_id desc limit 6',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
 
            break;
          case 'mc':
-           $videos=DB::select('select p.post_id, p.thumbnail, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ?) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where 	identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1 and p.formato_id=1) as p where p.vi = 0 and p.formato_id=1 order by  p.qtd_reacoes desc limit 6',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
+           $videos=DB::select('select p.post_id, p.thumbnail, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ?) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where    identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1 and p.formato_id=1) as p where p.vi = 0 and p.formato_id=1 order by  p.qtd_reacoes desc limit 6',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
 
             break;
          case 'mr':
-           $videos=DB::select('select p.post_id, p.thumbnail, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ?) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where 	identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1 and p.formato_id=1) as p where p.vi = 0 and p.formato_id=1 order by  p.post_id desc limit 6',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
+           $videos=DB::select('select p.post_id, p.thumbnail, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ?) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where    identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1 and p.formato_id=1) as p where p.vi = 0 and p.formato_id=1 order by  p.post_id desc limit 6',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
 
              break;
          case 'mco':
-           $videos=DB::select('select p.post_id, p.thumbnail, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ?) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where 	identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1 and p.formato_id=1) as p where p.vi = 0 and p.formato_id=1 order by  p.qtd_comment desc limit 6',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
+           $videos=DB::select('select p.post_id, p.thumbnail, p.uuid, p.descricao, p.page_id, p.formato_id, p.created_at,p.file,segui,dono_page,page_uuid,page_tipo_relacionamento_id,page_nome,page_foto,guardado,qtd_reacoes, qtd_comment,reagi,page_identify from (select p.*, (select count(*) from views as v where v.post_id = p.post_id and v.conta_id = ?) as vi, (select identificadors.identificador_id from identificadors where identificadors.id = p.page_id and identificadors.tipo_identificador_id = 2) as page_identify, (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify, (select count(*) from seguidors where    identificador_id_seguida = page_identify and identificador_id_seguindo = conta_identify) as segui, pa.uuid as page_uuid, pa.tipo_relacionamento_id as page_tipo_relacionamento_id, pa.estado_pagina_id as estado_pagina_id, pa.nome as page_nome, pa.foto as page_foto, (select count(*) from post_reactions pr where pr.post_id = p.post_id) as qtd_reacoes, (select count(*) from comments cm where cm.post_id = p.post_id) as qtd_comment,(select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = conta_identify) as reagi, (select count(*) from saveds as g where g.post_id = p.post_id and g.conta_id = ?) as guardado, if(pa.conta_id_a = ?|| pa.conta_id_b = ? , 1, 0) as dono_page from posts as p inner join pages pa on p.page_id =pa.page_id where p.estado_post_id = 1 and pa.estado_pagina_id = 1 and p.formato_id=1) as p where p.vi = 0 and p.formato_id=1 order by  p.qtd_comment desc limit 6',[$conta_logada,$conta_logada,$conta_logada,$conta_logada,$conta_logada]);
 
               break;
         }
 
         return response()->json($videos);
+
+        }catch(\Exception $e){
+
+                    $function_name = "tassumirvideos_final";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+
       }
 
     public function edit_option(Request $request){
-      $auth = new AuthController();
-        $variavel= DB::table('posts')
-              ->where('uuid', $request->id1)
-              ->get();
-              foreach ($variavel as $key) {
-                $resposta=$auth->DadosPost($key);
-              }
 
-              return response()->json($resposta);
-            }
+        try{
+
+            $auth = new AuthController();
+            $variavel= DB::table('posts')
+                  ->where('uuid', $request->id1)
+                  ->get();
+                  foreach ($variavel as $key) {
+                    $resposta=$auth->DadosPost($key);
+                  }
+
+                  return response()->json($resposta);
+
+        }catch(\Exception $e){
+
+                    $function_name = "edit_option";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+    }
 
         public function edit_post(Request $request){
-            $controll = new AuthController();
-            if ($request->message != NULL) {
-                DB::table('posts')
-                    ->where('uuid', $request->uuid)
-                    ->update([
-                    'descricao' => $request->message,
-                    'updated_at' => $controll->dat_create_update()
-                ]);
-            }
+            try{
 
-            return response()->json(['saved' => true, 'description' => $request->message]);
+                $controll = new AuthController();
+                if ($request->message != NULL) {
+                    DB::table('posts')
+                        ->where('uuid', $request->uuid)
+                        ->update([
+                        'descricao' => $request->message,
+                        'updated_at' => $controll->dat_create_update()
+                    ]);
+                }
+
+                return response()->json(['saved' => true, 'description' => $request->message]);
+            }catch(\Exception $e){
+
+                    $function_name = "edit_post";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+            }
         }
 
     public function destaques($limit, $init){
+        try{
+
         $posts = DB::select('select * from posts where post_id > ? order by post_id desc limit ?', [$init, $limit]);
         $post_drafted = array();
         $aux;
@@ -224,8 +367,15 @@ class PostController extends Controller
             }
             $i++;
         }
-        //dd($destaques);
         return ['destaques'=> $destaques, 'last_post_dest' => $last_post_dest];
+        }catch(\Exception $e){
+
+                    $function_name = "destaques";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     public function view_post(Request $request)
@@ -262,19 +412,35 @@ class PostController extends Controller
                 'save_video' => $save_video,
                 'ident' => $request->id,
             ]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
+
+                    $function_name = "view_post";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
 
 
     }
     public function view_video(Request $request)
     {
-        $line = $request->data."";
-        $data = explode('_', $line);
-        $post_uuid = $data[2];
-        $account_on_uuid = $data[3];
-        return response()->json($data);
+        try{
+
+            $line = $request->data."";
+            $data = explode('_', $line);
+            $post_uuid = $data[2];
+            $account_on_uuid = $data[3];
+            return response()->json($data);
+        }catch(\Exception $e){
+
+                    $function_name = "view_video";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     /**
@@ -330,7 +496,7 @@ class PostController extends Controller
                     'sql' => $sql
                 ];
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return [
                 'message' => 'saved',
                 'state' => true,
@@ -343,6 +509,12 @@ class PostController extends Controller
                 ],
                 'sql' => $sql
             ];
+
+                    $function_name = "toSave";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -369,6 +541,10 @@ class PostController extends Controller
     }
 
     public function comment_reac_final(Request $request){
+
+
+        try{
+            
             $auth = new AuthController();
             $uuid = Auth::user()->uuid;
             $control=DB::select('select c.*, if(dono_page=1, page_idtf,conta_identify) as idtf,if(dono_page=0,(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = conta_identify),(select count(*) from reactions_comments where comment_id = c.comment_id and identificador_id = page_idtf)) as ja_reagi,if(dono_page=0,(select r.reaction_comment_id from reactions_comments as r where r.comment_id = c.comment_id and r.identificador_id = conta_identify),(select r.reaction_comment_id from reactions_comments as r where r.comment_id = c.comment_id and r.identificador_id = page_idtf))as id_ja_reagi, if(c.identificador_id = page_idtf, 1, 0) page_dono_comment, if(tipo_identify=1, id_identify ,null) as dono_comment from (select (select identificadors.identificador_id from identificadors where identificadors.id = c.comment_id and identificadors.tipo_identificador_id = 4) as comment_identify,c.comment_id, c.identificador_id ,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_a and identificadors.tipo_identificador_id = 1) as conta_ai_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) as page_idtf,(select identificadors.tipo_identificador_id from identificadors where identificadors.identificador_id= c.identificador_id) as tipo_identify,(select identificadors.id from identificadors where identificadors.identificador_id= c.identificador_id) as id_identify,(select identificadors.identificador_id from identificadors where identificadors.id = pa.conta_id_b and identificadors.tipo_identificador_id = 1) as conta_b_identify,(select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1) as conta_identify,(select count(*) from reactions_comments where comment_id = c.comment_id) as qtd_reactions,if (pa.conta_id_a = ? || pa.conta_id_b = ? , 1, 0) as dono_page, (select identificadors.identificador_id from identificadors where identificadors.id = c.post_id and identificadors.tipo_identificador_id = 3) as post_idtf from comments as c inner join pages as pa on pa.page_id=(select  p.page_id from posts as p where p.post_id= c.post_id) where c.uuid =?)as c', [Auth::user()->conta_id,Auth::user()->conta_id, Auth::user()->conta_id,$request->id]);
@@ -444,7 +620,17 @@ class PostController extends Controller
                     'add' => $add,
                     'remove' => $remove 
                   ]);
-                }
+
+        }catch(\Exception $e){
+
+                    $function_name = "comment_reac_final";
+                    $controller_name = "PostController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+
+    }
 
     /**
      * Update the specified resource in storage.

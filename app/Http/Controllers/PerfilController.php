@@ -23,12 +23,35 @@ class PerfilController extends Controller
         $this->casalPage = new PaginaCasalController();
     }
 
+    public function save_errors_on_database($function_name,$controller_name,$error_msg){
+
+
+                DB::table('errors')->insert([
+                    'uuid'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'nome_da_funcao'=>$function_name,
+                    'nome_do_controller'=>$controller_name,
+                    'descricao_do_erro'=> $error_msg,
+                    
+                ]);
+
+    }
     public function more_information($id)
     {
+      try{
+
         $contas = DB::select('select data_nasc, created_at from contas where uuid = ?', [$id])[0];
         $nasc = explode('-', $contas->data_nasc)[0];
         $data = getdate()['year'] - intval($nasc);
         return response()->json(['age' => $data.' anos', 'aderiu' => $contas->created_at]);
+
+      }catch(\Exception $e){
+           $function_name = "more_information";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
+      }
     }
 
     /**
@@ -38,9 +61,21 @@ class PerfilController extends Controller
      */
 
       public function notificacoes_number(){
-        $id = Auth::user()->conta_id;
+        try{
+
+           $id = Auth::user()->conta_id;
         $numbers = DB::select('select count(*) as not_numbers from notifications where notifications.identificador_id_receptor = (select identificadors.identificador_id from identificadors where identificadors.tipo_identificador_id = 1 and id = ?) and id_state_notification = 2', [$id]);
         return ['not_numbers' => $numbers[0]->not_numbers];
+        }catch(\Exception $e){
+
+           $function_name = "notificacoes_number";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
+        }
+       
       }
 
     public function index()
@@ -55,8 +90,13 @@ class PerfilController extends Controller
           $genero = $user[0]->genero;
           $nome_completo = $user[0]->nome . ' ' . $user[0]->apelido;
           return view('perfil.index', compact('page_current', 'genero', 'uuid', 'descricao', 'nome_completo', 'foto'));
-        } catch (Exception $e) {
-            dd('erro');
+        } catch (\Exception $e) {
+            
+           $function_name = "index";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
     public function index_visit(Request $request, $id)
@@ -70,8 +110,13 @@ class PerfilController extends Controller
           $genero = $user[0]->genero;
           $nome_completo = $user[0]->nome . ' ' . $user[0]->apelido;
           return view('perfil.index', compact('page_current', 'genero', 'descricao', 'uuid', 'nome_completo', 'foto'));
-        } catch (Exception $e) {
-            dd('erro');
+        } catch (\Exception $e) {
+            
+           $function_name = "index_visit";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
     public function get_genre()
@@ -85,13 +130,21 @@ class PerfilController extends Controller
           $genero = $user[0]->genero;
           $nome_completo = $user[0]->nome . ' ' . $user[0]->apelido;
           return view('perfil.index', compact('page_current', 'genero', 'descricao', 'uuid', 'nome_completo', 'foto'));
-        } catch (Exception $e) {
-            dd('erro');
+        } catch (\Exception $e) {
+            
+           $function_name = "get_genre";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
     public function marital_status(Request $request){
-        $conta_id = Auth::user()->conta_id;
+
+          try{
+
+            $conta_id = Auth::user()->conta_id;
         $uuid = $request->id;
         $result = DB::select("select (select count(*) from pages where conta_id_a = ? || conta_id_b = ?) as has_page, (select conta_id from contas where uuid = ?) as id, (select genero from contas where conta_id = ?) as genre_owner, (select genero from contas where uuid = ?) as genre, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select conta_id from contas where conta_id = pages.conta_id_a), (select conta_id from contas where conta_id = pages.conta_id_b)) as conta_id, if(count(pages.tipo_page_id) > 0, (select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = pages.tipo_relacionamento_id), 'not') as relationship, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select uuid from contas where conta_id = pages.conta_id_b), (select uuid from contas where conta_id = pages.conta_id_a)) as spouse_uuid, if ((select count(*) from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select nome from contas where conta_id = pages.conta_id_b), (select nome from contas where conta_id = pages.conta_id_a)) as spouse_name, if ((select count(*) from pages where uuid = pages.conta_id_a = (select conta_id from contas where uuid = ?)) > 0, (select apelido from contas where conta_id = pages.conta_id_b), (select apelido from contas where conta_id = pages.conta_id_a)) as spouse_apelido from pages where pages.conta_id_a = (select conta_id from contas where uuid = ?) or pages.conta_id_b = (select conta_id from contas where uuid = ?) limit 1", [$conta_id, $conta_id, $uuid, $conta_id, $uuid, $uuid, $uuid, $uuid, $uuid, $uuid, $uuid]);
 
@@ -223,25 +276,67 @@ class PerfilController extends Controller
           'notification' => $notification,
           'payment' => $payment,
         ]);
+
+          }catch(\Exception $e){
+
+
+           $function_name = "marital_status";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
+          }
+
+
     }
 
     public function relationship_request($id_pedida, $id_pedinte){
+      try{
+
+
       $result = DB::select('select uuid, pedido_relacionamento_id as id, estado_pedido_relac_id as estado_pedido, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedida = ? and pedido_relacionamentos.conta_id_pedinte = ?', [$id_pedida, $id_pedinte]);
       return $result[0];
+
+      }catch(\Exception $e){
+
+
+           $function_name = "relationship_request";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
+      }
     }
 
     public function relationship_requests(){
-      $id_pedida = Auth::user()->conta_id;
+
+      try{
+        $id_pedida = Auth::user()->conta_id;
       $result = DB::select('select uuid, estado_pedido_relac_id, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedida = ? and estado_pedido_relac_id = 1', [$id_pedida]);
       $sizeof = sizeof($result) > 0 ? true : false;
       return response()->json([
         'state' => $result[0]->pedido,
         'estado_pedido' => $result[0]->estado_pedido_relac_id,
       ]);
+      }catch(\Exception $e){
+
+           $function_name = "relationship_requests";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
+      }
+      
     }
 
     public function relationship_requests_pedinte(){
-      $id_pedinte = Auth::user()->conta_id;
+
+      try{
+
+          $id_pedinte = Auth::user()->conta_id;
       $result = DB::select('select uuid, (select tipo_contas_id from contas where conta_id = ?) as tipo_conta, if((select count(*) from pages where conta_id_a = ? || conta_id_b = ?) > 0, true, false) as relationship, estado_pedido_relac_id, if(count(pedido_relacionamento_id) > 0, true, false) as pedido from pedido_relacionamentos where pedido_relacionamentos.conta_id_pedinte = ? || pedido_relacionamentos.conta_id_pedida = ?', [$id_pedinte, $id_pedinte, $id_pedinte, $id_pedinte, $id_pedinte]);
       $sizeof = sizeof($result) > 0 ? true : false;
       if ($sizeof) {
@@ -254,47 +349,86 @@ class PerfilController extends Controller
         'state' => $sizeof,
         'estado_pedido' => $result[0]->estado_pedido_relac_id,
       ]);
+
+      }catch(\Exception $e){
+
+           $function_name = "relationship_requests_pedinte";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
+      
     }
 
     public function search_assumir(Request $request) {
-      $id = Auth::user()->conta_id;
-      $text = '%'.$request->text.'%';
-      $result = [];
-      if ($request->text != '' && $request->text != ' ') {
-        $result = DB::select("select foto, uuid, conta_id, nome, apelido, (select count(*) as count from pages where conta_id_a = contas.conta_id) as page_a, (select count(*) as count from pages where conta_id_b = contas.conta_id) as page_b from contas where genero <> (select genero from contas where conta_id = ?) and tipo_contas_id = (select tipo_contas_id from contas where tipo_contas_id <> 1 limit 1) and (nome like ? or apelido like ?) limit 5", [$id, $text, $text]);
+
+      try{
+
+          $id = Auth::user()->conta_id;
+          $text = '%'.$request->text.'%';
+          $result = [];
+          if ($request->text != '' && $request->text != ' ') {
+            $result = DB::select("select foto, uuid, conta_id, nome, apelido, (select count(*) as count from pages where conta_id_a = contas.conta_id) as page_a, (select count(*) as count from pages where conta_id_b = contas.conta_id) as page_b from contas where genero <> (select genero from contas where conta_id = ?) and tipo_contas_id = (select tipo_contas_id from contas where tipo_contas_id <> 1 limit 1) and (nome like ? or apelido like ?) limit 5", [$id, $text, $text]);
+          }
+          
+          $state = false;
+          $data = $result;
+          if (sizeof($result) > 0) {
+            $state = true;
+          }
+          return response()->json([
+            'state' => $state,
+            'search' => $data,
+            'text' => $text,
+          ]);
+
+      }catch(\Exception $e){
+
+           $function_name = "search_assumir";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
       }
+
       
-      $state = false;
-      $data = $result;
-      if (sizeof($result) > 0) {
-        $state = true;
-      }
-      return response()->json([
-        'state' => $state,
-        'search' => $data,
-        'text' => $text,
-      ]);
     }
 
     public function data_profile(Request $request){
-      $id = Auth::user()->conta_id;
-      $uuid = $request->id;
-      if ($request->type == 0) {
-        $data = DB::select('select count(*) as seguindo from seguidors where seguidors.identificador_id_seguindo = (select identificador_id as identificador_id_seguindo from identificadors where id = (select conta_id from contas where uuid = ?) and identificadors.tipo_identificador_id = 1)', [$uuid]);
-        return response()->json([
-          'data' => $data[0]->seguindo
-        ]);
-      } elseif ($request->type == 1) {
-        $data = DB::select('select count(*) as reactions from post_reactions where post_reactions.identificador_id = (select identificador_id as identificador_id_seguindo from identificadors where id = (select conta_id from contas where uuid = ?) and identificadors.tipo_identificador_id = 1)', [$uuid]);
-        return response()->json([
-          'data' => $data[0]->reactions
-        ]);
-      } elseif ($request->type == 2) {
-        $data = DB::select('select count(*) as saveds from saveds where conta_id = (select conta_id from contas where uuid = ?)', [$uuid]);
-        return response()->json([
-          'data' => $data[0]->saveds
-        ]);
+
+      try{
+
+        $id = Auth::user()->conta_id;
+        $uuid = $request->id;
+        if ($request->type == 0) {
+          $data = DB::select('select count(*) as seguindo from seguidors where seguidors.identificador_id_seguindo = (select identificador_id as identificador_id_seguindo from identificadors where id = (select conta_id from contas where uuid = ?) and identificadors.tipo_identificador_id = 1)', [$uuid]);
+          return response()->json([
+            'data' => $data[0]->seguindo
+          ]);
+        } elseif ($request->type == 1) {
+          $data = DB::select('select count(*) as reactions from post_reactions where post_reactions.identificador_id = (select identificador_id as identificador_id_seguindo from identificadors where id = (select conta_id from contas where uuid = ?) and identificadors.tipo_identificador_id = 1)', [$uuid]);
+          return response()->json([
+            'data' => $data[0]->reactions
+          ]);
+        } elseif ($request->type == 2) {
+          $data = DB::select('select count(*) as saveds from saveds where conta_id = (select conta_id from contas where uuid = ?)', [$uuid]);
+          return response()->json([
+            'data' => $data[0]->saveds
+          ]);
+        }
+      }catch(\Exception $e){
+
+
+                  $function_name = "data_profile";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
       }
+
     }
 
     public function perfil_das_contas($id)
@@ -442,23 +576,19 @@ class PerfilController extends Controller
               $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
               $page_content = $page_couple->page_default_date($account_name);
               $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-
-
-              //dd($account_name);
-
-
               $page_current = 'profile';
-
-              //-----------------------------------------------------------------------------------------------------------------------------------------
-
-
 
 
               return view('perfil.index', compact('account_name','guardadosP', 'notificacoes_count','notificacoes', 'gostos', 'perfil','conta_logada', 'tipos_de_relacionamento', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasSeguidas', 'paginasNaoSeguidas'));
 
 
-        } catch (Exception $e) {
-            dd('erro');
+        } catch (\Exception $e) {
+            
+                  $function_name = "perfil_das_contas";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -516,7 +646,13 @@ class PerfilController extends Controller
       }
       return response()->json($text);
 
-    } catch (\Exception $e) {
+    }catch(\Exception $e) {
+
+                  $function_name = "get_nine_text_perfil";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
 
     }
     }
@@ -533,6 +669,12 @@ class PerfilController extends Controller
       return response()->json($img);
     } catch (\Exception $e) {
 
+                  $function_name = "get_nine_images_perfil";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
     }
     }
     public function get_nine_videos_perfil(Request $request)
@@ -547,7 +689,14 @@ class PerfilController extends Controller
           $video=DB::select('select c.* from (select p.page_id,p.formato_id,p.uuid,p.file,p.thumbnail,p.post_id,p.descricao,pg.nome,pg.foto,pg.uuid as page_uuid, (select count(*) from post_reactions as prr where prr.post_id = p.post_id and prr.identificador_id = (select identificadors.identificador_id from identificadors where identificadors.id = (select conta_id from contas where uuid = ?) and identificadors.tipo_identificador_id = 1)) as reagi from posts as p inner join pages as pg on pg.page_id=p.page_id where p.post_id<? and p.formato_id=1 order by p.post_id desc) as c where reagi=1 order by c.post_id desc limit 9',[$conta_logada,$request->id]);
         }
         return response()->json($video);
-      } catch (Exception $e) {
+      } catch (\Exception $e) {
+
+
+                  $function_name = "get_nine_videos_perfil";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
 
       }
     }
@@ -588,14 +737,31 @@ class PerfilController extends Controller
 
             return view('perfil.edit', compact('account_name','notificacoes_count', 'notificacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'page_content', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'conta_logada'));
 
-        } catch (Exception $e) {
-            dd('erro');
+        } catch (\Exception $e) {
+            
+                  $function_name = "edit";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
     public function get_ident_notification($id){
-      $id = DB::select('select notification_id from notifications where identificador_id_destino = (select identificador_id from identificadors where id = ? and tipo_identificador_id = 5)', [$id])[0]->notification_id;
-      return $id;
+
+      try{
+
+        $id = DB::select('select notification_id from notifications where identificador_id_destino = (select identificador_id from identificadors where id = ? and tipo_identificador_id = 5)', [$id])[0]->notification_id;
+        return $id;
+      }catch(\Exception $e){
+
+           $function_name = "get_ident_notification";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
+
     }
 
     /**
@@ -771,8 +937,13 @@ class PerfilController extends Controller
                         return redirect()->route('account.profile');
               }
 
-        } catch (Exception $e) {
-            dd('erro');
+        } catch (\Exception $e) {
+            
+           $function_name = "update";
+                    $controller_name = "PerfilController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -789,9 +960,20 @@ class PerfilController extends Controller
 
     public function engagement_proposal(Request $request)
     {
+      try{
+
         $auth = new AuthController();
         $this->Pedido_relac($request);
         return back();
+      }catch(\Exception $e){
+
+
+          $function_name = "engagement_proposal";
+          $controller_name = "PerfilController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
 
     public function Pedido_relac(Request $request)
@@ -836,8 +1018,13 @@ class PerfilController extends Controller
 
         }
           return redirect()->route('account1.profile', $request->conta_pedida);
-        } catch (Exception $e) {
-            dd('erro');
+        } catch (\Exception $e) {
+            
+          $function_name = "Pedido_relac";
+          $controller_name = "PerfilController";
+          $error_msg = $e->getMessage();
+
+          $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -901,14 +1088,31 @@ class PerfilController extends Controller
 
                 return back();
 
-            } catch (Exception $e) {
-                dd('erro');
+            } catch (\Exception $e) {
+                      
+                $function_name = "add_picture";
+                $controller_name = "PerfilController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
             }
         }
 
 
     public static function profile_picture($account_id)
     {
-        return DB::select('select foto from contas where conta_id = ?', [$account_id])[0]->foto;
+        try{
+          return DB::select('select foto from contas where conta_id = ?', [$account_id])[0]->foto;
+
+        }catch(\Exception $e){
+
+
+                $function_name = "profile_picture";
+                $controller_name = "PerfilController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
+        }
     }
 }

@@ -13,16 +13,40 @@ class PaisController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    
+public function save_errors_on_database($function_name,$controller_name,$error_msg){
+
+
+                DB::table('errors')->insert([
+                    'uuid'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'nome_da_funcao'=>$function_name,
+                    'nome_do_controller'=>$controller_name,
+                    'descricao_do_erro'=> $error_msg,
+                    
+                ]);
+
+    }
     public function index(Request $request)
     {
+       // $error_handler = new searchController();
+
         try {
             if ($request->ajax()) {
             $dadosPais['pais'] = Pais::all();
             return response()->json($dadosPais);
             }
             
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             
+          $function_name = "post_search_final";
+          $controller_name = "searchController";
+          $error_msg = $e->getMessage();
+          
+        $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+            //$error_handler->save_errors_on_database($function_name, $controller_name,  $error_msg );
+         
         }
         
     }

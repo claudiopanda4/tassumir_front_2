@@ -130,7 +130,25 @@ class SeguidorController extends Controller
             ]);        
         } catch (Exception $e) {
             DB::beginTransaction();
+
+                    $function_name = "follow";
+                    $controller_name = "SeguidorController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
+
+    }
+    public function save_errors_on_database($function_name,$controller_name,$error_msg){
+
+
+                DB::table('errors')->insert([
+                    'uuid'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'nome_da_funcao'=>$function_name,
+                    'nome_do_controller'=>$controller_name,
+                    'descricao_do_erro'=> $error_msg,
+                    
+                ]);
 
     }
 
@@ -235,13 +253,14 @@ class SeguidorController extends Controller
         }
         } catch (Exception $e) {
 
+                    $function_name = "store";
+                    $controller_name = "SeguidorController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
 
     }
-
-
-
-
     /**
      * Display the specified resource.
      *
@@ -285,6 +304,8 @@ class SeguidorController extends Controller
      */
     public function destroy(Request $request)
     {
+        try{
+
         if ($request->ajax()) {
              $identificador_seguida = DB::table('identificadors')->where([
                 ['tipo_identificador_id', 2],
@@ -330,6 +351,15 @@ class SeguidorController extends Controller
                 }
          return response()->json($newpage);
             }
+        }catch(\Exception $e){
+
+                    $function_name = "destroy";
+                    $controller_name = "SeguidorController";
+                    $error_msg = $e->getMessage();
+
+                    $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+
         }
 
 
