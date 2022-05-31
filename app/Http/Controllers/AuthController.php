@@ -134,21 +134,24 @@ class AuthController extends Controller
        
 
         try{
-             if (Auth::check()) {
-           return true;
-        } else {
-            $numero = $request->telefone;
-            $password = $request->password;
-            $email = $request->email;
-            $result = DB::select('select * from logins where (telefone = ? && password = ?) OR (email = ? && password = ?)', [$numero, $password, $email, $password]);
-            $return = sizeof($result) ? true: false;
-            //dd($return);
-            return $return;
-        }
+                if (Auth::check()) {
+
+                    return true;
+
+                } else {
+
+                    $numero = $request->telefone;
+                    $password = $request->password;
+                    $email = $request->email;
+                    $result = DB::select('select * from logins where (telefone = ? && password = ?) OR (email = ? && password = ?)', [$numero, $password, $email, $password]);
+                    $return = sizeof($result) ? true: false;
+                    //dd($return);
+                    return $return;
+                }
 
         }catch(\Exception $e){
 
-                     $function_name = "login_return";
+                    $function_name = "login_return";
                     $controller_name = "AuthController";
                     $error_msg = $e->getMessage();
 
@@ -210,7 +213,7 @@ class AuthController extends Controller
               return $pagenaoPage;
         } catch (Exception $e) {
 
-                     $function_name = "paginasNaoSeguidasIndex";
+                    $function_name = "paginasNaoSeguidasIndex";
                     $controller_name = "AuthController";
                     $error_msg = $e->getMessage();
 
@@ -229,7 +232,7 @@ class AuthController extends Controller
                 ]);
         }catch(\Exception $e){
 
-                     $function_name = "relationship_type";
+                    $function_name = "relationship_type";
                     $controller_name = "AuthController";
                     $error_msg = $e->getMessage();
 
@@ -498,7 +501,7 @@ class AuthController extends Controller
            return $dates;
            }catch(\Exception $e){
 
-                     $function_name = "default_";
+                    $function_name = "default_";
                     $controller_name = "AuthController";
                     $error_msg = $e->getMessage();
 
@@ -680,12 +683,15 @@ class AuthController extends Controller
                         $a++;
 
                 }
+
                 }
-                dd($not_pedido);
+                
+                //dd($not_pedido);
                 return $not_pedido;
+
             } catch (\Exception $e) {
 
-                     $function_name = "Notifications_pedido_final";
+                    $function_name = "Notifications_pedido_final";
                     $controller_name = "AuthController";
                     $error_msg = $e->getMessage();
 
@@ -736,7 +742,7 @@ class AuthController extends Controller
                       $a++;
               }
               }
-              dd($not_resposta);
+              //dd($not_resposta);
               return $not_resposta;
             } catch (\Exception $e) {
 
@@ -789,7 +795,7 @@ class AuthController extends Controller
                       $a++;
               }
               }
-              dd($not_creat_page);
+              //dd($not_creat_page);
               return $not_creat_page;
             } catch (\Exception $e) {
                      $function_name = "Notifications_page_creat_final";
@@ -978,7 +984,7 @@ class AuthController extends Controller
                     }
               }
               }
-              dd($notificacoes);
+              //dd($notificacoes);
               return $notificacoes;
 
               }catch(\Exception $e){
@@ -1170,7 +1176,7 @@ class AuthController extends Controller
                       }
                 }
                 }
-                dd($notificacoes);
+                //dd($notificacoes);
                 return $notificacoes;
                 }catch(\Exception $e){
 
@@ -1362,7 +1368,7 @@ class AuthController extends Controller
                     }
               }
               }
-              dd($notificacoes);
+              //dd($notificacoes);
               return $notificacoes;
               }catch(\Exception $e){
 
@@ -1556,7 +1562,7 @@ class AuthController extends Controller
                     }
               }
               }
-              dd($notificacoes);
+              //dd($notificacoes);
               return $notificacoes;
 
               }catch(\Exception $e){
@@ -1750,7 +1756,7 @@ class AuthController extends Controller
                     }
               }
               }
-              dd($notificacoes);
+              //dd($notificacoes);
               return $notificacoes;
 
               }catch(\Exception $e){
@@ -1780,8 +1786,6 @@ class AuthController extends Controller
             }
 
     public function index(){
-    
-
         try{
             if (Auth::check() == true) {
                 $page_current = 'home_index';
@@ -1825,7 +1829,6 @@ class AuthController extends Controller
 
     public function user_data(Request $request){
     
-
         try{
             $id = Auth::user()->conta_id;
             $contas = DB::select('select foto, nome, apelido from contas where (conta_id) = (?)', [$id]);
@@ -1840,26 +1843,24 @@ class AuthController extends Controller
         }
     }
     public function user_photo(Request $request){
-       
 
         try{
-             $id = Auth::user()->conta_id;
-        $contas = DB::select('select foto from contas where (conta_id) = (?)', [$id]);
-        $photo = '/storage/img/users/'.$contas[0]->foto;
-        $class = '';
-        if ($contas[0]->foto == null || $contas[0]->foto == 'null' || $contas[0]->foto == '') {
-            $photo = '/css/uicons/user.png';
-            $class = 'no-img';
-        }
-        return json_encode(['photo' => $photo, 'add' => $class]);
+            $id = Auth::user()->conta_id;
+            $contas = DB::select('select foto from contas where (conta_id) = (?)', [$id]);
+            $photo = '/storage/img/users/'.$contas[0]->foto;
+            $class = '';
+            if ($contas[0]->foto == null || $contas[0]->foto == 'null' || $contas[0]->foto == '') {
+                $photo = '/css/uicons/user.png';
+                $class = 'no-img';
+            }
+            return json_encode(['photo' => $photo, 'add' => $class]);
 
         }catch(\Exception $e){
 
-          $function_name = "user_photo";
-            $controller_name = "AuthController";
-            $error_msg = $e->getMessage();
-
-            $this->save_errors_on_database($function_name, $controller_name,  $error_msg ); 
+              $function_name = "user_photo";
+              $controller_name = "AuthController";
+              $error_msg = $e->getMessage();
+              $this->save_errors_on_database($function_name, $controller_name,  $error_msg ); 
         }
     }
     /*Função para pegar os dados com ajax*/
@@ -1867,10 +1868,11 @@ class AuthController extends Controller
     public function paginasqueSigo(){
     
         try{
-               $conta_logada = Auth::user()->conta_id;
-        $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 1 limit 3', [$conta_logada]);
+            
+            $conta_logada = Auth::user()->conta_id;
+            $pagequesigo = DB::select('select * from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 1 limit 3', [$conta_logada]);
 
-        return response()->json($pagequesigo);
+            return response()->json($pagequesigo);
         }catch(\Exception $e){
 
           $function_name = "paginasqueSigo";
@@ -1886,12 +1888,10 @@ class AuthController extends Controller
 
         try{
                 $id = Auth::user()->conta_id;
-        $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 ORDER BY RAND() limit 3', [$id]);
+                $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 ORDER BY RAND() limit 3', [$id]);
 
-        return response()->json($pagequesigo);
+                return response()->json($pagequesigo);
         }catch(\Exception $e){
-
-
           $function_name = "paginasquenaoSigo";
             $controller_name = "AuthController";
             $error_msg = $e->getMessage();
@@ -1905,13 +1905,13 @@ class AuthController extends Controller
      
         try{
             $id = Auth::user()->conta_id;
-        $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 ORDER BY RAND() limit 10', [$id]);
+            $pagequesigo = DB::select('select foto, segui, seguidores, tipo_relacionamento_id, uuid, nome, page_id from (select pa.*, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2) and identificador_id_seguindo = (select identificadors.identificador_id from identificadors where identificadors.id = ? and identificadors.tipo_identificador_id = 1)) as segui, (select count(*) from seguidors where    identificador_id_seguida = (select identificadors.identificador_id from identificadors where identificadors.id = pa.page_id and identificadors.tipo_identificador_id = 2)) as seguidores FROM pages as pa) as pa where pa.segui = 0 ORDER BY RAND() limit 10', [$id]);
 
-        return response()->json($pagequesigo);
+            return response()->json($pagequesigo);
 
         }catch(\Exception $e){
 
-          $function_name = "paginasquenaoSigoIndex";
+            $function_name = "paginasquenaoSigoIndex";
             $controller_name = "AuthController";
             $error_msg = $e->getMessage();
 
@@ -1925,12 +1925,16 @@ class AuthController extends Controller
 
 
   public function paginasSeguidas(){
+
         try {
+
             $paginasSeguidas = array();
             $pagePage = array();
             $account_name = $this->defaultDate();
+            
             $identificadorPage = DB::table('identificadors')->where('tipo_identificador_id', 2)->get();
             $dadosSgndo = DB::select('select * from identificadors where (id,tipo_identificador_id) = (?, ?)', [$account_name[0]->conta_id, 1 ]);
+
             $seguidas = DB::table('seguidors')->where('identificador_id_seguindo', $dadosSgndo[0]->identificador_id)->get();
             $valor_id = 0;
             $contador = 0;
