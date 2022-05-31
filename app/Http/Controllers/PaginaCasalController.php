@@ -23,8 +23,12 @@ class PaginaCasalController extends Controller
       try {
         $qtd_de_publicacoes=DB::select('select count(*) as qtd from posts where page_id=(select page_id from pages where uuid=?) and estado_post_id=1',[$uuid]);
         return json_encode(['qtd' => $qtd_de_publicacoes[0]->qtd]);
-      } catch (Exception $e) {
+      } catch (\Exception $e) {
+                $function_name = "qtd_de_publicacoes";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
 
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       }
 
     }
@@ -38,10 +42,15 @@ class PaginaCasalController extends Controller
             $who_follows_me=DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto from (select s.identificador_id_seguindo, (select i.id from identificadors as i where i.identificador_id=s.identificador_id_seguindo)as id from seguidors as s where s.identificador_id_seguida = (select i.identificador_id from identificadors as i where i.tipo_identificador_id = 2 and i.id= (select pa.page_id from pages as pa where pa.uuid=?)))  as al inner join contas as c on c.conta_id = id order by c.nome, c.apelido ',[$request->uuid]);
         }
 
-
         return response()->json($who_follows_me);
 
       } catch (\Exception $e) {
+
+                $function_name = "who_follows_me";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
 
       }
     }
@@ -59,6 +68,11 @@ class PaginaCasalController extends Controller
 
       } catch (\Exception $e) {
 
+                $function_name = "pages_i_follow";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       }
 
     }
@@ -70,8 +84,13 @@ class PaginaCasalController extends Controller
           'type' => $data[0]->tipo_relacionamento,
           'preco' => $data[0]->preco,
         ]);
-      } catch (Exception $e) {
+      } catch (\Exception $e) {
 
+                $function_name = "get_relationship";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       }
     }
 
@@ -82,49 +101,69 @@ class PaginaCasalController extends Controller
 
       } catch (\Exception $e) {
 
+                $function_name = "dados_page";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       }
 
     }
 
     public function spouse_names(Request $request)
     {
-      //return $request->id;
+    
+      try{
 
-      $data = DB::select("select (select tipo_relacionamento from tipo_relacionamentos WHERE tipo_relacionamento_id = page.tipo_relacionamento_id) as relacionamento, if(page.tipo_page_id <> 2, true, false) as nativo, if((select genero from contas where conta_id = page.conta_id_a) = 'Masculino', (select nome from contas where conta_id = page.conta_id_a), (select nome from contas where conta_id = page.conta_id_b)) as homem_nome, if((select genero from contas where conta_id = page.conta_id_a) = 'Masculino', (select uuid from contas where conta_id = page.conta_id_a), (select uuid from contas where conta_id = page.conta_id_b)) as man_uuid, if((select genero from contas where conta_id = page.conta_id_a) = 'Feminino', (select uuid from contas where conta_id = page.conta_id_a), (select uuid from contas where conta_id = page.conta_id_b)) as woman_uuid, if((select genero from contas where conta_id = page.conta_id_a) = 'Masculino', (select apelido from contas where conta_id = page.conta_id_a), (select apelido from contas where conta_id = page.conta_id_b)) as homem_sobrenome, if((select genero from contas where conta_id = page.conta_id_b) = 'Feminino', (select nome from contas where conta_id = page.conta_id_b), (select nome from contas where conta_id = page.conta_id_a)) as mulher_nome, if((select genero from contas where conta_id = page.conta_id_b) = 'Feminino', (select apelido from contas where conta_id = page.conta_id_b), (select apelido from contas where conta_id = page.conta_id_a)) as mulher_sobrenome from pages as page where page.uuid = ?",[$request->id])[0];
-      return response()->json([
-        'homem' => $data->homem_nome . " " . $data->homem_sobrenome,
-        'mulher' => $data->mulher_nome . " " . $data->mulher_sobrenome,
-        'state' => $data->nativo,
-        'man_uuid' => $data->man_uuid,
-        'woman_uuid' => $data->woman_uuid,
-        'relacionamento' => $data->relacionamento
-      ]);
+            $data = DB::select("select (select tipo_relacionamento from tipo_relacionamentos WHERE tipo_relacionamento_id = page.tipo_relacionamento_id) as relacionamento, if(page.tipo_page_id <> 2, true, false) as nativo, if((select genero from contas where conta_id = page.conta_id_a) = 'Masculino', (select nome from contas where conta_id = page.conta_id_a), (select nome from contas where conta_id = page.conta_id_b)) as homem_nome, if((select genero from contas where conta_id = page.conta_id_a) = 'Masculino', (select uuid from contas where conta_id = page.conta_id_a), (select uuid from contas where conta_id = page.conta_id_b)) as man_uuid, if((select genero from contas where conta_id = page.conta_id_a) = 'Feminino', (select uuid from contas where conta_id = page.conta_id_a), (select uuid from contas where conta_id = page.conta_id_b)) as woman_uuid, if((select genero from contas where conta_id = page.conta_id_a) = 'Masculino', (select apelido from contas where conta_id = page.conta_id_a), (select apelido from contas where conta_id = page.conta_id_b)) as homem_sobrenome, if((select genero from contas where conta_id = page.conta_id_b) = 'Feminino', (select nome from contas where conta_id = page.conta_id_b), (select nome from contas where conta_id = page.conta_id_a)) as mulher_nome, if((select genero from contas where conta_id = page.conta_id_b) = 'Feminino', (select apelido from contas where conta_id = page.conta_id_b), (select apelido from contas where conta_id = page.conta_id_a)) as mulher_sobrenome from pages as page where page.uuid = ?",[$request->id])[0];
+          return response()->json([
+            'homem' => $data->homem_nome . " " . $data->homem_sobrenome,
+            'mulher' => $data->mulher_nome . " " . $data->mulher_sobrenome,
+            'state' => $data->nativo,
+            'man_uuid' => $data->man_uuid,
+            'woman_uuid' => $data->woman_uuid,
+            'relacionamento' => $data->relacionamento
+          ]);
+
+      }catch(\Exception $e){
+
+                $function_name = "spouse_names";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
 
     public function description_page($uuid)
     {
-      $data = DB::select("select descricao from pages where uuid = ?",[$uuid])[0];
-      return response()->json(['description' => $data->descricao]);
+      try{
+          $data = DB::select("select descricao from pages where uuid = ?",[$uuid])[0];
+          return response()->json(['description' => $data->descricao]);
+      }catch(\Exception $e){
+
+                $function_name = "description_page";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
     public function qtd_de_seguidores(Request $request)
     {
       try {
         $qtd_de_seguidores=DB::select('select count(*) as qtd from seguidors as s where s.identificador_id_seguida=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=2 and i.id=(select page_id from pages where uuid=?))',[$request->ident]);
         return json_encode(['qtd' => $qtd_de_seguidores[0]->qtd]);
-      } catch (Exception $e) {
+      } catch (\Exception $e) {
+
+                $function_name = "qtd_de_seguidores";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       }
 
     }
-
-
-    /*public function dados_page($uuid)
-    {
-
-      $dados_page=DB::select('Select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,tipo_relacionamento, if(genero_conta_b="Masculino",nome_conta_b,nome_conta_a)as nome_conta_homem, if(genero_conta_b="Masculino",apelido_conta_b,apelido_conta_a)as apeltido_conta_homem, if(genero_conta_b="Masculino",nome_conta_a,nome_conta_b)as nome_conta_mulher, if(genero_conta_b="Masculino",apelido_conta_a,apelido_conta_b)as apeltido_conta_mulher from(select pg.uuid,pg.nome,pg.descricao,pg.foto,pg.tipo_relacionamento_id,(select tr.descricao from tipo_relacionamentos as tr where tr.tipo_relacionamento_id=pg.tipo_relacionamento_id) as tipo_relacionamento,(select c.genero from contas as c where c.conta_id=pg.conta_id_a)as genero_conta_a,(select c.genero from contas as c where c.conta_id=pg.conta_id_b)as genero_conta_b,(select c.nome from contas as c where c.conta_id=pg.conta_id_a)as nome_conta_a,(select c.apelido from contas as c where c.conta_id=pg.conta_id_a)as apelido_conta_a,(select c.nome from contas as c where c.conta_id=pg.conta_id_b)as nome_conta_b,(select c.apelido from contas as c where c.conta_id=pg.conta_id_b)as apelido_conta_b from pages as pg where pg.uuid=?) as pg',[$uuid]);
-
-    }
-  public function qtd_de_seguidores(Request $request)*/
-
     public function ami_following(Request $request)
     {
       try {
@@ -150,18 +189,29 @@ class PaginaCasalController extends Controller
           'class' => $class,
           'state' => $state
         ]);
-      } catch (Exception $e) {
+      } catch (\Exception $e) {
+                $function_name = "ami_following";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
       }
 
     }
 
     public function get_follow_me(Request $request)
-  {
-    try {
-      $result=DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto from(select s.identificador_id_seguindo from seguidors as s where s.identificador_id_seguida=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=2 and i.id=(select page_id from pages where uuid=?))) as p inner join contas as c on c.conta_id=(select id from identificadors where identificador_id=p.identificador_id_seguindo)',[$request->page_uuid]);
-      return $result;
-    } catch (\Exception $e) {
-    }
+    {
+
+      try {
+        $result=DB::select('select c.conta_id,c.uuid,c.nome,c.apelido,c.foto from(select s.identificador_id_seguindo from seguidors as s where s.identificador_id_seguida=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=2 and i.id=(select page_id from pages where uuid=?))) as p inner join contas as c on c.conta_id=(select id from identificadors where identificador_id=p.identificador_id_seguindo)',[$request->page_uuid]);
+        return $result;
+      } catch (\Exception $e) {
+                  $function_name = "get_follow_me";
+                  $controller_name = "PaginaCasalController";
+                  $error_msg = $e->getMessage();
+
+                  $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
   }
 
   public function qtd_de_likes_page(Request $request)
@@ -170,6 +220,11 @@ class PaginaCasalController extends Controller
       $qtd_de_likes_page = DB::select('select count(*) as qtd from post_reactions as pr inner join posts as  p on p.page_id=(select page_id from pages where uuid=?) where pr.post_id = p.post_id',[$request->ident]);
       return json_encode(['qtd' => $qtd_de_likes_page[0]->qtd]);
     } catch (\Exception $e) {
+                $function_name = "qtd_de_likes_page";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
     }
 
   }
@@ -184,26 +239,41 @@ class PaginaCasalController extends Controller
       }
       return response()->json($text);
 
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
+                $function_name = "get_nine_text_page";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
     }
   }
   public function get_nine_images_page(Request $request)
   {
     try {
+
       if ($request->id == 0) {
+
         $img=DB::select('select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid = ?) and p.formato_id=2 order by p.post_id desc limit 9',[$request->uuid]);
+
       } else {
+
         $img=DB::select('select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=2 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
       }
       return response()->json($img);
-    } catch (Exception $e) {
 
+    } catch (\Exception $e) {
+                $function_name = "get_nine_images_page";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
     }
   }
 
   public function isPageMine(Request $request)
   {
     try {
+      
       $conta_id = Auth::user()->conta_id;
       $result = DB::select('select (select conta_id_a from pages where page_id = posts.page_id ) as conta_id_a, (select conta_id_b from pages where page_id = posts.page_id) as conta_id_b from posts where uuid = ?', [$request->uuid])[0];
       $state = false;
@@ -211,8 +281,14 @@ class PaginaCasalController extends Controller
         $state = true;
       }
       return response()->json(['state' => $state]);
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
 
+
+                $function_name = "isPageMine";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
     }
   }
 
@@ -225,7 +301,14 @@ class PaginaCasalController extends Controller
         $video=DB::select('Select p.uuid,p.formato_id,p.post_id,p.descricao,p.file,p.thumbnail,p.created_at from posts as p where p.page_id=(select page_id from pages where uuid=?) and p.formato_id=1 and p.post_id<? order by p.post_id desc limit 9',[$request->uuid,$request->id]);
       }
       return response()->json($video);
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
+
+
+                $function_name = "get_nine_videos_page";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
     }
   }
 
@@ -244,40 +327,73 @@ class PaginaCasalController extends Controller
     return redirect()->route('couple.page1',$request->uuid);
 
 
-    }  catch (Exception $e) {
-        dd($e);
+    }  catch (\Exception $e) {
+        
+                $function_name = "page_update";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
     }
 
 
     }
     public function conta_seguinte()
     {
-       $dadosSeguida = DB::table('seguidors')
+      
+        try{
+
+             $dadosSeguida = DB::table('seguidors')
                ->join('identificadors', 'seguidors.identificador_id_seguindo', '=', 'identificadors.identificador_id')
                ->select('seguidors.*', 'identificadors.id')
                ->get();
-        $conta_seguinte=array();
-          $controll = new AuthController;
-          $dates = $controll->default_();
-          $conta_logada = $dates['conta_logada'];
-          foreach ($dadosSeguida as $key => $value) {
-            if ($value->id ==  $conta_logada[0]->conta_id) {
-              $conta_seguinte[$key] = $value->identificador_id_seguida;
-            }
-          }
+            $conta_seguinte=array();
+              $controll = new AuthController;
+              $dates = $controll->default_();
+              $conta_logada = $dates['conta_logada'];
+              foreach ($dadosSeguida as $key => $value) {
+                if ($value->id ==  $conta_logada[0]->conta_id) {
+                  $conta_seguinte[$key] = $value->identificador_id_seguida;
+                }
+              }
 
-        return $conta_seguinte;
+            return $conta_seguinte;
+
+        }catch(\Exception $e){
+
+                $function_name = "conta_seguinte";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
     }
 
     public function index($uuid){
-      $page_current = 'page';
-      $dados = DB::select('select uuid, nome, foto from pages where uuid = ?', [$uuid]);
-      //dd($result);
-      return view('pagina.couple_page', compact('page_current','dados'));
+
+      try{
+
+        $page_current = 'page';
+        $dados = DB::select('select uuid, nome, foto from pages where uuid = ?', [$uuid]);
+        //dd($result);
+        return view('pagina.couple_page', compact('page_current','dados'));
+
+      }catch(\Exception $e){
+
+
+                $function_name = "index";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
 
     public function accepted_relationship(Request $request)
       {
+        
+        try{
+
         $controll = new AuthController;
         $uuid = $request->uuid_accept;
         //dd($uuid);
@@ -304,55 +420,101 @@ class PaginaCasalController extends Controller
                 }
 
         return back();
+
+        }catch(\Exception $e){
+
+                $function_name = "accepted_relationship";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
       }
       public function relationship_accept(Request $request, $uuid){
 
-        $tipo=DB::select('select (select nome from contas where conta_id = pr.conta_id_pedinte)as nome,(select apelido from contas where conta_id = pr.conta_id_pedinte) as apelido,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = pr.tipo_relacionamento_id ) as tipo_relacionamento from pedido_relacionamentos as pr where uuid = ?', [$uuid]);
-        $resposta='Ao clicar em "Sim, Aceito", você concorda com o que os termos dizem sobre o ';
-        $resposta.=$tipo[0]->tipo_relacionamento;
-        $resposta.='. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes. Aceita Assumir o(a)  ';
-        $resposta.= $tipo[0]->nome;
-        $resposta.= ' ';
-        $resposta.= $tipo[0]->apelido;
-        $resposta.= '?';
+        try{
+              $tipo=DB::select('select (select nome from contas where conta_id = pr.conta_id_pedinte)as nome,(select apelido from contas where conta_id = pr.conta_id_pedinte) as apelido,(select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = pr.tipo_relacionamento_id ) as tipo_relacionamento from pedido_relacionamentos as pr where uuid = ?', [$uuid]);
+              $resposta='Ao clicar em "Sim, Aceito", você concorda com o que os termos dizem sobre o ';
+              $resposta.=$tipo[0]->tipo_relacionamento;
+              $resposta.='. Caso tenha alguma DÚVIDA, seria bem melhor consultar antes. Aceita Assumir o(a)  ';
+              $resposta.= $tipo[0]->nome;
+              $resposta.= ' ';
+              $resposta.= $tipo[0]->apelido;
+              $resposta.= '?';
 
-        return response()->json(['answer' => $resposta]);
+              return response()->json(['answer' => $resposta]);
+
+        }catch(\Exception $e){
+
+                $function_name = "relationship_accept";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
       }
 
       public function cancel_request_relationship($uuid){
 
-        $control = DB::select('select pr.pedido_relacionamento_id,(select n.notification_id from notifications as n where n.id_action_notification=4 and  n.identificador_id_causador=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte) and n.identificador_id_receptor=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida) and n.identificador_id_destino=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)) as id_not, (select identificador_id from identificadors where id= pr.pedido_relacionamento_id and tipo_identificador_id=5) as identify from pedido_relacionamentos as pr where uuid = ?', [$uuid]);
+        try{
 
-        $resposta = 0;
+             $control = DB::select('select pr.pedido_relacionamento_id,(select n.notification_id from notifications as n where n.id_action_notification=4 and  n.identificador_id_causador=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte) and n.identificador_id_receptor=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida) and n.identificador_id_destino=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)) as id_not, (select identificador_id from identificadors where id= pr.pedido_relacionamento_id and tipo_identificador_id=5) as identify from pedido_relacionamentos as pr where uuid = ?', [$uuid]);
 
-        if (sizeof($control)>0) {
-            DB::table('identificadors')->where('identificador_id',$control[0]->identify)
-            ->delete();
-            DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$control[0]->pedido_relacionamento_id)
-            ->delete();
-            DB::table('notifications')->where('notification_id',$control[0]->id_not)
-            ->delete();
-            $resposta = 1;
+            $resposta = 0;
+
+            if (sizeof($control)>0) {
+                DB::table('identificadors')->where('identificador_id',$control[0]->identify)
+                ->delete();
+                DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$control[0]->pedido_relacionamento_id)
+                ->delete();
+                DB::table('notifications')->where('notification_id',$control[0]->id_not)
+                ->delete();
+                $resposta = 1;
+            }
+            return back();
+
+        }catch(\Exception $e){
+
+                $function_name = "cancel_request_relationship";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
-        return back();
       }
 
       public function reject_relationship(Request $request){
-        $control=DB::select('select pr.pedido_relacionamento_id,(select n.notification_id from notifications as n where n.id_action_notification=4 and  n.identificador_id_causador=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte) and n.identificador_id_receptor=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida) and n.identificador_id_destino=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)) as id_not, (select identificador_id from identificadors where id= pr.pedido_relacionamento_id and tipo_identificador_id=5) as identify from pedido_relacionamentos as pr where uuid = ?', [$request->id1]);
-        $resposta= 0;
 
-        if (sizeof($control)>0) {
-                  DB::table('identificadors')->where('identificador_id',$control[0]->identify)
-                  ->delete();
-                  DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$control[0]->pedido_relacionamento_id)
-                  ->delete();
-                  DB::table('notifications')->where('notification_id',$control[0]->id_not)
-                  ->delete();
-                  $resposta= 1;        }
-        return response()->json($resposta);
+        try{
+
+             $control=DB::select('select pr.pedido_relacionamento_id,(select n.notification_id from notifications as n where n.id_action_notification=4 and  n.identificador_id_causador=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedinte) and n.identificador_id_receptor=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=1 and i.id=pr.conta_id_pedida) and n.identificador_id_destino=(select i.identificador_id from identificadors as i where i.tipo_identificador_id=5 and i.id=pr.pedido_relacionamento_id)) as id_not, (select identificador_id from identificadors where id= pr.pedido_relacionamento_id and tipo_identificador_id=5) as identify from pedido_relacionamentos as pr where uuid = ?', [$request->id1]);
+            $resposta= 0;
+
+          if (sizeof($control)>0) {
+                    DB::table('identificadors')->where('identificador_id',$control[0]->identify)
+                    ->delete();
+                    DB::table('pedido_relacionamentos')->where('pedido_relacionamento_id',$control[0]->pedido_relacionamento_id)
+                    ->delete();
+                    DB::table('notifications')->where('notification_id',$control[0]->id_not)
+                    ->delete();
+                    $resposta= 1;        }
+          return response()->json($resposta);
+
+        }catch(\Exception $e){
+
+                $function_name = "reject_relationship";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
       }
 
       public function request_relationship1($id) {
+
+        try{
+
+
         $pedido=array();
         $tipo=DB::select('select * from pedido_relacionamentos where uuid = ?', [$id]);
         $tipos=DB::select('select * from tipo_relacionamentos where tipo_relacionamento_id = ?', [$tipo[0]->tipo_relacionamento_id]);
@@ -396,32 +558,49 @@ class PaginaCasalController extends Controller
           $pedido[0]['not']=$notificacoes_aux[0]->notification_id ;
         }
                     return view('relacionamento.index', compact('account_name','notificacoes_count', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'paginasSeguidas', 'paginasNaoSeguidas', 'dadosSeguida',));
+
+        }catch(\Exception $e){
+
+                $function_name = "request_relationship1";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+
       }
 
     public function request_relationship() {
-      $controll = new AuthController;
-       $dates = $controll->default_();
-        $account_name = $dates['account_name'];
-        $checkUserStatus = $dates['checkUserStatus'];
-        $profile_picture = $dates['profile_picture'];
-        $isUserHost = $dates['isUserHost'];
-        $hasUserManyPages = $dates['hasUserManyPages'];
-        $allUserPages = $dates['allUserPages'];
-        $page_content = $dates['page_content'];
-        $conta_logada = $dates['conta_logada'];
-        $notificacoes = $dates['notificacoes'];
-        $notificacoes_count = $dates['notificacoes_count'];
-        $dadosSeguida = $dates['dadosSeguida'];
-        $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
-        $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
-        $page_current = 'relationship_request';
-        //return view('relacionamento.index', compact('account_name', 'pedido', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida',));
 
+      try{
 
-        /*siene*/ //$casalPageName = $this->get_casalPage_name($page_content);
-        //return view('relacionamento.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'dadosPage', 'dadosSeguindo', 'dadosSeguida', ));
+          $controll = new AuthController;
+         $dates = $controll->default_();
+          $account_name = $dates['account_name'];
+          $checkUserStatus = $dates['checkUserStatus'];
+          $profile_picture = $dates['profile_picture'];
+          $isUserHost = $dates['isUserHost'];
+          $hasUserManyPages = $dates['hasUserManyPages'];
+          $allUserPages = $dates['allUserPages'];
+          $page_content = $dates['page_content'];
+          $conta_logada = $dates['conta_logada'];
+          $notificacoes = $dates['notificacoes'];
+          $notificacoes_count = $dates['notificacoes_count'];
+          $dadosSeguida = $dates['dadosSeguida'];
+          $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
+          $paginasNaoSeguidas = $dates['paginasNaoSeguidas'];
+          $page_current = 'relationship_request';
 
-        return view('relacionamento.index', compact('account_name','notificacoes_count', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'paginasNaoSeguidas', 'paginasNaoSeguidas', 'dadosSeguida',));
+          return view('relacionamento.index', compact('account_name','notificacoes_count', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'paginasNaoSeguidas', 'paginasNaoSeguidas', 'dadosSeguida',));
+
+      }catch(\Exception $e){
+
+                $function_name = "request_relationship";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
 
     }
 
@@ -430,21 +609,7 @@ class PaginaCasalController extends Controller
     {
 
         try {
-            /*$auth = new AuthController;
-            $account_name = $auth->defaultDate();
-            $checkUserStatus = AuthController::isCasal($account_name[0]->conta_id);
-            $profile_picture = AuthController::profile_picture($account_name[0]->conta_id);
-            $isUserHost = AuthController::isUserHost($account_name[0]->conta_id);
-            $hasUserManyPages = AuthController::hasUserManyPages($account_name[0]->conta_id);
-            $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
-            $page_content = $this->page_default_date($account_name);
-            $seguidores = Self::seguidores($page_content[0]->page_id);
-            $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
-            $publicacoes = $this->get_all_post($page_content[0]->page_id);
-            $this->current_page_id = $page_content[0]->page_id;*/
-            //dd($page_content);
-
-
+         
             $controll = new AuthController;
             $pagenaoseguidas = $controll->paginasNaoSeguidasIndex();
              $dates = $controll->default_();
@@ -475,18 +640,15 @@ class PaginaCasalController extends Controller
                     $sugerir = $this->suggest_pages($page_content[0]->page_id);
                     $allPosts = $this->get_post_types($page_content[0]->page_id);
 
-                    /*siene*/ //$casalPageName = $this->get_casalPage_name($page_content);
-
-
-
-                    //return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir',));
-
-
                     return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'allPosts', 'sugerir' , 'pagenaoseguidas'));
 
-            //        return view('pagina.couple_page', compact('account_name','notificacoes', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'allPosts', 'sugerir'));
-        } catch (Exception $e) {
-            dd($e);
+        } catch (\Exception $e) {
+            
+                $function_name = "show_page";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
 
 
@@ -512,8 +674,6 @@ class PaginaCasalController extends Controller
           $dadosSeguida = $dates['dadosSeguida'];
           $page_current = 'relationship_request';
 
-
-
             $allUserPages = AuthController::allUserPages(new AuthController, $account_name[0]->conta_id);
             $seguidores = Self::seguidores($page_content[0]->page_id);
             $tipo_relac = $this->type_of_relac($page_content[0]->tipo_relacionamento_id);
@@ -528,20 +688,23 @@ class PaginaCasalController extends Controller
             $sugerir = $this->suggest_pages($page_content[0]->page_id);
             $allPosts = $this->get_post_types($page_content[0]->page_id);
 
-
-            //$casalPageName = $this->get_casalPage_name($page_content);
-
-            //return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts',));
-
             return view('pagina.pages', compact('account_name', 'conta_logada','notificacoes_count','notificacoes', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'sugerir', 'allPosts', 'pagenaoseguidas'));
 
-        } catch (Exception $e) {
-            dd($e);
+        } catch (\Exception $e) {
+            
+                $function_name = "my_pages";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
 
     }
 
     public function page_default_date ($account_name) {
+
+      try{
+
 
         $page_content = DB::select('select * from pages where conta_id_a = ? or conta_id_b = ?', [
             $account_name[0]->conta_id,
@@ -549,6 +712,15 @@ class PaginaCasalController extends Controller
         ]);
 
         return $page_content;
+      }catch(\Exception $e){
+
+                $function_name = "paginas";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
+
     }
 
     public function paginas($uuid){
@@ -606,13 +778,17 @@ class PaginaCasalController extends Controller
             $v=0;
           }
 
-          //return view('pagina.couple_page', compact('account_name','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'dadosSeguindo', 'dadosPage', 'sugerir', 'allPosts', 'casalPageName', 'uuidToCompare'));
           $conta_seguinte = $this->conta_seguinte();
 
           return view('pagina.couple_page', compact('account_name','notificacoes_count','notificacoes','v', 'conta_logada', 'page_content', 'tipo_relac', 'seguidores', 'publicacoes', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'dadosSeguida', 'paginasNaoSeguidas', 'paginasSeguidas', 'sugerir', 'allPosts', 'casalPageName', 'conta_seguinte', 'pagenaoseguidas'));
 
-        } catch (Exception $e) {
-            dd($e);
+        } catch (\Exception $e) {
+            
+                $function_name = "paginas";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
 
     }
@@ -638,16 +814,15 @@ class PaginaCasalController extends Controller
             $sugerir = $this->suggest_pages($page_content[0]->page_id);
             $allPosts = $this->get_post_types($page_content[0]->page_id);
 
-
-            /*siene*/
-
-
-            //return view('pagina.edit_couple', compact('account_name','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir'));
-
             return view('pagina.edit_couple', compact('account_name','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir'));
 
-        } catch (Exception $e) {
-            dd($e);
+        } catch (\Exception $e) {
+            
+                $function_name = "edit_couple";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -695,8 +870,13 @@ class PaginaCasalController extends Controller
 
 
                           return redirect()->route('account.home.feed');
-       } catch (Exception $e) {
-            dd($e);
+       } catch (\Exception $e) {
+            
+                $function_name = "delete_couple_page";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -712,6 +892,12 @@ class PaginaCasalController extends Controller
       }
     } catch (\Exception $e) {
 
+                $function_name = "editar_pagina";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+
     }
     }
 
@@ -723,22 +909,66 @@ class PaginaCasalController extends Controller
     */
 
     private function type_of_relac($id) {
+      try{
+
         return DB::select('select tipo_relacionamento from tipo_relacionamentos where tipo_relacionamento_id = ?', [$id])[0]->tipo_relacionamento;
+      }catch(\Exception $e){
+
+                $function_name = "type_of_relac";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
 
     public static function seguidores($id)
     {
+      try{
+
+
         //return count(DB::select('select * from seguidors where uuid = ?', [$id]));
         return count(DB::select('select * from seguidors where identificador_id_seguida = ?', [$id]));
+
+      }catch(\Exception $e){
+
+                $function_name = "seguidores";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
 
     private function get_all_post($id) {
+      try{
+
         return count(DB::select('select * from posts where page_id = ?', [$id]));
+      }catch(\Exception $e){
+
+                $function_name = "get_all_post";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
 
     private function post($uuid) {
+      try{
+
+
         return view('pagina.pages');
         //return count(DB::select('select * from posts where $uuid = ?', [$uuid]));
+
+      }catch(\Exception $e){
+
+                $function_name = "post";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
     /**
      * @param
@@ -764,16 +994,19 @@ class PaginaCasalController extends Controller
            return redirect()->route('account.home.feed');
 
 
-         } catch (Exception $e) {
-             dd($e);
+         } catch (\Exception $e) {
+             
+                $function_name = "Outra_pessoa";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
          }
      }
     public function store_post(Request $request)
     {
         try
         {
-            //dd($request);
-
             $page_id = DB::select('select page_id from pages where uuid = ?', [$request->page_u])[0]->page_id;
 
             if ($request->hasFile('imgOrVideo'))
@@ -821,8 +1054,13 @@ class PaginaCasalController extends Controller
             return back();
 
 
-        } catch (Exception $e) {
-            dd($e);
+        } catch (\Exception $e) {
+            
+                $function_name = "store_post";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -830,12 +1068,24 @@ class PaginaCasalController extends Controller
 
     function check_video_duration($video) {
 
-      $check = new \getID3;
-      $file = $check->analyze($video);
-      $duration_seconds = $file['playtime_seconds'];
-      $minutos = number_format(floor($duration_seconds / 60), 0);
+      try{
 
-      return intval($minutos);
+           $check = new \getID3;
+          $file = $check->analyze($video);
+          $duration_seconds = $file['playtime_seconds'];
+          $minutos = number_format(floor($duration_seconds / 60), 0);
+
+          return intval($minutos);
+
+      }catch(\Exception $e){
+
+                $function_name = "check_video_duration";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
+     
 
     }
 
@@ -861,8 +1111,13 @@ class PaginaCasalController extends Controller
                   ]);
                       return redirect()->route('account.home.feed');
 
-        } catch (Exception $e) {
-            dd($e);
+        } catch (\Exception $e) {
+          
+                $function_name = "ask_for_annulment";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -871,7 +1126,6 @@ class PaginaCasalController extends Controller
         try
         {
           $controll = new AuthController;
-
 
           DB::table('pages')->where('uuid',$request->uuidPage)
         ->update(['estado_pagina_id' => 1, 'updated_at' =>$controll->dat_create_update()]);
@@ -907,8 +1161,13 @@ class PaginaCasalController extends Controller
 
                         return redirect()->route('account.home.feed');
 
-        } catch (Exception $e) {
-            dd($e);
+        } catch (\Exception $e) {
+            
+                $function_name = "undo_page_deletion";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -921,13 +1180,11 @@ class PaginaCasalController extends Controller
 
 
             $uuid = \Ramsey\Uuid\Uuid::uuid4()->toString();
-            //dd($uuid);
+            
             if($description == null || $description == ""){
                 $description = "";
             }
-          /*  DB::insert('insert into posts(uuid, descricao, file, page_id,reactions, comments, total_reactions_comments, formato_id, estado_post_id, created_at) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [$uuid, $description, $file_name, $id, 0, 0, 0, $format, 1, $controll->dat_create_update()]);*/
-
+        
                 $thumbnail = null;
                 if ($thumb != false) {
                   $post = new PostController();
@@ -942,70 +1199,155 @@ class PaginaCasalController extends Controller
               'id' => DB::select('select * from posts where uuid = ?', [$uuid])[0]->post_id,
               'created_at'=> $controll->dat_create_update(),
          ]);
-        } catch (Exception $e) {
-            dd($e);
+        } catch (\Exception $e) {
+            
+                $function_name = "store";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
 /*siene*/
     public static function confirm_extension($extension) {
-      return $extension === 'jpg' || $extension === 'jpeg';
+      try{
+
+           return $extension === 'jpg' || $extension === 'jpeg';
+
+      }catch(\Exception $e){
+
+                $function_name = "convertImage_and_storeTo_storage";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
+     
     }
 
     public static function convertImage_and_storeTo_storage($request, $path, $file, $format = "jpg") {
-      $image = $request->file($file);
-      $file_name = time() . '_' . md5($request->file($file)->getClientOriginalName()) . '.' . $format;
+      try{
 
-      Image::make($image)->encode($format, 65)->save(storage_path($path . $file_name));
-      return $file_name;
+            $image = $request->file($file);
+            $file_name = time() . '_' . md5($request->file($file)->getClientOriginalName()) . '.' . $format;
+
+            Image::make($image)->encode($format, 65)->save(storage_path($path . $file_name));
+            return $file_name;
+
+      }catch(\Exception $e){
+
+                $function_name = "convertImage_and_storeTo_storage";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
+    
     }
 
 
     public static function check_image_extension( $extension )
     {
+      try{
         return $extension === 'jpg' || $extension === 'jpeg' || $extension === 'png';
+      }catch(\Exception $e){
+
+                $function_name = "check_image_extension";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
 
     public function check_video_extension( $extension )
     {
+      try{
+
         return $extension === 'mp4' || $extension === 'avi' || $extension === 'mkv' || $extension === '3gp' || $extension === 'wmv'|| $extension === 'flv' || $extension === 'webm' || $extension === 'ogg';
+      }catch(\Exception $e){
+
+                $function_name = "check_video_extension";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
 
     private function formato_id( $formato ) {
+      try{
+
         return DB::select('select formato_id from formatos where formato = ?', [$formato])[0]->formato_id;
+      }catch(\Exception $e){
+
+                $function_name = "formato_id";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
 
     public function suggest_pages($hostId)
     {
-        $all_content = [];
-        $data = DB::select('select * from seguidors where identificador_id_seguindo <> ? AND identificador_id_seguida <> ?', [$hostId, $hostId]);
-        foreach ($data as $value) {
-            $all_content = DB::table('pages')->where('page_id', $value->identificador_id_seguida)->get();
-        }
-        return $all_content;
+      try{
+
+          $all_content = [];
+          $data = DB::select('select * from seguidors where identificador_id_seguindo <> ? AND identificador_id_seguida <> ?', [$hostId, $hostId]);
+          foreach ($data as $value) {
+              $all_content = DB::table('pages')->where('page_id', $value->identificador_id_seguida)->get();
+          }
+          return $all_content;
+
+      }catch(\Exception $e){
+
+                $function_name = "suggest_pages";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
+
+      
     }
 
     public function get_post_types($id)
-    {   $index = 0;
-        $posts = [];
-        $data = DB::table('posts')->where('page_id', $id)->get();
-        foreach ($data as $d) {
-            if ( sizeof(explode('.',$d->file)) > 1 ) {
-                $extension = explode('.', $d->file)[1];
-                if ($this->check_image_extension($extension))
-                {
-                    $posts[$index]['postImages'] = $d->file;
-                }
-                else if ($this->check_video_extension($extension))
-                {
-                    $posts[$index]['postVideos'] = $d->file;
-                }
+    { 
+
+        try{
+
+              $index = 0;
+              $posts = [];
+              $data = DB::table('posts')->where('page_id', $id)->get();
+              foreach ($data as $d) {
+                  if ( sizeof(explode('.',$d->file)) > 1 ) {
+                      $extension = explode('.', $d->file)[1];
+                      if ($this->check_image_extension($extension))
+                      {
+                          $posts[$index]['postImages'] = $d->file;
+                      }
+                      else if ($this->check_video_extension($extension))
+                      {
+                          $posts[$index]['postVideos'] = $d->file;
+                      }
+                  }
+                  $posts[$index]['postDescricao'] = $d->descricao;
+                  $index++;
             }
-            $posts[$index]['postDescricao'] = $d->descricao;
-            $index++;
-        }
 
         return $posts;
+
+        }catch(\Exception $e){
+
+                $function_name = "get_post_types";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+        }
+    
     }
 
     public function delete_page($id){
@@ -1060,8 +1402,13 @@ class PaginaCasalController extends Controller
                    }
                 }
             return view('notificacoes.delete_page', compact('dados','account_name','notificacoes_count','notificacoes', 'conta_logada', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_current', 'allPosts', 'sugerir', 'page_content'));
-        } catch (Exception $e) {
-            dd($e);
+        } catch (\Exception $e) {
+            
+                $function_name = "delete_page";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
     //---------------------------------------------------------
@@ -1069,8 +1416,9 @@ class PaginaCasalController extends Controller
     // Pega o nome do casal da pagina
     private static function get_casalPage_name($uid)
     {
-      //dd($uid);
-      $data = DB::table('pages')->where('uuid', $uid)->select('conta_id_a', 'conta_id_b')->get();
+      try{
+
+        $data = DB::table('pages')->where('uuid', $uid)->select('conta_id_a', 'conta_id_b')->get();
 
       $donodapage = DB::table('pedido_relacionamentos')->where('conta_id_pedida', $data[0]->conta_id_a)->orwhere('conta_id_pedinte', $data[0]->conta_id_a)->get();
 
@@ -1091,14 +1439,48 @@ class PaginaCasalController extends Controller
           } else{
             return 'Página de '.self::get_account_nomeAndApelido('contas', $data[0]->conta_id_a) . ' & ' . self::get_account_nomeAndApelido('contas', $data[0]->conta_id_b) .' que são Nativos';
           }
+      }catch(\Exception $e){
+
+                $function_name = "get_casalPage_name";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
+ 
 
     }
 
     private static function get_account_nomeAndApelido($table_name, $account_id) {
+
+      try{
+
+
       $account_name = DB::table($table_name)->where('conta_id', $account_id)->select('nome', 'apelido')->get()[0];
       return $account_name->nome . ' ' . $account_name->apelido;
+
+      }catch(\Exception $e){
+
+                $function_name = "get_account_nomeAndApelido";
+                $controller_name = "PaginaCasalController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
+      }
     }
 
 
     /* fim codigo siene */
+      public function save_errors_on_database($function_name,$controller_name,$error_msg){
+
+
+                DB::table('errors')->insert([
+                    'uuid'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'nome_da_funcao'=>$function_name,
+                    'nome_do_controller'=>$controller_name,
+                    'descricao_do_erro'=> $error_msg,
+                    
+                ]);
+
+    }
 }

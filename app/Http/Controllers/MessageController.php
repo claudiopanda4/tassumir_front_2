@@ -9,11 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
     public function index()
     {
         try {
@@ -40,34 +36,35 @@ class MessageController extends Controller
         })->select('messages.*', 'identificadors.id')->get();
 
 
-
-
         $contas = DB::table('contas')->limit(8)->get();
 
 
         //dd($contas);
         return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'paginasNaoSeguidas', 'paginasSeguidas', 'dadosSeguida', 'user_logado', 'contas', 'message_contact'));
-        } catch (Exception $e) {
 
+        } catch (\Exception $e) {
+
+                $function_name = "index";
+                $controller_name = "MessageController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function save_errors_on_database($function_name,$controller_name,$error_msg){
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
+                DB::table('errors')->insert([
+                    'uuid'=>\Ramsey\Uuid\Uuid::uuid4()->toString(),
+                    'nome_da_funcao'=>$function_name,
+                    'nome_do_controller'=>$controller_name,
+                    'descricao_do_erro'=> $error_msg,
+                    
+                ]);
+
+    }
+  
     public function store(Request $request)
     {
         try {
@@ -115,17 +112,16 @@ class MessageController extends Controller
         }else{
             return response()->json('Nenhum dado Enviado');
         }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
+                $function_name = "store";
+                $controller_name = "MessageController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request)
     {
         try {
@@ -183,8 +179,13 @@ class MessageController extends Controller
             $message_user['tamanho_sms'] = sizeof($message_lenth);
             return response()->json($message_user);
         }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
+                $function_name = "show";
+                $controller_name = "MessageController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
 
     }
@@ -238,29 +239,21 @@ class MessageController extends Controller
 
         $contas = DB::table('contas')->limit(8)->get();
 
-
-        //dd($contas);
-
         return view('message.index', compact('account_name', 'checkUserStatus', 'profile_picture', 'isUserHost', 'hasUserManyPages', 'allUserPages', 'page_content', 'page_current', 'checkUserStatus', 'conta_logada', 'notificacoes', 'user_logado', 'contas', 'message_contact', 'message_text', 'identificador_user', 'identificador_dest', 'conta_destino', 'message_lenth'));
         
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
+                $function_name = "mostrar_sms";
+                $controller_name = "MessageController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Message $message)
-    {
-        //
-    }
-
+   
      public function last_sms(Request $request)
     {
         try {
@@ -311,8 +304,13 @@ class MessageController extends Controller
             }
             return response()->json($message_user);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
+                $function_name = "last_sms";
+                $controller_name = "MessageController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
@@ -358,51 +356,44 @@ class MessageController extends Controller
             }
             return response()->json($message_user);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
+                $function_name = "first_sms";
+                $controller_name = "MessageController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
     }
 
     public function pesquisar_destinatario(Request $request)
     {
-        if($request->ajax()){
+        try{
 
-            $conta = DB::table('contas')->where('nome', 'like', '%'.$request->dados.'%')
-            ->orwhere('apelido', 'like', '%'.$request->dados.'%')->limit(5)->get();
+            if($request->ajax()){
 
-            $data = $conta;
-            if(count($data)>0){
-                $output['valor']=$data;
-            }else{
-              $output['valor']='Sem Resultado';
+                $conta = DB::table('contas')->where('nome', 'like', '%'.$request->dados.'%')
+                ->orwhere('apelido', 'like', '%'.$request->dados.'%')->limit(5)->get();
+
+                $data = $conta;
+                if(count($data)>0){
+                    $output['valor']=$data;
+                }else{
+                  $output['valor']='Sem Resultado';
+                }
+
+                return response()->json($output);
             }
 
-            return response()->json($output);
+        }catch(\Exception $e){
+
+                $function_name = "pesquisar_destinatario";
+                $controller_name = "MessageController";
+                $error_msg = $e->getMessage();
+
+                $this->save_errors_on_database($function_name, $controller_name,  $error_msg );
         }
 
-    }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Message $message)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Message $message)
-    {
-        //
     }
 }
